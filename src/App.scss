@@ -1,0 +1,61 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box !important;
+  list-style: none !important;
+  list-style-type: none !important;
+  text-decoration: none !important;
+  outline: none !important;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(64, 61, 59);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(64, 61, 59, 0.8);
+}
+
+body {
+  font-family: "Inter", sans-serif !important;
+  background: #f6f6f6;
+  margin: 0;
+  letter-spacing: normal;
+  box-sizing: border-box;
+  --box-shadow: 0 0 4px rgba(0, 0, 0, 0.025), 0 0 16px rgba(0, 0, 0, 0.025),
+    0 0 32px rgba(0, 0, 0, 0.025), 0 0 64px rgba(0, 0, 0, 0.025);
+}
+
+.nav-tabs .nav-link {
+  background-color: transparent !important;
+  color: #495057 !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+#screen-wrapper {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: max-content 3fr;
+  grid-template-rows: 0.2fr 3fr;
+  grid-template-areas:
+    "header header"
+    "sidenav main";
+}
+
+main {
+  grid-area: main;
+  padding: 30px;
+  overflow-y: scroll;
+}

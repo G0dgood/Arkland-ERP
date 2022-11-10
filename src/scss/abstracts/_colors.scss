@@ -1,0 +1,23 @@
+$box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+
+// arkland Colors
+$colors: (
+  // Primary
+  white: #ffffff,
+  white-100: rgb(255, 255, 255),
+  black: #252a32,
+  black-100: rgb(26, 26, 26),
+  light: #f1f5f8,
+  red: #d32f2f,
+  blue: #148cb8,
+  grey: #5c5c5c
+);
+
+@function color($key) {
+  @if map-has-key($colors, $key) {
+    @return map-get($colors, $key);
+  }
+
+  @warn "unknown `#{$key}` in $colors.";
+  @return null;
+}
