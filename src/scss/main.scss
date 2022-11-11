@@ -1,11 +1,11 @@
 // components
-@use "./components/Header.scss";
-@use "./components/Sidebar.scss";
+@use "./components/header.scss";
+@use "./components/sidebar.scss";
 @use "./css/bootstrap.css";
 
 // pages
-@use "./pages/Dashboard.scss";
-@use "./pages/Login.scss";
+@use "./pages/dashboard.scss";
+@use "./pages/login.scss";
 
 *,
 *::before,
@@ -30,9 +30,11 @@
 }
 ::-webkit-scrollbar-thumb {
   background: rgb(64, 61, 59);
+  display: none;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(64, 61, 59, 0.8);
+  display: none;
 }
 
 body {
