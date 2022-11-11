@@ -54,6 +54,10 @@
 .dropdown-names {
   color: #1a1a1a;
   margin-left: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
 }
 .header-container .header-user-details i.fa-chevron-down {
   color: #edbcbc;
@@ -156,10 +160,16 @@
 
 .header-logo-text {
   margin-right: 50px;
-  font-weight: bold;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
 }
 .header-logo-text1 {
-  font-weight: bold;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
 }
 
 @media screen and (max-width: 1000px) {
