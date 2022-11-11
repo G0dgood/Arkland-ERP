@@ -7,6 +7,7 @@ import { FiBarChart, FiShoppingCart, FiTool, FiUsers } from 'react-icons/fi';
 import { RiWallet2Line } from 'react-icons/ri';
 import { BiBox } from 'react-icons/bi';
 import { AiOutlineDesktop } from 'react-icons/ai';
+import { MainSearch } from '../../components/TableOptions';
 
 const Departments = () => {
 	const [collapseNav, setCollapseNav] = useState(() => {
@@ -30,7 +31,7 @@ const Departments = () => {
 			<main>
 				<div className='departments-main-container'>
 					<div><Button variant="contained" className='Add-btn'> <GoPlus /> {' '}Create Department</Button></div>
-					<div className='GoSearch-container'> <GoSearch className="Search-input" />  <input className='GoSearch' placeholder='Search...         Departments' /></div>
+					<MainSearch placeholder={'Search...          All Employees'} />
 				</div>
 
 				<div className='Department-item'>
