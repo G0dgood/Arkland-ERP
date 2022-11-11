@@ -10,7 +10,10 @@ $colors: (
   light: #f1f5f8,
   red: #d32f2f,
   blue: #148cb8,
-  grey: #5c5c5c
+  grey: #5c5c5c,
+  border:#B2B2B2,
+  container-border:#e8e8e8, 
+  primary-color:#990000 
 );
 
 @function color($key) {

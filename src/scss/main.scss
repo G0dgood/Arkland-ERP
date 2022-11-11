@@ -6,6 +6,9 @@
 // pages
 @use "./pages/Dashboard.scss";
 @use "./pages/Login.scss";
+@use "./pages/kpiassessment";
+@use "./pages/policy"; 
+@use "./pages/departments";
 
 *,
 *::before,

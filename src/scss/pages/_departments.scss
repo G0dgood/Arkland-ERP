@@ -1,0 +1,75 @@
+@use "../abstracts/colors" as c;
+
+.departments-main-container{
+	width: 100%;
+	// height: 100%; 
+	display: flex;
+	justify-content: space-between !important;
+}
+
+.GoSearch{
+	border: none;
+	background-color: none !important;
+	color: none !important;
+	  background-color: transparent !important;
+			width: 350px;
+			height: 40px;
+}
+
+.GoSearch-container{
+	border: 2px solid #B2B2B2;
+	height: 50px;
+	border-radius: 4px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	background-color: c.color(white);
+}
+
+.Search-input{
+	color: c.color(border);
+	padding-right: 10px;
+	font-size:30px;
+	font-weight: bold;
+}
+
+::placeholder {
+  color: c.color(border);
+}
+
+.Department-item{
+	display: flex;
+	justify-content: space-around;
+	margin-top: 5rem;
+}
+ 
+
+.Department-container-item-sub{
+	display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+color: c.color(white);
+	width: 80px;
+	height: 80px;
+		background-color: c.color(primary-color);
+		border-radius: 8px;
+}
+
+.Department-item-sub-main{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.Department-item-sub-p{
+	 padding-top: 1rem;
+		font-weight: bold;
+}
+//  .GoSearch input:-webkit-autofill,
+// .GoSearch input:-webkit-autofill:focus {
+//     transition: background-color 600000s 0s, color 600000s 0s;
+// }
+// .GoSearch input[data-autocompleted] {
+//     background-color: transparent !important;
+// }
