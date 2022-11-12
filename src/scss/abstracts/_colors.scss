@@ -19,7 +19,8 @@ $colors: (
   border:#B2B2B2,
   light-border:#ededed,
   container-border:#e8e8e8, 
-  primary-color:#990000 
+  primary-color:#990000 ,
+  table-color:#e0e0e0
 );
 
 @function color($key) {

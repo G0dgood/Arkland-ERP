@@ -86,3 +86,46 @@
   border-right: 4px solid #fff !important;
   border-bottom: 5px solid transparent;
 }
+
+
+@media only screen and (max-width: 1080) {
+
+.entries-perpage{
+   white-space: nowrap;
+   margin-right: 1rem !important;
+}
+  .allemployees-container-main{
+    overflow-y: scroll !important;
+  }
+}
+@media only screen and (max-width: 720px) {
+  #collapse-sidenavbar{
+    display:none !important;
+  }
+  #open-sidenavbar{
+    display:none !important;
+  }
+ 
+.header-logo-text1{
+    display:none !important;
+}
+.header-logo-text{
+   white-space: nowrap;
+}
+.dropdown-names{
+   white-space: nowrap;
+}
+.entries-perpage{
+   white-space: nowrap;
+   margin-right: 1rem;
+}
+  .header-logo {
+    display: block !important;
+      margin-left: 0px !important;  
+    margin-right: 0px !important;
+  }
+
+  .allemployees-container-main{
+    overflow-y: scroll;
+  }
+}

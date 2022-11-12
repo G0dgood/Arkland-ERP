@@ -2,6 +2,7 @@
 @use "./components/header.scss";
 @use "./components/sidebar.scss";
 @use "./components/tableoptions";
+@use "./components/tablecomponent";
 @use "./css/bootstrap.css";
 
 // pages
@@ -53,6 +54,16 @@ body {
   box-sizing: border-box;
   --box-shadow: 0 0 4px rgba(0, 0, 0, 0.025), 0 0 16px rgba(0, 0, 0, 0.025),
     0 0 32px rgba(0, 0, 0, 0.025), 0 0 64px rgba(0, 0, 0, 0.025);
+}
+
+td{
+  white-space: nowrap !important;
+   
+}
+
+Button{
+   white-space: nowrap !important;
+  
 }
 
 .nav-tabs .nav-link {
