@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import { GoPlus, GoSearch } from "react-icons/go";
+import { GoPlus } from "react-icons/go";
 import { FiBarChart, FiShoppingCart, FiTool, FiUsers } from 'react-icons/fi';
 import { RiWallet2Line } from 'react-icons/ri';
 import { BiBox } from 'react-icons/bi';
@@ -30,7 +30,9 @@ const Departments = () => {
 			<Sidebar collapseNav={collapseNav} />
 			<main>
 				<div className='departments-main-container'>
-					<div><Button variant="contained" className='Add-btn'> <GoPlus /> {' '}Create Department</Button></div>
+					<div>
+						<Button variant="contained" className='Add-btn'> <GoPlus /> {' '}Create Department</Button>
+					</div>
 					<MainSearch placeholder={'Search...          All Employees'} />
 				</div>
 

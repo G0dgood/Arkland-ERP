@@ -88,17 +88,18 @@
 }
 
 
-@media only screen and (max-width: 1080) {
+// @media only screen and (max-width: 1080) {
 
-.entries-perpage{
-   white-space: nowrap;
-   margin-right: 1rem !important;
-}
-  .allemployees-container-main{
-    overflow-y: scroll !important;
-  }
-}
+// .entries-perpage{
+//    white-space: nowrap;
+//    margin-right: 1rem !important;
+// }
+//   .allemployees-container-main{
+//     overflow-y: scroll !important;
+//   }
+// }
 @media only screen and (max-width: 720px) {
+  
   #collapse-sidenavbar{
     display:none !important;
   }
