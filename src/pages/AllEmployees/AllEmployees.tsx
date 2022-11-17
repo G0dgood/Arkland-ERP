@@ -60,7 +60,7 @@ const AllEmployees = () => {
 						<div className='allemployees-container-sup'>
 							<div className='allemployees-sup-item1'>
 								<Button variant="contained" className="Add-btn">
-									<GoPlus />		Create Employee
+									<GoPlus size={25} className="icon-space" />		Create Employee
 								</Button>
 							</div>
 							<div className='allemployees-sup-item2'>
@@ -83,11 +83,7 @@ const AllEmployees = () => {
 					</div>
 
 					<section className="md-ui component-data-table">
-						{/* <header className="main-table-header">
-							<h1 className="table-header--title">Nutrition</h1>
-							<span className="table-header--icons"><i className="material-icons">filter_list</i><i className="material-icons">more_vert</i>
-							</span>
-						</header> */}
+
 						<div className="main-table-wrapper">
 							<table className="main-table-content">
 								<thead className="data-table-header">
@@ -113,9 +109,9 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">14%</td>
 										<td className="table-datacell datatype-numeric">
 											<div className='table-active-items'>
-												<span><BsCheckCircle size={18} color={"green"} /></span>
+												<span><BsCheckCircle size={25} color={"green"} /></span>
 												<span>
-													<FiEdit size={18} /> {"  "} <FiLock size={18} />
+													<FiEdit size={25} /> {"  "} <FiLock size={25} />
 												</span>
 											</div>
 										</td>
@@ -131,9 +127,9 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">8%</td>
 										<td className="table-datacell datatype-numeric">
 											<div className='table-active-items'>
-												<span><BsCheckCircle size={18} color={"green"} /></span>
+												<span><BsCheckCircle size={25} color={"green"} /></span>
 												<span>
-													<FiEdit size={18} /> {"  "} <FiLock size={18} />
+													<FiEdit size={25} /> {"  "} <FiLock size={25} />
 												</span>
 											</div>
 										</td>
@@ -150,10 +146,10 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">
 											<div className='table-active-items'>
 												<span>
-													<BsXCircle size={18} color={"red"} />
+													<BsXCircle size={25} color={"red"} />
 												</span>
 												<span>
-													<FiEdit size={18} /> {"  "} <FiLock size={18} />
+													<FiEdit size={25} /> {"  "} <FiLock size={25} />
 												</span>
 											</div>
 										</td>
@@ -169,9 +165,9 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">3%</td>
 										<td className="table-datacell datatype-numeric">
 											<div className='table-active-items'>
-												<span>			<BsXCircle size={18} color={"red"} /></span>
+												<span>			<BsXCircle size={25} color={"red"} /></span>
 												<span>
-													<FiEdit size={18} /> {"  "} <FiLock size={18} />
+													<FiEdit size={25} /> {"  "} <FiLock size={25} />
 												</span>
 											</div>
 										</td>
@@ -186,9 +182,9 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">327</td>
 										<td className="table-datacell datatype-numeric">7%</td>
 										<td className="table-datacell datatype-numeric">		<div className='table-active-items'>
-											<span><BsCheckCircle size={18} color={"green"} /></span>
+											<span><BsCheckCircle size={25} color={"green"} /></span>
 											<span>
-												<FiEdit size={18} /> {"  "} <FiLock size={18} />
+												<FiEdit size={25} /> {"  "} <FiLock size={25} />
 											</span>
 										</div>
 										</td>
@@ -203,9 +199,9 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">50</td>
 										<td className="table-datacell datatype-numeric">0%</td>
 										<td className="table-datacell datatype-numeric"><div className='table-active-items'>
-											<span><BsCheckCircle size={18} color={"green"} /></span>
+											<span><BsCheckCircle size={25} color={"green"} /></span>
 											<span>
-												<FiEdit size={18} /> {"  "} <FiLock size={18} />
+												<FiEdit size={25} /> {"  "} <FiLock size={25} />
 											</span>
 										</div></td>
 
@@ -219,9 +215,9 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">38</td>
 										<td className="table-datacell datatype-numeric">0%</td>
 										<td className="table-datacell datatype-numeric"><div className='table-active-items'>
-											<span><BsCheckCircle size={18} color={"green"} /></span>
+											<span><BsCheckCircle size={25} color={"green"} /></span>
 											<span>
-												<FiEdit size={18} /> {"  "} <FiLock size={18} />
+												<FiEdit size={25} /> {"  "} <FiLock size={25} />
 											</span>
 										</div></td>
 
@@ -235,9 +231,9 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">562</td>
 										<td className="table-datacell datatype-numeric">0%</td>
 										<td className="table-datacell datatype-numeric"><div className='table-active-items'>
-											<span><BsCheckCircle size={18} color={"green"} /></span>
+											<span><BsCheckCircle size={25} color={"green"} /></span>
 											<span>
-												<FiEdit size={18} /> {"  "} <FiLock size={18} />
+												<FiEdit size={25} /> {"  "} <FiLock size={25} />
 											</span>
 										</div></td>
 
@@ -251,25 +247,25 @@ const AllEmployees = () => {
 										<td className="table-datacell datatype-numeric">326</td>
 										<td className="table-datacell datatype-numeric">2%</td>
 										<td className="table-datacell datatype-numeric"><div className='table-active-items'>
-											<span>			<BsXCircle size={18} color={"red"} /></span>
+											<span>			<BsXCircle size={25} color={"red"} /></span>
 											<span>
-												<FiEdit size={18} /> {"  "} <FiLock size={18} />
+												<FiEdit size={25} /> {"  "} <FiLock size={25} />
 											</span>
 										</div></td>
 
 									</tr>
 									<tr className="data-table-row">
 										<td className="table-datacell datatype-string">KitKat</td>
-										<td className="table-datacell datatype-numeric">518</td>
+										<td className="table-datacell datatype-numeric">525</td>
 										<td className="table-datacell datatype-numeric">26.0</td>
 										<td className="table-datacell datatype-numeric">65</td>
 										<td className="table-datacell datatype-numeric">7</td>
 										<td className="table-datacell datatype-numeric">54</td>
 										<td className="table-datacell datatype-numeric">12%</td>
 										<td className="table-datacell datatype-numeric"><div className='table-active-items'>
-											<span><BsCheckCircle size={18} color={"green"} /></span>
+											<span><BsCheckCircle size={25} color={"green"} /></span>
 											<span>
-												<FiEdit size={18} /> {"  "} <FiLock size={18} />
+												<FiEdit size={25} /> {"  "} <FiLock size={25} />
 											</span>
 										</div></td>
 
@@ -277,17 +273,7 @@ const AllEmployees = () => {
 								</tbody>
 							</table>
 						</div>
-						{/* <footer className="main-table-footer">
-							<span className="rows-selection">
-								<span className="rows-selection-label">Rows per page:</span>
-								<span className="rows-selection-dropdown">10<i className="material-icons">arrow_drop_down</i></span>
-							</span>
-							<span className="rows-amount">1-10 of 100</span>
-							<span className="table-pagination">
-								<i className="material-icons">keyboard_arrow_left</i>
-								<i className="material-icons">keyboard_arrow_right</i>
-							</span>
-						</footer> */}
+
 					</section>
 				</div>
 			</main>

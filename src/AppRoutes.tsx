@@ -10,6 +10,7 @@ import Projects from './pages/Projects/Projects';
 import Leave from './pages/Leave/Leave';
 import Support from './pages/Support/Support';
 import Policy from './pages/Policy/Policy';
+import SiteWorkerRequest from './pages/Projects/SiteWorkerRequest';
 
 
 
@@ -28,6 +29,7 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/leave" element={<Leave />} />
       <Route path="/support" element={<Support />} />
       <Route path="/policy" element={<Policy />} />
+      <Route path="/SiteWorkerRequest" element={<SiteWorkerRequest />} />
     </Routes>
   )
 }

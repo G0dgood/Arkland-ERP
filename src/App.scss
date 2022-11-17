@@ -15,43 +15,5 @@
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-::-webkit-scrollbar {
-  width: 4px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-::-webkit-scrollbar-thumb {
-  background: rgb(64, 61, 59);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(64, 61, 59, 0.8);
-}
-
-body {
-  font-family: "Inter", sans-serif !important;
-  background: #f6f6f6;
-  margin: 0;
-  letter-spacing: normal;
-  box-sizing: border-box; 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} 
-
-.nav-tabs .nav-link {
-  background-color: transparent !important;
-  color: #495057 !important;
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-}
-
  
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
  

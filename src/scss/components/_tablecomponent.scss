@@ -1,6 +1,7 @@
 @use "../abstracts/colors" as c;
 
 .md-ui.component-data-table {
+				border-radius: 10px !important;
 	background: #fff;
 	border: 0;
 	border-radius: 2px;
@@ -36,22 +37,27 @@
 		display: block;
 		max-width: 100%;
 		overflow-x: auto;
+		
 		/* START data table content */
 		.main-table-content {
 			border-collapse: collapse;
 			border-spacing: 0;
 			width: 100%;
 			overflow: hidden;
+	
 			tr {
 				border-bottom: 1px solid c.color(table-color);
+				
 				td {
 					text-overflow: ellipsis;
 					padding: 1rem;
 					&:first-child {
-						padding: 0 50px 0 24px;
+						padding: 0 14px 0 24px;
+						border-radius:10px 0px 0px 0px;
 					}
 					&:last-child {
 						padding: 0 14px 0 0;
+						border-radius:0px 10px 0px 0px;
 					}
 					&.datatype-string {
 						text-align: left;
@@ -74,8 +80,7 @@
 									text-align: center !important;
 						font-size: 12px;
 						font-weight: 500;
-						vertical-align: middle;
-						
+						vertical-align: middle; 
 						.material-icons {
 							font-size: 18px;
 							vertical-align: middle;
@@ -96,6 +101,7 @@
 					td {
 						color: rgba(0, 0, 0, 0.87);
 						font-weight: 500;
+					
 						input[type="text"] {
 							background: transparent;
 							border: 0;

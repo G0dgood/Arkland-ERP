@@ -61,7 +61,65 @@ const KPIAssessment = () => {
 				</div>
 
 				<div className='kpi-top-container-card-3'>
-					ffffff
+					<section className="md-ui component-data-table">
+
+						<div className="main-table-wrapper">
+							<table className="main-table-content">
+								<thead className="data-table-header">
+									<tr className="data-table-row">
+										<td className="table-datacell datatype-numeric">Key Performance Indicator</td>
+										<td className="table-datacell datatype-numeric">Indicator Description</td>
+										<td className="table-datacell datatype-numeric">Weight</td>
+										<td className="table-datacell datatype-numeric">Employee Grade</td>
+										<td className="table-datacell datatype-numeric">Employee Score</td>
+										<td className="table-datacell datatype-numeric">Supervisor Grade</td>
+										<td className="table-datacell datatype-numeric">Supervisor Score</td>
+
+									</tr>
+								</thead>
+								<tbody className="data-table-content">
+									<tr className="data-table-row">
+
+										<td className="table-datacell datatype-numeric">Key Performance Indicator</td>
+										<td className="table-datacell datatype-numeric">Lorem ipsum dolor sit amet, consectetur adip.</td>
+										<td className="table-datacell datatype-numeric"></td>
+										<td className="table-datacell datatype-numeric"></td>
+										<td className="table-datacell datatype-numeric"></td>
+
+
+									</tr>
+									<tr className="data-table-row">
+										<td className="table-datacell datatype-numeric"> Efficiency</td>
+										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-numeric"> </td>
+
+
+									</tr>
+									<tr className="data-table-row">
+										<td className="table-datacell datatype-numeric">Attendance </td>
+										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-numeric"> </td>
+
+
+									</tr>
+									<tr className="data-table-row">
+										<td className="table-datacell datatype-numeric"> Feedback</td>
+										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-numeric"> </td>
+
+									</tr>
+									<tr className="data-table-row">
+										<td className="table-datacell datatype-numeric"> Consistency</td>
+										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-numeric"> </td>
+
+
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</section>
 				</div>
 			</main>
 		</div>
