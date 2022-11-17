@@ -1,0 +1,8 @@
+@use "../abstracts/colors" as c;
+
+.view-project-btn {
+  font-weight: bold !important;
+  background-color: c.color(project-view-btn) !important;
+  border-radius: 4px !important;
+  color: #fff !important;
+}
