@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import { GoPlus } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 import { faker } from "@faker-js/faker";
 import Header from "../../components/Header";
@@ -56,6 +57,7 @@ const Projects = () => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
@@ -64,6 +66,10 @@ const Projects = () => {
   }, [collapseNav]);
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
+  };
+  const viewProject = () => {
+    console.log("clicked");
+    navigate("/viewproject");
   };
 
   return (
@@ -132,6 +138,7 @@ const Projects = () => {
                               <Button
                                 variant="contained"
                                 className="view-project-btn"
+                                onClick={viewProject}
                               >
                                 View
                               </Button>
