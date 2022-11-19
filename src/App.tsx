@@ -1,9 +1,8 @@
 
-
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
-
-
+import "./scss/main.scss";
+import "./App.scss";
 
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
-    </div >
+    </div>
   );
 }
 

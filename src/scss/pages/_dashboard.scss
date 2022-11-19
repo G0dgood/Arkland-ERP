@@ -72,40 +72,70 @@ input[type="checkbox"] {
   padding: 1.3rem !important;
   border-radius: 4px !important;
   color: #fff !important;
-}
-
-.main-div-col-2 {
-  display: flex;
-  flex-direction: column;
-  padding: 1.2rem;
+  .MuiButton-label {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-transform: none;
+  }
 }
 
 .OpenInFull {
   position: absolute !important;
   right: 0 !important;
   top: 0 !important;
-  margin: 10px !important;
+  margin: 2px !important;
 }
 .event-time {
   color: #990000;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 28px;
+  align-items: center;
+  font-feature-settings: "salt" on, "liga" off;
+  margin-top: 10px;
 }
 .event-days {
   color: #1a1a1a;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 20px;
+  margin-bottom: 10px;
+  font-feature-settings: "salt" on, "liga" off;
 }
 .event-months {
   font-weight: bold;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 0px !important;
 }
 .main-min-text {
-  margin-top: 5rem;
+  margin-top: 2.5rem;
   padding-left: 5px;
   box-sizing: border-box !important;
   flex-wrap: wrap;
+
+  height: 70%;
+
+  &-header {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+  }
 }
+
 .main-min-text2 {
   padding-top: 10px;
   flex-wrap: wrap;
   width: 90%;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .main-div {
@@ -122,8 +152,11 @@ input[type="checkbox"] {
   height: 100%;
 }
 .main-div-col-2 {
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
   width: 100%;
-  height: 100%;
+  height: 98%;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
@@ -131,13 +164,13 @@ input[type="checkbox"] {
 
 .main-div-col-1-sub {
   width: 100%;
-  height: 40%;
+  height: 28%;
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 4fr 1fr;
 }
 .main-div-col-2-sub {
   width: 100%;
-  height: 60%;
+  height: 70%;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
@@ -145,8 +178,8 @@ input[type="checkbox"] {
 }
 
 .main-div-col-1-sub-min {
-  width: 97%;
-  height: 90%;
+  width: 97%; //97%
+  height: 10.625rem;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
@@ -197,20 +230,20 @@ input[type="checkbox"] {
 
 .main-sub-img {
   object-fit: fill;
-  width: 230px;
-  height: 100%;
+  width: 12.625rem; //230px
+  height: 9.875rem; //100%
   position: relative;
-  right: 1rem;
-  top: 3.1rem;
+  right: 2rem;
+  margin-top: 0.75rem;
 }
 .main-div-col-1-sub-min-text {
   width: 100%;
-  height: 100%;
+  min-height: 9.875rem !important;
 }
 .main-div-col-2-sub-min {
   position: relative;
-  width: 100%;
-  height: 90%;
+  width: 12.5rem; //100%
+  height: 10.625rem; //90%
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
@@ -218,6 +251,7 @@ input[type="checkbox"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1.1rem;
 }
 
 .Create-event {
@@ -233,4 +267,47 @@ input[type="checkbox"] {
 
 .FiTrash2 {
   padding-right: 0.7rem;
+}
+
+@media only screen and (max-width: 720px) {
+  .Announcement-sub-text {
+    margin-right: 1rem;
+  }
+
+  .main-div-col-2-sub-min {
+    display: none !important;
+  }
+  .main-div-col-1-sub {
+    display: block;
+  }
+  .main-div-col-1-sub-min {
+    width: 100%;
+  }
+  .Announcement-sub-1 {
+    overflow-x: scroll !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .main-min-text {
+    overflow-y: scroll !important;
+  }
+  .main-div {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 1rem 0 0 1rem;
+  }
+  .main-div-col-1 {
+    width: 100%;
+
+    height: 100%;
+  }
+}
+@media only screen and (max-width: 1400px) {
+  .main-min-text {
+    overflow-y: scroll !important;
+  }
 }

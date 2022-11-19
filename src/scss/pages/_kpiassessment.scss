@@ -1,0 +1,110 @@
+@use "../abstracts/colors" as c;
+
+.kpi-top-container{
+	width: 100%;
+	min-height: 20% !important;
+	// background-color: bisque;
+	 display: grid;
+  grid-template-columns: 3fr 2fr;
+}
+
+.grading-system-contain{
+display: grid;
+  grid-template-columns: 3fr 2fr;
+		
+}
+ 
+
+.kpi-top-container-card-1{ 
+ 
+padding-right: 2rem !important;
+    display: flex;
+     flex-flow: column;
+      height: 100%;
+}
+.kpi-top-container-card-2{ 
+width: 100%;
+height: 100%;
+
+}
+
+.grading-system {
+    background-color: c.color(white);
+    border-radius: 3px;
+    box-shadow: 0 0 1px c.color(border); 
+				width: 100%;
+				height: 100%;
+				    display: grid;
+    grid-template-columns: 2fr 4fr;
+				  box-shadow: c.$box-card-shadow;
+				
+}
+
+.grading-system p:nth-child(odd) {
+    color: c.color(grey);
+    font-size: medium;
+    font-weight: 700;
+    text-align: center;
+    border-right: 1px solid c.color(border);
+}
+.grading-system p {
+				border-top: 1px solid c.color(border);
+				padding: 10px;
+				margin: 0;
+}
+.grading-system p:first-child {
+    
+    border-top: none !important;
+}
+ .grading-system-second-child{
+		border-top: none !important;
+	}
+
+.kpi-top-card-1{
+	width: 100%;
+	height: 55px;
+	background-color: c.color(primary-color);
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	padding-left: 20px;
+	color: c.color(white);
+	font-weight: bold;
+	margin-bottom: 30px;
+	     box-shadow: c.$box-card-shadow;
+}
+.kpi-top-card-1-sub{
+	background-color: c.color(white);
+	width: 100%;
+flex-grow: 1; 
+			    display: grid;
+    grid-template-columns: 2fr 4fr; 
+					    box-shadow: c.$box-card-shadow;
+}
+
+.kpi-top-card-1-sub p:nth-child(odd) {
+    color: c.color(grey);
+    font-size: medium;
+    font-weight: 700;
+   
+    border-right: 1px solid #ededed;
+			  padding-left: 2rem !important;
+}
+.kpi-top-card-1-sub p {
+				border-top: 1px solid #ededed; 
+				padding: 20px;
+			
+				margin: 0;
+}
+.kpi-top-card-1-sub p:first-child {
+    
+    border-top: none !important;
+}
+ .kpi-top-card-1-sub-second-child{
+		border-top: none !important;
+	}
+
+	.kpi-top-container-card-3{
+		width: 100%;  
+		margin-top: 2rem;
+	}

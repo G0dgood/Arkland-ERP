@@ -1,0 +1,10 @@
+@use "../abstracts/colors" as c;
+
+.SupportmainTitle{
+	display: flex;
+	justify-content: space-between;
+}
+
+.SupportmainTitleh3{
+	color:c.color(primary-color);
+}
