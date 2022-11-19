@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { faker } from "@faker-js/faker";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { MainSearch } from "../../components/TableOptions";
+import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from "../../components/TableOptions";
+import Pagination from "../../components/Pagination";
 
 interface IData {
 	name?: string;
@@ -20,6 +21,8 @@ interface IData {
 	children?: JSX.Element | JSX.Element[];
 	// view?: () => null;
 }
+
+
 
 export const DATA: IData[] = [];
 
@@ -53,6 +56,9 @@ const header = [
 ];
 
 const Projects = () => {
+
+
+	const [isLoading, setisLoading] = useState(false);
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
 		return JSON.parse(localStorage.getItem("collapse")) || false;
@@ -72,97 +78,137 @@ const Projects = () => {
 		navigate("/viewproject");
 	};
 
+
+	const [sortData, setSortData] = useState([]);
+	const [searchItem, setSearchItem] = useState("");
+
+	// --- Pagination --- //
+	const [entriesPerPage, setEntriesPerPage] = useState(() => {
+		return localStorage.getItem("reportsPerPage") || "10";
+	});
+
+
+	useEffect(() => {
+		localStorage.setItem("reportsPerPage", entriesPerPage);
+	}, [entriesPerPage]);
+
+	useEffect(() => {
+		if (DATA) {
+			const result: any = DATA?.filter((object) => {
+				return JSON?.stringify(object)?.toString()?.includes(searchItem);
+			});
+			setSortData(result);
+		}
+
+	}, [searchItem]);
+
+
+
+	const [displayData, setDisplayData] = useState([]);
+
 	return (
 		<div id="screen-wrapper">
 			<Header toggleSideNav={toggleSideNav} />
 			<Sidebar collapseNav={collapseNav} />
 			<main>
-				<div className="allemployees-container">
-					<div className="allemployees-container-main">
-						<div className="allemployees-container-sup">
-							<div className="allemployees-sup-item1">
-								<Button variant="contained" className="Add-btn">
-									<GoPlus /> Create Project
-								</Button>
+				<div>
+					<div className="allemployees-container">
+						<div className="allemployees-container-main">
+							<div className="allemployees-container-sup">
+								<div className="allemployees-sup-item1">
+									<Button variant="contained" className="Add-btn">
+										<GoPlus /> Create Project
+									</Button>
+								</div>
+								<div className="allemployees-sup-item2">
+									<Button variant="contained" className="Add-btn">
+										Request Worker List
+									</Button>
+								</div>
+								<div className="allemployees-sup-item2">
+									<EntriesPerPage
+										data={DATA}
+										entriesPerPage={entriesPerPage}
+										setEntriesPerPage={setEntriesPerPage}
+									/>
+								</div>
 							</div>
-							<div className="allemployees-sup-item2">
-								<Button variant="contained" className="Add-btn">
-									Request Worker List
-								</Button>
-							</div>
-						</div>
 
-						<div>
-							<MainSearch placeholder={"Search...          Projects"} />
+							<div>
+								<MainSearch
+									setSearchItem={setSearchItem}
+									searchItem={searchItem}
+									placeholder={"Search...          Projects"} />
+							</div>
 						</div>
+						<section className="md-ui component-data-table">
+							<div className="main-table-wrapper">
+								<table className="main-table-content">
+									<thead className="data-table-header">
+										<tr className="data-table-row">
+											{header.map((i, index) => {
+												return (
+													<>
+														<td
+															className="table-datacell datatype-numeric"
+															key={index} >
+															{i.title}
+														</td>
+													</>
+												);
+											})}
+										</tr>
+									</thead>
+									<tbody className="data-table-content">
+										{isLoading ? (
+											<TableFetch colSpan={8} />
+										) : displayData?.length === 0 || displayData == null ? (
+											<NoRecordFound colSpan={8} />
+										) : (
+											displayData.map((i: any, index) => {
+												return (
+													<>
+														<tr className="data-table-row" key={index}>
+															{Object.values(i).map((i: any, index: number) => {
+																return (
+																	<>
+																		<td
+																			className="table-datacell datatype-numeric"
+																			key={index}
+																		>
+																			{i}
+																		</td>
+																	</>
+																);
+															})}
+															<td className="table-datacell datatype-numeric">
+																<div className="table-active-items">
+																	<Button
+																		variant="contained"
+																		className="view-project-btn"
+																		onClick={viewProject} >
+																		View
+																	</Button>
+																</div>
+															</td>
+														</tr>
+													</>
+												);
+											})
+										)}
+									</tbody>
+								</table>
+							</div>
+						</section>
 					</div>
-
-					<section className="md-ui component-data-table">
-						<div className="main-table-wrapper">
-							<table className="main-table-content">
-								<thead className="data-table-header">
-									<tr className="data-table-row">
-										{header.map((i, index) => {
-											return (
-												<>
-													<td
-														className="table-datacell datatype-numeric"
-														key={index}
-													>
-														{i.title}
-													</td>
-												</>
-											);
-										})}
-									</tr>
-								</thead>
-								<tbody className="data-table-content">
-									{DATA.map((i: any, index) => {
-										return (
-											<>
-												<tr className="data-table-row" key={index}>
-													{Object.values(i).map((i: any, index: number) => {
-														return (
-															<>
-																<td
-																	className="table-datacell datatype-numeric"
-																	key={index}
-																>
-																	{i}
-																</td>
-															</>
-														);
-													})}
-													<td className="table-datacell datatype-numeric">
-														<div className="table-active-items">
-															<Button
-																variant="contained"
-																className="view-project-btn"
-																onClick={viewProject}
-															>
-																View
-															</Button>
-														</div>
-													</td>
-												</tr>
-											</>
-										);
-									})}
-								</tbody>
-							</table>
-						</div>
-						{/* <footer className="main-table-footer">
-              <span className="rows-selection">
-                <span className="rows-selection-label">
-                  Total of 34 Projects
-                </span>
-              </span>
-              <span className="table-pagination">
-                <i className="material-icons">Prev</i>
-                <i className="material-icons">Next</i>
-              </span>
-            </footer> */}
-					</section>
+					<footer className="main-table-footer">
+						<Pagination
+							setDisplayData={setDisplayData}
+							data={sortData}
+							entriesPerPage={entriesPerPage}
+							Total={"Project"}
+						/>
+					</footer>
 				</div>
 			</main>
 		</div>

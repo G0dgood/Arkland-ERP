@@ -7,19 +7,21 @@
 @use "./components/tableoptions";
 @use "./components/tablecomponent";
 @use "./components/button";
+@use "./components/pagination";
 @use "./css/bootstrap.css";
 
 // pages
 @use "./pages/kpiassessment";
 @use "./pages/policy";
-@use "./pages/departments";
+@use "./pages/departments"; 
 @use "./pages/dashboard.scss"; 
 @use "./pages/allemployees"; 
 @use "./pages/support"; 
 @use "./pages/siteworkerrequest"; 
 @use "./pages/leave"; 
-@use "./pages/login.scss"; 
-@use "./pages/projects"; 
+@use "./pages/login.scss";    
+@use "./pages/projects";
+@use "./pages/viewprojects"; 
 
 
 @use "./abstracts/colors" as c;
@@ -120,4 +122,19 @@ color: #fff !important;
 
 .icon-bold{
   font-weight: bold;
+}
+
+.table-loader {
+  color: #cacaca !important;
+  text-align: center !important;
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important; 
+}
+.table-loader p {
+  color: #7a7a7a; 
+}
+
+.pageEntries{
+  font-weight: bold;
+  color: c.color(primary-color);
 }

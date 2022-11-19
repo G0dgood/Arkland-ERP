@@ -3,6 +3,9 @@ import { GoSearch } from "react-icons/go";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { VscCloudDownload } from 'react-icons/vsc';
 
+
+
+// EntriesPerPage
 const EntriesPerPage = ({ data, entriesPerPage, setEntriesPerPage }: any) => (
   <div className="entries-perpage">
     {data?.length > 1 && (
@@ -22,6 +25,8 @@ const EntriesPerPage = ({ data, entriesPerPage, setEntriesPerPage }: any) => (
     )}
   </div>
 );
+
+// TableFetch
 const TableFetch = ({ colSpan }: any) => (
   <tr>
     <td colSpan={colSpan} className="table-loader">
@@ -30,6 +35,7 @@ const TableFetch = ({ colSpan }: any) => (
     </td>
   </tr>
 );
+// NoRecordFound
 const NoRecordFound = ({ colSpan }: any) => (
   <tr>
     <td colSpan={colSpan} className="table-loader">
@@ -39,11 +45,14 @@ const NoRecordFound = ({ colSpan }: any) => (
   </tr>
 );
 
-const MainSearch = ({ placeholder }: any) => {
+// Search
+const MainSearch = ({ placeholder, result, onChange }: any) => {
   return (
     <div className='GoSearch-container'>
       <GoSearch className="Search-input" />
-      <input className='GoSearch' placeholder={placeholder} />
+      <input className='GoSearch' placeholder={placeholder}
+        value={result}
+        onChange={onChange} />
     </div>
 
   )

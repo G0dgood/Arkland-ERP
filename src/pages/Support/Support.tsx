@@ -1,7 +1,6 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
-import { BsCheckCircle, BsXCircle } from 'react-icons/bs';
-import { FiEdit, FiLock } from 'react-icons/fi';
+import { useEffect, useState } from 'react'
+
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 

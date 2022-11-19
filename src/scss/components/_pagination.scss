@@ -1,0 +1,49 @@
+ @use "../abstracts/colors" as c;
+// 	c.color(table-color)
+// project-view-btn
+.pagination-container {
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+    flex-wrap: wrap !important;
+}
+.pagination-container a {
+  color: #707683;
+  padding: 0.25rem 0.5rem;
+  user-select: none;
+  // border: 1px solid #fff;
+  border-radius: 3px;
+
+}
+.pagination-container a:hover {
+  color: c.color(project-view-btn) !important;
+  border: 1px solid  c.color(project-view-btn);
+}
+.pagination-active a,
+.pagination-active a:hover {
+  background-color:  c.color(project-view-btn) !important;
+  color:c.color(white) !important;
+  border: 1px solid  c.color(project-view-btn) !important;
+}
+#table-footer a.previous-btn,
+#table-footer a.next-btn {
+  color:  c.color(project-view-btn);
+  // border: 1px solid  c.color(project-view-btn) !important;
+}
+.pagination-disabled a,
+.pagination-disabled a:hover {
+  color: #b4b4b4 !important;
+  cursor: not-allowed;
+  // border: 1px solid #b4b4b4 !important;
+}
+/* --- End Pagination --- */
+
+#tfoot-ReactPaginate {
+  display: flex;
+  justify-content: space-between !important;
+  // background-color: #fff;
+  padding: 0.8rem 0.4rem;
+  margin-top: 0.8rem; 
+  flex-wrap: wrap !important;
+}
+ 

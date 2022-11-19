@@ -1,11 +1,10 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsCheckCircle, BsXCircle } from 'react-icons/bs';
-import { FiEdit, FiLock } from 'react-icons/fi';
 import { GoPlus } from 'react-icons/go';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import { MainSearch } from '../../components/TableOptions';
+// import { MainSearch } from '../../components/TableOptions';
 
 const Leave = () => {
 	const [collapseNav, setCollapseNav] = useState(() => {
@@ -40,7 +39,7 @@ const Leave = () => {
 					<div className='allemployees-container-sup'>
 						<div className='allemployees-sup-item1'>
 							<Button variant="contained" className="Add-btn">
-								<GoPlus size={25} className="icon-space" />
+								<GoPlus size={20} className="icon-space" />
 								Team Leave Applications
 							</Button>
 						</div>
@@ -79,11 +78,15 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Frozen yogurt</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"red"} className="icon-bold" />  </td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"green"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"red"} className="icon-bold" />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"green"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn-error">
-											Approved
+											Not Approved
 										</Button>
 									</td>
 
@@ -93,8 +96,12 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Ice cream sandwich</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"green"} /></td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"green"} />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn">
 											Approved
@@ -107,11 +114,15 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Eclair</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"green"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"green"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn-error">
-											Approved
+											Not Approved
 										</Button>
 									</td>
 
@@ -121,8 +132,12 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Cupcake</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"green"} /></td>
-									< td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"green"} />
+									</td>
+									< td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn">
 											Approved
@@ -135,11 +150,15 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Gingerbread</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"green"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"green"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn-error">
-											Approved
+											Not Approved
 										</Button>
 									</td>
 								</tr>
@@ -147,11 +166,15 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Jellybean</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn-error">
-											Approved
+											Not Approved
 										</Button>
 									</td>
 								</tr>
@@ -159,8 +182,12 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Lollipop</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"green"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"green"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn">
 											Approved
@@ -173,8 +200,12 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Honeycomb</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"green"} /></td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"green"} />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn">
 											Approved
@@ -187,11 +218,15 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">Donut</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"green"} /></td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"green"} />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn-error">
-											Approved
+											Not Approved
 										</Button>
 									</td>
 
@@ -201,8 +236,12 @@ const Leave = () => {
 									<td className="table-datacell datatype-string">KitKat</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric"><BsCheckCircle size={25} color={"green"} /></td>
-									<td className="table-datacell datatype-numeric"><BsXCircle size={25} color={"red"} /></td>
+									<td className="table-datacell datatype-numeric">
+										<BsCheckCircle size={25} color={"green"} />
+									</td>
+									<td className="table-datacell datatype-numeric">
+										<BsXCircle size={25} color={"red"} />
+									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button variant="outlined" id="leave-status-btn">
 											Approved
