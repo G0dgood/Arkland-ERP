@@ -6,21 +6,20 @@
 @use "./components/sidebar.scss";
 @use "./components/tableoptions";
 @use "./components/tablecomponent";
+@use "./components/button";
 @use "./css/bootstrap.css";
 
 // pages
- 
-// @use "./pages/Dashboard.scss";
-// @use "./pages/Login.scss";
 @use "./pages/kpiassessment";
-@use "./pages/policy"; 
+@use "./pages/policy";
 @use "./pages/departments";
-@use "./pages/dashboard.scss";
-@use "./pages/login.scss"; 
+@use "./pages/dashboard.scss"; 
 @use "./pages/allemployees"; 
 @use "./pages/support"; 
 @use "./pages/siteworkerrequest"; 
 @use "./pages/leave"; 
+@use "./pages/login.scss"; 
+@use "./pages/projects"; 
 
 
 @use "./abstracts/colors" as c;
@@ -64,14 +63,12 @@ body {
     0 0 32px rgba(0, 0, 0, 0.025), 0 0 64px rgba(0, 0, 0, 0.025);
 }
 
-td{
+td {
   white-space: nowrap !important;
-   
 }
 
-Button{
-   white-space: nowrap !important;
-  
+Button {
+  white-space: nowrap !important;
 }
 
 .nav-tabs .nav-link {

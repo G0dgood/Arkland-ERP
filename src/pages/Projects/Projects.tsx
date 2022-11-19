@@ -1,19 +1,63 @@
-import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
-import { AiOutlineLogout } from 'react-icons/ai';
-import { BsCheckCircle, BsXCircle } from 'react-icons/bs';
-import { FiEdit, FiLock } from 'react-icons/fi';
-import { GoPlus } from 'react-icons/go';
-import { NavLink } from 'react-router-dom';
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
-import { EntriesPerPage, MainSearch } from '../../components/TableOptions';
+import React, { useEffect, useState } from "react";
+import { Button } from "@material-ui/core";
+import { GoPlus } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
+
+import { faker } from "@faker-js/faker";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
+import { MainSearch } from "../../components/TableOptions";
+
+interface IData {
+	name?: string;
+	department?: string;
+	teamlead?: string;
+	role?: string;
+	location?: string;
+	lga?: string;
+	country?: string;
+	due_date?: string;
+	children?: JSX.Element | JSX.Element[];
+	// view?: () => null;
+}
+
+export const DATA: IData[] = [];
+
+export function createRandomData(): IData {
+	return {
+		name: faker.name.fullName(),
+		department: faker.commerce.department(),
+		teamlead: faker.name.fullName(),
+		role: faker.random.word(),
+		location: faker.address.secondaryAddress(),
+		lga: faker.address.streetAddress(),
+		country: faker.address.country(),
+		due_date: faker.commerce.price(),
+	};
+}
+
+Array.from({ length: 50 }).forEach(() => {
+	DATA.push(createRandomData());
+});
+// header for data table
+const header = [
+	{ title: "NAME", prop: "NAME" },
+	{ title: "DEPARTMENT", prop: "DEPARTMENT" },
+	{ title: "TEAM LEAD", prop: "team_lead" },
+	{ title: "ROLE", prop: "role" },
+	{ title: "LOCATION", prop: "location" },
+	{ title: "LGA", prop: "lga" },
+	{ title: "COUNTRY", prop: "country" },
+	{ title: "DUE DATE", prop: "due_date" },
+	{ title: "VIEW", prop: "view" },
+];
 
 const Projects = () => {
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
 		return JSON.parse(localStorage.getItem("collapse")) || false;
 	});
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		// --- Set state of collapseNav to localStorage on pageLoad --- //
@@ -23,239 +67,106 @@ const Projects = () => {
 	const toggleSideNav = () => {
 		setCollapseNav(!collapseNav);
 	};
+	const viewProject = () => {
+		console.log("clicked");
+		navigate("/viewproject");
+	};
 
 	return (
 		<div id="screen-wrapper">
 			<Header toggleSideNav={toggleSideNav} />
 			<Sidebar collapseNav={collapseNav} />
 			<main>
-				<div>
-					<div className='allemployees-container-main' >
-						<div className='allemployees-container-sup'>
-							<div className='allemployees-sup-item1'>
-								<Button variant="contained" className="Add-btn" >
-									<GoPlus size={20} className="icon-space" />	{"   "}	Create Project
-								</Button>
-							</div>
-							<div className='allemployees-sup-item2'>
-
+				<div className="allemployees-container">
+					<div className="allemployees-container-main">
+						<div className="allemployees-container-sup">
+							<div className="allemployees-sup-item1">
 								<Button variant="contained" className="Add-btn">
-									<NavLink
-										to="/SiteWorkerRequest"
-										className="drop-logout"
-										id='white-btn-color'
-									// onClick={handleLogoutUser}
-									>
-										{/* <AiOutlineLogout size={20} className='dropdown-icons-tools' /> */}
-										Request Worker  List
-									</NavLink>
-
+									<GoPlus /> Create Project
 								</Button>
 							</div>
-
+							<div className="allemployees-sup-item2">
+								<Button variant="contained" className="Add-btn">
+									Request Worker List
+								</Button>
+							</div>
 						</div>
 
 						<div>
-							<MainSearch placeholder={'Search...          Projects'} />
+							<MainSearch placeholder={"Search...          Projects"} />
 						</div>
 					</div>
+
+					<section className="md-ui component-data-table">
+						<div className="main-table-wrapper">
+							<table className="main-table-content">
+								<thead className="data-table-header">
+									<tr className="data-table-row">
+										{header.map((i, index) => {
+											return (
+												<>
+													<td
+														className="table-datacell datatype-numeric"
+														key={index}
+													>
+														{i.title}
+													</td>
+												</>
+											);
+										})}
+									</tr>
+								</thead>
+								<tbody className="data-table-content">
+									{DATA.map((i: any, index) => {
+										return (
+											<>
+												<tr className="data-table-row" key={index}>
+													{Object.values(i).map((i: any, index: number) => {
+														return (
+															<>
+																<td
+																	className="table-datacell datatype-numeric"
+																	key={index}
+																>
+																	{i}
+																</td>
+															</>
+														);
+													})}
+													<td className="table-datacell datatype-numeric">
+														<div className="table-active-items">
+															<Button
+																variant="contained"
+																className="view-project-btn"
+																onClick={viewProject}
+															>
+																View
+															</Button>
+														</div>
+													</td>
+												</tr>
+											</>
+										);
+									})}
+								</tbody>
+							</table>
+						</div>
+						{/* <footer className="main-table-footer">
+              <span className="rows-selection">
+                <span className="rows-selection-label">
+                  Total of 34 Projects
+                </span>
+              </span>
+              <span className="table-pagination">
+                <i className="material-icons">Prev</i>
+                <i className="material-icons">Next</i>
+              </span>
+            </footer> */}
+					</section>
 				</div>
-				<section className="md-ui component-data-table">
-					{/* <header className="main-table-header">
-							<h1 className="table-header--title">Nutrition</h1>
-							<span className="table-header--icons"><i className="material-icons">filter_list</i><i className="material-icons">more_vert</i>
-							</span>
-						</header> */}
-					<div className="main-table-wrapper">
-						<table className="main-table-content">
-							<thead className="data-table-header">
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">NAME</td>
-									<td className="table-datacell datatype-numeric">DEPARTMENT</td>
-									<td className="table-datacell datatype-numeric">TEAM LEAD</td>
-									<td className="table-datacell datatype-numeric">DESCRIPTION</td>
-									<td className="table-datacell datatype-numeric">LOCATION</td>
-									<td className="table-datacell datatype-numeric">LGA</td>
-									<td className="table-datacell datatype-numeric">COUNTRY</td>
-									<td className="table-datacell datatype-numeric">DUE DATE</td>
-									<td className="table-datacell datatype-numeric">VIEW</td>
-								</tr>
-							</thead>
-							<tbody className="data-table-content">
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Frozen yogurt</td>
-									<td className="table-datacell datatype-numeric">159</td>
-									<td className="table-datacell datatype-numeric">6.0</td>
-									<td className="table-datacell datatype-numeric">24</td>
-									<td className="table-datacell datatype-numeric">4.0</td>
-									<td className="table-datacell datatype-numeric">87</td>
-									<td className="table-datacell datatype-numeric">14%</td>
-									<td className="table-datacell datatype-numeric">14%</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Ice cream sandwich</td>
-									<td className="table-datacell datatype-numeric">237</td>
-									<td className="table-datacell datatype-numeric">9.0</td>
-									<td className="table-datacell datatype-numeric">37</td>
-									<td className="table-datacell datatype-numeric">4.3</td>
-									<td className="table-datacell datatype-numeric">129</td>
-									<td className="table-datacell datatype-numeric">8%</td>
-									<td className="table-datacell datatype-numeric">8%</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Eclair</td>
-									<td className="table-datacell datatype-numeric">262</td>
-									<td className="table-datacell datatype-numeric">16.0</td>
-									<td className="table-datacell datatype-numeric">24</td>
-									<td className="table-datacell datatype-numeric">6.0</td>
-									<td className="table-datacell datatype-numeric">337</td>
-									<td className="table-datacell datatype-numeric">6%</td>
-									<td className="table-datacell datatype-numeric">6%</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Cupcake</td>
-									<td className="table-datacell datatype-numeric">305</td>
-									<td className="table-datacell datatype-numeric">3.7</td>
-									<td className="table-datacell datatype-numeric">67</td>
-									<td className="table-datacell datatype-numeric">4.3</td>
-									<td className="table-datacell datatype-numeric">413</td>
-									<td className="table-datacell datatype-numeric">3%</td>
-									<td className="table-datacell datatype-numeric">3%</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Gingerbread</td>
-									<td className="table-datacell datatype-numeric">356</td>
-									<td className="table-datacell datatype-numeric">16.0</td>
-									<td className="table-datacell datatype-numeric">49</td>
-									<td className="table-datacell datatype-numeric">3.9</td>
-									<td className="table-datacell datatype-numeric">327</td>
-									<td className="table-datacell datatype-numeric">7%</td>
-									<td className="table-datacell datatype-numeric">7%</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Jellybean</td>
-									<td className="table-datacell datatype-numeric">375</td>
-									<td className="table-datacell datatype-numeric">0.0</td>
-									<td className="table-datacell datatype-numeric">94</td>
-									<td className="table-datacell datatype-numeric">0.0</td>
-									<td className="table-datacell datatype-numeric">50</td>
-									<td className="table-datacell datatype-numeric">0%</td>
-									<td className="table-datacell datatype-numeric">0%</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-								</tr>
-								<tr>
-									<td className="table-datacell datatype-string">Lollipop</td>
-									<td className="table-datacell datatype-numeric">392</td>
-									<td className="table-datacell datatype-numeric">0.2</td>
-									<td className="table-datacell datatype-numeric">98</td>
-									<td className="table-datacell datatype-numeric">0</td>
-									<td className="table-datacell datatype-numeric">38</td>
-									<td className="table-datacell datatype-numeric">0%</td>
-									<td className="table-datacell datatype-numeric">0%</td>
-
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Honeycomb</td>
-									<td className="table-datacell datatype-numeric">408</td>
-									<td className="table-datacell datatype-numeric">3.2</td>
-									<td className="table-datacell datatype-numeric">87</td>
-									<td className="table-datacell datatype-numeric">6.5</td>
-									<td className="table-datacell datatype-numeric">562</td>
-									<td className="table-datacell datatype-numeric">0%</td>
-									<td className="table-datacell datatype-numeric">0%</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Donut</td>
-									<td className="table-datacell datatype-numeric">452</td>
-									<td className="table-datacell datatype-numeric">25.0</td>
-									<td className="table-datacell datatype-numeric">51</td>
-									<td className="table-datacell datatype-numeric">4.9</td>
-									<td className="table-datacell datatype-numeric">326</td>
-									<td className="table-datacell datatype-numeric">2%</td>
-									<td className="table-datacell datatype-numeric">2%</td>
-
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">KitKat</td>
-									<td className="table-datacell datatype-numeric">518</td>
-									<td className="table-datacell datatype-numeric">26.0</td>
-									<td className="table-datacell datatype-numeric">65</td>
-									<td className="table-datacell datatype-numeric">7</td>
-									<td className="table-datacell datatype-numeric">54</td>
-									<td className="table-datacell datatype-numeric">12%</td>
-									<td className="table-datacell datatype-numeric">12%</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="contained" className="View-btn">
-											View
-										</Button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					{/* <footer className="main-table-footer">
-							<span className="rows-selection">
-								<span className="rows-selection-label">Rows per page:</span>
-								<span className="rows-selection-dropdown">10<i className="material-icons">arrow_drop_down</i></span>
-							</span>
-							<span className="rows-amount">1-10 of 100</span>
-							<span className="table-pagination">
-								<i className="material-icons">keyboard_arrow_left</i>
-								<i className="material-icons">keyboard_arrow_right</i>
-							</span>
-						</footer> */}
-				</section>
 			</main>
 		</div>
-	)
-}
+	);
+};
 
-export default Projects
+export default Projects;
