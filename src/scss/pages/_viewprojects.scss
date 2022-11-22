@@ -49,7 +49,7 @@
   grid-template-columns: 2fr 2fr 1.5fr;
 
   &-min {
-    height: 10.625rem;
+    height: 49%;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
@@ -62,13 +62,14 @@
 
       &__header {
         justify-content: space-between;
-        width: 100%;
+        width: 95%;
         height: 42px;
-        left: 255px;
-        top: 295px;
         display: flex;
         background: rgba(153, 0, 0, 0.3);
         border-radius: 4px;
+        padding: 10px;
+        border-left: 8px solid c.color(primary-color);
+        margin-bottom: 15px;
 
         h5 {
           font-style: normal;
@@ -102,11 +103,57 @@
       line-height: 24px;
       margin: 0;
     }
+    &-title1 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 10px;
+    }
 
     &-subTitle {
       font-weight: 700;
       font-size: 16px;
       line-height: 24px;
+    }
+
+    &-subTitle1 {
+      font-weight: 400;
+      font-size: 8px;
+      line-height: 0px;
+      color: c.color(project-view-btn);
+    }
+  }
+
+  &-container1 {
+    width: 100%;
+    margin-left: 3rem;
+
+    &-flex {
+      display: flex;
+    }
+
+    &-flexMargin {
+      margin-left: 12px;
+      margin-top: 14px;
+    }
+    &-title {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 10px;
+    }
+
+    &-subTitle {
+      font-weight: 400;
+      font-size: 8px;
+      line-height: 0px;
+      color: c.color(project-view-btn);
+    }
+
+    &-image {
+      object-fit: fill;
+      width: 45px;
+      height: 45px;
     }
   }
 }

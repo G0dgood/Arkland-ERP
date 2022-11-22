@@ -11,6 +11,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectAvatar from "../../assets/vectors/project-avatar.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
+import projectProfile from "../../assets/vectors/project-profile.svg";
 
 const ViewProject = () => {
   // const [checked, setChecked] = React.useState(false);
@@ -206,15 +207,94 @@ const ViewProject = () => {
               </div>
             </div>
             <div className="project-main-div-col-2-sub">
-              <div className="project-main-div-col-2-sub-min-main__header">
-                <h5>Team Members</h5>
-                <img
-                  src={redPlus}
-                  alt="User"
-                  className="project-main-div-col-2-sub-min-main__header-plus"
-                />
+              <div>
+                <div className="project-main-div-col-2-sub-min-main__header">
+                  <h5>Team Members</h5>
+                  <img
+                    src={redPlus}
+                    alt="User"
+                    className="project-main-div-col-2-sub-min-main__header-plus"
+                  />
+                </div>
+                <div className="project-main-div-col-2-sub-min project-main-div-col-2-sub-min-main">
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="project-main-div-col-2-sub-min project-main-div-col-2-sub-min-main"></div>
               <div className="project-main-div-col-2-sub-min project-main-div-col-2-sub-min-main">
                 <img
                   src={projectAvatar}
