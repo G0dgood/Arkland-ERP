@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "@mui/material";
 import {
   Chart,
   ChartAxis,
@@ -7,6 +8,7 @@ import {
   ChartVoronoiContainer,
   ChartDonut,
 } from "@patternfly/react-charts";
+import Calendar from "react-calendar";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectAvatar from "../../assets/vectors/project-avatar.svg";
@@ -14,6 +16,7 @@ import redPlus from "../../assets/vectors/red-plus.svg";
 import projectProfile from "../../assets/vectors/project-profile.svg";
 
 const ViewProject = () => {
+  const [value, onChange] = useState(new Date());
   // const [checked, setChecked] = React.useState(false);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   // const handleChange = (event: any) => {
@@ -216,7 +219,311 @@ const ViewProject = () => {
                     className="project-main-div-col-2-sub-min-main__header-plus"
                   />
                 </div>
-                <div className="project-main-div-col-2-sub-min project-main-div-col-2-sub-min-main">
+                <div className="project-main-div-col-2-sub-max project-main-div-col-2-sub-min-main">
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-main-div-col-2-sub-container1">
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="project-main-div-col-2-sub-container1-flex">
+                      <img
+                        src={projectProfile}
+                        alt="User"
+                        className="project-main-div-col-2-sub-container1-image"
+                      />
+                      <div className="project-main-div-col-2-sub-container1-flexMargin">
+                        <p className="project-main-div-col-2-sub-container1-title">
+                          John Doe
+                        </p>
+                        <p
+                          className="project-main-div-col-2-sub-container1-subTitle"
+                          style={{ textTransform: "uppercase" }}
+                        >
+                          Backend Developer
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                   <div className="project-main-div-col-2-sub-container1">
                     <div className="project-main-div-col-2-sub-container1-flex">
                       <img
@@ -295,23 +602,158 @@ const ViewProject = () => {
                   </div>
                 </div>
               </div>
-              <div className="project-main-div-col-2-sub-min project-main-div-col-2-sub-min-main">
-                <img
-                  src={projectAvatar}
-                  alt="User"
-                  className="project-sub-img"
-                />
-                <p className="project-sub-img__name">John Doe</p>
-                <p className="project-sub-img__title">SITE MANAGER</p>
+              <div>
+                <div className="project-main-div-col-2-sub-min-main__header">
+                  <h5>Team Members</h5>
+                  <img
+                    src={redPlus}
+                    alt="User"
+                    className="project-main-div-col-2-sub-min-main__header-plus"
+                  />
+                </div>
+                <div className="project-main-div-col-2-sub-max1 project-main-div-col-2-sub-min-main">
+                  <div className="Announcement-container">
+                    <div className="Announcement-sub-2">
+                      <div
+                        className="project-main-todo-Event"
+                        style={{ borderRadius: "4px" }}
+                      >
+                        <div className="main-todo-container">
+                          <div className="main-todo-note">
+                            <div className="project-main-todo-note-big">
+                              Vel est mattis purus.
+                            </div>
+                            <div className="project-main-todo-note">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Tellus curabitur amet, sed ornare facilisis
+                              dictum. Sed cursus turpis diam, id volutpat sit
+                              vel. Dui aenean euismod nisi blandit purus
+                              dignissim. Justo mattis nulla.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="Announcement-sub-2">
+                      <div
+                        className="project-main-todo-Event"
+                        style={{ borderRadius: "4px" }}
+                      >
+                        <div className="main-todo-container">
+                          <div className="main-todo-note">
+                            <div className="project-main-todo-note-big">
+                              Vel est mattis purus.
+                            </div>
+                            <div className="project-main-todo-note">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Tellus curabitur amet, sed ornare facilisis
+                              dictum. Sed cursus turpis diam, id volutpat sit
+                              vel. Dui aenean euismod nisi blandit purus
+                              dignissim. Justo mattis nulla.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="Announcement-sub-2">
+                      <div
+                        className="project-main-todo-Event"
+                        style={{ borderRadius: "4px" }}
+                      >
+                        <div className="main-todo-container">
+                          <div className="main-todo-note">
+                            <div className="project-main-todo-note-big">
+                              Vel est mattis purus.
+                            </div>
+                            <div className="project-main-todo-note">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Tellus curabitur amet, sed ornare facilisis
+                              dictum. Sed cursus turpis diam, id volutpat sit
+                              vel. Dui aenean euismod nisi blandit purus
+                              dignissim. Justo mattis nulla.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="Announcement-sub-2">
+                      <div
+                        className="project-main-todo-Event"
+                        style={{ borderRadius: "4px" }}
+                      >
+                        <div className="main-todo-container">
+                          <div className="main-todo-note">
+                            <div className="project-main-todo-note-big">
+                              Vel est mattis purus.
+                            </div>
+                            <div className="project-main-todo-note">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Tellus curabitur amet, sed ornare facilisis
+                              dictum. Sed cursus turpis diam, id volutpat sit
+                              vel. Dui aenean euismod nisi blandit purus
+                              dignissim. Justo mattis nulla.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="Announcement-sub-2">
+                      <div
+                        className="project-main-todo-Event"
+                        style={{ borderRadius: "4px" }}
+                      >
+                        <div className="main-todo-container">
+                          <div className="main-todo-note">
+                            <div className="project-main-todo-note-big">
+                              Vel est mattis purus.
+                            </div>
+                            <div className="project-main-todo-note">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Tellus curabitur amet, sed ornare facilisis
+                              dictum. Sed cursus turpis diam, id volutpat sit
+                              vel. Dui aenean euismod nisi blandit purus
+                              dignissim. Justo mattis nulla.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="Announcement-sub-2">
+                      <div
+                        className="project-main-todo-Event"
+                        style={{ borderRadius: "4px" }}
+                      >
+                        <div className="main-todo-container">
+                          <div className="main-todo-note">
+                            <div className="project-main-todo-note-big">
+                              Vel est mattis purus.
+                            </div>
+                            <div className="project-main-todo-note">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Tellus curabitur amet, sed ornare facilisis
+                              dictum. Sed cursus turpis diam, id volutpat sit
+                              vel. Dui aenean euismod nisi blandit purus
+                              dignissim. Justo mattis nulla.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="project-main-div-col-2-sub-min project-main-div-col-2-sub-min-secondary">
-                <img
-                  src={projectAvatar}
-                  alt="User"
-                  className="project-sub-img"
-                />
-                <p className="project-sub-img__name">John Doe</p>
-                <p className="project-sub-img__title">SITE MANAGER</p>
+              <div>
+                <div className="project-main-div-col-2-sub-max2 project-main-div-col-2-sub-min-calendar">
+                  <Calendar onChange={onChange} value={value} />
+                </div>
+                <Button
+                  variant="contained"
+                  className="project-main-div-col-2-sub-max2-request-button"
+                >
+                  Request Worker
+                </Button>
               </div>
             </div>
           </div>
