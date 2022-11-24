@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/login/Login";
+import Login from "./pages/Login/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
 import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
 import AllEmployees from "./pages/all_employees/AllEmployees";
