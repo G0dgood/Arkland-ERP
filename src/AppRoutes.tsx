@@ -1,16 +1,16 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
-import Dashboard from "./pages/dashboard/Dashboard";
-import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
-import AllEmployees from "./pages/all_employees/AllEmployees";
-import Departments from "./pages/departments/Departments";
-import Projects from "./pages/projects/Projects";
-import Leave from "./pages/leave/Leave";
-import Support from "./pages/support/Support";
-import Policy from "./pages/policy/Policy";
-import SiteWorkerRequest from "./pages/projects/SiteWorkerRequest";
-import ViewProjects from "./pages/projects/ViewProjects";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import KPIAssessment from "./pages/KPIAssessment/KPIAssessment";
+import AllEmployees from "./pages/All_employees/AllEmployees";
+import Departments from "./pages/Departments/Departments";
+import Projects from "./pages/Projects/Projects";
+import Leave from "./pages/Leave/Leave";
+import Support from "./pages/Support/Support";
+import Policy from "./pages/Policy/Policy";
+import SiteWorkerRequest from "./pages/Projects/SiteWorkerRequest";
+import ViewProjects from "./pages/Projects/ViewProjects";
 
 const AppRoutes: React.FC<any> = () => {
   return (
