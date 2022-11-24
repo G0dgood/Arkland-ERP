@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { BsCheckCircle, BsXCircle } from "react-icons/bs";
+import { BsCheckCircle } from "react-icons/bs";
 import { FiEdit, FiLock } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import Header from "../../components/Header";
@@ -130,7 +130,7 @@ const AllEmployees = () => {
            <NoRecordFound colSpan={8} />
           ) : (
            displayData.map((item: any, i: any) => (
-            <tr className="data-table-row">
+            <tr className="data-table-row" key={i}>
              <td className="table-datacell datatype-string">{item?.name}</td>
              <td className="table-datacell datatype-numeric">159</td>
              <td className="table-datacell datatype-numeric">6.0</td>
