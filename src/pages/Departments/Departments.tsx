@@ -1,13 +1,13 @@
-import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+
+import { useEffect, useState } from 'react'
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import { GoPlus } from "react-icons/go";
 import { FiBarChart, FiShoppingCart, FiTool, FiUsers } from 'react-icons/fi';
 import { RiWallet2Line } from 'react-icons/ri';
 import { BiBox } from 'react-icons/bi';
 import { AiOutlineDesktop } from 'react-icons/ai';
 import { MainSearch } from '../../components/TableOptions';
+import CreateDepartmentModal from '../../components/Modals/CreateDepartmentModal';
 
 const Departments = () => {
 	const [collapseNav, setCollapseNav] = useState(() => {
@@ -31,7 +31,8 @@ const Departments = () => {
 			<main>
 				<div className='departments-main-container'>
 					<div>
-						<Button variant="contained" className='Add-btn'> <GoPlus /> {' '}Create Department</Button>
+						<	CreateDepartmentModal />
+
 					</div>
 					<MainSearch placeholder={'Search...          All Employees'} />
 				</div>

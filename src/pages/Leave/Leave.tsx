@@ -2,11 +2,14 @@ import { Button } from '@material-ui/core';
 import { useEffect, useState } from 'react'
 import { BsCheckCircle, BsXCircle } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
+import ApplyForLeave from '../../components/Modals/ApplyForLeave';
 import Sidebar from '../../components/Sidebar';
 // import { MainSearch } from '../../components/TableOptions';
 
 const Leave = () => {
+	const navigate = useNavigate();
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
 		return JSON.parse(localStorage.getItem("collapse")) || false;
@@ -38,9 +41,9 @@ const Leave = () => {
 				<div className='allemployees-container-main' >
 					<div className='allemployees-container-sup'>
 						<div className='allemployees-sup-item1'>
-							<Button variant="contained" className="Add-btn">
-								<GoPlus size={20} className="icon-space" />
-								Team Leave Applications
+							<Button variant="contained" className="Add-btn" onClick={() => navigate("/teamleaveapplications")}>
+								<GoPlus className="icon-space" />
+								{" "} Team Leave Applications
 							</Button>
 						</div>
 						<div className='allemployees-sup-item2'>
@@ -51,9 +54,10 @@ const Leave = () => {
 					</div>
 
 					<div>
-						<Button variant="contained" className="Add-btn">
+						{/* <Button variant="contained" className="Add-btn">
 							Apply for Leave
-						</Button>
+						</Button> */}
+						<ApplyForLeave />
 					</div>
 				</div>
 

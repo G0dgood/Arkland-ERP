@@ -8,6 +8,7 @@
 @use "./components/tablecomponent";
 @use "./components/button";
 @use "./components/pagination";
+@use "./components/modals";
 @use "./css/bootstrap.css";
 
 // pages
@@ -109,7 +110,7 @@ color: #fff !important;
 }
 
 #Add-btn-sub{
-  width: 10px !important;
+  width: 3.2rem !important;
 }
 .icon-space{
   margin-right: 0.4rem;
@@ -137,4 +138,21 @@ color: #fff !important;
 .pageEntries{
   font-weight: bold;
   color: c.color(primary-color);
+}
+
+
+.back-btn-icon {
+  // height: 1rem !important;
+  font-weight: bold !important;
+  background-color: c.color(primary-color) !important;
+  // padding: 1.3rem !important;
+  border-radius: 4px !important;
+  color: #fff !important;
+}
+
+#team-applicatiom-update {
+   background-color:  c.color(project-view-btn);
+   color: c.color(white);
+   padding: 0.1rem 1rem;
+  font-weight: bold;
 }

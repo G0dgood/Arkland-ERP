@@ -1,7 +1,7 @@
-import { Button } from '@material-ui/core';
-import { useEffect, useState } from 'react'
 
+import { useEffect, useState } from 'react'
 import Header from '../../components/Header';
+import AddNewSupportMessageModal from '../../components/Modals/AddNewSupportMessageModal';
 import Sidebar from '../../components/Sidebar';
 
 const Support = () => {
@@ -29,9 +29,10 @@ const Support = () => {
 						<h3 className='SupportmainTitleh3'>Support</h3>
 					</div>
 					<div>
-						<Button variant="contained" className="Add-btn">
+						{/* <Button variant="contained" className="Add-btn">
 							New Message
-						</Button>
+						</Button> */}
+						<AddNewSupportMessageModal />
 					</div>
 				</div>
 
