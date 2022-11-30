@@ -12,7 +12,7 @@ const CreateDepartmentModal = (props: any) => {
 		<div>
 			<Button variant="contained" className="Add-btn"
 				onClick={() => setLgShow(true)}>
-				<GoPlus />{' '}Create Department
+				<GoPlus className="icon-space" />{' '}Create Department
 			</Button>
 			<Modal
 				size="lg"
@@ -21,15 +21,13 @@ const CreateDepartmentModal = (props: any) => {
 				centered
 			>
 				<Modal.Header  >
-
 					<span>
 
 					</span>
-					<span className='span-center-title'>New Message</span>
+					<span className='span-center-title'>Create Department</span>
 					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
-
 				</Modal.Header>
 				<Modal.Body>
 					<div className='Modal-Body'>
@@ -39,7 +37,6 @@ const CreateDepartmentModal = (props: any) => {
 							<option value="AL">Alabama</option>
 							<option value="AK">Alaska</option>
 						</select >
-						{/* <input className='Modal-Input' placeholder='Name of department' /> */}
 
 						<div className='Modal-textarea-middle'>
 							<h6>Description</h6>
@@ -70,8 +67,3 @@ const CreateDepartmentModal = (props: any) => {
 }
 
 export default CreateDepartmentModal
-{/* <select id="Modal-textarea-input-sub" >
-	<option value="none">(None)</option>
-	<option value="AL">Alabama</option>
-	<option value="AK">Alaska</option>
-</select > */}

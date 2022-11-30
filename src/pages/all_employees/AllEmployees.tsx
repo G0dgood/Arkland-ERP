@@ -81,7 +81,7 @@ const AllEmployees = () => {
                 <div className='allemployees-sup-item1'>
                   <Button variant="contained" className="Add-btn">
                     {/* className="icon-space"  */}
-                    <GoPlus />
+                    <GoPlus className="icon-space" />
                     Create Employee
                   </Button>
                 </div>
