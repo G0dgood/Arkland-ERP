@@ -1,0 +1,70 @@
+@use "../abstracts/colors" as c;
+
+.modal-header {
+   display: flex !important;  
+			justify-content: space-between !important; 
+    align-items: center !important;  
+    border-bottom: 1px solid #dee2e6; 
+				background-color: c.color(primary-color) !important;
+				color:c.color(white) !important;
+				text-align: center !important;
+}
+ 
+
+.span-center-title{
+	font-size: x-large;
+}
+.Modal-Body{
+	padding: 2rem 2rem 1rem 2rem;
+}
+
+.Modal-Input{
+	width: 100%;
+	padding: 0.9rem;
+	border: 2px solid c.color(border) !important;
+	border-radius: 5px;
+}
+
+.Modal-textarea-middle{
+	margin-top: 1rem;
+	
+}
+
+.Modal-textarea{
+width: 100%;
+	border: 2px solid c.color(border) !important;
+	border-radius: 5px;
+		padding: 0.9rem;
+}
+
+.Modal-two-input{
+	width: 50%;
+}
+
+.Modal-data-time{
+	display: flex; 
+	width: 100%;
+	padding-top: 1rem;
+}
+
+#Modal-textarea-input-sub{
+	width: 100% !important;
+		padding: 0.9rem !important;
+			border: 2px solid c.color(border) !important;
+	border-radius: 5px !important; 
+}
+
+.div-space{
+	width: 1rem;
+}
+
+.Add-btn-modal{
+	width: 100%;
+	background-color: c.color(primary-color) !important;
+	color: #fff !important;
+	padding: 0.8rem !important;
+}
+
+.btn-modal-container{
+	padding-top: 2rem;
+}
