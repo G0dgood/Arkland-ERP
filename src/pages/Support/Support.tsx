@@ -1,4 +1,5 @@
 
+
 import { useEffect, useState } from 'react'
 import Header from '../../components/Header';
 import AddNewSupportMessageModal from '../../components/Modals/AddNewSupportMessageModal';
@@ -29,9 +30,11 @@ const Support = () => {
 						<h3 className='SupportmainTitleh3'>Support</h3>
 					</div>
 					<div>
+
 						{/* <Button variant="contained" className="Add-btn">
 							New Message
 						</Button> */}
+
 						<AddNewSupportMessageModal />
 					</div>
 				</div>
