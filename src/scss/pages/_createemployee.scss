@@ -1,0 +1,80 @@
+@use "../abstracts/colors" as c;
+
+.addemployeecontainer{
+	width: 100%;
+	height: 100%;
+	background-color:c.color(white);
+	box-shadow: c.$box-card-shadow;
+}
+
+.addemployeecontainer-sup{
+	background-color:c.color(primary-color);
+	width: 100%;
+	// height: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0px 5rem;
+
+}
+
+.addemployee-sup{
+	display: flex;
+	padding: 1rem;
+
+}
+.addemployeecontainer-title{
+	color:c.color(white) ;
+}
+
+.addemployee-space{
+	width: 1rem;
+}
+
+.addemployee-back{
+	border: 2px solid c.color(white) !important;
+	padding: 4px 2rem !important;
+	color: c.color(white) !important;
+	font-weight: bold !important;
+}
+
+.addemployee-back2{
+	border: 2px solid c.color(white) !important;
+	padding: 4px 2rem !important;
+	color: c.color(primary-color) !important;
+	font-weight: bold !important;
+	background-color: c.color(white) !important;
+}
+
+.addemployee-essential-tab{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem;
+		align-self: center; 
+}
+
+.essential-tab{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+		width: 8rem; 
+}
+
+.vl{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+			width: 5rem; 
+
+}
+
+.vl-hline{
+width: 16rem;
+	height: 0.2rem;
+	background-color: black;
+	border-radius: 10; 
+	position: absolute;
+}
+

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BsCheckCircle } from "react-icons/bs";
 import { FiEdit, FiLock } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Pagination from "../../components/Pagination";
 import Sidebar from "../../components/Sidebar";
@@ -10,6 +11,8 @@ import TableLoader from "../../components/TableLoader";
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from "../../components/TableOptions";
 
 const AllEmployees = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState([]);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
@@ -62,10 +65,6 @@ const AllEmployees = () => {
 
   }, [data, searchItem]);
 
-
-
-
-
   const [displayData, setDisplayData] = useState([]);
 
   return (
@@ -79,8 +78,11 @@ const AllEmployees = () => {
             <div className='allemployees-container-main' >
               <div className='allemployees-container-sup'>
                 <div className='allemployees-sup-item1'>
-                  <Button variant="contained" className="Add-btn">
-                    {/* className="icon-space"  */}
+                  <Button
+                    variant="contained"
+                    className="Add-btn"
+                    onClick={() => navigate('/createemployee')}>
+
                     <GoPlus className="icon-space" />
                     Create Employee
                   </Button>

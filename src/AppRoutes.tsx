@@ -12,6 +12,7 @@ import Policy from "./pages/Policy/Policy";
 import SiteWorkerRequest from "./pages/Projects/SiteWorkerRequest";
 import ViewProjects from "./pages/Projects/ViewProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
+import CreateEmployee from "./pages/all_employees/CreateEmployee";
 
 
 const AppRoutes: React.FC<any> = () => {
@@ -28,7 +29,9 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/support" element={<Support />} />
       <Route path="/policy" element={<Policy />} />
       <Route path="/siteWorkerrequest" element={<SiteWorkerRequest />} />
-      <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
+      <Route path="/createemployee" element={<CreateEmployee />} />
+      <Route path="/teamleaveapplications" element={<TeamLeaveApplications />}
+      />
     </Routes>
   );
 };
