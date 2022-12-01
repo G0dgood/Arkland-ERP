@@ -1,0 +1,40 @@
+ @use "../abstracts/colors" as c;
+
+.modal-header {
+   display: flex !important;  
+			justify-content: space-between !important; 
+    align-items: center !important;  
+    border-bottom: 1px solid #dee2e6; 
+				background-color: c.color(primary-color) !important;
+				color:c.color(white) !important;
+				text-align: center !important;
+}
+ 
+
+.span-center-title{
+	font-size: x-large;
+}
+.Modal-Body{
+	padding: 2rem;
+}
+
+.Modal-Input{
+	width: 100%;
+	padding: 0.9rem;
+	border: 2px solid c.color(border) !important;
+	border-radius: 5px;
+}
+
+.Modal-textarea-middle{
+	margin-top: 1rem;
+}
+
+.Modal-data-time{
+	display: flex; 
+	width: 100%;
+}
+
+ 
+ 
+
+ 

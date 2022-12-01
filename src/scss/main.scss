@@ -8,6 +8,7 @@
 @use "./components/tablecomponent";
 @use "./components/button";
 @use "./components/pagination";
+@use "./components/modals";
 @use "./css/bootstrap.css";
 
 // pages
@@ -71,6 +72,18 @@ td {
 
 Button {
   white-space: nowrap !important;
+}
+
+textarea{
+  width: 100%;
+  border: 2px solid c.color(border) !important;
+  border-radius: 5px;
+}
+input{
+    width: 100%;
+    	padding: 0.9rem;
+	border: 2px solid c.color(border) !important;
+	border-radius: 5px;
 }
 
 .nav-tabs .nav-link {
