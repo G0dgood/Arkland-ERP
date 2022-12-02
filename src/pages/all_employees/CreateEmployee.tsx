@@ -45,8 +45,6 @@ const CreateEmployee = () => {
 						{active === 3 && <Refrence />}
 						{active === 4 && <Employment />}
 						{active === 5 && <Address />}
-
-
 					</div>
 				</div>
 			</main>
