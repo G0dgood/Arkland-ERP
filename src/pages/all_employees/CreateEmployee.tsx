@@ -1,10 +1,22 @@
-import { Button } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
+import AddEmployeeNav from './AddEmployeeNav';
+import AddEmployeeTitle from './AddEmployeeTitle';
+import Address from './employeeInputs/Address';
+import Employment from './employeeInputs/Employment';
+import Essentials from './employeeInputs/Essentials';
+import Finance from './employeeInputs/Finance';
+import Refrence from './employeeInputs/Refrence';
 
 const CreateEmployee = () => {
+	// State to store count value 
+	const [active, setActive] = useState<number>(1)
+	useEffect(() => {
+		setActive(active)
+	}, [active])
 
+	console.log('active', active)
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
@@ -25,58 +37,16 @@ const CreateEmployee = () => {
 			<Sidebar collapseNav={collapseNav} />
 			<main>
 				<div className='addemployeecontainer'>
-					<div className='addemployeecontainer-sup'>
-						<h4 className='addemployeecontainer-title'>Add Employee</h4>
-						<div className='addemployee-sup'>
-							<div>
-								<Button variant="outlined" className="addemployee-back">
-									BACK
-								</Button>
-							</div>
-							<div className='addemployee-space' />
-							<div>
-								<Button variant="contained" className="addemployee-back2">
-									CONTINUE
-								</Button>
-							</div>
-						</div>
-					</div>
-					<div className='addemployee-essential-tab'>
-						<div className='essential-tab'>
-							<div className='vl'>
-								<div>ff</div>
-								{/* <div className='vl-hline'> </div> */}
-							</div>
-							<div>ESSENTIAL</div>
-						</div>
-						<div className='essential-tab'>
-							<div className='vl'>
-								<div>ff</div>
-								<div className='vl-hline'> </div>
-							</div>
-							<div>ESSENTIAL</div>
-						</div>
-						<div className='essential-tab'>
-							<div className='vl'>
-								<div>ff</div>
-								<div className='vl-hline'> </div>
-							</div>
-							<div>ESSENTIAL</div>
-						</div>
-						<div className='essential-tab'>
-							<div className='vl'>
-								<div>ff</div>
-								<div className='vl-hline'> </div>
-							</div>
-							<div>ESSENTIAL</div>
-						</div>
-						<div className='essential-tab'>
-							<div className='vl'>
-								<div>ff</div>
-								{/* <div className='vl-hline'> </div> */}
-							</div>
-							<div>ESSENTIAL</div>
-						</div>
+					<AddEmployeeTitle setActive={setActive} active={active} />
+					<AddEmployeeNav active={active} />
+					<div className='all-inputs-container'>
+						{active === 1 && <Essentials />}
+						{active === 2 && <Finance />}
+						{active === 3 && <Refrence />}
+						{active === 4 && <Employment />}
+						{active === 5 && <Address />}
+
+
 					</div>
 				</div>
 			</main>
@@ -85,3 +55,6 @@ const CreateEmployee = () => {
 }
 
 export default CreateEmployee
+
+
+
