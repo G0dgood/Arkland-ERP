@@ -251,8 +251,6 @@ const Leave = () => {
 											Approved
 										</Button>
 									</td>
-
-
 								</tr>
 							</tbody>
 						</table>
