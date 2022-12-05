@@ -1,6 +1,10 @@
+<<<<<<< HEAD
  
  @use "../abstracts/colors" as c;
  
+=======
+ @use "../abstracts/colors" as c;
+>>>>>>> 679f43b (new)
 
 .modal-header {
    display: flex !important;  
@@ -16,8 +20,13 @@
 .span-center-title{
 	font-size: x-large;
 }
+<<<<<<< HEAD
 .Modal-Body{ 
 	padding: 2rem 2rem 1rem 2rem; 
+=======
+.Modal-Body{
+	padding: 2rem;
+>>>>>>> 679f43b (new)
 }
 
 .Modal-Input{
@@ -29,6 +38,7 @@
 
 .Modal-textarea-middle{
 	margin-top: 1rem;
+<<<<<<< HEAD
  
 }
 
@@ -41,10 +51,13 @@ width: 100%;
 
 .Modal-two-input{
 	width: 50%; 
+=======
+>>>>>>> 679f43b (new)
 }
 
 .Modal-data-time{
 	display: flex; 
+<<<<<<< HEAD
 	width: 100%;  
  	padding-top: 1rem;
   }
@@ -71,3 +84,12 @@ width: 100%;
 	padding-top: 2rem;
 }
  
+=======
+	width: 100%;
+}
+
+ 
+ 
+
+ 
+>>>>>>> 679f43b (new)

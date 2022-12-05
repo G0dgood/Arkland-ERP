@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @use "../abstracts/colors" as c;
 
 .project-main-div-col-1 {
@@ -253,3 +254,138 @@
     line-height: 14px;
   }
 }
+=======
+@use "../abstracts/colors" as c;
+
+.project-main-div-col-1 {
+  width: 101%;
+
+  height: 100%;
+}
+
+.project-main-div {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 1rem 0 0 1rem;
+}
+
+.project-main-div-col-1-sub {
+  width: 100%;
+  height: 28%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1.5fr;
+
+  &-min {
+    position: relative;
+    width: 89%;
+    height: 10.625rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.1rem;
+
+    &-text {
+      margin: 0;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 24px;
+    }
+  }
+}
+.project-main-div-col-2-sub {
+  width: 100%;
+  height: 28%;
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr;
+
+  &-min {
+    height: 10.625rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+    display: flex;
+    flex-direction: row;
+    padding-top: 2rem;
+
+    &-main {
+      width: 95%;
+
+      &__header {
+        justify-content: space-between;
+        width: 100%;
+        height: 42px;
+        left: 255px;
+        top: 295px;
+        display: flex;
+        background: rgba(153, 0, 0, 0.3);
+        border-radius: 4px;
+
+        h5 {
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 24px;
+        }
+        &-plus {
+          object-fit: fill;
+          width: 23px;
+          height: 23px;
+          // margin-top: 1.75rem;
+        }
+      }
+    }
+
+    &-secondary {
+      width: 87%;
+      margin: 0;
+      padding: 0;
+      flex-direction: column;
+    }
+  }
+
+  &-container {
+    width: 100%;
+    margin-left: 3rem;
+    &-title {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 24px;
+      margin: 0;
+    }
+
+    &-subTitle {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}
+
+.project-sub-img {
+  object-fit: fill;
+  width: 93px;
+  height: 93px;
+  margin-top: 1.75rem;
+
+  &__name {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 1px;
+    margin-top: 8px;
+  }
+
+  &__title {
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 0px;
+    color: c.color(project-view-btn);
+  }
+}
+>>>>>>> 679f43b (new)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #open-sidenavbar {
   grid-area: sidenav;
   padding: 0 18px;
@@ -135,3 +136,137 @@
     overflow-y: scroll;
   }
 }
+=======
+#open-sidenavbar {
+  grid-area: sidenav;
+  padding: 0 18px;
+  padding-top: 23px;
+  background: #fff;
+  transition: padding .3s linear;
+  color: #1A1A1A !important;
+   border-right: 1px solid #e8e8e8 !important;
+}
+
+#collapse-sidenavbar {
+  grid-area: sidenav;
+  padding: 0 10px;
+  padding-top: 23px;
+  background: #fff;
+  transition: padding .3s linear;
+    color: #1A1A1A !important;
+}
+
+#collapse-sidenavbar .nav-name {
+  display: none;
+}
+
+.nav-menu a {
+  position: relative;
+  color: #1A1A1A !important;
+  text-decoration: none;
+  padding: 12px 15px;
+  margin: 5px 0;   
+  border-radius: 3px; 
+  font-weight: 500;
+}
+.nav-menu a:hover,
+.nav-menu a.active-here {
+  background-color: #990000;
+  color: #fff !important;
+}
+.nav-menu span {
+  padding-left: 22px;    
+}
+
+
+/* --- Side Nav Bubble --- */
+#collapse-sidenavbar .sidenav-bubble {
+  background-color: #fff;
+  position: absolute;
+  top: 8px;
+  left: 55px;
+  border-radius: 3px;
+  z-index: 999;
+  text-transform: capitalize;
+  box-sizing: border-box;
+  animation: sidenav-bubble .3s;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1), 
+              0 0 4px rgba(0, 0, 0, 0.1),
+              0 0 16px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes sidenav-bubble {
+  from {
+    opacity: 0.89;
+    left: 60px;
+  }
+  to {
+    opacity: 1;
+    left: 55px;
+  }
+}
+
+.sidenav-bubble p {
+  position: relative;
+  white-space: nowrap;
+  margin: 0;
+  padding: 5px 12px;
+  font-weight: bold;
+  color: #1A1A1A;
+}
+.sidenav-bubble p:before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 12px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-right: 4px solid #fff !important;
+  border-bottom: 5px solid transparent;
+}
+
+
+// @media only screen and (max-width: 1080) {
+
+// .entries-perpage{
+//    white-space: nowrap;
+//    margin-right: 1rem !important;
+// }
+//   .allemployees-container-main{
+//     overflow-y: scroll !important;
+//   }
+// }
+@media only screen and (max-width: 720px) {
+  
+  #collapse-sidenavbar{
+    display:none !important;
+  }
+  #open-sidenavbar{
+    display:none !important;
+  }
+ 
+.header-logo-text1{
+    display:none !important;
+}
+.header-logo-text{
+   white-space: nowrap;
+}
+.dropdown-names{
+   white-space: nowrap;
+}
+.entries-perpage{
+   white-space: nowrap;
+   margin-right: 1rem;
+}
+  .header-logo {
+    display: block !important;
+      margin-left: 0px !important;  
+    margin-right: 0px !important;
+  }
+
+  .allemployees-container-main{
+    overflow-y: scroll;
+  }
+}
+>>>>>>> 679f43b (new)

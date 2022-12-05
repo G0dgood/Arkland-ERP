@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+import { Button } from '@material-ui/core';
+import { useEffect, useState } from 'react'
+import AddNewSupportMessageModal from '../../components/AddNewSupportMessageModal';
+>>>>>>> 679f43b (new)
 
 
 import { useEffect, useState } from 'react'
@@ -30,11 +36,14 @@ const Support = () => {
 						<h3 className='SupportmainTitleh3'>Support</h3>
 					</div>
 					<div>
+<<<<<<< HEAD
 
 						{/* <Button variant="contained" className="Add-btn">
 							New Message
 						</Button> */}
 
+=======
+>>>>>>> 679f43b (new)
 						<AddNewSupportMessageModal />
 					</div>
 				</div>
