@@ -5,8 +5,10 @@ import { MdOpenInFull } from "react-icons/md";
 import { FiTrash2 } from "react-icons/fi";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+// @ts-ignore
 import img from "../../assets/images/mann2.svg";
 import Checkbox from "@material-ui/core/Checkbox";
+import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 
 const Dashboard = () => {
  // const [checked, setChecked] = React.useState(false);
@@ -106,9 +108,7 @@ const Dashboard = () => {
         </div>
         <div>
          {" "}
-         <Button variant="contained" className="Add-btn">
-          Create Announcement
-         </Button>
+         <CreateAnnouncementModal />
         </div>
        </div>
        {/* Announcement */}
