@@ -1,6 +1,7 @@
 .entries-perpage {
   color: #5c5c5c;
   margin-left: 25px;
+  white-space: nowrap !important;
 }
 .entries-perpage select {
   color: #5c5c5c;
@@ -20,4 +21,15 @@
   box-sizing: 0 0 3px #000;
   transition: all 0.3s ease-out;
   -webkit-transition: all 0.3s ease-out;
+}
+
+@media only screen and (max-width: 1220px) { 
+
+.entries-perpage {
+  color: #5c5c5c;
+  margin-left: 25px;
+  white-space: nowrap !important;
+  margin-right: 1rem !important;
+}
+
 }

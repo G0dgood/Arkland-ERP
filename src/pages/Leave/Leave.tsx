@@ -47,7 +47,7 @@ const Leave = () => {
 							</Button>
 						</div>
 						<div className='allemployees-sup-item2'>
-							<Button variant="contained" className="Add-btn">
+							<Button variant="contained" className="Add-btn" onClick={() => navigate("/allleaveapplications")}>
 								All Leave Applications
 							</Button>
 						</div>

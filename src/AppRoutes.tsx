@@ -7,6 +7,7 @@ import AllEmployees from "./pages/all_employees/AllEmployees";
 import Departments from "./pages/Departments/Departments";
 import Projects from "./pages/Projects/Projects";
 import Leave from "./pages/Leave/Leave";
+import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
 import Support from "./pages/Support/Support";
 import Policy from "./pages/Policy/Policy";
 import SiteWorkerRequest from "./pages/Projects/SiteWorkerRequest";
@@ -14,6 +15,7 @@ import ViewProjects from "./pages/Projects/ViewProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
 import WarningList from "./pages/all_employees/WarningList";
+import WeeklyReport from "./pages/WeeklyReport/WeeklyReport";
 
 
 const AppRoutes: React.FC<any> = () => {
@@ -27,11 +29,13 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/projects" element={<Projects />} />
       <Route path="/viewproject" element={<ViewProjects />} />
       <Route path="/leave" element={<Leave />} />
+      <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
       <Route path="/support" element={<Support />} />
       <Route path="/policy" element={<Policy />} />
       <Route path="/siteWorkerrequest" element={<SiteWorkerRequest />} />
       <Route path="/createemployee" element={<CreateEmployee />} />
       <Route path="/warninglist" element={<WarningList />} />
+      <Route path="/weeklyreport" element={<WeeklyReport />} />
       <Route path="/teamleaveapplications" element={<TeamLeaveApplications />}
       />
     </Routes>

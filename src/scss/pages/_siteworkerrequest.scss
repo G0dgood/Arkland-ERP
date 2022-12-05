@@ -2,6 +2,7 @@
 	display: flex;
 	justify-content: space-between !important;
  
+ 
 }
 
 .SiteWorkermaindivsub{
@@ -15,4 +16,16 @@
 
 .SupportmainTitleh3{
 	margin-left: 1rem;
+	white-space: nowrap !important;
+}
+
+
+@media only screen and (max-width: 1220px) { 
+
+.SiteWorkermaindiv{
+	display: flex;
+	justify-content: space-between !important;
+	overflow-x: scroll;
+}
+
 }
