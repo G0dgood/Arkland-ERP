@@ -6,6 +6,7 @@ import { BiSupport, } from "react-icons/bi";
 import { AiOutlineBank, } from "react-icons/ai";
 import { FiPieChart, FiUser, FiFolder, FiLogOut } from "react-icons/fi";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
+import { GoFile } from "react-icons/go";
 
 const Sidebar = ({ collapseNav }: any) => {
 
@@ -22,6 +23,7 @@ const Sidebar = ({ collapseNav }: any) => {
   const [support, setSupport] = useState(false);
   const [policy, setPolicy] = useState(false);
   const [logout, setLogout] = useState(false);
+  const [weeklyreport, setWeeklyreport] = useState(false);
 
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
@@ -61,6 +63,24 @@ const Sidebar = ({ collapseNav }: any) => {
           {kipassessment && collapseNav && (
             <div className="sidenav-bubble">
               <p>KPI Assessment</p>
+            </div>
+          )}
+        </NavLink>
+        <NavLink
+          to="/weeklyreport"
+          // exact
+          className={
+            window.location.pathname === "/weeklyreport"
+              ? "active-here"
+              : "nav-link"
+          }
+          onMouseEnter={() => setWeeklyreport(true)}
+          onMouseLeave={() => setWeeklyreport(false)}>
+          <GoFile size={23} />
+          <span className="nav-name">Weekly Report</span>
+          {weeklyreport && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>Weekly Report</p>
             </div>
           )}
         </NavLink>

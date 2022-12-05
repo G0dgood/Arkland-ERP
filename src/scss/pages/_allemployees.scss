@@ -1,6 +1,6 @@
 .allemployees-container-main{
-	display: flex; 
-	justify-content: space-between;
+	display: flex !important; 
+	justify-content: space-between !important; 
 }
 
 .allemployees-container{ 
@@ -22,4 +22,14 @@
 }
 .allemployees-sup-item2{
 	margin-right: 4rem;
+}
+
+@media only screen and (max-width: 1220px) { 
+
+.allemployees-container-main{
+	display: flex; 
+	justify-content: space-between;
+	overflow-x: scroll;
+}
+
 }

@@ -173,3 +173,28 @@ color: #fff !important;
 .modal-input-sub-space{
   margin-top: 1rem;
 }
+
+// custom search for all leave application
+#form-inline {
+    display: flex !important;
+    flex-flow: row wrap !important;
+    align-items: center !important;
+    box-shadow: none !important;
+    white-space: nowrap !important;
+}
+
+#search-input{
+ padding: 0.7rem;
+ width: 200px !important;
+ border: 0px !important;
+ background-color: c.color(search-color);
+}
+
+.search-btn { 
+    background-color: c.color(primary-color) !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    color: c.color(white) !important;
+    padding: 0.7rem 1rem;
+    border: 0px !important;
+}

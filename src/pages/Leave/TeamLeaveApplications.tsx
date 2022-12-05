@@ -74,7 +74,8 @@ const TeamLeaveApplications = () => {
 									<td className="table-datacell datatype-numeric">Paid-Leave</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">Active</td>
-									<td className="table-datacell datatype-numeric"><Button id="team-applicatiom-update">Update</Button></td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-numeric">25-08-2022</td>
@@ -82,7 +83,8 @@ const TeamLeaveApplications = () => {
 									<td className="table-datacell datatype-numeric">Paid-Leave</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">Active</td>
-									<td className="table-datacell datatype-numeric"><Button id="team-applicatiom-update">Update</Button></td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-numeric">25-08-2022</td>
@@ -90,7 +92,8 @@ const TeamLeaveApplications = () => {
 									<td className="table-datacell datatype-numeric">Paid-Leave</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">Active</td>
-									<td className="table-datacell datatype-numeric"><Button id="team-applicatiom-update">Update</Button></td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-numeric">25-08-2022</td>
@@ -98,7 +101,8 @@ const TeamLeaveApplications = () => {
 									<td className="table-datacell datatype-numeric">Paid-Leave</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">Active</td>
-									<td className="table-datacell datatype-numeric"><Button id="team-applicatiom-update">Update</Button></td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-numeric">25-08-2022</td>
@@ -106,7 +110,8 @@ const TeamLeaveApplications = () => {
 									<td className="table-datacell datatype-numeric">Paid-Leave</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">Active</td>
-									<td className="table-datacell datatype-numeric"><Button id="team-applicatiom-update">Update</Button></td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-numeric">25-08-2022</td>
@@ -114,7 +119,8 @@ const TeamLeaveApplications = () => {
 									<td className="table-datacell datatype-numeric">Paid-Leave</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">Active</td>
-									<td className="table-datacell datatype-numeric"><Button id="team-applicatiom-update">Update</Button></td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-numeric">25-08-2022</td>
@@ -122,7 +128,8 @@ const TeamLeaveApplications = () => {
 									<td className="table-datacell datatype-numeric">Paid-Leave</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">Active</td>
-									<td className="table-datacell datatype-numeric"><Button id="team-applicatiom-update">Update</Button></td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-numeric">25-08-2022</td>
@@ -130,7 +137,8 @@ const TeamLeaveApplications = () => {
 									<td className="table-datacell datatype-numeric">Paid-Leave</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">Active</td>
-									<td className="table-datacell datatype-numeric"><Button id="team-applicatiom-update">Update</Button></td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 							</tbody>
 						</table>

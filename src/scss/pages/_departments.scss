@@ -7,6 +7,18 @@
   justify-content: space-between !important;
 }
 
+@media only screen and (max-width: 1220px) { 
+
+.departments-main-container {
+   width: 100%;
+  // height: 100%;
+  display: flex;
+  justify-content: space-between !important;
+  overflow-x: scroll !important;
+}
+
+}
+
 .GoSearch {
   border: none !important;
   background-color: none !important;
@@ -49,6 +61,30 @@
   justify-content: space-around;
   margin-top: 5rem;
 }
+
+@media only screen and (max-width: 1400px) {
+  .Department-item {
+     display: grid;
+  grid-template-columns: auto auto auto auto; 
+  padding: 10px; 
+  }
+}
+@media only screen and (max-width: 820px) {
+  .Department-item {
+     display: grid;
+  grid-template-columns: auto auto auto ; 
+  padding: 10px;
+  
+  }
+}
+@media only screen and (max-width: 400px) {
+  .Department-item {
+     display: grid;
+  grid-template-columns: auto auto ; 
+  padding: 10px; 
+  }
+}
+
 
 .Department-container-item-sub {
   display: flex;
