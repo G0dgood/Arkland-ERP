@@ -20,21 +20,21 @@ const Login = () => {
   return (
     <div id="login-wrapper">
       <Carousel fade>
-        <Carousel.Item interval={50000}>
+        <Carousel.Item interval={8000}>
           <img className="d-block w-100" src={first} alt="First" />
         </Carousel.Item>
-        <Carousel.Item interval={50000}>
+        <Carousel.Item interval={8000}>
           <img className="d-block w-100" src={second} alt="Second" />
         </Carousel.Item>
-        <Carousel.Item interval={50000}>
+        <Carousel.Item interval={8000}>
           <img className="d-block w-100" src={fourth} alt="Third" />
         </Carousel.Item>
-        <Carousel.Item interval={50000}>
+        <Carousel.Item interval={8000}>
           <img className="d-block w-100" src={third} alt="Fourth" />
         </Carousel.Item>
-        <Carousel.Item>
+        <Carousel.Item interval={8000}>
           <img className="d-block w-100" src={fifth} alt="Fifth" />
-        </Carousel.Item>
+        </Carousel.Item >
       </Carousel>
 
       <div className="login-container">

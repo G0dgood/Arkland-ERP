@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 
 
@@ -5,10 +6,10 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const subNavData: any = [
-		{
-			id: 1,
-			category: "COVER PAGE",
-		},
+		// {
+		// 	id: 1,
+		// 	category: "COVER PAGE",
+		// },
 
 		{
 			id: 2,
@@ -46,7 +47,7 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 
 	];
 
-	const [filter, setFilter] = useState([])
+
 	const [result, setResult] = useState("");
 
 
@@ -62,11 +63,8 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 	useEffect(() => {
 		const found = subNavData.filter((element: { category: string; }) => element.category === result);
 		setData(found)
-		// if (result === "ALL") {
-		// 	setFilter(subNavData)
-		// }
-		// @ts-ignore
-	}, [result, filter, setData])
+
+	}, [result, setData])
 
 
 	// useEffect(() => {
