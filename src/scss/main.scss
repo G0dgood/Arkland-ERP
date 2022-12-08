@@ -61,7 +61,7 @@ body {
   background: #f6f6f6;
   margin: 0;
   letter-spacing: normal;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   --box-shadow: 0 0 4px rgba(0, 0, 0, 0.025), 0 0 16px rgba(0, 0, 0, 0.025),
     0 0 32px rgba(0, 0, 0, 0.025), 0 0 64px rgba(0, 0, 0, 0.025);
 }
@@ -217,6 +217,32 @@ button.ccsnl-btn:hover {
   background-color: transparent;
   color: c.color(grey);
 }
+
+ // input:hover, select:hover, textarea:hover { 
+			// 			border: 1px solid c.color(primary-color) !important;
+      // }
+      input:focus, select:focus, textarea:focus { 
+						border: 2px solid c.color(primary-color) !important;
+      }
+
+      // input[type="date"]::-webkit-inner-spin-button {
+      // display: none !important;
+      // }
+ input[type="time"]::-webkit-inner-spin-button {
+      margin: 2px 22px 0 0;
+      }
+  // .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+  //     position: absolute;
+  //     font-size: 20px;
+  //     color: #a9a9a9;
+  //     }
+
+      // [type="date"]::-webkit-calendar-picker-indicator {
+      // right: 0;
+      // z-index: 2;
+      // opacity: 0;
+      // cursor: pointer;
+      // }
 
 
 

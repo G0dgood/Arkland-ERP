@@ -124,7 +124,7 @@ flex-grow: 1;
   background-color: c.color(primary-color);
   color: c.color(white-100);
   border: 1px solid c.color(black-100);
-   padding: 10px ;
+   padding: 2px ;
   text-align: left;
   font-size: 18px;
 		white-space: nowrap;
@@ -147,18 +147,18 @@ flex-grow: 1;
 #table-wrapper  td:nth-of-type(2) {
 	min-width: 600px !important; 
 	word-wrap: break-word !important;
-	background-color: aqua; 
+	// background-color: aqua; 
 }
 #table-wrapper  td:nth-of-type(3) {
 	min-width: 600px !important; 
 	word-wrap: break-word !important;
-	background-color: aqua;
+	// background-color: aqua;
 }
 #table-wrapper  td:nth-of-type(4) {
 	min-width: 600px !important;
 	width: 100% !important;
 	word-wrap: break-word !important;
-	background-color: aqua;
+	// background-color: aqua;
 }
 
 #td-span-row{

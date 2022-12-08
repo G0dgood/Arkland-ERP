@@ -24,8 +24,7 @@ const WeeklyReport = () => {
 		setCollapseNav(!collapseNav);
 	};
 	//
-	const [data, setData] = useState<any>("COVER PAGE")
-
+	const [data, setData] = useState<any>("week 1")
 
 
 
@@ -65,12 +64,12 @@ const WeeklyReport = () => {
 								</div>
 							</div>
 							<div className='weekly-report-title'>
-								<h4>{data[0]?.category}</h4>
+								<h4>{data.length === 0 ? "Week 1" : data[0]?.category}</h4>
 							</div>
 						</div>
 					</div>
 					<div>
-						{data[0]?.category === "COVER PAGE" && ''}
+						{data.length === 0 && <WeeklyReportTable />}
 						{data[0]?.category === "Week 1" && <WeeklyReportTable />}
 						{data[0]?.category === "Week 2" && <WeeklyReportTable2 />}
 						{data[0]?.category === "Week 3" && <WeeklyReportTable3 />}

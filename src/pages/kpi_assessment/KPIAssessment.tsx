@@ -32,13 +32,13 @@ const KPIAssessment = () => {
 							<div className='kpi-top-card-1'>Employee Appraisal </div>
 							<div className='kpi-top-card-1-sub'>
 								<p>Employee Name</p>
-								<p className='kpi-top-card-1-sub-second-child'>dd</p>
+								<p className='kpi-top-card-1-sub-second-child'> </p>
 								<p>Employee Role</p>
-								<p>d</p>
+								<p> </p>
 								<p>Employee ID</p>
-								<p>d</p>
+								<p> </p>
 								<p>Review Date</p>
-								<p>d</p>
+								<p> </p>
 							</div>
 						</div>
 						<div className='kpi-top-container-card-2'>
@@ -80,46 +80,163 @@ const KPIAssessment = () => {
 								<tbody className="data-table-content">
 									<tr className="data-table-row">
 
-										<td className="table-datacell datatype-numeric">Key Performance Indicator</td>
-										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-string">Key Performance Indicator</td>
+										<td className="table-datacell datatype-numeric"> Lorem ipsum dolor sit amet, consectetur adip.</td>
+										<td className="table-datacell datatype-numeric">20</td>
+										<td className="table-datacell datatype-numeric">
+											<select className='performance-field' name="score"  >
+												<option>
+												</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+											</select>
+										</td>
 										<td className="table-datacell datatype-numeric"></td>
+										<td className="table-datacell datatype-numeric">
+											<select className='performance-field' name="score"  >
+												<option>
+												</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+											</select></td>
 										<td className="table-datacell datatype-numeric"></td>
-										<td className="table-datacell datatype-numeric"></td>
 
 
 									</tr>
 									<tr className="data-table-row">
-										<td className="table-datacell datatype-numeric"> Efficiency</td>
+										<td className="table-datacell datatype-string"> Efficiency</td>
+										<td className="table-datacell datatype-numeric"> Lorem ipsum dolor sit amet, consectetur adip.</td>
+										<td className="table-datacell datatype-numeric">20 </td>
+										<td className="table-datacell datatype-numeric">	<select className='performance-field' name="score"  >
+											<option>
+											</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select></td>
 										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-numeric"> 	<select className='performance-field' name="score"  >
+											<option>
+											</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select></td>
 										<td className="table-datacell datatype-numeric"> </td>
 
 
 									</tr>
 									<tr className="data-table-row">
-										<td className="table-datacell datatype-numeric">Attendance </td>
+										<td className="table-datacell datatype-string">Attendance </td>
+										<td className="table-datacell datatype-numeric">Lorem ipsum dolor sit amet, consectetur adip. </td>
+										<td className="table-datacell datatype-numeric"> 20</td>
+										<td className="table-datacell datatype-numeric"> 	<select className='performance-field' name="score"  >
+											<option>
+											</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select></td>
 										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-numeric"> 	<select className='performance-field' name="score"  >
+											<option>
+											</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select></td>
 										<td className="table-datacell datatype-numeric"> </td>
 
 
 									</tr>
 									<tr className="data-table-row">
-										<td className="table-datacell datatype-numeric"> Feedback</td>
+										<td className="table-datacell datatype-string"> Feedback</td>
+										<td className="table-datacell datatype-numeric"> Lorem ipsum dolor sit amet, consectetur adip.</td>
+										<td className="table-datacell datatype-numeric">20 </td>
+										<td className="table-datacell datatype-numeric"> 	<select className='performance-field' name="score"  >
+											<option>
+											</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select></td>
 										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-numeric">	<select className='performance-field' name="score"  >
+											<option>
+											</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select> </td>
 										<td className="table-datacell datatype-numeric"> </td>
 
 									</tr>
 									<tr className="data-table-row">
-										<td className="table-datacell datatype-numeric"> Consistency</td>
+										<td className="table-datacell datatype-string"> Consistency</td>
+										<td className="table-datacell datatype-numeric"> Lorem ipsum dolor sit amet, consectetur adip.</td>
+										<td className="table-datacell datatype-numeric">20 </td>
+										<td className="table-datacell datatype-numeric"> 	<select className='performance-field' name="score"  >
+											<option>
+											</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select></td>
 										<td className="table-datacell datatype-numeric"> </td>
+										<td className="table-datacell datatype-numeric"> 	<select className='performance-field' name="score"  >
+											<option>
+											</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select></td>
 										<td className="table-datacell datatype-numeric"> </td>
-
-
 									</tr>
-
+									<tr className="data-table-row">
+										<td className="table-datacell datatype-string table-datacell-color" >  </td>
+										<td className="table-datacell datatype-numeric table-datacell-color">  </td>
+										<td className="table-datacell datatype-numeric table-datacell-color2">100</td>
+										<td className="table-datacell datatype-numeric table-datacell-color">  </td>
+										<td className="table-datacell datatype-numeric table-datacell-color2"> </td>
+										<td className="table-datacell datatype-numeric table-datacell-color">  </td>
+										<td className="table-datacell datatype-numeric table-datacell-color2"> </td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
 					</section>
+					<div className='table-datacell-button-bottom'>
+						<div className='table-datacell-button-bottom-color1'>KPI SCORE:</div>
+						<div className='table-datacell-button-bottom-color2'>100</div>
+					</div>
+
+					<div className='emp-reconmentdetion'>
+						<div className='emp-reconmentdetion-sub'>
+							<div className='reconmentdetion-sub-title'>
+								Comments & Recommandations - Employee
+							</div>
+							<textarea rows={12} />
+						</div>
+						<div className='emp-reconmentdetion-sub-space' />
+						<div className='emp-reconmentdetion-sub'>
+							<div className='reconmentdetion-sub-title'>
+								Comments & Recommandations - Appraradir
+							</div>
+							<textarea rows={12} />
+						</div>
+					</div>
 				</div>
 			</main>
 		</div>

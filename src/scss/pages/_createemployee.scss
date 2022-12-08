@@ -286,35 +286,12 @@ width: 16rem;
       .item:hover p, .item:hover i {
       color: c.color(primary-color) !important; 
       }
-      input:hover, select:hover, textarea:hover { 
-						border: 1px solid c.color(primary-color) !important;
-      }
-      input:focus, select:focus, textarea:focus { 
-						border: 2px solid c.color(primary-color) !important;
-      }
-
-      input[type="date"]::-webkit-inner-spin-button {
-      display: none !important;
-      }
- input[type="time"]::-webkit-inner-spin-button {
-      margin: 2px 22px 0 0;
-      }
-  .item i, input[type="date"]::-webkit-calendar-picker-indicator {
-      position: absolute;
-      font-size: 20px;
-      color: #a9a9a9;
-      }
-.item i {
+      
+      .item i {
       right: 1%;
       top: 30px;
       z-index: 1;
   }
-      [type="date"]::-webkit-calendar-picker-indicator {
-      right: 0;
-      z-index: 2;
-      opacity: 0;
-      cursor: pointer;
-      }
   .btn-block {
       margin-top: 20px;
       text-align: center;
