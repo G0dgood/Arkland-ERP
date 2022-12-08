@@ -7,8 +7,10 @@ import { BiBox } from 'react-icons/bi';
 import { AiOutlineDesktop } from 'react-icons/ai';
 import { MainSearch } from '../../components/TableOptions';
 import CreateDepartmentModal from '../../components/Modals/CreateDepartmentModal';
+import { useNavigate } from 'react-router-dom';
 
 const Departments = () => {
+	const navigate = useNavigate();
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
 		return JSON.parse(localStorage.getItem("collapse")) || false;
@@ -38,7 +40,7 @@ const Departments = () => {
 
 				<div className='Department-item'>
 					<div className='Department-item-sub-main'>
-						<div className='Department-container-item-sub'>
+						<div className='Department-container-item-sub' onClick={() => navigate("/home")}>
 							<FiShoppingCart size={50} />
 						</div>
 						<p className='Department-item-sub-p'>Procurement</p>

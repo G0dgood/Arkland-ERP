@@ -286,7 +286,7 @@ width: 16rem;
       .item:hover p, .item:hover i {
       color: c.color(primary-color) !important; 
       }
-      
+
       .item i {
       right: 1%;
       top: 30px;
@@ -371,4 +371,8 @@ width: 16rem;
  .row-item{
   display: flex;
   justify-content: space-between;
+ }
+
+ .form-group{
+  margin-top: 1rem;
  }

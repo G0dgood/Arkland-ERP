@@ -16,7 +16,7 @@ const CreateEmployee = () => {
 		setActive(active)
 	}, [active])
 
-	console.log('active', active)
+
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore

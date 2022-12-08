@@ -67,9 +67,6 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 	}, [result, setData])
 
 
-	// useEffect(() => {
-	// 	setData(subNavData)
-	// }, [setData, subNavData])
 
 
 
