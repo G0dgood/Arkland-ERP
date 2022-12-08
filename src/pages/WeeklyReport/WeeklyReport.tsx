@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
+import WeeklyReportTable from '../../components/table_component/WeeklyReportTable';
+import WeeklyReportTable2 from '../../components/table_component/WeeklyReportTable2';
+import WeeklyReportTable3 from '../../components/table_component/WeeklyReportTable3';
+import WeeklyReportTable4 from '../../components/table_component/WeeklyReportTable4';
+import WeeklyReportTable5 from '../../components/table_component/WeeklyReportTable5';
+import WeeKlyReportButtomTabs from '../../components/WeeKlyReportButtomTabs';
 
 const WeeklyReport = () => {
 
@@ -18,6 +24,10 @@ const WeeklyReport = () => {
 		setCollapseNav(!collapseNav);
 	};
 	//
+	const [data, setData] = useState<any>("COVER PAGE")
+
+
+
 
 	return (
 		<div id="screen-wrapper">
@@ -25,19 +35,12 @@ const WeeklyReport = () => {
 			<Sidebar collapseNav={collapseNav} />
 			<main>
 				<div className='weeklycontainer'>
-					<div  >
-						{/* <div>ff</div>
-						<div>ff</div> */}
+					<div>
 						<div>
-							{/* <div className='grading-system-contain'>
-								<div> </div>
-								<h4 className='grading-system-title'>Grading System</h4>
-							</div> */}
 							<div className='weekly-top-container'>
 								<div className='weeklyreporttop-container-card-1'>
-									{/* <div className='kpi-top-card-1'>Employee Appraisal </div> */}
 									<div className='weekly-top-card-1-sub'>
-										<p>Employee Name</p>
+										<p>EMPLOYEE NAME</p>
 										<p className='weekly-top-card-1-sub-second-child'>Okoro Godwin Chinedu</p>
 										<p>EMPLOYEE TITLE</p>
 										<p>Software Developer</p>
@@ -54,7 +57,6 @@ const WeeklyReport = () => {
 								<div className='weekly-top-container-card-2'>
 									<div className='weekly-grading-system'>
 										<p>SELF ASSESSMENT OPTIONS</p>
-										{/* <p className='weekly-grading-system-second-child'>Description</p> */}
 										<p>Execellent</p>
 										<p>Above Average</p>
 										<p>Average</p>
@@ -62,7 +64,21 @@ const WeeklyReport = () => {
 									</div>
 								</div>
 							</div>
+							<div className='weekly-report-title'>
+								<h4>{data[0]?.category}</h4>
+							</div>
 						</div>
+					</div>
+					<div>
+						{data[0]?.category === "COVER PAGE" && ''}
+						{data[0]?.category === "Week 1" && <WeeklyReportTable />}
+						{data[0]?.category === "Week 2" && <WeeklyReportTable2 />}
+						{data[0]?.category === "Week 3" && <WeeklyReportTable3 />}
+						{data[0]?.category === "Week 4" && <WeeklyReportTable4 />}
+						{data[0]?.category === "Week 5" && <WeeklyReportTable5 />}
+
+
+						<WeeKlyReportButtomTabs setData={setData} />
 					</div>
 				</div>
 			</main>
