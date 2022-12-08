@@ -9,13 +9,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 
 const Header = ({ toggleSideNav, }: any) => {
 
-
-
-
   const [dropDown, setDropDown] = useState(false);
-
-
-
   const handleLogoutUser = () => {
 
   };

@@ -51,7 +51,6 @@ const Dashboard = () => {
 
  const year = objectDate.getFullYear();
 
-
  const day = today.toLocaleDateString(locale, { weekday: 'long' });
  const date = ` ${today.toLocaleDateString(locale, { month: 'long' })} `;
  const time = today.toLocaleTimeString(locale, { hour: 'numeric', hour12: true, minute: 'numeric' });

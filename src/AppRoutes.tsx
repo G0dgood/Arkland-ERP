@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
@@ -16,6 +17,7 @@ import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
 import WarningList from "./pages/all_employees/WarningList";
 import WeeklyReport from "./pages/WeeklyReport/WeeklyReport";
+import WeeklyReportTable from "./components/table_component/WeeklyReportTable";
 
 
 const AppRoutes: React.FC<any> = () => {
@@ -24,6 +26,7 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Dashboard />} />
       <Route path="/kpiassessment" element={<KPIAssessment />} />
+      <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
       <Route path="/allemployees" element={<AllEmployees />} />
       <Route path="/departments" element={<Departments />} />
       <Route path="/projects" element={<Projects />} />
@@ -43,3 +46,9 @@ const AppRoutes: React.FC<any> = () => {
 };
 
 export default AppRoutes;
+
+
+
+
+
+

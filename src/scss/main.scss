@@ -1,6 +1,4 @@
 
-
-
 // components
 @use "./components/header.scss";
 @use "./components/sidebar.scss";
@@ -10,6 +8,7 @@
 @use "./components/pagination";
 @use "./components/modals";
 @use "./css/bootstrap.css";
+@use "./components/weeklyreport";
 
 // pages
 @use "./pages/kpiassessment";
@@ -198,3 +197,27 @@ color: #fff !important;
     padding: 0.7rem 1rem;
     border: 0px !important;
 }
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+button.ccsnl-btn {
+  background-color: c.color(grey);
+  color: #fff;
+  font-weight: bold;
+  padding: 0.25rem 1.5rem;
+  border: 2px solid c.color(grey);
+  transition: 0.25s;
+}
+button.ccsnl-btn:hover {
+  background-color: transparent;
+  color: c.color(grey);
+}
+
+
+
+

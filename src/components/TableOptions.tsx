@@ -1,4 +1,3 @@
-import React from "react";
 import { GoSearch } from "react-icons/go";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { VscCloudDownload } from 'react-icons/vsc';

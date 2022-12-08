@@ -81,7 +81,7 @@ const KPIAssessment = () => {
 									<tr className="data-table-row">
 
 										<td className="table-datacell datatype-numeric">Key Performance Indicator</td>
-										<td className="table-datacell datatype-numeric">Lorem ipsum dolor sit amet, consectetur adip.</td>
+										<td className="table-datacell datatype-numeric"> </td>
 										<td className="table-datacell datatype-numeric"></td>
 										<td className="table-datacell datatype-numeric"></td>
 										<td className="table-datacell datatype-numeric"></td>
@@ -125,5 +125,7 @@ const KPIAssessment = () => {
 		</div>
 	)
 }
+
+
 
 export default KPIAssessment

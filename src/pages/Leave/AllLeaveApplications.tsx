@@ -1,13 +1,12 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { BsCheckCircle, BsDownload } from 'react-icons/bs';
+import { BsCheckCircle } from 'react-icons/bs';
 import { FaArrowLeft, FaDownload } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header'
-import CreateWarningModal from '../../components/Modals/CreateWarningModal';
 import Pagination from '../../components/Pagination';
 import Sidebar from '../../components/Sidebar'
-import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
+import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
 
 const AllLeaveApplications = () => {
 
@@ -125,7 +124,7 @@ const AllLeaveApplications = () => {
 								) : (
 									displayData.map((item: any, i: any) => (
 										<tr className="data-table-row">
-											<td className="table-datacell datatype-numeric">jamesb@arklandstructuresltd.com</td>
+											<td className="table-datacell datatype-string">jamesb@arklandstructuresltd.com</td>
 											<td className="table-datacell datatype-numeric">25-08-2022</td>
 											<td className="table-datacell datatype-numeric">31-08-2022</td>
 											<td className="table-datacell datatype-numeric">5</td>
