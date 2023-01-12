@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import { Button } from '@mui/material'
-import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
 
@@ -32,7 +32,7 @@ const CreateAnnouncementModal = () => {
 				<Modal.Body>
 					<div className='Modal-Body'>
 						<div className='Modal-textarea-middle'>
-							<h6>Description</h6>
+							<h6>Message</h6>
 							<textarea rows={6} className='Modal-textarea' placeholder='What is the announcement about' />
 						</div>
 						<div className='modal-input-sub-space'>

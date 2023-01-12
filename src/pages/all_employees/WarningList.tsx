@@ -57,6 +57,7 @@ const WarningList = () => {
 	useEffect(() => {
 		if (data) {
 			const result = data?.filter((object) => {
+				// @ts-ignore
 				return JSON?.stringify(object)?.toString()?.includes(searchItem);
 			});
 			setSortData(result);
@@ -101,7 +102,7 @@ const WarningList = () => {
 					<div className="main-table-wrapper">
 						<table className="main-table-content">
 							<thead className="data-table-header">
-								<tr className="data-table-row">
+								<tr className="data-table-row"  >
 									<td className="table-datacell datatype-numeric">EMPLOYER ID</td>
 									<td className="table-datacell datatype-numeric">FULL NAME</td>
 									<td className="table-datacell datatype-numeric">MISCONDUCT</td>

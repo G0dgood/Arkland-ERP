@@ -1,7 +1,7 @@
-import { GoSearch } from "react-icons/go";
+
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { VscCloudDownload } from 'react-icons/vsc';
-
+import Search from "./Search";
 
 
 // EntriesPerPage
@@ -46,13 +46,24 @@ const NoRecordFound = ({ colSpan }: any) => (
 
 // Search
 const MainSearch = ({ placeholder, result, onChange }: any) => {
+
   return (
-    <div className='GoSearch-container'>
-      <GoSearch className="Search-input" />
-      <input className='GoSearch' style={{ border: "0px" }} placeholder={placeholder}
+    // <div className='GoSearch-container'>
+    <div className="search-entries">
+      <Search
+        placeHolder={placeholder}
         value={result}
-        onChange={onChange} />
+        onChange={onChange}
+      />
     </div>
+    // <div className="Search-input-bg">
+    //   <GoSearch className="Search-input" />
+    // </div>
+
+    // <input className='GoSearch' style={{ border: "0px" }} placeholder={placeholder}
+    //   value={result}
+    //   onChange={onChange} />
+    // </div>
 
   )
 };

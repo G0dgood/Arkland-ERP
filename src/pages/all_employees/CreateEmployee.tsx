@@ -8,6 +8,7 @@ import Employment from './employeeInputs/Employment';
 import Essentials from './employeeInputs/Essentials';
 import Finance from './employeeInputs/Finance';
 import Refrence from './employeeInputs/Refrence';
+import CreateEmployeeView from './employeeInputs/CreateEmployeeView';
 
 const CreateEmployee = () => {
 	// State to store count value 
@@ -38,13 +39,15 @@ const CreateEmployee = () => {
 			<main>
 				<div className='addemployeecontainer'>
 					<AddEmployeeTitle setActive={setActive} active={active} />
-					<AddEmployeeNav active={active} />
+					{active === 6 ? "" : <AddEmployeeNav active={active} setActive={setActive} />}
+
 					<div className='all-inputs-container'>
 						{active === 1 && <Essentials />}
 						{active === 2 && <Finance />}
 						{active === 3 && <Refrence />}
 						{active === 4 && <Employment />}
-						{active === 5 && <Address />}
+						{active === 5 && <Address setActive={setActive} />}
+						{active === 6 && <CreateEmployeeView />}
 
 					</div>
 				</div>

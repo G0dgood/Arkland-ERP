@@ -35,45 +35,45 @@ const Departments = () => {
 						<	CreateDepartmentModal />
 
 					</div>
-					<MainSearch placeholder={'Search...          All Employees'} />
+					<MainSearch placeholder={'Search...          Depertments'} />
 				</div>
 
 				<div className='Department-item'>
-					<div className='Department-item-sub-main'>
-						<div className='Department-container-item-sub' onClick={() => navigate("/home")}>
+					<div className='Department-item-sub-main' onClick={() => navigate("/procurement")}>
+						<div className='Department-container-item-sub' >
 							<FiShoppingCart size={50} />
 						</div>
 						<p className='Department-item-sub-p'>Procurement</p>
 					</div>
-					<div className='Department-item-sub-main'>
+					<div className='Department-item-sub-main' onClick={() => navigate("/engineering")}>
 						<div className='Department-container-item-sub'>
 							<FiTool size={50} />
 						</div>
 						<p className='Department-item-sub-p'>Engineering</p>
 					</div>
-					<div className='Department-item-sub-main'>
+					<div className='Department-item-sub-main' onClick={() => navigate("/finance")}>
 						<div className='Department-container-item-sub'>
 							<RiWallet2Line size={50} />
 						</div>
 						<p className='Department-item-sub-p'>Finance</p>
 					</div>
-					<div className='Department-item-sub-main'>
+					<div className='Department-item-sub-main' onClick={() => navigate("/humanresource")}>
 						<div className='Department-container-item-sub'>
 							<FiUsers size={50} />
 						</div>
 						<p className='Department-item-sub-p'>Human Resource</p>
 					</div>
-					<div className='Department-item-sub-main'>
+					<div className='Department-item-sub-main' onClick={() => navigate("/inventory")}>
 						<div className='Department-container-item-sub'>
 							<BiBox size={50} />
 						</div>
 						<p className='Department-item-sub-p'>Inventory</p>
 					</div>
-					<div className='Department-item-sub-main'>
+					<div className='Department-item-sub-main' onClick={() => navigate("/informationtech")}>
 						<div className='Department-container-item-sub'><AiOutlineDesktop size={50} /></div>
 						<p className='Department-item-sub-p'>IT</p>
 					</div>
-					<div className='Department-item-sub-main'>
+					<div className='Department-item-sub-main' onClick={() => navigate("/budget")}>
 						<div className='Department-container-item-sub'><FiBarChart size={50} /></div>
 						<p className='Department-item-sub-p'>Budget</p>
 					</div>

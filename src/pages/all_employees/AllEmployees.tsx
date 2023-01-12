@@ -57,7 +57,9 @@ const AllEmployees = () => {
 
   useEffect(() => {
     if (data) {
+
       const result = data?.filter((object) => {
+        // @ts-ignore
         return JSON?.stringify(object)?.toString()?.includes(searchItem);
       });
       setSortData(result);
@@ -110,7 +112,7 @@ const AllEmployees = () => {
                 <MainSearch
                   setSearchItem={setSearchItem}
                   searchItem={searchItem}
-                  placeholder={'Search...          Departments'} />
+                  placeholder={'Search...          All Employee'} />
               </div>
             </div>
             <section className="md-ui component-data-table">
@@ -118,7 +120,7 @@ const AllEmployees = () => {
               <div className="main-table-wrapper">
                 <table className="main-table-content">
                   <thead className="data-table-header">
-                    <tr className="data-table-row">
+                    <tr className="data-table-row" >
                       <td className="table-datacell datatype-string">EMPLOYEE ID</td>
                       <td className="table-datacell datatype-numeric">FIRST NAME</td>
                       <td className="table-datacell datatype-numeric">MIDDLE NAME</td>
@@ -146,11 +148,17 @@ const AllEmployees = () => {
                           <td className="table-datacell datatype-numeric">14%</td>
                           <td className="table-datacell datatype-numeric">
                             <div className='table-active-items'>
-                              <span>
+                              <span >
                                 <BsCheckCircle size={25} color={"green"} />
                               </span>
                               <span>
-                                <FiEdit size={25} /> {"  "} <FiLock size={25} />
+                                <span className="edit-icon-color" onClick={() => navigate("/admineditUser")}>
+                                  <FiEdit size={25} />
+                                </span>
+                                {"  "}
+                                <span className="lock-icon-color" >
+                                  <FiLock size={25} />
+                                </span>
                               </span>
                             </div>
                           </td>

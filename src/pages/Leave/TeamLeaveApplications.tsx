@@ -47,7 +47,7 @@ const TeamLeaveApplications = () => {
 					<div className="main-table-wrapper">
 						<table className="main-table-content">
 							<thead className="data-table-header">
-								<tr className="data-table-row">
+								<tr className="data-table-row" >
 									<td className="table-datacell datatype-numeric">Date Applied</td>
 									<td className="table-datacell datatype-numeric">Email Address</td>
 									<td className="table-datacell datatype-numeric">Leave  Type</td>

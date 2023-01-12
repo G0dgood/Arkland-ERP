@@ -66,7 +66,7 @@ const KPIAssessment = () => {
 						<div className="main-table-wrapper">
 							<table className="main-table-content">
 								<thead className="data-table-header">
-									<tr className="data-table-row">
+									<tr className="data-table-row"  >
 										<td className="table-datacell datatype-numeric">Key Performance Indicator</td>
 										<td className="table-datacell datatype-numeric">Indicator Description</td>
 										<td className="table-datacell datatype-numeric">Weight</td>

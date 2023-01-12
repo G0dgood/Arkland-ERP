@@ -57,6 +57,7 @@ const AllLeaveApplications = () => {
 	useEffect(() => {
 		if (data) {
 			const result = data?.filter((object) => {
+				// @ts-ignore
 				return JSON?.stringify(object)?.toString()?.includes(searchItem);
 			});
 			setSortData(result);
@@ -105,7 +106,7 @@ const AllLeaveApplications = () => {
 					<div className="main-table-wrapper">
 						<table className="main-table-content">
 							<thead className="data-table-header">
-								<tr className="data-table-row">
+								<tr className="data-table-row" >
 									<td className="table-datacell datatype-numeric">Email Address</td>
 									<td className="table-datacell datatype-numeric">Leave Type</td>
 									<td className="table-datacell datatype-numeric">Start Date</td>

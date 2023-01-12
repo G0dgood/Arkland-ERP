@@ -1,17 +1,66 @@
+
+@use "../abstracts/colors" as c;
+
 #leave-status-btn{
 	padding: 3px 3rem;
 	color: #2E8107;
-	border: 2px solid #2E8107;
+	border: 1px solid #2E8107;
 	border-radius: 8px !important;
-	margin: 10px 0px;
+	// margin: 10px 0px;
 		font-weight: bold;
 }
 #leave-status-btn-error{
 	padding: 3px 2rem;
 		color: #AC1B1B;
-	border: 2px solid #AC1B1B;
+	border: 1px solid #AC1B1B;
 	border-radius: 8px !important;
 	// margin: 10px 0px;
 	font-weight: bold;
 }
+#leave-status-btn-pending{
+	padding: 3px 3rem;
+		color: c.color(  project-view-btn) !important;
+	border: 1px solid c.color(  project-view-btn) !important;
+	border-radius: 8px !important;
+	margin: 10px 0px;
+	font-weight: bold;
+}
+
+
+.form-grp{
+	margin-bottom: 1rem !important;
+}
+
+
+// .item-2 {
+//   width: 60px;
+//   height: 60px;
+//   position: relative;
+//   border: 1px solid #FFF;
+//   border-radius: 50%;
+//   &:before,
+//   &:after {
+//     content: "";
+//     position: absolute;
+//     width: 80%;
+//     height: 2px;
+//     background-color: #FFF;
+//     transition: 0.3s ease-out;
+//     left: 50%;
+//     top: 50%;
+//   }
+//   &:after {
+//     transform: translate(-50%, -50%) rotate(45deg);
+//   }
+//   &:before {
+//     transform: translate(-50%, -50%) rotate(-45deg);
+//   }
+//   &:hover,
+//   &:focus {
+//     &:before,
+//     &:after {
+//       transform: translate(-50%, -50%) rotate(180deg);
+//     }
+//   }
+// }
  

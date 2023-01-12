@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import ApplyForLeave from '../../components/Modals/ApplyForLeave';
 import Sidebar from '../../components/Sidebar';
+import ViewLeave from './ViewLeave';
 // import { MainSearch } from '../../components/TableOptions';
 
 const Leave = () => {
@@ -32,6 +33,8 @@ const Leave = () => {
 		localStorage.setItem("reportsPerPage", entriesPerPage);
 	}, [entriesPerPage]);
 
+
+	const [showLeave, setShowLeaver] = useState(false)
 
 	return (
 		<div id="screen-wrapper">
@@ -65,16 +68,15 @@ const Leave = () => {
 
 					<div className="main-table-wrapper">
 						<table className="main-table-content">
-							<thead className="data-table-header">
-								<tr className="data-table-row">
+							<thead className="data-table-header  " >
+								<tr className="data-table-row ">
 									<td className="table-datacell datatype-string">Leave Type</td>
 									<td className="table-datacell datatype-numeric">Start Date</td>
 									<td className="table-datacell datatype-numeric">End Date</td>
 									<td className="table-datacell datatype-numeric">HOD Approval</td>
 									<td className="table-datacell datatype-numeric">Final Approval</td>
-									<td className="table-datacell datatype-numeric">
-										Status
-									</td>
+									<td className="table-datacell datatype-numeric">View</td>
+									<td className="table-datacell datatype-numeric">Status</td>
 								</tr>
 							</thead>
 							<tbody className="data-table-content">
@@ -93,7 +95,8 @@ const Leave = () => {
 											Not Approved
 										</Button>
 									</td>
-
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update" onClick={() => setShowLeaver(true)} >View</Button></td>
 
 								</tr>
 								<tr className="data-table-row">
@@ -112,7 +115,8 @@ const Leave = () => {
 										</Button>
 									</td>
 
-
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">View</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-string">Eclair</td>
@@ -130,7 +134,8 @@ const Leave = () => {
 										</Button>
 									</td>
 
-
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">View</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-string">Cupcake</td>
@@ -148,7 +153,9 @@ const Leave = () => {
 										</Button>
 									</td>
 
-
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">View</Button>
+									</td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-string">Gingerbread</td>
@@ -161,10 +168,12 @@ const Leave = () => {
 										<BsCheckCircle size={25} color={"green"} />
 									</td>
 									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn-error">
-											Not Approved
+										<Button variant="outlined" id="leave-status-btn-pending">
+											Pending
 										</Button>
 									</td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">View</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-string">Jellybean</td>
@@ -181,6 +190,8 @@ const Leave = () => {
 											Not Approved
 										</Button>
 									</td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">View</Button></td>
 								</tr>
 								<tr>
 									<td className="table-datacell datatype-string">Lollipop</td>
@@ -198,7 +209,8 @@ const Leave = () => {
 										</Button>
 									</td>
 
-
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">Update</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-string">Honeycomb</td>
@@ -211,12 +223,13 @@ const Leave = () => {
 										<BsXCircle size={25} color={"red"} />
 									</td>
 									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn">
-											Approved
+										<Button variant="outlined" id="leave-status-btn-pending">
+											Pending
 										</Button>
 									</td>
 
-
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">View</Button></td>
 								</tr>
 								<tr className="data-table-row">
 									<td className="table-datacell datatype-string">Donut</td>
@@ -233,7 +246,8 @@ const Leave = () => {
 											Not Approved
 										</Button>
 									</td>
-
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">View</Button></td>
 
 								</tr>
 								<tr className="data-table-row">
@@ -251,12 +265,15 @@ const Leave = () => {
 											Approved
 										</Button>
 									</td>
+									<td className="table-datacell datatype-numeric">
+										<Button id="team-applicatiom-update">View</Button></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 
 				</section>
+				<ViewLeave showLeave={showLeave} setShowLeaver={setShowLeaver} />
 			</main>
 		</div>
 	)
