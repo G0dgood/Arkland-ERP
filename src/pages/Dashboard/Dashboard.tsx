@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
-import { BsFillPinAngleFill, BsThreeDots } from "react-icons/bs";
 import { MdOpenInFull } from "react-icons/md";
-import { FiTrash2 } from "react-icons/fi";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 // @ts-ignore
@@ -10,8 +7,12 @@ import img from "../../assets/images/mann2.svg";
 import Checkbox from "@material-ui/core/Checkbox";
 import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 import { useNavigate } from "react-router-dom";
+import TodoShowAll from "../../components/TodoShowAll";
+import CreateEvent from "../../components/Modals/CreateEvent";
+import Announcement from "./Announcement";
+import Todos from "./Todos";
 
-const Dashboard = () => {
+const Dashboard = ({ setShowDrawer, showDrawer }: any) => {
  const navigate = useNavigate();
  // const [checked, setChecked] = React.useState(false);
  const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -34,7 +35,8 @@ const Dashboard = () => {
  };
 
  const locale = 'en';
- const [today, setDate] = React.useState(new Date()); // Save the current date to be able to trigger an update
+ // Save the current date to be able to trigger an update
+ const [today, setDate] = React.useState(new Date());
 
  React.useEffect(() => {
   const timer = setInterval(() => { // Creates an interval which will update the current data every minute
@@ -47,15 +49,25 @@ const Dashboard = () => {
  }, []);
 
  const objectDate = new Date();
-
  const month = objectDate.getMonth();
-
-
  const year = objectDate.getFullYear();
-
  const day = today.toLocaleDateString(locale, { weekday: 'long' });
  const date = ` ${today.toLocaleDateString(locale, { month: 'long' })} `;
  const time = today.toLocaleTimeString(locale, { hour: 'numeric', hour12: true, minute: 'numeric' });
+
+
+ // window.onload = function () {
+ //  const nav: any = document.getElementById('nav');
+ //  const burger: any = document.getElementById('burger');
+ //  const overlay: any = document.getElementById('overlay1');
+
+ //  burger.addEventListener('click', () => {
+ //   burger.classList.toggle('active');
+ //   nav.classList.toggle('active');
+ //   overlay.classList.toggle('active');
+ //  });
+ // }
+
 
 
 
@@ -65,7 +77,8 @@ const Dashboard = () => {
    <Header toggleSideNav={toggleSideNav} />
    <Sidebar collapseNav={collapseNav} />
    <main>
-    <div className="main-div">
+    <TodoShowAll showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
+    <div className="main-div" >
      <div className="main-div-col-1">
       <div className="main-div-col-1-sub">
        <div className="main-div-col-1-sub-min">
@@ -92,238 +105,15 @@ const Dashboard = () => {
         <h1 className="event-time">{time}</h1>
         <h1 className="event-days">{day}</h1>
         <p className="event-months">{date.toUpperCase()} {month} {year}</p>
-        <Button variant="contained" className="Create-event">
-         Create Event
-        </Button>
+        <CreateEvent />
        </div>
       </div>
-      <div className="main-div-col-2-sub">
-       <div className="Announcement-sub-1">
-        <div className="Announcement-sub-text">
-         <span className="sub-text-contained">
-          <h4>Announcement</h4>
-         </span>
-         <span >
-          <p>Today, 21 Jun 2022</p>
-         </span>
-        </div>
-        <div>
-         {" "}
-         <CreateAnnouncementModal />
-        </div>
-       </div>
-       {/* Announcement */}
-       <div className="Announcement-container">
-        <div className="Announcement-sub-2">
-         <div
-          className="main-todo-Event"
-          style={{ borderRadius: "4px" }}
-         >
-          <div className="main-todo-container">
-           <div className="main-todo-note">
-            <div>Outing schedule for every departement</div>
-            <div>5 Minutes ago</div>
-           </div>
-          </div>
-          <div className="FiTrash2">
-           <span className="BsFillPinAngleFill">
-            {" "}
-            <BsFillPinAngleFill size={20} />
-           </span>
-           <span>
-            <BsThreeDots size={25} />
-           </span>
-          </div>
-         </div>
-        </div>
-        <div className="Announcement-sub-2">
-         <div
-          className="main-todo-Event"
-          style={{ borderRadius: "4px" }}
-         >
-          <div className="main-todo-container">
-           <div className="main-todo-note">
-            <div>Outing schedule for every departement</div>
-            <div>5 Minutes ago</div>
-           </div>
-          </div>
-          <div className="FiTrash2">
-           <span className="BsFillPinAngleFill">
-            {" "}
-            <BsFillPinAngleFill size={20} />
-           </span>
-           <span>
-            <BsThreeDots size={25} />
-           </span>
-          </div>
-         </div>
-        </div>
-        <div className="Announcement-sub-2">
-         <div
-          className="main-todo-Event"
-          style={{ borderRadius: "4px" }}
-         >
-          <div className="main-todo-container">
-           <div className="main-todo-note">
-            <div>Outing schedule for every departement</div>
-            <div>5 Minutes ago</div>
-           </div>
-          </div>
-          <div className="FiTrash2">
-           <span className="BsFillPinAngleFill">
-            {" "}
-            <BsFillPinAngleFill size={20} />
-           </span>
-           <span>
-            <BsThreeDots size={25} />
-           </span>
-          </div>
-         </div>
-        </div>
-
-
-
-        <div className="Announcement-sub-2">
-         <div
-          className="main-todo-Event"
-          style={{ borderRadius: "4px" }}
-         >
-          <div className="main-todo-container">
-           <div className="main-todo-note">
-            <div>Outing schedule for every departement</div>
-            <div>5 Minutes ago</div>
-           </div>
-          </div>
-          <div className="FiTrash2">
-           <span className="BsFillPinAngleFill">
-            {" "}
-            <BsFillPinAngleFill size={20} />
-           </span>
-           <span>
-            <BsThreeDots size={25} />
-           </span>
-          </div>
-         </div>
-        </div>
-
-        <div className="Announcement-sub-2">
-         <div
-          className="main-todo-Event"
-          style={{ borderRadius: "4px" }}
-         >
-          <div className="main-todo-container">
-           <div className="main-todo-note">
-            <div>Outing schedule for every departement</div>
-            <div>5 Minutes ago</div>
-           </div>
-          </div>
-          <div className="FiTrash2">
-           <span className="BsFillPinAngleFill">
-            <BsFillPinAngleFill size={20} />
-           </span>
-           <span>
-            <BsThreeDots size={25} />
-           </span>
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
+      {/* Announcement */}
+      <Announcement />
      </div>
 
      {/* Todos start */}
-     <div className="main-div-col-2">
-      <div className="main-todo-1">
-       <div className="main-todo-title">
-        <h4>To Do</h4>
-       </div>
-
-       {/* Checkbox */}
-       <div className="main-todo-Event" style={{ borderRadius: "4px" }}>
-        <div className="main-todo-container">
-         <div className="main-todo-input">
-          {" "}
-          <Checkbox {...label} />
-         </div>
-         <div>
-          <div>Call</div>
-          <div>Today - 11:30 AM</div>
-         </div>
-        </div>
-        <div className="FiTrash2">
-         <FiTrash2 size={25} />
-        </div>
-       </div>
-       <div className="main-todo-Event" style={{ borderRadius: "4px" }}>
-        <div className="main-todo-container">
-         <div className="main-todo-input">
-          {" "}
-          <Checkbox {...label} />
-         </div>
-         <div>
-          <div>Short meeting with IT Dept</div>
-          <div>Today - 09:30 AM</div>
-         </div>
-        </div>
-        <div className="FiTrash2">
-         <FiTrash2 size={25} />
-        </div>
-       </div>
-       <div className="main-todo-Event" style={{ borderRadius: "4px" }}>
-        <div className="main-todo-container">
-         <div className="main-todo-input">
-          {" "}
-          <Checkbox {...label} />
-         </div>
-         <div>
-          <div>Sort Design screens</div>
-          <div>Today - 11:30 AM</div>
-         </div>
-        </div>
-        <div className="FiTrash2">
-         <FiTrash2 size={25} />
-        </div>
-       </div>
-       <div className="main-todo-Event" style={{ borderRadius: "4px" }}>
-        <div className="main-todo-container">
-         <div className="main-todo-input">
-          {" "}
-          <Checkbox {...label} />
-         </div>
-         <div>
-          <div>Follow up on design</div>
-          <div>Today - 11:30 AM</div>
-         </div>
-        </div>
-        <div className="FiTrash2">
-         <FiTrash2 size={25} />
-        </div>
-       </div>
-       <div className="main-todo-Event" style={{ borderRadius: "4px" }}>
-        <div className="main-todo-container">
-         <div className="main-todo-input">
-          {" "}
-          <Checkbox {...label} />
-         </div>
-         <div>
-          <div>Call</div>
-          <div>Today - 11:30 AM</div>
-         </div>
-        </div>
-        <div className="FiTrash2">
-         <FiTrash2 size={25} />
-        </div>
-       </div>
-      </div>
-      <div className="main-todo-2">
-       <Button variant="outlined" className="show-btn">
-        Show All
-       </Button>
-       <Button variant="contained" className="Add-btn">
-        Add New
-       </Button>
-      </div>
-     </div>
+     <Todos showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
      {/* Todos end */}
     </div>
    </main>

@@ -14,7 +14,7 @@ const AddEmployeeTitle = ({ setActive, active }: any) => {
 	// Function to increment count by 1
 	const incrementCount = () => {
 		// Update state with incremented value
-		if (active !== 5) {
+		if (active !== 6) {
 			setActive(active + 1);
 		}
 	};
@@ -27,7 +27,7 @@ const AddEmployeeTitle = ({ setActive, active }: any) => {
 	};
 
 	useEffect(() => {
-		if (active === 5) {
+		if (active === 6) {
 			setFinish(true)
 		} else {
 			setFinish(!true)

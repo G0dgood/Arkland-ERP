@@ -38,7 +38,7 @@ const Header = ({ toggleSideNav, }: any) => {
           {dropDown && (
             <div className="dropdown">
               <Nav className="flex-column">
-                <NavLink to=" " className="drop-user-settings">
+                <NavLink to="/profile" className="drop-user-settings">
                   <CgProfile size={20} className='dropdown-icons-tools' />
                   Profile
                 </NavLink>

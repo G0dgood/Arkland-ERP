@@ -29,7 +29,6 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/kpiassessment" element={<KPIAssessment />} />
       <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
       <Route path="/allemployees" element={<AllEmployees />} />
-      <Route path="/departments" element={<Departments />} />
       <Route path="/projects" element={<Projects />} />
       <Route path="/viewproject" element={<ViewProjects />} />
       <Route path="/leave" element={<Leave />} />

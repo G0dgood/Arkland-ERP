@@ -510,7 +510,6 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
         setViewingEvent={setViewingEvent}
         actualDate={date}
       />
-
       {viewingEvent && (
         <Event
           event={viewingEvent}
@@ -519,7 +518,6 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
           deleteEvent={deleteEvent}
         />
       )}
-
       {showingEventForm && showingEventForm.visible && (
         <EventForm
           withEvent={showingEventForm.withEvent}

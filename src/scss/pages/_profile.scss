@@ -1,0 +1,122 @@
+@use "../abstracts/colors" as c;
+
+
+ 
+.getjob-application-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.getjob-application-details p {
+  font-size: medium;
+  margin: 5px ;
+  margin-bottom: 1rem;
+}
+.getjob-application-details p:nth-child(odd) {
+  color: #5c5c5c;
+}
+.getjob-application-details p:nth-child(even) {
+ 
+   font-weight: bold;
+}
+.getjob-application-details p:nth-child(2) {
+  text-transform: capitalize;
+}
+.getjob-application-details a {
+  width: fit-content;
+  color: #5c5c5c;
+  padding: 5px 10px;
+  margin-top: 20px;
+  font-weight: bold;
+  border-radius: 3px;
+  border: 1px solid #5c5c5c;
+}
+
+.profile-body{
+  background-color: c.color(white);
+  width: 100%;
+  height: 100%;
+  padding: 5rem;
+  box-shadow: c.$box-shadow;
+}
+
+.profile-body-container-sup{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.show-btn-profile {
+  height: 1rem !important;
+  font-weight: bold !important;
+  border: 2px solid c.color(light-grey-border)!important;
+  padding: 1rem !important;
+  border-radius: 4px !important;
+  color: c.color(black-100)!important;
+  font-weight: bold !important;
+}
+
+.profile-body-container-sup-title{
+  margin-top: 1rem;
+  display: flex;
+}
+
+.profile-image{
+  width:60px;
+  height: 60px;
+  border: 2px solid c.color(light-grey-border)!important;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+   overflow: hidden;
+}
+
+.profile-image-name{
+  display: flex; 
+}
+span .profile-image-name-sub1{
+  margin-right: 1rem;
+  font-weight: bolder;
+  font-size: larger;
+  margin-bottom: 0rem !important;
+}
+span .profile-image-name-sub2{
+  color: #A58FEF;
+  background-color: #E9E3FC;
+  padding: 0.1rem 2rem;
+  margin-right: 0.4rem;
+  border: 2px solid #A58FEF;
+  border-radius: 3px;
+  font-weight:500;
+  // font-size: larger;
+  margin-bottom: 0rem !important;
+}
+
+.profile-image-name-sub3{
+  margin-top: 1rem;
+}
+
+.profile-image-name-number{
+  margin-right: 1rem;
+}
+
+.viewprofile-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+}
+
+.General-Information{
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: bolder;
+}
+
+.profile-image-size{
+  width: 60px;
+  height: 60px;
+   object-fit:cover;
+  
+}
+
+

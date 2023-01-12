@@ -205,13 +205,16 @@
         }
       }
       /* START - data table header */
+					 
       .data-table-header {
-        tr {
+        tr { 
+         width: 100% !important;
           height: 2.5rem;
           padding: 0 24px;
           background-color: c.color(primary-color);
-
+border: 10px solid c.color(primary-color);
           td {
+											padding: 3px;
             color: c.color(white);
             border-right: 1px solid c.color(white);
             text-align: center !important;

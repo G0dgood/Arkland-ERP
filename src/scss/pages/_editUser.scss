@@ -1,0 +1,149 @@
+@use "../abstracts/colors" as c;
+
+#edit-user section {
+  background-color: c.color(white);
+  margin-top: 1rem;
+  box-shadow: c.$box-shadow;
+}
+
+#edit-user section h3 {
+  font-size: 1.17rem;
+  font-weight: 600;
+}
+
+#edit-user .profile-container {
+  padding: 1.15rem 1.15rem 0 1.15rem;
+}
+
+#edit-user .user-info {
+  background-color: c.color(white);
+  padding: 1.25rem;
+  align-items: center;
+  color: #858585;
+  display: flex;
+  gap: 1.5rem;
+  box-shadow: c.$box-shadow-input;
+}
+
+#edit-user .user-info h3 {
+  color: #2c2c2c;
+}
+
+#edit-user .form-cont {
+  background-color: c.color(white);
+  margin-top: 1rem;
+  padding: 1.25rem;
+  box-shadow: c.$box-shadow-input;
+}
+
+#edit-user .form-cont .profile-form-form  {
+  display: grid;
+  grid-template-columns: repeat(3, 2fr);
+  gap: 1rem;
+  column-gap: 1.5rem;
+  width: 100% !important;
+}
+
+#edit-user form .form_btn { 
+  // display: flex;
+  // justify-content: flex-end;
+  margin-top: 1rem;
+}
+#edit-user form button {
+  background-color: var(--blue);
+  color: c.color(white);
+  padding: .65rem 1.25rem;
+}
+#edit-user form input,
+#edit-user form select {
+  background-color: rgba(0, 0, 0, .025);
+  width: 100%;
+}
+#edit-user form input:focus,
+#edit-user form select:focus {
+  background-color: c.color(white);
+}
+
+
+/* --- Media Query --- */
+@media only screen and (max-width: 985px) {
+  #edit-user .form-cont form {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  #edit-user form .form_btn {
+    grid-column: 1 / span 1;
+    justify-content: center;
+  }
+  #edit-user form button {
+    width: 100%;
+    padding: .75rem 1rem;
+  }
+
+  .profile-form-form{
+  display: grid !important; 
+  grid-template-columns: 1fr !important;
+     gap: 1rem !important;
+    column-gap: 1.5rem !important; 
+}
+  .profile-form-flex{
+  display: grid !important; 
+  grid-template-columns: 1fr  !important;
+     gap: 1rem !important;
+    column-gap: 1.5rem !important; 
+}
+}
+
+.Add-btn-edit {
+    height: 0.8rem !important;
+    font-weight: bold !important;
+    background-color: #990000 !important;
+    padding: 1.3rem !important;
+    border-radius: 4px !important;
+    color: #ffffff !important;
+    margin-right: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.show-btn-edit {
+    height: 0.8rem !important;
+    font-weight: bold !important;
+    border: 1px solid #990000 !important;
+    padding: 1.3rem !important;
+    border-radius: 4px !important;
+    color: #990000 !important;
+    font-weight: bold !important;
+    margin-right: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.profile-form-flex{
+  display: grid !important; 
+  grid-template-columns: 1fr 1fr;
+     gap: 1rem !important;
+    column-gap: 1.5rem;
+  width: 100% !important ;
+}
+
+#leave{
+  width: 100% !important;
+}
+
+@media only screen and (max-width: 485px) {
+  #edit-user .user-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-form-form{
+  display: grid !important; 
+  grid-template-columns: 1fr !important;
+     gap: 1rem !important;
+    column-gap: 1.5rem !important; 
+}
+  .profile-form-flex{
+  display: grid !important; 
+  grid-template-columns: 1fr  ;
+     gap: 1rem !important;
+    column-gap: 1.5rem !important; 
+}
+}

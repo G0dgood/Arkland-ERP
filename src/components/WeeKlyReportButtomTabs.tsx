@@ -10,37 +10,25 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 		// 	id: 1,
 		// 	category: "COVER PAGE",
 		// },
-
 		{
 			id: 2,
 			category: "Week 1",
-
 		},
-
 		{
 			id: 12,
-
 			category: "Week 2",
-
 		},
 		{
 			id: 13,
-
 			category: "Week 3",
-
 		},
-
 		{
 			id: 3,
-
 			category: "Week 4"
 		},
-
 		{
 			id: 4,
-
 			category: "Week 5",
-
 		},
 
 
@@ -49,11 +37,9 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 
 
 	const [result, setResult] = useState("");
-
-
 	//Getting the unique values in the array from caseStudyData
 	// @ts-ignore
-	const categories = [...new Set(subNavData.map((item: any) => item.category))];
+	const categories = [...new Set(subNavData.map((item: any) => item?.category))];
 
 	const showInfo = (catagory: any) => {
 		setResult(catagory)
@@ -63,16 +49,20 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 	useEffect(() => {
 		const found = subNavData.filter((element: { category: string; }) => element.category === result);
 		setData(found)
-<<<<<<< HEAD
-
-	}, [result, setData])
-=======
 		// if (result === "ALL") {
 		// 	setFilter(subNavData)
 		// } 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [result, filter, setData])
->>>>>>> 589cb59 (update)
+	}, [result, setData])
+
+	// filter
+
+	// if (result === "ALL") {
+	// 	setFilter(subNavData)
+	// } 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+
+
 
 
 
