@@ -1,33 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState, Fragment } from "react";
+import { Modal } from "react-bootstrap";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { Button } from "@material-ui/core";
+import { DAYS_SHORT, MONTHS, SAMPLE_META, preloadedEvents } from "./CalenderOptions";
 
 // Sample events calendar build, explained and detailed over at
 // https://justacoding.blog/react-calendar-component-example-with-events/
 
 // Some config for convenience
 const MOCK_LOADING_TIME = 1000;
-const SAMPLE_META =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
-// Utilities/helpers
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
-const DAYS_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const toStartOfDay = (date) => {
+
+
+const toStartOfDay = (date: string | number | Date) => {
   const newDate = new Date(date);
   newDate.setHours(0);
   newDate.setMinutes(0);
@@ -36,13 +24,13 @@ const toStartOfDay = (date) => {
   return newDate;
 };
 
-const pad = (input) => {
+const pad = (input: string | number) => {
   return input < 10 ? "0" + input : input;
 };
 
 // I'm using default <input type="datepick-local">,
 // so a specific date format is required
-const dateToInputFormat = (date) => {
+const dateToInputFormat = (date: { getMonth: () => number; getDate: () => any; getHours: () => any; getMinutes: () => any; getFullYear: () => any; }) => {
   if (!date) {
     return null;
   }
@@ -58,8 +46,8 @@ const dateToInputFormat = (date) => {
 // Could be used to filter out invalid events data also
 // (ie. missing properties) or events that can't be parsed
 // to contain valid to/from dates
-const parseEvents = (events) => {
-  return events.map((event) => {
+const parseEvents = (events: any[]) => {
+  return events.map((event: { dateFrom: string | number | Date; dateTo: string | number | Date; }) => {
     const from = new Date(event.dateFrom);
     const to = new Date(event.dateTo);
 
@@ -71,10 +59,10 @@ const parseEvents = (events) => {
   });
 };
 
-const findEventsForDate = (events, date) => {
+const findEventsForDate = (events: any[], date: Date) => {
   const dateTime = date.getTime();
 
-  return events.filter((event) => {
+  return events.filter((event: { from: any; to: any; }) => {
     const eventFromTime = toStartOfDay(event.from).getTime();
     const eventToTime = toStartOfDay(event.to).getTime();
 
@@ -83,7 +71,7 @@ const findEventsForDate = (events, date) => {
 };
 
 // Top bar, contains the month/year combo as well as back/forward links
-const Navigation = ({ date, setDate, setShowingEventForm }) => {
+const Navigation = ({ date, setDate, setShowingEventForm }: any) => {
   return (
     <div className="navigation">
       <div
@@ -93,7 +81,8 @@ const Navigation = ({ date, setDate, setShowingEventForm }) => {
           newDate.setMonth(newDate.getMonth() - 1);
           setDate(newDate);
         }}>
-        {"<-"} {MONTHS[date.getMonth() === 0 ? 11 : date.getMonth() - 1]}
+        {<MdArrowBackIos size={20} />}{" "}
+        {MONTHS[date.getMonth() === 0 ? 11 : date.getMonth() - 1]}
       </div>
 
       <div className="monthAndYear">
@@ -113,7 +102,8 @@ const Navigation = ({ date, setDate, setShowingEventForm }) => {
           newDate.setMonth(newDate.getMonth() + 1);
           setDate(newDate);
         }}>
-        {MONTHS[date.getMonth() === 11 ? 0 : date.getMonth() + 1]} {"->"}
+        {MONTHS[date.getMonth() === 11 ? 0 : date.getMonth() + 1]}{" "}
+        {<MdArrowForwardIos size={20} />}
       </div>
     </div>
   );
@@ -132,12 +122,11 @@ const DayLabels = () => {
 
 // An individual event displayed within the calendar grid itself
 // can be clicked to open the main event view
-const MiniEvent = ({ event, setViewingEvent }) => {
+const MiniEvent = ({ event, setViewingEvent }: any) => {
   return (
     <div
-      className={`miniEvent ${
-        event.type ? event.type.toLowerCase() : "standard"
-      }`}
+      className={`miniEvent ${event.type ? event.type.toLowerCase() : "standard"
+        }`}
       onClick={() => setViewingEvent(event)}>
       {event.name}
     </div>
@@ -151,9 +140,9 @@ const Event = ({
   setViewingEvent,
   setShowingEventForm,
   deleteEvent,
-}) => {
+}: any) => {
   return (
-    <Modal
+    <Modals
       onClose={() => setViewingEvent(null)}
       title={`${event.name} (${event.type})`}
       className="eventModal">
@@ -163,6 +152,8 @@ const Event = ({
       <p>{event.meta}</p>
 
       <button
+        className="button-green"
+        // @ts-ignore
         // eslint-disable-next-line no-script-url
         href="javascript:;"
         onClick={() => {
@@ -173,7 +164,8 @@ const Event = ({
       </button>
 
       <button
-        className="red"
+        className="button-red"
+        // @ts-ignore
         // eslint-disable-next-line no-script-url
         href="javascript:;"
         onClick={() => deleteEvent(event)}>
@@ -187,7 +179,7 @@ const Event = ({
         onClick={() => setViewingEvent(null)}>
         Back to calendar
       </a>
-    </Modal>
+    </Modals>
   );
 };
 
@@ -202,7 +194,7 @@ const EventForm = ({
   withEvent,
   setViewingEvent,
   preselectedDate,
-}) => {
+}: any) => {
   const newEvent = withEvent || {};
   if (!withEvent && !!preselectedDate) {
     newEvent.dateFrom = dateToInputFormat(preselectedDate);
@@ -210,7 +202,7 @@ const EventForm = ({
   const [event, setEvent] = useState(newEvent);
 
   return (
-    <Modal
+    <Modals
       onClose={() => setShowingEventForm({ visible: false })}
       title={`${withEvent ? "Edit event" : "Add a new event"}`}>
       <div className="form">
@@ -292,20 +284,23 @@ const EventForm = ({
           </Fragment>
         )}
       </div>
-    </Modal>
+    </Modals>
   );
 };
 
 // Generic component - modal to present children within
-const Modal = ({ children, onClose, title, className }) => {
+const Modals = ({ children, onClose, title, className }: any) => {
   return (
-    <Fragment>
-      <div className="overlay" onClick={onClose} />
-      <div className={`modal ${className}`}>
-        <h3>{title}</h3>
-        <div className="inner">{children}</div>
-      </div>
-    </Fragment>
+    // @ts-ignore
+    <Modal show={true} size="md">
+      <Fragment>
+        <div className="overlay" onClick={onClose} />
+        <div className={`modal-calender ${className}`}>
+          <h3>{title}</h3>
+          <div className="inner">{children}</div>
+        </div>
+      </Fragment>
+    </Modal>
   );
 };
 
@@ -331,7 +326,7 @@ const Loader = () => {
 };
 
 // Generic component - simple feedback after an action has taken place
-const Feedback = ({ message, type }) => {
+const Feedback = ({ message, type }: any) => {
   return <div className={`feedback ${type}`}>{message}</div>;
 };
 
@@ -343,7 +338,7 @@ const Grid = ({
   setViewingEvent,
   setShowingEventForm,
   actualDate,
-}) => {
+}: any) => {
   const ROWS_COUNT = 6;
   const currentDate = toStartOfDay(new Date());
 
@@ -367,11 +362,9 @@ const Grid = ({
         return (
           <div
             key={index}
-            className={`cell ${
-              date.date.getTime() === currentDate.getTime() ? "current" : ""
-            } ${
-              date.date.getMonth() !== actualDate.getMonth() ? "otherMonth" : ""
-            }`}>
+            className={`cell ${date.date.getTime() === currentDate.getTime() ? "current" : ""
+              } ${date.date.getMonth() !== actualDate.getMonth() ? "otherMonth" : ""
+              }`}>
             <div className="date">
               {date.date.getDate()}
               <a
@@ -387,7 +380,7 @@ const Grid = ({
                 +
               </a>
             </div>
-            {date.events.map((event, index) => (
+            {date.events.map((event: any, index: React.Key | null | undefined) => (
               <MiniEvent
                 key={index}
                 event={event}
@@ -402,7 +395,7 @@ const Grid = ({
 };
 
 // The "main" component, our actual calendar
-const Calendar = ({ month, year, preloadedEvents = [] }) => {
+const Calendar = ({ month, year, preloadedEvents = [] }: any) => {
   const selectedDate = new Date(year, month - 1);
 
   const [date, setDate] = useState(selectedDate);
@@ -428,7 +421,7 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
     console.log("Date has changed... Let's load some fresh data");
   }, [date]);
 
-  const addEvent = (event) => {
+  const addEvent = (event: any) => {
     setIsLoading(true);
     setShowingEventForm({ visible: false });
 
@@ -450,7 +443,7 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
     }, MOCK_LOADING_TIME);
   };
 
-  const editEvent = (event) => {
+  const editEvent = (event: { id: any; }) => {
     setIsLoading(true);
     setShowingEventForm({ visible: false });
 
@@ -458,6 +451,7 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
       const parsedEvent = parseEvents([event]);
 
       const updatedEvents = [...events].map((updatedEvent) => {
+        // @ts-ignore
         return updatedEvent.id === event.id ? parsedEvent[0] : updatedEvent;
       });
 
@@ -467,12 +461,14 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
     }, MOCK_LOADING_TIME);
   };
 
-  const deleteEvent = (event) => {
+  const deleteEvent = (event: { id: any; }) => {
     setIsLoading(true);
+    // @ts-ignore
     setViewingEvent(null);
 
     setTimeout(() => {
       const updatedEvents = [...events].filter(
+        // @ts-ignore
         (finalEvent) => finalEvent.id !== event.id
       );
 
@@ -482,9 +478,11 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
     }, MOCK_LOADING_TIME);
   };
 
-  const showFeedback = ({ message, type, timeout = 2500 }) => {
+  const showFeedback = ({ message, type, timeout = 2500 }: any) => {
+    // @ts-ignore
     setFeedback({ message, type });
     setTimeout(() => {
+      // @ts-ignore
       setFeedback(null);
     }, timeout);
   };
@@ -492,17 +490,15 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
   return (
     <div className="calendar">
       {isLoading && <Loader />}
-
+      {/* @ts-ignore */}
       {feedback && <Feedback message={feedback.message} type={feedback.type} />}
-
       <Navigation
         date={date}
         setDate={setDate}
         setShowingEventForm={setShowingEventForm}
       />
-
+      {/* @ts-ignore */}
       <DayLabels />
-
       <Grid
         date={date}
         events={events}
@@ -519,8 +515,11 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
         />
       )}
       {showingEventForm && showingEventForm.visible && (
+
         <EventForm
+          // @ts-ignore
           withEvent={showingEventForm.withEvent}
+          // @ts-ignore
           preselectedDate={showingEventForm.preselectedDate}
           setShowingEventForm={setShowingEventForm}
           addEvent={addEvent}
@@ -532,61 +531,37 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
   );
 };
 
-export const Calendars = () => (
+export const Calendars = ({ date, setDate }: any) => (
   <div>
+    <div className="DashboardCalender-top-btn">
+      <div className="Calender-top-btn-sup">
+        <div
+          className="back"
+          onClick={() => {
+            const newDate = new Date(date);
+            newDate.setMonth(newDate.getMonth() - 1);
+            setDate(newDate);
+          }}>
+          <MdArrowBackIos size={20} />
+        </div>
+        <div>
+          month={1}
+          year={2023}
+        </div>
+        <div>
+          <MdArrowForwardIos size={20} />
+        </div>
+      </div>
+      <div>
+        <Button variant="contained" className="Create-event-Calender">
+          Add event
+        </Button>
+      </div>
+    </div>
     <Calendar
       month={10}
-      year={2021}
-      preloadedEvents={[
-        {
-          id: 1,
-          name: "Holiday",
-          dateFrom: "2021-09-29T12:00",
-          dateTo: "2021-10-03T08:45",
-          meta: SAMPLE_META,
-          type: "Holiday",
-        },
-        {
-          id: 2,
-          name: "Meeting",
-          dateFrom: "2021-10-01T09:45",
-          dateTo: "2021-10-04T22:00",
-          meta: SAMPLE_META,
-          type: "Standard",
-        },
-        {
-          id: 3,
-          name: "Away",
-          dateFrom: "2021-10-01T01:00",
-          dateTo: "2021-10-01T23:59",
-          meta: SAMPLE_META,
-          type: "Busy",
-        },
-        {
-          id: 4,
-          name: "Inspection",
-          dateFrom: "2021-10-19T07:30",
-          dateTo: "2021-10-21T23:59",
-          meta: SAMPLE_META,
-          type: "Standard",
-        },
-        {
-          id: 5,
-          name: "Holiday - Greece",
-          dateFrom: "2021-10-14T08:00",
-          dateTo: "2021-10-16T23:59",
-          meta: SAMPLE_META,
-          type: "Holiday",
-        },
-        {
-          id: 6,
-          name: "Holiday - Spain",
-          dateFrom: "2021-10-29T08:00",
-          dateTo: "2021-10-31T23:59",
-          meta: SAMPLE_META,
-          type: "Holiday",
-        },
-      ]}
+      year={2022}
+      preloadedEvents={preloadedEvents}
     />
     ,
   </div>

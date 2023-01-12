@@ -4,21 +4,17 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 // @ts-ignore
 import img from "../../assets/images/mann2.svg";
-import Checkbox from "@material-ui/core/Checkbox";
-import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 import { useNavigate } from "react-router-dom";
-import TodoShowAll from "../../components/TodoShowAll";
 import CreateEvent from "../../components/Modals/CreateEvent";
-import Announcement from "./Announcement";
+import TodoShowAll from "../../components/TodoShowAll";
 import Todos from "./Todos";
+import Announcement from "./Announcement";
 
-const Dashboard = ({ setShowDrawer, showDrawer }: any) => {
+
+
+const Dashboard = () => {
  const navigate = useNavigate();
- // const [checked, setChecked] = React.useState(false);
- const label = { inputProps: { "aria-label": "Checkbox demo" } };
- // const handleChange = (event: any) => {
- // 	setChecked(event.target.checked);
- // };
+ const [showDrawer, setShowDrawer] = useState<any>(false);
  // --- Get current state of collapseNav from localStorage --- //
  const [collapseNav, setCollapseNav] = useState(() => {
   // @ts-ignore

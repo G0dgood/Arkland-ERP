@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import Header from './Header'
 import Sidebar from './Sidebar'
-import { Calendars } from './Calender';
+import { Calendars } from './Calender/Calender';
 
 const DashboardCalender = () => {
 	const [collapseNav, setCollapseNav] = useState(() => {
@@ -26,24 +26,8 @@ const DashboardCalender = () => {
 			<Sidebar collapseNav={collapseNav} />
 			<main>
 				<div>
-					<div className='DashboardCalender-top-btn' >
-						<div className='Calender-top-btn-sup'>
-							<div>
-								<MdArrowBackIos size={20} />
-							</div>
-							<div>July 2022</div>
-							<div>
-								<MdArrowForwardIos size={20} />
-							</div>
-						</div>
-						<div>
-							<Button variant="contained" className="Create-event-Calender">
-								Add event
-							</Button>
-						</div>
-					</div>
 					<div>
-						<Calendars />
+						<Calendars date={undefined} setDate={undefined} />
 					</div>
 				</div>
 			</main>

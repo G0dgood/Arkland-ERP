@@ -49,13 +49,9 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 	useEffect(() => {
 		const found = subNavData.filter((element: { category: string; }) => element.category === result);
 		setData(found)
-		// if (result === "ALL") {
-		// 	setFilter(subNavData)
-		// } 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [result, setData])
 
-	// filter
+
+	}, [result, setData])
 
 	// if (result === "ALL") {
 	// 	setFilter(subNavData)

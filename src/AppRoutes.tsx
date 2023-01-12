@@ -19,6 +19,16 @@ import WarningList from "./pages/all_employees/WarningList";
 import WeeklyReport from "./pages/WeeklyReport/WeeklyReport";
 import WeeklyReportTable from "./components/table_component/WeeklyReportTable";
 import DashboardCalender from "./components/DashboardCalender";
+import Profile from "./pages/Profile/Profile";
+import EditUser from "./pages/EditUser/EditUser";
+import Procurement from "./pages/Departments/SubDepartments/Procurement";
+import Engineering from "./pages/Departments/SubDepartments/Engineering";
+import HumanResource from "./pages/Departments/SubDepartments/HumanResource";
+import Inventory from "./pages/Departments/SubDepartments/Inventory";
+import Informationtech from "./pages/Departments/SubDepartments/Informationtech";
+import Budget from "./pages/Departments/SubDepartments/Budget";
+import Finance from "./pages/Departments/SubDepartments/Finance";
+import AdminEditUser from "./pages/AdminEditUser/AdminEditUser";
 
 
 const AppRoutes: React.FC<any> = () => {
@@ -40,8 +50,20 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/warninglist" element={<WarningList />} />
       <Route path="/weeklyreport" element={<WeeklyReport />} />
       <Route path="/dashboardcalender" element={<DashboardCalender />} />
-      <Route path="/teamleaveapplications" element={<TeamLeaveApplications />}
-      />
+      <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/edit" element={<EditUser />} />
+      {/* Departments */}
+      <Route path="/departments" element={<Departments />} />
+      <Route path="/procurement" element={<Procurement />} />
+      <Route path="/engineering" element={<Engineering />} />
+      <Route path="/finance" element={<Finance />} />
+      <Route path="/humanresource" element={<HumanResource />} />
+      <Route path="/inventory" element={<Inventory />} />
+      <Route path="/informationtech" element={<Informationtech />} />
+      <Route path="/budget" element={<Budget />} />
+      {/* AdminEditUser */}
+      <Route path="/admineditUser" element={<AdminEditUser />} />
     </Routes>
   );
 };
