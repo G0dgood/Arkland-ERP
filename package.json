@@ -18,9 +18,11 @@
     "@types/react-dom": "^18.0.0",
     "bootstrap": "^5.2.2",
     "formik": "^2.2.9",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-calendar": "^4.0.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-paginate": "^8.1.4",
@@ -59,6 +61,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-calendar": "^3.9.0"
+    "@types/react-calendar": "^3.9.0",
+    "@types/react-datepicker": "^4.8.0"
   }
 }
