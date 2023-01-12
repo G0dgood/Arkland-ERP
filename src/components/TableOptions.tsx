@@ -49,7 +49,7 @@ const MainSearch = ({ placeholder, result, onChange }: any) => {
   return (
     <div className='GoSearch-container'>
       <GoSearch className="Search-input" />
-      <input className='GoSearch' placeholder={placeholder}
+      <input className='GoSearch' style={{ border: "0px" }} placeholder={placeholder}
         value={result}
         onChange={onChange} />
     </div>
