@@ -9,8 +9,10 @@ import Sidebar from "../../components/Sidebar";
 import img from "../../assets/images/mann2.svg";
 import Checkbox from "@material-ui/core/Checkbox";
 import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+ const navigate = useNavigate();
  // const [checked, setChecked] = React.useState(false);
  const label = { inputProps: { "aria-label": "Checkbox demo" } };
  // const handleChange = (event: any) => {
@@ -85,7 +87,7 @@ const Dashboard = () => {
        </div>
        <div className="main-div-col-2-sub-min">
         <span className="OpenInFull">
-         <MdOpenInFull />
+         <MdOpenInFull onClick={() => navigate('/dashboardcalender')} />
         </span>
         <h1 className="event-time">{time}</h1>
         <h1 className="event-days">{day}</h1>

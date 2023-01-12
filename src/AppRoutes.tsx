@@ -18,6 +18,7 @@ import CreateEmployee from "./pages/all_employees/CreateEmployee";
 import WarningList from "./pages/all_employees/WarningList";
 import WeeklyReport from "./pages/WeeklyReport/WeeklyReport";
 import WeeklyReportTable from "./components/table_component/WeeklyReportTable";
+import DashboardCalender from "./components/DashboardCalender";
 
 
 const AppRoutes: React.FC<any> = () => {
@@ -39,6 +40,7 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/createemployee" element={<CreateEmployee />} />
       <Route path="/warninglist" element={<WarningList />} />
       <Route path="/weeklyreport" element={<WeeklyReport />} />
+      <Route path="/dashboardcalender" element={<DashboardCalender />} />
       <Route path="/teamleaveapplications" element={<TeamLeaveApplications />}
       />
     </Routes>
