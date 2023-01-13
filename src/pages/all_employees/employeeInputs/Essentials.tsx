@@ -8,11 +8,14 @@ import SelectField from "../../../components/Inputs/SelectField";
 
 const Essentials = () => {
   const handleSubmit = (values: any) => {};
-  const genderOptions = ["Select gender", "Male", "Female"];
-  const disability = ["Select gender", "Male", "Female"];
-
+  const genderOptions = ["Select your gender", "Male", "Female"];
   const validate = Yup.object().shape({
-    first_name: Yup.string().required("Family name is required"),
+    first_name: Yup.string().required("First name is required"),
+    middle_name: Yup.string(),
+    last_name: Yup.string().required("Last name is required"),
+    email: Yup.string().required("Email is required"),
+    phone: Yup.string().required("Phone number is required"),
+    date_of_birth: Yup.string().required("Date of birth is required"),
   });
   const formatDate = (date: Date) => moment(date).format("YYYY-MM-DD");
   const dateChange = (date: Date, dateType: any) => {
@@ -36,7 +39,7 @@ const Essentials = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="First name"
+                        label="First Name"
                         name="first_name"
                         placeholder="Enter first name"
                       />
@@ -69,7 +72,7 @@ const Essentials = () => {
                     <div className="form-group">
                       <InputField
                         label="Email"
-                        name="Email"
+                        name="email"
                         placeholder="Enter email"
                       />
                     </div>
@@ -79,7 +82,7 @@ const Essentials = () => {
                     <div className="form-group">
                       <InputField
                         label="Phone"
-                        name="Phone"
+                        name="phone"
                         placeholder="Enter Phone"
                       />
                     </div>
@@ -92,13 +95,14 @@ const Essentials = () => {
                         label="Gender"
                         name="gender"
                         options={genderOptions}
+                        className="form-group__gender"
                       />
                     </div>
                   </div>
                   <div className="imput-space" />
                   <div className="col">
                     <div className="form-group">
-                      <span className="input__label">Date of birth</span>
+                      <span className="input__label">Date of Birth</span>
                       <DatePicker
                         showMonthDropdown
                         showYearDropdown
@@ -111,39 +115,27 @@ const Essentials = () => {
                             formatDate({ value }.value)
                           )
                         }
-                        className="select-input agent-project__owner form-control"
+                        className="select-input form-group__datepicker "
                       />
-                      {/* <label>Date of Birth</label>
-                      <input type="date" placeholder="Enter Date of Birth" /> */}
                     </div>
                   </div>
                 </div>
                 <div className="row-item">
                   <div className="col">
-                    {/* <div className="form-group">
-								<label>First Name</label>
-								<input type="text" placeholder="Enter first name" />
-							</div> */}
                     <div className="form-group">
-                      <SelectField
+                      <InputField
                         label="Disability"
                         name="disability"
-                        options={genderOptions}
+                        placeholder="Enter Disability"
                       />
-                      {/* <label htmlFor="status">Disability</label>
-                      <select id="status">
-                        <option></option>
-                        <option value="Single">Single</option>
-                        <option value="Married">Married</option>
-                      </select> */}
                     </div>
                   </div>
                   <div className="imput-space" />
                   <div className="col">
                     <div className="form-group">
-                      <label>Institution Attended</label>
-                      <input
-                        type="text"
+                      <InputField
+                        label="Institution Attended"
+                        name="institution_attended"
                         placeholder="Enter Institution Attended"
                       />
                     </div>
@@ -152,15 +144,21 @@ const Essentials = () => {
                 <div className="row-item">
                   <div className="col">
                     <div className="form-group">
-                      <label>Course Studied</label>
-                      <input type="text" placeholder="Enter Course Studied" />
+                      <InputField
+                        label="Course Studied"
+                        name="course_studied"
+                        placeholder="Enter Course Studied"
+                      />
                     </div>
                   </div>
                   <div className="imput-space" />
                   <div className="col">
                     <div className="form-group">
-                      <label>Qualification</label>
-                      <input type="text" placeholder="Enter Qualification" />
+                      <InputField
+                        label="Qualification"
+                        name="qualification"
+                        placeholder="Enter Qualification"
+                      />
                     </div>
                   </div>
                 </div>

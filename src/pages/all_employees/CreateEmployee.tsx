@@ -10,7 +10,7 @@ import Address from "./employeeInputs/Address";
 import Employment from "./employeeInputs/Employment";
 import Essentials from "./employeeInputs/Essentials";
 import Finance from "./employeeInputs/Finance";
-import Refrence from "./employeeInputs/Refrence";
+import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
 
 const CreateEmployee = () => {
@@ -60,7 +60,7 @@ const CreateEmployee = () => {
           <div className="all-inputs-container">
             {active === 1 && <Essentials />}
             {active === 2 && <Finance />}
-            {active === 3 && <Refrence />}
+            {active === 3 && <Reference />}
             {active === 4 && <Employment />}
             {active === 5 && <Address setActive={setActive} />}
             {active === 6 && <CreateEmployeeView />}

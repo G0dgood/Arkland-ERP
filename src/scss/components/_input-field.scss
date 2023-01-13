@@ -13,18 +13,17 @@
 
   &__field {
     width: 100%;
-    padding: 0.9rem;
     background-color: c.color(white);
     border: 1px solid b.$border-color-200;
     box-sizing: border-box;
     @include m.radius;
     @include m.flex-config(center, center, false, false);
     outline: 0;
-    @include m.font(16px, 400, 1.6875);
+    @include m.font(16px, 400, 0);
     color: c.color(grey-300);
     box-shadow: none;
     transition: border-color 0.3s, color 0.3s;
-
+    padding: 0.575rem 0.75rem;
     &::placeholder {
       font-size: 12px;
       font-weight: 400;

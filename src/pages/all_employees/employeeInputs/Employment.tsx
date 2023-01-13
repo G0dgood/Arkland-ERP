@@ -1,99 +1,144 @@
-import React from 'react'
+import React from "react";
+import { Form, Formik } from "formik";
+import DatePicker from "react-datepicker";
+import * as Yup from "yup";
+import SelectField from "../../../components/Inputs/SelectField";
+import InputField from "../../../components/Inputs/InputField";
 
 const Employment = () => {
-	return (
-		<div className='EssentialsContainer'>
-			<div className="testbox">
-				<form  >
+  const handleSubmit = (values: any) => {};
+  const validate = Yup.object().shape({});
+  const departmentOptions = [
+    "Enter name of department",
+    "Engineering",
+    "Finance",
+    "Architecture",
+  ];
+  const roleOptions = ["Enter role", "admin", "agent"];
+  const workLocationOptions = [
+    "Do you have any work location objection?",
+    "yes",
+    "no",
+  ];
+  const typeOfEmploymentOptions = [
+    "Enter type of employment",
+    "Full time",
+    "Part time",
+  ];
+  return (
+    <div className="EssentialsContainer">
+      <Formik
+        initialValues={{
+          first_name: "",
+        }}
+        onSubmit={handleSubmit}
+        validationSchema={validate}
+      >
+        {(formik) => (
+          <Form>
+            <div className="testbox">
+              <form>
+                <div className="imput-space" />
+                <div className="row-item">
+                  <div className="col">
+                    <div className="form-group">
+                      <SelectField
+                        label="Department"
+                        name="department"
+                        options={departmentOptions}
+                        className="form-group__gender"
+                      />
+                    </div>
+                  </div>
+                  <div className="imput-space" />
+                  <div className="col">
+                    <div className="form-group">
+                      <SelectField
+                        label="Role"
+                        name="role"
+                        options={roleOptions}
+                        className="form-group__gender"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row-item">
+                  <div className="col">
+                    <div className="form-group">
+                      <SelectField
+                        label="Work Location Objection"
+                        name="has_work_location_objection"
+                        options={workLocationOptions}
+                        className="form-group__gender"
+                      />
+                    </div>
+                  </div>
+                  <div className="imput-space" />
+                  <div className="col">
+                    <div className="form-group">
+                      <span className="input__label">Employment Date</span>
+                      <DatePicker
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Enter date of employment"
+                        onChange={(value: any) => console.log("value")}
+                        className="select-input form-group__datepicker "
+                      />{" "}
+                    </div>
+                  </div>
+                </div>
+                <div className="row-item">
+                  <div className="col">
+                    <div className="form-group">
+                      <InputField
+                        label="Employment Duration"
+                        name="employment_duration"
+                        placeholder="Enter duration of employment"
+                      />
+                    </div>
+                  </div>
+                  <div className="imput-space" />
+                  <div className="col">
+                    <div className="form-group">
+                      <SelectField
+                        label="Employment Type"
+                        name="employment_type"
+                        options={typeOfEmploymentOptions}
+                        className="form-group__gender"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row-item">
+                  <div className="col">
+                    <div className="form-group">
+                      <InputField
+                        label="Employment ID"
+                        name="employment_id"
+                        placeholder="Enter employment ID"
+                      />
+                    </div>
+                  </div>
+                  <div className="imput-space" />
+                  <div className="col">
+                    <div className="form-group">
+                      <InputField
+                        label="Tally Number"
+                        name="tall_number"
+                        placeholder="Enter tally number"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+};
 
-					<div className='imput-space' />
-					<div className='row-item'>
-						<div className="col">
-							<div className="form-group">
-								<label>Email</label>
-								<input type="text" placeholder="Enter Email" />
-							</div>
-						</div>
-						<div className='imput-space' />
-						<div className="col">
-							<div className="form-group">
-								<label>Phone</label>
-								<input type="text" placeholder="Enter Phone" />
-							</div>
-						</div>
-					</div>
-					<div className='row-item'>
-						{/* <div className="col">
-							<div className="form-group">
-								<label>First Name</label>
-								<input type="text" placeholder="Enter first name" />
-							</div>
-						</div> */}
-						<div className="col">
-							<div className="form-group">
-								<label htmlFor="status">Gender</label>
-								<select
-									id="status"
-								>
-									<option></option>
-									<option value="Single">Single</option>
-									<option value="Married">Married</option>
-								</select>
-							</div>
-						</div>
-						<div className='imput-space' />
-						<div className="col">
-							<div className="form-group">
-								<label>Date of Birth</label>
-								<input type="date" placeholder="Enter Date of Birth" />
-							</div>
-						</div>
-					</div>
-					<div className='row-item'>
-						<div className="col">
-							{/* <div className="form-group">
-								<label>First Name</label>
-								<input type="text" placeholder="Enter first name" />
-							</div> */}
-							<div className="form-group">
-								<label htmlFor="status">Disability</label>
-								<select
-									id="status"
-								>
-									<option></option>
-									<option value="Single">Single</option>
-									<option value="Married">Married</option>
-								</select>
-							</div>
-						</div>
-						<div className='imput-space' />
-						<div className="col">
-							<div className="form-group">
-								<label>Institution Attended</label>
-								<input type="text" placeholder="Enter Institution Attended" />
-							</div>
-						</div>
-					</div>
-					<div className='row-item'>
-						<div className="col">
-							<div className="form-group">
-								<label>Course Studied</label>
-								<input type="text" placeholder="Enter Course Studied" />
-							</div>
-						</div>
-						<div className='imput-space' />
-						<div className="col">
-							<div className="form-group">
-								<label>Qualification</label>
-								<input type="text" placeholder="Enter Qualification" />
-							</div>
-						</div>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	)
-}
-
-export default Employment
+export default Employment;

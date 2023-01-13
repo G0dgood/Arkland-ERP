@@ -378,6 +378,24 @@ form {
 
 .form-group {
   margin-top: 1rem;
+
+  &__gender .form-control {
+    color: c.color(grey-200);
+    font-size: 12px;
+    padding: 0.575rem 0.75rem;
+  }
+
+  &__status .form-control {
+    width: 48%;
+    color: c.color(grey-200);
+    font-size: 12px;
+    padding: 0.575rem 0.75rem;
+  }
+
+  &__datepicker {
+    font-size: 12px !important;
+    padding: 0.575rem 0.75rem;
+  }
 }
 
 .demo-wrap {
