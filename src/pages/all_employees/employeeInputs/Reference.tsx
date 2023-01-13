@@ -1,23 +1,23 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-
 import InputField from "../../../components/Inputs/InputField";
 
-const Finance = () => {
+const Refrence = () => {
   const handleSubmit = (values: any) => {};
   const validate = Yup.object().shape({
-    bank_name: Yup.string().required("Bank name is required"),
-    bank_account_number: Yup.string().required(
-      "Bank account number is required"
-    ),
-    basic_salary: Yup.string().required("Basic salary is required"),
+    first_name: Yup.string().required("First name is required"),
+    middle_name: Yup.string(),
+    last_name: Yup.string().required("Last name is required"),
+    email: Yup.string().required("Email is required"),
+    phone: Yup.string().required("Phone number is required"),
+    date_of_birth: Yup.string().required("Date of birth is required"),
   });
   return (
     <div className="EssentialsContainer">
       <Formik
         initialValues={{
-          first_name: "",
+          next_of_kin: "",
         }}
         onSubmit={handleSubmit}
         validationSchema={validate}
@@ -31,9 +31,9 @@ const Finance = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="Bank Name"
-                        name="bank_name"
-                        placeholder="Enter bank name"
+                        label="Next of Kin"
+                        name="next_of_kin"
+                        placeholder="Enter name of next of kin"
                       />
                     </div>
                   </div>
@@ -41,9 +41,9 @@ const Finance = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="Bank Account Number"
-                        name="bank_account_number"
-                        placeholder="Enter bank account number"
+                        label="Next of Kin Phone Number"
+                        name="next_of_kin_phone"
+                        placeholder="Enter phone number of next of kin"
                       />
                     </div>
                   </div>
@@ -52,9 +52,9 @@ const Finance = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="Basic Salary"
-                        name="basic_salary"
-                        placeholder="Enter basic salary"
+                        label="Next of Kin Email"
+                        name="next_of_kin_email"
+                        placeholder="Enter email of next of kin"
                       />
                     </div>
                   </div>
@@ -62,9 +62,9 @@ const Finance = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="Meal Allowance"
-                        name="meal_allowance"
-                        placeholder="Enter meal allowance"
+                        label="Next of Kin Address"
+                        name="next_of_kin_address"
+                        placeholder="Enter home address of next of kin"
                       />
                     </div>
                   </div>
@@ -73,9 +73,9 @@ const Finance = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="Utility Allowance"
-                        name="utility_allowance"
-                        placeholder="Enter utility allowance"
+                        label="Referee Name"
+                        name="referee_name"
+                        placeholder="Enter referee name"
                       />
                     </div>
                   </div>
@@ -83,9 +83,9 @@ const Finance = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="Medical Allowance"
-                        name="medical_allowance"
-                        placeholder="Enter medical allowance"
+                        label="Referee Phone Number"
+                        name="referee_phone"
+                        placeholder="Enter referee name"
                       />
                     </div>
                   </div>
@@ -94,9 +94,9 @@ const Finance = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="Housing Allowance"
-                        name="housing_allowance"
-                        placeholder="Enter housing allowance"
+                        label="Emergency Contact Name"
+                        name="emergency_contact_name"
+                        placeholder="Enter name of emergency contact"
                       />
                     </div>
                   </div>
@@ -104,9 +104,9 @@ const Finance = () => {
                   <div className="col">
                     <div className="form-group">
                       <InputField
-                        label="Transportation Allowance"
-                        name="transportation_allowance"
-                        placeholder="Enter transportation allowance"
+                        label="Emergency Contact Phone"
+                        name="emergency_contact_phone"
+                        placeholder="Enter phone number of emergency contact"
                       />
                     </div>
                   </div>
@@ -120,4 +120,4 @@ const Finance = () => {
   );
 };
 
-export default Finance;
+export default Refrence;

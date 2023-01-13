@@ -1,8 +1,8 @@
-
 // components
 @use "./components/header.scss";
 @use "./components/sidebar.scss";
 @use "./components/tableoptions";
+@use "./components/input-field";
 @use "./components/tablecomponent";
 @use "./components/button";
 @use "./components/pagination";
@@ -14,19 +14,18 @@
 // pages
 @use "./pages/kpiassessment";
 @use "./pages/policy";
-@use "./pages/departments"; 
-@use "./pages/dashboard.scss"; 
-@use "./pages/allemployees"; 
-@use "./pages/support"; 
-@use "./pages/siteworkerrequest"; 
-@use "./pages/leave"; 
-@use "./pages/login.scss";    
+@use "./pages/departments";
+@use "./pages/dashboard.scss";
+@use "./pages/allemployees";
+@use "./pages/support";
+@use "./pages/siteworkerrequest";
+@use "./pages/leave";
+@use "./pages/login.scss";
 @use "./pages/projects";
-@use "./pages/viewprojects"; 
-@use "./pages/createemployee"; 
-@use "./pages/profile"; 
-@use "./pages/editUser"; 
-
+@use "./pages/viewprojects";
+@use "./pages/createemployee";
+@use "./pages/profile";
+@use "./pages/editUser";
 
 @use "./abstracts/colors" as c;
 *,
@@ -77,16 +76,16 @@ Button {
   white-space: nowrap !important;
 }
 
-textarea{
+textarea {
   width: 100%;
   border: 2px solid c.color(border) !important;
   border-radius: 5px;
 }
-input{
-    width: 100%;
+input {
+  width: 100%;
   padding: 0.9rem;
-	border: 2px solid c.color(border) !important;
-	border-radius: 5px;
+  border: 2px solid c.color(border) !important;
+  border-radius: 5px;
 }
 
 .nav-tabs .nav-link {
@@ -111,32 +110,33 @@ main {
   grid-area: main;
   padding: 30px;
   overflow-y: scroll;
+  overflow-x: scroll;
 }
 
-.View-btn{
-  background-color: #BF8412 !important;
+.View-btn {
+  background-color: #bf8412 !important;
   color: #fff !important;
   padding: 5px 25px !important;
   font-weight: bold !important;
 }
 
-#white-btn-color{
-color: #fff !important;
+#white-btn-color {
+  color: #fff !important;
 }
 
-#Add-btn-sub{
+#Add-btn-sub {
   width: 3.2rem !important;
 }
-.icon-space{
+.icon-space {
   margin-right: 0.4rem;
 }
 
-.leave-status-bt{
+.leave-status-bt {
   // background-color: #fff !important;
   border: 1px solid c.color(primary-color);
 }
 
-.icon-bold{
+.icon-bold {
   font-weight: bold;
 }
 
@@ -144,17 +144,16 @@ color: #fff !important;
   color: #cacaca !important;
   text-align: center !important;
   padding-top: 1.5rem !important;
-  padding-bottom: 1.5rem !important; 
+  padding-bottom: 1.5rem !important;
 }
 .table-loader p {
-  color: #7a7a7a; 
+  color: #7a7a7a;
 }
 
-.pageEntries{
+.pageEntries {
   font-weight: bold;
   color: c.color(primary-color);
 }
-
 
 .back-btn-icon {
   // height: 1rem !important;
@@ -166,39 +165,39 @@ color: #fff !important;
 }
 
 #team-applicatiom-update {
-   background-color:  c.color(project-view-btn);
-   color: c.color(white);
-   padding: 0.1rem 1rem;
+  background-color: c.color(project-view-btn);
+  color: c.color(white);
+  padding: 0.1rem 1rem;
   font-weight: bold;
 }
 
-.modal-input-sub-space{
+.modal-input-sub-space {
   margin-top: 1rem;
 }
 
 // custom search for all leave application
 #form-inline {
-    display: flex !important;
-    flex-flow: row wrap !important;
-    align-items: center !important;
-    box-shadow: none !important;
-    white-space: nowrap !important;
+  display: flex !important;
+  flex-flow: row wrap !important;
+  align-items: center !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
 }
 
-#search-input{
- padding: 0.7rem;
- width: 200px !important;
- border: 0px !important;
- background-color: c.color(search-color);
+#search-input {
+  padding: 0.7rem;
+  width: 200px !important;
+  border: 0px !important;
+  background-color: c.color(search-color);
 }
 
-.search-btn { 
-    background-color: c.color(primary-color) !important;
-    border-top-right-radius: 5px !important;
-    border-bottom-right-radius: 5px !important;
-    color: c.color(white) !important;
-    padding: 0.7rem 1rem;
-    border: 0px !important;
+.search-btn {
+  background-color: c.color(primary-color) !important;
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+  color: c.color(white) !important;
+  padding: 0.7rem 1rem;
+  border: 0px !important;
 }
 
 button {
@@ -221,77 +220,74 @@ button.ccsnl-btn:hover {
   color: c.color(grey);
 }
 
- form input,
- form select {
-  background-color: rgba(0, 0, 0, .025);
+form input,
+form select {
+  background-color: rgba(0, 0, 0, 0.025);
   width: 100%;
 }
- form input:focus,
- form select:focus {
+form input:focus,
+form select:focus {
   background-color: var(--clr-white);
 }
 
-
-  form select {
-    // margin-bottom: 1vh;
-    // height: 45px;
-    // background-color: #fff;
-    // border-radius: 3px;
-    // border: 1px solid #e8e8e8;
-    // box-shadow: 0 0 2px #e8e8e8;
-      padding: 0.9rem;
-	border: 2px solid c.color(border) !important;
-	border-radius: 5px;
-  }
-    form input:focus,
-    form select:focus {
-    border: 2px solid c.color(primary-color);
-    box-shadow: 0 0 2px c.color(primary-color);
-  }
+form select {
+  // margin-bottom: 1vh;
+  // height: 45px;
+  // background-color: #fff;
+  // border-radius: 3px;
+  // border: 1px solid #e8e8e8;
+  // box-shadow: 0 0 2px #e8e8e8;
+  padding: 0.9rem;
+  border: 2px solid c.color(border) !important;
+  border-radius: 5px;
+}
+form input:focus,
+form select:focus {
+  border: 2px solid c.color(primary-color);
+  box-shadow: 0 0 2px c.color(primary-color);
+}
 //  form .form_btn {
 //   grid-column: 1 / span 2;
 //   display: flex;
 //   justify-content: flex-end;
 // }
 
+// input:hover, select:hover, textarea:hover {
+// 			border: 1px solid c.color(primary-color) !important;
+// }
+// input:focus, select:focus, textarea:focus {
+// 			border: 2px solid c.color(primary-color) !important;
+// }
 
- // input:hover, select:hover, textarea:hover { 
-			// 			border: 1px solid c.color(primary-color) !important;
-      // }
-      // input:focus, select:focus, textarea:focus { 
-			// 			border: 2px solid c.color(primary-color) !important;
-      // }
+// input[type="date"]::-webkit-inner-spin-button {
+// display: none !important;
+// }
+input[type="time"]::-webkit-inner-spin-button {
+  margin: 2px 22px 0 0;
+}
 
-      // input[type="date"]::-webkit-inner-spin-button {
-      // display: none !important;
-      // }
- input[type="time"]::-webkit-inner-spin-button {
-      margin: 2px 22px 0 0;
-      }
+#Essential-btn {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-top: 3rem !important;
+  align-items: flex-end;
+}
+// .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+//     position: absolute;
+//     font-size: 20px;
+//     color: #a9a9a9;
+//     }
 
-      #Essential-btn{
-        display: flex !important;
-        justify-content: flex-end !important;
-        margin-top: 3rem !important;
-        align-items: flex-end;
-      }
-  // .item i, input[type="date"]::-webkit-calendar-picker-indicator {
-  //     position: absolute;
-  //     font-size: 20px;
-  //     color: #a9a9a9;
-  //     }
-
-      // [type="date"]::-webkit-calendar-picker-indicator {
-      // right: 0;
-      // z-index: 2;
-      // opacity: 0;
-      // cursor: pointer;
-      // }
-
+// [type="date"]::-webkit-calendar-picker-indicator {
+// right: 0;
+// z-index: 2;
+// opacity: 0;
+// cursor: pointer;
+// }
 
 // .selectdiv {
 //   position: relative;
-//   /*Don't really need this just for demo styling*/ 
+//   /*Don't really need this just for demo styling*/
 //   float: left;
 //    width: 100%;
 //   margin: 50px 33%;
@@ -322,7 +318,7 @@ button.ccsnl-btn:hover {
 //   -moz-appearance: none;
 //   appearance: none;
 //   /* Add some styling */
-  
+
 //   display: block;
 //   width: 100% !important;
 //   // max-width: 320px;
@@ -340,7 +336,6 @@ button.ccsnl-btn:hover {
 //   word-break: normal;
 // }
 
-
 .search-form-ctrl {
   position: relative;
 }
@@ -355,7 +350,7 @@ form.searchbox {
 form input[type="search"] {
   padding: 8px 15px;
   color: #4b4b4b;
-  font-size: .9rem;
+  font-size: 0.9rem;
   width: 100%;
   outline: none;
   border: 0;
@@ -370,13 +365,13 @@ form input[type="search"]:focus {
   box-shadow: 0 0 1px c.color(border);
   border: 1px solid c.color(border);
 }
-form input[type="search"]::-webkit-search-cancel-button{
-  position:relative;
-  right: 5px;  
-  background-color: c.color(primary-color);  
+form input[type="search"]::-webkit-search-cancel-button {
+  position: relative;
+  right: 5px;
+  background-color: c.color(primary-color);
 }
 form.searchbox button {
-  background-color: c.color(primary-color);;
+  background-color: c.color(primary-color);
   position: absolute;
   top: 9px;
   right: 9px;
@@ -391,7 +386,7 @@ form.searchbox button {
   -webkit-transition: all 0.3s ease-out;
 }
 form.searchbox button i {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 form.searchbox button:hover {
   background-color: #c74b2c;
