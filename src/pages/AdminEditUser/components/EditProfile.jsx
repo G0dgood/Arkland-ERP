@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@material-ui/core";
 
 const EditProfile = () => {
@@ -13,22 +13,6 @@ const EditProfile = () => {
   const [lga, setLga] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [religion, setReligion] = useState("");
-
-  // useEffect(() => {
-  //   if(employee.employee) {
-  //     setDob(employee.employee.dob)
-  //     setContactNo(employee.employee.contactNo)
-  //     setPrivateEmail(employee.employee.privateEmail)
-  //     setGender(employee.employee.gender)
-  //     setDateOfJoining(employee.employee.dateOfJoining)
-  //     setDateOfLastPromotion(employee.employee.dateOfLastPromotion)
-  //     setAddress(employee.employee.address)
-  //     setStateOfOrigin(employee.employee.stateOfOrigin)
-  //     setLga(employee.employee.lga)
-  //     setMaritalStatus(employee.employee.maritalStatus)
-  //     setReligion(employee.employee.religion)
-  //   }
-  // }, [employee])
 
   return (
     <div className="form-cont">

@@ -1,25 +1,13 @@
-import React from 'react'
-import AddTodo from "../../components/Modals/AddTodo";
 import Checkbox from "@material-ui/core/Checkbox";
 import { FiTrash2 } from 'react-icons/fi';
 import { Button } from "@mui/material";
 
-
-const Todos = ({ showDrawer, setShowDrawer }: any) => {
-
-	const handleShow = () => {
-		if (!showDrawer) {
-			setShowDrawer(true);
-		} else {
-			setShowDrawer(!showDrawer);
-		}
-	};
+const Schedule = () => {
 	return (
 		<div className="main-div-col-2">
 			<div className="main-todo-1">
 				<div className="main-todo-title">
-					<h4>To Do</h4>
-
+					<h4>Upcoming Schedule</h4> <span>Today, 21 Jun 2022</span>
 				</div>
 
 				{/* Checkbox */}
@@ -99,14 +87,11 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
 					</div>
 				</div>
 			</div>
-			<div className="main-todo-2-btn" >
-				<Button variant="outlined" className="show-btn" onClick={handleShow}>
-					Show All
-				</Button>
-				<AddTodo />
-			</div>
+			<Button variant="outlined" className="show-btn-schedule"  >
+				Create a New Schedule
+			</Button>
 		</div>
 	)
 }
 
-export default Todos
+export default Schedule
