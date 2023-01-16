@@ -347,7 +347,10 @@ input[type="time"]::-webkit-inner-spin-button {
 form.searchbox {
   width: 20rem;
 }
+
+
 form input[type="search"] {
+  background:  c.color(search-color) !important;
   padding: 8px 15px;
   color: #4b4b4b;
   font-size: 0.9rem;
