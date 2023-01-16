@@ -198,7 +198,7 @@
     &-subTitle {
       font-weight: 400;
       font-size: 8px;
-      line-height: 0px;
+      // line-height: 0px;
       color: c.color(project-view-btn);
     }
 
@@ -226,7 +226,7 @@
   &__title {
     font-weight: 400;
     font-size: 8px;
-    line-height: 0px;
+    line-height: 1.2rem;
     color: c.color(project-view-btn);
   }
 }
