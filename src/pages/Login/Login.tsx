@@ -8,7 +8,7 @@ import logo from "../../assets/images/ASLLOGO.svg";
 import { useNavigate } from "react-router-dom";
 // import { TextField } from "@material-ui/core";
 import Checkbox from "@mui/material/Checkbox";
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
 import { Spinner, Toast } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
