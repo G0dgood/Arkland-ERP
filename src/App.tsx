@@ -1,17 +1,15 @@
-
-import { BrowserRouter } from 'react-router-dom';
-import AppRoutes from './AppRoutes';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./AppRoutes";
 import "./scss/main.scss";
 import "./App.scss";
 
-function App() {
+const App: React.FC = (): JSX.Element => {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </div>
+    <React.Suspense fallback={"App loading"}>
+      <AppRoutes />
+    </React.Suspense>
   );
-}
+};
 
 export default App;
