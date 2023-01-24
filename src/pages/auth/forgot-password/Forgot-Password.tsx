@@ -10,48 +10,41 @@ import Checkbox from "@mui/material/Checkbox";
 import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import axios, { AxiosResponse } from "axios";
-import first from "../../assets/images/Bijou.jpg";
-import second from "../../assets/images/1.jpeg";
-import third from "../../assets/images/1.jpg";
-import fourth from "../../assets/images/A&A.jpg";
-import fifth from "../../assets/images/PHOENIX.jpg";
-import logo from "../../assets/images/ASLLOGO.svg";
-import { useAppDispatch } from "../../hooks/useDispatch";
-import InputField from "../../components/Inputs/InputField";
-import storage from "../../utils/storage";
-import { setUser } from "../../store/actions/user";
+import first from "../../../assets/images/Bijou.jpg";
+import second from "../../../assets/images/1.jpeg";
+import third from "../../../assets/images/1.jpg";
+import fourth from "../../../assets/images/A&A.jpg";
+import fifth from "../../../assets/images/PHOENIX.jpg";
+import logo from "../../../assets/images/ASLLOGO.svg";
+import InputField from "../../../components/Inputs/InputField";
 
-const Login = () => {
-  const dispatch = useAppDispatch();
+const ForgotPassword = () => {
   const [isLoading, setLoading] = React.useState(false);
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   const [error, setError] = useState<any>();
+  const [success, setSuccess] = useState<any>();
   const [showToast, setShowToast] = useState(false);
   const [message, setMessage] = useState("");
 
   const validate = Yup.object().shape({
     email: Yup.string().email().required("Email Address is Required"),
-    password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
   });
 
   const handleSubmit = (values: any, { resetForm }: any) => {
+    delete axios.defaults.headers.common["authorization"];
     setLoading(true);
     axios
-      .post(`${process.env.REACT_APP_API}/auth/login`, values)
+      .patch(`${process.env.REACT_APP_API}/auth/password`, values)
       .then((res: AxiosResponse) => {
         setLoading(false);
         resetForm(values);
-        console.log(res.data.token);
-        // set token in axios header
-        axios.defaults.headers.common["authorization"] = res.data.token;
-        // set token in cookie
-        Cookies.set("token", res.data.token);
-        dispatch(setUser(res.data?.user));
-        storage.set("user", JSON.stringify(res.data?.user));
-        window.location.replace("/home");
+        if (res.data.success === true) {
+          setSuccess(true);
+          setMessage("Check your email for your new password");
+          setTimeout(() => {
+            window.location.replace("/");
+          }, 5000);
+        }
       })
       .catch((err) => {
         setLoading(false);
@@ -67,7 +60,7 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Login | Arkland ERP</title>
+        <title>Forgot Password | Arkland ERP</title>
       </Helmet>
       <div id="login-wrapper">
         <Carousel fade>
@@ -88,13 +81,32 @@ const Login = () => {
           </Carousel.Item>
         </Carousel>
 
-        <div className="login-container">
+        <div className="login-container success-toast">
           {error && (
             <Toast
               onClose={() => setShowToast(false)}
               show={true}
               delay={4000}
               autohide
+            >
+              <Toast.Body>
+                <span>
+                  <BsExclamationLg />
+                </span>
+                <p>{message}</p>
+                <span onClick={() => setShowToast(false)}>
+                  <FaTimes />
+                </span>
+              </Toast.Body>
+            </Toast>
+          )}
+          {success && (
+            <Toast
+              onClose={() => setShowToast(false)}
+              show={true}
+              delay={4000}
+              autohide
+              bg="success"
             >
               <Toast.Body>
                 <span>
@@ -114,49 +126,29 @@ const Login = () => {
                 <Formik
                   initialValues={{
                     email: "",
-                    password: "",
                   }}
                   onSubmit={handleSubmit}
                   validationSchema={validate}
                 >
                   {(formik) => (
                     <Form>
-                      <div className="form-ctrl" style={{ marginBottom: 30 }}>
+                      <div className="form-ctrl">
                         <InputField
                           label="Email address"
                           name="email"
                           className="register-form-width"
                         />
                       </div>
-                      <div className="form-ctrl">
-                        <InputField
-                          placeholder="Enter password"
-                          label="Password"
-                          name="password"
-                          password
-                          className="register-form-width"
-                        />
-                      </div>
                       <div className="Forgot-password">
-                        <span>
-                          {" "}
-                          <Checkbox {...label} />
-                          Remember me
-                        </span>
                         <div>
-                          Forgot password?
-                          <a
-                            href="/forgot-password"
-                            className="forgot-click-here"
-                          >
-                            {" "}
+                          Login?{" "}
+                          <a href="/" className="forgot-click-here">
                             Click Here
                           </a>
                         </div>
                       </div>
-
-                      <Button type="submit">
-                        {isLoading ? "Please wait..." : "Login"}
+                      <Button type="submit" className="forgot-password-button">
+                        {isLoading ? "Please wait..." : "Forgot Password"}
                       </Button>
                     </Form>
                   )}
@@ -170,4 +162,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

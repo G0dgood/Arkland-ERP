@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
@@ -29,12 +28,13 @@ import Informationtech from "./pages/Departments/SubDepartments/Informationtech"
 import Budget from "./pages/Departments/SubDepartments/Budget";
 import Finance from "./pages/Departments/SubDepartments/Finance";
 import AdminEditUser from "./pages/AdminEditUser/AdminEditUser";
-
+import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
 
 const AppRoutes: React.FC<any> = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/home" element={<Dashboard />} />
       <Route path="/kpiassessment" element={<KPIAssessment />} />
       <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
@@ -50,7 +50,10 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/warninglist" element={<WarningList />} />
       <Route path="/weeklyreport" element={<WeeklyReport />} />
       <Route path="/dashboardcalender" element={<DashboardCalender />} />
-      <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
+      <Route
+        path="/teamleaveapplications"
+        element={<TeamLeaveApplications />}
+      />
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile/edit" element={<EditUser />} />
       {/* Departments */}
@@ -69,9 +72,3 @@ const AppRoutes: React.FC<any> = () => {
 };
 
 export default AppRoutes;
-
-
-
-
-
-
