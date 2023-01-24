@@ -14,11 +14,18 @@ const Header = ({ toggleSideNav }: any) => {
   const navigate = useNavigate();
   const [dropDown, setDropDown] = useState(false);
   const handleLogoutUser = () => {
-    delete axios.defaults.headers.common["Authorization"];
-    Cookies.remove("token");
-    storage.remove("user");
-    navigate("/");
-    window.location.reload();
+    axios
+      .patch(`${process.env.REACT_APP_API}/me/logout`)
+      .then(() => {
+        delete axios.defaults.headers.common["Authorization"];
+        Cookies.remove("token");
+        storage.remove("user");
+        navigate("/");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
