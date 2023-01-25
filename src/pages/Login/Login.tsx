@@ -44,7 +44,6 @@ const Login = () => {
       .then((res: AxiosResponse) => {
         setLoading(false);
         resetForm(values);
-        console.log(res.data.token);
         // set token in axios header
         axios.defaults.headers.common["authorization"] = res.data.token;
         // set token in cookie

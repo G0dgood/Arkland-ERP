@@ -29,44 +29,64 @@ import Budget from "./pages/Departments/SubDepartments/Budget";
 import Finance from "./pages/Departments/SubDepartments/Finance";
 import AdminEditUser from "./pages/AdminEditUser/AdminEditUser";
 import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
+import PrivateRoute from "./components/PrivateRoute";
+import storage from "./utils/storage";
 
 const AppRoutes: React.FC<any> = () => {
+  const user: any = storage.get("user");
+  const parsedUserData = JSON.parse(user);
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/home" element={<Dashboard />} />
-      <Route path="/kpiassessment" element={<KPIAssessment />} />
-      <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
-      <Route path="/allemployees" element={<AllEmployees />} />
-      <Route path="/projects" element={<Projects />} />
-      <Route path="/viewproject" element={<ViewProjects />} />
-      <Route path="/leave" element={<Leave />} />
-      <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
-      <Route path="/support" element={<Support />} />
-      <Route path="/policy" element={<Policy />} />
-      <Route path="/siteWorkerrequest" element={<SiteWorkerRequest />} />
-      <Route path="/createemployee" element={<CreateEmployee />} />
-      <Route path="/warninglist" element={<WarningList />} />
-      <Route path="/weeklyreport" element={<WeeklyReport />} />
-      <Route path="/dashboardcalender" element={<DashboardCalender />} />
+      {/* General user routes */}
+      <Route element={<PrivateRoute isAllowed={!!parsedUserData} />}>
+        <Route path="/home" element={<Dashboard />} />
+        <Route path="/kpiassessment" element={<KPIAssessment />} />
+        <Route path="/leave" element={<Leave />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
+        <Route
+          path="/teamleaveapplications"
+          element={<TeamLeaveApplications />}
+        />
+        <Route path="/weeklyreport" element={<WeeklyReport />} />
+      </Route>
+      {/* Protected routes as admins, HR, Project managers and team leads */}
       <Route
-        path="/teamleaveapplications"
-        element={<TeamLeaveApplications />}
-      />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/profile/edit" element={<EditUser />} />
-      {/* Departments */}
-      <Route path="/departments" element={<Departments />} />
-      <Route path="/procurement" element={<Procurement />} />
-      <Route path="/engineering" element={<Engineering />} />
-      <Route path="/finance" element={<Finance />} />
-      <Route path="/humanresource" element={<HumanResource />} />
-      <Route path="/inventory" element={<Inventory />} />
-      <Route path="/informationtech" element={<Informationtech />} />
-      <Route path="/budget" element={<Budget />} />
-      {/* AdminEditUser */}
-      <Route path="/admineditUser" element={<AdminEditUser />} />
+        element={
+          <PrivateRoute
+            isAllowed={!!parsedUserData && parsedUserData.is_super_admin}
+            redirectPath="/home"
+          />
+        }
+      >
+        <Route path="/allemployees" element={<AllEmployees />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/viewproject" element={<ViewProjects />} />
+        <Route
+          path="/allleaveapplications"
+          element={<AllLeaveApplications />}
+        />
+        <Route path="/siteWorkerrequest" element={<SiteWorkerRequest />} />
+        <Route path="/createemployee" element={<CreateEmployee />} />
+        <Route path="/warninglist" element={<WarningList />} />
+        <Route path="/dashboardcalender" element={<DashboardCalender />} />
+        <Route path="/profile/edit" element={<EditUser />} />
+        <Route path="/profile" element={<Profile />} />
+        {/* Departments */}
+        <Route path="/departments" element={<Departments />} />
+        <Route path="/procurement" element={<Procurement />} />
+        <Route path="/engineering" element={<Engineering />} />
+        <Route path="/finance" element={<Finance />} />
+        <Route path="/humanresource" element={<HumanResource />} />
+        <Route path="/inventory" element={<Inventory />} />
+        <Route path="/informationtech" element={<Informationtech />} />
+        <Route path="/budget" element={<Budget />} />
+        {/* AdminEditUser */}
+        <Route path="/admineditUser" element={<AdminEditUser />} />
+      </Route>
     </Routes>
   );
 };
