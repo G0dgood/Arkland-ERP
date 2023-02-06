@@ -28,7 +28,7 @@ const CreateEmployeeView = ({ active, employee }: any) => {
         setLoading(false);
         const html = err.response.data.message;
         const icon = "error";
-        const title = "Employee creation request Failed";
+        const title = "Employee creation request failed";
         fireAlert(title, html, icon);
       });
   };

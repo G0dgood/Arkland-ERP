@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
+import PhoneInput from "react-phone-input-2";
 import InputField from "../../../components/Inputs/InputField";
 import SelectField from "../../../components/Inputs/SelectField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
@@ -121,10 +122,28 @@ const Essentials = ({
                     <div className="imput-space" />
                     <div className="col">
                       <div className="form-group">
-                        <InputField
-                          label="Phone"
-                          name="phone"
-                          placeholder="Enter Phone"
+                        <PhoneInput
+                          value=""
+                          inputProps={{
+                            name: "phone",
+                            required: true,
+                          }}
+                          inputStyle={{
+                            background: "4f269f",
+                            height: "40px",
+                            width: "100%",
+                            maxWidth: "31.25rem",
+                          }}
+                          specialLabel="Employee Phone Number"
+                          inputClass="w-100"
+                          containerClass="mb-3 agent-project__owner"
+                          onChange={(telephone) =>
+                            setFieldValue("phone", `${telephone}`)
+                          }
+                          country={"ng"}
+                          placeholder="Enter employee Phone Number"
+                          defaultErrorMessage="required"
+                          enableSearch={true}
                         />
                       </div>
                     </div>
