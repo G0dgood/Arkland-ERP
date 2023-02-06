@@ -1,3 +1,19 @@
+export interface EmployeeFormProps {
+  setActive?: any;
+  active?: any;
+  next?: any;
+  prev?: any;
+  employee?: Object;
+  handleChange?: any;
+  handleSubmit?: any;
+  ref?: any;
+  props?: any;
+  setEmployee?: any;
+  values?: any;
+  id?: string;
+  bindSubmitForm?: any;
+}
+
 export interface CreateEmployeeProps {
   first_name: string;
   last_name: string;
@@ -18,7 +34,6 @@ export interface CreateEmployeeProps {
   medical_allowance: number;
   housing_allowance: number;
   transportation_allowance: number;
-
   date_of_birth: string;
   next_of_kin: string;
   next_of_kin_phone: string;

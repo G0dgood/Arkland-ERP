@@ -13,19 +13,19 @@ import storage from "../utils/storage";
 const Header = ({ toggleSideNav }: any) => {
   const navigate = useNavigate();
   const [dropDown, setDropDown] = useState(false);
-  const handleLogoutUser = () => {
-    axios
+  const handleLogoutUser = async () => {
+    await axios
       .patch(`${process.env.REACT_APP_API}/me/logout`)
       .then(() => {
         delete axios.defaults.headers.common["Authorization"];
-        Cookies.remove("token");
-        storage.remove("user");
-        navigate("/");
-        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
       });
+    await Cookies.remove("token");
+    await storage.remove("user");
+    navigate("/");
+    window.location.reload();
   };
 
   return (

@@ -20,12 +20,13 @@ import { useAppDispatch } from "../../hooks/useDispatch";
 import InputField from "../../components/Inputs/InputField";
 import storage from "../../utils/storage";
 import { setUser } from "../../store/actions/user";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const [isLoading, setLoading] = React.useState(false);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
+  const navigate = useNavigate();
   const [error, setError] = useState<any>();
   const [showToast, setShowToast] = useState(false);
   const [message, setMessage] = useState("");
@@ -48,7 +49,6 @@ const Login = () => {
         axios.defaults.headers.common["authorization"] = res.data.token;
         // set token in cookie
         Cookies.set("token", res.data.token);
-        dispatch(setUser(res.data?.user));
         storage.set("user", JSON.stringify(res.data?.user));
         window.location.replace("/home");
       })

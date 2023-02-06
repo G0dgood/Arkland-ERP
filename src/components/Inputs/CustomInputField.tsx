@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { ErrorMessage, useField } from "formik";
 import { InputFieldProps } from "../../interfaces/input";
 
-const InputField = ({
+const CustomInputField = ({
   label,
   className,
   password,
   placeholder,
   maxLength,
+  minLength,
   inputMode,
   style,
   value,
@@ -15,31 +16,11 @@ const InputField = ({
   onChange,
   required,
   disabled,
+  type,
   ...props
 }: InputFieldProps) => {
   const [field, meta] = useField(props);
   const [labelColor, setLabelColor] = useState(false);
-
-  let type;
-  if (password) {
-    type = "password";
-  } else {
-    type = "text";
-  }
-
-  const [inputType, setInputType] = useState(type);
-
-  const toggleInputType = () => {
-    if (password) {
-      if (inputType === "text") {
-        setInputType("password");
-      }
-
-      if (inputType === "password") {
-        setInputType("text");
-      }
-    }
-  };
 
   const handleFocus = () => {
     setLabelColor(true);
@@ -48,12 +29,6 @@ const InputField = ({
   const handleBlur = () => {
     setLabelColor(false);
   };
-
-  useEffect(() => {
-    if (!password) {
-      setInputType("text");
-    }
-  }, [password]);
 
   return (
     <div className={`input ${className ? className : ""}`}>
@@ -69,28 +44,18 @@ const InputField = ({
         className={`input__field ${meta.touched && meta.error && "error"}`}
         {...field}
         {...props}
-        type={inputType}
+        type={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
         autoComplete="off"
         placeholder={placeholder}
         inputMode={inputMode}
-        // onChange={onChange}
+        onChange={onChange}
         style={style}
         maxLength={maxLength}
+        minLength={minLength}
         value={value}
       />
-
-      {password && (
-        <span
-          className={`input__eye heading-2-bold ${
-            inputType === "password" ? "close" : ""
-          }`}
-          onClick={toggleInputType}
-        >
-          Show
-        </span>
-      )}
       <ErrorMessage
         component="p"
         name={field.name}
@@ -100,4 +65,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default CustomInputField;
