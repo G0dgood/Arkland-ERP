@@ -63,7 +63,7 @@ const CreateEmployeeView = ({ active, employee }: any) => {
             <p> {employee?.gender}</p>
             <p>Marital Status</p>
             <p> {employee?.marital_status}</p>
-            <p>Date of Birth</p>
+            <p>Date of Birth (DD-MM-YYYY)</p>
             <p> {moment(employee?.date_of_birth).format("DD-MM-YYYY")}</p>
             <p>Age</p>
             <p> {moment(employee?.date_of_birth).fromNow().split(" ")[0]} </p>
@@ -159,20 +159,20 @@ const CreateEmployeeView = ({ active, employee }: any) => {
             <p>
               {employee.has_work_location_objection === true ? "Yes" : "No"}
             </p>
-            <p>Employment Date</p>
-            <p>{employee?.employment_date}</p>
+            <p>Tally Number</p>
+            <p>{employee?.tally_number}</p>
           </div>
         </div>
         <div>
           <div className="getjob-application-details">
-            <p>Employment Duration (Months)</p>
-            <p>{employee?.employment_duration}</p>
-            <p>Employment Type</p>
-            <p>{employee?.employment_type}</p>
             <p>Employment ID</p>
             <p>{employee?.employee_id} </p>
-            <p>Tally Number</p>
-            <p>{employee?.tally_number}</p>
+            <p>Employment Type</p>
+            <p>{employee?.employment_type}</p>
+            <p>Employment Date (DD-MM-YYYY)</p>
+            <p>{moment(employee?.employment_date).format("DD-MM-YYYY")}</p>
+            <p>Employment Duration (Months)</p>
+            <p>{employee?.employment_duration}</p>
           </div>
         </div>
       </div>
