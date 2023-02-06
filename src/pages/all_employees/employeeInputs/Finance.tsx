@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import Cleave from "cleave.js/react";
 import InputField from "../../../components/Inputs/InputField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
@@ -24,6 +25,9 @@ const Finance = ({
     setEmployee({ ...employee, ...values });
     setActive(3);
   };
+
+  const removeNonNumeric = (num: any) => num.toString().replace(/[^0-9]/g, "");
+
   return (
     <div className={active === 2 ? "EssentialsContainer" : "d-none"}>
       <Formik
@@ -41,7 +45,7 @@ const Finance = ({
         onSubmit={handleSubmit}
         validationSchema={validate}
       >
-        {({ values, handleChange, setFieldValue, submitForm }) => {
+        {({ values, setFieldValue, submitForm }) => {
           if (active === 2) {
             bindSubmitForm(submitForm);
           }
@@ -92,106 +96,175 @@ const Finance = ({
                     </div>
                     <div className="imput-space" />
                     <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          type="number"
-                          label="Basic Salary"
-                          name="basic_salary"
-                          placeholder="Enter basic salary"
-                          onChange={(event: any) => {
-                            setFieldValue("basic_salary", event?.target.value);
+                      <div className="form-group cleaveInput">
+                        <p className="sendmoney-select_acc-label">
+                          Basic Salary
+                        </p>
+                        <Cleave
+                          options={{
+                            numeral: true,
+                            numeralThousandsGroupStyle: "thousand",
+                            prefix: "₦ ",
+                            rawValueTrimPrefix: true,
                           }}
+                          className="form-group__gender cleaveInput"
+                          id="basic_salary"
+                          name="basic_salary"
+                          placeholder="Enter employee basic salary"
+                          value={values.basic_salary}
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "basic_salary",
+                              removeNonNumeric(event?.target.value)
+                            );
+                          }}
+                          inputMode="numeric"
                         />
                       </div>
                     </div>
                   </div>
                   <div className="row-item">
                     <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          type="number"
-                          label="Meal Allowance"
+                      <div className="form-group cleaveInput">
+                        <p className="sendmoney-select_acc-label">
+                          Meal Allowance
+                        </p>
+                        <Cleave
+                          placeholder="Enter employee meal allowance"
+                          options={{
+                            numeral: true,
+                            numeralThousandsGroupStyle: "thousand",
+                            prefix: "₦ ",
+                            rawValueTrimPrefix: true,
+                          }}
+                          id="meal_allowance"
+                          className="form-group__gender cleaveInput"
                           name="meal_allowance"
-                          placeholder="Enter meal allowance"
+                          value={values.meal_allowance}
                           onChange={(event: any) => {
                             setFieldValue(
                               "meal_allowance",
-                              event?.target.value
+                              removeNonNumeric(event?.target.value)
                             );
                           }}
+                          inputMode="numeric"
                         />
                       </div>
                     </div>
                     <div className="imput-space" />
                     <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          type="number"
-                          label="Utility Allowance"
+                      <div className="form-group cleaveInput">
+                        <p className="sendmoney-select_acc-label">
+                          Utility Allowance
+                        </p>
+                        <Cleave
+                          placeholder="Enter employee utility allowance"
+                          options={{
+                            numeral: true,
+                            numeralThousandsGroupStyle: "thousand",
+                            prefix: "₦ ",
+                            rawValueTrimPrefix: true,
+                          }}
+                          id="utility_allowance"
+                          className="form-group__gender cleaveInput"
                           name="utility_allowance"
-                          placeholder="Enter utility allowance"
+                          value={values.utility_allowance}
                           onChange={(event: any) => {
                             setFieldValue(
                               "utility_allowance",
-                              event?.target.value
+                              removeNonNumeric(event?.target.value)
                             );
                           }}
+                          inputMode="numeric"
                         />
                       </div>
                     </div>
                   </div>
                   <div className="row-item">
                     <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          type="number"
-                          label="Medical Allowance"
+                      <div className="form-group cleaveInput">
+                        <p className="sendmoney-select_acc-label">
+                          Medical Allowance
+                        </p>
+                        <Cleave
+                          placeholder="Enter employee medical allowance"
+                          options={{
+                            numeral: true,
+                            numeralThousandsGroupStyle: "thousand",
+                            prefix: "₦ ",
+                            rawValueTrimPrefix: true,
+                          }}
+                          id="medical_allowance"
+                          className="form-group__gender cleaveInput"
                           name="medical_allowance"
-                          placeholder="Enter medical allowance"
+                          value={values.medical_allowance}
                           onChange={(event: any) => {
                             setFieldValue(
                               "medical_allowance",
-                              event?.target.value
+                              removeNonNumeric(event?.target.value)
                             );
                           }}
+                          inputMode="numeric"
                         />
                       </div>
                     </div>
                     <div className="imput-space" />
                     <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          type="number"
-                          label="Housing Allowance"
+                      <div className="form-group cleaveInput">
+                        <p className="sendmoney-select_acc-label">
+                          Housing Allowance
+                        </p>
+                        <Cleave
+                          placeholder="Enter employee housing allowance"
+                          options={{
+                            numeral: true,
+                            numeralThousandsGroupStyle: "thousand",
+                            prefix: "₦ ",
+                            rawValueTrimPrefix: true,
+                          }}
+                          id="housing_allowance"
+                          className="form-group__gender cleaveInput"
                           name="housing_allowance"
-                          placeholder="Enter housing allowance"
+                          value={values.housing_allowance}
                           onChange={(event: any) => {
                             setFieldValue(
                               "housing_allowance",
-                              event?.target.value
+                              removeNonNumeric(event?.target.value)
                             );
                           }}
+                          inputMode="numeric"
                         />
                       </div>
                     </div>
                   </div>
                   <div className="row-item">
                     <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          type="number"
+                      <div className="form-group cleaveInput">
+                        <p className="sendmoney-select_acc-label">
+                          Transportation Allowance
+                        </p>
+                        <Cleave
                           style={{
                             width: "50%",
                           }}
-                          label="Transportation Allowance"
+                          placeholder="Enter employee Transportation Allowance"
+                          options={{
+                            numeral: true,
+                            numeralThousandsGroupStyle: "thousand",
+                            prefix: "₦ ",
+                            rawValueTrimPrefix: true,
+                          }}
+                          id="transportation_allowance"
+                          className="form-group__gender cleaveInput"
                           name="transportation_allowance"
-                          placeholder="Enter transportation allowance"
+                          value={values.transportation_allowance}
                           onChange={(event: any) => {
                             setFieldValue(
                               "transportation_allowance",
-                              event?.target.value
+                              removeNonNumeric(event?.target.value)
                             );
                           }}
+                          inputMode="numeric"
                         />
                       </div>
                     </div>

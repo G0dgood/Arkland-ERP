@@ -16,6 +16,14 @@ const Essentials = ({
 }: EmployeeFormProps) => {
   const genderOptions = ["Select employee gender", "Male", "Female"];
   const disabilityOptions = ["Does employee have disability", "Yes", "No"];
+  const isExpatriateOptions = ["Is employee an expatriate", "Yes", "No"];
+  const martialStatusOptions = [
+    "Select marital status",
+    "Married",
+    "Single",
+    "Divroced",
+  ];
+
   const validate = Yup.object().shape({
     first_name: Yup.string().required("First name is required"),
     middle_name: Yup.string(),
@@ -27,7 +35,7 @@ const Essentials = ({
     const show = moment(date).format();
     return show;
   };
-  const formatDisability = (value?: any) => {
+  const formatToTrue = (value?: any) => {
     if (value === "Yes") {
       return true;
     } else if (value === "No") {
@@ -46,11 +54,13 @@ const Essentials = ({
           first_name: "",
           middle_name: "",
           last_name: "",
+          marital_status: "",
           email: "",
           phone: "",
           gender: "",
           date_of_birth: "",
           has_disability: "",
+          is_expatriate: "",
           institution_attended: "",
           course_studied: "",
           qualification: "",
@@ -164,7 +174,7 @@ const Essentials = ({
                           onChange={(event: any) => {
                             setFieldValue(
                               "has_disability",
-                              formatDisability(event?.target.value)
+                              formatToTrue(event?.target.value)
                             );
                           }}
                         />
@@ -198,6 +208,41 @@ const Essentials = ({
                           label="Qualification"
                           name="qualification"
                           placeholder="Enter Qualification"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row-item">
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
+                          label="Marital Status"
+                          name="marital_status"
+                          options={martialStatusOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "marital_status",
+                              event?.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
+                          label="Expatriate"
+                          name="is_expatriate"
+                          options={isExpatriateOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "is_expatriate",
+                              formatToTrue(event?.target.value)
+                            );
+                          }}
                         />
                       </div>
                     </div>

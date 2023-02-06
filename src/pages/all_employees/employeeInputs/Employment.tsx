@@ -1,11 +1,10 @@
 import React from "react";
 import { Form, Formik } from "formik";
-import DatePicker from "react-datepicker";
 import * as Yup from "yup";
+import moment from "moment";
 import SelectField from "../../../components/Inputs/SelectField";
 import InputField from "../../../components/Inputs/InputField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
-import DateInputField from "../../../components/Inputs/CustomInputField";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
 
 const Employment = ({
@@ -33,6 +32,10 @@ const Employment = ({
     "Full time",
     "Part time",
   ];
+  const formatDate = (date: Date) => {
+    const show = moment(date).format();
+    return show;
+  };
   const formatWorkLocations = (value?: any) => {
     if (value === "Yes") {
       return true;
@@ -126,28 +129,17 @@ const Employment = ({
                           type="date"
                           label="Employment Date"
                           name="employment_date"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row-item">
-                    <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          type="number"
-                          label="Employment Duration (Months)"
-                          name="employment_duration"
-                          placeholder="Enter duration of employment"
                           onChange={(event: any) => {
                             setFieldValue(
-                              "employment_duration",
-                              event?.target.value
+                              "employment_date",
+                              formatDate(event?.target.value)
                             );
                           }}
                         />
                       </div>
                     </div>
-                    <div className="imput-space" />
+                  </div>
+                  <div className="row-item">
                     <div className="col">
                       <div className="form-group">
                         <SelectField
@@ -158,6 +150,23 @@ const Employment = ({
                           onChange={(event: any) => {
                             setFieldValue(
                               "employment_type",
+                              event?.target.value
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <CustomInputField
+                          type="number"
+                          label="Employment Duration (Months)"
+                          name="employment_duration"
+                          placeholder="Enter duration of employment"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "employment_duration",
                               event?.target.value
                             );
                           }}

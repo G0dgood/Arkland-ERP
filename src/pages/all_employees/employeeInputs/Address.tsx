@@ -22,12 +22,6 @@ const Address = ({
     setActive(6);
   };
   const validate = Yup.object().shape({});
-  const martialStatusOptions = [
-    "Select marital status",
-    "Married",
-    "Single",
-    "Divroced",
-  ];
 
   return (
     <div className={active === 5 ? "EssentialsContainer" : "d-none"}>
@@ -39,7 +33,6 @@ const Address = ({
           state_of_origin: "",
           country: "",
           nin: "",
-          marital_status: "",
         }}
         onSubmit={handleSubmit}
         validationSchema={validate}
@@ -125,24 +118,7 @@ const Address = ({
                       </div>
                     </div>
                   </div>
-                  <div className="row-item">
-                    <div className="col">
-                      <div className="form-group">
-                        <SelectField
-                          label="Marital Status"
-                          name="marital_status"
-                          options={martialStatusOptions}
-                          className="form-group__status"
-                          onChange={(value: any) =>
-                            setFieldValue(
-                              "marital_status",
-                              { value }.value.label
-                            )
-                          }
-                        />
-                      </div>
-                    </div>
-                  </div>
+
                   <div id="Essential-btn">
                     <Button
                       variant="outlined"

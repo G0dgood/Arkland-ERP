@@ -30,6 +30,7 @@ const CreateEmployee = () => {
     qualification: "",
     department: "",
     role: "",
+    is_expatriate: false,
 
     bank_name: "",
     bank_account_number: "",

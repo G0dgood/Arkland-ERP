@@ -17,6 +17,7 @@ const CustomInputField = ({
   required,
   disabled,
   type,
+  handleChange,
   ...props
 }: InputFieldProps) => {
   const [field, meta] = useField(props);
@@ -47,6 +48,7 @@ const CustomInputField = ({
         type={type}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onInput={handleChange}
         autoComplete="off"
         placeholder={placeholder}
         inputMode={inputMode}

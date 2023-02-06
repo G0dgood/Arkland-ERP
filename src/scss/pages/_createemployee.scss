@@ -376,6 +376,12 @@ form {
   justify-content: space-between;
 }
 
+.cleaveInput {
+  input {
+    padding: 0.4rem !important;
+    background-color: white;
+  }
+}
 .form-group {
   margin-top: 1rem;
 
@@ -383,6 +389,12 @@ form {
     color: c.color(grey-200);
     font-size: 12px;
     padding: 0.575rem 0.75rem;
+  }
+
+  &__cleaveInput {
+    input {
+      padding: 0.4rem !important;
+    }
   }
 
   &__status .form-control {
@@ -413,7 +425,8 @@ form {
   height: 100vh;
 }
 
-.more-view{
+.more-view {
   width: 100% !important;
-  height: 100vh !important;
+  height: 100% !important;
+  // height: 100vh !important;
 }

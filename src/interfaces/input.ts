@@ -4,6 +4,7 @@ export interface InputFieldProps {
   password?: any;
   name: string;
   placeholder?: string;
+  handleChange?: any;
   type?: string;
   disabled?: boolean;
   minLength?: number;
