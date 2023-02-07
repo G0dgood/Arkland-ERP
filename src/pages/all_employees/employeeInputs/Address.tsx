@@ -32,7 +32,6 @@ const Address = ({
           zip_code: "",
           state_of_origin: "",
           country: "",
-          nin: "",
         }}
         onSubmit={handleSubmit}
         validationSchema={validate}
@@ -91,21 +90,12 @@ const Address = ({
                   </div>
                   <div className="row-item">
                     <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          type="number"
-                          label="NIN"
-                          name="nin"
-                          placeholder="Enter National Identity Number"
-                          onChange={(event: any) => {
-                            setFieldValue("nin", event?.target.value);
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div className="imput-space" />
-                    <div className="col">
-                      <div className="form-group">
+                      <div
+                        className="form-group"
+                        style={{
+                          width: "50%",
+                        }}
+                      >
                         <CountrySelectField
                           className="agent-project__owner"
                           label="Country"
@@ -117,6 +107,8 @@ const Address = ({
                         />
                       </div>
                     </div>
+
+                    <div className="imput-space" />
                   </div>
 
                   <div id="Essential-btn">

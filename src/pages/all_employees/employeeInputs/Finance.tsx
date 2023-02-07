@@ -5,6 +5,7 @@ import Cleave from "cleave.js/react";
 import InputField from "../../../components/Inputs/InputField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
+import { removeNonNumeric } from "../../../utils/numbers";
 
 const Finance = ({
   active,
@@ -25,8 +26,6 @@ const Finance = ({
     setEmployee({ ...employee, ...values });
     setActive(3);
   };
-
-  const removeNonNumeric = (num: any) => num.toString().replace(/[^0-9]/g, "");
 
   return (
     <div className={active === 2 ? "EssentialsContainer" : "d-none"}>

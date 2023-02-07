@@ -29,8 +29,13 @@ const Employment = ({
   ];
   const typeOfEmploymentOptions = [
     "Enter type of employment",
-    "Full time",
-    "Part time",
+    "full time",
+    "full time remote",
+    "part time",
+    "part time remote",
+    "contract",
+    "contract remote",
+    "casual worker",
   ];
   const formatDate = (date: Date) => {
     const show = moment(date).format();

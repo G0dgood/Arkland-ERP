@@ -12,7 +12,6 @@ const CreateEmployeeView = ({ active, employee }: any) => {
 
   const handleSubmit = async () => {
     setLoading(true);
-
     const allEmployeeValues = { ...employee };
     await axios
       .post(`${process.env.REACT_APP_API}/hr/employees`, allEmployeeValues)
@@ -66,7 +65,11 @@ const CreateEmployeeView = ({ active, employee }: any) => {
             <p>Date of Birth (DD-MM-YYYY)</p>
             <p> {moment(employee?.date_of_birth).format("DD-MM-YYYY")}</p>
             <p>Age</p>
-            <p> {moment(employee?.date_of_birth).fromNow().split(" ")[0]} </p>
+            <p>
+              {" "}
+              {moment(employee?.date_of_birth).fromNow().split(" ")[0]} years
+              old.
+            </p>
           </div>
         </div>
         <div>
