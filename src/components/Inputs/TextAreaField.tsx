@@ -5,8 +5,19 @@ import { InputFieldProps } from "../../interfaces/input";
 const TextAreaField = ({
   label,
   className,
+  password,
   placeholder,
+  maxLength,
+  minLength,
+  inputMode,
+  style,
   value,
+  readOnly,
+  onChange,
+  required,
+  disabled,
+  type,
+  handleChange,
   ...props
 }: InputFieldProps) => {
   const [field, meta] = useField(props);
@@ -37,12 +48,22 @@ const TextAreaField = ({
         rows={4}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onInput={handleChange}
         autoComplete="off"
         placeholder={placeholder}
+        inputMode={inputMode}
+        onChange={onChange}
+        style={style}
+        maxLength={maxLength}
+        minLength={minLength}
         value={value}
       />
 
-      <ErrorMessage component="p" name={field.name} className="input__error" />
+      <ErrorMessage
+        component="p"
+        name={field.name}
+        className="input__error text-danger mt-2"
+      />
     </div>
   );
 };

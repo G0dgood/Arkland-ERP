@@ -1,9 +1,9 @@
 import React from "react";
 import moment from "moment";
 import { Button } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import logo from "../../../assets/images/ASLLOGO.svg";
-import { useNavigate } from "react-router-dom";
 import { fireAlert } from "../../../utils/Alert";
 
 const CreateEmployeeView = ({ active, employee }: any) => {
@@ -31,7 +31,6 @@ const CreateEmployeeView = ({ active, employee }: any) => {
         fireAlert(title, html, icon);
       });
   };
-  console.log("create complete view", employee);
   return (
     <div
       className={

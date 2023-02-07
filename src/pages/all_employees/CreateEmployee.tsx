@@ -17,7 +17,6 @@ import { number } from "yup";
 
 const CreateEmployee = () => {
   const navigate = useNavigate();
-
   const [employee, setEmployee] = useState({
     first_name: "",
     middle_name: "",
@@ -94,7 +93,6 @@ const CreateEmployee = () => {
   const handleSubmitMyForm = (e: Event) => {
     if (submitMyFormRef.current) {
       submitMyFormRef.current(e);
-      console.log("submitMyFormRef.current(e);", submitMyFormRef.current(e));
     }
   };
 
