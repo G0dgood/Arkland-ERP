@@ -20,7 +20,7 @@ const CreateEmployeeView = ({ active, employee }: any) => {
         const html = `Request to create an employee sent`;
         const icon = "success";
         fireAlert(title, html, icon);
-        navigate(`/employees`);
+        navigate(`/allemployees`);
       })
       .catch((err) => {
         setLoading(false);

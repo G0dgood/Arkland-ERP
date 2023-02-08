@@ -7,6 +7,9 @@ import InputField from "../../../components/Inputs/InputField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
 import ReactSelectField from "../../../components/Inputs/ReactSelectField";
+import { getDepartment } from "../../../store/reducers/department";
+import { getRoles } from "../../../store/reducers/roles";
+import { useAppDispatch } from "../../../hooks/useDispatch";
 
 const Employment = ({
   active,
@@ -17,6 +20,11 @@ const Employment = ({
   options,
   roleOptions,
 }: EmployeeFormProps) => {
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    dispatch(getDepartment());
+    dispatch(getRoles());
+  }, [dispatch]);
   const validate = Yup.object().shape({});
   const workLocationOptions = [
     "Do you have any work location objection?",
