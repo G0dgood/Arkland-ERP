@@ -1,88 +1,110 @@
-import { useEffect, useState } from 'react'
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
-import { FiBarChart, FiShoppingCart, FiTool, FiUsers } from 'react-icons/fi';
-import { RiWallet2Line } from 'react-icons/ri';
-import { BiBox } from 'react-icons/bi';
-import { AiOutlineDesktop } from 'react-icons/ai';
-import { MainSearch } from '../../components/TableOptions';
-import CreateDepartmentModal from '../../components/Modals/CreateDepartmentModal';
-import { useNavigate } from 'react-router-dom';
+import { RiWallet2Line } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineDesktop } from "react-icons/ai";
+import { FiBarChart, FiShoppingCart, FiTool, FiUsers } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { BiBox } from "react-icons/bi";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
+import { MainSearch } from "../../components/TableOptions";
+import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
 
 const Departments = () => {
-	const navigate = useNavigate();
-	const [collapseNav, setCollapseNav] = useState(() => {
-		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
-	});
+  const navigate = useNavigate();
+  const [collapseNav, setCollapseNav] = useState(() => {
+    // @ts-ignore
+    return JSON.parse(localStorage.getItem("collapse")) || false;
+  });
 
-	useEffect(() => {
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-		localStorage.setItem("collapse", JSON.stringify(collapseNav));
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-	}, [collapseNav]);
-	const toggleSideNav = () => {
-		setCollapseNav(!collapseNav);
-	};
+  useEffect(() => {
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+    localStorage.setItem("collapse", JSON.stringify(collapseNav));
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+  }, [collapseNav]);
+  const toggleSideNav = () => {
+    setCollapseNav(!collapseNav);
+  };
 
-	return (
-		<div id="screen-wrapper">
-			<Header toggleSideNav={toggleSideNav} />
-			<Sidebar collapseNav={collapseNav} />
-			<main>
-				<div className='departments-main-container'>
-					<div>
-						<	CreateDepartmentModal />
+  return (
+    <div id="screen-wrapper">
+      <Header toggleSideNav={toggleSideNav} />
+      <Sidebar collapseNav={collapseNav} />
+      <main>
+        <div className="departments-main-container">
+          <div>
+            <CreateDepartmentModal />
+          </div>
+          <MainSearch placeholder={"Search...          Depertments"} />
+        </div>
 
-					</div>
-					<MainSearch placeholder={'Search...          Depertments'} />
-				</div>
+        <div className="Department-item">
+          <div
+            className="Department-item-sub-main"
+            onClick={() => navigate("/procurement")}
+          >
+            <div className="Department-container-item-sub">
+              <FiShoppingCart size={50} />
+            </div>
+            <p className="Department-item-sub-p">Procurement</p>
+          </div>
+          <div
+            className="Department-item-sub-main"
+            onClick={() => navigate("/engineering")}
+          >
+            <div className="Department-container-item-sub">
+              <FiTool size={50} />
+            </div>
+            <p className="Department-item-sub-p">Engineering</p>
+          </div>
+          <div
+            className="Department-item-sub-main"
+            onClick={() => navigate("/finance")}
+          >
+            <div className="Department-container-item-sub">
+              <RiWallet2Line size={50} />
+            </div>
+            <p className="Department-item-sub-p">Finance</p>
+          </div>
+          <div
+            className="Department-item-sub-main"
+            onClick={() => navigate("/humanresource")}
+          >
+            <div className="Department-container-item-sub">
+              <FiUsers size={50} />
+            </div>
+            <p className="Department-item-sub-p">Human Resource</p>
+          </div>
+          <div
+            className="Department-item-sub-main"
+            onClick={() => navigate("/inventory")}
+          >
+            <div className="Department-container-item-sub">
+              <BiBox size={50} />
+            </div>
+            <p className="Department-item-sub-p">Inventory</p>
+          </div>
+          <div
+            className="Department-item-sub-main"
+            onClick={() => navigate("/informationtech")}
+          >
+            <div className="Department-container-item-sub">
+              <AiOutlineDesktop size={50} />
+            </div>
+            <p className="Department-item-sub-p">IT</p>
+          </div>
+          <div
+            className="Department-item-sub-main"
+            onClick={() => navigate("/budget")}
+          >
+            <div className="Department-container-item-sub">
+              <FiBarChart size={50} />
+            </div>
+            <p className="Department-item-sub-p">Budget</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
 
-				<div className='Department-item'>
-					<div className='Department-item-sub-main' onClick={() => navigate("/procurement")}>
-						<div className='Department-container-item-sub' >
-							<FiShoppingCart size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Procurement</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/engineering")}>
-						<div className='Department-container-item-sub'>
-							<FiTool size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Engineering</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/finance")}>
-						<div className='Department-container-item-sub'>
-							<RiWallet2Line size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Finance</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/humanresource")}>
-						<div className='Department-container-item-sub'>
-							<FiUsers size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Human Resource</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/inventory")}>
-						<div className='Department-container-item-sub'>
-							<BiBox size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Inventory</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/informationtech")}>
-						<div className='Department-container-item-sub'><AiOutlineDesktop size={50} /></div>
-						<p className='Department-item-sub-p'>IT</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/budget")}>
-						<div className='Department-container-item-sub'><FiBarChart size={50} /></div>
-						<p className='Department-item-sub-p'>Budget</p>
-					</div>
-				</div>
-			</main>
-		</div>
-	)
-}
-
-
-
-export default Departments
+export default Departments;

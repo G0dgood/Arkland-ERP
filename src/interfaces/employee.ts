@@ -4,6 +4,8 @@ export interface EmployeeFormProps {
   next?: any;
   prev?: any;
   employee?: Object;
+  options?: any;
+  roleOptions?: any;
   handleChange?: any;
   handleSubmit?: any;
   ref?: any;

@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { number } from "yup";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import AddEmployeeNav from "./AddEmployeeNav";
@@ -13,7 +14,8 @@ import Essentials from "./employeeInputs/Essentials";
 import Finance from "./employeeInputs/Finance";
 import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
-import { number } from "yup";
+import { useAppSelector } from "../../hooks/useDispatch";
+import store from "../../store";
 
 const CreateEmployee = () => {
   const navigate = useNavigate();
@@ -100,6 +102,34 @@ const CreateEmployee = () => {
     submitMyFormRef.current = submitForm;
   }, []);
 
+  const departments: any = useAppSelector(
+    (state) => state.department.department
+  );
+  const availablleDepartments = [] as any;
+
+  departments &&
+    departments.forEach((department: any) =>
+      availablleDepartments.push({
+        value: department.id,
+        label: department.name,
+      })
+    );
+
+  const roles: any = useAppSelector((state) => state.roles.roles);
+  const availablleRoles = [] as any;
+
+  roles &&
+    roles.forEach((role: any) =>
+      availablleRoles.push({
+        value: role.id,
+        label: role.name,
+      })
+    );
+
+  // let bucket: any;
+  // bucket = store.getState();
+  // console.log("bucket", bucket);
+
   return (
     <>
       <Helmet>
@@ -158,6 +188,8 @@ const CreateEmployee = () => {
                 setEmployee={setEmployee}
                 setActive={setActive}
                 bindSubmitForm={bindSubmitForm}
+                options={availablleDepartments}
+                roleOptions={availablleRoles}
               />
               <Address
                 active={active}

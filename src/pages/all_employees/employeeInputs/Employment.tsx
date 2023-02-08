@@ -6,6 +6,7 @@ import SelectField from "../../../components/Inputs/SelectField";
 import InputField from "../../../components/Inputs/InputField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
+import ReactSelectField from "../../../components/Inputs/ReactSelectField";
 
 const Employment = ({
   active,
@@ -13,15 +14,10 @@ const Employment = ({
   setEmployee,
   setActive,
   bindSubmitForm,
+  options,
+  roleOptions,
 }: EmployeeFormProps) => {
   const validate = Yup.object().shape({});
-  const departmentOptions = [
-    "Enter name of department",
-    "Engineering",
-    "Finance",
-    "Architecture",
-  ];
-  const roleOptions = ["Enter role", "admin", "agent"];
   const workLocationOptions = [
     "Do you have any work location objection?",
     "Yes",
@@ -81,13 +77,13 @@ const Employment = ({
                   <div className="row-item">
                     <div className="col">
                       <div className="form-group">
-                        <SelectField
+                        <ReactSelectField
+                          options={options}
                           label="Department"
                           name="department"
-                          options={departmentOptions}
                           className="form-group__gender"
                           onChange={(event: any) => {
-                            setFieldValue("department", event?.target.value);
+                            setFieldValue("department", event?.value);
                           }}
                         />
                       </div>
@@ -95,13 +91,13 @@ const Employment = ({
                     <div className="imput-space" />
                     <div className="col">
                       <div className="form-group">
-                        <SelectField
+                        <ReactSelectField
                           label="Role"
                           name="role"
                           options={roleOptions}
                           className="form-group__gender"
                           onChange={(event: any) => {
-                            setFieldValue("role", event?.target.value);
+                            setFieldValue("role", event?.value);
                           }}
                         />
                       </div>

@@ -6,6 +6,7 @@ import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
 import AllEmployees from "./pages/all_employees/AllEmployees";
 import Departments from "./pages/Departments/Departments";
 import Projects from "./pages/Projects/Projects";
+import Cookies from "js-cookie";
 import Leave from "./pages/Leave/Leave";
 import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
 import Support from "./pages/Support/Support";
@@ -31,8 +32,40 @@ import AdminEditUser from "./pages/AdminEditUser/AdminEditUser";
 import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
 import PrivateRoute from "./components/PrivateRoute";
 import storage from "./utils/storage";
+import { useAppDispatch } from "./hooks/useDispatch";
+import { getDepartment } from "./store/reducers/department";
+import { getRoles } from "./store/reducers/roles";
+import axios from "axios";
+import { sessionExpired } from "./utils/sessionExpires";
 
 const AppRoutes: React.FC<any> = () => {
+  const dispatch = useAppDispatch();
+  const removeData = () => {
+    Cookies.remove("isAuthenticated");
+    Cookies.remove("token");
+    delete axios.defaults.headers.common["Authorization"];
+  };
+
+  axios.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (error) {
+      const status = error.response ? error.response.status : null;
+      const url = error.response ? error.response.config.url : null;
+
+      if (status === 401) {
+        sessionExpired();
+        removeData();
+      }
+    }
+  );
+  React.useEffect(() => {
+    if (Cookies.get("token")) {
+      dispatch(getDepartment());
+      dispatch(getRoles());
+    }
+  }, [dispatch]);
   const user: any = storage.get("user");
   const parsedUserData = JSON.parse(user);
   return (

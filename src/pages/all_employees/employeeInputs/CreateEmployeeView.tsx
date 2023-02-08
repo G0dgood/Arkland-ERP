@@ -9,7 +9,6 @@ import { fireAlert } from "../../../utils/Alert";
 const CreateEmployeeView = ({ active, employee }: any) => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-
   const handleSubmit = async () => {
     setLoading(true);
     const allEmployeeValues = { ...employee };
