@@ -15,7 +15,6 @@ import Finance from "./employeeInputs/Finance";
 import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
 import { useAppSelector } from "../../hooks/useDispatch";
-import store from "../../store";
 
 const CreateEmployee = () => {
   const navigate = useNavigate();
@@ -125,10 +124,6 @@ const CreateEmployee = () => {
         label: role.name,
       })
     );
-
-  // let bucket: any;
-  // bucket = store.getState();
-  // console.log("bucket", bucket);
 
   return (
     <>

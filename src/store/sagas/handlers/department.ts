@@ -7,7 +7,7 @@ export function* handleGetDepartments(action: any) {
   try {
     const response: AxiosResponse = yield call(requestGetDepartments);
     const { data } = response;
-    yield put(setDepartment(data.data));
+    yield put(setDepartment(data?.data));
   } catch (error) {
     console.log(error);
   }

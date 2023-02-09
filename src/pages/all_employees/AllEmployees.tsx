@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { BsCheckCircle } from "react-icons/bs";
@@ -14,9 +15,11 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 
 const AllEmployees = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [data, setData] = useState([]);
   const [sortData, setSortData] = useState([]);
@@ -70,6 +73,33 @@ const AllEmployees = () => {
     }
   }, [data, searchItem]);
 
+  const employees = useAppSelector((state) => state.employees.employees);
+
+  const roles: any = useAppSelector((state) => state.roles.roles);
+  const departments: any = useAppSelector(
+    (state) => state.department.department
+  );
+
+  function checkNameOfRole(id: any): any {
+    let name = [] as any;
+    roles &&
+      roles.forEach((role: any) => {
+        if (id === role.id) {
+          name = role.name;
+        }
+      });
+    return name;
+  }
+  function checkDepartment(id: any): any {
+    let name = [] as any;
+    departments &&
+      departments.forEach((department: any) => {
+        if (id === department.id) {
+          name = department.name;
+        }
+      });
+    return name;
+  }
   const [displayData, setDisplayData] = useState([]);
 
   const header = [
@@ -80,7 +110,7 @@ const AllEmployees = () => {
     { title: "EMAIL", prop: "email" },
     { title: "ROLE", prop: "role" },
     { title: "DEPARTMENT", prop: "department" },
-    { title: "ACTIVE USER", prop: "active_user" },
+    // { title: "ACTIVE USER", prop: "active_user" },
     { title: "VIEW", prop: "view" },
   ];
 
@@ -152,35 +182,35 @@ const AllEmployees = () => {
                   <tbody className="data-table-content">
                     {isLoading ? (
                       <TableFetch colSpan={8} />
-                    ) : displayData?.length === 0 || displayData == null ? (
+                    ) : employees?.length === 0 || employees == null ? (
                       <NoRecordFound colSpan={8} />
                     ) : (
-                      displayData.map((item: any, i: any) => (
+                      employees.map((item: any, i: any) => (
                         <tr className="data-table-row">
                           <td className="table-datacell datatype-string">
                             {item.id}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {item.name}
+                            {item.first_name}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {item.name}
+                            {item?.middle_name}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {item.name}
+                            {item?.last_name}
                           </td>
                           <td className="table-datacell datatype-numeric">
                             {item.email}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            87
+                            {checkNameOfRole(item.role)}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            14%
+                            {checkDepartment(item.department)}
                           </td>
-                          <td className="table-datacell datatype-numeric">
+                          {/* <td className="table-datacell datatype-numeric">
                             14%
-                          </td>
+                          </td> */}
                           <td className="table-datacell datatype-numeric">
                             <div className="table-active-items">
                               <span>

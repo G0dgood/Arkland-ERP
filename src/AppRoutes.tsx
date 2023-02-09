@@ -37,6 +37,7 @@ import { getDepartment } from "./store/reducers/department";
 import { getRoles } from "./store/reducers/roles";
 import axios from "axios";
 import { sessionExpired } from "./utils/sessionExpires";
+import { getEmployees } from "./store/reducers/employees";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -64,6 +65,7 @@ const AppRoutes: React.FC<any> = () => {
     if (Cookies.get("token")) {
       dispatch(getDepartment());
       dispatch(getRoles());
+      dispatch(getEmployees());
     }
   }, [dispatch]);
   const user: any = storage.get("user");
