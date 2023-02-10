@@ -1,17 +1,18 @@
-import React, { useEffect, useState, } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
+import { AiOutlineLogout } from "react-icons/ai";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { CgProfile } from "react-icons/cg";
 import { TfiAlignJustify } from "react-icons/tfi";
 import logo from "../assets/images/ASLLOGO.svg";
-import { AiOutlineLogout } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/storage";
 
-const Header = ({ toggleSideNav, }: any) => {
+const Header = ({ toggleSideNav }: any) => {
+  const navigate = useNavigate();
   const [network, setnetwork] = useState<any>()
   const [dropDown, setDropDown] = useState(false);
   const handleLogoutUser = async () => {
