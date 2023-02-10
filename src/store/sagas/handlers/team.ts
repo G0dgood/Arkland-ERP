@@ -7,7 +7,6 @@ export function* handleGetTeam(action: any) {
   try {
     const response: AxiosResponse = yield call(requestGetTeam);
     const { data } = response;
-    console.log(data);
     yield put(setTeam(data?.data));
   } catch (error) {
     console.log(error);
