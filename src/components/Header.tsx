@@ -9,6 +9,7 @@ import { TfiAlignJustify } from "react-icons/tfi";
 import logo from "../assets/images/ASLLOGO.svg";
 import { AiOutlineLogout } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
+import storage from "../utils/storage";
 
 const Header = ({ toggleSideNav, }: any) => {
   const [network, setnetwork] = useState<any>()
