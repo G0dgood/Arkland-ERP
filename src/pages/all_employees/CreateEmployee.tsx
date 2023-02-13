@@ -22,6 +22,7 @@ const CreateEmployee = () => {
     first_name: "",
     middle_name: "",
     last_name: "",
+    personal_email: "",
     email: "",
     phone: "",
     gender: "",
@@ -60,6 +61,7 @@ const CreateEmployee = () => {
     employment_duration: "",
     employment_type: "",
     employee_id: "",
+    category: "",
 
     tally_number: "",
     address: "",
@@ -196,6 +198,8 @@ const CreateEmployee = () => {
               <CreateEmployeeView
                 active={active}
                 employee={employee}
+                roles={roles}
+                departments={departments}
                 setEmployee={setEmployee}
                 setActive={setActive}
                 bindSubmitForm={bindSubmitForm}

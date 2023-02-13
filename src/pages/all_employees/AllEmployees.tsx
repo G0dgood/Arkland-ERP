@@ -16,29 +16,22 @@ import {
   TableFetch,
 } from "../../components/TableOptions";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { getDepartment } from "../../store/reducers/department";
+import { getRoles } from "../../store/reducers/roles";
+import { getEmployees } from "../../store/reducers/employees";
 
 const AllEmployees = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  React.useEffect(() => {
+    dispatch(getEmployees());
+    dispatch(getDepartment());
+    dispatch(getRoles());
+  }, [dispatch]);
   const [data, setData] = useState([]);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [isLoading, setisLoading] = useState(false);
-
-  useEffect(() => {
-    setisLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        setisLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setisLoading(false);
-      });
-  }, []);
 
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore

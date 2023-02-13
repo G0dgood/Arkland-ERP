@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export function requestGetEmployees() {
-  return axios.request({
+export async function requestGetEmployees() {
+  return await axios.request({
     method: "get",
     url: `${process.env.REACT_APP_API}/hr/employees?status=in+review`,
   });
