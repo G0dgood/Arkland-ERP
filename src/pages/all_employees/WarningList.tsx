@@ -42,11 +42,6 @@ const WarningList = () => {
         console.log(err);
         setisLoading(false);
       });
-
-    //cleanup
-    return () => {
-      source.cancel();
-    };
   }, []);
 
   React.useEffect(() => {

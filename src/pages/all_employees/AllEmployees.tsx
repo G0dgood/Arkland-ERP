@@ -46,11 +46,6 @@ const AllEmployees = () => {
         console.log(err);
         setisLoading(false);
       });
-
-    //cleanup
-    return () => {
-      source.cancel();
-    };
   }, []);
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
