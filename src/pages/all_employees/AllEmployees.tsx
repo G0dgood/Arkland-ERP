@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { BsCheckCircle } from "react-icons/bs";
 import { FiEdit, FiLock } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Pagination from "../../components/Pagination";
@@ -18,21 +19,34 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { getDepartment } from "../../store/reducers/department";
 import { getRoles } from "../../store/reducers/roles";
-import { getEmployees } from "../../store/reducers/employees";
+import { checkForName } from "../../utils/checkForName";
 
 const AllEmployees = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   React.useEffect(() => {
-    dispatch(getEmployees());
     dispatch(getDepartment());
     dispatch(getRoles());
-  }, [dispatch]);
-  const [data, setData] = useState([]);
+  }, []);
+  const [employees, setEmployees] = useState([] as any);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [isLoading, setisLoading] = useState(false);
 
+  React.useEffect(() => {
+    const source = axios.CancelToken.source();
+    setisLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_API}/hr/employees?status=in+review`)
+      .then((res: AxiosResponse) => {
+        setEmployees([...res.data.data]);
+        setisLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setisLoading(false);
+      });
+  }, []);
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
@@ -56,43 +70,11 @@ const AllEmployees = () => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
 
-  useEffect(() => {
-    if (data) {
-      const result = data?.filter((object) => {
-        // @ts-ignore
-        return JSON?.stringify(object)?.toString()?.includes(searchItem);
-      });
-      setSortData(result);
-    }
-  }, [data, searchItem]);
-
-  const employees = useAppSelector((state) => state.employees.employees);
-
   const roles: any = useAppSelector((state) => state.roles.roles);
   const departments: any = useAppSelector(
     (state) => state.department.department
   );
 
-  function checkNameOfRole(id: any): any {
-    let name = [] as any;
-    roles &&
-      roles.forEach((role: any) => {
-        if (id === role.id) {
-          name = role.name;
-        }
-      });
-    return name;
-  }
-  function checkDepartment(id: any): any {
-    let name = [] as any;
-    departments &&
-      departments.forEach((department: any) => {
-        if (id === department.id) {
-          name = department.name;
-        }
-      });
-    return name;
-  }
   const [displayData, setDisplayData] = useState([]);
 
   const header = [
@@ -138,7 +120,7 @@ const AllEmployees = () => {
 
                 <div>
                   <EntriesPerPage
-                    data={data}
+                    // data={data}
                     entriesPerPage={entriesPerPage}
                     setEntriesPerPage={setEntriesPerPage}
                   />
@@ -196,14 +178,12 @@ const AllEmployees = () => {
                             {item.email}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {checkNameOfRole(item.role)}
+                            {checkForName(item.role, roles)}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {checkDepartment(item.department)}
+                            {checkForName(item.department, departments)}
                           </td>
-                          {/* <td className="table-datacell datatype-numeric">
-                            14%
-                          </td> */}
+
                           <td className="table-datacell datatype-numeric">
                             <div className="table-active-items">
                               <span>

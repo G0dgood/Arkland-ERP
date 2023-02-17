@@ -26,13 +26,15 @@ const CreateDepartmentModal = (props: any) => {
       )
       .then((res: AxiosResponse) => {
         setLoading(false);
-        const title = "Department created successfully";
-        const html = `Department created `;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        resetForm(values);
-        setLgShow(false);
-        navigate(`/departments`);
+        if (res.data.success === true || res.status === 200) {
+          const title = "Department created successfully";
+          const html = `Department created `;
+          const icon = "success";
+          fireAlert(title, html, icon);
+          resetForm(values);
+          setLgShow(false);
+          navigate(`/departments`);
+        }
       })
       .catch((err) => {
         setLoading(false);

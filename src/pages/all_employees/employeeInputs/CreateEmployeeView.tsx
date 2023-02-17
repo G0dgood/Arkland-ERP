@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import { fireAlert } from "../../../utils/Alert";
-import { useAppSelector } from "../../../hooks/useDispatch";
 
 const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
   const [isLoading, setLoading] = React.useState(false);
@@ -23,11 +22,6 @@ const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
           const icon = "success";
           fireAlert(title, html, icon);
           navigate(`/allemployees`);
-        } else if (undefined) {
-          const html = res.status;
-          const icon = "error";
-          const title = "Employee creation request failed";
-          fireAlert(title, html, icon);
         }
       })
       .catch(function (error) {
