@@ -37,23 +37,35 @@ const Login = () => {
 
   const handleSubmit = (values: any, { resetForm }: any) => {
     setLoading(true);
-    axios
-      .post(`${process.env.REACT_APP_API}/auth/login`, values)
-      .then((res: AxiosResponse) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...values }),
+    };
+    fetch(`${process.env.REACT_APP_API}/auth/login`, requestOptions)
+      .then(async (response) => {
         setLoading(false);
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          // get error message from body or default to response status
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
         resetForm(values);
         // set token in axios header
-        axios.defaults.headers.common["authorization"] = res.data.token;
-        // set token in cookie
-        Cookies.set("token", res.data.token);
-        storage.set("user", JSON.stringify(res.data?.user));
+        axios.defaults.headers.common["authorization"] = data.token;
+        // // set token in cookie
+        Cookies.set("token", data.token);
+        storage.set("user", JSON.stringify(data?.user));
         window.location.replace("/home");
       })
-      .catch((err) => {
+      .catch((error) => {
         setLoading(false);
         setError(true);
-        console.log(err.response);
-        setMessage(err.response?.data?.message);
+        setMessage(error);
         setTimeout(() => {
           setError(false);
           setMessage("");

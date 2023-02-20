@@ -179,7 +179,7 @@ const Projects = () => {
                       <NoRecordFound colSpan={8} />
                     ) : (
                       displayData.map((item: any, i: any) => (
-                        <tr className="data-table-row">
+                        <tr className="data-table-row" onClick={viewProject}>
                           <td className="table-datacell datatype-string">
                             {item?.name}
                           </td>
