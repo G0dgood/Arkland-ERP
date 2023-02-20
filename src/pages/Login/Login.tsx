@@ -8,6 +8,7 @@ import { Form, Formik } from "formik";
 import { BsExclamationLg } from "react-icons/bs";
 import Checkbox from "@mui/material/Checkbox";
 import { FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import axios, { AxiosResponse } from "axios";
 import first from "../../assets/images/Bijou.jpg";
@@ -19,14 +20,10 @@ import logo from "../../assets/images/ASLLOGO.svg";
 import { useAppDispatch } from "../../hooks/useDispatch";
 import InputField from "../../components/Inputs/InputField";
 import storage from "../../utils/storage";
-import { setUser } from "../../store/actions/user";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const dispatch = useAppDispatch();
   const [isLoading, setLoading] = React.useState(false);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const navigate = useNavigate();
   const [error, setError] = useState<any>();
   const [showToast, setShowToast] = useState(false);
   const [message, setMessage] = useState("");
@@ -55,6 +52,7 @@ const Login = () => {
       .catch((err) => {
         setLoading(false);
         setError(true);
+        console.log(err.response);
         setMessage(err.response?.data?.message);
         setTimeout(() => {
           setError(false);

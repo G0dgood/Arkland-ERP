@@ -26,6 +26,12 @@ const Employment = ({
     dispatch(getRoles());
   }, [dispatch]);
   const validate = Yup.object().shape({});
+  const categoryOptions = [
+    "Select staff category",
+    "Master",
+    "Senior",
+    "Junior",
+  ];
   const workLocationOptions = [
     "Do you have any work location objection?",
     "Yes",
@@ -63,6 +69,7 @@ const Employment = ({
         initialValues={{
           department: "",
           role: "",
+          category: "",
           has_work_location_objection: "",
           employment_date: "",
           employment_duration: "",
@@ -115,6 +122,20 @@ const Employment = ({
                     <div className="col">
                       <div className="form-group">
                         <SelectField
+                          label="Staff category"
+                          name="category"
+                          options={categoryOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue("category", event?.target.value);
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
                           label="Work Location Objection"
                           name="has_work_location_objection"
                           options={workLocationOptions}
@@ -128,7 +149,8 @@ const Employment = ({
                         />
                       </div>
                     </div>
-                    <div className="imput-space" />
+                  </div>
+                  <div className="row-item">
                     <div className="col">
                       <div className="form-group">
                         <CustomInputField
@@ -147,8 +169,8 @@ const Employment = ({
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="row-item">
+
+                    <div className="imput-space" />
                     <div className="col">
                       <div className="form-group">
                         <SelectField
@@ -165,7 +187,8 @@ const Employment = ({
                         />
                       </div>
                     </div>
-                    <div className="imput-space" />
+                  </div>
+                  <div className="row-item">
                     <div className="col">
                       <div className="form-group">
                         <CustomInputField
@@ -182,8 +205,7 @@ const Employment = ({
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="row-item">
+                    <div className="imput-space" />
                     <div className="col">
                       <div className="form-group">
                         <InputField
@@ -193,7 +215,13 @@ const Employment = ({
                         />
                       </div>
                     </div>
-                    <div className="imput-space" />
+                  </div>
+                  <div
+                    className="row-item"
+                    style={{
+                      width: "52%",
+                    }}
+                  >
                     <div className="col">
                       <div className="form-group">
                         <InputField
@@ -203,6 +231,7 @@ const Employment = ({
                         />
                       </div>
                     </div>
+                    <div className="imput-space" />
                   </div>
                 </form>
               </div>

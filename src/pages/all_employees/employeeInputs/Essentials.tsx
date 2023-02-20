@@ -128,7 +128,6 @@ const Essentials = ({
     first_name: Yup.string().required("First name is required"),
     middle_name: Yup.string(),
     last_name: Yup.string().required("Last name is required"),
-    email: Yup.string().email().required("Email is required"),
     phone: Yup.string().required("Phone number is required"),
   });
   const formatDate = (date: Date) => {
@@ -166,6 +165,7 @@ const Essentials = ({
           middle_name: "",
           last_name: "",
           marital_status: "",
+          personal_email: "",
           email: "",
           phone: "",
           gender: "",
@@ -227,13 +227,24 @@ const Essentials = ({
                     <div className="col">
                       <div className="form-group">
                         <InputField
-                          label="Email"
+                          label="Official Email"
                           name="email"
-                          placeholder="Enter email"
+                          placeholder="Enter official email"
                         />
                       </div>
                     </div>
                     <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="Personal Email"
+                          name="personal_email"
+                          placeholder="Enter personal email"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row-item">
                     <div className="col">
                       <div className="form-group">
                         <PhoneInput
@@ -261,8 +272,8 @@ const Essentials = ({
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="row-item">
+
+                    <div className="imput-space" />
                     <div className="col">
                       <div className="form-group">
                         <SelectField
@@ -276,7 +287,8 @@ const Essentials = ({
                         />
                       </div>
                     </div>
-                    <div className="imput-space" />
+                  </div>
+                  <div className="row-item">
                     <div className="col">
                       <div className="form-group">
                         <CustomInputField
@@ -290,6 +302,24 @@ const Essentials = ({
                             setFieldValue(
                               "date_of_birth",
                               formatDate(event?.target.value)
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
+                          label="Marital Status"
+                          name="marital_status"
+                          options={martialStatusOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "marital_status",
+                              event?.target.value
                             );
                           }}
                         />
@@ -313,6 +343,7 @@ const Essentials = ({
                         />
                       </div>
                     </div>
+
                     <div className="imput-space" />
                     <div className="col">
                       <div className="form-group">
@@ -335,6 +366,7 @@ const Essentials = ({
                       </div>
                     </div>
                     <div className="imput-space" />
+
                     <div className="col">
                       <div className="form-group">
                         <SelectField
@@ -348,24 +380,7 @@ const Essentials = ({
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="row-item">
-                    <div className="col">
-                      <div className="form-group">
-                        <SelectField
-                          label="Marital Status"
-                          name="marital_status"
-                          options={martialStatusOptions}
-                          className="form-group__gender"
-                          onChange={(event: any) => {
-                            setFieldValue(
-                              "marital_status",
-                              event?.target.value
-                            );
-                          }}
-                        />
-                      </div>
-                    </div>
+
                     <div className="imput-space" />
                     <div className="col">
                       <div className="form-group">

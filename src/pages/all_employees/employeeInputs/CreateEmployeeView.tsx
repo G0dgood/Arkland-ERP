@@ -6,30 +6,53 @@ import axios, { AxiosResponse } from "axios";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import { fireAlert } from "../../../utils/Alert";
 
-const CreateEmployeeView = ({ active, employee }: any) => {
+const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setLoading(true);
     const allEmployeeValues = { ...employee };
-    await axios
+    axios
       .post(`${process.env.REACT_APP_API}/hr/employees`, allEmployeeValues)
       .then((res: AxiosResponse) => {
         setLoading(false);
-        const title = "Employee creation request successful";
-        const html = `Request to create an employee sent`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        navigate(`/allemployees`);
+        if (res.data.success === true || res.status === 200) {
+          const title = "Employee creation request successful";
+          const html = `Request to create an employee sent`;
+          const icon = "success";
+          fireAlert(title, html, icon);
+          navigate(`/allemployees`);
+        }
       })
-      .catch((err) => {
+      .catch(function (error) {
         setLoading(false);
-        const html = err.response.data.message;
+        const html = "Try again";
         const icon = "error";
         const title = "Employee creation request failed";
         fireAlert(title, html, icon);
       });
   };
+
+  function checkNameOfRole(id: any): any {
+    let name = [] as any;
+    roles &&
+      roles.forEach((role: any) => {
+        if (id === role.id) {
+          name = role.name;
+        }
+      });
+    return name;
+  }
+  function checkDepartment(id: any): any {
+    let name = [] as any;
+    departments &&
+      departments.forEach((department: any) => {
+        if (id === department.id) {
+          name = department.name;
+        }
+      });
+    return name;
+  }
   return (
     <div
       className={
@@ -51,29 +74,22 @@ const CreateEmployeeView = ({ active, employee }: any) => {
                 employee?.last_name}
             </p>
             <p>Email</p>
-            <p>{employee?.email}</p>
+            <p>{employee?.personal_email}</p>
             <p>Phone</p>
             <p>{employee?.phone} </p>
-            <p>NIN</p>
-            <p>{employee?.nin}</p>
-            <p>Gender</p>
-            <p> {employee?.gender}</p>
-            <p>Marital Status</p>
-            <p> {employee?.marital_status}</p>
             <p>Date of Birth (DD-MM-YYYY)</p>
             <p> {moment(employee?.date_of_birth).format("DD-MM-YYYY")}</p>
             <p>Age</p>
             <p>
               {" "}
               {moment(employee?.date_of_birth).fromNow().split(" ")[0]} years
-              old.
+              old
             </p>
-          </div>
-        </div>
-        <div>
-          <div className="getjob-application-details">
-            <p>Expatriate</p>
-            <p>{employee.is_expatriate === true ? "Yes" : "No"}</p>
+
+            <p>Gender</p>
+            <p> {employee?.gender}</p>
+            <p>Marital Status</p>
+            <p> {employee?.marital_status}</p>
             <p>Country</p>
             <p>{employee?.country}</p>
             <p>State</p>
@@ -82,6 +98,34 @@ const CreateEmployeeView = ({ active, employee }: any) => {
             <p>{employee?.address}</p>
             <p>City</p>
             <p>{employee?.city}</p>
+          </div>
+        </div>
+        <div>
+          <div className="getjob-application-details">
+            <p>Expatriate</p>
+            <p>{employee.is_expatriate === true ? "Yes" : "No"}</p>
+            {employee.is_expatriate === true ? (
+              <>
+                <>
+                  <p>Passport Number</p>
+                  <p>{employee?.passport_number}</p>
+                </>
+                <>
+                  <p>Visa Type</p>
+                  <p>{employee?.visa_type}</p>
+                </>
+                <>
+                  <p>Visa Duration</p>
+                  <p>{employee?.visa_duration} months </p>
+                </>
+              </>
+            ) : (
+              <>
+                <p>NIN</p>
+                <p>{employee?.nin}</p>
+              </>
+            )}
+
             <p>Instiution attended</p>
             <p>{employee?.institution_attended}</p>
             <p>Course studied</p>
@@ -153,9 +197,9 @@ const CreateEmployeeView = ({ active, employee }: any) => {
         <div>
           <div className="getjob-application-details">
             <p>Department</p>
-            <p>{employee?.department}</p>
+            <p>{checkDepartment(employee?.department)}</p>
             <p>Role</p>
-            <p>{employee?.role}</p>
+            <p>{checkNameOfRole(employee?.role)}</p>
             <p>Work Location Objection</p>
             <p>
               {employee.has_work_location_objection === true ? "Yes" : "No"}
