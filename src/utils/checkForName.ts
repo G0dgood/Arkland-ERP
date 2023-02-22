@@ -19,3 +19,14 @@ export function checkForEmployee(id: any, employee?: any): any {
     });
   return name;
 }
+
+export function checkForTeams(id: any, teams?: any): any {
+  let name = [] as any;
+  teams &&
+    teams.forEach((team: any) => {
+      if (id === team.id) {
+        name = team.name;
+      }
+    });
+  return name;
+}

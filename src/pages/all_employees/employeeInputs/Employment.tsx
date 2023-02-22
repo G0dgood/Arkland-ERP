@@ -20,11 +20,6 @@ const Employment = ({
   options,
   roleOptions,
 }: EmployeeFormProps) => {
-  const dispatch = useAppDispatch();
-  React.useEffect(() => {
-    dispatch(getDepartment());
-    dispatch(getRoles());
-  }, [dispatch]);
   const validate = Yup.object().shape({});
   const categoryOptions = [
     "Select staff category",
