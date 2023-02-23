@@ -27,7 +27,7 @@ const AllEmployees = () => {
   React.useEffect(() => {
     dispatch(getDepartment());
     dispatch(getRoles());
-  }, []);
+  }, [dispatch]);
   const [employees, setEmployees] = useState([] as any);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
