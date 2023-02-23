@@ -5,6 +5,7 @@ import { BsCheckCircle } from "react-icons/bs";
 import { FiEdit, FiLock } from "react-icons/fi";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import {
@@ -19,7 +20,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { getTeam } from "../../store/reducers/team";
 import { getTeamLeads } from "../../store/reducers/teamLeads";
 import { checkForTeams } from "../../utils/checkForName";
-import moment from "moment";
 
 // header for data table
 const header = [
@@ -63,6 +63,9 @@ const Projects = () => {
         console.log(err);
         setisLoading(false);
       });
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   useEffect(() => {
@@ -73,8 +76,8 @@ const Projects = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-  const viewProject = () => {
-    navigate("/viewproject");
+  const viewProject = (id: number) => {
+    navigate(`/viewproject/${id}`);
   };
 
   const [sortData, setSortData] = useState([]);
@@ -172,7 +175,10 @@ const Projects = () => {
                       <NoRecordFound colSpan={8} />
                     ) : (
                       projects.map((item: any, i: any) => (
-                        <tr className="data-table-row" onClick={viewProject}>
+                        <tr
+                          className="data-table-row"
+                          onClick={() => viewProject(item?.id)}
+                        >
                           <td className="table-datacell datatype-string">
                             {item?.name}
                           </td>
@@ -199,7 +205,7 @@ const Projects = () => {
                           <td className="table-datacell datatype-numeric">
                             {item?.status}
                           </td>
-                          <td className="table-datacell datatype-numeric">
+                          {/* <td className="table-datacell datatype-numeric">
                             <div className="table-active-items">
                               <span>
                                 <BsCheckCircle size={25} color={"green"} />
@@ -217,7 +223,7 @@ const Projects = () => {
                                 </span>
                               </span>
                             </div>
-                          </td>
+                          </td> */}
                         </tr>
                       ))
                     )}
