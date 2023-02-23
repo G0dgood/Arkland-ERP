@@ -38,6 +38,7 @@ import { getRoles } from "./store/reducers/roles";
 import axios from "axios";
 import { sessionExpired } from "./utils/sessionExpires";
 import { getEmployees } from "./store/reducers/employees";
+import ProjectView from "./pages/Projects/ProjectView";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -61,6 +62,7 @@ const AppRoutes: React.FC<any> = () => {
       }
     }
   );
+
   React.useEffect(() => {
     if (Cookies.get("token")) {
       dispatch(getDepartment());
@@ -82,10 +84,7 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
-        <Route
-          path="/teamleaveapplications"
-          element={<TeamLeaveApplications />}
-        />
+        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
       </Route>
       {/* Protected routes as admins, HR, Project managers and team leads */}
@@ -100,10 +99,7 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/allemployees" element={<AllEmployees />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/viewproject" element={<ViewProjects />} />
-        <Route
-          path="/allleaveapplications"
-          element={<AllLeaveApplications />}
-        />
+        <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
         <Route path="/siteWorkerrequest" element={<SiteWorkerRequest />} />
         <Route path="/createemployee" element={<CreateEmployee />} />
         <Route path="/warninglist" element={<WarningList />} />
@@ -121,6 +117,8 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/budget" element={<Budget />} />
         {/* AdminEditUser */}
         <Route path="/admineditUser" element={<AdminEditUser />} />
+        {/* Project View */}
+        <Route path="/projectview" element={<ProjectView />} />
       </Route>
     </Routes>
   );
