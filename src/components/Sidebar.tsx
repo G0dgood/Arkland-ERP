@@ -125,7 +125,7 @@ const Sidebar = ({ collapseNav }: any) => {
 
 
         <NavLink
-          to="/projects"
+          to="/projectview"
           // exact
           className={
             window.location.pathname === "/projects"

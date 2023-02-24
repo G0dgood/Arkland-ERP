@@ -10,10 +10,12 @@ import { HiOutlineChatBubbleOvalLeftEllipsis } from 'react-icons/hi2';
 import { ProgressBar } from 'react-bootstrap';
 import { projectdata } from '../../components/ERP_Datas/ProjectData';
 import { MdOutlineMarkEmailUnread } from 'react-icons/md';
+import { ChartDonut } from '@patternfly/react-charts';
+import { useNavigate } from 'react-router-dom';
 
 
 const ProjectView = () => {
-
+	const navigate = useNavigate();
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
@@ -43,8 +45,9 @@ const ProjectView = () => {
 								<span className='Request-btn'>
 									<Button className='subone-header-flex-btn'>
 										<BsPlusLg size={10} color='#fff' className='Create-plue-account' /> Create Project</Button></span>
-								<span><Button className='subone-header-flex-btn'>
-									<BsPlusLg size={10} color='#fff' className='Create-plue-account' /> {" "}Request Worker List</Button></span>
+								<span>
+									<Button className='subone-header-flex-btn' onClick={() => navigate("/siteWorkerrequest")}>
+										<BsPlusLg size={10} color='#fff' className='Create-plue-account' /> {" "}Request Worker List</Button></span>
 
 							</div>
 						</div>
@@ -74,7 +77,7 @@ const ProjectView = () => {
 						</div>
 						<div className='subone-col-3'>
 							{projectdata?.map((item: any, i: any) =>
-								<div className='ProjectView-card'>
+								<div className='ProjectView-card' key={i} onClick={() => navigate("/viewproject")}>
 									<div className='iDotsHorizontalRounded'>
 										<Button className={item.button}>{item.buttonText}</Button>
 										<BiDotsHorizontalRounded color='#97979B' />
@@ -86,10 +89,10 @@ const ProjectView = () => {
 									</div>
 									<div className='iDotsRounded-percent-people'>
 										<div className='iDotsRounded-percent-list'>
-											<span className='profile-container'>BS</span>
-											<span className='profile-container'>BN</span>
-											<span className='profile-container'>JA</span>
-											<span className='profile-container'>AD</span>
+											<span className='profile-containers'>BS</span>
+											<span className='profile-containers'>BN</span>
+											<span className='profile-containers'>JA</span>
+											<span className='profile-containers'>AD</span>
 										</div>
 										<div className='percent-people-grid'>
 											<div><HiOutlinePaperClip />6</div>
@@ -112,32 +115,56 @@ const ProjectView = () => {
 									<HiOutlineUserGroup size={28} />
 								</div>
 							</div>
-							<div className='subtwo-content-two-sub2'> </div>
+							<div className='subtwo-content-two-sub2'>
+								<div
+									style={{ height: "18rem", width: "18rem", margin: "auto" }}
+								>
+									<ChartDonut
+										ariaDesc="Progress"
+										ariaTitle="Progress"
+										constrainToVisibleArea={true}
+										data={[
+											{ x: "Completed", y: 100 },
+											{ x: "Pending", y: 100 - +10 },
+										]}
+										title="35%"
+										colorScale={["#48AB62", "#116327"]}
+										height={200}
+										width={200}
+										padAngle={0}
+										innerRadius={50}
+									/>
+								</div>
+							</div>
 							<div className='subtwo-content-three-sub3'>
 								<p>Projects</p>
 								<div className='ProjectView-projects'>
 									<div className='projects-total1'>
 										<h6>TOTAL</h6>
 										<div className='projects-total-container'>
-											<span className='projects-total1-span'></span> <span className='projects-total1-span1'>144</span>
+											<span className='projects-total1-span'></span>
+											<span className='projects-total1-span1'>144</span>
 										</div>
 									</div>
 									<div className='projects-total2'>
 										<h6>COMPLETED</h6>
 										<div className='projects-total-container'>
-											<span className='projects-total2-span'></span> <span className='projects-total1-span1'>56</span>
+											<span className='projects-total2-span'></span>
+											<span className='projects-total1-span1'>56</span>
 										</div>
 									</div>
 									<div className='projects-total3'>
 										<h6>TOTAL</h6>
 										<div className='projects-total-container'>
-											<span className='projects-total3-span'></span> <span className='projects-total1-span1'>72</span>
+											<span className='projects-total3-span'></span>
+											<span className='projects-total1-span1'>72</span>
 										</div>
 									</div>
 									<div className='projects-total4'>
 										<h6>TOTAL</h6>
 										<div className='projects-total-container'>
-											<span className='projects-total4-span'></span> <span className='projects-total1-span1'>24</span>
+											<span className='projects-total4-span'></span>
+											<span className='projects-total1-span1'>24</span>
 										</div>
 									</div>
 								</div>

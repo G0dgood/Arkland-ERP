@@ -136,15 +136,7 @@ const CreateEmployee = () => {
         <Header toggleSideNav={toggleSideNav} />
         <Sidebar collapseNav={collapseNav} />
         <main>
-          <div className="back-to-employee-container">
-            <Button
-              onClick={() => navigate("/allemployees")}
-              variant="outlined"
-              className="back-to-employee-button"
-            >
-              <GoArrowLeft className="back-to-employee-icon" size={20} />
-            </Button>
-          </div>
+
           <div className="addemployeecontainer">
             <AddEmployeeTitle
               setActive={setActive}
