@@ -3,7 +3,6 @@ import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import { HiOutlinePaperClip, HiOutlineUserGroup } from 'react-icons/hi';
 import { Button } from '@material-ui/core';
-import { GoSettings } from 'react-icons/go';
 import { BsChevronDown, BsPlusLg } from 'react-icons/bs';
 import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from 'react-icons/bi';
 import { HiOutlineChatBubbleOvalLeftEllipsis } from 'react-icons/hi2';
@@ -12,6 +11,7 @@ import { projectdata } from '../../components/ERP_Datas/ProjectData';
 import { MdOutlineMarkEmailUnread } from 'react-icons/md';
 import { ChartDonut } from '@patternfly/react-charts';
 import { useNavigate } from 'react-router-dom';
+import CreateProjectModal from '../../components/Modals/CreateProjectModal';
 
 
 const ProjectView = () => {
@@ -41,15 +41,16 @@ const ProjectView = () => {
 					<div className='ProjectViewContainer-subone'>
 						<div className='subone-col-1 subtwo-content-one-sub1-content subone-header-flex'>
 							<h5>Projects</h5>
-							<div>
-								<span className='Request-btn'>
-									<Button className='subone-header-flex-btn'>
-										<BsPlusLg size={10} color='#fff' className='Create-plue-account' /> Create Project</Button></span>
-								<span>
+							<div className='Request-btn-modal-container'>
+								<div className='Request-btn'>
+									<CreateProjectModal />
+								</div>
+								<div>
 									<Button className='subone-header-flex-btn' onClick={() => navigate("/siteWorkerrequest")}>
-										<BsPlusLg size={10} color='#fff' className='Create-plue-account' /> {" "}Request Worker List</Button></span>
-
+										<BsPlusLg size={10} color='#fff' className='Create-plue-account' /> {" "}Request Worker List</Button>
+								</div>
 							</div>
+
 						</div>
 						<div className='subone-col-2'>
 							<div className='subone-col-sup1'>
@@ -77,7 +78,7 @@ const ProjectView = () => {
 						</div>
 						<div className='subone-col-3'>
 							{projectdata?.map((item: any, i: any) =>
-								<div className='ProjectView-card' key={i} onClick={() => navigate("/viewproject")}>
+								<div className='ProjectView-card' key={i} onClick={() => navigate("/viewproject/:id")}>
 									<div className='iDotsHorizontalRounded'>
 										<Button className={item.button}>{item.buttonText}</Button>
 										<BiDotsHorizontalRounded color='#97979B' />
