@@ -118,7 +118,7 @@ const ProjectView = () => {
 							</div>
 							<div className='subtwo-content-two-sub2'>
 								<div
-									style={{ height: "18rem", width: "18rem", margin: "auto" }}
+								// style={{ height: "18rem", width: "18rem", margin: "auto" }}
 								>
 									<ChartDonut
 										ariaDesc="Progress"
