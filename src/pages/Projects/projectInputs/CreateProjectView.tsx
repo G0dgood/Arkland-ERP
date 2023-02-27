@@ -14,7 +14,6 @@ const CreateProjectView = ({
   teams,
   teamLeads,
 }: any) => {
-  console.log(project);
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const handleSubmit = () => {
