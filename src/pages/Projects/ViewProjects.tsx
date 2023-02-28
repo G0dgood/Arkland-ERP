@@ -10,12 +10,13 @@ import {
 } from "@patternfly/react-charts";
 import moment from "moment";
 import Calendar from "react-calendar";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SyncLoader from "react-spinners/SyncLoader";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectAvatar from "../../assets/vectors/project-avatar.svg";
+import projectBack from "../../assets/vectors/project-back.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
 import projectProfile from "../../assets/vectors/project-profile.svg";
 import { checkForTeams } from "../../utils/checkForName";
@@ -24,6 +25,8 @@ import { BarLoader } from "react-spinners";
 
 const ViewProject = () => {
   const { id }: any = useParams();
+  const navigate = useNavigate();
+
   const [value, onChange] = useState(new Date());
   const [projects, setProjects] = React.useState({} as any);
   const [teamMembers, setTeamMembers] = React.useState({} as any);
@@ -79,7 +82,7 @@ const ViewProject = () => {
       source.cancel();
     };
   }, [dataFetch === true]);
-
+  console.log(projects);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   // const handleChange = (event: any) => {
   // 	setChecked(event.target.checked);
@@ -152,6 +155,12 @@ const ViewProject = () => {
               <div className="project-main-div-col-1-sub">
                 <div className="project-main-div-col-1-sub-min">
                   <img
+                    src={projectBack}
+                    alt="User"
+                    className="project-back-img"
+                    onClick={() => navigate("/projectview")}
+                  />
+                  <img
                     src={projectAvatar}
                     alt="User"
                     className="project-sub-img"
@@ -176,7 +185,7 @@ const ViewProject = () => {
                         NUMBER OF EMPLOYEES:
                       </p>
                       <p className="project-main-div-col-2-sub-container-subTitle">
-                        253
+                        {teamMembers.length > 0 ? teamMembers.length : ""}
                       </p>
                     </div>
                   </div>
@@ -214,9 +223,9 @@ const ViewProject = () => {
                       constrainToVisibleArea={true}
                       data={[
                         { x: "Completed", y: 100 },
-                        { x: "Pending", y: 100 - +10 },
+                        { x: "Pending", y: `${projects.progress_percentage}%` },
                       ]}
-                      title="35%"
+                      title={`${projects.progress_percentage}%`}
                       colorScale={["#48AB62", "#116327"]}
                       height={200}
                       width={200}
@@ -304,396 +313,47 @@ const ViewProject = () => {
                   </div>
 
                   <div className="project-main-div-col-2-sub-max project-main-div-col-2-sub-min-main">
-                    {isTeamLoading ? (
+                    {isTeamLoading === true ? (
                       <div>
                         <SyncLoader
                           cssOverride={override}
                           color={"#990000"}
-                          loading={isLoading}
+                          loading={isTeamLoading}
                         />
                       </div>
                     ) : (
-                      <div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "1fr",
+                        }}
+                      >
+                        {teamMembers?.length > 0 ? (
+                          <div className="project-main-div-col-2-sub-container1">
+                            {teamMembers?.map((item: any, i: any) => (
+                              <div className="project-main-div-col-2-sub-container1-flex">
+                                <img
+                                  src={projectProfile}
+                                  alt="User"
+                                  className="project-main-div-col-2-sub-container1-image"
+                                />
+                                <div className="project-main-div-col-2-sub-container1-flexMargin">
+                                  <p className="project-main-div-col-2-sub-container1-title">
+                                    {item.employee_name}
+                                  </p>
+                                  <p
+                                    className="project-main-div-col-2-sub-container1-subTitle"
+                                    style={{ textTransform: "uppercase" }}
+                                  >
+                                    {item.team_name}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="project-main-div-col-2-sub-container1">
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                          <div className="project-main-div-col-2-sub-container1-flex">
-                            <img
-                              src={projectProfile}
-                              alt="User"
-                              className="project-main-div-col-2-sub-container1-image"
-                            />
-                            <div className="project-main-div-col-2-sub-container1-flexMargin">
-                              <p className="project-main-div-col-2-sub-container1-title">
-                                John Doe
-                              </p>
-                              <p
-                                className="project-main-div-col-2-sub-container1-subTitle"
-                                style={{ textTransform: "uppercase" }}
-                              >
-                                Backend Developer
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     )}
                   </div>

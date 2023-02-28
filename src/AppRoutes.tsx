@@ -1,5 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
@@ -36,10 +38,11 @@ import storage from "./utils/storage";
 import { useAppDispatch } from "./hooks/useDispatch";
 import { getDepartment } from "./store/reducers/department";
 import { getRoles } from "./store/reducers/roles";
-import axios from "axios";
 import { sessionExpired } from "./utils/sessionExpires";
 import { getEmployees } from "./store/reducers/employees";
 import ProjectView from "./pages/Projects/ProjectView";
+import { getTeamLeads } from "./store/reducers/teamLeads";
+import { getTeam } from "./store/reducers/team";
 import DepartmentsView from "./pages/Departments/DepartmentsView";
 
 const AppRoutes: React.FC<any> = () => {
@@ -70,13 +73,18 @@ const AppRoutes: React.FC<any> = () => {
       dispatch(getDepartment());
       dispatch(getRoles());
       dispatch(getEmployees());
+      dispatch(getTeamLeads());
+      dispatch(getTeam());
     }
   }, [dispatch]);
   const user: any = storage.get("user");
   const parsedUserData = JSON.parse(user);
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route
+        path="/"
+        element={parsedUserData ? <Navigate to="/home" /> : <Login />}
+      />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* General user routes */}
       <Route element={<PrivateRoute isAllowed={!!parsedUserData} />}>
@@ -86,14 +94,17 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
-        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
+        <Route
+          path="/teamleaveapplications"
+          element={<TeamLeaveApplications />}
+        />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
       </Route>
       {/* Protected routes as admins, HR, Project managers and team leads */}
       <Route
         element={
           <PrivateRoute
-            isAllowed={!!parsedUserData && parsedUserData.is_super_admin}
+            isAllowed={!!parsedUserData && !parsedUserData.is_super_admin}
             redirectPath="/home"
           />
         }
