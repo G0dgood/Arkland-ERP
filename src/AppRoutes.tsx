@@ -40,6 +40,7 @@ import axios from "axios";
 import { sessionExpired } from "./utils/sessionExpires";
 import { getEmployees } from "./store/reducers/employees";
 import ProjectView from "./pages/Projects/ProjectView";
+import DepartmentsView from "./pages/Departments/DepartmentsView";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -113,6 +114,7 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/profile" element={<Profile />} />
         {/* Departments */}
         <Route path="/departments" element={<Departments />} />
+        <Route path="/departmentsview" element={<DepartmentsView />} />
         <Route path="/procurement" element={<Procurement />} />
         <Route path="/engineering" element={<Engineering />} />
         <Route path="/finance" element={<Finance />} />

@@ -137,3 +137,54 @@ export const projectdata = [
 	},
 
 ]
+export const departmentdata = [
+
+	{
+		"buttonText": "Procurement",
+		"button": "iDotsRounded1",
+		'text': "Procurement",
+		'percent': "pro-percent",
+		'percentNumber': "20",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+	},
+	{
+		"buttonText": "Engineering",
+		"button": "iDotsRounded5",
+		'text': "Engineering",
+		'percent': "pro-percent",
+		'percentNumber': "70",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+	},
+	{
+		"buttonText": "Finance",
+		"button": "iDotsRounded4",
+		'text': "Finance",
+		'percent': "pro-percent",
+		'percentNumber': "30",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+	},
+	{
+		"buttonText": "Information Technology",
+		"button": "iDotsRounded3",
+		'text': "Information Technology",
+		'percent': "pro-percent",
+		'percentNumber': "60",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+	},
+	{
+		"buttonText": "Budget",
+		"button": "iDotsRounded2",
+		'text': "Budget",
+		'percent': "pro-percent",
+		'percentNumber': "70",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+	},
+
+
+
+]
