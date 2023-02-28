@@ -155,14 +155,14 @@ const ProjectView = () => {
 										</div>
 									</div>
 									<div className='projects-total3'>
-										<h6>TOTAL</h6>
+										<h6>IN PROGRESS</h6>
 										<div className='projects-total-container'>
 											<span className='projects-total3-span'></span>
 											<span className='projects-total1-span1'>72</span>
 										</div>
 									</div>
 									<div className='projects-total4'>
-										<h6>TOTAL</h6>
+										<h6>WAITING</h6>
 										<div className='projects-total-container'>
 											<span className='projects-total4-span'></span>
 											<span className='projects-total1-span1'>24</span>

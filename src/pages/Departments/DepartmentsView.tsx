@@ -37,15 +37,12 @@ const DepartmentsView = () => {
 				<div className='ProjectViewContainer'>
 					<div className='ProjectViewContainer-subone'>
 						<div className='subone-col-1 subtwo-content-one-sub1-content subone-header-flex'>
-							<h5>Projects</h5>
+							<h5>Department</h5>
 							<div className='Request-btn-modal-container'>
 								<div className='Request-btn'>
 									<CreateProjectModal />
 								</div>
-								<div>
-									<Button className='subone-header-flex-btn' onClick={() => navigate("/siteWorkerrequest")}>
-										<BsPlusLg size={10} color='#fff' className='Create-plue-account' /> {" "}Request Worker List</Button>
-								</div>
+
 							</div>
 
 						</div>
@@ -75,7 +72,7 @@ const DepartmentsView = () => {
 						</div>
 						<div className='subone-col-3'>
 							{departmentdata?.map((item: any, i: any) =>
-								<div className='ProjectView-card' key={i} onClick={() => navigate("/viewproject/:id")}>
+								<div className='ProjectView-card' key={i} onClick={() => navigate(`${item.link}`)}>
 									<div className='iDotsHorizontalRounded'>
 										<Button className={item.button}>{item.buttonText}</Button>
 										<BiDotsHorizontalRounded color='#97979B' />
@@ -152,14 +149,14 @@ const DepartmentsView = () => {
 										</div>
 									</div>
 									<div className='projects-total3'>
-										<h6>TOTAL</h6>
+										<h6>IN PROGRESS</h6>
 										<div className='projects-total-container'>
 											<span className='projects-total3-span'></span>
 											<span className='projects-total1-span1'>72</span>
 										</div>
 									</div>
 									<div className='projects-total4'>
-										<h6>TOTAL</h6>
+										<h6>WAITING</h6>
 										<div className='projects-total-container'>
 											<span className='projects-total4-span'></span>
 											<span className='projects-total1-span1'>24</span>

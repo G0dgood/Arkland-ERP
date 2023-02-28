@@ -137,6 +137,8 @@ export const projectdata = [
 	},
 
 ]
+
+
 export const departmentdata = [
 
 	{
@@ -147,6 +149,7 @@ export const departmentdata = [
 		'percentNumber': "20",
 		'percent-progress': "pro-percent",
 		'percent-people': "pro-people",
+		'link': "/procurement",
 	},
 	{
 		"buttonText": "Engineering",
@@ -156,6 +159,7 @@ export const departmentdata = [
 		'percentNumber': "70",
 		'percent-progress': "pro-percent",
 		'percent-people': "pro-people",
+		'link': "/engineering",
 	},
 	{
 		"buttonText": "Finance",
@@ -165,6 +169,17 @@ export const departmentdata = [
 		'percentNumber': "30",
 		'percent-progress': "pro-percent",
 		'percent-people': "pro-people",
+		'link': "/finance",
+	},
+	{
+		"buttonText": "Human Resource",
+		"button": "iDotsRounded3",
+		'text': "Human Resource",
+		'percent': "pro-percent",
+		'percentNumber': "60",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+		'link': "/humanresource",
 	},
 	{
 		"buttonText": "Information Technology",
@@ -174,6 +189,7 @@ export const departmentdata = [
 		'percentNumber': "60",
 		'percent-progress': "pro-percent",
 		'percent-people': "pro-people",
+		'link': "/informationtech",
 	},
 	{
 		"buttonText": "Budget",
@@ -183,6 +199,7 @@ export const departmentdata = [
 		'percentNumber': "70",
 		'percent-progress': "pro-percent",
 		'percent-people': "pro-people",
+		'link': "/budget",
 	},
 
 
