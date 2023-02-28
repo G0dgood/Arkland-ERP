@@ -10,12 +10,13 @@ import {
 } from "@patternfly/react-charts";
 import moment from "moment";
 import Calendar from "react-calendar";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SyncLoader from "react-spinners/SyncLoader";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectAvatar from "../../assets/vectors/project-avatar.svg";
+import projectBack from "../../assets/vectors/project-back.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
 import projectProfile from "../../assets/vectors/project-profile.svg";
 import { checkForTeams } from "../../utils/checkForName";
@@ -24,6 +25,8 @@ import { BarLoader } from "react-spinners";
 
 const ViewProject = () => {
   const { id }: any = useParams();
+  const navigate = useNavigate();
+
   const [value, onChange] = useState(new Date());
   const [projects, setProjects] = React.useState({} as any);
   const [teamMembers, setTeamMembers] = React.useState({} as any);
@@ -151,6 +154,12 @@ const ViewProject = () => {
             <div className="project-main-div-col-1">
               <div className="project-main-div-col-1-sub">
                 <div className="project-main-div-col-1-sub-min">
+                  <img
+                    src={projectBack}
+                    alt="User"
+                    className="project-back-img"
+                    onClick={() => navigate("/projectview")}
+                  />
                   <img
                     src={projectAvatar}
                     alt="User"
