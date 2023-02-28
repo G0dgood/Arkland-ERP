@@ -80,7 +80,7 @@ const CreateProjectView = ({
           className={"Add-btn-edit"}
           onClick={handleSubmit}
         >
-          {isLoading ? "Processing..." : "          Create Project"}
+          {isLoading ? "Processing..." : "Create Project"}
         </Button>
       </div>
     </div>

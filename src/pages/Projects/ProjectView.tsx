@@ -133,7 +133,9 @@ const ProjectView = () => {
                         <Button className={`iDotsRounded1`}>{item.name}</Button>
                         <BiDotsHorizontalRounded color="#97979B" />
                       </div>
-                      <div className="iDotsRounded-text">{item.location}</div>
+                      <div className="iDotsRounded-text">
+                        Location: {item.location}
+                      </div>
                       <div className="iDotsRounded-percent">
                         {item.progress_percentage}%
                       </div>
