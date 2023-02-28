@@ -137,3 +137,71 @@ export const projectdata = [
 	},
 
 ]
+
+
+export const departmentdata = [
+
+	{
+		"buttonText": "Procurement",
+		"button": "iDotsRounded1",
+		'text': "Procurement",
+		'percent': "pro-percent",
+		'percentNumber': "20",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+		'link': "/procurement",
+	},
+	{
+		"buttonText": "Engineering",
+		"button": "iDotsRounded5",
+		'text': "Engineering",
+		'percent': "pro-percent",
+		'percentNumber': "70",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+		'link': "/engineering",
+	},
+	{
+		"buttonText": "Finance",
+		"button": "iDotsRounded4",
+		'text': "Finance",
+		'percent': "pro-percent",
+		'percentNumber': "30",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+		'link': "/finance",
+	},
+	{
+		"buttonText": "Human Resource",
+		"button": "iDotsRounded3",
+		'text': "Human Resource",
+		'percent': "pro-percent",
+		'percentNumber': "60",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+		'link': "/humanresource",
+	},
+	{
+		"buttonText": "Information Technology",
+		"button": "iDotsRounded3",
+		'text': "Information Technology",
+		'percent': "pro-percent",
+		'percentNumber': "60",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+		'link': "/informationtech",
+	},
+	{
+		"buttonText": "Budget",
+		"button": "iDotsRounded2",
+		'text': "Budget",
+		'percent': "pro-percent",
+		'percentNumber': "70",
+		'percent-progress': "pro-percent",
+		'percent-people': "pro-people",
+		'link': "/budget",
+	},
+
+
+
+]
