@@ -11,7 +11,7 @@ import { Button } from '@material-ui/core';
 import { BsChevronDown, BsPlusLg } from 'react-icons/bs';
 import CreateProjectModal from '../../components/Modals/CreateProjectModal';
 import { useNavigate } from 'react-router-dom';
-import { departmentdata, projectdata } from '../../components/ERP_Datas/ProjectData';
+import { departmentdata } from '../../components/ERP_Datas/ProjectData';
 
 const DepartmentsView = () => {
 	const navigate = useNavigate();
