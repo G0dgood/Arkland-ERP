@@ -79,6 +79,7 @@ const ViewProject = () => {
       source.cancel();
     };
   }, [dataFetch === true]);
+  console.log(projects);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   // const handleChange = (event: any) => {
   // 	setChecked(event.target.checked);
@@ -175,7 +176,7 @@ const ViewProject = () => {
                         NUMBER OF EMPLOYEES:
                       </p>
                       <p className="project-main-div-col-2-sub-container-subTitle">
-                        253
+                        {teamMembers.length > 0 ? teamMembers.length : ""}
                       </p>
                     </div>
                   </div>
@@ -213,9 +214,9 @@ const ViewProject = () => {
                       constrainToVisibleArea={true}
                       data={[
                         { x: "Completed", y: 100 },
-                        { x: "Pending", y: 100 - +10 },
+                        { x: "Pending", y: `${projects.progress_percentage}%` },
                       ]}
-                      title="35%"
+                      title={`${projects.progress_percentage}%`}
                       colorScale={["#48AB62", "#116327"]}
                       height={200}
                       width={200}
@@ -303,12 +304,12 @@ const ViewProject = () => {
                   </div>
 
                   <div className="project-main-div-col-2-sub-max project-main-div-col-2-sub-min-main">
-                    {isTeamLoading ? (
+                    {isTeamLoading === true ? (
                       <div>
                         <SyncLoader
                           cssOverride={override}
                           color={"#990000"}
-                          loading={isLoading}
+                          loading={isTeamLoading}
                         />
                       </div>
                     ) : (
@@ -318,28 +319,32 @@ const ViewProject = () => {
                           gridTemplateColumns: "1fr",
                         }}
                       >
-                        <div className="project-main-div-col-2-sub-container1">
-                          {teamMembers.map((item: any, i: any) => (
-                            <div className="project-main-div-col-2-sub-container1-flex">
-                              <img
-                                src={projectProfile}
-                                alt="User"
-                                className="project-main-div-col-2-sub-container1-image"
-                              />
-                              <div className="project-main-div-col-2-sub-container1-flexMargin">
-                                <p className="project-main-div-col-2-sub-container1-title">
-                                  {item.employee_name}
-                                </p>
-                                <p
-                                  className="project-main-div-col-2-sub-container1-subTitle"
-                                  style={{ textTransform: "uppercase" }}
-                                >
-                                  {item.team_name}
-                                </p>
+                        {teamMembers?.length > 0 ? (
+                          <div className="project-main-div-col-2-sub-container1">
+                            {teamMembers?.map((item: any, i: any) => (
+                              <div className="project-main-div-col-2-sub-container1-flex">
+                                <img
+                                  src={projectProfile}
+                                  alt="User"
+                                  className="project-main-div-col-2-sub-container1-image"
+                                />
+                                <div className="project-main-div-col-2-sub-container1-flexMargin">
+                                  <p className="project-main-div-col-2-sub-container1-title">
+                                    {item.employee_name}
+                                  </p>
+                                  <p
+                                    className="project-main-div-col-2-sub-container1-subTitle"
+                                    style={{ textTransform: "uppercase" }}
+                                  >
+                                    {item.team_name}
+                                  </p>
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                        </div>
+                            ))}
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     )}
                   </div>
