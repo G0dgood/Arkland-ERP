@@ -22,6 +22,8 @@ import projectProfile from "../../assets/vectors/project-profile.svg";
 import { checkForTeams } from "../../utils/checkForName";
 import { useAppSelector } from "../../hooks/useDispatch";
 import { BarLoader } from "react-spinners";
+import CreateProjectModal from "../../components/Modals/CreateProjectModal";
+import RequestWorkerModal from "../../components/Modals/RequestWorkerModal";
 
 const ViewProject = () => {
   const { id }: any = useParams();
@@ -82,7 +84,6 @@ const ViewProject = () => {
       source.cancel();
     };
   }, [dataFetch === true]);
-  console.log(projects);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   // const handleChange = (event: any) => {
   // 	setChecked(event.target.checked);
@@ -508,7 +509,7 @@ const ViewProject = () => {
                     variant="contained"
                     className="project-main-div-col-2-sub-max2-request-button"
                   >
-                    Request Worker
+                    <RequestWorkerModal />
                   </Button>
                 </div>
               </div>

@@ -74,7 +74,7 @@ const ProjectView = () => {
                 <div>
                   <Button
                     className="subone-header-flex-btn"
-                    onClick={() => navigate("/siteWorkerrequest")}
+                    onClick={() => navigate("/site-worker-request")}
                   >
                     <BsPlusLg
                       size={10}
