@@ -7,10 +7,22 @@ import Header from '../../components/Header';
 import ApplyForLeave from '../../components/Modals/ApplyForLeave';
 import Sidebar from '../../components/Sidebar';
 import ViewLeave from './ViewLeave';
+import { useAppSelector } from '../../hooks/userDispatch';
 // import { MainSearch } from '../../components/TableOptions';
 
 const Leave = () => {
+
 	const navigate = useNavigate();
+
+	const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.leave);
+
+
+	// console.log('Testing...', data,
+	// 	isError,
+	// 	isSuccess,
+	// 	isLoading,
+	// 	message,
+	// 	error)
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
 		return JSON.parse(localStorage.getItem("collapse")) || false;

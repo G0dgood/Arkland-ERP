@@ -10,6 +10,7 @@ import logo from "../assets/images/ASLLOGO.svg";
 import { AiOutlineLogout } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/storage";
+import MobileSideBar from "./MobileSideBar";
 
 const Header = ({ toggleSideNav, }: any) => {
   const [network, setnetwork] = useState<any>()
@@ -41,6 +42,15 @@ const Header = ({ toggleSideNav, }: any) => {
     }
   }, [network])
 
+
+  const [isOpen, setIsopen] = useState(false);
+  const [hideNav, setHideNav] = useState<any>(false);
+
+  const ToggleSidebar = () => {
+    isOpen === true ? setIsopen(false) : setIsopen(true);
+  };
+
+
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)}>
       <Toaster
@@ -54,7 +64,9 @@ const Header = ({ toggleSideNav, }: any) => {
       />
       <div className="header-container">
         <div className="header-left">
-          <TfiAlignJustify size={25} onClick={toggleSideNav} />
+          <TfiAlignJustify className="mobileSidebarbtn" size={25} onClick={toggleSideNav} />
+          <TfiAlignJustify className="mobileSidebarbtntwo" size={25} onClick={ToggleSidebar} />
+
           <div className="header-logo">
             <img src={logo} alt="ASL" />
           </div>
@@ -94,6 +106,7 @@ const Header = ({ toggleSideNav, }: any) => {
           )}
         </div>
       </div>
+      <MobileSideBar ToggleSidebar={ToggleSidebar} isOpen={isOpen} setHideNav={setHideNav} />
     </div>
   );
 };

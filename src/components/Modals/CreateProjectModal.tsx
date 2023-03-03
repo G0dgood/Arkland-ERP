@@ -143,6 +143,7 @@ const CreateDepartmentModal = (props: any) => {
 				fireAlert(title, html, icon);
 			});
 	};
+
 	return (
 		<div>
 			<Button variant="contained" className='subone-header-flex-btn' onClick={() => setLgShow(true)}>
