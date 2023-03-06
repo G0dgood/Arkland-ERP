@@ -44,6 +44,8 @@ const Login = () => {
     };
     fetch(`${process.env.REACT_APP_API}/auth/login`, requestOptions)
       .then(async (response) => {
+        localStorage.setItem('user', JSON.stringify(response));
+        console.log('response', response)
         setLoading(false);
         const isJson = response.headers
           .get("content-type")

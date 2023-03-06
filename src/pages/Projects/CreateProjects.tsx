@@ -68,17 +68,17 @@ const CreateProjects = () => {
       })
     );
 
-  const teams: any = useAppSelector((state) => state.team.team);
+  const teams: any = useAppSelector((state) => state?.team?.team);
   const availablleTeams = [] as any;
   teams &&
     teams.forEach((team: any) =>
       availablleTeams.push({
-        value: team.id,
-        label: team.name,
+        value: team?.id,
+        label: team?.name,
       })
     );
 
-  const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+  const teamLeads: any = useAppSelector((state) => state?.teamLeads?.teamLeads);
   const availablleTeamLeads = [] as any;
 
   teamLeads &&

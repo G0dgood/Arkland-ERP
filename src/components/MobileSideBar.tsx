@@ -104,11 +104,11 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                 <Nav className=" li mb-4">
                   <NavLink
                     className={
-                      window.location.pathname === "/departmentsview"
+                      window.location.pathname === "/departments"
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/departmentsview" >
+                    to="/departments" >
                     <span className="me-3">
                       <FiFolder size={20} />
                     </span>
@@ -119,11 +119,11 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                 <Nav className=" li mb-4">
                   <NavLink
                     className={
-                      window.location.pathname === "/projectview"
+                      window.location.pathname === "/projects"
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/projectview" >
+                    to="/projects" >
                     <span className="me-3">
                       < AiOutlineBank size={25} />
                     </span>

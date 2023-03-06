@@ -11,8 +11,16 @@ import { AiOutlineLogout } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/storage";
 import MobileSideBar from "./MobileSideBar";
+import { useAppSelector } from "../hooks/useDispatch";
 
 const Header = ({ toggleSideNav, }: any) => {
+  // @ts-ignore
+  const userInfo: any = JSON.parse(localStorage.getItem("user"))
+
+  // const { data, isError, isSuccess, isLoading, message, error } = useAppSelector((state: any) => state.auth);
+
+
+
   const [network, setnetwork] = useState<any>()
   const [dropDown, setDropDown] = useState(false);
   const navigate = useNavigate();
@@ -72,7 +80,7 @@ const Header = ({ toggleSideNav, }: any) => {
           </div>
           <span className="header-logo-text">Line Manager</span>
           <span className="header-logo-text1">
-            jamesabiodun@arklandstructuresltd.com
+            {userInfo.email}
           </span>
         </div>
 
@@ -81,7 +89,7 @@ const Header = ({ toggleSideNav, }: any) => {
           onClick={() => setDropDown(!dropDown)}
           onMouseEnter={() => setDropDown(true)}
         >
-          <span className="dropdown-names"> Bito Unlimited </span>
+          <span className="dropdown-names">{userInfo.full_name}</span>
           <div className="preview-header img-container-header">
             <FaUserCircle size={22} />
           </div>

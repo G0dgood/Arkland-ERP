@@ -24,7 +24,7 @@ const CreateWarningModal = () => {
       .post(`${process.env.REACT_APP_API}/hr/warnings`, createDepartmentValues)
       .then((res: AxiosResponse) => {
         setLoading(false);
-        if (res.data.success === true || res.status === 200) {
+        if (res?.data?.success === true || res?.status === 200) {
           const title = "Warning created successfully.";
           const html = `Warning created`;
           const icon = "success";
@@ -36,20 +36,20 @@ const CreateWarningModal = () => {
       })
       .catch((err) => {
         setLoading(false);
-        const html = err.response.data.message;
+        const html = err?.response?.data?.message;
         const icon = "error";
         const title = "Warning creation failed";
         fireAlert(title, html, icon);
       });
   };
-  const employees: any = useAppSelector((state) => state.employees.employees);
+  const employees: any = useAppSelector((state) => state?.employees?.employees);
   const availablleEmployees = [] as any;
 
   employees &&
     employees.forEach((employee: any) =>
       availablleEmployees.push({
-        value: employee.id,
-        label: employee.full_name,
+        value: employee?.id,
+        label: employee?.full_name,
       })
     );
   return (

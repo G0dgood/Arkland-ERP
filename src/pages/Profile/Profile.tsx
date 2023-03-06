@@ -7,8 +7,13 @@ import { FiChevronLeft } from 'react-icons/fi';
 import { BsDot } from 'react-icons/bs';
 import logo from '../../assets/images/asl-profile.jpeg';
 import { Link } from 'react-router-dom'
+import moment from 'moment';
 
 const Profile = () => {
+	// @ts-ignore
+	const userInfo: any = JSON.parse(localStorage.getItem("user"))
+
+	console.log('userInfo', userInfo)
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
@@ -30,7 +35,9 @@ const Profile = () => {
 			<main>
 				<div className="profile-body">
 					<div className="profile-body-container-sup">
-						<span><FiChevronLeft size={30} /></span>
+						<span>
+							<FiChevronLeft size={30} />
+						</span>
 						<span>
 							<Link to='/profile/edit'>
 								<Button variant="outlined" className="show-btn-profile" >
@@ -46,16 +53,16 @@ const Profile = () => {
 						</span>
 						<span>
 							<span className='profile-image-name'>
-								<p className='profile-image-name-sub1' style={{ marginBottom: "0px" }}>James Abiodun</p>
-								<p  > <BsDot size={20} color={"green"} />active </p>
+								<p className='profile-image-name-sub1' style={{ marginBottom: "0px" }}>{userInfo.full_name}</p>
+								<p> <BsDot size={20} color={"green"} /> {userInfo.status}</p>
 							</span>
 							<p>
-								<span className='profile-image-name-sub2'>IT</span> Developer</p>
+								<span className='profile-image-name-sub2'>IT</span>Developer</p>
 						</span>
 					</div>
 					<div className='profile-image-name-sub3'>
-						<span className='profile-image-name-number'>+234 706 345 6677</span>
-						<a href='jamesabiodun@arkland.com'>jamesabiodun@arkland.com</a>
+						<span className='profile-image-name-number'>{userInfo?.employee?.phone}</span>
+						<a href='jamesabiodun@arkland.com'>{userInfo?.employee?.address}</a>
 					</div>
 					<div className='General-Information'>
 						<h5>General Information</h5>
@@ -67,29 +74,29 @@ const Profile = () => {
 								<p>Date of Birth</p>
 								<p>03/16/1988</p>
 								<p>Full Name</p>
-								<p>James Abiodun</p>
+								<p>{userInfo?.employee?.full_name}</p>
 								<p>Address</p>
-								<p>24 Eze Str Lekki 1</p>
+								<p>{userInfo?.employee?.address}</p>
 								<p>City</p>
-								<p>Lagos Island</p>
+								<p>{userInfo?.employee?.city}</p>
 								<p>State</p>
 								<p>Lagos</p>
 								<p>Phone</p>
-								<p>+234 706 345 6677 </p>
+								<p>{userInfo?.employee?.phone}</p>
 							</div>
 						</div>
 						<div>
 							<div className="getjob-application-details">
 								<p>Date of Joining</p>
-								<p>10/01/2021</p>
+								<p>{moment(userInfo?.employee?.employment_date).format("DD-MM-YYYY")}</p>
 								<p>Role</p>
 								<p>Developer</p>
-								<p>Line Manager</p>
+								<p>HOD</p>
 								<p>Peter Obi</p>
 								<p>Department</p>
 								<p>IT</p>
 								<p>Employer ID</p>
-								<p>340-2222</p>
+								<p>als-{userInfo?.employee?.employee_id}</p>
 								<p>Station</p>
 								<p>A&A Towers, Floor 3, Room 5 </p>
 							</div>

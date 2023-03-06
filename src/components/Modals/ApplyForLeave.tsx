@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core';
 import { MdOutlineClose } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../hooks/userDispatch';
-import { createLeave } from '../../features/Leave/leaveSlice';
+import { createLeave, reset } from '../../features/Leave/leaveSlice';
+import { fireAlert } from "../../utils/Alert";
 
 
 const ApplyForLeave = (props: any) => {
 	const dispatch = useAppDispatch();
 	const [lgShow, setLgShow] = useState(false);
-	const { data, isError, isLoading, message } = useAppSelector((state: any) => state.leave);
+	const { isError, isSuccess, isLoading, message } = useAppSelector((state: any) => state.leave);
 
 	const [inputs, setInputs] = useState({
 		start_date: "",
@@ -18,23 +19,36 @@ const ApplyForLeave = (props: any) => {
 		leave_type: "",
 	})
 
+	console.log('message-message', message)
 
-	// useEffect(() => {
-	// 	// @ts-ignore
-	// 	dispatch(createLeave(inputs));
-	// }, [dispatch, inputs]);
-
-	// const handelCreate = async () => {
-	// 	// @ts-ignore
-	// 	dispatch(createLeave(inputs));
-
-	// };
+	const title = "Successful";
+	const html = message;
+	const icon = "success";
+	const title1 = "Leave error";
+	const html1 = message;
+	const icon1 = "error";
 
 	useEffect(() => {
+		if (isSuccess) {
+			// fireAlert(title, html, icon);
+			setTimeout(() => {
+				dispatch(reset());
+			}, 2000);
+			setLgShow(false)
+		} else if (isError) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				dispatch(reset());
+			}, 10000);
+		}
+
+	}, [dispatch, html, title, icon, isSuccess, isError, html1]);
+
+	const handelCreate = async () => {
 		// @ts-ignore
 		dispatch(createLeave(inputs));
-	}, []);
-	// console.log("inputs", inputs)
+
+	};
 
 
 	const handleOnChange = (input: any, value: any) => {
@@ -74,6 +88,7 @@ const ApplyForLeave = (props: any) => {
 							<option value=" ">Select Name...</option>
 							<option value="Paid Leave">Paid Leave</option>
 							<option value="Sick Leave">Sick Leave</option>
+							<option value="casual">Casual</option>
 						</select >
 						<div className='Modal-data-time'>
 						</div>
@@ -99,8 +114,8 @@ const ApplyForLeave = (props: any) => {
 								onChange={(e) => handleOnChange("description", e.target.value)} />
 						</div>
 						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal" >
-								{/* {isLoading ? "APPLLING...." : "APPLY"} */}
+							<Button variant="contained" className="Add-btn-modal" onClick={handelCreate}>
+								{isLoading ? <Spinner animation="border" /> : "APPLY"}
 							</Button>
 						</div>
 					</div>

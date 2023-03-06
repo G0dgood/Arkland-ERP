@@ -38,7 +38,7 @@ const CreateDepartmentModal = (props: any) => {
       })
       .catch((err) => {
         setLoading(false);
-        const html = err.response.data.message;
+        const html = err?.response?.data?.message;
         const icon = "error";
         const title = "Department creation failed";
         fireAlert(title, html, icon);
@@ -48,7 +48,7 @@ const CreateDepartmentModal = (props: any) => {
     <div>
       <Button
         variant="contained"
-        className="Add-btn"
+        className="subone-header-flex-btn"
         onClick={() => setLgShow(true)}
       >
         <GoPlus className="icon-space" /> Create Department

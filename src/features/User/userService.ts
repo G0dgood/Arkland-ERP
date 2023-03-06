@@ -3,13 +3,13 @@ import axios from 'axios'
  
   
  
-const createLeave = async ( input:any) => { 
+const userRole = async (  ) => { 
 	 
-  const { data } = await axios.post(`${process.env.REACT_APP_API}/hr/leaves`,input)
+  const { data } = await axios.get(`${process.env.REACT_APP_API}/hr/employee-roles`, )
    
   return data
 }
-const getCreateLeave = async ( ) => { 
+const userDepartment = async ( ) => { 
 	 
   const { data } = await axios.get(`${process.env.REACT_APP_API}/hr/leaves`)
    
@@ -21,8 +21,8 @@ const getCreateLeave = async ( ) => {
  
  
 const leaveService = { 
-  createLeave,  
-  getCreateLeave
+  userRole,  
+  userDepartment
 }
 
 export default leaveService

@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
 import AllEmployees from "./pages/all_employees/AllEmployees";
-import Departments from "./pages/Departments/Departments";
-import Projects from "./pages/Projects/Projects";
 import Cookies from "js-cookie";
 import Leave from "./pages/Leave/Leave";
 import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
@@ -36,11 +36,13 @@ import storage from "./utils/storage";
 import { useAppDispatch } from "./hooks/useDispatch";
 import { getDepartment } from "./store/reducers/department";
 import { getRoles } from "./store/reducers/roles";
-import axios from "axios";
 import { sessionExpired } from "./utils/sessionExpires";
 import { getEmployees } from "./store/reducers/employees";
-import ProjectView from "./pages/Projects/ProjectView";
-import DepartmentsView from "./pages/Departments/DepartmentsView";
+import { getTeamLeads } from "./store/reducers/teamLeads";
+import { getTeam } from "./store/reducers/team";
+import Departments from "./pages/Departments/Departments";
+import Project from "./pages/Projects/Project";
+import KpiContainer from "./pages/kpi_assessment/KpiContainer";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -55,7 +57,7 @@ const AppRoutes: React.FC<any> = () => {
       return response;
     },
     function (error) {
-      const status = error.response ? error.response.status : null;
+      const status = error?.response ? error?.response?.status : null;
       const url = error.response ? error.response.config.url : null;
 
       if (status === 401) {
@@ -70,13 +72,18 @@ const AppRoutes: React.FC<any> = () => {
       dispatch(getDepartment());
       dispatch(getRoles());
       dispatch(getEmployees());
+      dispatch(getTeamLeads());
+      dispatch(getTeam());
     }
   }, [dispatch]);
-  const user: any = storage.get("user");
+  const user: any = storage?.get("user");
   const parsedUserData = JSON.parse(user);
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route
+        path="/"
+        element={parsedUserData ? <Navigate to="/home" /> : <Login />}
+      />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* General user routes */}
       <Route element={<PrivateRoute isAllowed={!!parsedUserData} />}>
@@ -86,20 +93,22 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
-        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
+        <Route
+          path="/teamleaveapplications"
+          element={<TeamLeaveApplications />}
+        />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
       </Route>
       {/* Protected routes as admins, HR, Project managers and team leads */}
       <Route
         element={
           <PrivateRoute
-            isAllowed={!!parsedUserData && parsedUserData.is_super_admin}
+            isAllowed={!!parsedUserData}
             redirectPath="/home"
           />
         }
       >
         <Route path="/allemployees" element={<AllEmployees />} />
-        <Route path="/projects" element={<Projects />} />
         <Route path="/viewproject/:id" element={<ViewProjects />} />
         <Route
           path="/allleaveapplications"
@@ -114,7 +123,6 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/profile" element={<Profile />} />
         {/* Departments */}
         <Route path="/departments" element={<Departments />} />
-        <Route path="/departmentsview" element={<DepartmentsView />} />
         <Route path="/procurement" element={<Procurement />} />
         <Route path="/engineering" element={<Engineering />} />
         <Route path="/finance" element={<Finance />} />
@@ -125,7 +133,8 @@ const AppRoutes: React.FC<any> = () => {
         {/* AdminEditUser */}
         <Route path="/admineditUser" element={<AdminEditUser />} />
         {/* Project View */}
-        <Route path="/projectview" element={<ProjectView />} />
+        <Route path="/projects" element={<Project />} />
+        <Route path="/kpicontainer" element={<KpiContainer />} />
       </Route>
     </Routes>
   );

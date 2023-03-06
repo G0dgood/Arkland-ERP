@@ -75,7 +75,6 @@ aside.close{left:0;transition:.5s;transition-timing-function: cubic-bezier(0.9,0
     padding: 15px;
     max-height: calc(100vh - 67px);
     overflow-x: hidden;
-     font-family: "Mulish" !important;
 }
 .sd-body .ul{
     display: inline-block;
@@ -86,7 +85,6 @@ aside.close{left:0;transition:.5s;transition-timing-function: cubic-bezier(0.9,0
 .sd-body .ul .li{
     list-style: none;
     margin-bottom: 8px;
-     font-family: "Mulish" !important;
 }
 .sd-body .ul .li .sd-link{
     display: inline-block;
@@ -96,7 +94,6 @@ aside.close{left:0;transition:.5s;transition-timing-function: cubic-bezier(0.9,0
     /* background-color: #e5e8ec; */
     border-radius: 4px;
     cursor: pointer;
-     font-family: "Mulish" !important;
        text-decoration: none;
 }
 .sd-body .ul .li .on-link {
@@ -108,12 +105,11 @@ aside.close{left:0;transition:.5s;transition-timing-function: cubic-bezier(0.9,0
     border-radius: 4px;
     cursor: pointer;
        text-decoration: none;
-        font-family: "Mulish" !important;
+
 }
 
 .icon-text{
-  color:#adadad !important;
-   font-family: "Mulish" !important;
+  color:#adadad !important
 }
 
  .login-body-img-nav{ 

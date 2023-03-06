@@ -1,4 +1,4 @@
-
+ 
 
 // components
 @use "./components/header.scss";
@@ -17,19 +17,18 @@
 // pages
 @use "./pages/kpiassessment";
 @use "./pages/policy";
-@use "./pages/departments";
+// @use "./pages/departments";
 @use "./pages/dashboard.scss";
 @use "./pages/allemployees";
 @use "./pages/support";
 @use "./pages/siteworkerrequest";
 @use "./pages/leave";
 @use "./pages/login.scss";
-@use "./pages/projects";
+@use "./pages/projectview";
 @use "./pages/viewprojects";
 @use "./pages/createemployee";
 @use "./pages/profile";
-@use "./pages/editUser";
-@use "./pages/projectview";
+@use "./pages/editUser"; 
 
 @use "./abstracts/colors" as c;
 
@@ -408,3 +407,17 @@ form.searchbox button i {
 form.searchbox button:hover {
   background-color: #c74b2c;
 }
+
+   .btn-primary{
+background-color: c.color(primary-color) !important;
+ }
+ 
+ .css-13cymwt-control{
+  border: 2px solid #b2b2b2 !important;
+ } 
+ 
+//  .css-13cymwt-control :active{
+//   border: 2px solid red !important;
+//  } 
+ 
+

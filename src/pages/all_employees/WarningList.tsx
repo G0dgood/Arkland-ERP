@@ -20,7 +20,7 @@ import { getEmployees } from "../../store/reducers/employees";
 const WarningList = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const employees: any = useAppSelector((state) => state.employees.employees);
+  const employees: any = useAppSelector((state) => state?.employees?.employees);
 
   const [warnings, setWarnings] = useState([] as any);
   const [data, setData] = useState([]);
@@ -35,7 +35,7 @@ const WarningList = () => {
       .get(`${process.env.REACT_APP_API}/hr/warnings`)
       .then((res: AxiosResponse) => {
         console.log(res);
-        setWarnings([...res.data.data]);
+        setWarnings([...res?.data?.data]);
         setisLoading(false);
       })
       .catch((err) => {
@@ -46,7 +46,7 @@ const WarningList = () => {
 
   React.useEffect(() => {
     dispatch(getEmployees());
-  }, []);
+  }, [dispatch]);
 
   const header = [
     { title: "EMPLOYEE ID", prop: "employee" },
@@ -135,7 +135,7 @@ const WarningList = () => {
                           className="table-datacell datatype-numeric"
                           key={index}
                         >
-                          {i.title}
+                          {i?.title}
                         </td>
                       </>
                     );
@@ -151,22 +151,22 @@ const WarningList = () => {
                   warnings.map((item: any, i: any) => (
                     <tr className="data-table-row">
                       <td className="table-datacell datatype-numeric">
-                        {item.employee}
+                        {item?.employee}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {checkForEmployee(item.employee, employees)}
+                        {checkForEmployee(item?.employee, employees)}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item.message}
+                        {item?.message}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item.misconduct}
+                        {item?.misconduct}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item.count}
+                        {item?.count}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item.status}
+                        {item?.status}
                       </td>
                     </tr>
                   ))

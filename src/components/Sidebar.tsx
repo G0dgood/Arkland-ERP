@@ -104,10 +104,10 @@ const Sidebar = ({ collapseNav }: any) => {
 
 
         <NavLink
-          to="/departmentsview"
+          to="/departments"
           // exact
           className={
-            window.location.pathname === "/departmentsview"
+            window.location.pathname === "/departments"
               ? "active-here"
               : "nav-link"
           }
@@ -125,7 +125,7 @@ const Sidebar = ({ collapseNav }: any) => {
 
 
         <NavLink
-          to="/projectview"
+          to="/projects"
           // exact
           className={
             window.location.pathname === "/projects"

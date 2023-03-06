@@ -14,9 +14,25 @@ import Essentials from "./employeeInputs/Essentials";
 import Finance from "./employeeInputs/Finance";
 import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
-import { useAppSelector } from "../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { userRole } from "../../features/User/userSlice";
 
 const CreateEmployee = () => {
+  const dispatch = useAppDispatch();
+  const { data,
+    isError,
+    isSuccess,
+    isLoading,
+    message,
+    error } = useAppSelector((state: any) => state.userinfo);
+
+  console.log('user-info', data)
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(userRole());
+  }, [dispatch]);
+
   const navigate = useNavigate();
   const [employee, setEmployee] = useState({
     first_name: "",
@@ -104,26 +120,26 @@ const CreateEmployee = () => {
   }, []);
 
   const departments: any = useAppSelector(
-    (state) => state.department.department
+    (state) => state?.department?.department
   );
   const availablleDepartments = [] as any;
 
   departments &&
     departments.forEach((department: any) =>
       availablleDepartments.push({
-        value: department.id,
-        label: department.name,
+        value: department?.id,
+        label: department?.name,
       })
     );
 
-  const roles: any = useAppSelector((state) => state.roles.roles);
+  const roles: any = useAppSelector((state) => state?.roles?.roles);
   const availablleRoles = [] as any;
 
   roles &&
     roles.forEach((role: any) =>
       availablleRoles.push({
-        value: role.id,
-        label: role.name,
+        value: role?.id,
+        label: role?.name,
       })
     );
 
@@ -155,22 +171,19 @@ const CreateEmployee = () => {
                 employee={employee}
                 setEmployee={setEmployee}
                 setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
+                bindSubmitForm={bindSubmitForm} roles={undefined} />
               <Finance
                 active={active}
                 employee={employee}
                 setEmployee={setEmployee}
                 setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
+                bindSubmitForm={bindSubmitForm} roles={undefined} />
               <Reference
                 active={active}
                 employee={employee}
                 setEmployee={setEmployee}
                 setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
+                bindSubmitForm={bindSubmitForm} roles={undefined} />
               <Employment
                 active={active}
                 employee={employee}
@@ -178,15 +191,15 @@ const CreateEmployee = () => {
                 setActive={setActive}
                 bindSubmitForm={bindSubmitForm}
                 options={availablleDepartments}
-                roleOptions={availablleRoles}
+                // roleOptions={availablleRoles}
+                roles={data}
               />
               <Address
                 active={active}
                 employee={employee}
                 setEmployee={setEmployee}
                 setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
+                bindSubmitForm={bindSubmitForm} roles={undefined} />
               <CreateEmployeeView
                 active={active}
                 employee={employee}
