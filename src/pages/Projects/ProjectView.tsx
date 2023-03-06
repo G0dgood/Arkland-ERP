@@ -10,15 +10,19 @@ import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
 import { ChartDonut } from "@patternfly/react-charts";
 import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
-import { projectdata } from "../../components/ERP_Datas/ProjectData";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
+import { useAppDispatch } from "../../hooks/useDispatch";
+import { getTeamLeads } from "../../store/reducers/teamLeads";
 
 const ProjectView = () => {
+  const dispatch = useAppDispatch();
   const [isLoading, setisLoading] = useState(false);
   const [projects, setProjects] = useState([] as any);
-
+  React.useEffect(() => {
+    dispatch(getTeamLeads());
+  }, [dispatch]);
   const navigate = useNavigate();
 
   const [collapseNav, setCollapseNav] = useState(() => {

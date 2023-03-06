@@ -1,11 +1,18 @@
 import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { MainSearch } from "../../components/TableOptions";
+import {
+  MainSearch,
+  NoRecordFound,
+  TableFetch,
+} from "../../components/TableOptions";
+import { useAppSelector } from "../../hooks/useDispatch";
+import { checkForName } from "../../utils/checkForName";
 
 const SiteWorkerRequest = () => {
   const [isLoading, setisLoading] = useState(false);
@@ -32,6 +39,9 @@ const SiteWorkerRequest = () => {
       source.cancel();
     };
   }, []);
+  console.log(requestWorkersList);
+  const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
     localStorage.setItem("collapse", JSON.stringify(collapseNav));
@@ -40,6 +50,13 @@ const SiteWorkerRequest = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
+
+  const header = [
+    { title: "FROM", prop: "team_lead" },
+    { title: "DATE SENT", prop: "created_at" },
+    { title: "IS URGENT", prop: "is_urgent" },
+    { title: "STATUS", prop: "status" },
+  ];
 
   return (
     <div id="screen-wrapper">
@@ -64,120 +81,48 @@ const SiteWorkerRequest = () => {
           </div>
         </div>
         <section className="md-ui component-data-table">
-          {/* <header className="main-table-header">
-							<h1 className="table-header--title">Nutrition</h1>
-							<span className="table-header--icons"><i className="material-icons">filter_list</i><i className="material-icons">more_vert</i>
-							</span>
-						</header> */}
           <div className="main-table-wrapper">
             <table className="main-table-content">
               <thead className="data-table-header">
                 <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">FROM</td>
-                  <td className="table-datacell datatype-numeric">DATE SENT</td>
-                  <td className="table-datacell datatype-numeric">REQUEST</td>
+                  {header.map((i, index) => {
+                    return (
+                      <>
+                        <td
+                          className="table-datacell datatype-numeric"
+                          key={index}
+                        >
+                          {i.title}
+                        </td>
+                      </>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody className="data-table-content">
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
-                <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    A&A TOWERS
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    25-08-2022
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    SITE WORKERS AT A&A
-                  </td>
-                </tr>
+                {isLoading ? (
+                  <TableFetch colSpan={8} />
+                ) : requestWorkersList?.length === 0 ||
+                  requestWorkersList == null ? (
+                  <NoRecordFound colSpan={8} />
+                ) : (
+                  requestWorkersList.map((item: any, i: any) => (
+                    <tr className="data-table-row">
+                      <td className="table-datacell datatype-numeric">
+                        {checkForName(item.team_lead, teamLeads)}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {moment(item?.created_at).format("DD-MM-YYYY")}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {item.is_urgent === false ? "No" : "Yes"}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {item.status}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
