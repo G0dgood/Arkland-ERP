@@ -59,7 +59,7 @@ const Login = () => {
         axios.defaults.headers.common["authorization"] = data.token;
         // // set token in cookie
         Cookies.set("token", data.token);
-        storage.set("user", JSON.stringify(data?.user));
+        storage.set("user", JSON.stringify({ data }));
         window.location.replace("/home");
       })
       .catch((error) => {
@@ -72,8 +72,6 @@ const Login = () => {
         }, 5000);
       });
   };
-
-
 
   return (
     <>
