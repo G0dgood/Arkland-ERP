@@ -11,7 +11,7 @@ import moment from 'moment';
 
 const Profile = () => {
 	// @ts-ignore
-	const userInfo: any = JSON.parse(localStorage.getItem("user"))
+	const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
 
 	console.log('userInfo', userInfo)
 
@@ -53,8 +53,8 @@ const Profile = () => {
 						</span>
 						<span>
 							<span className='profile-image-name'>
-								<p className='profile-image-name-sub1' style={{ marginBottom: "0px" }}>{userInfo.full_name}</p>
-								<p> <BsDot size={20} color={"green"} /> {userInfo.status}</p>
+								<p className='profile-image-name-sub1' style={{ marginBottom: "0px" }}>{userInfo?.full_name}</p>
+								<p> <BsDot size={20} color={"green"} /> {userInfo?.status}</p>
 							</span>
 							<p>
 								<span className='profile-image-name-sub2'>IT</span>Developer</p>

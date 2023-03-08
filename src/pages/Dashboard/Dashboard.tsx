@@ -5,9 +5,20 @@ import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useAppSelector } from "../../hooks/useDispatch";
 
 const Dashboard = () => {
+
+  const { user,
+    isError,
+    isSuccess,
+    isLoading,
+    message,
+    error } = useAppSelector((state: any) => state.auth);
+
+  console.log('data', user)
   // @ts-ignore
+
   const name = JSON.parse(localStorage.getItem("name"));
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = useState(() => {

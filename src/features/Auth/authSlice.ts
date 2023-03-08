@@ -16,25 +16,36 @@ const initialState = {
  
 
 // Login user
-export const login = createAsyncThunk('auth/login', async ( thunkAPI) => {
-  try {
-    return await authService.login()
-  } catch (error:any) {
-    const message =
-      (error.response || 
-        error.response.data ||
-        error.response.data.message) ||
-      error.message ||
-      error.toString() 
-        // @ts-ignore
-     return thunkAPI.rejectWithValue(message)
-  }
+export const login = createAsyncThunk('auth/login', async (values, thunkAPI) => {
+  
+    return await authService.login(values).then((res) => {
+      console.log('err-err',res)
+      
+    })
+    .catch((err) => {
+      console.log('err',err);
+    });
+ 
+  // catch (error: any) {
+  //   const message =
+  //     (error.response || 
+  //       error.response.data ||
+  //       error.response.data.message) ||
+  //     error.message ||
+  //     error.toString() 
+  //       // @ts-ignore
+  //   console.log('message', message)
+    
+  //     return thunkAPI.rejectWithValue(message) 
+  // }
 })
 
 // logout
 // export const logout = createAsyncThunk('auth/logout', async () => {
 //   authService.logout()
 // })
+
+
 
 export const authSlice = createSlice({
   name: 'auth',

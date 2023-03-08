@@ -15,7 +15,7 @@ import { useAppSelector } from "../hooks/useDispatch";
 
 const Header = ({ toggleSideNav, }: any) => {
   // @ts-ignore
-  const userInfo: any = JSON.parse(localStorage.getItem("user"))
+  const userInfo: any = JSON?.parse(localStorage.getItem("userInfo"))
 
   // const { data, isError, isSuccess, isLoading, message, error } = useAppSelector((state: any) => state.auth);
 
@@ -28,7 +28,7 @@ const Header = ({ toggleSideNav, }: any) => {
     await axios
       .patch(`${process.env.REACT_APP_API}/me/logout`)
       .then(() => {
-        delete axios.defaults.headers.common["Authorization"];
+        delete axios?.defaults?.headers?.common["Authorization"];
       })
       .catch((err) => {
         console.log(err);
@@ -36,7 +36,7 @@ const Header = ({ toggleSideNav, }: any) => {
     await Cookies.remove("token");
     await storage.remove("user");
     navigate("/");
-    window.location.reload();
+    window?.location?.reload();
   };
 
   window.addEventListener('offline', (e) => setnetwork('offline'));
@@ -80,7 +80,7 @@ const Header = ({ toggleSideNav, }: any) => {
           </div>
           <span className="header-logo-text">Line Manager</span>
           <span className="header-logo-text1">
-            {userInfo.email}
+            {userInfo?.email}
           </span>
         </div>
 
@@ -89,7 +89,7 @@ const Header = ({ toggleSideNav, }: any) => {
           onClick={() => setDropDown(!dropDown)}
           onMouseEnter={() => setDropDown(true)}
         >
-          <span className="dropdown-names">{userInfo.full_name}</span>
+          <span className="dropdown-names">{userInfo?.full_name}</span>
           <div className="preview-header img-container-header">
             <FaUserCircle size={22} />
           </div>

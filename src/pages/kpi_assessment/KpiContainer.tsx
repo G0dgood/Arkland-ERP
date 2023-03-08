@@ -12,7 +12,7 @@ const KpiContainer = () => {
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
+		return JSON?.parse(localStorage.getItem("collapse")) || false;
 	});
 
 	useEffect(() => {
