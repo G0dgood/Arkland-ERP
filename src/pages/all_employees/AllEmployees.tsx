@@ -37,7 +37,7 @@ const AllEmployees = () => {
     const source = axios.CancelToken.source();
     setisLoading(true);
     axios
-      .get(`${process.env.REACT_APP_API}/hr/employees?status=in+review`)
+      .get(`${process.env.REACT_APP_API}/hr/employees`)
       .then((res: AxiosResponse) => {
         setEmployees([...res.data.data]);
         setisLoading(false);

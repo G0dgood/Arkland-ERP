@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
@@ -11,8 +11,8 @@ import { AiOutlineLogout } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/storage";
 
-const Header = ({ toggleSideNav, }: any) => {
-  const [network, setnetwork] = useState<any>()
+const Header = ({ toggleSideNav }: any) => {
+  const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const navigate = useNavigate();
   const handleLogoutUser = async () => {
@@ -26,20 +26,19 @@ const Header = ({ toggleSideNav, }: any) => {
       });
     await Cookies.remove("token");
     await storage.remove("user");
-    navigate("/");
+    window.location.replace("/");
     window.location.reload();
   };
 
-  window.addEventListener('offline', (e) => setnetwork('offline'));
-  window.addEventListener('online', (e) => setnetwork('online'));
+  window.addEventListener("offline", (e) => setnetwork("offline"));
+  window.addEventListener("online", (e) => setnetwork("online"));
   useEffect(() => {
-    if (network === 'online') {
-      toast.success("You are back online!")
-    } else if (network === 'offline') {
-      toast.error("You have lost internet connection!")
-
+    if (network === "online") {
+      toast.success("You are back online!");
+    } else if (network === "offline") {
+      toast.error("You have lost internet connection!");
     }
-  }, [network])
+  }, [network]);
 
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)}>

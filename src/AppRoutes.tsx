@@ -50,6 +50,7 @@ const AppRoutes: React.FC<any> = () => {
   const removeData = () => {
     Cookies.remove("isAuthenticated");
     Cookies.remove("token");
+    storage.remove("user");
     delete axios.defaults.headers.common["Authorization"];
   };
 
@@ -104,7 +105,8 @@ const AppRoutes: React.FC<any> = () => {
       <Route
         element={
           <PrivateRoute
-            isAllowed={!!parsedUserData && !parsedUserData.is_super_admin}
+            isAllowed={!!parsedUserData}
+            // isAllowed={!!parsedUserData && !!parsedUserData.is_super_admin}
             redirectPath="/home"
           />
         }
@@ -116,7 +118,7 @@ const AppRoutes: React.FC<any> = () => {
           path="/allleaveapplications"
           element={<AllLeaveApplications />}
         />
-        <Route path="/siteWorkerrequest" element={<SiteWorkerRequest />} />
+        <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
         <Route path="/createemployee" element={<CreateEmployee />} />
         <Route path="/createprojects" element={<CreateProjects />} />
         <Route path="/warninglist" element={<WarningList />} />
