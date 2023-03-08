@@ -26,6 +26,7 @@ const ProjectView = () => {
   const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState<any>();
+  const [reRun, setReRun] = useState(false);
 
   const token = Cookies.get("token");
   React.useEffect(() => {
@@ -67,19 +68,24 @@ const ProjectView = () => {
           return Promise.reject(error);
         }
         setisLoading(false);
+        setReRun(false);
         setProjects([...data.data]);
       })
       .catch((error) => {
         setisLoading(false);
         setError(true);
         setMessage(error);
+        if (error === 500) {
+          setReRun(true);
+          setisLoading(true);
+        }
         setTimeout(() => {
           setError(false);
+          setReRun(false);
           setMessage("");
         }, 5000);
       });
-  }, [projects.length < 0]);
-
+  }, [reRun === true]);
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
