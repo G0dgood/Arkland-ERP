@@ -50,6 +50,7 @@ const AppRoutes: React.FC<any> = () => {
   const removeData = () => {
     Cookies.remove("isAuthenticated");
     Cookies.remove("token");
+    storage.remove("user");
     delete axios.defaults.headers.common["Authorization"];
   };
 

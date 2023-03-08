@@ -3,9 +3,9 @@ import { HiOutlinePaperClip, HiOutlineUserGroup } from "react-icons/hi";
 import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
-import { BsChevronDown, BsPlusLg } from "react-icons/bs";
+import { BsChevronDown, BsExclamationLg, BsPlusLg } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
-import { ProgressBar } from "react-bootstrap";
+import { ProgressBar, Toast } from "react-bootstrap";
 import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
 import { ChartDonut } from "@patternfly/react-charts";
@@ -15,13 +15,22 @@ import Sidebar from "../../components/Sidebar";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
 import { useAppDispatch } from "../../hooks/useDispatch";
 import { getTeamLeads } from "../../store/reducers/teamLeads";
+import { getEmployees } from "../../store/reducers/employees";
+import Cookies from "js-cookie";
+import { FaTimes } from "react-icons/fa";
 
 const ProjectView = () => {
   const dispatch = useAppDispatch();
   const [isLoading, setisLoading] = useState(false);
   const [projects, setProjects] = useState([] as any);
+  const [message, setMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [error, setError] = useState<any>();
+
+  const token = Cookies.get("token");
   React.useEffect(() => {
     dispatch(getTeamLeads());
+    dispatch(getEmployees());
   }, [dispatch]);
   const navigate = useNavigate();
 
@@ -39,22 +48,38 @@ const ProjectView = () => {
   };
 
   React.useEffect(() => {
-    const source = axios.CancelToken.source();
     setisLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API}/hr/projects`)
-      .then((res: AxiosResponse) => {
-        setProjects([...res.data.data]);
-        setisLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setisLoading(false);
-      });
-    return () => {
-      source.cancel();
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
     };
-  }, []);
+    fetch(`${process.env.REACT_APP_API}/hr/projects`, requestOptions)
+      .then(async (response) => {
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        setisLoading(false);
+        setProjects([...data.data]);
+      })
+      .catch((error) => {
+        setisLoading(false);
+        setError(true);
+        setMessage(error);
+        setTimeout(() => {
+          setError(false);
+          setMessage("");
+        }, 5000);
+      });
+  }, [projects.length < 0]);
+
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
@@ -68,6 +93,24 @@ const ProjectView = () => {
       <Sidebar collapseNav={collapseNav} />
       <main>
         <div className="ProjectViewContainer">
+          {error && (
+            <Toast
+              onClose={() => setShowToast(false)}
+              show={true}
+              delay={4000}
+              autohide
+            >
+              <Toast.Body>
+                <span>
+                  <BsExclamationLg />
+                </span>
+                <p>{message}</p>
+                <span onClick={() => setShowToast(false)}>
+                  <FaTimes />
+                </span>
+              </Toast.Body>
+            </Toast>
+          )}
           <div className="ProjectViewContainer-subone">
             <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
               <h5>Projects</h5>

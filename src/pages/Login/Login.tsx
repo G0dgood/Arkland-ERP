@@ -8,7 +8,6 @@ import { Form, Formik } from "formik";
 import { BsExclamationLg } from "react-icons/bs";
 import Checkbox from "@mui/material/Checkbox";
 import { FaTimes } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import axios, { AxiosResponse } from "axios";
 import first from "../../assets/images/Bijou.jpg";
@@ -17,7 +16,6 @@ import third from "../../assets/images/1.jpg";
 import fourth from "../../assets/images/A&A.jpg";
 import fifth from "../../assets/images/PHOENIX.jpg";
 import logo from "../../assets/images/ASLLOGO.svg";
-import { useAppDispatch } from "../../hooks/useDispatch";
 import InputField from "../../components/Inputs/InputField";
 import storage from "../../utils/storage";
 

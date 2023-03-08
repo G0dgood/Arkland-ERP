@@ -19,22 +19,35 @@ import projectAvatar from "../../assets/vectors/project-avatar.svg";
 import projectBack from "../../assets/vectors/project-back.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
 import projectProfile from "../../assets/vectors/project-profile.svg";
-import { checkForTeams } from "../../utils/checkForName";
-import { useAppSelector } from "../../hooks/useDispatch";
+import { checkForEmployee, checkForTeams } from "../../utils/checkForName";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { BarLoader } from "react-spinners";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
 import RequestWorkerModal from "../../components/Modals/RequestWorkerModal";
+import { getEmployees } from "../../store/reducers/employees";
+import Cookies from "js-cookie";
+import { Toast } from "react-bootstrap";
+import { BsExclamationLg } from "react-icons/bs";
+import { FaTimes } from "react-icons/fa";
 
 const ViewProject = () => {
+  const token = Cookies.get("token");
   const { id }: any = useParams();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [value, onChange] = useState(new Date());
   const [projects, setProjects] = React.useState({} as any);
+  const [projectsTasks, setProjectsTasks] = React.useState({} as any);
   const [teamMembers, setTeamMembers] = React.useState({} as any);
   const [isLoading, setLoading] = React.useState(false);
   const [dataFetch, setDataFetch] = React.useState(false);
   const [isTeamLoading, setTeamLoading] = React.useState(false);
+  const [isProjectTasksLoading, setProjectTasksLoading] = React.useState(false);
+  const [error, setError] = useState<any>();
+  const [message, setMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
@@ -44,45 +57,106 @@ const ViewProject = () => {
   };
 
   React.useEffect(() => {
-    const source = axios.CancelToken.source();
     setLoading(true);
-
-    axios
-      .get(`${process.env.REACT_APP_API}/hr/projects/${id}`)
-      .then((res) => {
-        setProjects(res.data.data);
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    };
+    fetch(`${process.env.REACT_APP_API}/hr/projects/${id}`, requestOptions)
+      .then(async (response) => {
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
         setLoading(false);
+        setProjects(data.data);
         setDataFetch(true);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
         setLoading(false);
+        setError(true);
+        setMessage(error);
+        setTimeout(() => {
+          setError(false);
+          setMessage("");
+        }, 5000);
       });
-    return () => {
-      source.cancel();
-    };
   }, [id]);
-  React.useEffect(() => {
-    const source = axios.CancelToken.source();
-    setTeamLoading(true);
-    if (dataFetch === true) {
-      axios
-        .get(
-          `${process.env.REACT_APP_API}/hr/teams/${projects?.team}/employees`
-        )
-        .then((res) => {
-          setTeamMembers(res.data.data);
-          setTeamLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setTeamLoading(false);
-        });
-    }
 
-    return () => {
-      source.cancel();
+  React.useEffect(() => {
+    setProjectTasksLoading(true);
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
     };
+    fetch(`${process.env.REACT_APP_API}/tasks?project=${id}`, requestOptions)
+      .then(async (response) => {
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        setProjectTasksLoading(false);
+        setProjectsTasks(data.data);
+      })
+      .catch((error) => {
+        setProjectTasksLoading(false);
+        setError(true);
+        setMessage(error);
+        setTimeout(() => {
+          setError(false);
+          setMessage("");
+        }, 5000);
+      });
+  }, [id]);
+
+  React.useEffect(() => {
+    setTeamLoading(true);
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    };
+    fetch(
+      `${process.env.REACT_APP_API}/hr/teams/${projects?.team}/employees`,
+      requestOptions
+    )
+      .then(async (response) => {
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json");
+        const data = isJson && (await response.json());
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        setTeamLoading(false);
+        setTeamMembers(data.data);
+      })
+      .catch((error) => {
+        setTeamLoading(false);
+        setError(true);
+        setMessage(error);
+        setTimeout(() => {
+          setError(false);
+          setMessage("");
+        }, 5000);
+      });
   }, [dataFetch === true]);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   // const handleChange = (event: any) => {
@@ -131,9 +205,28 @@ const ViewProject = () => {
     minute: "numeric",
   });
   const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+  const employees: any = useAppSelector((state) => state.employees.employees);
 
   return (
     <div id="screen-wrapper">
+      {error && (
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={true}
+          delay={4000}
+          autohide
+        >
+          <Toast.Body>
+            <span>
+              <BsExclamationLg />
+            </span>
+            <p>{message}</p>
+            <span onClick={() => setShowToast(false)}>
+              <FaTimes />
+            </span>
+          </Toast.Body>
+        </Toast>
+      )}
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
       {isLoading ? (
@@ -369,136 +462,54 @@ const ViewProject = () => {
                     />
                   </div>
                   <div className="project-main-div-col-2-sub-max1 project-main-div-col-2-sub-min-main">
-                    <div className="Announcement-container">
-                      <div className="Announcement-sub-2">
-                        <div
-                          className="project-main-todo-Event"
-                          style={{ borderRadius: "4px" }}
-                        >
-                          <div className="main-todo-container">
-                            <div className="main-todo-note">
-                              <div className="project-main-todo-note-big">
-                                Vel est mattis purus.
-                              </div>
-                              <div className="project-main-todo-note">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Tellus curabitur amet, sed
-                                ornare facilisis dictum. Sed cursus turpis diam,
-                                id volutpat sit vel. Dui aenean euismod nisi
-                                blandit purus dignissim. Justo mattis nulla.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                    {isProjectTasksLoading === true ? (
+                      <div>
+                        <SyncLoader
+                          cssOverride={override}
+                          color={"#990000"}
+                          loading={isProjectTasksLoading}
+                        />
                       </div>
-                      <div className="Announcement-sub-2">
-                        <div
-                          className="project-main-todo-Event"
-                          style={{ borderRadius: "4px" }}
-                        >
-                          <div className="main-todo-container">
-                            <div className="main-todo-note">
-                              <div className="project-main-todo-note-big">
-                                Vel est mattis purus.
+                    ) : (
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "1fr",
+                        }}
+                      >
+                        {projectsTasks?.length > 0 ? (
+                          <div className="Announcement-container">
+                            {projectsTasks?.map((item: any, i: any) => (
+                              <div className="Announcement-sub-2">
+                                <div
+                                  className="project-main-todo-Event"
+                                  style={{ borderRadius: "4px" }}
+                                >
+                                  <div className="main-todo-container">
+                                    <div className="main-todo-note">
+                                      <div
+                                        className="project-main-todo-note-big"
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "space-between",
+                                        }}
+                                      >
+                                        <div>{item.title}</div>
+                                      </div>
+                                      <div className="project-main-todo-note">
+                                        {/* {item.notes[0]?.text} */}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="project-main-todo-note">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Tellus curabitur amet, sed
-                                ornare facilisis dictum. Sed cursus turpis diam,
-                                id volutpat sit vel. Dui aenean euismod nisi
-                                blandit purus dignissim. Justo mattis nulla.
-                              </div>
-                            </div>
+                            ))}
                           </div>
-                        </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
-                      <div className="Announcement-sub-2">
-                        <div
-                          className="project-main-todo-Event"
-                          style={{ borderRadius: "4px" }}
-                        >
-                          <div className="main-todo-container">
-                            <div className="main-todo-note">
-                              <div className="project-main-todo-note-big">
-                                Vel est mattis purus.
-                              </div>
-                              <div className="project-main-todo-note">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Tellus curabitur amet, sed
-                                ornare facilisis dictum. Sed cursus turpis diam,
-                                id volutpat sit vel. Dui aenean euismod nisi
-                                blandit purus dignissim. Justo mattis nulla.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="Announcement-sub-2">
-                        <div
-                          className="project-main-todo-Event"
-                          style={{ borderRadius: "4px" }}
-                        >
-                          <div className="main-todo-container">
-                            <div className="main-todo-note">
-                              <div className="project-main-todo-note-big">
-                                Vel est mattis purus.
-                              </div>
-                              <div className="project-main-todo-note">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Tellus curabitur amet, sed
-                                ornare facilisis dictum. Sed cursus turpis diam,
-                                id volutpat sit vel. Dui aenean euismod nisi
-                                blandit purus dignissim. Justo mattis nulla.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="Announcement-sub-2">
-                        <div
-                          className="project-main-todo-Event"
-                          style={{ borderRadius: "4px" }}
-                        >
-                          <div className="main-todo-container">
-                            <div className="main-todo-note">
-                              <div className="project-main-todo-note-big">
-                                Vel est mattis purus.
-                              </div>
-                              <div className="project-main-todo-note">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Tellus curabitur amet, sed
-                                ornare facilisis dictum. Sed cursus turpis diam,
-                                id volutpat sit vel. Dui aenean euismod nisi
-                                blandit purus dignissim. Justo mattis nulla.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="Announcement-sub-2">
-                        <div
-                          className="project-main-todo-Event"
-                          style={{ borderRadius: "4px" }}
-                        >
-                          <div className="main-todo-container">
-                            <div className="main-todo-note">
-                              <div className="project-main-todo-note-big">
-                                Vel est mattis purus.
-                              </div>
-                              <div className="project-main-todo-note">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Tellus curabitur amet, sed
-                                ornare facilisis dictum. Sed cursus turpis diam,
-                                id volutpat sit vel. Dui aenean euismod nisi
-                                blandit purus dignissim. Justo mattis nulla.
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </div>
                 <div>
@@ -514,8 +525,6 @@ const ViewProject = () => {
                 </div>
               </div>
             </div>
-
-            {/* Todos end */}
           </div>
         </main>
       )}
