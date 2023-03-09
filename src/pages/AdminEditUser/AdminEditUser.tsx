@@ -25,7 +25,7 @@ const AdminEditUser = () => {
       <Sidebar />
       <main id="edit-user">
         <h6 className="page-title">
-          <Link to="/allemployees">Employees</Link> | Employee Profile
+          <Link to="/employees">Employees</Link> | Employee Profile
         </h6>
         <section>
           <div className="user-info">
