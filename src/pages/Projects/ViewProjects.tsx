@@ -14,8 +14,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import SyncLoader from "react-spinners/SyncLoader";
 import { MdOutlineClose } from "react-icons/md";
 import { Form, Formik } from "formik";
-import Cookies from "js-cookie";
 import { Modal, Toast } from "react-bootstrap";
+import axios, { AxiosResponse } from "axios";
 import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import Header from "../../components/Header";
@@ -27,14 +27,14 @@ import projectProfile from "../../assets/vectors/project-profile.svg";
 import { checkForTeams } from "../../utils/checkForName";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import RequestWorkerModal from "../../components/Modals/RequestWorkerModal";
-import CreateTaskModal from "../../components/Modals/CreateTaskModal";
 import InputField from "../../components/Inputs/InputField";
 import ReactSelectField from "../../components/Inputs/ReactSelectField";
 import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
+import { fireAlert } from "../../utils/Alert";
+import { getRequestOptions } from "../../utils/auth/header";
 
 const ViewProject = () => {
-  const token = Cookies.get("token");
   const { id }: any = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -63,101 +63,131 @@ const ViewProject = () => {
   };
 
   React.useEffect(() => {
-    setLoading(true);
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-    fetch(`${process.env.REACT_APP_API}/hr/projects/${id}`, requestOptions)
-      .then(async (response) => {
-        const isJson = response.headers
-          .get("content-type")
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/hr/projects/${id}`,
+          getRequestOptions
+        );
+        const isJsonResponse = response.headers
+          ?.get("content-type")
           ?.includes("application/json");
-        const data = isJson && (await response.json());
+        const data = isJsonResponse && (await response.json());
         if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
+          throw new Error(data.message || response.status);
         }
-        setLoading(false);
-        setReRun(false);
         setProjects(data.data);
-        setDataFetch(true);
-      })
-      .catch((error) => {
+        setLoading(false);
+        setError(false);
+        setMessage("");
+      } catch (error: any) {
         setLoading(false);
         setError(true);
-        setMessage(error);
-        if (error === 500) {
-          setReRun(true);
-          setLoading(true);
-        }
-        setTimeout(() => {
-          setError(false);
-          setReRun(false);
-          setMessage("");
-        }, 5000);
-      });
-  }, [id, reRun === true]);
+        setMessage(error.message || "Something went wrong");
+      }
+    };
+    fetchData();
+  }, [id]);
 
   React.useEffect(() => {
-    setProjectTasksLoading(true);
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-    fetch(`${process.env.REACT_APP_API}/tasks?project=${id}`, requestOptions)
-      .then(async (response) => {
-        const isJson = response.headers
-          .get("content-type")
+    const fetchData = async () => {
+      try {
+        setProjectTasksLoading(true);
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/tasks?project=${id}`,
+          getRequestOptions
+        );
+        const isJsonResponse = response.headers
+          ?.get("content-type")
           ?.includes("application/json");
-        const data = isJson && (await response.json());
+        const data = isJsonResponse && (await response.json());
         if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
+          throw new Error(data.message || response.status);
         }
-        setProjectTasksLoading(false);
-        setProjectTasksReRun(false);
         setProjectsTasks(data.data);
-      })
-      .catch((error) => {
+        setProjectTasksLoading(false);
+        setError(false);
+        setDataFetch(true);
+        setMessage("");
+      } catch (error: any) {
         setProjectTasksLoading(false);
         setError(true);
-        setMessage(error);
-        if (error === 500) {
-          setProjectTasksReRun(true);
-          setProjectTasksLoading(true);
+        setMessage(error.message || "Something went wrong");
+      }
+    };
+    fetchData();
+  }, [id]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setTeamLoading(true);
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/hr/teams/${projects?.team}/employees`,
+          getRequestOptions
+        );
+        const isJsonResponse = response.headers
+          ?.get("content-type")
+          ?.includes("application/json");
+        const data = isJsonResponse && (await response.json());
+        if (!response.ok) {
+          throw new Error(data.message || response.status);
         }
-        setTimeout(() => {
-          setError(false);
-          setProjectTasksReRun(false);
-          setMessage("");
-        }, 5000);
-      });
-  }, [id, taskReRun === true]);
+        setTeamMembers(data.data);
+        setTeamLoading(false);
+        setError(false);
+        setMessage("");
+      } catch (error: any) {
+        setTeamLoading(false);
+        setError(true);
+        setMessage(error.message || "Something went wrong");
+      }
+    };
+    fetchData();
+  }, [id]);
+
+  // React.useEffect(() => {
+  //   if (projects) {
+  //     const fetchData = async () => {
+  //       try {
+  //         setTeamLoading(true);
+  //         const response = await fetch(
+  //           `${process.env.REACT_APP_API}/hr/teams/${projects?.team}/employees`,
+  //           getRequestOptions
+  //         );
+  //         const isJsonResponse = response.headers
+  //           ?.get("content-type")
+  //           ?.includes("application/json");
+  //         const data = isJsonResponse && (await response.json());
+  //         if (!response.ok) {
+  //           throw new Error(data.message || response.status);
+  //         }
+  //         setTeamMembers(data.data);
+  //         setTeamLoading(false);
+  //         setError(false);
+  //         setMessage("");
+  //       } catch (error: any) {
+  //         setTeamLoading(false);
+  //         setError(true);
+  //         setMessage(error.message || "Something went wrong");
+  //       }
+  //     };
+  //     fetchData();
+  //   }
+  // }, [projects]);
+
   React.useEffect(() => {
     setTeamLoading(true);
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
     fetch(
       `${process.env.REACT_APP_API}/hr/teams/${projects?.team}/employees`,
-      requestOptions
+      getRequestOptions
     )
       .then(async (response) => {
         const isJson = response.headers
           .get("content-type")
           ?.includes("application/json");
-        const data = isJson && (await response.json());
+        const data = (await isJson) && (await response.json());
         if (!response.ok) {
           const error = (data && data.message) || response.status;
           return Promise.reject(error);
@@ -180,32 +210,35 @@ const ViewProject = () => {
           setMessage("");
         }, 5000);
       });
-  }, [dataFetch === true, teamReRun === true]);
+  }, [dataFetch === true, projects]);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setProjectTasksLoading(true);
-    const createDepartmentValues = { ...values };
-    // await axios
-    //   .post(`${process.env.REACT_APP_API}/hr/warnings`, createDepartmentValues)
-    //   .then((res: AxiosResponse) => {
-    //     setLoading(false);
-    //     if (res.data.success === true || res.status === 200) {
-    //       const title = "Warning created successfully.";
-    //       const html = `Warning created`;
-    //       const icon = "success";
-    //       fireAlert(title, html, icon);
-    //       resetForm(values);
-    //       setLgShow(false);
-    //       navigate(`/warninglist`);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setLoading(false);
-    //     const html = err.response.data.message;
-    //     const icon = "error";
-    //     const title = "Warning creation failed";
-    //     fireAlert(title, html, icon);
-    //   });
+    const proj = { project: id };
+    const createTaskValues = { ...values, ...proj };
+    await axios
+      .post(`${process.env.REACT_APP_API}/tasks`, createTaskValues)
+      .then((res: AxiosResponse) => {
+        setLoading(false);
+        if (res.data.success === true || res.status === 200) {
+          const title = "Task created successfully.";
+          const html = `Task created`;
+          const icon = "success";
+          fireAlert(title, html, icon);
+          resetForm(values);
+          setProjectTasksReRun(true);
+          setTaskCreateShow(false);
+          // navigate(`/warninglist`);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        const html = err.response.data.message;
+        const icon = "error";
+        const title = "Task creation failed";
+        fireAlert(title, html, icon);
+      });
   };
   // const handleChange = (event: any) => {
   // 	setChecked(event.target.checked);
@@ -325,7 +358,7 @@ const ViewProject = () => {
                   <p className="project-sub-img__name">
                     {checkForTeams(projects?.lead, teamLeads)}
                   </p>
-                  <p className="project-sub-img__title">SITE MANAGER</p>
+                  <p className="project-sub-img__title">PROJECT MANAGER</p>
                 </div>
                 <div className="project-main-div-col-2-sub-min project-main-div-col-2-sub-min-main">
                   <div className="project-main-div-col-2-sub-container">
@@ -462,11 +495,11 @@ const ViewProject = () => {
                 <div>
                   <div className="project-main-div-col-2-sub-min-main__header">
                     <h5>Team Members</h5>
-                    <img
+                    {/* <img
                       src={redPlus}
                       alt="User"
                       className="project-main-div-col-2-sub-min-main__header-plus"
-                    />
+                    /> */}
                   </div>
 
                   <div className="project-main-div-col-2-sub-max project-main-div-col-2-sub-min-main">
@@ -547,6 +580,9 @@ const ViewProject = () => {
                           initialValues={{
                             title: "",
                             assigned_to: "",
+                            points: "",
+                            priority: "",
+                            expected_completion_date: "",
                             note: "",
                           }}
                           onSubmit={handleSubmit}
@@ -611,7 +647,7 @@ const ViewProject = () => {
                                           className="form-group__gender"
                                           onChange={(event: any) => {
                                             setFieldValue(
-                                              "priority",
+                                              "points",
                                               event?.value
                                             );
                                           }}
@@ -664,7 +700,9 @@ const ViewProject = () => {
                                       className="Add-btn-modal"
                                       type="submit"
                                     >
-                                      {isLoading ? "Please wait..." : "Create"}
+                                      {isProjectTasksLoading
+                                        ? "Please wait..."
+                                        : "Create"}
                                     </Button>
                                   </div>
                                 </div>

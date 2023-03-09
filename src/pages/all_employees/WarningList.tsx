@@ -34,7 +34,6 @@ const WarningList = () => {
     axios
       .get(`${process.env.REACT_APP_API}/hr/warnings`)
       .then((res: AxiosResponse) => {
-        console.log(res);
         setWarnings([...res.data.data]);
         setisLoading(false);
       })
@@ -42,10 +41,6 @@ const WarningList = () => {
         console.log(err);
         setisLoading(false);
       });
-  }, []);
-
-  React.useEffect(() => {
-    dispatch(getEmployees());
   }, []);
 
   const header = [
