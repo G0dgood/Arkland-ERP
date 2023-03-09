@@ -1,19 +1,12 @@
 import React, { useEffect, useState, CSSProperties } from "react";
+import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
+import SyncLoader from "react-spinners/SyncLoader";
+import { Button } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
+import { getRequestOptions } from "../../utils/auth/header";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
-import { MdOutlineMarkEmailUnread } from "react-icons/md";
-import { HiOutlinePaperClip, HiOutlineUserGroup } from "react-icons/hi";
-import { ChartDonut } from "@patternfly/react-charts";
-import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
-import { ProgressBar } from "react-bootstrap";
-import { Button } from "@material-ui/core";
-import { BsChevronDown, BsPlusLg } from "react-icons/bs";
-import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
-import { useNavigate } from "react-router-dom";
-import { departmentdata } from "../../components/ERP_Datas/ProjectData";
-import { getRequestOptions } from "../../utils/auth/header";
-import SyncLoader from "react-spinners/SyncLoader";
 
 const DepartmentsView = () => {
   const navigate = useNavigate();

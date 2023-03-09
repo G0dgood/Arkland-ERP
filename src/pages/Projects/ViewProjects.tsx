@@ -18,6 +18,7 @@ import { Modal, Toast } from "react-bootstrap";
 import axios, { AxiosResponse } from "axios";
 import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
+import Cookies from "js-cookie";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectAvatar from "../../assets/vectors/project-avatar.svg";
@@ -37,6 +38,8 @@ import { getRequestOptions } from "../../utils/auth/header";
 const ViewProject = () => {
   const { id }: any = useParams();
   const navigate = useNavigate();
+  const token = Cookies.get("token");
+
   const [taskCreateShow, setTaskCreateShow] = useState(false);
   const [value, onChange] = useState(new Date());
   const [projects, setProjects] = React.useState({} as any);
@@ -48,6 +51,7 @@ const ViewProject = () => {
   const [error, setError] = useState<any>();
   const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [newTaskCreated, setNewTaskCreated] = React.useState(false);
 
   const override: CSSProperties = {
     display: "block",
@@ -121,34 +125,48 @@ const ViewProject = () => {
       }
     };
     fetchData();
-  }, [id]);
-
+  }, [id, newTaskCreated]);
+  const handleNewTaskCreated = () => {
+    setNewTaskCreated(!newTaskCreated);
+  };
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setProjectTasksLoading(true);
+    console.log("values", values);
     const proj = { project: id };
-    const createTaskValues = { ...values, ...proj };
-    await axios
-      .post(`${process.env.REACT_APP_API}/tasks`, createTaskValues)
-      .then((res: AxiosResponse) => {
-        setLoading(false);
-        if (res.data.success === true || res.status === 200) {
-          const title = "Task created successfully.";
-          const html = `Task created`;
-          const icon = "success";
-          fireAlert(title, html, icon);
-          resetForm(values);
-          setTaskCreateShow(false);
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        const html = err.response.data.message;
-        const icon = "error";
-        const title = "Task creation failed";
-        fireAlert(title, html, icon);
-      });
-  };
 
+    const createTaskValues = { ...values, ...proj };
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/tasks`, {
+        method: "POST",
+        body: JSON.stringify(createTaskValues),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setLoading(false);
+      if (response.ok) {
+        const title = "Task created successfully.";
+        const html = `Task created`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+        handleNewTaskCreated();
+        setTaskCreateShow(false);
+        resetForm(values);
+        setProjectTasksLoading(false);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Task creation failed";
+      fireAlert(title, html, icon);
+    }
+  };
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -637,7 +655,6 @@ const ViewProject = () => {
                                         className="project-main-todo-note-big"
                                         style={{
                                           display: "flex",
-                                          justifyContent: "space-between",
                                         }}
                                       >
                                         <div>{item.title}</div>

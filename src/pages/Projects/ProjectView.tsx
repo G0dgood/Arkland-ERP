@@ -13,12 +13,13 @@ import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
-import { useAppDispatch } from "../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { getTeamLeads } from "../../store/reducers/teamLeads";
 import { getRequestOptions } from "../../utils/auth/header";
 import { getRoles } from "../../store/reducers/roles";
 import { getDepartment } from "../../store/reducers/department";
 import { getTeam } from "../../store/reducers/team";
+import { checkForName } from "../../utils/checkForName";
 
 const ProjectView = () => {
   const dispatch = useAppDispatch();
@@ -91,6 +92,7 @@ const ProjectView = () => {
     width: "99.8%",
     borderRadius: "50px",
   };
+  const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
 
   return (
     <div id="screen-wrapper">
@@ -189,6 +191,9 @@ const ProjectView = () => {
                       </div>
                       <div className="iDotsRounded-text">
                         Location: {item.location}
+                      </div>
+                      <div className="iDotsRounded-text">
+                        Project Lead: {checkForName(item.lead, teamLeads)}
                       </div>
                       <div className="iDotsRounded-percent">
                         {item.progress_percentage}%

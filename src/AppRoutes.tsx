@@ -24,7 +24,6 @@ import WeeklyReportTable from "./components/table_component/WeeklyReportTable";
 import DashboardCalender from "./components/DashboardCalender";
 import Profile from "./pages/Profile/Profile";
 import EditUser from "./pages/EditUser/EditUser";
-import Procurement from "./pages/Departments/SubDepartments/Procurement";
 import Engineering from "./pages/Departments/SubDepartments/Engineering";
 import HumanResource from "./pages/Departments/SubDepartments/HumanResource";
 import Inventory from "./pages/Departments/SubDepartments/Inventory";
@@ -44,6 +43,7 @@ import ProjectView from "./pages/Projects/ProjectView";
 import { getTeamLeads } from "./store/reducers/teamLeads";
 import { getTeam } from "./store/reducers/team";
 import DepartmentsView from "./pages/Departments/DepartmentsView";
+import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -126,9 +126,8 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/profile/edit" element={<EditUser />} />
         <Route path="/profile" element={<Profile />} />
         {/* Departments */}
-        <Route path="/departments" element={<Departments />} />
-        <Route path="/departmentsview" element={<DepartmentsView />} />
-        <Route path="/procurement" element={<Procurement />} />
+        <Route path="/departments" element={<DepartmentsView />} />
+        <Route path="/viewdepartments/:id" element={<ViewDepartments />} />
         <Route path="/engineering" element={<Engineering />} />
         <Route path="/finance" element={<Finance />} />
         <Route path="/humanresource" element={<HumanResource />} />
