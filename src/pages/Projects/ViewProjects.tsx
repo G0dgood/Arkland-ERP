@@ -36,7 +36,6 @@ import { getRequestOptions } from "../../utils/auth/header";
 
 const ViewProject = () => {
   const { id }: any = useParams();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [taskCreateShow, setTaskCreateShow] = useState(false);
   const [value, onChange] = useState(new Date());
@@ -44,15 +43,11 @@ const ViewProject = () => {
   const [projectsTasks, setProjectsTasks] = React.useState({} as any);
   const [teamMembers, setTeamMembers] = React.useState({} as any);
   const [isLoading, setLoading] = React.useState(false);
-  const [dataFetch, setDataFetch] = React.useState(false);
   const [isTeamLoading, setTeamLoading] = React.useState(false);
   const [isProjectTasksLoading, setProjectTasksLoading] = React.useState(false);
   const [error, setError] = useState<any>();
   const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const [reRun, setReRun] = useState(false);
-  const [taskReRun, setProjectTasksReRun] = useState(false);
-  const [teamReRun, setTeamReRun] = useState(false);
 
   const override: CSSProperties = {
     display: "block",
@@ -66,152 +61,67 @@ const ViewProject = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
+        const responseProjects = await fetch(
           `${process.env.REACT_APP_API}/hr/projects/${id}`,
           getRequestOptions
         );
-        const isJsonResponse = response.headers
+        const isJsonResponseProjects = responseProjects.headers
           ?.get("content-type")
           ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
+        const dataProjects =
+          isJsonResponseProjects && (await responseProjects.json());
+        if (!responseProjects.ok) {
+          throw new Error(dataProjects.message || responseProjects.status);
         }
-        setProjects(data.data);
-        setLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setLoading(false);
-        setError(true);
-        setMessage(error.message || "Something went wrong");
-      }
-    };
-    fetchData();
-  }, [id]);
+        setProjects(dataProjects.data);
+        const urlForTeamMembers = `${process.env.REACT_APP_API}/hr/teams/${dataProjects.data.team}/employees`;
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setProjectTasksLoading(true);
-        const response = await fetch(
+        const responseProjectsTasks = await fetch(
           `${process.env.REACT_APP_API}/tasks?project=${id}`,
           getRequestOptions
         );
-        const isJsonResponse = response.headers
+        const isJsonResponseProjectsTasks = responseProjectsTasks.headers
           ?.get("content-type")
           ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
+        const dataProjectsTasks =
+          isJsonResponseProjectsTasks && (await responseProjectsTasks.json());
+        if (!responseProjectsTasks.ok) {
+          throw new Error(
+            dataProjectsTasks.message || responseProjectsTasks.status
+          );
         }
-        setProjectsTasks(data.data);
-        setProjectTasksLoading(false);
-        setError(false);
-        setDataFetch(true);
-        setMessage("");
-      } catch (error: any) {
-        setProjectTasksLoading(false);
-        setError(true);
-        setMessage(error.message || "Something went wrong");
-      }
-    };
-    fetchData();
-  }, [id]);
+        setProjectsTasks(dataProjectsTasks.data);
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setTeamLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/teams/${projects?.team}/employees`,
+        const responseProjectsTeamMembers = await fetch(
+          urlForTeamMembers,
           getRequestOptions
         );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
+        const isJsonResponseProjectsTeamMembers =
+          responseProjectsTeamMembers.headers
+            ?.get("content-type")
+            ?.includes("application/json");
+        const dataProjectsTeamMembers =
+          isJsonResponseProjectsTeamMembers &&
+          (await responseProjectsTeamMembers.json());
+        if (!responseProjectsTeamMembers.ok) {
+          throw new Error(
+            dataProjectsTeamMembers.message ||
+              responseProjectsTeamMembers.status
+          );
         }
-        setTeamMembers(data.data);
-        setTeamLoading(false);
+        setTeamMembers(dataProjectsTeamMembers.data);
+
+        setLoading(false);
         setError(false);
         setMessage("");
       } catch (error: any) {
-        setTeamLoading(false);
+        setLoading(false);
         setError(true);
         setMessage(error.message || "Something went wrong");
       }
     };
     fetchData();
   }, [id]);
-
-  // React.useEffect(() => {
-  //   if (projects) {
-  //     const fetchData = async () => {
-  //       try {
-  //         setTeamLoading(true);
-  //         const response = await fetch(
-  //           `${process.env.REACT_APP_API}/hr/teams/${projects?.team}/employees`,
-  //           getRequestOptions
-  //         );
-  //         const isJsonResponse = response.headers
-  //           ?.get("content-type")
-  //           ?.includes("application/json");
-  //         const data = isJsonResponse && (await response.json());
-  //         if (!response.ok) {
-  //           throw new Error(data.message || response.status);
-  //         }
-  //         setTeamMembers(data.data);
-  //         setTeamLoading(false);
-  //         setError(false);
-  //         setMessage("");
-  //       } catch (error: any) {
-  //         setTeamLoading(false);
-  //         setError(true);
-  //         setMessage(error.message || "Something went wrong");
-  //       }
-  //     };
-  //     fetchData();
-  //   }
-  // }, [projects]);
-
-  React.useEffect(() => {
-    setTeamLoading(true);
-    fetch(
-      `${process.env.REACT_APP_API}/hr/teams/${projects?.team}/employees`,
-      getRequestOptions
-    )
-      .then(async (response) => {
-        const isJson = response.headers
-          .get("content-type")
-          ?.includes("application/json");
-        const data = (await isJson) && (await response.json());
-        if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
-        }
-        setTeamLoading(false);
-        setTeamReRun(false);
-        setTeamMembers(data.data);
-      })
-      .catch((error) => {
-        setTeamLoading(false);
-        setError(true);
-        setMessage(error);
-        if (error === 500) {
-          setTeamReRun(true);
-          setTeamLoading(true);
-        }
-        setTimeout(() => {
-          setError(false);
-          setTeamReRun(false);
-          setMessage("");
-        }, 5000);
-      });
-  }, [dataFetch === true, projects]);
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setProjectTasksLoading(true);
@@ -227,9 +137,7 @@ const ViewProject = () => {
           const icon = "success";
           fireAlert(title, html, icon);
           resetForm(values);
-          setProjectTasksReRun(true);
           setTaskCreateShow(false);
-          // navigate(`/warninglist`);
         }
       })
       .catch((err) => {
@@ -240,9 +148,7 @@ const ViewProject = () => {
         fireAlert(title, html, icon);
       });
   };
-  // const handleChange = (event: any) => {
-  // 	setChecked(event.target.checked);
-  // };
+
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -258,22 +164,7 @@ const ViewProject = () => {
     setCollapseNav(!collapseNav);
   };
 
-  const locale = "en";
-  const [today, setDate] = React.useState(new Date()); // Save the current date to be able to trigger an update
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      // Creates an interval which will update the current data every minute
-      // This will trigger a rerender every component that uses the useDate hook.
-      setDate(new Date());
-    }, 60 * 1000);
-    return () => {
-      clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
-    };
-  }, []);
-
   const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
-  const employees: any = useAppSelector((state) => state.employees.employees);
   const availablleTeamMembers = [] as any;
   if (teamMembers.length < 0) {
     return null;
