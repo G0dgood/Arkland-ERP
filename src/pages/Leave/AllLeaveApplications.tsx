@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header'
 import Pagination from '../../components/Pagination';
 import Sidebar from '../../components/Sidebar'
-import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
+import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 
 const AllLeaveApplications = () => {
 
@@ -77,7 +77,7 @@ const AllLeaveApplications = () => {
 						<Button variant="contained"
 							className="back-btn-icon"
 							id="Add-btn-sub"
-							onClick={() => navigate("/allemployees")}>
+							onClick={() => navigate("/leave")}>
 							<FaArrowLeft size={25} />
 						</Button>
 
@@ -94,11 +94,11 @@ const AllLeaveApplications = () => {
 						Download-csv {" "} <FaDownload />
 					</Button>
 					<div>
-						{/* <MainSearch placeholder={'Search...          Warnings'} /> */}
-						<form id="form-inline">
+						<MainSearch placeholder={'Search...          all leave'} />
+						{/* <form id="form-inline">
 							<input name="q" placeholder="Search ..." type="text" id="search-input" />
 							<button type="submit" className="search-btn">Search</button>
-						</form>
+						</form> */}
 					</div>
 				</div>
 				<section className="md-ui component-data-table">

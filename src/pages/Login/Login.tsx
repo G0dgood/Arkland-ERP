@@ -9,7 +9,7 @@ import { BsExclamationLg } from "react-icons/bs";
 import Checkbox from "@mui/material/Checkbox";
 import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import first from "../../assets/images/Bijou.jpg";
 import second from "../../assets/images/1.jpeg";
 import third from "../../assets/images/1.jpg";
@@ -18,8 +18,12 @@ import fifth from "../../assets/images/PHOENIX.jpg";
 import logo from "../../assets/images/ASLLOGO.svg";
 import InputField from "../../components/Inputs/InputField";
 import storage from "../../utils/storage";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/useDispatch";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [isLoading, setLoading] = React.useState(false);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [error, setError] = useState<any>();
@@ -33,6 +37,8 @@ const Login = () => {
       .required("Password is required"),
   });
 
+
+
   const handleSubmit = (values: any, { resetForm }: any) => {
     setLoading(true);
     const requestOptions = {
@@ -42,6 +48,8 @@ const Login = () => {
     };
     fetch(`${process.env.REACT_APP_API}/auth/login`, requestOptions)
       .then(async (response) => {
+        // @ts-ignore
+        console.log('response-userinfo', response)
         setLoading(false);
         const isJson = response.headers
           .get("content-type")
@@ -55,10 +63,11 @@ const Login = () => {
         resetForm(values);
         // set token in axios header
         axios.defaults.headers.common["authorization"] = data.token;
-        // // set token in cookie
+        // set token in cookie
         Cookies.set("token", data.token);
         storage.set("user", JSON.stringify({ data }));
-        window.location.replace("/home");
+        localStorage.setItem('userinfo', JSON.stringify({ data }));
+        navigate("/home");
       })
       .catch((error) => {
         setLoading(false);

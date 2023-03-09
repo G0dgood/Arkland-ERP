@@ -6,6 +6,7 @@ import { HelmetProvider } from "react-helmet-async";
 import axios from "axios";
 import Cookies from "js-cookie";
 import store from "./store";
+import { store1 } from "./store/store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { handle_logout } from "./utils/auth-util";
@@ -32,7 +33,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={store && store1}>
         <HelmetProvider>
           <UserProviderContainer>
             <App />

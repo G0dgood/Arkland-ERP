@@ -43,7 +43,7 @@ const CreateProjectModal = (props: any) => {
       })
       .catch((err) => {
         setLoading(false);
-        const html = err.response.data.message;
+        const html = err.response?.data?.message;
         const icon = "error";
         const title = "Project creation failed";
         fireAlert(title, html, icon);

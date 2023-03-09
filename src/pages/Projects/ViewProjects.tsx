@@ -256,7 +256,7 @@ const ViewProject = () => {
                     src={projectBack}
                     alt="User"
                     className="project-back-img"
-                    onClick={() => navigate("/projectview")}
+                    onClick={() => navigate("/projects")}
                   />
                   <img
                     src={projectAvatar}
@@ -323,9 +323,12 @@ const ViewProject = () => {
                       constrainToVisibleArea={true}
                       data={[
                         { x: "Completed", y: 100 },
-                        { x: "Pending", y: `${projects.progress_percentage}%` },
+                        {
+                          x: "Pending",
+                          y: `${projects?.progress_percentage}%`,
+                        },
                       ]}
-                      title={`${projects.progress_percentage}%`}
+                      title={`${projects?.progress_percentage}%`}
                       colorScale={["#48AB62", "#116327"]}
                       height={200}
                       width={200}
@@ -341,7 +344,7 @@ const ViewProject = () => {
                       ariaTitle="Line chart example"
                       containerComponent={
                         <ChartVoronoiContainer
-                          labels={({ datum }) => `${datum.name}: ${datum.y}`}
+                          labels={({ datum }) => `${datum?.name}: ${datum?.y}`}
                           constrainToVisibleArea
                         />
                       }
@@ -439,13 +442,13 @@ const ViewProject = () => {
                                 />
                                 <div className="project-main-div-col-2-sub-container1-flexMargin">
                                   <p className="project-main-div-col-2-sub-container1-title">
-                                    {item.employee_name}
+                                    {item?.employee_name}
                                   </p>
                                   <p
                                     className="project-main-div-col-2-sub-container1-subTitle"
                                     style={{ textTransform: "uppercase" }}
                                   >
-                                    {item.team_name}
+                                    {item?.team_name}
                                   </p>
                                 </div>
                               </div>

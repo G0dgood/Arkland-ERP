@@ -5,9 +5,21 @@ import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useAppSelector } from "../../hooks/useDispatch";
 
 const Dashboard = () => {
+
+  const { user,
+    isError,
+    isSuccess,
+    isLoading,
+    message,
+    error } = useAppSelector((state: any) => state.auth);
+
   // @ts-ignore
+  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
+  // @ts-ignore
+
   const name = JSON.parse(localStorage.getItem("name"));
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = useState(() => {
@@ -40,7 +52,7 @@ const Dashboard = () => {
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
-      <main>{name === "admin" ? <AdminDashboard /> : <StaffDashboard />}</main>
+      <main>{userInfo?.data?.department?.name === "HR" ? <AdminDashboard /> : <StaffDashboard />}</main>
     </div>
   );
 };

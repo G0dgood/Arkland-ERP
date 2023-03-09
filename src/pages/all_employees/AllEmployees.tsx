@@ -96,9 +96,9 @@ const AllEmployees = () => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
 
-  const roles: any = useAppSelector((state) => state.roles.roles);
+  const roles: any = useAppSelector((state) => state?.roles?.roles);
   const departments: any = useAppSelector(
-    (state) => state.department.department
+    (state) => state?.department?.department
   );
 
   const [displayData, setDisplayData] = useState([]);
@@ -205,13 +205,13 @@ const AllEmployees = () => {
                     ) : employees?.length === 0 || employees == null ? (
                       <NoRecordFound colSpan={8} />
                     ) : (
-                      employees.map((item: any, i: any) => (
+                      employees?.map((item: any, i: any) => (
                         <tr className="data-table-row">
                           <td className="table-datacell datatype-string">
-                            {item.id}
+                            {item?.id}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {item.first_name}
+                            {item?.first_name}
                           </td>
                           <td className="table-datacell datatype-numeric">
                             {item?.middle_name}
@@ -220,13 +220,13 @@ const AllEmployees = () => {
                             {item?.last_name}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {item.email}
+                            {item?.email}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {checkForName(item.role, roles)}
+                            {checkForName(item?.role, roles)}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {checkForName(item.department, departments)}
+                            {checkForName(item?.department, departments)}
                           </td>
 
                           <td className="table-datacell datatype-numeric">

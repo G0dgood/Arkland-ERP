@@ -10,15 +10,21 @@ import logo from "../assets/images/ASLLOGO.svg";
 import { AiOutlineLogout } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/storage";
+import MobileSideBar from "./MobileSideBar";
+import { useAppSelector } from "../hooks/useDispatch";
 
 const Header = ({ toggleSideNav }: any) => {
+
+  // @ts-ignore
+  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
+
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const handleLogoutUser = async () => {
     await axios
       .patch(`${process.env.REACT_APP_API}/me/logout`)
       .then(() => {
-        delete axios.defaults.headers.common["Authorization"];
+        delete axios?.defaults?.headers?.common["Authorization"];
       })
       .catch((err) => {
         console.log(err);
@@ -39,6 +45,15 @@ const Header = ({ toggleSideNav }: any) => {
     }
   }, [network]);
 
+
+  const [isOpen, setIsopen] = useState(false);
+  const [hideNav, setHideNav] = useState<any>(false);
+
+  const ToggleSidebar = () => {
+    isOpen === true ? setIsopen(false) : setIsopen(true);
+  };
+
+
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)}>
       <Toaster
@@ -52,13 +67,17 @@ const Header = ({ toggleSideNav }: any) => {
       />
       <div className="header-container">
         <div className="header-left">
-          <TfiAlignJustify size={25} onClick={toggleSideNav} />
+          <TfiAlignJustify className="mobileSidebarbtn" size={25} onClick={toggleSideNav} />
+          <TfiAlignJustify className="mobileSidebarbtntwo" size={25} onClick={ToggleSidebar} />
+
           <div className="header-logo">
             <img src={logo} alt="ASL" />
           </div>
-          <span className="header-logo-text">Line Manager</span>
+          <span className="header-logo-text">
+            {/* Line Manager */}
+          </span>
           <span className="header-logo-text1">
-            jamesabiodun@arklandstructuresltd.com
+            {userInfo?.data?.employee?.email}
           </span>
         </div>
 
@@ -67,7 +86,9 @@ const Header = ({ toggleSideNav }: any) => {
           onClick={() => setDropDown(!dropDown)}
           onMouseEnter={() => setDropDown(true)}
         >
-          <span className="dropdown-names"> Bito Unlimited </span>
+          <span className="dropdown-names">
+            {userInfo?.data?.employee?.full_name}
+          </span>
           <div className="preview-header img-container-header">
             <FaUserCircle size={22} />
           </div>
@@ -92,6 +113,7 @@ const Header = ({ toggleSideNav }: any) => {
           )}
         </div>
       </div>
+      <MobileSideBar ToggleSidebar={ToggleSidebar} isOpen={isOpen} setHideNav={setHideNav} />
     </div>
   );
 };

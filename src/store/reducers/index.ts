@@ -4,7 +4,8 @@ import { EmployeesReducer } from "./employees";
 import { rolesReducer } from "./roles";
 import { teamReducer } from "./team";
 import { teamLeadsReducer } from "./teamLeads";
-import { userReducer, UserState } from "./user";
+import { userReducer, UserState } from "./user"; 
+
 
 export interface RootState {
   user: UserState;
@@ -12,7 +13,7 @@ export interface RootState {
   roles: any;
   employees: any;
   team: any;
-  teamLeads: any;
+  teamLeads: any; 
 }
 
 export const rootReducer = combineReducers<RootState | undefined>({
@@ -21,5 +22,5 @@ export const rootReducer = combineReducers<RootState | undefined>({
   roles: rolesReducer,
   employees: EmployeesReducer,
   team: teamReducer,
-  teamLeads: teamLeadsReducer,
+  teamLeads: teamLeadsReducer, 
 });

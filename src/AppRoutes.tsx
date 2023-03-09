@@ -6,15 +6,13 @@ import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
 import AllEmployees from "./pages/all_employees/AllEmployees";
-import Departments from "./pages/Departments/Departments";
-import Projects from "./pages/Projects/Projects";
 import Cookies from "js-cookie";
 import Leave from "./pages/Leave/Leave";
 import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
 import Support from "./pages/Support/Support";
 import Policy from "./pages/Policy/Policy";
 import SiteWorkerRequest from "./pages/Projects/SiteWorkerRequest";
-import ViewProjects from "./pages/Projects/ViewProjects";
+// import ViewProjects from "./pages/Projects/ViewProjects";
 import CreateProjects from "./pages/Projects/CreateProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
@@ -39,11 +37,15 @@ import { getDepartment } from "./store/reducers/department";
 import { getRoles } from "./store/reducers/roles";
 import { sessionExpired } from "./utils/sessionExpires";
 import { getEmployees } from "./store/reducers/employees";
-import ProjectView from "./pages/Projects/ProjectView";
 import { getTeamLeads } from "./store/reducers/teamLeads";
 import { getTeam } from "./store/reducers/team";
-import DepartmentsView from "./pages/Departments/DepartmentsView";
+import Departments from "./pages/Departments/Departments";
+import Project from "./pages/Projects/Project";
+import KpiContainer from "./pages/kpi_assessment/KpiContainer";
+import ViewProjects from "./pages/Projects/ViewProjects";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
+import ProjectView from "./pages/Projects/Project";
+import DepartmentsView from "./pages/Departments/Departments";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -59,7 +61,7 @@ const AppRoutes: React.FC<any> = () => {
       return response;
     },
     function (error) {
-      const status = error.response ? error.response.status : null;
+      const status = error?.response ? error?.response?.status : null;
       const url = error.response ? error.response.config.url : null;
 
       if (status === 401) {
@@ -69,17 +71,18 @@ const AppRoutes: React.FC<any> = () => {
     }
   );
 
-  React.useEffect(() => {
-    if (Cookies.get("token")) {
-      // dispatch(getDepartment());
-      // dispatch(getRoles());
-      // dispatch(getEmployees());
-      // dispatch(getTeamLeads());
-      // dispatch(getTeam());
-    }
-  }, [dispatch]);
-  const user: any = storage.get("user");
-  const parsedUserData = JSON.parse(user);
+  // React.useEffect(() => {
+  //   if (Cookies.get("token")) {
+  //     // dispatch(getDepartment());
+  //     // dispatch(getRoles());
+  //     // dispatch(getEmployees());
+  //     // dispatch(getTeamLeads());
+  //     // dispatch(getTeam());
+  //   }
+  // }, [dispatch]);
+  const user: any = storage?.get("user");
+  const parsedUserData = JSON?.parse(user);
+
   return (
     <Routes>
       <Route
@@ -100,44 +103,45 @@ const AppRoutes: React.FC<any> = () => {
           element={<TeamLeaveApplications />}
         />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
-      </Route>
-      {/* Protected routes as admins, HR, Project managers and team leads */}
-      <Route
-        element={
-          <PrivateRoute
-            isAllowed={!!parsedUserData}
-            // isAllowed={!!parsedUserData && !!parsedUserData.is_super_admin}
-            redirectPath="/home"
-          />
-        }
-      >
-        <Route path="/allemployees" element={<AllEmployees />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/viewproject/:id" element={<ViewProjects />} />
+        {/* </Route> */}
+        {/* Protected routes as admins, HR, Project managers and team leads */}
         <Route
-          path="/allleaveapplications"
-          element={<AllLeaveApplications />}
-        />
-        <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
-        <Route path="/createemployee" element={<CreateEmployee />} />
-        <Route path="/createprojects" element={<CreateProjects />} />
-        <Route path="/warninglist" element={<WarningList />} />
-        <Route path="/dashboardcalender" element={<DashboardCalender />} />
-        <Route path="/profile/edit" element={<EditUser />} />
-        <Route path="/profile" element={<Profile />} />
-        {/* Departments */}
-        <Route path="/departments" element={<DepartmentsView />} />
-        <Route path="/departments/:id" element={<ViewDepartments />} />
-        <Route path="/engineering" element={<Engineering />} />
-        <Route path="/finance" element={<Finance />} />
-        <Route path="/humanresource" element={<HumanResource />} />
-        <Route path="/inventory" element={<Inventory />} />
-        <Route path="/informationtech" element={<Informationtech />} />
-        <Route path="/budget" element={<Budget />} />
-        {/* AdminEditUser */}
-        <Route path="/admineditUser" element={<AdminEditUser />} />
-        {/* Project View */}
-        <Route path="/projectview" element={<ProjectView />} />
+          element={
+            <PrivateRoute
+              isAllowed={!!parsedUserData}
+              // isAllowed={!!parsedUserData && !!parsedUserData.is_super_admin}
+              redirectPath="/home"
+            />
+          }
+        >
+          <Route path="/allemployees" element={<AllEmployees />} />
+          <Route path="/projects" element={<ProjectView />} />
+          <Route path="/viewproject/:id" element={<ViewProjects />} />
+          <Route
+            path="/allleaveapplications"
+            element={<AllLeaveApplications />}
+          />
+          <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
+          <Route path="/createemployee" element={<CreateEmployee />} />
+          <Route path="/createprojects" element={<CreateProjects />} />
+          <Route path="/warninglist" element={<WarningList />} />
+          <Route path="/dashboardcalender" element={<DashboardCalender />} />
+          <Route path="/profile/edit" element={<EditUser />} />
+          <Route path="/profile" element={<Profile />} />
+          {/* Departments */}
+          <Route path="/departments" element={<DepartmentsView />} />
+          <Route path="/departments/:id" element={<ViewDepartments />} />
+          <Route path="/engineering" element={<Engineering />} />
+          <Route path="/finance" element={<Finance />} />
+          <Route path="/humanresource" element={<HumanResource />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/informationtech" element={<Informationtech />} />
+          <Route path="/budget" element={<Budget />} />
+          {/* AdminEditUser */}
+          <Route path="/admineditUser" element={<AdminEditUser />} />
+          {/* Project View */}
+          <Route path="/projectview" element={<ProjectView />} />
+        </Route>
       </Route>
     </Routes>
   );

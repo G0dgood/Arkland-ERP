@@ -174,7 +174,7 @@ const WarningList = () => {
                           className="table-datacell datatype-numeric"
                           key={index}
                         >
-                          {i.title}
+                          {i?.title}
                         </td>
                       </>
                     );
@@ -190,22 +190,22 @@ const WarningList = () => {
                   warnings.map((item: any, i: any) => (
                     <tr className="data-table-row">
                       <td className="table-datacell datatype-numeric">
-                        {item.employee}
+                        {item?.employee}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {checkForEmployee(item.employee, employees)}
+                        {checkForEmployee(item?.employee, employees)}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item.message}
+                        {item?.message}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item.misconduct}
+                        {item?.misconduct}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item.count}
+                        {item?.count}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item.status}
+                        {item?.status}
                       </td>
                     </tr>
                   ))

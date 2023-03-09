@@ -13,7 +13,7 @@ const Reference = ({
   bindSubmitForm,
 }: EmployeeFormProps) => {
   const handleSubmit = (values?: any) => {
-    console.log("Values", values);
+    // console.log("Values", values);
     setEmployee({ ...employee, ...values });
     setActive(4);
   };

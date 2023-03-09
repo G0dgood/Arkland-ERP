@@ -1,43 +1,39 @@
 import React, { useEffect, useState, CSSProperties } from "react";
 import { HiOutlinePaperClip, HiOutlineUserGroup } from "react-icons/hi";
 import { Button } from "@material-ui/core";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { BsChevronDown, BsExclamationLg, BsPlusLg } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
 import { ProgressBar, Toast } from "react-bootstrap";
+import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
 import { ChartDonut } from "@patternfly/react-charts";
-import { FaTimes } from "react-icons/fa";
-import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { useAppDispatch } from "../../hooks/useDispatch";
 import { getTeamLeads } from "../../store/reducers/teamLeads";
-import { getRequestOptions } from "../../utils/auth/header";
-import { getRoles } from "../../store/reducers/roles";
-import { getDepartment } from "../../store/reducers/department";
-import { getTeam } from "../../store/reducers/team";
-import { checkForName } from "../../utils/checkForName";
+import { getEmployees } from "../../store/reducers/employees";
+import Cookies from "js-cookie";
+import { FaTimes } from "react-icons/fa";
 
 const ProjectView = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    dispatch(getTeamLeads());
-    dispatch(getDepartment());
-    dispatch(getTeam());
-    dispatch(getRoles());
-  }, [dispatch]);
-
   const [isLoading, setisLoading] = useState(false);
   const [projects, setProjects] = useState([] as any);
   const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState<any>();
-  const [newProjectCreated, setNewProjectCreated] = React.useState(false);
+  const [reRun, setReRun] = useState(false);
+
+  const token = Cookies.get("token");
+  React.useEffect(() => {
+    dispatch(getTeamLeads());
+    dispatch(getEmployees());
+  }, [dispatch]);
+  const navigate = useNavigate();
 
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -53,38 +49,43 @@ const ProjectView = () => {
   };
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setisLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/projects`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
+    setisLoading(true);
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    };
+    fetch(`${process.env.REACT_APP_API}/hr/projects`, requestOptions)
+      .then(async (response) => {
+        const isJson = response.headers
+          .get("content-type")
           ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
+        const data = isJson && (await response.json());
         if (!response.ok) {
-          throw new Error(data.message || response.status);
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
         }
-        setProjects([...data.data]);
         setisLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
+        setReRun(false);
+        setProjects([...data.data]);
+      })
+      .catch((error) => {
         setisLoading(false);
         setError(true);
-        setMessage(error.message || "Something went wrong");
+        setMessage(error);
+        if (error === 500) {
+          setReRun(true);
+          setisLoading(true);
+        }
         setTimeout(() => {
-          fetchData();
-        }, 3000);
-      }
-    };
-    fetchData();
-  }, [newProjectCreated]);
-  const handleNewProjectCreated = () => {
-    setNewProjectCreated(!newProjectCreated);
-  };
+          setError(false);
+          setReRun(false);
+          setMessage("");
+        }, 5000);
+      });
+  }, [reRun === true]);
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
@@ -92,8 +93,6 @@ const ProjectView = () => {
     width: "99.8%",
     borderRadius: "50px",
   };
-  const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
-
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
@@ -123,9 +122,7 @@ const ProjectView = () => {
               <h5>Projects</h5>
               <div className="Request-btn-modal-container">
                 <div className="Request-btn">
-                  <CreateProjectModal
-                    onNewProjectCreated={handleNewProjectCreated}
-                  />
+                  <CreateProjectModal />
                 </div>
                 <div>
                   <Button
@@ -192,9 +189,6 @@ const ProjectView = () => {
                       <div className="iDotsRounded-text">
                         Location: {item.location}
                       </div>
-                      <div className="iDotsRounded-text">
-                        Project Lead: {checkForName(item.lead, teamLeads)}
-                      </div>
                       <div className="iDotsRounded-percent">
                         {item.progress_percentage}%
                       </div>
@@ -225,7 +219,7 @@ const ProjectView = () => {
           </div>
           <div className="ProjectViewContainer-subtwo">
             <div className="subtwo-content-one">
-              {/* <div className="subtwo-content-one-sub1">
+              <div className="subtwo-content-one-sub1">
                 <div className="subtwo-content-one-sub1-content">
                   <p>SELECTED</p>
                   <h5>Design Team</h5>
@@ -233,8 +227,8 @@ const ProjectView = () => {
                 <div className="subtwo-content-one-sub1-content-two">
                   <HiOutlineUserGroup size={28} />
                 </div>
-              </div> */}
-              {/* <div className="subtwo-content-two-sub2">
+              </div>
+              <div className="subtwo-content-two-sub2">
                 <div
                 // style={{ height: "18rem", width: "18rem", margin: "auto" }}
                 >
@@ -254,7 +248,7 @@ const ProjectView = () => {
                     innerRadius={50}
                   />
                 </div>
-              </div> */}
+              </div>
               <div className="subtwo-content-three-sub3">
                 <p>Projects</p>
                 <div className="ProjectView-projects">
@@ -262,32 +256,30 @@ const ProjectView = () => {
                     <h6>TOTAL</h6>
                     <div className="projects-total-container">
                       <span className="projects-total1-span"></span>
-                      <span className="projects-total1-span1">
-                        {projects?.length}
-                      </span>
+                      <span className="projects-total1-span1">144</span>
                     </div>
                   </div>
                   <div className="projects-total2">
                     <h6>COMPLETED</h6>
                     <div className="projects-total-container">
                       <span className="projects-total2-span"></span>
-                      <span className="projects-total1-span1">0</span>
+                      <span className="projects-total1-span1">56</span>
                     </div>
                   </div>
                   <div className="projects-total3">
-                    <h6>In Progress</h6>
+                    <h6>IN PROGRESS</h6>
                     <div className="projects-total-container">
                       <span className="projects-total3-span"></span>
-                      <span className="projects-total1-span1">0</span>
+                      <span className="projects-total1-span1">72</span>
                     </div>
                   </div>
-                  {/* <div className="projects-total4">
-                    <h6>TOTAL</h6>
+                  <div className="projects-total4">
+                    <h6>WAITING</h6>
                     <div className="projects-total-container">
                       <span className="projects-total4-span"></span>
                       <span className="projects-total1-span1">24</span>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
@@ -306,7 +298,7 @@ const ProjectView = () => {
                   <BiEditAlt size={20} color="#787B88" />
                 </div>
               </div>
-              <div className="subtwo-content-two-flex1">
+               <div className="subtwo-content-two-flex1">
                 <div className="subtwo-content-side">
                   <div className="content-side1">
                     <MdOutlineMarkEmailUnread color="#FFFFFF" size={25} />
@@ -319,7 +311,7 @@ const ProjectView = () => {
                 <div subtwo-content-side1>
                   <BsChevronDown size={20} color="#787B88" />
                 </div>
-              </div>
+              </div>  
             </div> */}
           </div>
         </div>

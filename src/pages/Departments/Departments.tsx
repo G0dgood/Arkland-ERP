@@ -1,110 +1,207 @@
-import { RiWallet2Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineDesktop } from "react-icons/ai";
-import { FiBarChart, FiShoppingCart, FiTool, FiUsers } from "react-icons/fi";
-import { useEffect, useState } from "react";
-import { BiBox } from "react-icons/bi";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { MainSearch } from "../../components/TableOptions";
-import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
+import React, { useEffect, useState } from 'react'
+import Header from '../../components/Header'
+import Sidebar from '../../components/Sidebar'
+import { BiDotsHorizontalRounded, } from 'react-icons/bi';
+import { HiOutlinePaperClip, HiOutlineUserGroup } from 'react-icons/hi';
+import { ChartDonut } from '@patternfly/react-charts';
+import { HiOutlineChatBubbleOvalLeftEllipsis } from 'react-icons/hi2';
+import { ProgressBar } from 'react-bootstrap';
+import { Button } from '@material-ui/core';
+import { BsPlusLg } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import { departmentdata } from '../../components/ERP_Datas/ProjectData';
+import CreateDepartmentModal from '../../components/Modals/CreateDepartmentModal';
 
-const Departments = () => {
-  const navigate = useNavigate();
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
+const DepartmentsView = () => {
+	const navigate = useNavigate();
+	const [collapseNav, setCollapseNav] = useState(() => {
+		// @ts-ignore
+		return JSON.parse(localStorage.getItem("collapse")) || false;
+	});
+	useEffect(() => {
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+		localStorage.setItem("collapse", JSON.stringify(collapseNav));
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+	}, [collapseNav]);
+	const toggleSideNav = () => {
+		setCollapseNav(!collapseNav);
+	};
 
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
+	return (
+		<div id="screen-wrapper">
 
-  return (
-    <div id="screen-wrapper">
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
-      <main>
-        <div className="departments-main-container">
-          <div>
-            <CreateDepartmentModal />
-          </div>
-          <MainSearch placeholder={"Search...          Depertments"} />
-        </div>
+			<Header toggleSideNav={toggleSideNav} />
+			<Sidebar collapseNav={collapseNav} />
+			<main>
+				<div className='ProjectViewContainer'>
+					<div className='ProjectViewContainer-subone'>
+						<div className='subone-col-1 subtwo-content-one-sub1-content subone-header-flex'>
+							<h5>Department</h5>
+							<div className='Request-btn-modal-container'>
+								<div className='Request-btn'>
+									<CreateDepartmentModal />
+								</div>
 
-        <div className="Department-item">
-          <div
-            className="Department-item-sub-main"
-            onClick={() => navigate("/procurement")}
-          >
-            <div className="Department-container-item-sub">
-              <FiShoppingCart size={50} />
-            </div>
-            <p className="Department-item-sub-p">Procurement</p>
-          </div>
-          <div
-            className="Department-item-sub-main"
-            onClick={() => navigate("/engineering")}
-          >
-            <div className="Department-container-item-sub">
-              <FiTool size={50} />
-            </div>
-            <p className="Department-item-sub-p">Engineering</p>
-          </div>
-          <div
-            className="Department-item-sub-main"
-            onClick={() => navigate("/finance")}
-          >
-            <div className="Department-container-item-sub">
-              <RiWallet2Line size={50} />
-            </div>
-            <p className="Department-item-sub-p">Finance</p>
-          </div>
-          <div
-            className="Department-item-sub-main"
-            onClick={() => navigate("/humanresource")}
-          >
-            <div className="Department-container-item-sub">
-              <FiUsers size={50} />
-            </div>
-            <p className="Department-item-sub-p">Human Resource</p>
-          </div>
-          <div
-            className="Department-item-sub-main"
-            onClick={() => navigate("/inventory")}
-          >
-            <div className="Department-container-item-sub">
-              <BiBox size={50} />
-            </div>
-            <p className="Department-item-sub-p">Inventory</p>
-          </div>
-          <div
-            className="Department-item-sub-main"
-            onClick={() => navigate("/informationtech")}
-          >
-            <div className="Department-container-item-sub">
-              <AiOutlineDesktop size={50} />
-            </div>
-            <p className="Department-item-sub-p">IT</p>
-          </div>
-          <div
-            className="Department-item-sub-main"
-            onClick={() => navigate("/budget")}
-          >
-            <div className="Department-container-item-sub">
-              <FiBarChart size={50} />
-            </div>
-            <p className="Department-item-sub-p">Budget</p>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-};
+							</div>
 
-export default Departments;
+						</div>
+						<div className='subone-col-2'>
+							<div className='subone-col-sup1'>
+								<span>Stated</span>
+								<span className='subone-col-sup1-circle'>
+									<BsPlusLg size={10} color='#5F5E68' />
+								</span>
+							</div>
+							<div className='subone-col-sup2'>
+								<span>
+									On Going
+								</span>
+								<span className='subone-col-sup1-circle'>
+									<BsPlusLg size={10} color='#5F5E68' />
+								</span>
+							</div>
+							<div className='subone-col-sup3'>
+								<span>
+									Completed
+								</span>
+								<span className='subone-col-sup1-circle'>
+									<BsPlusLg size={10} color='#5F5E68' />
+								</span>
+							</div>
+						</div>
+						<div className='subone-col-3'>
+							{departmentdata?.map((item: any, i: any) =>
+								<div className='ProjectView-card' key={i} onClick={() => navigate(`${item?.link}`)}>
+									<div className='iDotsHorizontalRounded'>
+										<Button className={item?.button}>{item?.buttonText}</Button>
+										<BiDotsHorizontalRounded color='#97979B' />
+									</div>
+									<div className='iDotsRounded-text'>{item?.text}</div>
+									<div className='iDotsRounded-percent'>{item?.percentNumber}%</div>
+									<div className='legend-details'>
+										<ProgressBar now={item?.percentNumber} />
+									</div>
+									<div className='iDotsRounded-percent-people'>
+										<div className='iDotsRounded-percent-list'>
+											<span className='profile-containers'>BS</span>
+											<span className='profile-containers'>BN</span>
+											<span className='profile-containers'>JA</span>
+											<span className='profile-containers'>AD</span>
+										</div>
+										<div className='percent-people-grid'>
+											<div><HiOutlinePaperClip />6</div>
+											<div><HiOutlineChatBubbleOvalLeftEllipsis />4</div>
+										</div>
+									</div>
+								</div>
+							)}
+						</div>
+
+					</div>
+					<div className='ProjectViewContainer-subtwo'>
+						<div className='subtwo-content-one'>
+							<div className='subtwo-content-one-sub1'>
+								<div className='subtwo-content-one-sub1-content'>
+									<p>SELECTED</p>
+									<h5>Design Team</h5>
+								</div>
+								<div className='subtwo-content-one-sub1-content-two'>
+									<HiOutlineUserGroup size={28} />
+								</div>
+							</div>
+							<div className='subtwo-content-two-sub2'>
+								<div
+								// style={{ height: "18rem", width: "18rem", margin: "auto" }}
+								>
+									<ChartDonut
+										ariaDesc="Progress"
+										ariaTitle="Progress"
+										constrainToVisibleArea={true}
+										data={[
+											{ x: "Completed", y: 100 },
+											{ x: "Pending", y: 100 - +10 },
+										]}
+										title="35%"
+										colorScale={["#48AB62", "#116327"]}
+										height={200}
+										width={200}
+										padAngle={0}
+										innerRadius={50}
+									/>
+								</div>
+							</div>
+							<div className='subtwo-content-three-sub3'>
+								<p>Projects</p>
+								<div className='ProjectView-projects'>
+									<div className='projects-total1'>
+										<h6>TOTAL</h6>
+										<div className='projects-total-container'>
+											<span className='projects-total1-span'></span>
+											<span className='projects-total1-span1'>144</span>
+										</div>
+									</div>
+									<div className='projects-total2'>
+										<h6>COMPLETED</h6>
+										<div className='projects-total-container'>
+											<span className='projects-total2-span'></span>
+											<span className='projects-total1-span1'>56</span>
+										</div>
+									</div>
+									<div className='projects-total3'>
+										<h6>IN PROGRESS</h6>
+										<div className='projects-total-container'>
+											<span className='projects-total3-span'></span>
+											<span className='projects-total1-span1'>72</span>
+										</div>
+									</div>
+									<div className='projects-total4'>
+										<h6>WAITING</h6>
+										<div className='projects-total-container'>
+											<span className='projects-total4-span'></span>
+											<span className='projects-total1-span1'>24</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{/* <div className='subtwo-content-two'>
+							<div className='subtwo-content-two-flex'>
+								<div className='subtwo-content-side'>
+									<div className='content-side'>
+										<BiTime color='#FFFFFF' size={25} />
+									</div>
+									<div>
+										<div className='content-side-day'>Sunday,20 December</div>
+										<div className='content-side-time'>08:00 - 11:00am</div>
+									</div>
+								</div>
+								<div subtwo-content-side1 >
+									<BiEditAlt size={20} color='#787B88' />
+								</div>
+							</div>
+							<div className='subtwo-content-two-flex1'>
+								<div className='subtwo-content-side'>
+									<div className='content-side1'>
+										<MdOutlineMarkEmailUnread color='#FFFFFF' size={25} />
+									</div>
+									<div>
+										<div className='content-side-day'>Sunday,20 December</div>
+										<div className='content-side-time'>08:00 - 11:00am</div>
+									</div>
+								</div>
+								<div subtwo-content-side1>
+									<BsChevronDown size={20} color='#787B88' />
+								</div>
+							</div>
+						</div> */}
+
+
+					</div>
+				</div>
+
+			</main>
+		</div>
+	)
+}
+
+export default DepartmentsView

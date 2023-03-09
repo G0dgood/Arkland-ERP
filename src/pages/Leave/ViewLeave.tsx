@@ -34,24 +34,21 @@ const ViewLeave = ({ showLeave, setShowLeaver }: any) => {
 					<div className='Drawactive'>
 						<form>
 							<div className="form-grp">
-								<label htmlFor="institution">Institution Attended</label>
+								<label htmlFor="institution">Name</label>
 								<input type="text" id="institution" required />
 							</div>
 							<div className="form-grp">
-								<label htmlFor="course">Course Of Study</label>
-								<input type="text" id="course" required />
+								<label htmlFor="course">Start Date</label>
+								<input type="date" id="course" required />
 							</div>
 							<div className="form-grp">
-								<label htmlFor="membership">Proffesional Membership</label>
-								<input type="text" id="membership" required />
+								<label htmlFor="membership">End Date</label>
+								<input type="date" id="membership" required />
 							</div>
+
 							<div className="form-grp">
-								<label htmlFor="graduation">Year Of Graduation</label>
-								<input type="date" id="graduation" required />
-							</div>
-							<div className="form-grp">
-								<label htmlFor="graduation">Year Of Graduation</label>
-								<textarea >
+								<label htmlFor="graduation">Description</label>
+								<textarea className='Modal-textarea' placeholder='Enter detailed reason for leave' rows={7}>
 
 								</textarea>
 							</div>
