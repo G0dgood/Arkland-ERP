@@ -266,7 +266,9 @@ const ViewProject = () => {
                         NUMBER OF EMPLOYEES:
                       </p>
                       <p className="project-main-div-col-2-sub-container-subTitle">
-                        {teamMembers.length > 0 ? teamMembers.length : ""}
+                        {teamMembers.length > 0
+                          ? teamMembers.length
+                          : "No employees assigned to project"}
                       </p>
                     </div>
                   </div>
@@ -433,7 +435,7 @@ const ViewProject = () => {
                             ))}
                           </div>
                         ) : (
-                          ""
+                          "No team members assigned to project"
                         )}
                       </div>
                     )}
@@ -652,7 +654,7 @@ const ViewProject = () => {
                             ))}
                           </div>
                         ) : (
-                          ""
+                          "Project tasks not assigned"
                         )}
                       </div>
                     )}

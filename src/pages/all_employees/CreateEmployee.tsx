@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { GoArrowLeft } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { number } from "yup";
 import Header from "../../components/Header";
@@ -18,6 +18,7 @@ import { useAppSelector } from "../../hooks/useDispatch";
 
 const CreateEmployee = () => {
   const navigate = useNavigate();
+
   const [employee, setEmployee] = useState({
     first_name: "",
     middle_name: "",
@@ -136,7 +137,6 @@ const CreateEmployee = () => {
         <Header toggleSideNav={toggleSideNav} />
         <Sidebar collapseNav={collapseNav} />
         <main>
-
           <div className="addemployeecontainer">
             <AddEmployeeTitle
               setActive={setActive}

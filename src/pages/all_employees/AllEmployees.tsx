@@ -27,12 +27,12 @@ import { getEmployees } from "../../store/reducers/employees";
 const AllEmployees = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   React.useEffect(() => {
     dispatch(getDepartment());
     dispatch(getRoles());
     dispatch(getEmployees());
   }, [dispatch]);
+
   const [employees, setEmployees] = useState([] as any);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
@@ -40,6 +40,7 @@ const AllEmployees = () => {
   const [error, setError] = useState<any>();
   const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [newEmployeeCreated, setNewEmployeeCreated] = React.useState(false);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +65,9 @@ const AllEmployees = () => {
         setisLoading(false);
         setError(true);
         setMessage(error.message || "Something went wrong");
+        setTimeout(() => {
+          fetchData();
+        }, 3000);
       }
     };
     fetchData();
@@ -143,6 +147,7 @@ const AllEmployees = () => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
+                    // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee

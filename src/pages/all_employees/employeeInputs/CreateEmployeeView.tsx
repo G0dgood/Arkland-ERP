@@ -2,35 +2,49 @@ import React from "react";
 import moment from "moment";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import { fireAlert } from "../../../utils/Alert";
 
 const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-  const handleSubmit = () => {
+  const token = Cookies.get("token");
+
+  const handleSubmit = async () => {
     setLoading(true);
     const allEmployeeValues = { ...employee };
-    axios
-      .post(`${process.env.REACT_APP_API}/hr/employees`, allEmployeeValues)
-      .then((res: AxiosResponse) => {
-        setLoading(false);
-        if (res.data.success === true || res.status === 200) {
-          const title = "Employee creation request successful";
-          const html = `Request to create an employee sent`;
-          const icon = "success";
-          fireAlert(title, html, icon);
-          navigate(`/allemployees`);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}/hr/employees`,
+        {
+          method: "POST",
+          body: JSON.stringify(allEmployeeValues),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-      .catch(function (error) {
-        setLoading(false);
-        const html = "Try again";
-        const icon = "error";
-        const title = "Employee creation request failed";
+      );
+      const data = await response.json();
+      setLoading(false);
+      if (response.ok) {
+        const title = "Employee creation request successful";
+        const html = `Request to create an employee sent`;
+        const icon = "success";
         fireAlert(title, html, icon);
-      });
+        navigate(`/allemployees`);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Employee creation request failed";
+      fireAlert(title, html, icon);
+    }
   };
 
   function checkNameOfRole(id: any): any {

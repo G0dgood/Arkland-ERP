@@ -1,6 +1,6 @@
+import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -22,7 +22,6 @@ const CreateProjectModal = (props: any) => {
   const validate = Yup.object().shape({
     name: Yup.string().required("Name of project is required"),
   });
-
   const [lgShow, setLgShow] = useState(false);
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
@@ -39,7 +38,7 @@ const CreateProjectModal = (props: any) => {
           fireAlert(title, html, icon);
           resetForm(values);
           setLgShow(false);
-          navigate(`/projects`);
+          props.onNewProjectCreated();
         }
       })
       .catch((err) => {
@@ -50,11 +49,39 @@ const CreateProjectModal = (props: any) => {
         fireAlert(title, html, icon);
       });
   };
-  const department: any = useAppSelector(
+  const departments: any = useAppSelector(
     (state) => state.department.department
   );
-  const team: any = useAppSelector((state) => state.team.team);
+  const availablleDepartments = [] as any;
 
+  departments &&
+    departments.forEach((team: any) =>
+      availablleDepartments.push({
+        value: team.id,
+        label: team.name,
+      })
+    );
+  const teams: any = useAppSelector((state) => state.team.team);
+  const availablleTeam = [] as any;
+
+  teams &&
+    teams.forEach((team: any) =>
+      availablleTeam.push({
+        value: team.id,
+        label: team.name,
+      })
+    );
+
+  const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+  const availablleTeamLeads = [] as any;
+
+  teamLeads &&
+    teamLeads.forEach((team: any) =>
+      availablleTeamLeads.push({
+        value: team.id,
+        label: team.name,
+      })
+    );
   return (
     <div>
       <Button
@@ -94,149 +121,177 @@ const CreateProjectModal = (props: any) => {
             onSubmit={handleSubmit}
             validationSchema={validate}
           >
-            {({ values, handleChange, setFieldValue, submitForm }) => {
+            {({ setFieldValue }) => {
               return (
-                <div className="Modal-Body">
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Project Name"
-                        name="name"
-                        placeholder="Enter name of project"
-                      />
+                <Form>
+                  <div className="Modal-Body">
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="Project Name"
+                          name="name"
+                          placeholder="Enter name of project"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="Modal-data-time">
-                    <div className="Modal-two-input">
+                    <div
+                      className="Modal-textarea-middle"
+                      style={{
+                        marginTop: "2rem",
+                      }}
+                    >
                       <div className="col">
                         <div className="form-group">
-                          <ReactSelectField
-                            label="Department"
-                            name="department"
-                            options={department}
-                            className="form-group__gender"
+                          <TextAreaField
+                            style={{
+                              height: "12rem",
+                              lineHeight: "1",
+                            }}
+                            label="Description"
+                            name="description"
+                            placeholder="Enter project description"
                             onChange={(event: any) => {
-                              setFieldValue("department", event?.value);
+                              setFieldValue("description", event?.value);
                             }}
                           />
                         </div>
                       </div>
                     </div>
-                    <div className="div-space" />
-                    <div className="Modal-two-input">
+                    <div className="Modal-data-time">
+                      <div className="Modal-two-input">
+                        <div className="col">
+                          <div className="form-group">
+                            <ReactSelectField
+                              label="Department"
+                              name="department"
+                              options={availablleDepartments}
+                              className="form-group__gender"
+                              onChange={(event: any) => {
+                                setFieldValue("department", event?.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="div-space" />
+                      <div className="Modal-two-input">
+                        <div className="col">
+                          <div className="form-group">
+                            <ReactSelectField
+                              label="Team"
+                              name="team"
+                              options={availablleTeam}
+                              className="form-group__gender"
+                              onChange={(event: any) => {
+                                setFieldValue("team", event?.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="div-space" />
+                      <div className="Modal-two-input">
+                        <div className="col">
+                          <div className="form-group">
+                            <ReactSelectField
+                              label="Project lead"
+                              name="lead"
+                              options={availablleTeamLeads}
+                              className="form-group__gender"
+                              onChange={(event: any) => {
+                                setFieldValue("lead", event?.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="Modal-data-time">
+                      <div className="Modal-two-input">
+                        <div className="col">
+                          <div className="form-group">
+                            <InputField
+                              label="Location"
+                              name="location"
+                              placeholder="Enter project location"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="div-space" />
+                      <div className="Modal-two-input">
+                        <div className="col">
+                          <div className="form-group">
+                            <CountrySelectField
+                              className="agent-project__owner"
+                              label="Country"
+                              name="country"
+                              placeholder="Select country"
+                              onChange={(value: any) =>
+                                setFieldValue("country", { value }.value.label)
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="Modal-data-time">
+                      <div className="Modal-two-input">
+                        <div className="col">
+                          <div className="form-group">
+                            <InputField
+                              label="Enter State"
+                              name="state"
+                              placeholder="Enter project's state"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="div-space" />
+                      <div className="Modal-two-input">
+                        <div className="col">
+                          <div className="form-group">
+                            <InputField
+                              label="Local Government Area"
+                              name="lga"
+                              placeholder="Enter project's lga"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="Modal-textarea-middle">
                       <div className="col">
                         <div className="form-group">
-                          <ReactSelectField
-                            label="Team"
-                            name="team"
-                            options={team}
-                            className="form-group__gender"
+                          <CustomInputField
+                            style={{
+                              lineHeight: 1,
+                            }}
+                            type="date"
+                            label="Proposed Completion Date"
+                            name="proposed_completion_date"
                             onChange={(event: any) => {
-                              setFieldValue("team", event?.value);
+                              setFieldValue(
+                                "proposed_completion_date",
+                                formatDate(event?.target.value)
+                              );
                             }}
                           />
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="Modal-textarea-middle">
-                    <div className="col">
-                      <div className="form-group">
-                        <TextAreaField
-                          style={{
-                            height: "12rem",
-                            lineHeight: "1",
-                          }}
-                          label="Description"
-                          name="description"
-                          placeholder="Enter project description"
-                          onChange={(event: any) => {
-                            setFieldValue("team", event?.value);
-                          }}
-                        />
-                      </div>
+                    <div className="btn-modal-container">
+                      <Button
+                        variant="contained"
+                        className="Add-btn-modal"
+                        type="submit"
+                      >
+                        {isLoading ? "Processing..." : "Create Project"}
+                      </Button>
                     </div>
                   </div>
-                  <div className="Modal-data-time">
-                    <div className="Modal-two-input">
-                      <div className="col">
-                        <div className="form-group">
-                          <InputField
-                            label="Location"
-                            name="location"
-                            placeholder="Enter project location"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="div-space" />
-                    <div className="Modal-two-input">
-                      <div className="col">
-                        <div className="form-group">
-                          <CountrySelectField
-                            className="agent-project__owner"
-                            label="Country"
-                            name="country"
-                            placeholder="Select country"
-                            onChange={(value: any) =>
-                              setFieldValue("country", { value }.value.label)
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="Modal-data-time">
-                    <div className="Modal-two-input">
-                      <div className="col">
-                        <div className="form-group">
-                          <InputField
-                            label="Enter State"
-                            name="state"
-                            placeholder="Enter project's state"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="div-space" />
-                    <div className="Modal-two-input">
-                      <div className="col">
-                        <div className="form-group">
-                          <InputField
-                            label="Local Government Area"
-                            name="lga"
-                            placeholder="Enter project's lga"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="Modal-textarea-middle">
-                    <div className="col">
-                      <div className="form-group">
-                        <CustomInputField
-                          style={{
-                            lineHeight: 1,
-                          }}
-                          type="date"
-                          label="Proposed Completion Date"
-                          name="proposed_completion_date"
-                          onChange={(event: any) => {
-                            setFieldValue(
-                              "proposed_completion_date",
-                              formatDate(event?.target.value)
-                            );
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="btn-modal-container">
-                    <Button variant="contained" className="Add-btn-modal">
-                      {isLoading ? "Processing..." : "          Create Project"}
-                    </Button>
-                  </div>
-                </div>
+                </Form>
               );
             }}
           </Formik>
