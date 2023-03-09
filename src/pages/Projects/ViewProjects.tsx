@@ -11,31 +11,34 @@ import {
 import moment from "moment";
 import Calendar from "react-calendar";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import SyncLoader from "react-spinners/SyncLoader";
+import { MdOutlineClose } from "react-icons/md";
+import { Form, Formik } from "formik";
+import Cookies from "js-cookie";
+import { Modal, Toast } from "react-bootstrap";
+import { BsExclamationLg } from "react-icons/bs";
+import { FaTimes } from "react-icons/fa";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectAvatar from "../../assets/vectors/project-avatar.svg";
 import projectBack from "../../assets/vectors/project-back.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
 import projectProfile from "../../assets/vectors/project-profile.svg";
-import { checkForEmployee, checkForTeams } from "../../utils/checkForName";
+import { checkForTeams } from "../../utils/checkForName";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { BarLoader } from "react-spinners";
-import CreateProjectModal from "../../components/Modals/CreateProjectModal";
 import RequestWorkerModal from "../../components/Modals/RequestWorkerModal";
-import { getEmployees } from "../../store/reducers/employees";
-import Cookies from "js-cookie";
-import { Toast } from "react-bootstrap";
-import { BsExclamationLg } from "react-icons/bs";
-import { FaTimes } from "react-icons/fa";
+import CreateTaskModal from "../../components/Modals/CreateTaskModal";
+import InputField from "../../components/Inputs/InputField";
+import ReactSelectField from "../../components/Inputs/ReactSelectField";
+import CustomInputField from "../../components/Inputs/CustomInputField";
+import { formatDate } from "../../utils/formatDate";
 
 const ViewProject = () => {
   const token = Cookies.get("token");
   const { id }: any = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const [taskCreateShow, setTaskCreateShow] = useState(false);
   const [value, onChange] = useState(new Date());
   const [projects, setProjects] = React.useState({} as any);
   const [projectsTasks, setProjectsTasks] = React.useState({} as any);
@@ -47,6 +50,9 @@ const ViewProject = () => {
   const [error, setError] = useState<any>();
   const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [reRun, setReRun] = useState(false);
+  const [taskReRun, setProjectTasksReRun] = useState(false);
+  const [teamReRun, setTeamReRun] = useState(false);
 
   const override: CSSProperties = {
     display: "block",
@@ -76,6 +82,7 @@ const ViewProject = () => {
           return Promise.reject(error);
         }
         setLoading(false);
+        setReRun(false);
         setProjects(data.data);
         setDataFetch(true);
       })
@@ -83,12 +90,17 @@ const ViewProject = () => {
         setLoading(false);
         setError(true);
         setMessage(error);
+        if (error === 500) {
+          setReRun(true);
+          setLoading(true);
+        }
         setTimeout(() => {
           setError(false);
+          setReRun(false);
           setMessage("");
         }, 5000);
       });
-  }, [id]);
+  }, [id, reRun === true]);
 
   React.useEffect(() => {
     setProjectTasksLoading(true);
@@ -110,19 +122,24 @@ const ViewProject = () => {
           return Promise.reject(error);
         }
         setProjectTasksLoading(false);
+        setProjectTasksReRun(false);
         setProjectsTasks(data.data);
       })
       .catch((error) => {
         setProjectTasksLoading(false);
         setError(true);
         setMessage(error);
+        if (error === 500) {
+          setProjectTasksReRun(true);
+          setProjectTasksLoading(true);
+        }
         setTimeout(() => {
           setError(false);
+          setProjectTasksReRun(false);
           setMessage("");
         }, 5000);
       });
-  }, [id]);
-
+  }, [id, taskReRun === true]);
   React.useEffect(() => {
     setTeamLoading(true);
     const requestOptions = {
@@ -146,19 +163,50 @@ const ViewProject = () => {
           return Promise.reject(error);
         }
         setTeamLoading(false);
+        setTeamReRun(false);
         setTeamMembers(data.data);
       })
       .catch((error) => {
         setTeamLoading(false);
         setError(true);
         setMessage(error);
+        if (error === 500) {
+          setTeamReRun(true);
+          setTeamLoading(true);
+        }
         setTimeout(() => {
           setError(false);
+          setTeamReRun(false);
           setMessage("");
         }, 5000);
       });
-  }, [dataFetch === true]);
+  }, [dataFetch === true, teamReRun === true]);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  const handleSubmit = async (values: any, { resetForm }: any) => {
+    setProjectTasksLoading(true);
+    const createDepartmentValues = { ...values };
+    // await axios
+    //   .post(`${process.env.REACT_APP_API}/hr/warnings`, createDepartmentValues)
+    //   .then((res: AxiosResponse) => {
+    //     setLoading(false);
+    //     if (res.data.success === true || res.status === 200) {
+    //       const title = "Warning created successfully.";
+    //       const html = `Warning created`;
+    //       const icon = "success";
+    //       fireAlert(title, html, icon);
+    //       resetForm(values);
+    //       setLgShow(false);
+    //       navigate(`/warninglist`);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     setLoading(false);
+    //     const html = err.response.data.message;
+    //     const icon = "error";
+    //     const title = "Warning creation failed";
+    //     fireAlert(title, html, icon);
+    //   });
+  };
   // const handleChange = (event: any) => {
   // 	setChecked(event.target.checked);
   // };
@@ -191,21 +239,36 @@ const ViewProject = () => {
     };
   }, []);
 
-  const objectDate = new Date();
-
-  const month = objectDate.getMonth();
-
-  const year = objectDate.getFullYear();
-
-  const day = today.toLocaleDateString(locale, { weekday: "long" });
-  const date = ` ${today.toLocaleDateString(locale, { month: "long" })} `;
-  const time = today.toLocaleTimeString(locale, {
-    hour: "numeric",
-    hour12: true,
-    minute: "numeric",
-  });
   const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
   const employees: any = useAppSelector((state) => state.employees.employees);
+  const availablleTeamMembers = [] as any;
+  if (teamMembers.length < 0) {
+    return null;
+  } else {
+    teamMembers.length > 0 &&
+      teamMembers.forEach((teamMember: any) =>
+        availablleTeamMembers.push({
+          value: teamMember.id,
+          label: teamMember.employee_name,
+        })
+      );
+  }
+
+  const priorityOptions = [
+    { value: "5", label: "Top priority" },
+    { value: "4", label: "High priority" },
+    { value: "3", label: "Medium priority" },
+    { value: "2", label: "Low priority" },
+    { value: "1", label: "Lowest priority" },
+  ];
+
+  const difficultyOptions = [
+    { value: "5", label: "Very challenging" },
+    { value: "4", label: "Challenging" },
+    { value: "3", label: "Moderate" },
+    { value: "2", label: "Easy" },
+    { value: "1", label: "Very easy:" },
+  ];
 
   return (
     <div id="screen-wrapper">
@@ -459,8 +522,160 @@ const ViewProject = () => {
                       src={redPlus}
                       alt="User"
                       className="project-main-div-col-2-sub-min-main__header-plus"
+                      onClick={() => setTaskCreateShow(true)}
                     />
                   </div>
+                  <div>
+                    <Modal
+                      size="lg"
+                      show={taskCreateShow}
+                      aria-labelledby="contained-modal-title-vcenter"
+                      centered
+                    >
+                      <Modal.Header>
+                        <span></span>
+                        <span className="span-center-title"> Create Task</span>
+                        <Button
+                          style={{ color: "#fff" }}
+                          onClick={() => setTaskCreateShow(false)}
+                        >
+                          <MdOutlineClose size={28} />
+                        </Button>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Formik
+                          initialValues={{
+                            title: "",
+                            assigned_to: "",
+                            note: "",
+                          }}
+                          onSubmit={handleSubmit}
+                        >
+                          {({ setFieldValue }) => {
+                            return (
+                              <Form>
+                                <div className="Modal-Body">
+                                  <div className="col">
+                                    <div className="form-group">
+                                      <InputField
+                                        label="Title"
+                                        placeholder="Enter task title"
+                                        name="title"
+                                        className="form-group__gender"
+                                        onChange={(event: any) => {
+                                          setFieldValue("title", event?.value);
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="Modal-textarea-middle">
+                                    <div className="col">
+                                      <div className="form-group">
+                                        <InputField
+                                          label="Note"
+                                          placeholder="Enter task note"
+                                          name="note"
+                                          className="form-group__gender"
+                                          onChange={(event: any) => {
+                                            setFieldValue("note", event?.value);
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="modal-input-sub-space">
+                                    <div className="col">
+                                      <div className="form-group">
+                                        <ReactSelectField
+                                          options={priorityOptions}
+                                          label="How important is this task?"
+                                          name="priority"
+                                          className="form-group__gender"
+                                          onChange={(event: any) => {
+                                            setFieldValue(
+                                              "priority",
+                                              event?.value
+                                            );
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="modal-input-sub-space">
+                                    <div className="col">
+                                      <div className="form-group">
+                                        <ReactSelectField
+                                          options={difficultyOptions}
+                                          label="How difficult is this task?"
+                                          name="points"
+                                          className="form-group__gender"
+                                          onChange={(event: any) => {
+                                            setFieldValue(
+                                              "priority",
+                                              event?.value
+                                            );
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="modal-input-sub-space">
+                                    <div className="col">
+                                      <div className="form-group">
+                                        <ReactSelectField
+                                          options={availablleTeamMembers}
+                                          label="Who is this task assigned to?"
+                                          name="assigned_to"
+                                          className="form-group__gender"
+                                          onChange={(event: any) => {
+                                            setFieldValue(
+                                              "assigned_to",
+                                              event?.value
+                                            );
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="modal-input-sub-space">
+                                    <div className="col">
+                                      <div className="form-group">
+                                        <CustomInputField
+                                          style={{
+                                            lineHeight: 1,
+                                          }}
+                                          type="date"
+                                          label="Proposed Completion Date"
+                                          name="expected_completion_date"
+                                          onChange={(event: any) => {
+                                            setFieldValue(
+                                              "expected_completion_date",
+                                              formatDate(event?.target.value)
+                                            );
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="btn-modal-container">
+                                    <Button
+                                      variant="contained"
+                                      className="Add-btn-modal"
+                                      type="submit"
+                                    >
+                                      {isLoading ? "Please wait..." : "Create"}
+                                    </Button>
+                                  </div>
+                                </div>
+                              </Form>
+                            );
+                          }}
+                        </Formik>
+                      </Modal.Body>
+                    </Modal>
+                  </div>
+
                   <div className="project-main-div-col-2-sub-max1 project-main-div-col-2-sub-min-main">
                     {isProjectTasksLoading === true ? (
                       <div>
@@ -497,7 +712,9 @@ const ViewProject = () => {
                                         <div>{item.title}</div>
                                       </div>
                                       <div className="project-main-todo-note">
-                                        {/* {item.notes[0]?.text} */}
+                                        {projectsTasks.length > 0
+                                          ? item.notes[0]?.text
+                                          : ""}
                                       </div>
                                     </div>
                                   </div>
