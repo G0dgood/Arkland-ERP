@@ -15,23 +15,9 @@ import Finance from "./employeeInputs/Finance";
 import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { userRole } from "../../features/User/userSlice";
 
 const CreateEmployee = () => {
-  const dispatch = useAppDispatch();
-  const { data,
-    isError,
-    isSuccess,
-    isLoading,
-    message,
-    error } = useAppSelector((state: any) => state.userinfo);
 
-  console.log('user-info', data)
-
-  useEffect(() => {
-    // @ts-ignore
-    dispatch(userRole());
-  }, [dispatch]);
 
   const navigate = useNavigate();
   const [employee, setEmployee] = useState({
@@ -191,9 +177,7 @@ const CreateEmployee = () => {
                 setActive={setActive}
                 bindSubmitForm={bindSubmitForm}
                 options={availablleDepartments}
-                // roleOptions={availablleRoles}
-                roles={data}
-              />
+                roleOptions={availablleRoles} roles={undefined} />
               <Address
                 active={active}
                 employee={employee}
@@ -203,7 +187,6 @@ const CreateEmployee = () => {
               <CreateEmployeeView
                 active={active}
                 employee={employee}
-                roles={roles}
                 departments={departments}
                 setEmployee={setEmployee}
                 setActive={setActive}

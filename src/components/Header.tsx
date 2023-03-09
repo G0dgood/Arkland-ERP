@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
@@ -13,15 +13,12 @@ import storage from "../utils/storage";
 import MobileSideBar from "./MobileSideBar";
 import { useAppSelector } from "../hooks/useDispatch";
 
-const Header = ({ toggleSideNav, }: any) => {
+const Header = ({ toggleSideNav }: any) => {
+
   // @ts-ignore
-  const userInfo: any = JSON?.parse(localStorage.getItem("userInfo"))
+  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
 
-  // const { data, isError, isSuccess, isLoading, message, error } = useAppSelector((state: any) => state.auth);
-
-
-
-  const [network, setnetwork] = useState<any>()
+  const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const navigate = useNavigate();
   const handleLogoutUser = async () => {
@@ -35,20 +32,19 @@ const Header = ({ toggleSideNav, }: any) => {
       });
     await Cookies.remove("token");
     await storage.remove("user");
-    navigate("/");
-    window?.location?.reload();
+    window.location.replace("/");
+    window.location.reload();
   };
 
-  window.addEventListener('offline', (e) => setnetwork('offline'));
-  window.addEventListener('online', (e) => setnetwork('online'));
+  window.addEventListener("offline", (e) => setnetwork("offline"));
+  window.addEventListener("online", (e) => setnetwork("online"));
   useEffect(() => {
-    if (network === 'online') {
-      toast.success("You are back online!")
-    } else if (network === 'offline') {
-      toast.error("You have lost internet connection!")
-
+    if (network === "online") {
+      toast.success("You are back online!");
+    } else if (network === "offline") {
+      toast.error("You have lost internet connection!");
     }
-  }, [network])
+  }, [network]);
 
 
   const [isOpen, setIsopen] = useState(false);
@@ -78,9 +74,11 @@ const Header = ({ toggleSideNav, }: any) => {
           <div className="header-logo">
             <img src={logo} alt="ASL" />
           </div>
-          <span className="header-logo-text">Line Manager</span>
+          <span className="header-logo-text">
+            {/* Line Manager */}
+          </span>
           <span className="header-logo-text1">
-            {userInfo?.email}
+            {userInfo?.data?.employee?.email}
           </span>
         </div>
 
@@ -89,7 +87,9 @@ const Header = ({ toggleSideNav, }: any) => {
           onClick={() => setDropDown(!dropDown)}
           onMouseEnter={() => setDropDown(true)}
         >
-          <span className="dropdown-names">{userInfo?.full_name}</span>
+          <span className="dropdown-names">
+            {userInfo?.data?.employee?.full_name}
+          </span>
           <div className="preview-header img-container-header">
             <FaUserCircle size={22} />
           </div>

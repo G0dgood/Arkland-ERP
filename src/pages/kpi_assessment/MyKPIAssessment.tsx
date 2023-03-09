@@ -3,36 +3,21 @@
 
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { BsCheckCircle } from 'react-icons/bs';
-import { FaArrowLeft, FaDownload } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header'
 import Pagination from '../../components/Pagination';
-import Sidebar from '../../components/Sidebar'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 
-const MyKPIAssessment = () => {
+import axios, { AxiosResponse } from 'axios';
+import moment from 'moment';
+import TableLoader from '../../components/TableLoader';
+import ViewKPImodal from '../../components/Modals/ViewKPImodal';
 
-	const navigate = useNavigate();
+const MyKPIAssessment = ({ setkpidata }: any) => {
 
-	const [data, setData] = useState([]);
+	const [data, setData] = useState<any>([]);
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
 	const [isLoading, setisLoading] = useState(false);
 
-	useEffect(() => {
-		setisLoading(true)
-		fetch("https://jsonplaceholder.typicode.com/users")
-			.then((response) => response.json())
-			.then((data) => {
-				setData(data);
-				setisLoading(false)
-			})
-			.catch((err) => {
-				console.log(err);
-				setisLoading(false)
-			});
-	}, []);
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
@@ -59,16 +44,40 @@ const MyKPIAssessment = () => {
 
 	useEffect(() => {
 		if (data) {
-			const result = data?.filter((object) => {
+			const result = data?.filter((object: any) => {
 				// @ts-ignore
 				return JSON?.stringify(object)?.toString()?.includes(searchItem);
 			});
 			setSortData(result);
 		}
-
 	}, [data, searchItem]);
 
 	const [displayData, setDisplayData] = useState([]);
+
+
+
+	React.useEffect(() => {
+		const source = axios.CancelToken.source();
+		setisLoading(true);
+		axios
+			.get(`${process.env.REACT_APP_API}/hr/appraisals`)
+			.then((res: AxiosResponse) => {
+				setData(res?.data?.data);
+				setkpidata(res?.data?.data?.length);
+				console.log("res-res-res", res)
+				setisLoading(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				setisLoading(false);
+			});
+		return () => {
+			source.cancel();
+		};
+	}, [setkpidata]);
+
+
+
 
 	return (
 
@@ -100,18 +109,16 @@ const MyKPIAssessment = () => {
 			{/* </div>
 			</div> */}
 			<section className="md-ui component-data-table">
-
+				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 				<div className="main-table-wrapper">
 					<table className="main-table-content">
 						<thead className="data-table-header">
 							<tr className="data-table-row" >
-								<td className="table-datacell datatype-numeric">Email Address</td>
-								<td className="table-datacell datatype-numeric">Leave Type</td>
-								<td className="table-datacell datatype-numeric">Start Date</td>
-								<td className="table-datacell datatype-numeric">No of Days</td>
-								<td className="table-datacell datatype-numeric">HOD Approval</td>
-								<td className="table-datacell datatype-numeric">Final Approval</td>
-								<td className="table-datacell datatype-numeric">ACTION</td>
+								<td className="table-datacell datatype-numeric">Year</td>
+								<td className="table-datacell datatype-numeric">Month</td>
+								<td className="table-datacell datatype-numeric">Average</td>
+								<td className="table-datacell datatype-numeric">status</td>
+								<td className="table-datacell datatype-numeric">---</td>
 
 							</tr>
 						</thead>
@@ -123,17 +130,14 @@ const MyKPIAssessment = () => {
 							) : (
 								displayData.map((item: any, i: any) => (
 									<tr className="data-table-row">
-										<td className="table-datacell datatype-string">jamesb@arklandstructuresltd.com</td>
-										<td className="table-datacell datatype-numeric">25-08-2022</td>
-										<td className="table-datacell datatype-numeric">31-08-2022</td>
-										<td className="table-datacell datatype-numeric">5</td>
+										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
+										<td className="table-datacell datatype-numeric">{item?.month}</td>
+										<td className="table-datacell datatype-numeric">{item?.performance_percentage_employee}%</td>
 										<td className="table-datacell datatype-numeric">
-											<BsCheckCircle size={25} color={"red"} className="icon-bold" /></td>
-										<td className="table-datacell datatype-numeric">
-											<BsCheckCircle size={25} color={"green"} />
+											<Button className='profile-image-name-sub2'>{item?.status}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Button id="team-applicatiom-update">View</Button>
+											<ViewKPImodal id={item?._id} />
 										</td>
 									</tr>
 								))
@@ -148,7 +152,7 @@ const MyKPIAssessment = () => {
 					setDisplayData={setDisplayData}
 					data={sortData}
 					entriesPerPage={entriesPerPage}
-					Total={"Employee"}
+					Total={"Assessment"}
 				/>
 			</footer>
 		</div >

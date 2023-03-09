@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Carousel } from "react-bootstrap";
 import { Toast } from "react-bootstrap";
 import { Button } from "@material-ui/core";
@@ -8,19 +8,18 @@ import { Form, Formik } from "formik";
 import { BsExclamationLg } from "react-icons/bs";
 import Checkbox from "@mui/material/Checkbox";
 import { FaTimes } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import first from "../../assets/images/Bijou.jpg";
 import second from "../../assets/images/1.jpeg";
 import third from "../../assets/images/1.jpg";
 import fourth from "../../assets/images/A&A.jpg";
 import fifth from "../../assets/images/PHOENIX.jpg";
 import logo from "../../assets/images/ASLLOGO.svg";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import InputField from "../../components/Inputs/InputField";
 import storage from "../../utils/storage";
-import { login } from "../../features/Auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/useDispatch";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,29 +39,6 @@ const Login = () => {
 
 
 
-  // const { user,
-  //   isError: error,
-  //   isSuccess,
-  //   isLoading,
-  //   message,
-  // } = useAppSelector((state: any) => state.auth);
-
-  // console.log('payload-payload', user)
-
-  // useEffect(() => {
-  //   if (user?.token) {
-  //     Cookies.set("token", user.token);
-  //     storage.set("user", JSON.stringify(user));
-  //     localStorage.setItem('userinfo', JSON.stringify(user));
-  //   }
-  // }, [user])
-
-
-  // const handleSubmit = (values: any) => {
-  //   // @ts-ignore
-  //   dispatch(login(values));
-  // };
-
   const handleSubmit = (values: any, { resetForm }: any) => {
     setLoading(true);
     const requestOptions = {
@@ -72,9 +48,8 @@ const Login = () => {
     };
     fetch(`${process.env.REACT_APP_API}/auth/login`, requestOptions)
       .then(async (response) => {
-        localStorage.setItem('userinfo', JSON.stringify(response));
         // @ts-ignore
-        console.log('response', response)
+        console.log('response-userinfo', response)
         setLoading(false);
         const isJson = response.headers
           .get("content-type")
@@ -88,12 +63,11 @@ const Login = () => {
         resetForm(values);
         // set token in axios header
         axios.defaults.headers.common["authorization"] = data.token;
-        // // set token in cookie
+        // set token in cookie
         Cookies.set("token", data.token);
-        console.log(data.token)
-        storage.set("user", JSON.stringify(data?.user));
-        // window.location.replace("/home");
-        navigate('/home')
+        storage.set("user", JSON.stringify({ data }));
+        localStorage.setItem('userinfo', JSON.stringify({ data }));
+        navigate("/home");
       })
       .catch((error) => {
         setLoading(false);
@@ -105,8 +79,6 @@ const Login = () => {
         }, 5000);
       });
   };
-
-
 
   return (
     <>

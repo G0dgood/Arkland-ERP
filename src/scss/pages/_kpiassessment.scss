@@ -109,6 +109,9 @@
   margin-top: 2rem;
 }
 
+#performance{
+  padding: 2rem;
+}
 .performance-field {
   padding: 0.4rem 2rem;
   margin-bottom: 0 !important;
@@ -347,3 +350,210 @@ textarea{
   justify-content: flex-end;
 }
 
+
+.performance-intro-header {
+    // display: flex;
+    // flex-direction: column;
+    background-color: #f4b6b6;
+    padding: 10px ;
+    border-radius: 3px;
+    box-shadow: 0 0 1px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%);
+}
+
+ .line-manager {
+    display: flex;
+    padding-bottom: 0; 
+}
+
+ .line-manager p {
+    color: #4b4b4b;
+    font-weight: 500;
+    font-size: medium;
+    margin-right: 8px;
+}
+ .quarter {
+    display: flex;
+    padding-bottom: 0;
+    margin-bottom: -5px;
+}
+//  .quarter p{ 
+//     padding-bottom: 1rem;  
+// }
+//  .quarter select{ 
+//     padding-bottom: 1rem;  
+// }
+
+// .performance-intro select, .kpi-body select[name="recommendations"], .performance-intro-header div.quarter p span {
+//     background-color: #fff;
+//     padding: 3px;
+//     color: #4b4b4b;
+//     font-weight: 500;
+//     font-size: medium;
+//     border-radius: 5px;
+//     outline: none;
+//     margin-right: 8px;
+//     border: 1px solid #e8e8e8;
+//     box-shadow: 0 0 2px #e8e8e8;
+//     transition: all 0.3s ease-out;
+//     -webkit-transition: all 0.3s ease-out;
+// }
+
+
+#performance section,
+#performance table {
+  margin-top: 1rem;
+}
+
+#performance .area-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+#performance .evaluation-area form {
+  background-color: #fff;
+  box-shadow: 0 0 1px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%) !important
+}
+
+#performance .evaluation-area .top-fields {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 1.15rem;
+ box-shadow: 0 0 1px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%) !important
+}
+
+#performance .evaluation-area .year-quarter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+#performance .evaluation-area_cont {
+  padding: 1.15rem;
+}
+
+#performance .evaluation-area .add-field {
+  display: grid;
+  grid-template-columns: 1fr .05fr .15fr;
+  gap: 1.15rem;
+}
+
+// #performance .evaluation-area .add-field button {
+//   background-color: var(--clr-orange);
+//   color: #fff;
+//   padding: .5rem;
+// }
+// #performance .evaluation-area .add-field button:hover {
+//   background-color: rgba(240, 64, 0, .85);
+// }
+// #performance .evaluation-area .add-field button:disabled {
+//   background-color: rgba(240, 64, 0, .35);
+//   cursor: not-allowed;
+// }
+
+#performance .evaluation-area .added-fields_cont {
+  max-height: 45vh;
+  margin: 1rem 0;
+  overflow-y: auto;
+}
+
+#performance .evaluation-area .added-field {
+  --clr-border: #eeeeee;
+  display: grid;
+  grid-template-columns: 1fr .15fr .15fr;
+  border-bottom: 1px solid var(--clr-border);
+  border-right: 1px solid var(--clr-border);
+  border-left: 1px solid var(--clr-border);
+}
+#performance .evaluation-area .added-field:nth-child(1) {
+  border-top: 1px solid var(--clr-border);
+}
+
+#performance .evaluation-area .added-field div {
+  padding: .5rem .75rem;
+}
+
+#performance .evaluation-area .added-field div:not(div:nth-child(1)) {
+  text-align: center;
+  border-left: 1px solid var(--clr-border);
+}
+
+ 
+
+#performance textarea {
+  width: 100%;
+}
+
+// #performance button[type="submit"] {
+//   background-color: var(--blue);
+//   color: #fff;
+//   padding: .5rem .85rem;
+//   margin-top: .5rem;
+// }
+// #performance button[type="submit"]:hover {
+//   background-color: rgba(0, 91, 144, .85);
+// }
+
+#performance .grade-system {
+  background-color: #fff;
+  color: #505050;
+   box-shadow: 0 0 1px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%) !important
+}
+
+#performance .grade-system h4 {
+  font-weight: bold;
+  font-size: 1rem;
+  padding: .5rem .75rem;
+}
+
+#performance .grade_item {
+  display: grid;
+  grid-template-columns: .5fr 2fr;
+}
+
+#performance .grade_item p {
+  padding: .4rem;
+  border-top: 1px solid #eeeeee;
+}
+#performance .grade_item p:first-of-type {
+  text-align: center;
+  border-right: 1px solid #eeeeee;
+}
+
+#performance .area-grid .table-link a {
+  font-size: .95rem;
+  padding: .25rem .4rem;
+}
+
+/* --- HOD Update Performance --- */
+#performance #edit-user {
+  margin-bottom: 1rem;
+}
+#performance #edit-user h3 {
+  font-size: 1.17rem;
+  font-weight: 600;
+}
+
+
+
+/*** --- Media Queries --- ***/
+@media only screen and (max-width: 980px) {
+  #performance .area-grid {
+    gap: 1rem;
+  }
+}
+
+@media only screen and (max-width: 725px) {
+  #performance .area-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+ .grade-system {
+    background-color: #f4b6b6 !important;
+    border-radius: 3px !important;
+    box-shadow: 0 0 1px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%) !important; 
+}

@@ -22,7 +22,7 @@ const Finance = ({
     basic_salary: Yup.string().required("Basic salary is required"),
   });
   const handleSubmit = (values?: any) => {
-    console.log("Values", values);
+    // console.log("Values", values);
     setEmployee({ ...employee, ...values });
     setActive(3);
   };

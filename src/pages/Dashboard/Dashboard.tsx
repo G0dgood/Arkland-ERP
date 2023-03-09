@@ -16,7 +16,8 @@ const Dashboard = () => {
     message,
     error } = useAppSelector((state: any) => state.auth);
 
-  console.log('data', user)
+  // @ts-ignore
+  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
   // @ts-ignore
 
   const name = JSON.parse(localStorage.getItem("name"));
@@ -51,7 +52,7 @@ const Dashboard = () => {
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
-      <main>{name === "admin" ? <AdminDashboard /> : <StaffDashboard />}</main>
+      <main>{userInfo?.data?.department?.name === "HR" ? <AdminDashboard /> : <StaffDashboard />}</main>
     </div>
   );
 };

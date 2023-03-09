@@ -9,6 +9,7 @@ import KPIAssessment from './KPIAssessment';
 const KpiContainer = () => {
 	const [isCheck, setIsCheck] = useState(false);
 	const [data, setData] = useState(0);
+	const [kpidata, setkpidata] = useState(0);
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
@@ -31,11 +32,11 @@ const KpiContainer = () => {
 			<Sidebar collapseNav={collapseNav} />
 			<main>
 				<div >
-					<KPINavTab setIsCheck={setIsCheck} isCheck={isCheck} data={data} />
+					<KPINavTab setIsCheck={setIsCheck} isCheck={isCheck} data={data} kpidata={kpidata} />
 				</div>
 				<div style={{ marginTop: "2rem" }}>
 					{/* <RegisterTable pageHeader={"Register User"} headerTitles={[]} setData={setData} /> */}
-					{isCheck === false ? <MyKPIAssessment /> : ""}
+					{isCheck === false ? <MyKPIAssessment setkpidata={setkpidata} /> : ""}
 					{isCheck === true ? <KPIAssessment /> : ""}
 
 				</div>

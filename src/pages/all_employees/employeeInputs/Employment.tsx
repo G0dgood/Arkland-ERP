@@ -19,7 +19,6 @@ const Employment = ({
   bindSubmitForm,
   options,
   roleOptions,
-  roles
 }: EmployeeFormProps) => {
   const validate = Yup.object().shape({});
   const categoryOptions = [
@@ -105,7 +104,7 @@ const Employment = ({
                         <ReactSelectField
                           label="Role"
                           name="role"
-                          options={roles?.data?.description}
+                          options={roleOptions}
                           className="form-group__gender"
                           onChange={(event: any) => {
                             setFieldValue("role", event?.value);

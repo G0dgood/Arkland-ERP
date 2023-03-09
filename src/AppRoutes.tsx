@@ -12,7 +12,7 @@ import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
 import Support from "./pages/Support/Support";
 import Policy from "./pages/Policy/Policy";
 import SiteWorkerRequest from "./pages/Projects/SiteWorkerRequest";
-import ViewProjects from "./pages/Projects/ViewProjects";
+// import ViewProjects from "./pages/Projects/ViewProjects";
 import CreateProjects from "./pages/Projects/CreateProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
@@ -43,12 +43,14 @@ import { getTeam } from "./store/reducers/team";
 import Departments from "./pages/Departments/Departments";
 import Project from "./pages/Projects/Project";
 import KpiContainer from "./pages/kpi_assessment/KpiContainer";
+import ViewProjects from "./pages/Projects/ViewProjects";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
   const removeData = () => {
     Cookies.remove("isAuthenticated");
     Cookies.remove("token");
+    storage.remove("user");
     delete axios.defaults.headers.common["Authorization"];
   };
 
@@ -104,17 +106,19 @@ const AppRoutes: React.FC<any> = () => {
         element={
           <PrivateRoute
             isAllowed={!!parsedUserData}
+            // isAllowed={!!parsedUserData && !!parsedUserData.is_super_admin}
             redirectPath="/home"
           />
         }
       > */}
       <Route path="/allemployees" element={<AllEmployees />} />
+      <Route path="/projects" element={<Project />} />
       <Route path="/viewproject/:id" element={<ViewProjects />} />
       <Route
         path="/allleaveapplications"
         element={<AllLeaveApplications />}
       />
-      <Route path="/siteWorkerrequest" element={<SiteWorkerRequest />} />
+      <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
       <Route path="/createemployee" element={<CreateEmployee />} />
       <Route path="/createprojects" element={<CreateProjects />} />
       <Route path="/warninglist" element={<WarningList />} />
@@ -123,6 +127,7 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/profile" element={<Profile />} />
       {/* Departments */}
       <Route path="/departments" element={<Departments />} />
+      {/* <Route path="/departmentsview" element={<DepartmentsView />} /> */}
       <Route path="/procurement" element={<Procurement />} />
       <Route path="/engineering" element={<Engineering />} />
       <Route path="/finance" element={<Finance />} />
@@ -133,7 +138,6 @@ const AppRoutes: React.FC<any> = () => {
       {/* AdminEditUser */}
       <Route path="/admineditUser" element={<AdminEditUser />} />
       {/* Project View */}
-      <Route path="/projects" element={<Project />} />
       <Route path="/kpicontainer" element={<KpiContainer />} />
       {/* </Route> */}
     </Routes>

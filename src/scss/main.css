@@ -6,6 +6,14 @@
   border-bottom: 1px solid #e8e8e8 !important;
 }
 
+:root {
+  --clr-white: #fff;
+  --blue: #005B90;
+  --clr-orange: #f04000;
+  --outline: 1px solid red;
+  
+}
+
 .header-container {
   display: flex;
   justify-content: space-between;

@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import { Button } from '@material-ui/core';
+import Cookies from 'js-cookie';
+import axios, { AxiosResponse } from 'axios';
 
-const KPIAssessment = () => {
+const KPIAssessment = (hods: any, superadmins: any,) => {
+	// const token = Cookies.get("token");
 
 	// @ts-ignore
-	const userInfo: any = JSON?.parse(localStorage.getItem("userInfo"))
+	const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
+
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
 		return JSON?.parse(localStorage.getItem("collapse")) || false;
@@ -21,7 +25,9 @@ const KPIAssessment = () => {
 		setCollapseNav(!collapseNav);
 	};
 	//
+	const [employees, setEmployees] = useState<any>();
 
+	console.log('employees', employees)
 
 	const [employeegrade, setemployeegrade] = useState<any>({
 		employeegrade1: 0,
@@ -32,8 +38,6 @@ const KPIAssessment = () => {
 		employeegrade6: 0,
 	})
 
-
-
 	const [inputs, setInputs] = useState({
 		job_knowledge: 15,
 		efficiency: 15,
@@ -42,8 +46,6 @@ const KPIAssessment = () => {
 		reliability: 15,
 		collaboration: 20,
 	})
-
-
 
 	// @ts-ignore
 	const [kpiData1, setkpiData1] = useState<any>({
@@ -65,7 +67,6 @@ const KPIAssessment = () => {
 		IndicatorDescription6: "Helps debug technical problems. Submits issues so that we can document and improve our service.",
 	});
 
-
 	const [kpiData3, setkpiData3] = useState<any>({
 		Weight1: 20,
 		Weight2: 15,
@@ -74,7 +75,6 @@ const KPIAssessment = () => {
 		Weight5: 15,
 		Weight6: 10,
 	});
-
 
 	const Weight = kpiData3.Weight1 +
 		kpiData3.Weight2 +
@@ -118,8 +118,6 @@ const KPIAssessment = () => {
 		}));
 	};
 
-
-
 	const totalScore1 = (kpiData3.Weight1 / 5) * employeegrade.employeegrade1
 	const totalScore2 = (kpiData3.Weight2 / 5) * employeegrade.employeegrade2
 	const totalScore3 = (kpiData3.Weight3 / 5) * employeegrade.employeegrade3
@@ -137,18 +135,18 @@ const KPIAssessment = () => {
 
 	const [kpinputs, setKpInputs] = useState({
 		month: 0,
-		employee: "632941e5b20c61595d0a6208",
-		reviewer: "632882a46cdfa02ee0ddbe28",
-		job_knowledge: totalScore1,
-		efficiency: totalScore2,
-		attendance: totalScore3,
-		communication: totalScore4,
-		reliability: totalScore5,
-		collaboration: totalScore6,
+		employee: "",
+		reviewer: " ",
+		job_knowledge: 0,
+		efficiency: 0,
+		attendance: 0,
+		communication: 0,
+		reliability: 0,
+		collaboration: 0,
 		comment: ""
 	})
 
-	console.log('kpinputs', kpinputs)
+ 
 
 
 	useEffect(() => {
@@ -201,50 +199,69 @@ const KPIAssessment = () => {
 			});
 		});
 	}, [kpinputs.collaboration, setKpInputs, totalScore6]);
+ 
+
+	useEffect(() => {
+		setKpInputs((prevState: any) => {
+			return ({
+				...prevState,
+				employee: userInfo?.data?.employee?.id
+			});
+		});
+	}, [kpinputs.employee, setKpInputs, totalScore6, userInfo?.data?.employee?.id]);
 
 	const [data, setData] = useState([]);
-	const [sortData, setSortData] = useState([]);
+	// const [sortData, setSortData] = useState([]);
 	const [isLoading, setisLoading] = useState(false);
 
-	console.log('collaboration', data, sortData, isLoading)
+	// console.log('collaboration', data, sortData, isLoading)
 
-	// useEffect(() => {
-	// 	setisLoading(true)
-	// 	const requestOptions = {
-	// 		method: "POST",
-	// 		headers: { "Content-Type": "application/json" },
-	// 		body: JSON.stringify({ ...kpinputs }),
-	// 	};
-	// 	fetch(`${process.env.REACT_APP_API}/hr/appraisals`, requestOptions)
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			setData(data);
-	// 			setisLoading(false)
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 			setisLoading(false)
-	// 		});
-	// }, [kpinputs]);
+
 
 	const handelkpi = () => {
-		setisLoading(true)
-		const requestOptions = {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ ...kpinputs }),
-		};
-		fetch(`${process.env.REACT_APP_API}/hr/appraisals`, requestOptions)
-			.then((response) => response.json())
-			.then((data) => {
-				setData(data);
-				setisLoading(false)
+
+		const source = axios.CancelToken.source();
+		setisLoading(true);
+		axios
+			.post(`${process.env.REACT_APP_API}/hr/appraisals`, kpinputs)
+			.then((res: AxiosResponse) => {
+				// setRequestWorkersList([...res.data.data]);
+				console.log("res-res-res", res)
+				setisLoading(false);
 			})
 			.catch((err) => {
-				console.log(err, 'err');
-				setisLoading(false)
+				console.log('res-res-res', err);
+				setisLoading(false);
 			});
+		return () => {
+			source.cancel();
+		};
 	}
+
+	React.useEffect(() => {
+		const source = axios.CancelToken.source();
+		setisLoading(true);
+		axios
+			.get(`${process.env.REACT_APP_API}/hr/employees`)
+			.then((res: AxiosResponse) => {
+				setEmployees([...res?.data?.data]);
+				setisLoading(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				setisLoading(false);
+			});
+		return () => {
+			source.cancel();
+		};
+	}, []);
+
+
+	const year = new Date().getFullYear().toString();
+
+	// const [year, setYear] = useState(2021)
+	const [quarter, setQuarter] = useState(0);
+	const [reportsTo, setReportsTo] = useState("");
 
 	return (
 		<div>
@@ -258,11 +275,11 @@ const KPIAssessment = () => {
 						<div className='kpi-top-card-1'>Employee Appraisal </div>
 						<div className='kpi-top-card-1-sub'>
 							<p>Employee Name</p>
-							<p className='kpi-top-card-1-sub-second-child'>{userInfo?.full_name}</p>
+							<p className='kpi-top-card-1-sub-second-child'>{userInfo?.data?.employee?.full_name}</p>
 							<p>Employee Role</p>
-							<p> </p>
+							<p>{userInfo?.data?.role?.name}</p>
 							<p>Employee ID</p>
-							<p>{userInfo?.employee?.employee_id} </p>
+							<p>{userInfo?.data?.employee?.employee_id} </p>
 							<p>Review Date</p>
 							<p> </p>
 						</div>
@@ -286,25 +303,59 @@ const KPIAssessment = () => {
 				</div>
 			</div>
 			<div className='datacell-button-bottom-select'>
+
+
+
+
+
 				<div className='table-datacell-button-bottom' style={{ marginRight: "20px" }}>
-					<div className='table-datacell-button-bottom-color1'>Select Month:</div>
-					<div className='table-datacell-button-bottom-color2'>
-						<select value={kpinputs.month}
-							onChange={(e) => handleOnKPI("month", e.target.value)}>
-							<option>0</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-							<option>6</option>
-							<option>7</option>
-							<option>8</option>
-							<option>9</option>
-							<option>10</option>
-							<option>11</option>
-							<option>12</option>
-						</select>
+					<div className="performance-intro-header">
+						<div className="quarter">
+							<p>
+								Year:{" "}
+								<select name="year"
+								// value={year}
+								>
+									<option>
+										{year}
+									</option>
+								</select>{" "}
+								Month:
+							</p>
+							<select
+								name="month"
+								value={kpinputs.month}
+								onChange={(e) => handleOnKPI("month", e.target.value)}>
+								<option> </option>
+								<option>0</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+								<option>6</option>
+								<option>7</option>
+								<option>8</option>
+								<option>9</option>
+								<option>10</option>
+								<option>11</option>
+								<option>12</option>
+							</select>
+						</div>
+						<div className="line-manager">
+							<p>Line Manager:</p>
+							<select
+								name="line-manager"
+								value={kpinputs.reviewer}
+								onChange={(e) => handleOnKPI('reviewer', e.target.value)}>
+								<option> </option>
+								{employees?.map((employ: any) => (
+									<option key={employ?._id} value={employ?.id}>
+										{employ?.full_name}
+									</option>
+								))}
+							</select>
+						</div>
 					</div>
 				</div>
 				<div className='table-datacell-button-bottom'>
