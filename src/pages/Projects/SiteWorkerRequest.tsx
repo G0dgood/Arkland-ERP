@@ -2,7 +2,9 @@ import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import { Toast } from "react-bootstrap";
+import { BsExclamationLg } from "react-icons/bs";
+import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -12,34 +14,52 @@ import {
   TableFetch,
 } from "../../components/TableOptions";
 import { useAppSelector } from "../../hooks/useDispatch";
+import { getRequestOptions } from "../../utils/auth/header";
 import { checkForName } from "../../utils/checkForName";
 
 const SiteWorkerRequest = () => {
   const [isLoading, setisLoading] = useState(false);
   const [requestWorkersList, setRequestWorkersList] = useState([] as any);
+  const [error, setError] = useState<any>();
+  const [message, setMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
+
   React.useEffect(() => {
-    const source = axios.CancelToken.source();
-    setisLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API}/hr/workers-requests`)
-      .then((res: AxiosResponse) => {
-        setRequestWorkersList([...res.data.data]);
+    const fetchData = async () => {
+      try {
+        setisLoading(true);
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/hr/workers-requests`,
+          getRequestOptions
+        );
+        const isJsonResponse = response.headers
+          ?.get("content-type")
+          ?.includes("application/json");
+        const data = isJsonResponse && (await response.json());
+        if (!response.ok) {
+          throw new Error(data.message || response.status);
+        }
+        setRequestWorkersList([...data.data]);
         setisLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+        setError(false);
+        setMessage("");
+      } catch (error: any) {
         setisLoading(false);
-      });
-    return () => {
-      source.cancel();
+        setError(true);
+        setMessage(error.message || "Something went wrong");
+        setTimeout(() => {
+          fetchData();
+        }, 5000);
+      }
     };
+    fetchData();
   }, []);
-  console.log(requestWorkersList);
+
   const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
 
   useEffect(() => {
@@ -60,6 +80,24 @@ const SiteWorkerRequest = () => {
 
   return (
     <div id="screen-wrapper">
+      {error && (
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={true}
+          delay={4000}
+          autohide
+        >
+          <Toast.Body>
+            <span>
+              <BsExclamationLg />
+            </span>
+            <p>{message}</p>
+            <span onClick={() => setShowToast(false)}>
+              <FaTimes />
+            </span>
+          </Toast.Body>
+        </Toast>
+      )}
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
       <main>

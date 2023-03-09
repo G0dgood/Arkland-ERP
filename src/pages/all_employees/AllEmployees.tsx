@@ -1,10 +1,9 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { BsCheckCircle } from "react-icons/bs";
+import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
 import { FiEdit, FiLock } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
-import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Pagination from "../../components/Pagination";
@@ -20,6 +19,10 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { getDepartment } from "../../store/reducers/department";
 import { getRoles } from "../../store/reducers/roles";
 import { checkForName } from "../../utils/checkForName";
+import { Toast } from "react-bootstrap";
+import { FaTimes } from "react-icons/fa";
+import { getRequestOptions } from "../../utils/auth/header";
+import { getEmployees } from "../../store/reducers/employees";
 
 const AllEmployees = () => {
   const navigate = useNavigate();
@@ -27,31 +30,49 @@ const AllEmployees = () => {
   React.useEffect(() => {
     dispatch(getDepartment());
     dispatch(getRoles());
+    dispatch(getEmployees());
   }, [dispatch]);
+
   const [employees, setEmployees] = useState([] as any);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [error, setError] = useState<any>();
+  const [message, setMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [newEmployeeCreated, setNewEmployeeCreated] = React.useState(false);
 
   React.useEffect(() => {
-    const source = axios.CancelToken.source();
-    setisLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API}/hr/employees`)
-      .then((res: AxiosResponse) => {
-        setEmployees([...res?.data?.data]);
+    const fetchData = async () => {
+      try {
+        setisLoading(true);
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/hr/employees`,
+          getRequestOptions
+        );
+        const isJsonResponse = response.headers
+          ?.get("content-type")
+          ?.includes("application/json");
+        const data = isJsonResponse && (await response.json());
+        if (!response.ok) {
+          throw new Error(data.message || response.status);
+        }
+        setEmployees(data.data);
         setisLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+        setError(false);
+        setMessage("");
+      } catch (error: any) {
         setisLoading(false);
-      });
-    return () => {
-      source.cancel();
+        setError(true);
+        setMessage(error.message || "Something went wrong");
+        setTimeout(() => {
+          fetchData();
+        }, 3000);
+      }
     };
+    fetchData();
   }, []);
 
-  // console.log('employees-employees', employees)
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
@@ -76,7 +97,9 @@ const AllEmployees = () => {
   }, [entriesPerPage]);
 
   const roles: any = useAppSelector((state) => state?.roles?.roles);
-  const departments: any = useAppSelector((state) => state?.department?.department);
+  const departments: any = useAppSelector(
+    (state) => state?.department?.department
+  );
 
   const [displayData, setDisplayData] = useState([]);
 
@@ -94,6 +117,24 @@ const AllEmployees = () => {
 
   return (
     <div id="screen-wrapper">
+      {error && (
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={true}
+          delay={4000}
+          autohide
+        >
+          <Toast.Body>
+            <span>
+              <BsExclamationLg />
+            </span>
+            <p>{message}</p>
+            <span onClick={() => setShowToast(false)}>
+              <FaTimes />
+            </span>
+          </Toast.Body>
+        </Toast>
+      )}
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
       <main>
@@ -106,6 +147,7 @@ const AllEmployees = () => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
+                    // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee

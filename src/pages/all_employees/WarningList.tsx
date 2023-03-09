@@ -1,9 +1,12 @@
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import { Toast } from "react-bootstrap";
+import { BsExclamationLg } from "react-icons/bs";
+import axios, { AxiosResponse } from "axios";
 import {
   EntriesPerPage,
   MainSearch,
@@ -12,42 +15,58 @@ import {
 } from "../../components/TableOptions";
 import Pagination from "../../components/Pagination";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
-import axios, { AxiosResponse } from "axios";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { checkForEmployee, checkForName } from "../../utils/checkForName";
 import { getEmployees } from "../../store/reducers/employees";
+import { getRequestOptions } from "../../utils/auth/header";
 
 const WarningList = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const employees: any = useAppSelector((state) => state?.employees?.employees);
-
+  const employees: any = useAppSelector((state) => state.employees.employees);
   const [warnings, setWarnings] = useState([] as any);
   const [data, setData] = useState([]);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [error, setError] = useState<any>();
+  const [message, setMessage] = useState("");
+  const [newWarningCreated, setNewWarningCreated] = React.useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   React.useEffect(() => {
-    const source = axios.CancelToken.source();
-    setisLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API}/hr/warnings`)
-      .then((res: AxiosResponse) => {
-        console.log(res);
-        setWarnings([...res?.data?.data]);
+    const fetchData = async () => {
+      try {
+        setisLoading(true);
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/hr/warnings`,
+          getRequestOptions
+        );
+        const isJsonResponse = response.headers
+          ?.get("content-type")
+          ?.includes("application/json");
+        const data = isJsonResponse && (await response.json());
+        if (!response.ok) {
+          throw new Error(data.message || response.status);
+        }
+        setWarnings([...data.data]);
         setisLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+        setError(false);
+        setMessage("");
+      } catch (error: any) {
         setisLoading(false);
-      });
-  }, []);
-
-  React.useEffect(() => {
-    dispatch(getEmployees());
-  }, [dispatch]);
-
+        setError(true);
+        setMessage(error.message || "Something went wrong");
+        setTimeout(() => {
+          fetchData();
+        }, 3000);
+      }
+    };
+    fetchData();
+  }, [newWarningCreated]);
+  const handleNewWarningCreated = () => {
+    setNewWarningCreated(!newWarningCreated);
+  };
   const header = [
     { title: "EMPLOYEE ID", prop: "employee" },
     { title: "FULL NAME", prop: "last_name" },
@@ -94,6 +113,24 @@ const WarningList = () => {
 
   return (
     <div id="screen-wrapper">
+      {error && (
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={true}
+          delay={4000}
+          autohide
+        >
+          <Toast.Body>
+            <span>
+              <BsExclamationLg />
+            </span>
+            <p>{message}</p>
+            <span onClick={() => setShowToast(false)}>
+              <FaTimes />
+            </span>
+          </Toast.Body>
+        </Toast>
+      )}
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
       <main>
@@ -109,7 +146,9 @@ const WarningList = () => {
             </Button>
 
             <span className="SupportmainTitleh3">
-              <CreateWarningModal />
+              <CreateWarningModal
+                onNewWarningCreated={handleNewWarningCreated}
+              />
             </span>
           </div>
           <div>

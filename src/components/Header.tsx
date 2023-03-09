@@ -20,7 +20,6 @@ const Header = ({ toggleSideNav }: any) => {
 
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
-  const navigate = useNavigate();
   const handleLogoutUser = async () => {
     await axios
       .patch(`${process.env.REACT_APP_API}/me/logout`)
@@ -30,9 +29,9 @@ const Header = ({ toggleSideNav }: any) => {
       .catch((err) => {
         console.log(err);
       });
+    window.location.replace("/");
     await Cookies.remove("token");
     await storage.remove("user");
-    window.location.replace("/");
     window.location.reload();
   };
 

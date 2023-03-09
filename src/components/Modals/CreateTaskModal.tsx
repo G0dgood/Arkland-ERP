@@ -11,7 +11,7 @@ import { useAppSelector } from "../../hooks/useDispatch";
 import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
 
-const CreateWarningModal = (props: any) => {
+const CreateTaskModal = () => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const subordinationOptions = ["Type of misconduct", "insubordination"];
@@ -23,32 +23,32 @@ const CreateWarningModal = (props: any) => {
       .post(`${process.env.REACT_APP_API}/hr/warnings`, createDepartmentValues)
       .then((res: AxiosResponse) => {
         setLoading(false);
-        if (res?.data?.success === true || res?.status === 200) {
+        if (res.data.success === true || res.status === 200) {
           const title = "Warning created successfully.";
           const html = `Warning created`;
           const icon = "success";
           fireAlert(title, html, icon);
           resetForm(values);
           setLgShow(false);
-          props.onNewWarningCreated();
+          navigate(`/warninglist`);
         }
       })
       .catch((err) => {
         setLoading(false);
-        const html = err?.response?.data?.message;
+        const html = err.response.data.message;
         const icon = "error";
         const title = "Warning creation failed";
         fireAlert(title, html, icon);
       });
   };
-  const employees: any = useAppSelector((state) => state?.employees?.employees);
+  const employees: any = useAppSelector((state) => state.employees.employees);
   const availablleEmployees = [] as any;
 
   employees &&
     employees.forEach((employee: any) =>
       availablleEmployees.push({
-        value: employee?.id,
-        label: employee?.full_name,
+        value: employee.id,
+        label: employee.full_name,
       })
     );
   return (
@@ -58,7 +58,7 @@ const CreateWarningModal = (props: any) => {
         className="Add-btn"
         onClick={() => setLgShow(true)}
       >
-        Create Warning
+        Create Task
       </Button>
       <Modal
         size="lg"
@@ -68,7 +68,7 @@ const CreateWarningModal = (props: any) => {
       >
         <Modal.Header>
           <span></span>
-          <span className="span-center-title"> Create Warning</span>
+          <span className="span-center-title"> Create Task</span>
           <Button style={{ color: "#fff" }} onClick={() => setLgShow(false)}>
             <MdOutlineClose size={28} />
           </Button>
@@ -155,4 +155,4 @@ const CreateWarningModal = (props: any) => {
   );
 };
 
-export default CreateWarningModal;
+export default CreateTaskModal;

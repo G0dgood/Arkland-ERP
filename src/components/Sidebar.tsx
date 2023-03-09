@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { BsBriefcase, BsShield } from "react-icons/bs";
-import { BiSupport, } from "react-icons/bi";
-import { AiOutlineBank, } from "react-icons/ai";
+import { BiSupport } from "react-icons/bi";
+import { AiOutlineBank } from "react-icons/ai";
 import { FiPieChart, FiUser, FiFolder, FiLogOut } from "react-icons/fi";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { GoFile } from "react-icons/go";
@@ -28,12 +28,11 @@ const Sidebar = ({ collapseNav }: any) => {
           to="/home"
           // exact
           className={
-            window.location.pathname === "/home"
-              ? "active-here"
-              : "nav-link"
+            window.location.pathname === "/home" ? "active-here" : "nav-link"
           }
           onMouseEnter={() => setDashboard(true)}
-          onMouseLeave={() => setDashboard(false)}>
+          onMouseLeave={() => setDashboard(false)}
+        >
           <TfiLayoutGrid2 size={20} />
           <span className="nav-name">Dashboard</span>
           {dashboard && collapseNav && (
@@ -42,7 +41,6 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-
 
         <NavLink
           to="/kpicontainer"
@@ -53,7 +51,8 @@ const Sidebar = ({ collapseNav }: any) => {
               : "nav-link"
           }
           onMouseEnter={() => setKPIAssessment(true)}
-          onMouseLeave={() => setKPIAssessment(false)}>
+          onMouseLeave={() => setKPIAssessment(false)}
+        >
           <FiPieChart size={20} />
           <span className="nav-name">KPI Assessment</span>
           {kipassessment && collapseNav && (
@@ -71,7 +70,8 @@ const Sidebar = ({ collapseNav }: any) => {
               : "nav-link"
           }
           onMouseEnter={() => setWeeklyreport(true)}
-          onMouseLeave={() => setWeeklyreport(false)}>
+          onMouseLeave={() => setWeeklyreport(false)}
+        >
           <GoFile size={23} />
           <span className="nav-name">Weekly Report</span>
           {weeklyreport && collapseNav && (
@@ -80,8 +80,6 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-
-
 
         <NavLink
           to="/allemployees"
@@ -92,7 +90,8 @@ const Sidebar = ({ collapseNav }: any) => {
               : "nav-link"
           }
           onMouseEnter={() => setallEmployees(true)}
-          onMouseLeave={() => setallEmployees(false)}>
+          onMouseLeave={() => setallEmployees(false)}
+        >
           <FiUser size={24} />
           <span className="nav-name">All Employees</span>
           {allemployees && collapseNav && (
@@ -101,7 +100,6 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-
 
         <NavLink
           to="/departments"
@@ -112,7 +110,8 @@ const Sidebar = ({ collapseNav }: any) => {
               : "nav-link"
           }
           onMouseEnter={() => setDepartments(true)}
-          onMouseLeave={() => setDepartments(false)}>
+          onMouseLeave={() => setDepartments(false)}
+        >
           <FiFolder size={20} />
           <span className="nav-name">Departments</span>
           {departments && collapseNav && (
@@ -121,8 +120,6 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-
-
 
         <NavLink
           to="/projects"
@@ -133,8 +130,9 @@ const Sidebar = ({ collapseNav }: any) => {
               : "nav-link"
           }
           onMouseEnter={() => setProjects(true)}
-          onMouseLeave={() => setProjects(false)}>
-          < AiOutlineBank size={25} />
+          onMouseLeave={() => setProjects(false)}
+        >
+          <AiOutlineBank size={25} />
           <span className="nav-name">Projects</span>
           {projects && collapseNav && (
             <div className="sidenav-bubble">
@@ -143,17 +141,15 @@ const Sidebar = ({ collapseNav }: any) => {
           )}
         </NavLink>
 
-
         <NavLink
           to="/leave"
           // exact
           className={
-            window.location.pathname === "/leave"
-              ? "active-here"
-              : "nav-link"
+            window.location.pathname === "/leave" ? "active-here" : "nav-link"
           }
           onMouseEnter={() => setLeave(true)}
-          onMouseLeave={() => setLeave(false)}>
+          onMouseLeave={() => setLeave(false)}
+        >
           <BsBriefcase size={22} />
           <span className="nav-name">Leave</span>
           {leave && collapseNav && (
@@ -163,17 +159,15 @@ const Sidebar = ({ collapseNav }: any) => {
           )}
         </NavLink>
 
-
         <NavLink
           to="/support"
           // exact
           className={
-            window.location.pathname === "/support"
-              ? "active-here"
-              : "nav-link"
+            window.location.pathname === "/support" ? "active-here" : "nav-link"
           }
           onMouseEnter={() => setSupport(true)}
-          onMouseLeave={() => setSupport(false)}>
+          onMouseLeave={() => setSupport(false)}
+        >
           <BiSupport size={22} />
           <span className="nav-name">Support</span>
           {support && collapseNav && (
@@ -183,18 +177,15 @@ const Sidebar = ({ collapseNav }: any) => {
           )}
         </NavLink>
 
-
-
         <NavLink
           to="/policy"
           // exact
           className={
-            window.location.pathname === "/policy"
-              ? "active-here"
-              : "nav-link"
+            window.location.pathname === "/policy" ? "active-here" : "nav-link"
           }
           onMouseEnter={() => setPolicy(true)}
-          onMouseLeave={() => setPolicy(false)}>
+          onMouseLeave={() => setPolicy(false)}
+        >
           <BsShield size={22} />
           <span className="nav-name">Policy</span>
           {policy && collapseNav && (
@@ -204,8 +195,6 @@ const Sidebar = ({ collapseNav }: any) => {
           )}
         </NavLink>
 
-
-
         <NavLink
           to="/"
           // exact
@@ -213,7 +202,8 @@ const Sidebar = ({ collapseNav }: any) => {
             window.location.pathname === "/logout" ? "active-here" : "nav-link"
           }
           onMouseEnter={() => setLogout(true)}
-          onMouseLeave={() => setLogout(false)}>
+          onMouseLeave={() => setLogout(false)}
+        >
           <FiLogOut size={22} />
           <span className="nav-name">Log out</span>
           {logout && collapseNav && (
@@ -222,7 +212,6 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-
       </Nav>
     </div>
   );

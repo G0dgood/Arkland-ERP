@@ -22,7 +22,6 @@ import WeeklyReportTable from "./components/table_component/WeeklyReportTable";
 import DashboardCalender from "./components/DashboardCalender";
 import Profile from "./pages/Profile/Profile";
 import EditUser from "./pages/EditUser/EditUser";
-import Procurement from "./pages/Departments/SubDepartments/Procurement";
 import Engineering from "./pages/Departments/SubDepartments/Engineering";
 import HumanResource from "./pages/Departments/SubDepartments/HumanResource";
 import Inventory from "./pages/Departments/SubDepartments/Inventory";
@@ -44,6 +43,9 @@ import Departments from "./pages/Departments/Departments";
 import Project from "./pages/Projects/Project";
 import KpiContainer from "./pages/kpi_assessment/KpiContainer";
 import ViewProjects from "./pages/Projects/ViewProjects";
+import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
+import ProjectView from "./pages/Projects/Project";
+import DepartmentsView from "./pages/Departments/Departments";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -71,75 +73,76 @@ const AppRoutes: React.FC<any> = () => {
 
   // React.useEffect(() => {
   //   if (Cookies.get("token")) {
-  //     dispatch(getDepartment());
-  //     dispatch(getRoles());
-  //     dispatch(getEmployees());
-  //     dispatch(getTeamLeads());
-  //     dispatch(getTeam());
+  //     // dispatch(getDepartment());
+  //     // dispatch(getRoles());
+  //     // dispatch(getEmployees());
+  //     // dispatch(getTeamLeads());
+  //     // dispatch(getTeam());
   //   }
   // }, [dispatch]);
-  // const user: any = storage?.get("user");
-  // const parsedUserData = JSON?.parse(user);
+  const user: any = storage?.get("user");
+  const parsedUserData = JSON?.parse(user);
+
   return (
     <Routes>
       <Route
         path="/"
-        element={<Login />}
+        element={parsedUserData ? <Navigate to="/home" /> : <Login />}
       />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* General user routes */}
-      {/* <Route element={<PrivateRoute isAllowed={!!parsedUserData} />}> */}
-      <Route path="/home" element={<Dashboard />} />
-      <Route path="/kpiassessment" element={<KPIAssessment />} />
-      <Route path="/leave" element={<Leave />} />
-      <Route path="/support" element={<Support />} />
-      <Route path="/policy" element={<Policy />} />
-      <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
-      <Route
-        path="/teamleaveapplications"
-        element={<TeamLeaveApplications />}
-      />
-      <Route path="/weeklyreport" element={<WeeklyReport />} />
-      {/* </Route> */}
-      {/* Protected routes as admins, HR, Project managers and team leads */}
-      {/* <Route
-        element={
-          <PrivateRoute
-            isAllowed={!!parsedUserData}
-            // isAllowed={!!parsedUserData && !!parsedUserData.is_super_admin}
-            redirectPath="/home"
+      <Route element={<PrivateRoute isAllowed={!!parsedUserData} />}>
+        <Route path="/home" element={<Dashboard />} />
+        <Route path="/kpiassessment" element={<KPIAssessment />} />
+        <Route path="/leave" element={<Leave />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
+        <Route
+          path="/teamleaveapplications"
+          element={<TeamLeaveApplications />}
+        />
+        <Route path="/weeklyreport" element={<WeeklyReport />} />
+        {/* </Route> */}
+        {/* Protected routes as admins, HR, Project managers and team leads */}
+        <Route
+          element={
+            <PrivateRoute
+              isAllowed={!!parsedUserData}
+              // isAllowed={!!parsedUserData && !!parsedUserData.is_super_admin}
+              redirectPath="/home"
+            />
+          }
+        >
+          <Route path="/allemployees" element={<AllEmployees />} />
+          <Route path="/projects" element={<ProjectView />} />
+          <Route path="/viewproject/:id" element={<ViewProjects />} />
+          <Route
+            path="/allleaveapplications"
+            element={<AllLeaveApplications />}
           />
-        }
-      > */}
-      <Route path="/allemployees" element={<AllEmployees />} />
-      <Route path="/projects" element={<Project />} />
-      <Route path="/viewproject/:id" element={<ViewProjects />} />
-      <Route
-        path="/allleaveapplications"
-        element={<AllLeaveApplications />}
-      />
-      <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
-      <Route path="/createemployee" element={<CreateEmployee />} />
-      <Route path="/createprojects" element={<CreateProjects />} />
-      <Route path="/warninglist" element={<WarningList />} />
-      <Route path="/dashboardcalender" element={<DashboardCalender />} />
-      <Route path="/profile/edit" element={<EditUser />} />
-      <Route path="/profile" element={<Profile />} />
-      {/* Departments */}
-      <Route path="/departments" element={<Departments />} />
-      {/* <Route path="/departmentsview" element={<DepartmentsView />} /> */}
-      <Route path="/procurement" element={<Procurement />} />
-      <Route path="/engineering" element={<Engineering />} />
-      <Route path="/finance" element={<Finance />} />
-      <Route path="/humanresource" element={<HumanResource />} />
-      <Route path="/inventory" element={<Inventory />} />
-      <Route path="/informationtech" element={<Informationtech />} />
-      <Route path="/budget" element={<Budget />} />
-      {/* AdminEditUser */}
-      <Route path="/admineditUser" element={<AdminEditUser />} />
-      {/* Project View */}
-      <Route path="/kpicontainer" element={<KpiContainer />} />
-      {/* </Route> */}
+          <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
+          <Route path="/createemployee" element={<CreateEmployee />} />
+          <Route path="/createprojects" element={<CreateProjects />} />
+          <Route path="/warninglist" element={<WarningList />} />
+          <Route path="/dashboardcalender" element={<DashboardCalender />} />
+          <Route path="/profile/edit" element={<EditUser />} />
+          <Route path="/profile" element={<Profile />} />
+          {/* Departments */}
+          <Route path="/departments" element={<DepartmentsView />} />
+          <Route path="/departments/:id" element={<ViewDepartments />} />
+          <Route path="/engineering" element={<Engineering />} />
+          <Route path="/finance" element={<Finance />} />
+          <Route path="/humanresource" element={<HumanResource />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/informationtech" element={<Informationtech />} />
+          <Route path="/budget" element={<Budget />} />
+          {/* AdminEditUser */}
+          <Route path="/admineditUser" element={<AdminEditUser />} />
+          {/* Project View */}
+          <Route path="/projectview" element={<ProjectView />} />
+        </Route>
+      </Route>
     </Routes>
   );
 };
