@@ -1,18 +1,59 @@
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { MainSearch } from "../../../components/TableOptions";
+import { getRequestOptions } from "../../../utils/auth/header";
+import { Toast } from "react-bootstrap";
+import { BsExclamationLg } from "react-icons/bs";
 
 const ViewDepartments = () => {
   const navigate = useNavigate();
+  const { id }: any = useParams();
+  const [isLoading, setLoading] = React.useState(false);
+  const [departments, setDepartments] = React.useState({} as any);
+  const [showToast, setShowToast] = useState(false);
+  const [error, setError] = useState<any>();
+  const [message, setMessage] = useState("");
+
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const responseDepartments = await fetch(
+          `${process.env.REACT_APP_API}/hr/departments/${id}`,
+          getRequestOptions
+        );
+        const isJsonResponseDepartments = responseDepartments.headers
+          ?.get("content-type")
+          ?.includes("application/json");
+        const dataDepartments =
+          isJsonResponseDepartments && (await responseDepartments.json());
+        if (!responseDepartments.ok) {
+          throw new Error(
+            dataDepartments.message || responseDepartments.status
+          );
+        }
+        setDepartments(dataDepartments.data);
 
+        setLoading(false);
+        setError(false);
+        setMessage("");
+      } catch (error: any) {
+        setLoading(false);
+        setError(true);
+        setMessage(error.message || "Something went wrong");
+      }
+    };
+    fetchData();
+  }, [id]);
+  console.log(departments);
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
     localStorage.setItem("collapse", JSON.stringify(collapseNav));
@@ -21,8 +62,33 @@ const ViewDepartments = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
+  const header = [
+    { title: "name", prop: "name" },
+    { title: "description", prop: "description" },
+    { title: "status", prop: "status" },
+    { title: "Created At", prop: "created_at" },
+  ];
+
   return (
     <div id="screen-wrapper">
+      {error && (
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={true}
+          delay={4000}
+          autohide
+        >
+          <Toast.Body>
+            <span>
+              <BsExclamationLg />
+            </span>
+            <p>{message}</p>
+            <span onClick={() => setShowToast(false)}>
+              <FaTimes />
+            </span>
+          </Toast.Body>
+        </Toast>
+      )}
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
       <main>
@@ -37,10 +103,12 @@ const ViewDepartments = () => {
               <FaArrowLeft size={25} />
             </Button>
 
-            <span className="SupportmainTitleh3">Procurement</span>
+            <span className="SupportmainTitleh3">{departments.name}</span>
           </div>
           <div>
-            <MainSearch placeholder={"Search...          Procurement"} />
+            <MainSearch
+              placeholder={`Search...          ${departments.name}`}
+            />
           </div>
         </div>
         <section className="md-ui component-data-table">
@@ -53,27 +121,21 @@ const ViewDepartments = () => {
             <table className="main-table-content">
               <thead className="data-table-header">
                 <tr className="data-table-row">
-                  <td className="table-datacell datatype-numeric">
-                    EMPLOYEE ID
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    FIRST NAME
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    MIDDLE NAME
-                  </td>
-                  <td className="table-datacell datatype-numeric">LAST NAME</td>
-                  <td className="table-datacell datatype-numeric">EMAIL</td>
-                  <td className="table-datacell datatype-numeric">ROLE</td>
-                  <td className="table-datacell datatype-numeric">
-                    DEPARTMENT
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    DATE OF EMPLOYMENT
-                  </td>
+                  {header.map((i, index) => {
+                    return (
+                      <>
+                        <td
+                          className="table-datacell datatype-numeric"
+                          key={index}
+                        >
+                          {i.title}
+                        </td>
+                      </>
+                    );
+                  })}
                 </tr>
               </thead>
-              <tbody className="data-table-content">
+              {/* <tbody className="data-table-content">
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
                     asl/adm/264
@@ -81,16 +143,6 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">IT </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
@@ -99,16 +151,6 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">IT </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
@@ -117,16 +159,6 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">IT </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
@@ -135,18 +167,6 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    Architecture{" "}
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
@@ -155,16 +175,6 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">IT </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
@@ -173,18 +183,6 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    Architecture{" "}
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
@@ -193,16 +191,6 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">IT </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
@@ -211,16 +199,6 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">IT </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-numeric">
@@ -229,18 +207,8 @@ const ViewDepartments = () => {
                   <td className="table-datacell datatype-numeric">James</td>
                   <td className="table-datacell datatype-numeric">Segun</td>
                   <td className="table-datacell datatype-numeric">Abiodun</td>
-                  <td className="table-datacell datatype-numeric">
-                    j.abiodun@arklandstructuresltd.com
-                  </td>
-                  <td className="table-datacell datatype-numeric">
-                    IT Support
-                  </td>
-                  <td className="table-datacell datatype-numeric">IT </td>
-                  <td className="table-datacell datatype-numeric">
-                    31-08-2022{" "}
-                  </td>
                 </tr>
-              </tbody>
+              </tbody> */}
             </table>
           </div>
         </section>

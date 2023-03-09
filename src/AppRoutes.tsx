@@ -127,7 +127,7 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/profile" element={<Profile />} />
         {/* Departments */}
         <Route path="/departments" element={<DepartmentsView />} />
-        <Route path="/viewdepartments/:id" element={<ViewDepartments />} />
+        <Route path="/departments/:id" element={<ViewDepartments />} />
         <Route path="/engineering" element={<Engineering />} />
         <Route path="/finance" element={<Finance />} />
         <Route path="/humanresource" element={<HumanResource />} />

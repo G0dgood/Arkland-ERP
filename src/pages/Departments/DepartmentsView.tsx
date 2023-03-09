@@ -105,7 +105,7 @@ const DepartmentsView = () => {
                   <div
                     className="ProjectView-card"
                     key={i}
-                    onClick={() => navigate(`${item.id}`)}
+                    onClick={() => navigate(`/departments/${item.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
                       <Button className={`iDotsRounded1`}>{item.name}</Button>
