@@ -59,7 +59,7 @@ const CreateTaskModal = () => {
         className="Add-btn"
         onClick={() => setLgShow(true)}
       >
-        Create Warning
+        Create Task
       </Button>
       <Modal
         size="lg"
@@ -69,7 +69,7 @@ const CreateTaskModal = () => {
       >
         <Modal.Header>
           <span></span>
-          <span className="span-center-title"> Create Warning</span>
+          <span className="span-center-title"> Create Task</span>
           <Button style={{ color: "#fff" }} onClick={() => setLgShow(false)}>
             <MdOutlineClose size={28} />
           </Button>

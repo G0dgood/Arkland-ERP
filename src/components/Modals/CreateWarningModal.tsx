@@ -11,7 +11,7 @@ import { useAppSelector } from "../../hooks/useDispatch";
 import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
 
-const CreateWarningModal = () => {
+const CreateWarningModal = (props: any) => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const subordinationOptions = ["Type of misconduct", "insubordination"];
@@ -30,7 +30,7 @@ const CreateWarningModal = () => {
           fireAlert(title, html, icon);
           resetForm(values);
           setLgShow(false);
-          navigate(`/warninglist`);
+          props.onNewWarningCreated();
         }
       })
       .catch((err) => {
