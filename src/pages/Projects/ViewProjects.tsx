@@ -15,7 +15,6 @@ import SyncLoader from "react-spinners/SyncLoader";
 import { MdOutlineClose } from "react-icons/md";
 import { Form, Formik } from "formik";
 import { Modal, Toast } from "react-bootstrap";
-import axios, { AxiosResponse } from "axios";
 import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import Cookies from "js-cookie";
