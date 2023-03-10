@@ -18,6 +18,8 @@ import { getTeamLeads } from "../../store/reducers/teamLeads";
 import { getEmployees } from "../../store/reducers/employees";
 import Cookies from "js-cookie";
 import { FaTimes } from "react-icons/fa";
+import { getRequestOptions } from "../../utils/auth/header";
+import { getRoles } from "../../store/reducers/roles";
 
 const ProjectView = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +34,7 @@ const ProjectView = () => {
   React.useEffect(() => {
     dispatch(getTeamLeads());
     dispatch(getEmployees());
+    dispatch(getRoles());
   }, [dispatch]);
   const navigate = useNavigate();
 
@@ -49,43 +52,35 @@ const ProjectView = () => {
   };
 
   React.useEffect(() => {
-    setisLoading(true);
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-    fetch(`${process.env.REACT_APP_API}/hr/projects`, requestOptions)
-      .then(async (response) => {
-        const isJson = response.headers
-          .get("content-type")
+    const fetchData = async () => {
+      try {
+        setisLoading(true);
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/hr/projects`,
+          getRequestOptions
+        );
+        const isJsonResponse = response.headers
+          ?.get("content-type")
           ?.includes("application/json");
-        const data = isJson && (await response.json());
+        const data = isJsonResponse && (await response.json());
         if (!response.ok) {
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
+          throw new Error(data.message || response.status);
         }
-        setisLoading(false);
-        setReRun(false);
         setProjects([...data.data]);
-      })
-      .catch((error) => {
+        setisLoading(false);
+        setError(false);
+        setMessage("");
+      } catch (error: any) {
         setisLoading(false);
         setError(true);
-        setMessage(error);
-        if (error === 500) {
-          setReRun(true);
-          setisLoading(true);
-        }
+        setMessage(error.message || "Something went wrong");
         setTimeout(() => {
-          setError(false);
-          setReRun(false);
-          setMessage("");
-        }, 5000);
-      });
-  }, [reRun === true]);
+          fetchData();
+        }, 3000);
+      }
+    };
+    fetchData();
+  }, []);
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
@@ -202,14 +197,14 @@ const ProjectView = () => {
                           <span className="profile-containers">JA</span>
                           <span className="profile-containers">AD</span>
                         </div>
-                        <div className="percent-people-grid">
+                        {/* <div className="percent-people-grid">
                           <div>
                             <HiOutlinePaperClip />6
                           </div>
                           <div>
                             <HiOutlineChatBubbleOvalLeftEllipsis />4
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   ))}
@@ -219,7 +214,7 @@ const ProjectView = () => {
           </div>
           <div className="ProjectViewContainer-subtwo">
             <div className="subtwo-content-one">
-              <div className="subtwo-content-one-sub1">
+              {/* <div className="subtwo-content-one-sub1">
                 <div className="subtwo-content-one-sub1-content">
                   <p>SELECTED</p>
                   <h5>Design Team</h5>
@@ -227,10 +222,9 @@ const ProjectView = () => {
                 <div className="subtwo-content-one-sub1-content-two">
                   <HiOutlineUserGroup size={28} />
                 </div>
-              </div>
-              <div className="subtwo-content-two-sub2">
+              </div> */}
+              {/* <div className="subtwo-content-two-sub2">
                 <div
-                // style={{ height: "18rem", width: "18rem", margin: "auto" }}
                 >
                   <ChartDonut
                     ariaDesc="Progress"
@@ -248,7 +242,7 @@ const ProjectView = () => {
                     innerRadius={50}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="subtwo-content-three-sub3">
                 <p>Projects</p>
                 <div className="ProjectView-projects">
@@ -256,28 +250,30 @@ const ProjectView = () => {
                     <h6>TOTAL</h6>
                     <div className="projects-total-container">
                       <span className="projects-total1-span"></span>
-                      <span className="projects-total1-span1">144</span>
+                      <span className="projects-total1-span1">
+                        {projects.length}
+                      </span>
                     </div>
                   </div>
                   <div className="projects-total2">
                     <h6>COMPLETED</h6>
                     <div className="projects-total-container">
                       <span className="projects-total2-span"></span>
-                      <span className="projects-total1-span1">56</span>
+                      <span className="projects-total1-span1">0</span>
                     </div>
                   </div>
                   <div className="projects-total3">
                     <h6>IN PROGRESS</h6>
                     <div className="projects-total-container">
                       <span className="projects-total3-span"></span>
-                      <span className="projects-total1-span1">72</span>
+                      <span className="projects-total1-span1">0</span>
                     </div>
                   </div>
                   <div className="projects-total4">
                     <h6>WAITING</h6>
                     <div className="projects-total-container">
                       <span className="projects-total4-span"></span>
-                      <span className="projects-total1-span1">24</span>
+                      <span className="projects-total1-span1">0</span>
                     </div>
                   </div>
                 </div>

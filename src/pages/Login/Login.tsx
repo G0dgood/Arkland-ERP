@@ -37,8 +37,6 @@ const Login = () => {
       .required("Password is required"),
   });
 
-
-
   const handleSubmit = (values: any, { resetForm }: any) => {
     setLoading(true);
     const requestOptions = {
@@ -49,7 +47,6 @@ const Login = () => {
     fetch(`${process.env.REACT_APP_API}/auth/login`, requestOptions)
       .then(async (response) => {
         // @ts-ignore
-        console.log('response-userinfo', response)
         setLoading(false);
         const isJson = response.headers
           .get("content-type")
@@ -66,8 +63,9 @@ const Login = () => {
         // set token in cookie
         Cookies.set("token", data.token);
         storage.set("user", JSON.stringify({ data }));
-        localStorage.setItem('userinfo', JSON.stringify({ data }));
-        navigate("/home");
+        localStorage.setItem("userinfo", JSON.stringify({ data }));
+        // navigate("/home");
+        window.location.replace("/home");
       })
       .catch((error) => {
         setLoading(false);
