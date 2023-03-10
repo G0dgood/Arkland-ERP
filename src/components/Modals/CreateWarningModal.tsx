@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
+import Cookies from "js-cookie";
 import axios, { AxiosResponse } from "axios";
 import { Form, Formik } from "formik";
 import { MdOutlineClose } from "react-icons/md";
@@ -12,34 +13,45 @@ import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
 
 const CreateWarningModal = (props: any) => {
+  const token = Cookies.get("token");
   const [isLoading, setLoading] = React.useState(false);
-  const navigate = useNavigate();
   const subordinationOptions = ["Type of misconduct", "insubordination"];
   const [lgShow, setLgShow] = useState(false);
+
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
-    const createDepartmentValues = { ...values };
-    await axios
-      .post(`${process.env.REACT_APP_API}/hr/warnings`, createDepartmentValues)
-      .then((res: AxiosResponse) => {
-        setLoading(false);
-        if (res?.data?.success === true || res?.status === 200) {
-          const title = "Warning created successfully.";
-          const html = `Warning created`;
-          const icon = "success";
-          fireAlert(title, html, icon);
-          resetForm(values);
-          setLgShow(false);
-          props.onNewWarningCreated();
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        const html = err?.response?.data?.message;
-        const icon = "error";
-        const title = "Warning creation failed";
-        fireAlert(title, html, icon);
+    console.log("values", values);
+    const createWarningValues = { ...values };
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/hr/warnings`, {
+        method: "POST",
+        body: JSON.stringify(createWarningValues),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
+      const data = await response.json();
+      setLoading(false);
+      if (response.ok) {
+        const title = "Warning created successfully.";
+        const html = `Warning created`;
+        const icon = "success";
+        resetForm(values);
+        fireAlert(title, html, icon);
+        setLgShow(false);
+        props.onNewWarningCreated();
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Warning creation failed";
+      fireAlert(title, html, icon);
+    }
   };
   const employees: any = useAppSelector((state) => state?.employees?.employees);
   const availablleEmployees = [] as any;
