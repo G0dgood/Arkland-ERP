@@ -33,7 +33,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store && store1}>
+      <Provider store={store}>
+        {/* <Provider store={store && store1}> */}
         <HelmetProvider>
           <UserProviderContainer>
             <App />

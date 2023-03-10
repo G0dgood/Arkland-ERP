@@ -94,6 +94,7 @@ const AppRoutes: React.FC<any> = () => {
       <Route element={<PrivateRoute isAllowed={!!parsedUserData} />}>
         <Route path="/home" element={<Dashboard />} />
         <Route path="/kpiassessment" element={<KPIAssessment />} />
+        <Route path="/kpicontainer" element={<KpiContainer />} />
         <Route path="/leave" element={<Leave />} />
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
