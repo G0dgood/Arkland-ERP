@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
 import { Button } from '@material-ui/core';
-import Cookies from 'js-cookie';
 import axios, { AxiosResponse } from 'axios';
+import { fireAlert } from '../../utils/Alert';
 
-const KPIAssessment = (hods: any, superadmins: any,) => {
-	// const token = Cookies.get("token");
+const KPIAssessment = () => {
+
 
 	// @ts-ignore
 	const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
@@ -27,7 +25,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 	//
 	const [employees, setEmployees] = useState<any>();
 
-	console.log('employees', employees)
+	// console.log('employees', employees)
 
 	const [employeegrade, setemployeegrade] = useState<any>({
 		employeegrade1: 0,
@@ -46,6 +44,23 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 		reliability: 15,
 		collaboration: 20,
 	})
+
+	// const [_kpiData, setKpiData] = useState<Record<'one' | 'two', any>>({
+	// 	one: {
+	// 		performance: 'Job Knowledge',
+	// 		description: "Measures employee's relevant knowledge and essential skills, such as work practices, policies and procedures needed to do a particular job",
+	// 		weight: 20,
+	// 	},
+	// 	two: {
+	// 		performance: 'Efficiency',
+	// 		description: "Maintaining the same standards and behaviors that lead to producing a high quality of work",
+	// 		weight: 15,
+	// 	},
+	// });
+
+	// const handleOnChangeKpiData = (num: 'one' | 'two', input: string, value: string | number) => {
+	// 	setKpiData((prevState) => ({ ...prevState, [num]: { ...prevState.[num], [input]: value } }))
+	// }
 
 	// @ts-ignore
 	const [kpiData1, setkpiData1] = useState<any>({
@@ -136,7 +151,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 	const [kpinputs, setKpInputs] = useState({
 		month: 0,
 		employee: "",
-		reviewer: " ",
+		reviewer: "",
 		job_knowledge: 0,
 		efficiency: 0,
 		attendance: 0,
@@ -146,7 +161,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 		comment: ""
 	})
 
- 
+
 
 
 	useEffect(() => {
@@ -199,7 +214,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 			});
 		});
 	}, [kpinputs.collaboration, setKpInputs, totalScore6]);
- 
+
 
 	useEffect(() => {
 		setKpInputs((prevState: any) => {
@@ -211,10 +226,11 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 	}, [kpinputs.employee, setKpInputs, totalScore6, userInfo?.data?.employee?.id]);
 
 	const [data, setData] = useState([]);
-	// const [sortData, setSortData] = useState([]);
 	const [isLoading, setisLoading] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
+	const [message, setMessage] = useState('')
 
-	// console.log('collaboration', data, sortData, isLoading)
+
 
 
 
@@ -225,12 +241,14 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 		axios
 			.post(`${process.env.REACT_APP_API}/hr/appraisals`, kpinputs)
 			.then((res: AxiosResponse) => {
-				// setRequestWorkersList([...res.data.data]);
-				console.log("res-res-res", res)
+				// setRequestWorkersList([...res.data.data]); 
 				setisLoading(false);
+				setisSuccess(true)
+
 			})
 			.catch((err) => {
 				console.log('res-res-res', err);
+				setMessage(err.data.message)
 				setisLoading(false);
 			});
 		return () => {
@@ -259,9 +277,33 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 
 	const year = new Date().getFullYear().toString();
 
-	// const [year, setYear] = useState(2021)
-	const [quarter, setQuarter] = useState(0);
-	const [reportsTo, setReportsTo] = useState("");
+	const title = "KPI created successfully";
+	const html = `KPI Assessment`;
+	const icon = "success";
+	const title1 = message;
+	const html1 = "Error";
+	const icon1 = "error";
+
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			// @ts-ignore
+			setemployeegrade({
+				employeegrade1: 0,
+				employeegrade2: 0,
+				employeegrade3: 0,
+				employeegrade4: 0,
+				employeegrade5: 0,
+				employeegrade6: 0,
+			});
+			setTimeout(() => {
+				setisSuccess(false)
+			}, 5000);
+		} else if (message) {
+			fireAlert(title1, html1, icon1);
+		}
+
+	}, [html, title, icon, isSuccess, message, html1, title1]);
 
 	return (
 		<div>
@@ -310,40 +352,43 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 
 				<div className='table-datacell-button-bottom' style={{ marginRight: "20px" }}>
 					<div className="performance-intro-header">
-						<div className="quarter">
-							<p>
-								Year:{" "}
+						<div className="quarter" style={{ marginBottom: "0.5rem" }}>
+							<div className="entries-perpage">
+								Year:
 								<select name="year"
 								// value={year}
 								>
 									<option>
 										{year}
 									</option>
-								</select>{" "}
+								</select>
 								Month:
-							</p>
-							<select
-								name="month"
-								value={kpinputs.month}
-								onChange={(e) => handleOnKPI("month", e.target.value)}>
-								<option> </option>
-								<option>0</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-								<option>6</option>
-								<option>7</option>
-								<option>8</option>
-								<option>9</option>
-								<option>10</option>
-								<option>11</option>
-								<option>12</option>
-							</select>
+							</div>
+							<div className="entries-perpage">
+								<select
+									name="month"
+									value={kpinputs.month}
+									onChange={(e) => handleOnKPI("month", e.target.value)}>
+									<option> </option>
+									<option>0</option>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+								</select>
+							</div>
 						</div>
-						<div className="line-manager">
-							<p>Line Manager:</p>
+
+						<div className="line-manager entries-perpage ">
+							<div>Line Manager:</div>
 							<select
 								name="line-manager"
 								value={kpinputs.reviewer}

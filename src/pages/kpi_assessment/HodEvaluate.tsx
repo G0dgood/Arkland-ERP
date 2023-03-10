@@ -1,12 +1,10 @@
 import { Button } from '@mui/material';
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, } from 'react';
 
-const HodEvaluation = () => {
 
-  const [performanceTable, setPerformanceTable] = useState([])
-  const [newFactor, setNewFactor] = useState("")
-  const [newRating, setNewRating] = useState("")
+const HodEvaluation = ({ data }: any) => {
+  const year = new Date().getFullYear().toString();
+
 
   // --- Handle Add Field --- //
   // const handleAddField = () => {
@@ -25,21 +23,50 @@ const HodEvaluation = () => {
   //   setPerformanceTable(fields)
   // }
 
+
+  const kpiData = [
+    {
+      'Performance': 'Job Knowledge',
+      'num': '1'
+    },
+
+    {
+      'Performance': 'Efficiency',
+      'num': '2'
+    },
+    {
+      'Performance': ' Attendance',
+      'num': '3'
+    },
+    {
+      'Performance': 'Software Development',
+      'num': '4'
+    },
+    {
+      'Performance': 'Team work',
+      'num': '5'
+    },
+    {
+      'Performance': 'Debugging',
+      'num': '6'
+    },
+  ];
+
   return (
     <form>
       <div className="top-fields">
-        <p>3 | 2021</p>
+        <p>{data?.data?.month}| {year} </p>
       </div>
       <div className="evaluation-area_cont">
         <div>
           <div className="added-fields_cont">
-            {[1, 2, 3, 4, 5].map((item, i) =>
+            {kpiData.map((item, i) =>
               <div key={i} className="added-field">
                 <div className="factor_area">
-                  <p>Punctuality</p>
+                  <p>{item.Performance}</p>
                 </div>
                 <div className="rate_area">
-                  <p>{item}</p>
+                  <p>{item.num}</p>
                 </div>
                 <div className="btn_area">
                   <select>
@@ -54,7 +81,8 @@ const HodEvaluation = () => {
           </div>
           {/* @ts-ignore */}
           <textarea rows="4" placeholder="Add an extended comment" required />
-          <Button type="submit">Submit</Button>
+          <Button variant="contained"
+            className="Add-btn-modal" type="submit">Submit</Button>
         </div>
       </div>
     </form>

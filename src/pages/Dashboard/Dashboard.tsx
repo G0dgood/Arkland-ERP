@@ -9,12 +9,12 @@ import { useAppSelector } from "../../hooks/useDispatch";
 
 const Dashboard = () => {
 
-  const { user,
-    isError,
-    isSuccess,
-    isLoading,
-    message,
-    error } = useAppSelector((state: any) => state.auth);
+  // const { user,
+  //   isError,
+  //   isSuccess,
+  //   isLoading,
+  //   message,
+  //   error } = useAppSelector((state: any) => state.auth);
 
   // @ts-ignore
   const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))

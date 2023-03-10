@@ -10,7 +10,7 @@ import { fireAlert } from "../../utils/Alert";
 const ApplyForLeave = (props: any) => {
 	const dispatch = useAppDispatch();
 	const [lgShow, setLgShow] = useState(false);
-	const { isError, isSuccess, isLoading, message } = useAppSelector((state: any) => state.leave);
+	// const { isError, isSuccess, isLoading, message } = useAppSelector((state: any) => state.leave);
 
 	const [inputs, setInputs] = useState({
 		start_date: "",
@@ -19,30 +19,30 @@ const ApplyForLeave = (props: any) => {
 		leave_type: "",
 	})
 
-	console.log('message-message', message)
 
-	const title = "Successful";
-	const html = message;
-	const icon = "success";
-	const title1 = "Leave error";
-	const html1 = message;
-	const icon1 = "error";
 
-	useEffect(() => {
-		if (isSuccess) {
-			// fireAlert(title, html, icon);
-			setTimeout(() => {
-				dispatch(reset());
-			}, 2000);
-			setLgShow(false)
-		} else if (isError) {
-			fireAlert(title1, html1, icon1);
-			setTimeout(() => {
-				dispatch(reset());
-			}, 10000);
-		}
+	// const title = "Successful";
+	// const html = message;
+	// const icon = "success";
+	// const title1 = "Leave error";
+	// const html1 = message;
+	// const icon1 = "error";
 
-	}, [dispatch, html, title, icon, isSuccess, isError, html1]);
+	// useEffect(() => {
+	// 	if (isSuccess) {
+	// 		// fireAlert(title, html, icon);
+	// 		setTimeout(() => {
+	// 			dispatch(reset());
+	// 		}, 2000);
+	// 		setLgShow(false)
+	// 	} else if (isError) {
+	// 		fireAlert(title1, html1, icon1);
+	// 		setTimeout(() => {
+	// 			dispatch(reset());
+	// 		}, 10000);
+	// 	}
+
+	// }, [dispatch, html, title, icon, isSuccess, isError, html1]);
 
 	const handelCreate = async () => {
 		// @ts-ignore
@@ -115,7 +115,7 @@ const ApplyForLeave = (props: any) => {
 						</div>
 						<div className='btn-modal-container'>
 							<Button variant="contained" className="Add-btn-modal" onClick={handelCreate}>
-								{isLoading ? <Spinner animation="border" /> : "APPLY"}
+								{/* {isLoading ? <Spinner animation="border" /> : "APPLY"} */}
 							</Button>
 						</div>
 					</div>

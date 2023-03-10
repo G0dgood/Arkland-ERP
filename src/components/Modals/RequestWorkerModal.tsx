@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
 import { BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
 import { useAppSelector } from "../../hooks/useDispatch";
-import TextAreaField from "../Inputs/TextAreaField";
 
 const RequestWorkerModal = (props: any) => {
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ const RequestWorkerModal = (props: any) => {
       )
       .then((res: AxiosResponse) => {
         setLoading(false);
-        if (res.data.success === true || res.status === 200) {
+        if (res?.data?.success === true || res?.status === 200) {
           const title = "Request for worker submitted";
           const html = `Request submitted`;
           const icon = "success";
@@ -38,7 +37,7 @@ const RequestWorkerModal = (props: any) => {
       })
       .catch((err) => {
         setLoading(false);
-        const html = err.response.data.message;
+        const html = err?.response?.data?.message;
         const icon = "error";
         const title = "Request submission failed";
         fireAlert(title, html, icon);
@@ -54,19 +53,19 @@ const RequestWorkerModal = (props: any) => {
     if (request?.requests?.length > 0) {
       setRequest((prevState: any) => {
         if (prevState) {
-          const existingRequestIndex = prevState.requests.findIndex(
-            (request: any) => request.role === role
+          const existingRequestIndex = prevState?.requests.findIndex(
+            (request: any) => request?.role === role
           );
           if (existingRequestIndex > -1) {
             const updatedRequest = [
-              ...prevState.requests.slice(0, existingRequestIndex),
+              ...prevState?.requests.slice(0, existingRequestIndex),
               {
-                ...prevState.requests[existingRequestIndex],
+                ...prevState?.requests[existingRequestIndex],
                 requested_quantity:
-                  prevState.requests[existingRequestIndex].requested_quantity +
+                  prevState?.requests[existingRequestIndex].requested_quantity +
                   1,
               },
-              ...prevState.requests.slice(existingRequestIndex + 1),
+              ...prevState?.requests?.slice(existingRequestIndex + 1),
             ];
 
             return {
@@ -78,7 +77,7 @@ const RequestWorkerModal = (props: any) => {
               role_name: role_name,
               requested_quantity: 1,
             };
-            const updatedRequests = [...prevState.requests, updatedValues];
+            const updatedRequests = [...prevState?.requests, updatedValues];
 
             return {
               requests: updatedRequests,
@@ -128,7 +127,7 @@ const RequestWorkerModal = (props: any) => {
 
     return <div>{quantity}</div>;
   };
-  const roles: any = useAppSelector((state) => state.roles.roles);
+  const roles: any = useAppSelector((state) => state?.roles?.roles);
   const availablleRoles = [] as any;
 
   roles &&
@@ -200,13 +199,13 @@ const RequestWorkerModal = (props: any) => {
                           return (
                             <div className="form-group request-form-group">
                               <div>
-                                <p>{item.name}</p>
+                                <p>{item?.name}</p>
                               </div>
                               <div className="request-button-group">
                                 <button
                                   className="btn btn-outline-primary"
                                   type="button"
-                                  onClick={(e) => decreaseQuantity(item.id)}
+                                  onClick={(e) => decreaseQuantity(item?.id)}
                                 >
                                   -
                                 </button>

@@ -4,12 +4,14 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import Pagination from '../../components/Pagination';
-import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
+import { NoRecordFound, TableFetch } from '../../components/TableOptions';
 
 import axios, { AxiosResponse } from 'axios';
 import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
 import ViewKPImodal from '../../components/Modals/ViewKPImodal';
+import { Link } from "react-router-dom";
+import { MdOutlineClose } from 'react-icons/md';
 
 const MyKPIAssessment = ({ setkpidata }: any) => {
 
@@ -64,7 +66,6 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 			.then((res: AxiosResponse) => {
 				setData(res?.data?.data);
 				setkpidata(res?.data?.data?.length);
-				console.log("res-res-res", res)
 				setisLoading(false);
 			})
 			.catch((err) => {
@@ -137,7 +138,11 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 											<Button className='profile-image-name-sub2'>{item?.status}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<ViewKPImodal id={item?._id} />
+											{/* <ViewKPImodal id={item?._id} /> */}
+											<Link to={`/viewKpassessment/${item?._id}`}  >
+
+												<Button id="team-applicatiom-update"  >View</Button>
+											</Link>
 										</td>
 									</tr>
 								))

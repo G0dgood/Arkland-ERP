@@ -16,7 +16,7 @@ import { useAppSelector } from "../hooks/useDispatch";
 const Header = ({ toggleSideNav }: any) => {
 
   // @ts-ignore
-  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
+  const userInfo: any = JSON.parse(storage?.get("user"));
 
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
