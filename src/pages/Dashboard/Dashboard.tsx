@@ -8,16 +8,11 @@ import { RootState } from "../../store";
 import { useAppSelector } from "../../hooks/useDispatch";
 
 const Dashboard = () => {
-
-  const { user,
-    isError,
-    isSuccess,
-    isLoading,
-    message,
-    error } = useAppSelector((state: any) => state.auth);
+  // const { user, isError, isSuccess, isLoading, message, error } =
+  //   useAppSelector((state: any) => state.auth);
 
   // @ts-ignore
-  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
+  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"));
   // @ts-ignore
 
   const name = JSON.parse(localStorage.getItem("name"));
@@ -52,7 +47,13 @@ const Dashboard = () => {
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
-      <main>{userInfo?.data?.department?.name === "HR" ? <AdminDashboard /> : <StaffDashboard />}</main>
+      <main>
+        {userInfo?.data?.department?.name === "HR" ? (
+          <AdminDashboard />
+        ) : (
+          <StaffDashboard />
+        )}
+      </main>
     </div>
   );
 };
