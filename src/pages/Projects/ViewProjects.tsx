@@ -130,6 +130,37 @@ const ViewProject = () => {
   const handleNewTaskCreated = () => {
     setNewTaskCreated(!newTaskCreated);
   };
+
+  const deleteTask = async (id: string) => {
+    setProjectTasksLoading(true);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/tasks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setProjectTasksLoading(false);
+      if (response.ok) {
+        const title = "Task deleted.";
+        const html = `Task deleted2`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setProjectTasksLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Task deletion failed";
+      fireAlert(title, html, icon);
+    }
+  };
+
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setProjectTasksLoading(true);
     console.log("values", values);
@@ -412,11 +443,6 @@ const ViewProject = () => {
                 <div>
                   <div className="project-main-div-col-2-sub-min-main__header">
                     <h5>Team Members</h5>
-                    {/* <img
-                      src={redPlus}
-                      alt="User"
-                      className="project-main-div-col-2-sub-min-main__header-plus"
-                    /> */}
                   </div>
 
                   <div className="project-main-div-col-2-sub-max project-main-div-col-2-sub-min-main">
@@ -691,7 +717,10 @@ const ViewProject = () => {
                                       </div>
                                     </div>
                                     <div className="FiTrash2">
-                                      <FiTrash2 size={25} />
+                                      <FiTrash2
+                                        size={25}
+                                        onClick={() => deleteTask(item?.id)}
+                                      />
                                     </div>
                                   </div>
                                 </div>
