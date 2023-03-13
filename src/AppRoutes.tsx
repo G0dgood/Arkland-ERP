@@ -72,15 +72,15 @@ const AppRoutes: React.FC<any> = () => {
     }
   );
 
-  // React.useEffect(() => {
-  //   if (Cookies.get("token")) {
-  //     // dispatch(getDepartment());
-  //     // dispatch(getRoles());
-  //     // dispatch(getEmployees());
-  //     // dispatch(getTeamLeads());
-  //     // dispatch(getTeam());
-  //   }
-  // }, [dispatch]);
+  React.useEffect(() => {
+    if (Cookies.get("token")) {
+      // dispatch(getDepartment());
+      // dispatch(getRoles());
+      dispatch(getEmployees());
+      // dispatch(getTeamLeads());
+      // dispatch(getTeam());
+    }
+  }, [dispatch]);
   const user: any = storage?.get("user");
   const parsedUserData = JSON?.parse(user);
 
@@ -115,8 +115,13 @@ const AppRoutes: React.FC<any> = () => {
           }
         >
 
+
           <Route path="/allemployees" element={<AllEmployees />} />
           <Route path="/projects" element={<Project />} />
+
+          <Route path="/employees" element={<AllEmployees />} />
+          <Route path="/projects" element={<ProjectView />} />
+
           <Route path="/viewproject/:id" element={<ViewProjects />} />
           <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
           <Route path="/site-worker-request" element={<SiteWorkerRequest />} />

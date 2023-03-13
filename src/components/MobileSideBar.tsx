@@ -10,20 +10,16 @@ import { AiOutlineBank } from "react-icons/ai";
 import { BsBriefcase, BsShield } from "react-icons/bs";
 import { BiSupport } from "react-icons/bi";
 const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
-
-
   const [width, setWidth] = useState(window.innerWidth);
   const updateDimensions = () => {
     setWidth(window.innerWidth);
-    setHideNav(window.innerWidth)
+    setHideNav(window.innerWidth);
   };
 
   useEffect(() => {
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
-
-
 
   return (
     <>
@@ -43,7 +39,6 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
             </div>
             <div className="sd-body">
               <div className="ul">
-
                 <Nav className=" li mb-4">
                   <NavLink
                     className={
@@ -51,7 +46,8 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/home" >
+                    to="/home"
+                  >
                     <span className="me-3">
                       <TfiLayoutGrid2 size={20} />
                     </span>
@@ -65,7 +61,8 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/kpiassessment" >
+                    to="/kpiassessment"
+                  >
                     <span className="me-3">
                       <FiPieChart size={20} />
                     </span>
@@ -79,7 +76,8 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/weeklyreport" >
+                    to="/weeklyreport"
+                  >
                     <span className="me-3">
                       <GoFile size={23} />
                     </span>
@@ -94,7 +92,8 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/allemployees" >
+                    to="/employees"
+                  >
                     <span className="me-3">
                       <FiUser size={24} />
                     </span>
@@ -108,7 +107,8 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/departments" >
+                    to="/departments"
+                  >
                     <span className="me-3">
                       <FiFolder size={20} />
                     </span>
@@ -123,15 +123,14 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/projects" >
+                    to="/projects"
+                  >
                     <span className="me-3">
-                      < AiOutlineBank size={25} />
+                      <AiOutlineBank size={25} />
                     </span>
                     <span className="icon-text"> Projects </span>
                   </NavLink>
                 </Nav>
-
-
 
                 <Nav className=" li mb-4">
                   <NavLink
@@ -193,13 +192,13 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                     <span className="icon-text"> Log out </span>
                   </NavLink>
                 </Nav>
-
               </div>
             </div>
           </div>
           <div
             className={`sidebar-overlay ${isOpen === true ? "active" : ""}`}
-            onClick={ToggleSidebar}></div>
+            onClick={ToggleSidebar}
+          ></div>
         </div>
       )}
     </>

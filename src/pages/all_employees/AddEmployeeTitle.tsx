@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
-
-
 const AddEmployeeTitle = ({ setActive, active, click }: any) => {
   const navigate = useNavigate();
 
@@ -42,13 +40,16 @@ const AddEmployeeTitle = ({ setActive, active, click }: any) => {
     <div className="addemployeecontainer-sup">
       <div className="back-to-employee-container">
         <Button
-          onClick={() => navigate("/allemployees")}
+          onClick={() => navigate("/employees")}
           variant="outlined"
           className="back-to-employee-button"
         >
           <GoArrowLeft className="back-to-employee-icon" size={20} />
         </Button>
-        <h4 className="addemployeecontainer-title" onClick={incrementCountCancel}>
+        <h4
+          className="addemployeecontainer-title"
+          onClick={incrementCountCancel}
+        >
           Add Employee
         </h4>
       </div>
