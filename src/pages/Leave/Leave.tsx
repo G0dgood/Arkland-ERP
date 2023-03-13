@@ -15,15 +15,15 @@ const Leave = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	const { isSuccess } = useAppSelector((state: any) => state.leave);
-	const { dataall,
-		isErrorall,
-		isSuccessall,
-		isLoadingall,
-		messageall,
-		errorall } = useAppSelector((state: any) => state.leave);
+	// const { isSuccess } = useAppSelector((state: any) => state.leave);
+	// const { dataall,
+	// 	isErrorall,
+	// 	isSuccessall,
+	// 	isLoadingall,
+	// 	messageall,
+	// 	errorall } = useAppSelector((state: any) => state.leave);
 
-	console.log('dataall', dataall)
+
 
 	const title = "Leave created successfully";
 	const html = `Leave created`;
@@ -47,20 +47,20 @@ const Leave = () => {
 
 
 
-	useEffect(() => {
-		dispatch(getCreateLeave());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(getCreateLeave());
+	// }, [dispatch]);
 
 
-	useEffect(() => {
-		if (isSuccess) {
-			fireAlert(title, html, icon);
-			setTimeout(() => {
-				dispatch(reset());
-			}, 2000);
-		}
+	// useEffect(() => {
+	// 	if (isSuccess) {
+	// 		fireAlert(title, html, icon);
+	// 		setTimeout(() => {
+	// 			dispatch(reset());
+	// 		}, 2000);
+	// 	}
 
-	}, [dispatch, html, title, icon, isSuccess]);
+	// }, [dispatch, html, title, icon, isSuccess]);
 
 
 	const [collapseNav, setCollapseNav] = useState(() => {

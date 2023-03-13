@@ -8,11 +8,12 @@ import { BsDot } from 'react-icons/bs';
 import logo from '../../assets/images/asl-profile.jpeg';
 import { Link } from 'react-router-dom'
 import moment from 'moment';
+import storage from '../../utils/storage';
 
 const Profile = () => {
-	// @ts-ignore
-	const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
 
+	// @ts-ignore
+	const userInfo: any = JSON.parse(storage?.get("user"));
 
 
 	const [collapseNav, setCollapseNav] = useState(() => {

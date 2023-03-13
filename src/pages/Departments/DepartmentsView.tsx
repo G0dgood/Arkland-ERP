@@ -35,7 +35,7 @@ const DepartmentsView = () => {
         if (!response.ok) {
           throw new Error(data.message || response.status);
         }
-        setDepartments([...data.data]);
+        setDepartments([...data?.data]);
         setisLoading(false);
         setError(false);
         setMessage("");

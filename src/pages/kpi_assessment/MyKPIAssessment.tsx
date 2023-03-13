@@ -4,14 +4,18 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import Pagination from '../../components/Pagination';
-import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
-
+import { NoRecordFound, TableFetch } from '../../components/TableOptions';
 import axios, { AxiosResponse } from 'axios';
 import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
-import ViewKPImodal from '../../components/Modals/ViewKPImodal';
+import { Link } from "react-router-dom";
+import storage from '../../utils/storage';
 
 const MyKPIAssessment = ({ setkpidata }: any) => {
+	// @ts-ignore
+	const userInfo: any = JSON.parse(storage?.get("user"));
+
+
 
 	const [data, setData] = useState<any>([]);
 	const [sortData, setSortData] = useState([]);
@@ -57,24 +61,20 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 
 
 	React.useEffect(() => {
-		const source = axios.CancelToken.source();
 		setisLoading(true);
 		axios
-			.get(`${process.env.REACT_APP_API}/hr/appraisals`)
+			.get(`${process.env.REACT_APP_API}/hr/appraisals?employee=${userInfo?.data?.employee?._id}`)
 			.then((res: AxiosResponse) => {
 				setData(res?.data?.data);
 				setkpidata(res?.data?.data?.length);
-				console.log("res-res-res", res)
 				setisLoading(false);
 			})
 			.catch((err) => {
 				console.log(err);
 				setisLoading(false);
 			});
-		return () => {
-			source.cancel();
-		};
-	}, [setkpidata]);
+	}, [setkpidata, userInfo?.data?.employee?._id]);
+
 
 
 
@@ -128,16 +128,21 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 							) : displayData?.length === 0 || displayData == null ? (
 								<NoRecordFound colSpan={8} />
 							) : (
-								displayData.map((item: any, i: any) => (
-									<tr className="data-table-row">
+								displayData?.map((item: any, i: any) => (
+									<tr className="data-table-row" key={i}>
 										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
 										<td className="table-datacell datatype-numeric">{item?.month}</td>
 										<td className="table-datacell datatype-numeric">{item?.performance_percentage_employee}%</td>
 										<td className="table-datacell datatype-numeric">
-											<Button className='profile-image-name-sub2'>{item?.status}</Button>
+											<Button className={item?.status === 'active' ? "table-link-active" : "table-link"}>{item?.status === 'active' ? 'Completed' : item?.status}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<ViewKPImodal id={item?._id} />
+											{/* <ViewKPImodal id={item?._id} /> */}
+											{/* <Link to={`/kpidetails/${item?.employee}`}  > */}
+											<Link to={`/kpidetails/${item?._id}`}  >
+
+												<Button id="team-applicatiom-update">View</Button>
+											</Link>
 										</td>
 									</tr>
 								))
@@ -146,7 +151,7 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 					</table>
 				</div>
 
-			</section>
+			</section >
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}
