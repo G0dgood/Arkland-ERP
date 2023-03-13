@@ -17,6 +17,7 @@ import { Form, Formik } from "formik";
 import { Modal, Toast } from "react-bootstrap";
 import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
+import { FiTrash2 } from "react-icons/fi";
 import Cookies from "js-cookie";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -24,8 +25,8 @@ import projectAvatar from "../../assets/vectors/project-avatar.svg";
 import projectBack from "../../assets/vectors/project-back.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
 import projectProfile from "../../assets/vectors/project-profile.svg";
-import { checkForTeams } from "../../utils/checkForName";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { checkForTeams, checkForEmployeeName } from "../../utils/checkForName";
+import { useAppSelector } from "../../hooks/useDispatch";
 import RequestWorkerModal from "../../components/Modals/RequestWorkerModal";
 import InputField from "../../components/Inputs/InputField";
 import ReactSelectField from "../../components/Inputs/ReactSelectField";
@@ -33,6 +34,7 @@ import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
 import { fireAlert } from "../../utils/Alert";
 import { getRequestOptions } from "../../utils/auth/header";
+import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 
 const ViewProject = () => {
   const { id }: any = useParams();
@@ -43,7 +45,7 @@ const ViewProject = () => {
   const [value, onChange] = useState(new Date());
   const [projects, setProjects] = React.useState({} as any);
   const [projectsTasks, setProjectsTasks] = React.useState({} as any);
-  const [teamMembers, setTeamMembers] = React.useState({} as any);
+  const [teamMembers, setTeamMembers] = React.useState([] as any);
   const [isLoading, setLoading] = React.useState(false);
   const [isTeamLoading, setTeamLoading] = React.useState(false);
   const [isProjectTasksLoading, setProjectTasksLoading] = React.useState(false);
@@ -119,21 +121,56 @@ const ViewProject = () => {
         setMessage("");
       } catch (error: any) {
         setLoading(false);
-        setError(true);
+        // setError(true);
         setMessage(error.message || "Something went wrong");
+        setTimeout(() => {
+          fetchData();
+        }, 5000);
       }
     };
     fetchData();
   }, [id, newTaskCreated]);
+
   const handleNewTaskCreated = () => {
     setNewTaskCreated(!newTaskCreated);
   };
+
+  const deleteTask = async (id: string) => {
+    setProjectTasksLoading(true);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/tasks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setProjectTasksLoading(false);
+      if (response.ok) {
+        const title = "Task deleted.";
+        const html = `Task deleted`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setProjectTasksLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Task deletion failed";
+      fireAlert(title, html, icon);
+    }
+  };
+
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setProjectTasksLoading(true);
     console.log("values", values);
-    const proj = { project: id };
+    const getProjectId = { project: id };
 
-    const createTaskValues = { ...values, ...proj };
+    const createTaskValues = { ...values, ...getProjectId };
     try {
       const response = await fetch(`${process.env.REACT_APP_API}/tasks`, {
         method: "POST",
@@ -171,7 +208,6 @@ const ViewProject = () => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
-
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
     localStorage.setItem("collapse", JSON.stringify(collapseNav));
@@ -194,22 +230,6 @@ const ViewProject = () => {
         })
       );
   }
-
-  const priorityOptions = [
-    { value: "5", label: "Top priority" },
-    { value: "4", label: "High priority" },
-    { value: "3", label: "Medium priority" },
-    { value: "2", label: "Low priority" },
-    { value: "1", label: "Lowest priority" },
-  ];
-
-  const difficultyOptions = [
-    { value: "5", label: "Very challenging" },
-    { value: "4", label: "Challenging" },
-    { value: "3", label: "Moderate" },
-    { value: "2", label: "Easy" },
-    { value: "1", label: "Very easy:" },
-  ];
 
   return (
     <div id="screen-wrapper">
@@ -262,9 +282,12 @@ const ViewProject = () => {
                     src={projectAvatar}
                     alt="User"
                     className="project-sub-img"
+                    style={{ color: "black" }}
                   />
                   <p className="project-sub-img__name">
-                    {checkForTeams(projects?.lead, teamLeads)}
+                    {projects &&
+                      teamLeads &&
+                      checkForTeams(projects?.lead, teamLeads)}
                   </p>
                   <p className="project-sub-img__title">PROJECT MANAGER</p>
                 </div>
@@ -408,11 +431,6 @@ const ViewProject = () => {
                 <div>
                   <div className="project-main-div-col-2-sub-min-main__header">
                     <h5>Team Members</h5>
-                    {/* <img
-                      src={redPlus}
-                      alt="User"
-                      className="project-main-div-col-2-sub-min-main__header-plus"
-                    /> */}
                   </div>
 
                   <div className="project-main-div-col-2-sub-max project-main-div-col-2-sub-min-main">
@@ -652,21 +670,36 @@ const ViewProject = () => {
                                   style={{ borderRadius: "4px" }}
                                 >
                                   <div className="main-todo-container">
-                                    <div className="main-todo-note">
-                                      <div
-                                        className="project-main-todo-note-big"
-                                        style={{
-                                          display: "flex",
-                                        }}
-                                      >
-                                        <div>{item.title}</div>
+                                    <div>
+                                      <div>
+                                        {item.title} on{" "}
+                                        {moment(
+                                          item?.expected_completion_date
+                                        ).format("DD-MM-YYYY")}{" "}
                                       </div>
-                                      <div className="project-main-todo-note">
+
+                                      <div className="main-todo-input-time">
+                                        {" "}
                                         {projectsTasks.length > 0
                                           ? item.notes[0]?.text
                                           : ""}
                                       </div>
+                                      <div className="main-todo-input-time">
+                                        {"Assigned to : "}
+                                        {projects &&
+                                          teamMembers &&
+                                          checkForEmployeeName(
+                                            item?.assigned_to,
+                                            teamMembers
+                                          )}
+                                      </div>
                                     </div>
+                                  </div>
+                                  <div className="FiTrash2">
+                                    <FiTrash2
+                                      size={25}
+                                      onClick={() => deleteTask(item?.id)}
+                                    />
                                   </div>
                                 </div>
                               </div>
