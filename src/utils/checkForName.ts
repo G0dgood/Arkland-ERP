@@ -30,3 +30,14 @@ export function checkForTeams(id: any, teams?: any): any {
     });
   return name;
 }
+
+export function checkForEmployeeName(id: any, datas?: any): any {
+  let name = [] as any;
+  datas &&
+    datas?.forEach((data: any) => {
+      if (id === data.id) {
+        name = data.employee_name;
+      }
+    });
+  return name;
+}

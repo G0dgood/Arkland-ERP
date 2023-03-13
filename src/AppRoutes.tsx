@@ -71,15 +71,15 @@ const AppRoutes: React.FC<any> = () => {
     }
   );
 
-  // React.useEffect(() => {
-  //   if (Cookies.get("token")) {
-  //     // dispatch(getDepartment());
-  //     // dispatch(getRoles());
-  //     // dispatch(getEmployees());
-  //     // dispatch(getTeamLeads());
-  //     // dispatch(getTeam());
-  //   }
-  // }, [dispatch]);
+  React.useEffect(() => {
+    if (Cookies.get("token")) {
+      // dispatch(getDepartment());
+      // dispatch(getRoles());
+      dispatch(getEmployees());
+      // dispatch(getTeamLeads());
+      // dispatch(getTeam());
+    }
+  }, [dispatch]);
   const user: any = storage?.get("user");
   const parsedUserData = JSON?.parse(user);
 

@@ -17,6 +17,7 @@ import { Form, Formik } from "formik";
 import { Modal, Toast } from "react-bootstrap";
 import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
+import { FiTrash2 } from "react-icons/fi";
 import Cookies from "js-cookie";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -24,7 +25,7 @@ import projectAvatar from "../../assets/vectors/project-avatar.svg";
 import projectBack from "../../assets/vectors/project-back.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
 import projectProfile from "../../assets/vectors/project-profile.svg";
-import { checkForTeams } from "../../utils/checkForName";
+import { checkForTeams, checkForEmployeeName } from "../../utils/checkForName";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import RequestWorkerModal from "../../components/Modals/RequestWorkerModal";
 import InputField from "../../components/Inputs/InputField";
@@ -43,7 +44,7 @@ const ViewProject = () => {
   const [value, onChange] = useState(new Date());
   const [projects, setProjects] = React.useState({} as any);
   const [projectsTasks, setProjectsTasks] = React.useState({} as any);
-  const [teamMembers, setTeamMembers] = React.useState({} as any);
+  const [teamMembers, setTeamMembers] = React.useState([] as any);
   const [isLoading, setLoading] = React.useState(false);
   const [isTeamLoading, setTeamLoading] = React.useState(false);
   const [isProjectTasksLoading, setProjectTasksLoading] = React.useState(false);
@@ -119,21 +120,22 @@ const ViewProject = () => {
         setMessage("");
       } catch (error: any) {
         setLoading(false);
-        setError(true);
+        // setError(true);
         setMessage(error.message || "Something went wrong");
       }
     };
     fetchData();
   }, [id, newTaskCreated]);
+
   const handleNewTaskCreated = () => {
     setNewTaskCreated(!newTaskCreated);
   };
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setProjectTasksLoading(true);
     console.log("values", values);
-    const proj = { project: id };
+    const getProjectId = { project: id };
 
-    const createTaskValues = { ...values, ...proj };
+    const createTaskValues = { ...values, ...getProjectId };
     try {
       const response = await fetch(`${process.env.REACT_APP_API}/tasks`, {
         method: "POST",
@@ -171,7 +173,6 @@ const ViewProject = () => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
-
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
     localStorage.setItem("collapse", JSON.stringify(collapseNav));
@@ -262,9 +263,12 @@ const ViewProject = () => {
                     src={projectAvatar}
                     alt="User"
                     className="project-sub-img"
+                    style={{ color: "black" }}
                   />
                   <p className="project-sub-img__name">
-                    {checkForTeams(projects?.lead, teamLeads)}
+                    {projects &&
+                      teamLeads &&
+                      checkForTeams(projects?.lead, teamLeads)}
                   </p>
                   <p className="project-sub-img__title">PROJECT MANAGER</p>
                 </div>
@@ -651,21 +655,43 @@ const ViewProject = () => {
                                   className="project-main-todo-Event"
                                   style={{ borderRadius: "4px" }}
                                 >
-                                  <div className="main-todo-container">
-                                    <div className="main-todo-note">
-                                      <div
-                                        className="project-main-todo-note-big"
-                                        style={{
-                                          display: "flex",
-                                        }}
-                                      >
-                                        <div>{item.title}</div>
+                                  <div
+                                    className="main-todo-Event"
+                                    style={{ border: "0" }}
+                                  >
+                                    <div className="main-todo-container">
+                                      <div>
+                                        <div>
+                                          {item.title} on{" "}
+                                          {moment(
+                                            item?.expected_completion_date
+                                          ).format("DD-MM-YYYY")}{" "}
+                                        </div>
+
+                                        <div className="main-todo-input-time">
+                                          {" "}
+                                          {projectsTasks.length > 0
+                                            ? item.notes[0]?.text
+                                            : ""}
+                                        </div>
+                                        <div
+                                          className="main-todo-input-time"
+                                          style={{
+                                            marginTop: "5px",
+                                          }}
+                                        >
+                                          {"Assigned to : "}
+                                          {projects &&
+                                            teamMembers &&
+                                            checkForEmployeeName(
+                                              item?.assigned_to,
+                                              teamMembers
+                                            )}
+                                        </div>
                                       </div>
-                                      <div className="project-main-todo-note">
-                                        {projectsTasks.length > 0
-                                          ? item.notes[0]?.text
-                                          : ""}
-                                      </div>
+                                    </div>
+                                    <div className="FiTrash2">
+                                      <FiTrash2 size={25} />
                                     </div>
                                   </div>
                                 </div>

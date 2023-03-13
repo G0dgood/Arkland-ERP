@@ -1,8 +1,11 @@
 import Schedule from "./Schedule";
 import imgs from "../../assets/images/average.png";
 import AdminAnnouncement from "./AdminAnnouncement";
+import { useAppSelector } from "../../hooks/useDispatch";
 
 const AdminDashboard = () => {
+  const employees = useAppSelector((state) => state.employees.employees);
+
   return (
     <div className="main-div">
       <div className="main-div-col-1">
@@ -24,7 +27,7 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className="Average-container">
-          <div className="Average-container-card">
+          {/* <div className="Average-container-card">
             <div className="Average-container-card-sup">
               <div>
                 <h6 className="Average-container-card-headings">Average</h6>
@@ -44,7 +47,7 @@ const AdminDashboard = () => {
                 </span>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="Average-container-card">
             <div className="Average-container-card-sup">
               <div>
@@ -52,10 +55,12 @@ const AdminDashboard = () => {
                 <h6 className="Average-container-card-headings">Employees</h6>
               </div>
               <div>
-                <h3 className="Average-container-card-children">216</h3>
+                <h3 className="Average-container-card-children">
+                  {employees?.length}
+                </h3>
               </div>
-              <p className="Avg-data">120 Men</p>
-              <p className="Avg-data">96 Women</p>
+              {/* <p className="Avg-data">120 Men</p>
+              <p className="Avg-data">96 Women</p> */}
             </div>
             <div>
               <div className="Average-container-card-view">

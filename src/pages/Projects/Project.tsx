@@ -30,12 +30,6 @@ const ProjectView = () => {
   const [error, setError] = useState<any>();
   const [reRun, setReRun] = useState(false);
 
-  const token = Cookies.get("token");
-  React.useEffect(() => {
-    dispatch(getTeamLeads());
-    dispatch(getEmployees());
-    dispatch(getRoles());
-  }, [dispatch]);
   const navigate = useNavigate();
 
   const [collapseNav, setCollapseNav] = useState(() => {
@@ -72,15 +66,22 @@ const ProjectView = () => {
         setMessage("");
       } catch (error: any) {
         setisLoading(false);
-        setError(true);
+        // setError(true);
         setMessage(error.message || "Something went wrong");
         setTimeout(() => {
           fetchData();
-        }, 3000);
+        }, 5000);
       }
     };
     fetchData();
   }, []);
+
+  React.useEffect(() => {
+    dispatch(getTeamLeads());
+    // dispatch(getEmployees());
+    dispatch(getRoles());
+  }, [dispatch]);
+
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
