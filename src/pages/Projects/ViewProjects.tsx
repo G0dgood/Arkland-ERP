@@ -681,47 +681,37 @@ const ViewProject = () => {
                                   className="project-main-todo-Event"
                                   style={{ borderRadius: "4px" }}
                                 >
-                                  <div
-                                    className="main-todo-Event"
-                                    style={{ border: "0" }}
-                                  >
-                                    <div className="main-todo-container">
+                                  <div className="main-todo-container">
+                                    <div>
                                       <div>
-                                        <div>
-                                          {item.title} on{" "}
-                                          {moment(
-                                            item?.expected_completion_date
-                                          ).format("DD-MM-YYYY")}{" "}
-                                        </div>
+                                        {item.title} on{" "}
+                                        {moment(
+                                          item?.expected_completion_date
+                                        ).format("DD-MM-YYYY")}{" "}
+                                      </div>
 
-                                        <div className="main-todo-input-time">
-                                          {" "}
-                                          {projectsTasks.length > 0
-                                            ? item.notes[0]?.text
-                                            : ""}
-                                        </div>
-                                        <div
-                                          className="main-todo-input-time"
-                                          style={{
-                                            marginTop: "5px",
-                                          }}
-                                        >
-                                          {"Assigned to : "}
-                                          {projects &&
-                                            teamMembers &&
-                                            checkForEmployeeName(
-                                              item?.assigned_to,
-                                              teamMembers
-                                            )}
-                                        </div>
+                                      <div className="main-todo-input-time">
+                                        {" "}
+                                        {projectsTasks.length > 0
+                                          ? item.notes[0]?.text
+                                          : ""}
+                                      </div>
+                                      <div className="main-todo-input-time">
+                                        {"Assigned to : "}
+                                        {projects &&
+                                          teamMembers &&
+                                          checkForEmployeeName(
+                                            item?.assigned_to,
+                                            teamMembers
+                                          )}
                                       </div>
                                     </div>
-                                    <div className="FiTrash2">
-                                      <FiTrash2
-                                        size={25}
-                                        onClick={() => deleteTask(item?.id)}
-                                      />
-                                    </div>
+                                  </div>
+                                  <div className="FiTrash2">
+                                    <FiTrash2
+                                      size={25}
+                                      onClick={() => deleteTask(item?.id)}
+                                    />
                                   </div>
                                 </div>
                               </div>
