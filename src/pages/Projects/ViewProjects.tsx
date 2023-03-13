@@ -26,7 +26,7 @@ import projectBack from "../../assets/vectors/project-back.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
 import projectProfile from "../../assets/vectors/project-profile.svg";
 import { checkForTeams, checkForEmployeeName } from "../../utils/checkForName";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { useAppSelector } from "../../hooks/useDispatch";
 import RequestWorkerModal from "../../components/Modals/RequestWorkerModal";
 import InputField from "../../components/Inputs/InputField";
 import ReactSelectField from "../../components/Inputs/ReactSelectField";
@@ -34,6 +34,7 @@ import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
 import { fireAlert } from "../../utils/Alert";
 import { getRequestOptions } from "../../utils/auth/header";
+import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 
 const ViewProject = () => {
   const { id }: any = useParams();
@@ -122,6 +123,9 @@ const ViewProject = () => {
         setLoading(false);
         // setError(true);
         setMessage(error.message || "Something went wrong");
+        setTimeout(() => {
+          fetchData();
+        }, 5000);
       }
     };
     fetchData();
@@ -145,7 +149,7 @@ const ViewProject = () => {
       setProjectTasksLoading(false);
       if (response.ok) {
         const title = "Task deleted.";
-        const html = `Task deleted2`;
+        const html = `Task deleted`;
         const icon = "success";
         fireAlert(title, html, icon);
       } else {
@@ -226,22 +230,6 @@ const ViewProject = () => {
         })
       );
   }
-
-  const priorityOptions = [
-    { value: "5", label: "Top priority" },
-    { value: "4", label: "High priority" },
-    { value: "3", label: "Medium priority" },
-    { value: "2", label: "Low priority" },
-    { value: "1", label: "Lowest priority" },
-  ];
-
-  const difficultyOptions = [
-    { value: "5", label: "Very challenging" },
-    { value: "4", label: "Challenging" },
-    { value: "3", label: "Moderate" },
-    { value: "2", label: "Easy" },
-    { value: "1", label: "Very easy:" },
-  ];
 
   return (
     <div id="screen-wrapper">

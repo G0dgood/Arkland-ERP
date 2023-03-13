@@ -89,7 +89,13 @@ const AdminAnnouncement = () => {
 
       <div>
         {isLoading === true ? (
-          <div>
+          <div
+            style={{
+              marginTop: "20px",
+              width: "40%",
+              alignItems: "center",
+            }}
+          >
             <SyncLoader
               cssOverride={override}
               color={"#990000"}

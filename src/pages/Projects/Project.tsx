@@ -1,46 +1,38 @@
 import React, { useEffect, useState, CSSProperties } from "react";
-import { HiOutlinePaperClip, HiOutlineUserGroup } from "react-icons/hi";
 import { Button } from "@material-ui/core";
-import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
-import { BsChevronDown, BsExclamationLg, BsPlusLg } from "react-icons/bs";
+import { BsExclamationLg, BsPlusLg } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
 import { ProgressBar, Toast } from "react-bootstrap";
-import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
-import { ChartDonut } from "@patternfly/react-charts";
-import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
 import { useAppDispatch } from "../../hooks/useDispatch";
 import { getTeamLeads } from "../../store/reducers/teamLeads";
-import { getEmployees } from "../../store/reducers/employees";
-import Cookies from "js-cookie";
 import { FaTimes } from "react-icons/fa";
 import { getRequestOptions } from "../../utils/auth/header";
 import { getRoles } from "../../store/reducers/roles";
 
 const ProjectView = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isLoading, setisLoading] = useState(false);
   const [projects, setProjects] = useState([] as any);
   const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState<any>();
-  const [reRun, setReRun] = useState(false);
-
-  const navigate = useNavigate();
-
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
+
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
     localStorage.setItem("collapse", JSON.stringify(collapseNav));
     // --- Set state of collapseNav to localStorage on pageLoad --- //
   }, [collapseNav]);
+
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
@@ -78,7 +70,6 @@ const ProjectView = () => {
 
   React.useEffect(() => {
     dispatch(getTeamLeads());
-    // dispatch(getEmployees());
     dispatch(getRoles());
   }, [dispatch]);
 

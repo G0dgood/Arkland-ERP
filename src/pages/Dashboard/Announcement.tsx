@@ -73,7 +73,13 @@ const Announcement = () => {
       </div>
       <div>
         {isLoading === true ? (
-          <div>
+          <div
+            style={{
+              margin: "auto",
+              width: "40%",
+              alignItems: "center",
+            }}
+          >
             <SyncLoader
               cssOverride={override}
               color={"#990000"}
