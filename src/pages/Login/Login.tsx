@@ -63,7 +63,7 @@ const Login = () => {
         // set token in cookie
         Cookies.set("token", data.token);
         storage.set("user", JSON.stringify({ data }));
-        localStorage.setItem("userinfo", JSON.stringify({ data }));
+        // localStorage.setItem("userinfo", JSON.stringify({ data }));
         // navigate("/home");
         window.location.replace("/home");
       })

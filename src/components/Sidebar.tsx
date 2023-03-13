@@ -7,11 +7,13 @@ import { AiOutlineBank } from "react-icons/ai";
 import { FiPieChart, FiUser, FiFolder, FiLogOut } from "react-icons/fi";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { GoFile } from "react-icons/go";
+import { MdOutlineAssessment } from "react-icons/md";
 
 const Sidebar = ({ collapseNav }: any) => {
   // --- SideNav Bubble (States) --- //
   const [dashboard, setDashboard] = useState(false);
   const [kipassessment, setKPIAssessment] = useState(false);
+  const [teamKPI, setTeamKPI] = useState(false);
   const [allemployees, setallEmployees] = useState(false);
   const [departments, setDepartments] = useState(false);
   const [projects, setProjects] = useState(false);
@@ -61,6 +63,26 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
+
+        <NavLink
+          to="/teamkpi"
+          // exact
+          className={
+            window.location.pathname === "/teamkpi"
+              ? "active-here"
+              : "nav-link"
+          }
+          onMouseEnter={() => setTeamKPI(true)}
+          onMouseLeave={() => setTeamKPI(false)}>
+          <MdOutlineAssessment size={20} />
+          <span className="nav-name">Team KPI</span>
+          {teamKPI && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>Team KPI</p>
+            </div>
+          )}
+        </NavLink>
+
         <NavLink
           to="/weeklyreport"
           // exact

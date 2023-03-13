@@ -43,9 +43,10 @@ import Departments from "./pages/Departments/Departments";
 import Project from "./pages/Projects/Project";
 import KpiContainer from "./pages/kpi_assessment/KpiContainer";
 import ViewProjects from "./pages/Projects/ViewProjects";
-import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
-import ProjectView from "./pages/Projects/Project";
+import TeamKPI from "./pages/kpi_assessment/TeamKPI";
 import DepartmentsView from "./pages/Departments/Departments";
+import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
+import KPIDetails from "./pages/kpi_assessment/KPIDetails";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -95,14 +96,12 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/home" element={<Dashboard />} />
         <Route path="/kpiassessment" element={<KPIAssessment />} />
         <Route path="/kpicontainer" element={<KpiContainer />} />
+        <Route path="/kpidetails/:id" element={<KPIDetails />} />
         <Route path="/leave" element={<Leave />} />
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
-        <Route
-          path="/teamleaveapplications"
-          element={<TeamLeaveApplications />}
-        />
+        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
         {/* </Route> */}
         {/* Protected routes as admins, HR, Project managers and team leads */}
@@ -115,13 +114,16 @@ const AppRoutes: React.FC<any> = () => {
             />
           }
         >
+
+
+          <Route path="/allemployees" element={<AllEmployees />} />
+          <Route path="/projects" element={<Project />} />
+
           <Route path="/employees" element={<AllEmployees />} />
           <Route path="/projects" element={<ProjectView />} />
+
           <Route path="/viewproject/:id" element={<ViewProjects />} />
-          <Route
-            path="/allleaveapplications"
-            element={<AllLeaveApplications />}
-          />
+          <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
           <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
           <Route path="/createemployee" element={<CreateEmployee />} />
           <Route path="/createprojects" element={<CreateProjects />} />
@@ -130,8 +132,9 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/profile/edit" element={<EditUser />} />
           <Route path="/profile" element={<Profile />} />
           {/* Departments */}
-          <Route path="/departments" element={<DepartmentsView />} />
-          <Route path="/departments/:id" element={<ViewDepartments />} />
+          <Route path="/departments" element={<Departments />} />
+          <Route path="/departmentsview" element={<DepartmentsView />} />
+          {/* <Route path="/procurement" element={<Procurement />} /> */}
           <Route path="/engineering" element={<Engineering />} />
           <Route path="/finance" element={<Finance />} />
           <Route path="/humanresource" element={<HumanResource />} />
@@ -141,7 +144,9 @@ const AppRoutes: React.FC<any> = () => {
           {/* AdminEditUser */}
           <Route path="/admineditUser" element={<AdminEditUser />} />
           {/* Project View */}
-          <Route path="/projectview" element={<ProjectView />} />
+          <Route path="/kpicontainer" element={<KpiContainer />} />
+          <Route path="/teamkpi" element={<TeamKPI />} />
+          <Route path="/viewkpiassessment/:id" element={<ViewKPAssessment />} />
         </Route>
       </Route>
     </Routes>

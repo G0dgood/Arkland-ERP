@@ -3,20 +3,16 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { useAppSelector } from "../../hooks/useDispatch";
+import storage from "../../utils/storage";
 
 const Dashboard = () => {
-  // const { user, isError, isSuccess, isLoading, message, error } =
-  //   useAppSelector((state: any) => state.auth);
 
   // @ts-ignore
-  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"));
-  // @ts-ignore
+  const userInfo: any = JSON?.parse(storage?.get("user"));
 
-  const name = JSON.parse(localStorage.getItem("name"));
   // --- Get current state of collapseNav from localStorage --- //
+
+  // console.log('userInfo', userInfo)
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;

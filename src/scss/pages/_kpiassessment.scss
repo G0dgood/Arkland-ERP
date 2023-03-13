@@ -47,11 +47,14 @@
   font-weight: 700;
   text-align: center;
   border-right: 1px solid c.color(border);
+  display: flex;
+  justify-content: center;
 }
 .grading-system p {
   border-top: 1px solid c.color(border);
-  padding: 10px;
-  margin: 0;
+padding: 0.4rem; 
+display: flex;
+align-items: center;
 }
 .grading-system p:first-child {
   border-top: none !important;
@@ -146,6 +149,8 @@
   color: c.color(white-100) !important;
   padding: 1rem;
   border-radius: 10px 0px 0px 10px;
+  display: flex;
+  align-items: center;
 }
 .table-datacell-button-bottom-color2 {
   font-size: larger;
@@ -154,6 +159,8 @@
   padding: 1rem 3rem;
   border: 2px solid c.color(primary-color);
   border-radius: 0px 10px 10px 0px;
+  display: flex;
+  align-items: center;
 }
 
 .emp-reconmentdetion {
@@ -462,28 +469,60 @@ textarea{
 #performance .evaluation-area .added-field {
   --clr-border: #eeeeee;
   display: grid;
-  grid-template-columns: 1fr .15fr .15fr;
+  grid-template-columns: 1fr .15fr .15fr ;
   border-bottom: 1px solid var(--clr-border);
   border-right: 1px solid var(--clr-border);
   border-left: 1px solid var(--clr-border);
+}
+  #performance .evaluation-area .added-field-hod {
+  --clr-border: #eeeeee;
+  display: grid;
+  grid-template-columns: 1fr .15fr .15fr .15fr .15fr ;
+  border-bottom: 1px solid var(--clr-border);
+  border-right: 1px solid var(--clr-border);
+  border-left: 1px solid var(--clr-border);
+}
+#performance .evaluation-area .added-field-hod:nth-child(1) {
+  border-top: 1px solid var(--clr-border);
 }
 #performance .evaluation-area .added-field:nth-child(1) {
   border-top: 1px solid var(--clr-border);
 }
 
-#performance .evaluation-area .added-field div {
-  padding: .5rem .75rem;
+.factor_area{
+  display: flex;
+  justify-content: space-between;
 }
 
+
+#performance .evaluation-area .added-field-hod div {
+  padding: .5rem .75rem;
+  display: flex;
+  align-items: center;
+}
+#performance .evaluation-area .added-field div {
+  padding: .5rem .75rem;
+  display: flex;
+  align-items: center;
+}
+
+#performance .evaluation-area .added-field-hod div:not(div:nth-child(1)) {
+  text-align: center;
+  border-left: 1px solid var(--clr-border);
+}
 #performance .evaluation-area .added-field div:not(div:nth-child(1)) {
   text-align: center;
   border-left: 1px solid var(--clr-border);
 }
 
+.hod-comment {
+  margin-top: 1rem;
+}
  
 
 #performance textarea {
   width: 100%;
+  padding: 10px;
 }
 
 // #performance button[type="submit"] {
@@ -556,4 +595,54 @@ textarea{
     background-color: #f4b6b6 !important;
     border-radius: 3px !important;
     box-shadow: 0 0 1px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%) !important; 
+}
+
+
+.kpi-summary {
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 15px 25px;
+  margin-top: 1rem;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.05), 0 0 2px rgba(0, 0, 0, 0.05),
+    0 0 4px rgba(0, 0, 0, 0.05);
+}
+.kpi-summary-title p {
+  color: #080808;
+  font-weight: 600;
+  font-size: medium;
+}
+.kpi-summary-body {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+.kpi-summary-body p:nth-child(odd) {
+  color: #818181;
+  font-weight: 500;
+  border-right: 1px solid #ffffff;
+}
+.kpi-summary-body p:nth-child(even) {
+  color: #e2522e;
+  font-weight: bold;
+}
+
+
+ .table-link  {
+    background-color: rgba(240, 64, 0, .1) !important;
+    color: #e2522e!important;
+    padding: 0.15rem 1rem !important;
+    border-radius: 3px !important;
+    border: 1px solid #e2522e!important;
+}
+ .table-link-active  {
+  //  text-align: center;
+    color: #29CC97 !important;
+    background-color: #29cc962c !important;
+    padding: 0.15rem 1rem !important;
+    border-radius: 3px !important;
+    border: 1px solid #29CC97 !important; 
+}
+
+.BiUser-user{
+  margin-right: 22rem;
 }

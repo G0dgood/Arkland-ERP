@@ -49,10 +49,8 @@ const ViewLeave = ({ showLeave, setShowLeaver }: any) => {
 							<div className="form-grp">
 								<label htmlFor="graduation">Description</label>
 								<textarea className='Modal-textarea' placeholder='Enter detailed reason for leave' rows={7}>
-
 								</textarea>
 							</div>
-
 							<div className="form_btn">
 								<Button variant="outlined" className={"Add-btn-edit"}>
 									Update

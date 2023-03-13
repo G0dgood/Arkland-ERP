@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
 import { Button } from '@material-ui/core';
-import Cookies from 'js-cookie';
 import axios, { AxiosResponse } from 'axios';
+import { fireAlert } from '../../utils/Alert';
+import Cookies from 'js-cookie';
 
-const KPIAssessment = (hods: any, superadmins: any,) => {
-	// const token = Cookies.get("token");
+const KPIAssessment = () => {
 
+	const token = Cookies.get("token");
 	// @ts-ignore
 	const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
 
@@ -27,7 +26,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 	//
 	const [employees, setEmployees] = useState<any>();
 
-	console.log('employees', employees)
+	// console.log('employees', employees)
 
 	const [employeegrade, setemployeegrade] = useState<any>({
 		employeegrade1: 0,
@@ -46,6 +45,23 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 		reliability: 15,
 		collaboration: 20,
 	})
+
+	// const [_kpiData, setKpiData] = useState<Record<'one' | 'two', any>>({
+	// 	one: {
+	// 		performance: 'Job Knowledge',
+	// 		description: "Measures employee's relevant knowledge and essential skills, such as work practices, policies and procedures needed to do a particular job",
+	// 		weight: 20,
+	// 	},
+	// 	two: {
+	// 		performance: 'Efficiency',
+	// 		description: "Maintaining the same standards and behaviors that lead to producing a high quality of work",
+	// 		weight: 15,
+	// 	},
+	// });
+
+	// const handleOnChangeKpiData = (num: 'one' | 'two', input: string, value: string | number) => {
+	// 	setKpiData((prevState) => ({ ...prevState, [num]: { ...prevState.[num], [input]: value } }))
+	// }
 
 	// @ts-ignore
 	const [kpiData1, setkpiData1] = useState<any>({
@@ -136,7 +152,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 	const [kpinputs, setKpInputs] = useState({
 		month: 0,
 		employee: "",
-		reviewer: " ",
+		reviewer: "",
 		job_knowledge: 0,
 		efficiency: 0,
 		attendance: 0,
@@ -146,7 +162,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 		comment: ""
 	})
 
- 
+
 
 
 	useEffect(() => {
@@ -199,7 +215,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 			});
 		});
 	}, [kpinputs.collaboration, setKpInputs, totalScore6]);
- 
+
 
 	useEffect(() => {
 		setKpInputs((prevState: any) => {
@@ -211,35 +227,83 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 	}, [kpinputs.employee, setKpInputs, totalScore6, userInfo?.data?.employee?.id]);
 
 	const [data, setData] = useState([]);
-	// const [sortData, setSortData] = useState([]);
 	const [isLoading, setisLoading] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
+	const [message, setMessage] = useState('')
+	const [isError, setisError] = useState(false)
 
-	// console.log('collaboration', data, sortData, isLoading)
+	const title = "Successful";
+	const html = "KPI Created!";
+	const icon = "success";
+	const title1 = "KPI error";
+	const html1 = message;
+	const icon1 = "error";
 
 
 
-	const handelkpi = () => {
+	// const handelkpi = () => {
+	// 	setisLoading(true);
+	// 	axios
+	// 		.post(`${process.env.REACT_APP_API}/hr/appraisals`, kpinputs)
+	// 		.then((res: AxiosResponse) => {
+	// 			// setRequestWorkersList([...res.data.data]);
+	// 			setisLoading(false);
+	// 			setisSuccess(true)
 
-		const source = axios.CancelToken.source();
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log('res-res-res', err);
+	// 			setMessage(err.data.message)
+	// 			setisLoading(false);
+	// 		});
+	// }
+
+
+
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+			}, 5000);
+		} else if (isError) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError(false);
+			}, 1000);
+		}
+
+	}, [html, title, icon, isSuccess, isError, html1]);
+
+	const handelkpi = (e: any) => {
+		e.preventDefault();
 		setisLoading(true);
-		axios
-			.post(`${process.env.REACT_APP_API}/hr/appraisals`, kpinputs)
-			.then((res: AxiosResponse) => {
-				// setRequestWorkersList([...res.data.data]);
-				console.log("res-res-res", res)
+		fetch(`${process.env.REACT_APP_API}/hr/appraisals`, {
+			method: "POST", // or 'PUT'
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+			body: JSON.stringify(kpinputs),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data?.success === false) {
+					setMessage(data?.message)
+					setisError(true)
+				} else {
+					setData(data)
+					setisSuccess(true)
+				}
 				setisLoading(false);
 			})
-			.catch((err) => {
-				console.log('res-res-res', err);
+			.catch((error) => {
 				setisLoading(false);
 			});
-		return () => {
-			source.cancel();
-		};
 	}
 
 	React.useEffect(() => {
-		const source = axios.CancelToken.source();
+
 		setisLoading(true);
 		axios
 			.get(`${process.env.REACT_APP_API}/hr/employees`)
@@ -251,17 +315,37 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 				console.log(err);
 				setisLoading(false);
 			});
-		return () => {
-			source.cancel();
-		};
 	}, []);
 
 
 	const year = new Date().getFullYear().toString();
 
-	// const [year, setYear] = useState(2021)
-	const [quarter, setQuarter] = useState(0);
-	const [reportsTo, setReportsTo] = useState("");
+
+
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			// @ts-ignore
+			setemployeegrade({
+				employeegrade1: 0,
+				employeegrade2: 0,
+				employeegrade3: 0,
+				employeegrade4: 0,
+				employeegrade5: 0,
+				employeegrade6: 0,
+			});
+			// @ts-ignore
+			setKpInputs({
+				comment: ""
+			})
+			setTimeout(() => {
+				setisSuccess(false)
+			}, 5000);
+		} else if (message) {
+			fireAlert(title1, html1, icon1);
+		}
+
+	}, [html, title, icon, isSuccess, message, html1, title1]);
 
 	return (
 		<div>
@@ -310,40 +394,43 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 
 				<div className='table-datacell-button-bottom' style={{ marginRight: "20px" }}>
 					<div className="performance-intro-header">
-						<div className="quarter">
-							<p>
-								Year:{" "}
+						<div className="quarter" style={{ marginBottom: "0.5rem" }}>
+							<div className="entries-perpage">
+								Year:
 								<select name="year"
 								// value={year}
 								>
 									<option>
 										{year}
 									</option>
-								</select>{" "}
+								</select>
 								Month:
-							</p>
-							<select
-								name="month"
-								value={kpinputs.month}
-								onChange={(e) => handleOnKPI("month", e.target.value)}>
-								<option> </option>
-								<option>0</option>
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-								<option>6</option>
-								<option>7</option>
-								<option>8</option>
-								<option>9</option>
-								<option>10</option>
-								<option>11</option>
-								<option>12</option>
-							</select>
+							</div>
+							<div className="entries-perpage">
+								<select
+									name="month"
+									value={kpinputs.month}
+									onChange={(e) => handleOnKPI("month", e.target.value)}>
+									<option> </option>
+									<option>0</option>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+									<option>7</option>
+									<option>8</option>
+									<option>9</option>
+									<option>10</option>
+									<option>11</option>
+									<option>12</option>
+								</select>
+							</div>
 						</div>
-						<div className="line-manager">
-							<p>Line Manager:</p>
+
+						<div className="line-manager entries-perpage ">
+							<div>Line Manager:</div>
 							<select
 								name="line-manager"
 								value={kpinputs.reviewer}
@@ -406,7 +493,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 									</td>
 
 									<td className="table-datacell datatype-numeric">
-										<select className='performance-field' name="score"
+										<select className='performance-field' name="score" required
 											value={employeegrade.employeegrade1}
 											onChange={(e) => handleOnChange4("employeegrade1", e.target.value)}>
 											<option>
@@ -442,7 +529,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 											value={kpiData3.Weight2}
 											onChange={(e) => handleOnChange3("userId", e.target.value)} /> </td>
 									<td className="table-datacell datatype-numeric">
-										<select className='performance-field' name="score"
+										<select className='performance-field' name="score" required
 											value={employeegrade.employeegrade2}
 											onChange={(e) => handleOnChange4("employeegrade2", e.target.value)}>
 											<option>
@@ -478,7 +565,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 											value={kpiData3.Weight3}
 											onChange={(e) => handleOnChange3("Weight3", e.target.value)} /> </td>
 									<td className="table-datacell datatype-numeric">
-										<select className='performance-field' name="score"
+										<select className='performance-field' name="score" required
 											value={employeegrade.employeegrade3}
 											onChange={(e) => handleOnChange4("employeegrade3", e.target.value)}>
 											<option>
@@ -514,7 +601,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 											value={kpiData3.Weight4}
 											onChange={(e) => handleOnChange3("Weight3", e.target.value)} /> </td>
 									<td className="table-datacell datatype-numeric">
-										<select className='performance-field' name="score"
+										<select className='performance-field' name="score" required
 											value={employeegrade.employeegrade4}
 											onChange={(e) => handleOnChange4("employeegrade4", e.target.value)}>
 											<option>
@@ -550,7 +637,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 											value={kpiData3.Weight5}
 											onChange={(e) => handleOnChange3("Weight5", e.target.value)} /> </td>
 									<td className="table-datacell datatype-numeric">
-										<select className='performance-field' name="score"
+										<select className='performance-field' name="score" required
 											value={employeegrade.employeegrade5}
 											onChange={(e) => handleOnChange4("employeegrade5", e.target.value)}>
 											<option>
@@ -586,7 +673,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 											value={kpiData3.Weight6}
 											onChange={(e) => handleOnChange4("Weight6", e.target.value)} /> </td>
 									<td className="table-datacell datatype-numeric">
-										<select className='performance-field' name="score"
+										<select className='performance-field' name="score" required
 											value={employeegrade.employeegrade6}
 											onChange={(e) => handleOnChange4("employeegrade6", e.target.value)}>
 											<option>
@@ -638,7 +725,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 			</div>
 			<div className="board">
 				<div className="shareCommentContainer">
-					<textarea id="shareCommentText" placeholder="Write a comment.."
+					<textarea id="shareCommentText" placeholder="Write a comment.." required
 						value={kpinputs.comment}
 						onChange={(e) => handleOnKPI("comment", e.target.value)}></textarea>
 					{/* <button className="btn btn-success"> Share</button> */}
@@ -660,3 +747,7 @@ const KPIAssessment = (hods: any, superadmins: any,) => {
 
 
 export default KPIAssessment
+
+function setisError1(arg0: boolean) {
+	throw new Error('Function not implemented.');
+}
