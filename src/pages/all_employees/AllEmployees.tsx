@@ -63,7 +63,7 @@ const AllEmployees = () => {
         setMessage("");
       } catch (error: any) {
         setisLoading(false);
-        setError(true);
+        // setError(true);
         setMessage(error.message || "Something went wrong");
         setTimeout(() => {
           fetchData();

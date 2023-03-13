@@ -140,7 +140,7 @@ const WarningList = () => {
               variant="contained"
               className="back-btn-icon"
               id="Add-btn-sub"
-              onClick={() => navigate("/allemployees")}
+              onClick={() => navigate("/employees")}
             >
               <FaArrowLeft size={25} />
             </Button>
