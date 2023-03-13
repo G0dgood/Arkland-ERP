@@ -38,7 +38,7 @@ const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
         throw new Error(data.message || "Something went wrong!");
       }
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       setLoading(false);
       const html = error.message || "Something went wrong!";
       const icon = "error";
@@ -50,9 +50,9 @@ const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
   function checkNameOfRole(id: any): any {
     let name = [] as any;
     roles &&
-      roles.forEach((role: any) => {
-        if (id === role.id) {
-          name = role.name;
+      roles?.forEach((role: any) => {
+        if (id === role?.id) {
+          name = role?.name;
         }
       });
     return name;

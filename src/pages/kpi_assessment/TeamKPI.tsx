@@ -9,9 +9,15 @@ import { FaArrowLeft } from 'react-icons/fa';
 import axios, { AxiosResponse } from 'axios';
 import ViewKPImodal from '../../components/Modals/ViewKPImodal';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import storage from '../../utils/storage';
 
 const TeamKPI = () => {
+	// @ts-ignore
+	const userInfo: any = JSON.parse(storage?.get("user"));
+
+
+
 	const navigate = useNavigate();
 	const [data, setData] = useState<any>([]);
 	const [sortData, setSortData] = useState([]);
@@ -52,23 +58,19 @@ const TeamKPI = () => {
 
 
 	React.useEffect(() => {
-		const source = axios.CancelToken.source();
 		setisLoading(true);
 		axios
-			.get(`${process.env.REACT_APP_API}/hr/appraisals`)
+			.get(`${process.env.REACT_APP_API}/hr/appraisals?reviewer=${userInfo?.data?.employee?.id}`)
 			.then((res: AxiosResponse) => {
 				setData(res?.data?.data);
-				console.log("res-res-res", res)
+				// console.log("res-res-res", res)
 				setisLoading(false);
 			})
 			.catch((err) => {
 				console.log(err);
 				setisLoading(false);
 			});
-		return () => {
-			source.cancel();
-		};
-	}, []);
+	}, [userInfo?.data?.employee?.id]);
 
 	return (
 		<div id="screen-wrapper">
@@ -122,15 +124,19 @@ const TeamKPI = () => {
 									<NoRecordFound colSpan={8} />
 								) : (
 									displayData.map((item: any, i: any) => (
-										<tr className="data-table-row">
+										<tr className="data-table-row" key={i}>
 											<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
 											<td className="table-datacell datatype-numeric">{item?.month}</td>
 											<td className="table-datacell datatype-numeric">{item?.performance_percentage_employee}%</td>
 											<td className="table-datacell datatype-numeric">
-												<Button className='profile-image-name-sub2'>{item?.status}</Button>
+												<Button className={item?.status === 'active' ? "table-link-active" : "table-link"}>
+													{item?.status === 'active' ? 'Completed' : item?.status}</Button>
 											</td>
 											<td className="table-datacell datatype-numeric">
-												<ViewKPImodal id={item?._id} />
+												{/* <ViewKPImodal id={item?._id} /> */}
+												<Link to={`/viewkpiassessment/${item?._id}`}  >
+													<Button id="team-applicatiom-update">{item?.status === 'active' ? 'View' : 'Update'}</Button>
+												</Link>
 											</td>
 										</tr>
 									))

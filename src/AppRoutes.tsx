@@ -46,6 +46,7 @@ import ViewProjects from "./pages/Projects/ViewProjects";
 import TeamKPI from "./pages/kpi_assessment/TeamKPI";
 import DepartmentsView from "./pages/Departments/Departments";
 import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
+import KPIDetails from "./pages/kpi_assessment/KPIDetails";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -95,6 +96,7 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/home" element={<Dashboard />} />
         <Route path="/kpiassessment" element={<KPIAssessment />} />
         <Route path="/kpicontainer" element={<KpiContainer />} />
+        <Route path="/kpidetails/:id" element={<KPIDetails />} />
         <Route path="/leave" element={<Leave />} />
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
@@ -139,7 +141,7 @@ const AppRoutes: React.FC<any> = () => {
           {/* Project View */}
           <Route path="/kpicontainer" element={<KpiContainer />} />
           <Route path="/teamkpi" element={<TeamKPI />} />
-          <Route path="/viewKpassessment/:id" element={<ViewKPAssessment />} />
+          <Route path="/viewkpiassessment/:id" element={<ViewKPAssessment />} />
         </Route>
       </Route>
     </Routes>

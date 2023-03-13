@@ -3,7 +3,7 @@ import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core';
 import { MdOutlineClose } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../hooks/userDispatch';
-import { createLeave, reset } from '../../features/Leave/leaveSlice';
+// import { createLeave, reset } from '../../features/Leave/leaveSlice';
 import { fireAlert } from "../../utils/Alert";
 
 
@@ -44,11 +44,11 @@ const ApplyForLeave = (props: any) => {
 
 	// }, [dispatch, html, title, icon, isSuccess, isError, html1]);
 
-	const handelCreate = async () => {
-		// @ts-ignore
-		dispatch(createLeave(inputs));
+	// const handelCreate = async () => {
+	// 	// @ts-ignore
+	// 	dispatch(createLeave(inputs));
 
-	};
+	// };
 
 
 	const handleOnChange = (input: any, value: any) => {
@@ -114,7 +114,7 @@ const ApplyForLeave = (props: any) => {
 								onChange={(e) => handleOnChange("description", e.target.value)} />
 						</div>
 						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal" onClick={handelCreate}>
+							<Button variant="contained" className="Add-btn-modal"  >
 								{/* {isLoading ? <Spinner animation="border" /> : "APPLY"} */}
 							</Button>
 						</div>

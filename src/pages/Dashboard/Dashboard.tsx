@@ -3,12 +3,16 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
+import storage from "../../utils/storage";
 
 const Dashboard = () => {
 
   // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
+  const userInfo: any = JSON?.parse(storage?.get("user"));
+
   // --- Get current state of collapseNav from localStorage --- //
+
+  // console.log('userInfo', userInfo)
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
