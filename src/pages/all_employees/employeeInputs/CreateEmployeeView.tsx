@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import { fireAlert } from "../../../utils/Alert";
+import { checkForName } from "../../../utils/checkForName";
 
-const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
+const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
   const [isLoading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const token = Cookies.get("token");
@@ -33,7 +34,7 @@ const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
         const html = `Request to create an employee sent`;
         const icon = "success";
         fireAlert(title, html, icon);
-        navigate(`/allemployees`);
+        navigate(`/employees`);
       } else {
         throw new Error(data.message || "Something went wrong!");
       }
@@ -47,16 +48,16 @@ const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
     }
   };
 
-  function checkNameOfRole(id: any): any {
-    let name = [] as any;
-    roles &&
-      roles?.forEach((role: any) => {
-        if (id === role?.id) {
-          name = role?.name;
-        }
-      });
-    return name;
-  }
+  // function checkNameOfRole(id: any): any {
+  //   let name = [] as any;
+  //   roles &&
+  //     roles?.forEach((role: any) => {
+  //       if (id === role?.id) {
+  //         name = role?.name;
+  //       }
+  //     });
+  //   return name;
+  // }
   function checkDepartment(id: any): any {
     let name = [] as any;
     departments &&
@@ -67,6 +68,7 @@ const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
       });
     return name;
   }
+
   return (
     <div
       className={
@@ -213,7 +215,7 @@ const CreateEmployeeView = ({ active, employee, roles, departments }: any) => {
             <p>Department</p>
             <p>{checkDepartment(employee?.department)}</p>
             <p>Role</p>
-            <p>{checkNameOfRole(employee?.role)}</p>
+            <p>{checkForName(employee?.role, roles)}</p>
             <p>Work Location Objection</p>
             <p>
               {employee.has_work_location_objection === true ? "Yes" : "No"}

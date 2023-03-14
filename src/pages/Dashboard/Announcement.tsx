@@ -37,7 +37,10 @@ const Announcement = () => {
         setMessage("");
       } catch (error: any) {
         setLoading(false);
-        setError(true);
+        // setError(true);
+        setTimeout(() => {
+          fetchData();
+        }, 3000);
         setMessage(error.message || "Something went wrong");
       }
     };

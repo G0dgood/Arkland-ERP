@@ -14,7 +14,7 @@ export interface EmployeeFormProps {
   values?: any;
   id?: string;
   bindSubmitForm?: any;
-  roles:any
+  roles?: any;
 }
 
 export interface CreateEmployeeProps {

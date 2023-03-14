@@ -88,7 +88,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                 <Nav className=" li mb-4">
                   <NavLink
                     className={
-                      window.location.pathname === "/allemployees"
+                      window.location.pathname === "/employees"
                         ? "on-link "
                         : "sd-link"
                     }

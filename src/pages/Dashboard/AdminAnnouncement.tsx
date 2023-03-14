@@ -41,8 +41,11 @@ const AdminAnnouncement = () => {
         setMessage("");
       } catch (error: any) {
         setLoading(false);
-        setError(true);
+        // setError(true);
         setMessage(error.message || "Something went wrong");
+        setTimeout(() => {
+          fetchData();
+        }, 5000);
       }
     };
     fetchData();

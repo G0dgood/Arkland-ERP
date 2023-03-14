@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
-import { GoArrowLeft } from "react-icons/go";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { number } from "yup";
@@ -14,13 +12,9 @@ import Essentials from "./employeeInputs/Essentials";
 import Finance from "./employeeInputs/Finance";
 import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { useAppSelector } from "../../hooks/useDispatch";
 
 const CreateEmployee = () => {
-
-
-  const navigate = useNavigate();
-
   const [employee, setEmployee] = useState({
     first_name: "",
     middle_name: "",
@@ -150,26 +144,28 @@ const CreateEmployee = () => {
             ) : (
               <AddEmployeeNav active={active} setActive={setActive} />
             )}
-
             <div className="all-inputs-container">
               <Essentials
                 active={active}
                 employee={employee}
                 setEmployee={setEmployee}
                 setActive={setActive}
-                bindSubmitForm={bindSubmitForm} roles={undefined} />
+                bindSubmitForm={bindSubmitForm}
+              />
               <Finance
                 active={active}
                 employee={employee}
                 setEmployee={setEmployee}
                 setActive={setActive}
-                bindSubmitForm={bindSubmitForm} roles={undefined} />
+                bindSubmitForm={bindSubmitForm}
+              />
               <Reference
                 active={active}
                 employee={employee}
                 setEmployee={setEmployee}
                 setActive={setActive}
-                bindSubmitForm={bindSubmitForm} roles={undefined} />
+                bindSubmitForm={bindSubmitForm}
+              />
               <Employment
                 active={active}
                 employee={employee}
@@ -177,20 +173,22 @@ const CreateEmployee = () => {
                 setActive={setActive}
                 bindSubmitForm={bindSubmitForm}
                 options={availablleDepartments}
-                roleOptions={availablleRoles} roles={undefined} />
+                roleOptions={availablleRoles}
+              />
               <Address
                 active={active}
                 employee={employee}
                 setEmployee={setEmployee}
                 setActive={setActive}
-                bindSubmitForm={bindSubmitForm} roles={undefined} />
+                bindSubmitForm={bindSubmitForm}
+              />
               <CreateEmployeeView
                 active={active}
                 employee={employee}
                 departments={departments}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
+                roles={roles}
+                // setActive={setActive}
+                // bindSubmitForm={bindSubmitForm}
               />
             </div>
           </div>

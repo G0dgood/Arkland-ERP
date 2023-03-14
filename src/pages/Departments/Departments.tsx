@@ -50,6 +50,7 @@ const DepartmentsView = () => {
     };
     fetchData();
   }, [newDepartmentCreated]);
+  console.log(departments);
   const handleNewDepartmentCreated = () => {
     setNewDepartmentCreated(!newDepartmentCreated);
   };
