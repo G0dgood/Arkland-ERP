@@ -20,6 +20,7 @@ const ViewDepartments = () => {
   const navigate = useNavigate();
   const { id }: any = useParams();
   const [isLoading, setLoading] = React.useState(false);
+  const [departments, setDepartments] = React.useState({} as any);
   const [departmentMembers, setDepartmentMembers] = React.useState({} as any);
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState<any>();
@@ -29,7 +30,38 @@ const ViewDepartments = () => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const responseDepartments = await fetch(
+          `${process.env.REACT_APP_API}/hr/departments/${id}`,
+          getRequestOptions
+        );
+        const isJsonResponseDepartments = responseDepartments.headers
+          ?.get("content-type")
+          ?.includes("application/json");
+        const dataDepartments =
+          isJsonResponseDepartments && (await responseDepartments.json());
+        if (!responseDepartments.ok) {
+          throw new Error(
+            dataDepartments.message || responseDepartments.status
+          );
+        }
+        setDepartments(dataDepartments.data);
 
+        setLoading(false);
+        setError(false);
+        setMessage("");
+      } catch (error: any) {
+        setLoading(false);
+        setError(true);
+        setMessage(error.message || "Something went wrong");
+      }
+    };
+    fetchData();
+  }, [id]);
+  console.log(departments);
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -67,7 +99,7 @@ const ViewDepartments = () => {
     fetchData();
   }, [id]);
   const roles: any = useAppSelector((state) => state?.roles?.roles);
-  const departments: any = useAppSelector(
+  const departmentState: any = useAppSelector(
     (state) => state?.department?.department
   );
 
@@ -125,11 +157,13 @@ const ViewDepartments = () => {
               <FaArrowLeft size={25} />
             </Button>
 
-            <span className="SupportmainTitleh3">{departments.name}</span>
+            <span className="SupportmainTitleh3">
+              {departments?.department?.name}
+            </span>
           </div>
           <div>
             <MainSearch
-              placeholder={`Search...          ${departments.name}`}
+              placeholder={`Search...          ${departments?.department?.name}`}
             />
           </div>
         </div>
@@ -186,7 +220,7 @@ const ViewDepartments = () => {
                         {checkForName(item?.role, roles)}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {checkForName(item?.department, departments)}
+                        {checkForName(item?.department, departmentState)}
                       </td>
 
                       <td className="table-datacell datatype-numeric">
