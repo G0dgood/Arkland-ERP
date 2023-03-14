@@ -47,6 +47,8 @@ import TeamKPI from "./pages/kpi_assessment/TeamKPI";
 import DepartmentsView from "./pages/Departments/Departments";
 import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
 import KPIDetails from "./pages/kpi_assessment/KPIDetails";
+import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
+import ViewEmployee from "./pages/all_employees/ViewEmployee";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -101,7 +103,10 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
-        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
+        <Route
+          path="/teamleaveapplications"
+          element={<TeamLeaveApplications />}
+        />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
         {/* </Route> */}
         {/* Protected routes as admins, HR, Project managers and team leads */}
@@ -114,16 +119,17 @@ const AppRoutes: React.FC<any> = () => {
             />
           }
         >
-
-
-          <Route path="/allemployees" element={<AllEmployees />} />
           <Route path="/projects" element={<Project />} />
 
           <Route path="/employees" element={<AllEmployees />} />
-          <Route path="/projects" element={<ProjectView />} />
+          <Route path="/employees/:id" element={<ViewEmployee />} />
+          <Route path="/projects" element={<Project />} />
 
           <Route path="/viewproject/:id" element={<ViewProjects />} />
-          <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
+          <Route
+            path="/allleaveapplications"
+            element={<AllLeaveApplications />}
+          />
           <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
           <Route path="/createemployee" element={<CreateEmployee />} />
           <Route path="/createprojects" element={<CreateProjects />} />
@@ -133,7 +139,7 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/profile" element={<Profile />} />
           {/* Departments */}
           <Route path="/departments" element={<Departments />} />
-          <Route path="/departmentsview" element={<DepartmentsView />} />
+          <Route path="/departments/:id" element={<ViewDepartments />} />
           {/* <Route path="/procurement" element={<Procurement />} /> */}
           <Route path="/engineering" element={<Engineering />} />
           <Route path="/finance" element={<Finance />} />

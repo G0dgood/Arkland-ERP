@@ -40,7 +40,6 @@ const AllEmployees = () => {
   const [error, setError] = useState<any>();
   const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const [newEmployeeCreated, setNewEmployeeCreated] = React.useState(false);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +66,7 @@ const AllEmployees = () => {
         setMessage(error.message || "Something went wrong");
         setTimeout(() => {
           fetchData();
-        }, 3000);
+        }, 2000);
       }
     };
     fetchData();
@@ -231,17 +230,28 @@ const AllEmployees = () => {
                           <td className="table-datacell datatype-numeric">
                             <div className="table-active-items">
                               <span>
-                                <BsCheckCircle size={25} color={"green"} />
+                                <BsCheckCircle
+                                  size={25}
+                                  color={"green"}
+                                  onClick={() =>
+                                    navigate(`/employees/${item.id}`)
+                                  }
+                                  title="View employee"
+                                />
                               </span>
                               <span>
                                 <span
                                   className="edit-icon-color"
                                   onClick={() => navigate("/admineditUser")}
+                                  title="Edit employee"
                                 >
                                   <FiEdit size={25} />
                                 </span>
                                 {"  "}
-                                <span className="lock-icon-color">
+                                <span
+                                  className="lock-icon-color"
+                                  title="Lock employee account"
+                                >
                                   <FiLock size={25} />
                                 </span>
                               </span>

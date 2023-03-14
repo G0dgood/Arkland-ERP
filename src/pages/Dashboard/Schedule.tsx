@@ -97,8 +97,6 @@ const Schedule = () => {
   };
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
-    console.log("values", values);
-    // const getProjectId = { project: id };
 
     const createTaskValues = { ...values };
     try {
