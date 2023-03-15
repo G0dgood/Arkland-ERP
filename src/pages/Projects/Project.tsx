@@ -38,6 +38,7 @@ const ProjectView = () => {
   };
 
   React.useEffect(() => {
+    let isMounted = true;
     const fetchData = async () => {
       try {
         setisLoading(true);
@@ -52,13 +53,15 @@ const ProjectView = () => {
         if (!response.ok) {
           throw new Error(data.message || response.status);
         }
-        setProjects([...data.data]);
-        setisLoading(false);
-        setError(false);
-        setMessage("");
+        if (isMounted) {
+          setProjects([...data.data]);
+          setisLoading(false);
+          setError(false);
+          setMessage("");
+        }
       } catch (error: any) {
         setisLoading(false);
-        // setError(true);
+        setError(true);
         setMessage(error.message || "Something went wrong");
         setTimeout(() => {
           fetchData();
@@ -66,12 +69,10 @@ const ProjectView = () => {
       }
     };
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
-
-  React.useEffect(() => {
-    dispatch(getTeamLeads());
-    dispatch(getRoles());
-  }, [dispatch]);
 
   const override: CSSProperties = {
     display: "block",

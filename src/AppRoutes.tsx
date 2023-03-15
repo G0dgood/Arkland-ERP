@@ -12,7 +12,6 @@ import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
 import Support from "./pages/Support/Support";
 import Policy from "./pages/Policy/Policy";
 import SiteWorkerRequest from "./pages/Projects/SiteWorkerRequest";
-// import ViewProjects from "./pages/Projects/ViewProjects";
 import CreateProjects from "./pages/Projects/CreateProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
@@ -44,11 +43,11 @@ import Project from "./pages/Projects/Project";
 import KpiContainer from "./pages/kpi_assessment/KpiContainer";
 import ViewProjects from "./pages/Projects/ViewProjects";
 import TeamKPI from "./pages/kpi_assessment/TeamKPI";
-import DepartmentsView from "./pages/Departments/Departments";
 import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
 import KPIDetails from "./pages/kpi_assessment/KPIDetails";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
+import { getProjects } from "./store/reducers/project";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -76,11 +75,12 @@ const AppRoutes: React.FC<any> = () => {
 
   React.useEffect(() => {
     if (Cookies.get("token")) {
-      // dispatch(getDepartment());
-      // dispatch(getRoles());
+      dispatch(getDepartment());
+      dispatch(getRoles());
       dispatch(getEmployees());
-      // dispatch(getTeamLeads());
-      // dispatch(getTeam());
+      dispatch(getTeamLeads());
+      dispatch(getTeam());
+      dispatch(getProjects());
     }
   }, [dispatch]);
   const user: any = storage?.get("user");

@@ -11,6 +11,7 @@ const ViewEmployee = () => {
   const navigate = useNavigate();
   const [isLoading, setLoading] = React.useState(false);
   const [employee, setEmployee] = React.useState({} as any);
+  const [salary, setSalary] = React.useState({} as any);
   const [error, setError] = React.useState<any>();
   const [message, setMessage] = React.useState("");
   const override: CSSProperties = {
@@ -48,8 +49,8 @@ const ViewEmployee = () => {
         if (!response.ok) {
           throw new Error(data.message || response.status);
         }
-        setEmployee(data.data);
-
+        setEmployee(data.data.employee);
+        setSalary(data.data.salary);
         setLoading(false);
         setError(false);
         setMessage("");
@@ -197,21 +198,21 @@ const ViewEmployee = () => {
                         <p>Bank Account Name</p>
                         <p>{employee?.bank_account_name} </p>
                         <p> Basic Salary</p>
-                        <p> ₦ {employee?.basic_salary}</p>
+                        <p> ₦ {salary?.basic_salary}</p>
                         <p> Meal Allowance</p>
-                        <p> ₦ {employee?.meal_allowance}</p>
+                        <p> ₦ {salary?.meal_allowance}</p>
                       </div>
                     </div>
                     <div>
                       <div className="getjob-application-details">
                         <p> Medical Allowance</p>
-                        <p> ₦ {employee?.medical_allowance}</p>
+                        <p> ₦ {salary?.medical_allowance}</p>
                         <p> Housing Allowance</p>
-                        <p>₦ {employee?.housing_allowance}</p>
+                        <p>₦ {salary?.housing_allowance}</p>
                         <p> Transportation Allowance</p>
-                        <p>₦ {employee?.transportation_allowance} </p>
+                        <p>₦ {salary?.transportation_allowance} </p>
                         <p> Utility Allowance</p>
-                        <p>₦ {employee?.utility_allowance}</p>
+                        <p>₦ {salary?.utility_allowance}</p>
                       </div>
                     </div>
                   </div>

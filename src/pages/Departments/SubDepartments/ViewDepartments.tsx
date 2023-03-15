@@ -1,9 +1,11 @@
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { FiEdit, FiLock } from "react-icons/fi";
+import { FaArrowLeft, FaTimes } from "react-icons/fa";
+import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import {
   MainSearch,
   NoRecordFound,
@@ -11,10 +13,8 @@ import {
 } from "../../../components/TableOptions";
 import { getRequestOptions } from "../../../utils/auth/header";
 import { Toast } from "react-bootstrap";
-import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
 import { checkForName } from "../../../utils/checkForName";
 import { useAppSelector } from "../../../hooks/useDispatch";
-import { FiEdit, FiLock } from "react-icons/fi";
 
 const ViewDepartments = () => {
   const navigate = useNavigate();
@@ -31,6 +31,8 @@ const ViewDepartments = () => {
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
   React.useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -48,8 +50,28 @@ const ViewDepartments = () => {
             dataDepartments.message || responseDepartments.status
           );
         }
-        setDepartments(dataDepartments.data);
-
+        if (isMounted) {
+          setDepartments(dataDepartments.data);
+        }
+        const responseDepartmentMembers = await fetch(
+          `${process.env.REACT_APP_API}/hr/employees?department=${id}`,
+          getRequestOptions
+        );
+        const isJsonResponseDepartmentMembers =
+          responseDepartmentMembers.headers
+            ?.get("content-type")
+            ?.includes("application/json");
+        const dataDepartmentsMembers =
+          isJsonResponseDepartmentMembers &&
+          (await responseDepartmentMembers.json());
+        if (!responseDepartmentMembers.ok) {
+          throw new Error(
+            dataDepartmentsMembers.message || responseDepartmentMembers.status
+          );
+        }
+        if (isMounted) {
+          setDepartmentMembers(dataDepartmentsMembers.data);
+        }
         setLoading(false);
         setError(false);
         setMessage("");
@@ -57,11 +79,16 @@ const ViewDepartments = () => {
         setLoading(false);
         setError(true);
         setMessage(error.message || "Something went wrong");
+        setTimeout(() => {
+          fetchData();
+        }, 5000);
       }
     };
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
-  console.log(departments);
   React.useEffect(() => {
     const fetchData = async () => {
       try {

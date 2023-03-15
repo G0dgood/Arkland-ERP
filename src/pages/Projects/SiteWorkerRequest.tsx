@@ -30,6 +30,8 @@ const SiteWorkerRequest = () => {
   });
 
   React.useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
         setisLoading(true);
@@ -58,9 +60,14 @@ const SiteWorkerRequest = () => {
       }
     };
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+  const team: any = useAppSelector((state) => state.team.team);
+  const projects: any = useAppSelector((state) => state.projects.projects);
 
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
@@ -72,7 +79,9 @@ const SiteWorkerRequest = () => {
   };
 
   const header = [
-    { title: "FROM", prop: "team_lead" },
+    { title: "PROJECT", prop: "project" },
+    { title: "TEAM", prop: "team" },
+    { title: "TEAM LEAD", prop: "team_lead" },
     { title: "DATE SENT", prop: "created_at" },
     { title: "IS URGENT", prop: "is_urgent" },
     { title: "STATUS", prop: "status" },
@@ -105,7 +114,7 @@ const SiteWorkerRequest = () => {
           <div className="SiteWorkermaindivsub">
             <Button variant="contained" className="Add-btn" id="Add-btn-sub">
               <NavLink
-                to="/projectview"
+                to="/projects"
                 className="drop-logout"
                 id="white-btn-color"
               >
@@ -146,6 +155,12 @@ const SiteWorkerRequest = () => {
                 ) : (
                   requestWorkersList.map((item: any, i: any) => (
                     <tr className="data-table-row">
+                      <td className="table-datacell datatype-numeric">
+                        {checkForName(item.project, projects)}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {checkForName(item.team, team)}
+                      </td>
                       <td className="table-datacell datatype-numeric">
                         {checkForName(item.team_lead, teamLeads)}
                       </td>

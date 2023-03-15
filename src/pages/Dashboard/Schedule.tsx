@@ -35,6 +35,8 @@ const Schedule = () => {
   };
 
   React.useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -49,13 +51,14 @@ const Schedule = () => {
         if (!responseTasks.ok) {
           throw new Error(dataTasks.message || responseTasks.status);
         }
-        setTasks(dataTasks.data);
-        setLoading(false);
-        setError(false);
-        setMessage("");
+        if (isMounted) {
+          setTasks(dataTasks.data);
+          setLoading(false);
+          setError(false);
+          setMessage("");
+        }
       } catch (error: any) {
         setLoading(false);
-        // setError(true);
         setMessage(error.message || "Something went wrong");
         setTimeout(() => {
           fetchData();
@@ -63,6 +66,9 @@ const Schedule = () => {
       }
     };
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [taskAction]);
 
   const deleteTask = async (id: string) => {
