@@ -111,7 +111,11 @@ const ViewProject = () => {
         if (!responseProjectsTeamMembers.ok) {
           throw new Error(
             dataProjectsTeamMembers.message ||
+<<<<<<< HEAD
               responseProjectsTeamMembers.status
+=======
+            responseProjectsTeamMembers.status
+>>>>>>> 73cbdc7 (update)
           );
         }
         setTeamMembers(dataProjectsTeamMembers.data);

@@ -47,8 +47,9 @@ import TeamKPI from "./pages/kpi_assessment/TeamKPI";
 import DepartmentsView from "./pages/Departments/Departments";
 import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
 import KPIDetails from "./pages/kpi_assessment/KPIDetails";
-import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
+import ProjectView from "./pages/Projects/Project";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
+import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();

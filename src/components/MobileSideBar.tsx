@@ -9,6 +9,7 @@ import { GoFile } from "react-icons/go";
 import { AiOutlineBank } from "react-icons/ai";
 import { BsBriefcase, BsShield } from "react-icons/bs";
 import { BiSupport } from "react-icons/bi";
+import { MdOutlineAssessment } from "react-icons/md";
 const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
   const [width, setWidth] = useState(window.innerWidth);
   const updateDimensions = () => {
@@ -39,7 +40,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
             </div>
             <div className="sd-body">
               <div className="ul">
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/home"
@@ -54,7 +55,8 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                     <span className="icon-text"> Dashborad </span>
                   </NavLink>
                 </Nav>
-                <Nav className=" li mb-4">
+
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/kpiassessment"
@@ -69,7 +71,23 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                     <span className="icon-text"> KPI Assessment </span>
                   </NavLink>
                 </Nav>
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
+                  <NavLink
+                    className={
+                      window.location.pathname === "/teamkpi"
+                        ? "on-link "
+                        : "sd-link"
+                    }
+                    to="/teamkpi"
+                  >
+                    <span className="me-3">
+                      <MdOutlineAssessment size={20} />
+                    </span>
+                    <span className="icon-text">Team KPI </span>
+                  </NavLink>
+                </Nav>
+
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/weeklyreport"
@@ -85,7 +103,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                   </NavLink>
                 </Nav>
 
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/employees"
@@ -100,7 +118,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                     <span className="icon-text"> All Employees </span>
                   </NavLink>
                 </Nav>
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/departments"
@@ -116,7 +134,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                   </NavLink>
                 </Nav>
 
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/projects"
@@ -132,7 +150,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                   </NavLink>
                 </Nav>
 
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/leave"
@@ -147,7 +165,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                     <span className="icon-text"> Leave </span>
                   </NavLink>
                 </Nav>
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/support"
@@ -162,7 +180,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                     <span className="icon-text"> Support </span>
                   </NavLink>
                 </Nav>
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/policy"
@@ -177,7 +195,7 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                     <span className="icon-text"> Policy </span>
                   </NavLink>
                 </Nav>
-                <Nav className=" li mb-4">
+                <Nav className=" li mb-3">
                   <NavLink
                     className={
                       window.location.pathname === "/logout"

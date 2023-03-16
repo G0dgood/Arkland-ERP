@@ -59,11 +59,10 @@ const Login = () => {
         }
         resetForm(values);
         // set token in axios header
-        axios.defaults.headers.common["authorization"] = data.token;
+        axios.defaults.headers.common["authorization"] = data?.token;
         // set token in cookie
         Cookies.set("token", data.token);
         storage.set("user", JSON.stringify({ data }));
-        // localStorage.setItem("userinfo", JSON.stringify({ data }));
         // navigate("/home");
         window.location.replace("/home");
       })
