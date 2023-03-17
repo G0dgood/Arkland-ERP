@@ -19,9 +19,6 @@ const ViewKPAssessment = () => {
 	const [broughtDownAverage, setBroughtDownAverage] = useState<any>(0);
 
 
-
-
-
 	const gradeSystem = [
 		{ rate: 5, definition: "Outstanding" },
 		{ rate: 4, definition: "Very Good" },

@@ -114,11 +114,12 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 					<table className="main-table-content">
 						<thead className="data-table-header">
 							<tr className="data-table-row" >
+								<td className="table-datacell datatype-name">Full Name</td>
 								<td className="table-datacell datatype-numeric">Year</td>
 								<td className="table-datacell datatype-numeric">Month</td>
 								<td className="table-datacell datatype-numeric">Average</td>
 								<td className="table-datacell datatype-numeric">status</td>
-								<td className="table-datacell datatype-numeric">---</td>
+								<td className="table-datacell datatype-numeric">Action</td>
 
 							</tr>
 						</thead>
@@ -130,8 +131,21 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 							) : (
 								displayData?.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
+										<td className="table-datacell datatype-numeric"> {item?.employee_name}</td>
 										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
-										<td className="table-datacell datatype-numeric">{item?.month}</td>
+										<td className="table-datacell datatype-numeric">{
+											item?.month === 1 ? 'January' :
+												item?.month === 2 ? 'February' :
+													item?.month === 3 ? "March" :
+														item?.month === 4 ? "April" :
+															item?.month === 5 ? "May" :
+																item?.month === 6 ? "June" :
+																	item?.month === 7 ? "July" :
+																		item?.month === 8 ? "	August" :
+																			item?.month === 9 ? "September" :
+																				item?.month === 10 ? "October" :
+																					item?.month === 11 ? "November" :
+																						item?.month === 12 ? "December" : ''}</td>
 										<td className="table-datacell datatype-numeric">{item?.performance_percentage_employee}%</td>
 										<td className="table-datacell datatype-numeric">
 											<Button className={item?.status === 'active' ? "table-link-active" : "table-link"}>{item?.status === 'active' ? 'Completed' : item?.status}</Button>
