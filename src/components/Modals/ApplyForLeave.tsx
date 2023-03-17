@@ -2,16 +2,12 @@ import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core';
 import { MdOutlineClose } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from '../../hooks/userDispatch';
-// import { createLeave, reset } from '../../features/Leave/leaveSlice';
 import { fireAlert } from "../../utils/Alert";
+import Cookies from 'js-cookie';
 
 
 const ApplyForLeave = (props: any) => {
-	const dispatch = useAppDispatch();
 	const [lgShow, setLgShow] = useState(false);
-	// const { isError, isSuccess, isLoading, message } = useAppSelector((state: any) => state.leave);
-
 	const [inputs, setInputs] = useState({
 		start_date: "",
 		end_date: "",
@@ -19,36 +15,72 @@ const ApplyForLeave = (props: any) => {
 		leave_type: "",
 	})
 
+	const token = Cookies.get("token");
+	const [isError, setisError] = useState(false)
+	const [message, setMessage] = useState("");
+	const [isLoading, setisLoading] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
 
 
-	// const title = "Successful";
-	// const html = message;
-	// const icon = "success";
-	// const title1 = "Leave error";
-	// const html1 = message;
-	// const icon1 = "error";
+	const handleLeave = () => {
+		setisLoading(true);
+		fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+			body: JSON.stringify(inputs),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data?.success === false) {
+					setMessage(data?.message)
+					setisError(true)
+				} else {
+					console.log('data', data)
+					setisSuccess(true)
+				}
+				setisLoading(false);
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				setisLoading(false);
+			});
+	}
 
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		// fireAlert(title, html, icon);
-	// 		setTimeout(() => {
-	// 			dispatch(reset());
-	// 		}, 2000);
-	// 		setLgShow(false)
-	// 	} else if (isError) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		setTimeout(() => {
-	// 			dispatch(reset());
-	// 		}, 10000);
-	// 	}
 
-	// }, [dispatch, html, title, icon, isSuccess, isError, html1]);
+	const title = "Successful";
+	const html = "Leave Created!";
+	const icon = "success";
+	const title1 = "Leave error";
+	const html1 = message;
+	const icon1 = "error";
 
-	// const handelCreate = async () => {
-	// 	// @ts-ignore
-	// 	dispatch(createLeave(inputs));
 
-	// };
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+				setMessage("")
+			}, 5000);
+			setLgShow(false)
+		} else if (isError) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError(false)
+				setMessage("")
+				setInputs({
+					start_date: "",
+					end_date: "",
+					description: "",
+					leave_type: "",
+				})
+			}, 5000);
+		}
+	}, [html, html1, isError, isSuccess])
+
 
 
 	const handleOnChange = (input: any, value: any) => {
@@ -68,9 +100,9 @@ const ApplyForLeave = (props: any) => {
 				size="lg"
 				show={lgShow}
 				aria-labelledby="contained-modal-title-vcenter"
-				centered
-			>
+				centered>
 				<Modal.Header  >
+
 					<span>
 
 					</span>
@@ -114,8 +146,8 @@ const ApplyForLeave = (props: any) => {
 								onChange={(e) => handleOnChange("description", e.target.value)} />
 						</div>
 						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal"  >
-								{/* {isLoading ? <Spinner animation="border" /> : "APPLY"} */}
+							<Button variant="contained" className="Add-btn-modal" onClick={handleLeave}>
+								{isLoading ? <Spinner animation="border" /> : "APPLY"}
 							</Button>
 						</div>
 					</div>

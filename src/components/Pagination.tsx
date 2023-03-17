@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 
 const Pagination = ({ data, setDisplayData, entriesPerPage, Total }: any) => {
+
   // --- Pagination --- //
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = parseInt(entriesPerPage);

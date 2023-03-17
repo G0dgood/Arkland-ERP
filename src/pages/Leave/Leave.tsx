@@ -7,49 +7,19 @@ import Header from '../../components/Header';
 import ApplyForLeave from '../../components/Modals/ApplyForLeave';
 import Sidebar from '../../components/Sidebar';
 import ViewLeave from './ViewLeave';
-import { useAppDispatch, useAppSelector } from '../../hooks/userDispatch';
-import { getCreateLeave, reset } from '../../features/Leave/leaveSlice';
 import { fireAlert } from '../../utils/Alert';
+import Cookies from 'js-cookie';
+import storage from '../../utils/storage';
+import Pagination from '../../components/Pagination';
+import { NoRecordFound, TableFetch } from '../../components/TableOptions';
+import TableLoader from '../../components/TableLoader';
+import moment from 'moment';
 
 const Leave = () => {
-	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	// const { isSuccess } = useAppSelector((state: any) => state.leave);
-	// const { dataall,
-	// 	isErrorall,
-	// 	isSuccessall,
-	// 	isLoadingall,
-	// 	messageall,
-	// 	errorall } = useAppSelector((state: any) => state.leave);
-
-
-
-	const title = "Leave created successfully";
-	const html = `Leave created`;
-	const icon = "success";
-
-	// const userInfo = localStorage.getItem('user')
-	// // @ts-ignore
-	// const userInfo: string = JSON.parse(localStorage.getItem("user"));
-
-
-	// console.log('data', data, "isError",
-	// 	isError,
-	// 	'isSuccess',
-	// 	isSuccess,
-	// 	'isLoading',
-	// 	isLoading,
-	// 	'message',
-	// 	message,
-	// 	'error',
-	// 	error)
-
-
-
-	// useEffect(() => {
-	// 	dispatch(getCreateLeave());
-	// }, [dispatch]);
+	// @ts-ignore
+	const userInfo: any = JSON.parse(storage?.get("user"));
 
 
 	// useEffect(() => {
@@ -88,6 +58,100 @@ const Leave = () => {
 
 	const [showLeave, setShowLeaver] = useState(false)
 
+
+	const token = Cookies.get("token");
+	const [data, setData] = useState<any>([]);
+	const [isError, setisError] = useState(false)
+	const [message, setMessage] = useState("");
+	const [isLoading, setisLoading] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
+	const [sortData, setSortData] = useState([]);
+	console.log('sortData', sortData)
+
+	// const handleLeave = () => {
+	// 	setisLoading(true);
+	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
+	// 		method: "POST", // or 'PUT'
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			Authorization: `Bearer ${token}`
+	// 		},
+	// 	})
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			if (data?.success === false) {
+	// 				setMessage(data?.message)
+	// 				setisError(true)
+	// 			} else {
+	// 				setData(data?.data)
+	// 				setisSuccess(true)
+	// 			}
+	// 			setisLoading(false);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("Error:", error);
+	// 			setisLoading(false);
+	// 		});
+	// }
+
+
+
+	useEffect(() => {
+		setisLoading(true);
+		fetch(`${process.env.REACT_APP_API}/hr/leaves?employee=${userInfo?.data?.employee?._id}`, {
+			method: "GET", // or 'PUT'
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data?.success === false) {
+					setMessage(data?.message)
+					setisError(true)
+				} else {
+					setData(data?.data)
+					setSortData(data?.data?.data)
+					console.log('data-data', data)
+				}
+				setisLoading(false);
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				setisLoading(false);
+			});
+	}, [token, userInfo?.data?.employee?._id])
+
+
+	// console.log('token', token)
+
+	const title = "Successful";
+	const html = message;
+	const icon = "success";
+	const title1 = "Leave error";
+	const html1 = message;
+	const icon1 = "error";
+
+
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+				setMessage("")
+			}, 5000);
+		} else if (isError) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError(false)
+				setMessage("")
+			}, 5000);
+		}
+	}, [html, html1, isError, isSuccess])
+
+	const [displayData, setDisplayData] = useState([]);
+
 	return (
 		<div id="screen-wrapper">
 			<Header toggleSideNav={toggleSideNav} />
@@ -122,7 +186,7 @@ const Leave = () => {
 				</div>
 
 				<section className="md-ui component-data-table">
-
+					{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 					<div className="main-table-wrapper">
 						<table className="main-table-content">
 							<thead className="data-table-header  " >
@@ -133,34 +197,47 @@ const Leave = () => {
 									<td className="table-datacell datatype-numeric">HOD Approval</td>
 									<td className="table-datacell datatype-numeric">HR Approval</td>
 									<td className="table-datacell datatype-numeric">Final Approval</td>
-									<td className="table-datacell datatype-numeric">View</td>
 									<td className="table-datacell datatype-numeric">Status</td>
+									<td className="table-datacell datatype-numeric">View</td>
 								</tr>
 							</thead>
 							<tbody className="data-table-content">
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Frozen yogurt</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"red"} className="icon-bold" />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn-error">
-											Not Approved
-										</Button>
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update" onClick={() => setShowLeaver(true)} >View</Button></td>
+								{
+									isLoading ? (
+										<TableFetch colSpan={8} />
+									) : displayData?.length === 0 || displayData == null ? (
+										<NoRecordFound colSpan={8} />
+									) : (displayData?.map((item: any, i: any) => (
+										<tr className="data-table-row" key={i}>
+											<td className="table-datacell datatype-string">{item?.type}</td>
+											<td className="table-datacell datatype-numeric">{moment(item?.start_date).format("DD-MM-YYYY")}</td>
+											<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
+											<td className="table-datacell datatype-numeric">
+												{item?.hod_approved ?
+													<BsCheckCircle size={25} color={"green"} /> :
+													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
 
-								</tr>
-								<tr className="data-table-row">
+											</td>
+											<td className="table-datacell datatype-numeric">
+												{item?.hr_approved ?
+													<BsCheckCircle size={25} color={"green"} /> :
+													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+											</td>
+											<td className="table-datacell datatype-numeric">
+												{item?.finally_approved ?
+													<BsCheckCircle size={25} color={"green"} /> :
+													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+											</td>
+											<td className="table-datacell datatype-numeric">
+												<Button variant="outlined" id="leave-status-btn-error">
+													Not Approved
+												</Button>
+											</td>
+											<td className="table-datacell datatype-numeric">
+												<Button id="team-applicatiom-update" onClick={() => setShowLeaver(true)} >View</Button></td>
+										</tr>
+									)))}
+								{/* <tr className="data-table-row">
 									<td className="table-datacell datatype-string">Ice cream sandwich</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
@@ -181,8 +258,8 @@ const Leave = () => {
 
 									<td className="table-datacell datatype-numeric">
 										<Button id="team-applicatiom-update">View</Button></td>
-								</tr>
-								<tr className="data-table-row">
+								</tr> */}
+								{/* <tr className="data-table-row">
 									<td className="table-datacell datatype-string">Eclair</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
@@ -203,8 +280,8 @@ const Leave = () => {
 
 									<td className="table-datacell datatype-numeric">
 										<Button id="team-applicatiom-update">View</Button></td>
-								</tr>
-								<tr className="data-table-row">
+								</tr> */}
+								{/* <tr className="data-table-row">
 									<td className="table-datacell datatype-string">Cupcake</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
 									<td className="table-datacell datatype-numeric">31-08-2022</td>
@@ -355,13 +432,21 @@ const Leave = () => {
 									</td>
 									<td className="table-datacell datatype-numeric">
 										<Button id="team-applicatiom-update">View</Button></td>
-								</tr>
+								</tr> */}
 							</tbody>
 						</table>
 					</div>
 
 				</section>
 				<ViewLeave showLeave={showLeave} setShowLeaver={setShowLeaver} />
+				<footer className="main-table-footer">
+					<Pagination
+						setDisplayData={setDisplayData}
+						data={sortData}
+						entriesPerPage={entriesPerPage}
+						Total={"Leave"}
+					/>
+				</footer>
 			</main>
 		</div>
 	)
