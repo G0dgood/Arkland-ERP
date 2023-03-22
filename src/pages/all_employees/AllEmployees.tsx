@@ -17,50 +17,59 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-import { useAppSelector } from "../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { checkForName } from "../../utils/checkForName";
-import { getRequestOptions } from "../../utils/auth/header";
+import { getRoles } from "../../store/reducers/roles";
+import { getDepartment } from "../../store/reducers/department";
+import { useEmployees } from "../../hooks/useEmployees";
 
 const AllEmployees = () => {
   const navigate = useNavigate();
-
-  const [employees, setEmployees] = useState([] as any);
+  const dispatch = useAppDispatch();
+  const { employees, isLoading, error, message } = useEmployees();
+  const roles: any = useAppSelector((state) => state?.roles?.roles);
+  const departments: any = useAppSelector(
+    (state) => state?.department?.department
+  );
   const [sortData, setSortData] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
-  const [isLoading, setisLoading] = useState(false);
-  const [error, setError] = useState<any>();
-  const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
-
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
+  const toggleSideNav = () => {
+    setCollapseNav(!collapseNav);
+  };
+
   useEffect(() => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
 
-  const roles: any = useAppSelector((state) => state?.roles?.roles);
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
+  useEffect(() => {
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+    localStorage.setItem("collapse", JSON.stringify(collapseNav));
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+  }, [collapseNav]);
 
-  const [displayData, setDisplayData] = useState([]);
+  React.useEffect(() => {
+    if (
+      !roles ||
+      roles.length === 0 ||
+      !departments ||
+      departments.length === 0
+    ) {
+      dispatch(getDepartment());
+      dispatch(getRoles());
+    }
+  }, [dispatch, roles, departments]);
 
   const header = [
     { title: "EMPLOYEE ID", prop: "employee_id" },
@@ -69,46 +78,9 @@ const AllEmployees = () => {
     { title: "ROLE", prop: "role" },
     { title: "DEPARTMENT", prop: "department" },
     { title: "CATEGORY", prop: "category" },
-    // { title: "ACTIVE USER", prop: "active_user" },
+    { title: "STATUS", prop: "status" },
     { title: "ACTIONS", prop: "actions" },
   ];
-  React.useEffect(() => {
-    let isMounted = true;
-    const fetchData = async () => {
-      try {
-        setisLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/employees`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
-        }
-        if (isMounted) {
-          setEmployees(data.data);
-          setisLoading(false);
-          setError(false);
-          setMessage("");
-        }
-      } catch (error: any) {
-        setisLoading(false);
-        setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 5000);
-      }
-    };
-    fetchData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   return (
     <div id="screen-wrapper">
@@ -142,7 +114,6 @@ const AllEmployees = () => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
-                    // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee
@@ -219,6 +190,9 @@ const AllEmployees = () => {
                           </td>
                           <td className="table-datacell datatype-numeric">
                             {item?.category}
+                          </td>
+                          <td className="table-datacell datatype-numeric">
+                            {item?.status}
                           </td>
                           <td className="table-datacell datatype-numeric">
                             <div className="table-active-items">

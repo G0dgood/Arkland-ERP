@@ -9,22 +9,19 @@ import { MdOutlineClose } from "react-icons/md";
 import { Form, Formik } from "formik";
 import InputField from "../../components/Inputs/InputField";
 import ReactSelectField from "../../components/Inputs/ReactSelectField";
-import { getRequestOptions } from "../../utils/auth/header";
 import { fireAlert } from "../../utils/Alert";
 import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
 import { useAppSelector } from "../../hooks/useDispatch";
+import useFetchTasks from "../../hooks/useSchedule";
 
 const Schedule = () => {
   const token = Cookies.get("token");
-
-  const [isLoading, setLoading] = React.useState(false);
-  const [tasks, setTasks] = React.useState({} as any);
   const [taskAction, setTaskAction] = React.useState({} as any);
-  const [error, setError] = React.useState<any>();
-  const [message, setMessage] = React.useState("");
   const [taskCreateShow, setTaskCreateShow] = React.useState(false);
+  const { tasks, isLoading, error, message, setLoading } =
+    useFetchTasks(taskAction);
 
   const override: CSSProperties = {
     display: "block",
@@ -33,43 +30,6 @@ const Schedule = () => {
     width: "99.8%",
     borderRadius: "50px",
   };
-
-  React.useEffect(() => {
-    let isMounted = true;
-
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const responseTasks = await fetch(
-          `${process.env.REACT_APP_API}/tasks`,
-          getRequestOptions
-        );
-        const isJsonResponseTasks = responseTasks.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const dataTasks = isJsonResponseTasks && (await responseTasks.json());
-        if (!responseTasks.ok) {
-          throw new Error(dataTasks.message || responseTasks.status);
-        }
-        if (isMounted) {
-          setTasks(dataTasks.data);
-          setLoading(false);
-          setError(false);
-          setMessage("");
-        }
-      } catch (error: any) {
-        setLoading(false);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 5000);
-      }
-    };
-    fetchData();
-    return () => {
-      isMounted = false;
-    };
-  }, [taskAction]);
 
   const deleteTask = async (id: string) => {
     setLoading(true);
@@ -148,11 +108,13 @@ const Schedule = () => {
         label: employee?.full_name,
       })
     );
+
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">
         <div className="main-todo-title">
-          <h4>Upcoming Schedule</h4> <span>Today, 21 Jun 2022</span>
+          <h4>Upcoming Schedule</h4>
+          <span>Today, {moment(Date.now()).format("DD-MMMM-YYYY")}</span>
         </div>
 
         {isLoading === true ? (
@@ -191,15 +153,16 @@ const Schedule = () => {
                           }}
                         >
                           <div>
-                            {item.title} on{" "}
+                            {item.title} due by{" "}
                             {moment(item?.expected_completion_date).format(
                               "DD-MMMM-YYYY"
                             )}{" "}
                           </div>
 
                           <div className="main-todo-input-time">
-                            {" "}
-                            {tasks.length > 0 ? item.notes[0]?.text : ""}
+                            {tasks && tasks.length > 0
+                              ? item.notes[0]?.text
+                              : ""}
                           </div>
                         </div>
                       </div>

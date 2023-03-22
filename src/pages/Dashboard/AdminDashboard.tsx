@@ -62,7 +62,7 @@ const AdminDashboard = () => {
               {/* <p className="Avg-data">120 Men</p>
               <p className="Avg-data">96 Women</p> */}
             </div>
-            <div>
+            {/* <div>
               <div className="Average-container-card-view">
                 <img src={imgs} alt="Average" className="graph-img" />
               </div>
@@ -71,7 +71,7 @@ const AdminDashboard = () => {
                   +2% Past month
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <AdminAnnouncement />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, CSSProperties } from "react";
+import { useEffect, useState, CSSProperties } from "react";
 import { Button } from "@mui/material";
 import {
   Chart,
@@ -18,7 +18,6 @@ import { Modal, Toast } from "react-bootstrap";
 import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
-import Cookies from "js-cookie";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectAvatar from "../../assets/vectors/project-avatar.svg";
@@ -32,27 +31,15 @@ import InputField from "../../components/Inputs/InputField";
 import ReactSelectField from "../../components/Inputs/ReactSelectField";
 import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
-import { fireAlert } from "../../utils/Alert";
-import { getRequestOptions } from "../../utils/auth/header";
 import { difficultyOptions, priorityOptions } from "../../functions/helpers";
+import { useProjectById } from "../../hooks/useProjects";
 
 const ViewProject = () => {
-  const { id }: any = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const token = Cookies.get("token");
 
-  const [taskCreateShow, setTaskCreateShow] = useState(false);
   const [value, onChange] = useState(new Date());
-  const [projects, setProjects] = React.useState({} as any);
-  const [projectsTasks, setProjectsTasks] = React.useState({} as any);
-  const [teamMembers, setTeamMembers] = React.useState([] as any);
-  const [isLoading, setLoading] = React.useState(false);
-  const [isTeamLoading, setTeamLoading] = React.useState(false);
-  const [isProjectTasksLoading, setProjectTasksLoading] = React.useState(false);
-  const [error, setError] = useState<any>();
-  const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const [newTaskCreated, setNewTaskCreated] = React.useState(false);
 
   const override: CSSProperties = {
     display: "block",
@@ -61,152 +48,25 @@ const ViewProject = () => {
     width: "99.8%",
     borderRadius: "50px",
   };
+  const {
+    projects,
+    projectsTasks,
+    teamMembers,
+    isLoading,
+    error,
+    message,
+    isProjectTasksLoading,
+    taskCreateShow,
+    isTeamLoading,
+    setTaskCreateShow,
+    deleteTask,
+    handleSubmit,
+  } = useProjectById(id ? id : "");
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const responseProjects = await fetch(
-          `${process.env.REACT_APP_API}/hr/projects/${id}`,
-          getRequestOptions
-        );
-        const isJsonResponseProjects = responseProjects.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const dataProjects =
-          isJsonResponseProjects && (await responseProjects.json());
-        if (!responseProjects.ok) {
-          throw new Error(dataProjects.message || responseProjects.status);
-        }
-        setProjects(dataProjects.data);
-        const urlForTeamMembers = `${process.env.REACT_APP_API}/hr/teams/${dataProjects.data.team}/employees`;
-
-        const responseProjectsTasks = await fetch(
-          `${process.env.REACT_APP_API}/tasks?project=${id}`,
-          getRequestOptions
-        );
-        const isJsonResponseProjectsTasks = responseProjectsTasks.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const dataProjectsTasks =
-          isJsonResponseProjectsTasks && (await responseProjectsTasks.json());
-        if (!responseProjectsTasks.ok) {
-          throw new Error(
-            dataProjectsTasks.message || responseProjectsTasks.status
-          );
-        }
-        setProjectsTasks(dataProjectsTasks.data);
-
-        const responseProjectsTeamMembers = await fetch(
-          urlForTeamMembers,
-          getRequestOptions
-        );
-        const isJsonResponseProjectsTeamMembers =
-          responseProjectsTeamMembers.headers
-            ?.get("content-type")
-            ?.includes("application/json");
-        const dataProjectsTeamMembers =
-          isJsonResponseProjectsTeamMembers &&
-          (await responseProjectsTeamMembers.json());
-        if (!responseProjectsTeamMembers.ok) {
-          throw new Error(
-            dataProjectsTeamMembers.message ||
-<<<<<<< HEAD
-              responseProjectsTeamMembers.status
-=======
-            responseProjectsTeamMembers.status
->>>>>>> 73cbdc7 (update)
-          );
-        }
-        setTeamMembers(dataProjectsTeamMembers.data);
-
-        setLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setLoading(false);
-        // setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 2000);
-      }
-    };
-    fetchData();
-  }, [id, newTaskCreated]);
-
-  const handleNewTaskCreated = () => {
-    setNewTaskCreated(!newTaskCreated);
+  const handleDeleteTask = (taskId: string) => {
+    deleteTask(taskId);
   };
 
-  const deleteTask = async (id: string) => {
-    setProjectTasksLoading(true);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API}/tasks/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setProjectTasksLoading(false);
-      if (response.ok) {
-        const title = "Task deleted.";
-        const html = `Task deleted`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setProjectTasksLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Task deletion failed";
-      fireAlert(title, html, icon);
-    }
-  };
-
-  const handleSubmit = async (values: any, { resetForm }: any) => {
-    setProjectTasksLoading(true);
-    console.log("values", values);
-    const getProjectId = { project: id };
-
-    const createTaskValues = { ...values, ...getProjectId };
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API}/tasks`, {
-        method: "POST",
-        body: JSON.stringify(createTaskValues),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Task created successfully.";
-        const html = `Task created`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        handleNewTaskCreated();
-        setTaskCreateShow(false);
-        resetForm(values);
-        setProjectTasksLoading(false);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Task creation failed";
-      fireAlert(title, html, icon);
-    }
-  };
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -280,7 +140,7 @@ const ViewProject = () => {
                     src={projectBack}
                     alt="User"
                     className="project-back-img"
-                    onClick={() => navigate("/projects")}
+                    onClick={() => navigate(-1)}
                   />
                   <img
                     src={projectAvatar}
@@ -702,7 +562,7 @@ const ViewProject = () => {
                                   <div className="FiTrash2">
                                     <FiTrash2
                                       size={25}
-                                      onClick={() => deleteTask(item?.id)}
+                                      onClick={() => handleDeleteTask(item?.id)}
                                     />
                                   </div>
                                 </div>

@@ -49,6 +49,7 @@ import ProjectView from "./pages/Projects/Project";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
 import { getProjects } from "./store/reducers/project";
+import { getTasks } from "./store/reducers/tasks";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();

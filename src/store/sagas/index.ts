@@ -3,12 +3,14 @@ import { GET_DEPARTMENT } from "../reducers/department";
 import { GET_EMPLOYEES } from "../reducers/employees";
 import { GET_PROJECTS } from "../reducers/project";
 import { GET_ROLES } from "../reducers/roles";
+import { GET_TASKS } from "../reducers/tasks";
 import { GET_TEAM } from "../reducers/team";
 import { GET_TEAM_LEADS } from "../reducers/teamLeads";
 import { handleGetDepartments } from "./handlers/department";
 import { handleGetEmployees } from "./handlers/employees";
 import { handleGetProjects } from "./handlers/project";
 import { handleGetRoles } from "./handlers/roles";
+import { handleGetTasks } from "./handlers/tasks";
 import { handleGetTeam } from "./handlers/team";
 import { handleGetTeamLeads } from "./handlers/teamLeads";
 
@@ -20,5 +22,6 @@ export function* saga() {
     takeLatest(GET_TEAM, handleGetTeam),
     takeLatest(GET_TEAM_LEADS, handleGetTeamLeads),
     takeLatest(GET_PROJECTS, handleGetProjects),
+    takeLatest(GET_TASKS, handleGetTasks),
   ]);
 }
