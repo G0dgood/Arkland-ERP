@@ -10,46 +10,12 @@ import { Button } from "@material-ui/core";
 import { Toast } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
 import { getRequestOptions } from "../../utils/auth/header";
+import useAnnouncements from "../../hooks/useAnnouncements";
 
 const AdminAnnouncement = () => {
-  const [announcements, setannouncements] = React.useState({} as any);
-  const [isLoading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<any>();
-  const [message, setMessage] = React.useState("");
+  const { announcements, isLoading, error, message } = useAnnouncements();
   const [showToast, setShowToast] = React.useState(false);
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const responseannouncements = await fetch(
-          `${process.env.REACT_APP_API}/hr/announcements`,
-          getRequestOptions
-        );
-        const isJsonResponseannouncements = responseannouncements.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const dataProjects =
-          isJsonResponseannouncements && (await responseannouncements.json());
-        if (!responseannouncements.ok) {
-          throw new Error(dataProjects.message || responseannouncements.status);
-        }
-        setannouncements(dataProjects.data);
-
-        setLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setLoading(false);
-        // setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 5000);
-      }
-    };
-    fetchData();
-  }, []);
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
@@ -85,8 +51,7 @@ const AdminAnnouncement = () => {
           <span>{/* <p>Today, 21 Jun 2022</p> */}</span>
         </div>
         <div>
-          <p>Today, 21 Jun 2022</p>
-          {/* <CreateAnnouncementModal /> */}
+          <p>Today, {moment(Date.now()).format("DD-MMMM-YYYY")}</p>
         </div>
       </div>
 

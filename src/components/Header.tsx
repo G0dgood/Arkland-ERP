@@ -14,7 +14,6 @@ import MobileSideBar from "./MobileSideBar";
 import { useAppSelector } from "../hooks/useDispatch";
 
 const Header = ({ toggleSideNav }: any) => {
-
   // @ts-ignore
   const userInfo: any = JSON.parse(storage?.get("user"));
 
@@ -29,9 +28,9 @@ const Header = ({ toggleSideNav }: any) => {
       .catch((err) => {
         console.log(err);
       });
-    window.location.replace("/");
     await Cookies.remove("token");
     await storage.remove("user");
+    window.location.replace("/");
     window.location.reload();
   };
 
@@ -45,14 +44,12 @@ const Header = ({ toggleSideNav }: any) => {
     }
   }, [network]);
 
-
   const [isOpen, setIsopen] = useState(false);
   const [hideNav, setHideNav] = useState<any>(false);
 
   const ToggleSidebar = () => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
   };
-
 
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)}>
@@ -67,15 +64,21 @@ const Header = ({ toggleSideNav }: any) => {
       />
       <div className="header-container">
         <div className="header-left">
-          <TfiAlignJustify className="mobileSidebarbtn" size={25} onClick={toggleSideNav} />
-          <TfiAlignJustify className="mobileSidebarbtntwo" size={25} onClick={ToggleSidebar} />
+          <TfiAlignJustify
+            className="mobileSidebarbtn"
+            size={25}
+            onClick={toggleSideNav}
+          />
+          <TfiAlignJustify
+            className="mobileSidebarbtntwo"
+            size={25}
+            onClick={ToggleSidebar}
+          />
 
           <div className="header-logo">
             <img src={logo} alt="ASL" />
           </div>
-          <span className="header-logo-text">
-            {/* Line Manager */}
-          </span>
+          <span className="header-logo-text">{/* Line Manager */}</span>
           <span className="header-logo-text1">
             {userInfo?.data?.employee?.email}
           </span>
@@ -113,7 +116,11 @@ const Header = ({ toggleSideNav }: any) => {
           )}
         </div>
       </div>
-      <MobileSideBar ToggleSidebar={ToggleSidebar} isOpen={isOpen} setHideNav={setHideNav} />
+      <MobileSideBar
+        ToggleSidebar={ToggleSidebar}
+        isOpen={isOpen}
+        setHideNav={setHideNav}
+      />
     </div>
   );
 };

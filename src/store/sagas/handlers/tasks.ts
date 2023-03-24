@@ -1,22 +1,23 @@
 import { AxiosResponse } from "axios";
 import { call, put, delay } from "redux-saga/effects";
-import { setEmployees } from "../../reducers/employees";
-import { requestGetEmployees } from "../request/employees";
+import { setTasks } from "../../reducers/tasks";
+import { requestGetTasks } from "../request/tasks";
 
-export function* handleGetEmployees(action: any) {
+export function* handleGetTasks(action: any) {
   let reRun = false;
   let retryCount = 0;
-  const maxRetries = 5;
+  const maxRetries = 3;
   const retryTimeout = 2000;
+
   while (retryCount < maxRetries) {
     try {
-      const response: AxiosResponse = yield call(requestGetEmployees);
+      const response: AxiosResponse = yield call(requestGetTasks);
       const { data } = response ?? {};
       if (data === undefined) {
         throw new Error("Data not received");
       }
-      yield put({ type: "EMPLOYEES_FETCH_SUCCESS", payload: response });
-      yield put(setEmployees(data?.data));
+      yield put({ type: "TASKS_FETCH_SUCCESS", payload: response });
+      yield put(setTasks(data?.data));
       return;
     } catch (error) {
       console.log(error);
@@ -27,8 +28,8 @@ export function* handleGetEmployees(action: any) {
       }
     }
     yield put({
-      type: "EMPLOYEES_FETCH_ERROR",
-      payload: "Failed to fetch employees",
+      type: "TASKS_FETCH_ERROR",
+      payload: "Failed to fetch tasks.",
     });
   }
 }

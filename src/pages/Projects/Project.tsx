@@ -1,31 +1,24 @@
-import React, { useEffect, useState, CSSProperties } from "react";
+import { useEffect, useState, CSSProperties } from "react";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { BsExclamationLg, BsPlusLg } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
 import { ProgressBar, Toast } from "react-bootstrap";
 import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
+import { FaTimes } from "react-icons/fa";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
-import { useAppDispatch } from "../../hooks/useDispatch";
-import { getTeamLeads } from "../../store/reducers/teamLeads";
-import { FaTimes } from "react-icons/fa";
-import { getRequestOptions } from "../../utils/auth/header";
-import { getRoles } from "../../store/reducers/roles";
+import { useProjects } from "../../hooks/useProjects";
 
 const ProjectView = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isLoading, setisLoading] = useState(false);
-  const [projects, setProjects] = useState([] as any);
-  const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const [error, setError] = useState<any>();
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
+  const { projects, isLoading, error, message } = useProjects();
 
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
@@ -36,42 +29,6 @@ const ProjectView = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setisLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/projects`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
-        }
-        setProjects([...data.data]);
-        setisLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setisLoading(false);
-        // setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 5000);
-      }
-    };
-    fetchData();
-  }, []);
-
-  React.useEffect(() => {
-    dispatch(getTeamLeads());
-    dispatch(getRoles());
-  }, [dispatch]);
 
   const override: CSSProperties = {
     display: "block",

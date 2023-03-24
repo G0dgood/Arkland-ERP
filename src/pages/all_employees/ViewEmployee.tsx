@@ -1,25 +1,27 @@
 import React, { CSSProperties } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
-import { getRequestOptions } from "../../utils/auth/header";
 import { SyncLoader } from "react-spinners";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectBack from "../../assets/vectors/project-back.svg";
+import { useEmployeeById } from "../../hooks/useEmployees";
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+  width: "99.8%",
+  borderRadius: "50px",
+};
+interface Params {
+  id: string;
+}
 const ViewEmployee = () => {
-  const { id }: any = useParams();
   const navigate = useNavigate();
-  const [isLoading, setLoading] = React.useState(false);
-  const [employee, setEmployee] = React.useState({} as any);
-  const [error, setError] = React.useState<any>();
-  const [message, setMessage] = React.useState("");
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
-  };
+  const { id } = useParams<{ id: string }>();
+  const { employee, salary, isLoading } = useEmployeeById(id ? id : "");
+
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = React.useState(() => {
     // @ts-ignore
@@ -33,37 +35,7 @@ const ViewEmployee = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/employees/${id}`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
-        }
-        setEmployee(data.data);
 
-        setLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setLoading(false);
-        // setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 5000);
-      }
-    };
-    fetchData();
-  }, [id]);
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
@@ -91,7 +63,7 @@ const ViewEmployee = () => {
                     src={projectBack}
                     alt="User"
                     className="project-back-img"
-                    onClick={() => navigate("/employees")}
+                    onClick={() => navigate(-1)}
                     title="Return"
                   />
                   <h4 style={{ marginTop: "3rem" }}>Review Employee Details</h4>
@@ -106,11 +78,7 @@ const ViewEmployee = () => {
                       <div className="getjob-application-details">
                         <p>Full Name</p>
                         <p>
-                          {`${employee?.first_name},` +
-                            " " +
-                            employee?.middle_name +
-                            " " +
-                            employee?.last_name}
+                          <p>{employee?.full_name}</p>
                         </p>
                         <p>Email</p>
                         <p>{employee?.personal_email}</p>
@@ -197,21 +165,21 @@ const ViewEmployee = () => {
                         <p>Bank Account Name</p>
                         <p>{employee?.bank_account_name} </p>
                         <p> Basic Salary</p>
-                        <p> ₦ {employee?.basic_salary}</p>
+                        <p> ₦ {salary?.basic_salary}</p>
                         <p> Meal Allowance</p>
-                        <p> ₦ {employee?.meal_allowance}</p>
+                        <p> ₦ {salary?.meal_allowance}</p>
                       </div>
                     </div>
                     <div>
                       <div className="getjob-application-details">
                         <p> Medical Allowance</p>
-                        <p> ₦ {employee?.medical_allowance}</p>
+                        <p> ₦ {salary?.medical_allowance}</p>
                         <p> Housing Allowance</p>
-                        <p>₦ {employee?.housing_allowance}</p>
+                        <p>₦ {salary?.housing_allowance}</p>
                         <p> Transportation Allowance</p>
-                        <p>₦ {employee?.transportation_allowance} </p>
+                        <p>₦ {salary?.transportation_allowance} </p>
                         <p> Utility Allowance</p>
-                        <p>₦ {employee?.utility_allowance}</p>
+                        <p>₦ {salary?.utility_allowance}</p>
                       </div>
                     </div>
                   </div>

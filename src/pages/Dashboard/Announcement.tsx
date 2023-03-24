@@ -15,6 +15,8 @@ const Announcement = () => {
     React.useState(false);
 
   React.useEffect(() => {
+    let isMounted = true;
+    let retryCount = 0;
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -30,21 +32,27 @@ const Announcement = () => {
         if (!responseAnnouncements.ok) {
           throw new Error(dataProjects.message || responseAnnouncements.status);
         }
-        setAnnouncements(dataProjects.data);
-
-        setLoading(false);
-        setError(false);
-        setMessage("");
+        if (isMounted) {
+          setAnnouncements(dataProjects.data);
+          setLoading(false);
+          setError(false);
+          setMessage("");
+        }
       } catch (error: any) {
         setLoading(false);
-        // setError(true);
-        setTimeout(() => {
-          fetchData();
-        }, 3000);
         setMessage(error.message || "Something went wrong");
+        if (retryCount < 5) {
+          setTimeout(() => {
+            retryCount++;
+            fetchData();
+          }, 5000);
+        }
       }
     };
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [newAnnouncementCreated]);
   const handleNewAnnouncementCreated = () => {
     setNewAnnouncementCreated(!newAnnouncementCreated);

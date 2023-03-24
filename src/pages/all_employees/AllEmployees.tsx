@@ -5,8 +5,10 @@ import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
 import { FiEdit, FiLock } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
+import { Toast } from "react-bootstrap";
+import { FaTimes } from "react-icons/fa";
 import Pagination from "../../components/Pagination";
+import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import TableLoader from "../../components/TableLoader";
 import {
@@ -16,101 +18,68 @@ import {
   TableFetch,
 } from "../../components/TableOptions";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { getDepartment } from "../../store/reducers/department";
-import { getRoles } from "../../store/reducers/roles";
 import { checkForName } from "../../utils/checkForName";
-import { Toast } from "react-bootstrap";
-import { FaTimes } from "react-icons/fa";
-import { getRequestOptions } from "../../utils/auth/header";
-import { getEmployees } from "../../store/reducers/employees";
+import { getRoles } from "../../store/reducers/roles";
+import { getDepartment } from "../../store/reducers/department";
+import { useEmployees } from "../../hooks/useEmployees";
 
 const AllEmployees = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  React.useEffect(() => {
-    dispatch(getDepartment());
-    dispatch(getRoles());
-    dispatch(getEmployees());
-  }, [dispatch]);
-
-  const [employees, setEmployees] = useState([] as any);
+  const { employees, isLoading, error, message } = useEmployees();
+  const roles: any = useAppSelector((state) => state?.roles?.roles);
+  const departments: any = useAppSelector(
+    (state) => state?.department?.department
+  );
   const [sortData, setSortData] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
-  const [isLoading, setisLoading] = useState(false);
-  const [error, setError] = useState<any>();
-  const [message, setMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setisLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/employees`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
-        }
-        setEmployees(data.data);
-        setisLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setisLoading(false);
-        // setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 2000);
-      }
-    };
-    fetchData();
-  }, []);
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
-
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
+  const toggleSideNav = () => {
+    setCollapseNav(!collapseNav);
+  };
+
   useEffect(() => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
 
-  const roles: any = useAppSelector((state) => state?.roles?.roles);
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
+  useEffect(() => {
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+    localStorage.setItem("collapse", JSON.stringify(collapseNav));
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+  }, [collapseNav]);
 
-  const [displayData, setDisplayData] = useState([]);
+  React.useEffect(() => {
+    if (
+      !roles ||
+      roles.length === 0 ||
+      !departments ||
+      departments.length === 0
+    ) {
+      dispatch(getDepartment());
+      dispatch(getRoles());
+    }
+  }, [dispatch, roles, departments]);
 
   const header = [
     { title: "EMPLOYEE ID", prop: "employee_id" },
-    { title: "FIRST NAME", prop: "first_name" },
-    { title: "MIDDLE NAME", prop: "middle_name" },
-    { title: "LAST NAME", prop: "last_name" },
+    { title: "FULL NAME", prop: "full_name" },
     { title: "EMAIL", prop: "email" },
     { title: "ROLE", prop: "role" },
     { title: "DEPARTMENT", prop: "department" },
-    // { title: "ACTIVE USER", prop: "active_user" },
-    { title: "VIEW", prop: "view" },
+    { title: "CATEGORY", prop: "category" },
+    { title: "STATUS", prop: "status" },
+    { title: "ACTIONS", prop: "actions" },
   ];
 
   return (
@@ -145,7 +114,6 @@ const AllEmployees = () => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
-                    // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee
@@ -206,16 +174,10 @@ const AllEmployees = () => {
                       employees?.map((item: any, i: any) => (
                         <tr className="data-table-row">
                           <td className="table-datacell datatype-string">
-                            {item?.id}
+                            {item?.employee_id}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {item?.first_name}
-                          </td>
-                          <td className="table-datacell datatype-numeric">
-                            {item?.middle_name}
-                          </td>
-                          <td className="table-datacell datatype-numeric">
-                            {item?.last_name}
+                            {item?.full_name}
                           </td>
                           <td className="table-datacell datatype-numeric">
                             {item?.email}
@@ -226,7 +188,12 @@ const AllEmployees = () => {
                           <td className="table-datacell datatype-numeric">
                             {checkForName(item?.department, departments)}
                           </td>
-
+                          <td className="table-datacell datatype-numeric">
+                            {item?.category}
+                          </td>
+                          <td className="table-datacell datatype-numeric">
+                            {item?.status}
+                          </td>
                           <td className="table-datacell datatype-numeric">
                             <div className="table-active-items">
                               <span>
