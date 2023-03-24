@@ -95,7 +95,7 @@ const ViewKPAssessment = () => {
 		setBroughtDownAverage(finalscore)
 	}, [data?.performance_percentage_employee, hodscore]);
 
-	console.log('hodscore', hodscore)
+
 
 	return (
 		<div>

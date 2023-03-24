@@ -77,9 +77,8 @@ const AllEmployees = () => {
     { title: "EMAIL", prop: "email" },
     { title: "ROLE", prop: "role" },
     { title: "DEPARTMENT", prop: "department" },
-    { title: "CATEGORY", prop: "category" },
-    { title: "STATUS", prop: "status" },
-    { title: "ACTIONS", prop: "actions" },
+    { title: "ACTIVE USER", prop: "active_user" },
+    { title: "VIEW", prop: "view" },
   ];
 
   return (
@@ -114,6 +113,7 @@ const AllEmployees = () => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
+                  // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee
@@ -167,12 +167,12 @@ const AllEmployees = () => {
                   </thead>
                   <tbody className="data-table-content">
                     {isLoading ? (
-                      <TableFetch colSpan={8} />
-                    ) : employees?.length === 0 || employees == null ? (
-                      <NoRecordFound colSpan={8} />
+                      <TableFetch colSpan={9} />
+                    ) : employees?.length === 0 || employees === null ? (
+                      <NoRecordFound colSpan={9} />
                     ) : (
                       employees?.map((item: any, i: any) => (
-                        <tr className="data-table-row">
+                        <tr className="data-table-row" key={i}>
                           <td className="table-datacell datatype-string">
                             {item?.employee_id}
                           </td>
@@ -189,23 +189,20 @@ const AllEmployees = () => {
                             {checkForName(item?.department, departments)}
                           </td>
                           <td className="table-datacell datatype-numeric">
-                            {item?.category}
+                            <span>
+                              <BsCheckCircle
+                                size={25}
+                                color={"green"}
+                                onClick={() =>
+                                  navigate(`/employees/${item.id}`)
+                                }
+                                title="View employee"
+                              />
+                            </span>
                           </td>
-                          <td className="table-datacell datatype-numeric">
-                            {item?.status}
-                          </td>
+
                           <td className="table-datacell datatype-numeric">
                             <div className="table-active-items">
-                              <span>
-                                <BsCheckCircle
-                                  size={25}
-                                  color={"green"}
-                                  onClick={() =>
-                                    navigate(`/employees/${item.id}`)
-                                  }
-                                  title="View employee"
-                                />
-                              </span>
                               <span>
                                 <span
                                   className="edit-icon-color"

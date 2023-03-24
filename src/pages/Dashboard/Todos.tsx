@@ -3,18 +3,20 @@ import Cookies from "js-cookie";
 import AddTodo from "../../components/Modals/AddTodo";
 import Checkbox from "@material-ui/core/Checkbox";
 import { FiTrash2 } from "react-icons/fi";
+import { RiTodoLine } from "react-icons/ri";
 import { Button } from "@mui/material";
 import { getRequestOptions } from "../../utils/auth/header";
 import { fireAlert } from "../../utils/Alert";
 import { useAppSelector } from "../../hooks/useDispatch";
 import moment from "moment";
 import { SyncLoader } from "react-spinners";
+import { NoRecordFound } from "../../components/TableOptions";
 
 const Todos = ({ showDrawer, setShowDrawer }: any) => {
   const token = Cookies.get("token");
   const [isLoading, setLoading] = React.useState(false);
-  const [tasks, setTasks] = React.useState({} as any);
-  const [taskAction, setTaskAction] = React.useState({} as any);
+  const [tasks, setTasks] = React.useState([] as any);
+  const [taskAction, setTaskAction] = React.useState([] as any);
   const [error, setError] = React.useState<any>();
   const [message, setMessage] = React.useState("");
   const [taskCreateShow, setTaskCreateShow] = React.useState(false);
@@ -106,28 +108,47 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
           <h4>To Do</h4>
         </div>
 
-        {isLoading === true ? (
-          <div
-            style={{
-              margin: "auto",
-              width: "40%",
-              alignItems: "center",
-            }}
-          >
-            <SyncLoader
-              cssOverride={override}
-              color={"#990000"}
-              loading={isLoading}
-            />
-          </div>
-        ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-            }}
-          >
-            {tasks?.length > 0 ? (
+        {
+          //   <div
+          //     style={{
+          //       display: "flex",
+          //       justifyContent: "center",
+          //       margin: "auto",
+          //       width: "40%",
+          //       alignItems: "center",
+          //     }}
+          //   >
+          //     <SyncLoader
+          //       cssOverride={override}
+          //       color={"#990000"}
+          //       loading={isLoading}
+          //     />
+          //   </div>
+          // ) : (
+          isLoading ? (
+            <div className="table-loader-announcement1">
+              <SyncLoader
+                cssOverride={override}
+                color={"#990000"}
+                loading={isLoading}
+              />
+            </div>
+          ) : tasks?.length === 0 || tasks == null ? (
+            <div className="table-loader-announcement1">
+              {/* <RiTodoLine size={100} className="todo-RiTodoLine" /> */}
+              <div>
+                {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                <img src="https://img.icons8.com/external-outline-design-circle/66/null/external-Todo-List-shopping-and-ecommerce-outline-design-circle.png" />
+                <p className="mt-3">No task found</p>
+              </div>
+            </div>
+          ) : (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+              }}
+            >
               <div>
                 {tasks?.map((item: any, i: any) => (
                   <div
@@ -149,7 +170,6 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                         </div>
                       </div>
                     </div>
-
                     <div className="FiTrash2">
                       <FiTrash2
                         size={25}
@@ -159,8 +179,8 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                   </div>
                 ))}
               </div>
-            ) : (
-              <div>
+              {/* ) : (
+              <div className="main-todo-RiTodoLine" >
                 <div
                   className="main-todo-Event"
                   style={{ borderRadius: "4px" }}
@@ -175,10 +195,11 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                     </div>
                   </div>
                 </div>
+                <RiTodoLine size={140} color="#99000008" className="todo-RiTodoLine" />
               </div>
-            )}
-          </div>
-        )}
+            )} */}
+            </div>
+          )}
       </div>
 
       <div className="main-todo-2-btn">

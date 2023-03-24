@@ -2,7 +2,7 @@ import React from "react";
 import { MainSearch } from "../TableOptions";
 import AddNewSupportMessageModal from "../AddNewSupportMessageModal";
 
-const MyMessage = ({ handleShow }) => {
+const MyMessage = ({ handleShow }: any) => {
   return (
     <div className="my-message">
       <div className="msg-search">

@@ -5,9 +5,10 @@ import { BsFillPinAngleFill, BsThreeDots } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
 import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 import { getRequestOptions } from "../../utils/auth/header";
+import { GrAnnounce } from "react-icons/gr";
 
 const Announcement = () => {
-  const [announcements, setAnnouncements] = React.useState({} as any);
+  const [announcements, setAnnouncements] = React.useState([] as any);
   const [isLoading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<any>();
   const [message, setMessage] = React.useState("");
@@ -30,14 +31,22 @@ const Announcement = () => {
         const dataProjects =
           isJsonResponseAnnouncements && (await responseAnnouncements.json());
         if (!responseAnnouncements.ok) {
-          throw new Error(dataProjects.message || responseAnnouncements.status);
+          throw new Error(dataProjects?.message || responseAnnouncements.status);
         }
+<<<<<<< HEAD
         if (isMounted) {
           setAnnouncements(dataProjects.data);
           setLoading(false);
           setError(false);
           setMessage("");
         }
+=======
+        setAnnouncements(dataProjects?.data);
+
+        setLoading(false);
+        setError(false);
+        setMessage("");
+>>>>>>> c3228f1 (update weekly report)
       } catch (error: any) {
         setLoading(false);
         setMessage(error.message || "Something went wrong");
@@ -76,67 +85,90 @@ const Announcement = () => {
           </span>
         </div>
         <div>
-          {" "}
           <CreateAnnouncementModal
             onNewAnnouncementCreated={handleNewAnnouncementCreated}
           />
         </div>
       </div>
       <div>
-        {isLoading === true ? (
-          <div
-            style={{
-              margin: "auto",
-              width: "40%",
-              alignItems: "center",
-            }}
-          >
-            <SyncLoader
-              cssOverride={override}
-              color={"#990000"}
-              loading={isLoading}
-            />
-          </div>
-        ) : (
-          <>
-            {announcements.length > 0 ? (
-              <div className="Announcement-container">
-                {announcements?.map((item: any, i: any) => (
-                  <div className="Announcement-sub-2">
-                    <div
-                      className="main-todo-Event"
-                      style={{ borderRadius: "4px" }}
-                    >
-                      <div className="main-todo-container">
-                        <div className="main-todo-note">
-                          <div>{item.message}</div>
-                          <div className="main-todo-note-minutes">
-                            {/* {moment().diff(item.created_at)} */}
-                            {moment
-                              .duration(moment().diff(item.created_at))
-                              .humanize()}{" "}
-                            ago
-                          </div>
+        {
+          //   isLoading === true ? (
+          //   <div
+          //     style={{
+          //       margin: "auto",
+          //       width: "40%",
+          //       alignItems: "center",
+          //     }}
+          //   >
+          //     <SyncLoader
+          //       cssOverride={override}
+          //       color={"#990000"}
+          //       loading={isLoading}
+          //     />
+          //   </div>
+          // ) : (
+          //   <>
+          //     {announcements.length > 0 ? (
+
+          isLoading ? (
+            <div
+              // style={{
+              //   margin: "auto",
+              //   width: "100%",
+              //   alignItems: "center",
+              // }}
+              className="table-loader-announcement"
+            >
+              <SyncLoader
+                cssOverride={override}
+                color={"#990000"}
+                loading={isLoading}
+              />
+            </div>
+          ) : announcements?.length === 0 || announcements == null ? (
+            <div className="table-loader-announcement">
+              {/* <GrAnnounce size={140} className="todo-RiTodoLine" color="#cacaca" /> */}
+              <div>
+                {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-announcement-marketing-outline-others-phat-plus.png" />
+                <p className="mt-3">No announcement found</p>
+              </div>
+            </div>
+          ) : (
+            <div className="Announcement-container">
+              {announcements?.map((item: any, i: any) => (
+                <div className="Announcement-sub-2" key={i}>
+                  <div
+                    className="main-todo-Event"
+                    style={{ borderRadius: "4px" }}
+                  >
+                    <div className="main-todo-container">
+                      <div className="main-todo-note">
+                        <div>{item?.message}</div>
+                        <div className="main-todo-note-minutes">
+                          {/* {moment().diff(item.created_at)} */}
+                          {moment
+                            .duration(moment().diff(item?.created_at))
+                            .humanize()}{" "}
+                          ago
                         </div>
                       </div>
-                      <div className="FiTrash2">
-                        <span className="BsFillPinAngleFill">
-                          {" "}
-                          <BsFillPinAngleFill size={20} />
-                        </span>
-                        <span>
-                          <BsThreeDots size={25} />
-                        </span>
-                      </div>
+                    </div>
+                    <div className="FiTrash2">
+                      <span className="BsFillPinAngleFill">
+                        {" "}
+                        <BsFillPinAngleFill size={20} />
+                      </span>
+                      <span>
+                        <BsThreeDots size={25} />
+                      </span>
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              ""
-            )}
-          </>
-        )}
+                </div>
+              ))}
+            </div>
+          )
+        }
       </div>
     </div>
   );

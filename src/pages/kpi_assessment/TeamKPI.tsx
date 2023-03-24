@@ -55,7 +55,7 @@ const TeamKPI = () => {
 
 	const [displayData, setDisplayData] = useState([]);
 
-	console.log('displayData', displayData)
+
 
 
 

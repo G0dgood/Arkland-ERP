@@ -48,8 +48,12 @@ import KPIDetails from "./pages/kpi_assessment/KPIDetails";
 import ProjectView from "./pages/Projects/Project";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
+<<<<<<< HEAD
 import { getProjects } from "./store/reducers/project";
 import { getTasks } from "./store/reducers/tasks";
+=======
+import WeeklyContainer from "./pages/WeeklyReport/WeeklyContainer";
+>>>>>>> c3228f1 (update weekly report)
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -66,7 +70,7 @@ const AppRoutes: React.FC<any> = () => {
     },
     function (error) {
       const status = error?.response ? error?.response?.status : null;
-      const url = error.response ? error.response.config.url : null;
+      const url = error.response ? error.response?.config?.url : null;
 
       if (status === 401) {
         sessionExpired();
@@ -105,6 +109,7 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
+        <Route path="/weeklycontainer" element={<WeeklyContainer />} />
         <Route
           path="/teamleaveapplications"
           element={<TeamLeaveApplications />}
