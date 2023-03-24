@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { InterfaceAction } from "../interfaces/base";
 import { getRequestOptions } from "../utils/auth/header";
 
@@ -8,6 +8,14 @@ function useFetchTasks(taskAction: InterfaceAction) {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
+
+  const updateTasks = useCallback((data: any) => {
+    setTasks(data);
+    setLoading(false);
+    setError("");
+    setRetryCount(0);
+    setMessage("");
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -53,14 +61,14 @@ function useFetchTasks(taskAction: InterfaceAction) {
       }
     };
 
-    if (isMounted) {
-      fetchData();
-    }
+    // if (isMounted) {
+    fetchData();
+    // }
 
     return () => {
       isMounted = false;
     };
-  }, [retryCount, taskAction]);
+  }, [retryCount, updateTasks, taskAction]);
 
   return {
     tasks,
