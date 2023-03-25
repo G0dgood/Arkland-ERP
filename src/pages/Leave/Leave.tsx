@@ -32,6 +32,34 @@ const Leave = () => {
 
 	// }, [dispatch, html, title, icon, isSuccess]);
 
+	// @ts-ignore
+	// React.useEffect(async () => {
+	// 	const Info: any = await AsyncStorage.getItem('user')
+	// 	const Infos = JSON.parse(Info)
+	// 	const config = {
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			Authorization: `Bearer ${Infos?.idToken}`,
+	// 		},
+	// 	};
+
+	// 	setLoading(true);
+	// 	axios
+	// 		.get(baseUrl + `/requests/details/${Id}`, config)
+	// 		.then((res) => {
+	// 			setdata(res?.data);
+	// 			// console.log("DetailsPage", res.data);
+	// 			setLoading(false);
+	// 		})
+	// 		.catch((err) => {
+	// 			// console.log('err', err);
+	// 			setMessages(
+	// 				err?.message);
+	// 			setLoading(false);
+	// 			setisError(true);
+	// 		});
+	// }, [user?.idToken,]);
+
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore

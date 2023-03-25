@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { checkForEmployee, checkForName } from "../../utils/checkForName";
 import { getEmployees } from "../../store/reducers/employees";
 import { getRequestOptions } from "../../utils/auth/header";
+import TableLoader from "../../components/TableLoader";
 
 const WarningList = () => {
   const dispatch = useAppDispatch();
@@ -164,6 +165,7 @@ const WarningList = () => {
         </div>
         <section className="md-ui component-data-table">
           <div className="main-table-wrapper">
+            {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
             <table className="main-table-content">
               <thead className="data-table-header">
                 <tr className="data-table-row">

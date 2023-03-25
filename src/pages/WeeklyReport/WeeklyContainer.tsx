@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react'
-// import RegisterNavTab from './KPINavTab';
-import KPINavTab from './KPINavTab';
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
-import MyKPIAssessment from './MyKPIAssessment';
-import KPIAssessment from './KPIAssessment';
+import Header from '../../components/Header'
+import Sidebar from '../../components/Sidebar'
+import KPINavTab from '../kpi_assessment/KPINavTab';
+import WeeklyReport from './WeeklyReport';
+import TeamWeeklyReport from './TeamWeeklyReport';
+import MyWeekReport from './MyWeekReport';
 
-const KpiContainer = () => {
+const WeeklyContainer = () => {
 	const [isCheck, setIsCheck] = useState(false);
-	const [data, setData] = useState(0);
 	const [kpidata, setkpidata] = useState(0);
-
-	const [collapseNav, setCollapseNav] = useState(() => {
+	const [collapseNav, setCollapseNav] = useState<any>(() => {
 		// @ts-ignore
-		return JSON?.parse(localStorage.getItem("collapse")) || false;
+		return JSON.parse(localStorage.getItem("collapse")) || false;
 	});
 
 	useEffect(() => {
@@ -24,7 +22,7 @@ const KpiContainer = () => {
 	const toggleSideNav = () => {
 		setCollapseNav(!collapseNav);
 	};
-	//
+
 
 	return (
 		<div id="screen-wrapper">
@@ -35,15 +33,14 @@ const KpiContainer = () => {
 					<KPINavTab
 						setIsCheck={setIsCheck}
 						isCheck={isCheck}
-						data={data}
 						infodata={kpidata}
-						text1={"My Kpi Assessment"}
-						text2={"KPI Assessment"}
+						text1={"My weekly Report"}
+						text2={"Create weekly Report"}
 					/>
 				</div>
 				<div style={{ marginTop: "2rem" }}>
-					{isCheck === false ? <MyKPIAssessment setkpidata={setkpidata} /> : ""}
-					{isCheck === true ? <KPIAssessment /> : ""}
+					{isCheck === false ? <MyWeekReport setkpidata={setkpidata} /> : ""}
+					{isCheck === true ? <WeeklyReport setIsCheck={setIsCheck} /> : ""}
 
 				</div>
 			</main>
@@ -51,4 +48,4 @@ const KpiContainer = () => {
 	)
 }
 
-export default KpiContainer
+export default WeeklyContainer

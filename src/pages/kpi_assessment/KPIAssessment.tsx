@@ -403,10 +403,12 @@ const KPIAssessment = () => {
 									<option>
 										{year}
 									</option>
+
 								</select>
-								Month:
 							</div>
+							<div style={{ width: "30px" }} />
 							<div className="entries-perpage">
+								Month:
 								<select
 									name="month"
 									value={kpinputs.month}
@@ -747,6 +749,3 @@ const KPIAssessment = () => {
 
 export default KPIAssessment
 
-function setisError1(arg0: boolean) {
-	throw new Error('Function not implemented.');
-}

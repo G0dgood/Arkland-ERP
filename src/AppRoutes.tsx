@@ -50,6 +50,8 @@ import ViewEmployee from "./pages/all_employees/ViewEmployee";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
 import { getProjects } from "./store/reducers/project";
 import { getTasks } from "./store/reducers/tasks";
+import WeeklyContainer from "./pages/WeeklyReport/WeeklyContainer";
+import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -66,7 +68,7 @@ const AppRoutes: React.FC<any> = () => {
     },
     function (error) {
       const status = error?.response ? error?.response?.status : null;
-      const url = error.response ? error.response.config.url : null;
+      const url = error.response ? error.response?.config?.url : null;
 
       if (status === 401) {
         sessionExpired();
@@ -105,11 +107,11 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
-        <Route
-          path="/teamleaveapplications"
-          element={<TeamLeaveApplications />}
+        <Route path="/weeklycontainer" element={<WeeklyContainer />} />
+        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />}
         />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
+        <Route path="/weeklyreportview/:id" element={<WeeklyReportView />} />
         {/* </Route> */}
         {/* Protected routes as admins, HR, Project managers and team leads */}
         <Route

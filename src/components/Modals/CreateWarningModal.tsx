@@ -20,7 +20,7 @@ const CreateWarningModal = (props: any) => {
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
-    console.log("values", values);
+    // console.log("values", values);
     const createWarningValues = { ...values };
     try {
       const response = await fetch(`${process.env.REACT_APP_API}/hr/warnings`, {

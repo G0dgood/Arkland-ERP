@@ -90,11 +90,11 @@ const Navbar = ({ ToggleSidebar, isOpen, setHideNav }: any) => {
                 <Nav className=" li mb-3">
                   <NavLink
                     className={
-                      window.location.pathname === "/weeklyreport"
+                      window.location.pathname === "/weeklycontainer"
                         ? "on-link "
                         : "sd-link"
                     }
-                    to="/weeklyreport"
+                    to="/weeklycontainer"
                   >
                     <span className="me-3">
                       <GoFile size={23} />

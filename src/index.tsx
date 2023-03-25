@@ -19,7 +19,7 @@ axios.interceptors.request.use(
     return config;
   },
   function (error) {
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       handle_logout();
     }
 
