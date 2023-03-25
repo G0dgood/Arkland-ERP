@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TableLoader from '../TableLoader'
 import { NoRecordFound, TableFetch } from '../TableOptions'
 
 const WeeklyReportTable5 = ({ data, isLoading }: any) => {
 
-	console.log('data?.length', data)
+
 	return (
 		<div>
 			<div id="table-wrapper">
@@ -29,11 +29,11 @@ const WeeklyReportTable5 = ({ data, isLoading }: any) => {
 
 					{isLoading ? (
 						<TableFetch colSpan={8} />
-					) : data?.length === undefined ? (
+					) : data?.length === 0 ? (
 						<NoRecordFound colSpan={8} />
 					) : (
-						data?.activities?.map((item: any, i: any) => (
-							<tr  >
+						data?.map((item: any, i: any) => (
+							<tr key={i}>
 								<td >
 									<div id="td-span-row">
 										<textarea

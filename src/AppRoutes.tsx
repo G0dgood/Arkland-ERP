@@ -48,12 +48,10 @@ import KPIDetails from "./pages/kpi_assessment/KPIDetails";
 import ProjectView from "./pages/Projects/Project";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
-<<<<<<< HEAD
 import { getProjects } from "./store/reducers/project";
 import { getTasks } from "./store/reducers/tasks";
-=======
 import WeeklyContainer from "./pages/WeeklyReport/WeeklyContainer";
->>>>>>> c3228f1 (update weekly report)
+import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -110,11 +108,10 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
         <Route path="/weeklycontainer" element={<WeeklyContainer />} />
-        <Route
-          path="/teamleaveapplications"
-          element={<TeamLeaveApplications />}
+        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />}
         />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
+        <Route path="/weeklyreportview/:id" element={<WeeklyReportView />} />
         {/* </Route> */}
         {/* Protected routes as admins, HR, Project managers and team leads */}
         <Route

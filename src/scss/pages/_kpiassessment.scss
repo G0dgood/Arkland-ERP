@@ -190,7 +190,7 @@ align-items: center;
   color: c.color(white-100) !important;
 }
 .Performance-Indicator-input{
-  width: 10rem;
+  width: 20rem;
   height: 1rem;
   // border: none !important;
 }
@@ -369,6 +369,7 @@ textarea{
 
  .line-manager {
     display: flex;
+    align-items: center;
     padding-bottom: 0; 
 }
 

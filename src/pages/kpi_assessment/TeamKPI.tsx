@@ -7,7 +7,6 @@ import Pagination from '../../components/Pagination';
 import { Button } from '@material-ui/core';
 import { FaArrowLeft } from 'react-icons/fa';
 import axios, { AxiosResponse } from 'axios';
-import ViewKPImodal from '../../components/Modals/ViewKPImodal';
 import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';
 import storage from '../../utils/storage';

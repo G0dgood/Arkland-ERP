@@ -4,10 +4,12 @@ import Sidebar from '../../components/Sidebar'
 import KPINavTab from '../kpi_assessment/KPINavTab';
 import WeeklyReport from './WeeklyReport';
 import TeamWeeklyReport from './TeamWeeklyReport';
+import MyWeekReport from './MyWeekReport';
 
 const WeeklyContainer = () => {
 	const [isCheck, setIsCheck] = useState(false);
-	const [collapseNav, setCollapseNav] = useState(() => {
+	const [kpidata, setkpidata] = useState(0);
+	const [collapseNav, setCollapseNav] = useState<any>(() => {
 		// @ts-ignore
 		return JSON.parse(localStorage.getItem("collapse")) || false;
 	});
@@ -31,15 +33,14 @@ const WeeklyContainer = () => {
 					<KPINavTab
 						setIsCheck={setIsCheck}
 						isCheck={isCheck}
-						infodata={0}
+						infodata={kpidata}
 						text1={"My weekly Report"}
 						text2={"Create weekly Report"}
 					/>
 				</div>
 				<div style={{ marginTop: "2rem" }}>
-					{/* <RegisterTable pageHeader={"Register User"} headerTitles={[]} setData={setData} /> */}
-					{isCheck === false ? <TeamWeeklyReport /> : ""}
-					{isCheck === true ? <WeeklyReport /> : ""}
+					{isCheck === false ? <MyWeekReport setkpidata={setkpidata} /> : ""}
+					{isCheck === true ? <WeeklyReport setIsCheck={setIsCheck} /> : ""}
 
 				</div>
 			</main>

@@ -4,18 +4,20 @@ import WeekReportTitle from './WeekReportTitle'
 import WeeklyReportTable5 from '../../components/table_component/WeeklyReportTable5'
 import storage from '../../utils/storage'
 import Cookies from 'js-cookie'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { fireAlert } from '../../utils/Alert'
 import TableLoader from '../../components/TableLoader'
 import { BsChatLeftText } from 'react-icons/bs'
 import { Button } from '@material-ui/core'
 import { MdOutlineClose } from 'react-icons/md'
 import axios, { AxiosResponse } from 'axios'
+import { Spinner } from 'react-bootstrap'
 
 const WeeklyReportView = () => {
 	const { id } = useParams()
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
+	const navigate = useNavigate();
 
 	const token = Cookies.get("token");
 	const [data, setData] = useState<any>([]);
@@ -26,12 +28,17 @@ const WeeklyReportView = () => {
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 
-	console.log('data', data)
+	const [isLoading1, setisLoading1] = useState(false);
+
+
 
 	const title = "Weekly Reports error";
 	const html = message;
 	const icon = "error";
-	console.error("Error:", message);
+	const title1 = "Weekly Reports error";
+	const html1 = "Weekly Reports delected";
+	const icon1 = "success";
+
 
 	React.useEffect(() => {
 		setisLoading(true);
@@ -40,14 +47,32 @@ const WeeklyReportView = () => {
 			.then((res: AxiosResponse) => {
 				setData(res?.data?.data);
 				setisLoading(false);
-				console.log('res', res);
 			})
 			.catch((err) => {
 				console.log(err);
 				setMessage(err?.message)
 				setisLoading(false);
 			});
-	}, [id]);
+	}, [id, navigate]);
+	console.log('data', data)
+
+
+	const handleDelete = () => {
+		setisLoading1(true);
+		axios
+			.delete(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`)
+			.then((res: AxiosResponse) => {
+				setisLoading1(false);
+				fireAlert(title1, html1, icon1);
+				setTimeout(() => {
+					navigate("/weeklycontainer");
+				}, 2000);
+			})
+			.catch((data) => {
+				console.log(data);
+				setisLoading1(false);
+			});
+	}
 
 	// useEffect(() => {
 	// 	setisLoading(true);
@@ -77,7 +102,7 @@ const WeeklyReportView = () => {
 
 	// }, [id, token])
 
-	// console.log('token', token)
+
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -116,9 +141,8 @@ const WeeklyReportView = () => {
 				</div>
 			</header>
 			<main>
-				{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ''} */}
-
 				{/* <WeekReportTitle /> */}
+
 				<div className='weekly-top-container'>
 					<div className='weeklyreporttop-container-card-1'>
 						<div className='weekly-top-card-1-sub'>
@@ -147,15 +171,20 @@ const WeeklyReportView = () => {
 					</div>
 				</div>
 				<div className='weekly-report-title'>
-					<div>
-						<h4>Week {data?.week}
-							{/* {inputs.week} */}
-						</h4>
+					<div className='weekly-delete'>
+						<div>
+							<h4>Week {data?.week}
+							</h4>
+						</div>
+						<div>
+							{data?.status === "acknowledged" ? "" : <Button className={"table-link"} onClick={handleDelete}>{isLoading1 ? <Spinner animation="border" /> : 'Delete'}</Button>}
+
+						</div>
 					</div>
 				</div>
 				<div>
-
-					<WeeklyReportTable5 data={data} isLoading={isLoading} />
+					{isLoading1 ? <TableLoader isLoading={isLoading1} /> : ''}
+					<WeeklyReportTable5 data={data?.activities} isLoading={isLoading} />
 				</div>
 			</main>
 		</div>

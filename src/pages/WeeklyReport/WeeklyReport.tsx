@@ -9,8 +9,10 @@ import { MdPostAdd } from 'react-icons/md';
 import Cookies from 'js-cookie';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const WeeklyReport = () => {
+const WeeklyReport = ({ setIsCheck }: any) => {
+	const navigate = useNavigate();
 	const token = Cookies.get("token");
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
@@ -21,15 +23,7 @@ const WeeklyReport = () => {
 		return JSON.parse(localStorage.getItem("collapse")) || false;
 	});
 
-	useEffect(() => {
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-		localStorage.setItem("collapse", JSON.stringify(collapseNav));
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-	}, [collapseNav]);
-	const toggleSideNav = () => {
-		setCollapseNav(!collapseNav);
-	};
-	//
+
 
 
 
@@ -100,22 +94,9 @@ const WeeklyReport = () => {
 		blockers: item.blockers
 	}));
 
-	// useEffect(() => {
-	// 	// if (sendToBackend.length) {
-
-	// 	setInputs((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			activities: sendToBackend
-	// 		});
-	// 	});
-	// 	// }
-
-	// }, [inputs]);
-
 	const allinput = { ...inputs, activities }
 
-	console.log("inputs", allinput)
+
 
 	const title = "Successful";
 	const html = "Week Report Created!";
@@ -140,8 +121,10 @@ const WeeklyReport = () => {
 					setMessage(data?.message)
 					setisError(true)
 				} else {
-					console.log('data', data)
 					setisSuccess(true)
+					setTimeout(() => {
+						setIsCheck(false)
+					}, 2000);
 				}
 				setisLoading(false);
 			})
@@ -283,15 +266,7 @@ const WeeklyReport = () => {
 				</div>
 			</div>
 			<div>
-				{/* {data.length === 0 && <WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} />} */}
 				<WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} setInputs={setInputs} inputs={inputs} />
-				{/* {data[0]?.category === "Week 2" && <WeeklyReportTable2 />}
-						{data[0]?.category === "Week 3" && <WeeklyReportTable3 />}
-						{data[0]?.category === "Week 4" && <WeeklyReportTable4 />}
-						{data[0]?.category === "Week 5" && <WeeklyReportTable5 />} */}
-
-
-				{/* <WeeKlyReportButtomTabs setData={setData} /> */}
 				<div className='WeeKlyReport-submit-container'>
 					<button className="ccsnl-btn WeeKlyReport-tab"
 						onClick={handleLeave}>

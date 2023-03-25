@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { BiUser } from 'react-icons/bi'
 import { Link, useParams } from 'react-router-dom'
 import HodEvaluation from './HodEvaluate'
-import axios, { AxiosResponse } from 'axios'
+// import axios, { AxiosResponse } from 'axios'
 import { BsChatLeftText } from 'react-icons/bs'
 import { MdOutlineClose } from 'react-icons/md'
 import TableLoader from '../../components/TableLoader'
@@ -90,6 +90,8 @@ const ViewKPAssessment = () => {
 	// 		});
 	// }, [id]);
 
+
+
 	React.useEffect(() => {
 		const finalscore: any = (data?.performance_percentage_employee + hodscore) / (hodscore === 0 ? 0 : 2)
 		setBroughtDownAverage(finalscore)
@@ -141,9 +143,9 @@ const ViewKPAssessment = () => {
 						<div className="grade-system">
 							<h4>Grading System</h4>
 							{gradeSystem.map(item =>
-								<div key={item.rate} className="grade_item">
-									<p>{item.rate}</p>
-									<p>{item.definition}</p>
+								<div key={item?.rate} className="grade_item">
+									<p>{item?.rate}</p>
+									<p>{item?.definition}</p>
 								</div>
 							)}
 						</div>

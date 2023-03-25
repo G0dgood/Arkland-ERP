@@ -33,20 +33,11 @@ const Announcement = () => {
         if (!responseAnnouncements.ok) {
           throw new Error(dataProjects?.message || responseAnnouncements.status);
         }
-<<<<<<< HEAD
-        if (isMounted) {
-          setAnnouncements(dataProjects.data);
-          setLoading(false);
-          setError(false);
-          setMessage("");
-        }
-=======
         setAnnouncements(dataProjects?.data);
 
         setLoading(false);
         setError(false);
         setMessage("");
->>>>>>> c3228f1 (update weekly report)
       } catch (error: any) {
         setLoading(false);
         setMessage(error.message || "Something went wrong");

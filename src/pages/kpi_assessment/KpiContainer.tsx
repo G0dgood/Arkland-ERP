@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import RegisterNavTab from './KPINavTab';
+// import RegisterNavTab from './KPINavTab';
 import KPINavTab from './KPINavTab';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';

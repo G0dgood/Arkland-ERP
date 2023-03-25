@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import storage from '../../utils/storage';
 import { fireAlert } from '../../utils/Alert';
 
-const MyWeekReport = ({ setDatalenght }: any) => {
+const MyWeekReport = ({ setkpidata }: any) => {
 
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
@@ -41,13 +41,14 @@ const MyWeekReport = ({ setDatalenght }: any) => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
+
 				if (data?.success === false) {
 					setMessage(data?.message)
-					setisError(true)
+					// setisError(true)
 				} else {
 					setisSuccess(true)
 					setData(data)
-					setDatalenght(data?.data?.length)
+					setkpidata(data?.data?.length)
 				}
 				setisLoading(false);
 			})
@@ -56,7 +57,9 @@ const MyWeekReport = ({ setDatalenght }: any) => {
 				setisLoading(false);
 			});
 
-	}, [setDatalenght, token])
+	}, [setkpidata, token])
+
+
 
 	useEffect(() => {
 		if (isError) {
@@ -65,8 +68,9 @@ const MyWeekReport = ({ setDatalenght }: any) => {
 				setisError(false);
 			}, 1000);
 		}
-
 	}, [html, isError, isSuccess]);
+
+
 	return (
 		<div  >
 			<section className="md-ui component-data-table">
@@ -101,7 +105,8 @@ const MyWeekReport = ({ setDatalenght }: any) => {
 										</td>
 										<td className="table-datacell datatype-numeric">
 											<Link to={`/weeklyreportview/${item?._id}`}>
-												<Button id="team-applicatiom-update">View</Button>
+
+												<Button id="team-applicatiom-update">	{item?.status === "acknowledged" ? 'View' : 'Update'}</Button>
 											</Link>
 
 										</td>
