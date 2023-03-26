@@ -83,33 +83,9 @@ const Announcement = () => {
       </div>
       <div>
         {
-          //   isLoading === true ? (
-          //   <div
-          //     style={{
-          //       margin: "auto",
-          //       width: "40%",
-          //       alignItems: "center",
-          //     }}
-          //   >
-          //     <SyncLoader
-          //       cssOverride={override}
-          //       color={"#990000"}
-          //       loading={isLoading}
-          //     />
-          //   </div>
-          // ) : (
-          //   <>
-          //     {announcements.length > 0 ? (
 
           isLoading ? (
-            <div
-              // style={{
-              //   margin: "auto",
-              //   width: "100%",
-              //   alignItems: "center",
-              // }}
-              className="table-loader-announcement"
-            >
+            <div className="table-loader-announcement" >
               <SyncLoader
                 cssOverride={override}
                 color={"#990000"}
@@ -118,7 +94,6 @@ const Announcement = () => {
             </div>
           ) : announcements?.length === 0 || announcements == null ? (
             <div className="table-loader-announcement">
-              {/* <GrAnnounce size={140} className="todo-RiTodoLine" color="#cacaca" /> */}
               <div>
                 {/* eslint-disable-next-line jsx-a11y/alt-text */}
                 <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-announcement-marketing-outline-others-phat-plus.png" />
@@ -137,7 +112,6 @@ const Announcement = () => {
                       <div className="main-todo-note">
                         <div>{item?.message}</div>
                         <div className="main-todo-note-minutes">
-                          {/* {moment().diff(item.created_at)} */}
                           {moment
                             .duration(moment().diff(item?.created_at))
                             .humanize()}{" "}
