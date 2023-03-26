@@ -22,6 +22,8 @@ const MyWeekReport = ({ setkpidata }: any) => {
 	const [message, setMessage] = useState("");
 
 	const [displayData, setDisplayData] = useState([]);
+
+
 	const title = "Week Report error";
 	const html = message;
 	const icon = "error";

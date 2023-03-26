@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react'
 import TableLoader from '../TableLoader'
 import { NoRecordFound, TableFetch } from '../TableOptions'
 
-const WeeklyReportTable5 = ({ data, isLoading }: any) => {
+const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
 
+	const handleChange = (input: any, value: any) => {
+		setInputs((prevState: any) => ({
+			...prevState,
+			[input]: value,
+		}));
+	};
 
 	return (
 		<div>
@@ -40,7 +46,7 @@ const WeeklyReportTable5 = ({ data, isLoading }: any) => {
 											id='kpi-textarea'
 											className='Performance-Indicator-input2'
 											value={item.completed}
-											// onChange={(e) => handleChange("completed", e.target.value, item.id)}
+											onChange={(e) => handleChange("completed", e.target.value)}
 											rows={5}
 											placeholder="Activities Completed This Week" />
 									</div>
@@ -50,7 +56,7 @@ const WeeklyReportTable5 = ({ data, isLoading }: any) => {
 										id='kpi-textarea'
 										className='Performance-Indicator-input2'
 										value={item.in_progress}
-										// onChange={(e) => handleChange("in_progress", e.target.value, item.id)}
+										onChange={(e) => handleChange("in_progress", e.target.value)}
 										rows={5}
 										placeholder="Activities" />
 								</td>
@@ -58,7 +64,7 @@ const WeeklyReportTable5 = ({ data, isLoading }: any) => {
 									id='kpi-textarea'
 									className='Performance-Indicator-input2'
 									value={item.next}
-									// onChange={(e) => handleChange("next", e.target.value, item.id)}
+									onChange={(e) => handleChange("next", e.target.value)}
 									rows={5}
 									placeholder="Next Action" /></td>
 								<td>	<input
@@ -66,20 +72,20 @@ const WeeklyReportTable5 = ({ data, isLoading }: any) => {
 									type="date"
 									className='Performance-Indicator-input2'
 									value={item.due_date_for_next}
-									// onChange={(e) => handleChange("due_date_for_next", e.target.value, item.id)}
+									onChange={(e) => handleChange("due_date_for_next", e.target.value)}
 									placeholder="Due Date" /></td>
 								<td>	<textarea
 									id='kpi-textarea'
 									className='Performance-Indicator-input2'
 									value={item.next_week_tasks}
-									// onChange={(e) => handleChange("next_week_tasks", e.target.value, item.id)}
+									onChange={(e) => handleChange("next_week_tasks", e.target.value)}
 									rows={5}
 									placeholder="Activities To Be Started Next Week" /></td>
 								<td>	<textarea
 									id='kpi-textarea'
 									className='Performance-Indicator-input2'
 									value={item.issues}
-									// onChange={(e) => handleChange("issues", e.target.value, item.id)}
+									onChange={(e) => handleChange("issues", e.target.value)}
 									rows={5}
 									placeholder="Issues For Immediate Attention" /></td>
 								<td>

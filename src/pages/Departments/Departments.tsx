@@ -8,6 +8,7 @@ import { getRequestOptions } from "../../utils/auth/header";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useDepartments } from "../../hooks/useDepartments";
+import { MdOutlineMapsHomeWork } from "react-icons/md";
 
 const DepartmentsView = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const DepartmentsView = () => {
   const { departments, isLoading, error, message } =
     useDepartments(newDepartmentCreated);
 
+  console.log('departments', departments.length)
+
   const handleNewDepartmentCreated = () => {
     setNewDepartmentCreated(!newDepartmentCreated);
   };
@@ -32,13 +35,7 @@ const DepartmentsView = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
-  };
+
 
   return (
     <div id="screen-wrapper">
@@ -58,17 +55,21 @@ const DepartmentsView = () => {
               </div>
             </div>
             {isLoading ? (
-              <div
-                style={{
-                  margin: "auto",
-                  width: "20%",
-                }}
-              >
+              <div className="isLoading-container">
+
                 <SyncLoader
-                  cssOverride={override}
                   color={"#990000"}
                   loading={isLoading}
                 />
+
+              </div>
+            ) : departments?.length === 0 ? (
+              <div className="table-loader-announcement">
+                <div>
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                  <img src="https://img.icons8.com/wired/64/null/department.png" />
+                  <p className="mt-3">No department found</p>
+                </div>
               </div>
             ) : (
               <div className="subone-col-3">

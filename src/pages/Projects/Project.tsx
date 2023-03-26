@@ -30,13 +30,7 @@ const ProjectView = () => {
     setCollapseNav(!collapseNav);
   };
 
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
-  };
+
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
@@ -104,18 +98,19 @@ const ProjectView = () => {
               </div>
             </div>
             {isLoading ? (
-              <div
-                style={{
-                  margin: "auto",
-                  width: "10%",
-                  alignItems: "center",
-                }}
-              >
+              <div className="isLoading-container">
                 <SyncLoader
-                  cssOverride={override}
                   color={"#990000"}
                   loading={isLoading}
                 />
+              </div>
+            ) : projects?.length === 0 ? (
+              <div className="table-loader-announcement">
+                <div>
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                  <img src="https://img.icons8.com/dotty/80/null/test-passed.png" />
+                  <p className="mt-3">No project found</p>
+                </div>
               </div>
             ) : (
               <>

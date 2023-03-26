@@ -24,20 +24,27 @@ const WeeklyReportView = () => {
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
 	const [isLoading, setisLoading] = useState(false);
+	const [isLoading2, setisLoading2] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 
 	const [isLoading1, setisLoading1] = useState(false);
 
+	const [inputs, setInputs] = useState([]);
 
 
 	const title = "Weekly Reports error";
 	const html = message;
 	const icon = "error";
-	const title1 = "Weekly Reports error";
+
+	const title1 = "Weekly Reports Delected";
 	const html1 = "Weekly Reports delected";
 	const icon1 = "success";
+
+	const title2 = "Weekly Update";
+	const html2 = "Weekly Reports Updated";
+	const icon2 = "success";
 
 
 	React.useEffect(() => {
@@ -71,6 +78,23 @@ const WeeklyReportView = () => {
 			.catch((data) => {
 				console.log(data);
 				setisLoading1(false);
+			});
+	}
+
+	const handleUpate = () => {
+		setisLoading2(true);
+		axios
+			.patch(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`, inputs)
+			.then((res: AxiosResponse) => {
+				setisLoading2(false);
+				fireAlert(title2, html2, icon2);
+				setTimeout(() => {
+					navigate("/weeklycontainer");
+				}, 2000);
+			})
+			.catch((data) => {
+				console.log(data);
+				setisLoading2(false);
 			});
 	}
 
@@ -141,7 +165,6 @@ const WeeklyReportView = () => {
 				</div>
 			</header>
 			<main>
-				{/* <WeekReportTitle /> */}
 
 				<div className='weekly-top-container'>
 					<div className='weeklyreporttop-container-card-1'>
@@ -180,11 +203,15 @@ const WeeklyReportView = () => {
 							{data?.status === "acknowledged" ? "" : <Button className={"table-link"} onClick={handleDelete}>{isLoading1 ? <Spinner animation="border" /> : 'Delete'}</Button>}
 
 						</div>
+						<div>
+							{data?.status === "acknowledged" ? "" : <Button className="table-link-active" onClick={handleUpate}>	{isLoading2 ? <Spinner animation="border" /> : 'Update'}</Button>}
+
+						</div>
 					</div>
 				</div>
 				<div>
 					{isLoading1 ? <TableLoader isLoading={isLoading1} /> : ''}
-					<WeeklyReportTable5 data={data?.activities} isLoading={isLoading} />
+					<WeeklyReportTable5 data={data?.activities} isLoading={isLoading} setInputs={setInputs} />
 				</div>
 			</main>
 		</div>

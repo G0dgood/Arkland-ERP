@@ -151,8 +151,6 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 											<Button className={item?.status === 'active' ? "table-link-active" : "table-link"}>{item?.status === 'active' ? 'Completed' : item?.status}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{/* <ViewKPImodal id={item?._id} /> */}
-											{/* <Link to={`/kpidetails/${item?.employee}`}  > */}
 											<Link to={`/kpidetails/${item?._id}`}  >
 
 												<Button id="team-applicatiom-update">View</Button>
