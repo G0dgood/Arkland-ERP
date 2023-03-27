@@ -1,5 +1,16 @@
  @use "../abstracts/colors" as c;
 
+ .mobileSidebarbtn:hover{
+border: 1px solid  c.color(primary-color);
+padding: 3px;
+border-radius: 2px;
+ }
+ .mobileSidebarbtntwo:hover{
+border: 1px solid  c.color(primary-color);
+padding: 3px;
+border-radius: 2px;
+ }
+
 @media only screen and (max-width: 720px) {
   #header__sidebar{
     display:none !important;

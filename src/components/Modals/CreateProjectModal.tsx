@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import axios, { AxiosResponse } from "axios";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -287,7 +287,7 @@ const CreateProjectModal = (props: any) => {
                         className="Add-btn-modal"
                         type="submit"
                       >
-                        {isLoading ? "Processing..." : "Create Project"}
+                        {isLoading ? <Spinner animation="border" /> : "Create Project"}
                       </Button>
                     </div>
                   </div>

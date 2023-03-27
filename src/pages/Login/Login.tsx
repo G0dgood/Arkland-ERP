@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Spinner } from "react-bootstrap";
 import { Toast } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import * as Yup from "yup";
@@ -169,7 +169,7 @@ const Login = () => {
                       </div>
 
                       <Button type="submit">
-                        {isLoading ? "Please wait..." : "Login"}
+                        {isLoading ? <Spinner animation="border" /> : "Login"}
                       </Button>
                     </Form>
                   )}

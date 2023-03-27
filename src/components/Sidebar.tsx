@@ -8,8 +8,12 @@ import { FiPieChart, FiUser, FiFolder, FiLogOut } from "react-icons/fi";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { GoFile } from "react-icons/go";
 import { MdOutlineAssessment } from "react-icons/md";
+import storage from "../utils/storage";
 
 const Sidebar = ({ collapseNav }: any) => {
+
+  // @ts-ignore
+  const userInfo: any = JSON.parse(storage?.get("user"));
   // --- SideNav Bubble (States) --- //
   const [dashboard, setDashboard] = useState(false);
   const [kipassessment, setKPIAssessment] = useState(false);
@@ -22,6 +26,7 @@ const Sidebar = ({ collapseNav }: any) => {
   const [policy, setPolicy] = useState(false);
   const [logout, setLogout] = useState(false);
   const [weeklyreport, setWeeklyreport] = useState(false);
+  const [teamweekly, setTeamWeekly] = useState(false);
 
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
@@ -102,27 +107,46 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-
         <NavLink
-          to="/employees"
+          to="/teamweekly"
           // exact
           className={
-            window.location.pathname === "/employees"
+            window.location.pathname === "/teamweekly"
               ? "active-here"
               : "nav-link"
           }
-          onMouseEnter={() => setallEmployees(true)}
-          onMouseLeave={() => setallEmployees(false)}
+          onMouseEnter={() => setTeamWeekly(true)}
+          onMouseLeave={() => setTeamWeekly(false)}
         >
-          <FiUser size={24} />
-          <span className="nav-name">All Employees</span>
-          {allemployees && collapseNav && (
+          <GoFile size={23} />
+          <span className="nav-name">Team Weekly</span>
+          {teamweekly && collapseNav && (
             <div className="sidenav-bubble">
-              <p>All Employees</p>
+              <p>Team Weekly</p>
             </div>
           )}
         </NavLink>
-
+        {(userInfo?.data?.department?.name === "HR") && (
+          <NavLink
+            to="/employees"
+            // exact
+            className={
+              window.location.pathname === "/employees"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setallEmployees(true)}
+            onMouseLeave={() => setallEmployees(false)}
+          >
+            <FiUser size={24} />
+            <span className="nav-name">All Employees</span>
+            {allemployees && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>All Employees</p>
+              </div>
+            )}
+          </NavLink>
+        )}
         <NavLink
           to="/departments"
           // exact

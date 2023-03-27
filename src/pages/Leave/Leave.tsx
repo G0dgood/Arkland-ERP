@@ -94,7 +94,7 @@ const Leave = () => {
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
 	const [sortData, setSortData] = useState([]);
-	console.log('sortData', sortData)
+
 
 	// const handleLeave = () => {
 	// 	setisLoading(true);
@@ -152,7 +152,7 @@ const Leave = () => {
 	}, [token, userInfo?.data?.employee?._id])
 
 
-	// console.log('token', token)
+
 
 	const title = "Successful";
 	const html = message;
@@ -190,7 +190,7 @@ const Leave = () => {
 						<div className='allemployees-sup-item1'>
 							<Button variant="contained" className="Add-btn" onClick={() => navigate("/teamleaveapplications")}>
 								<GoPlus className="icon-space" />
-								{" "} Team Leave Applications
+								Team Leave Applications
 							</Button>
 						</div>
 						<div className='allemployees-sup-item2'>
@@ -206,9 +206,6 @@ const Leave = () => {
 					</div>
 
 					<div>
-						{/* <Button variant="contained" className="Add-btn">
-							Apply for Leave
-						</Button> */}
 						<ApplyForLeave />
 					</div>
 				</div>
@@ -265,202 +262,7 @@ const Leave = () => {
 												<Button id="team-applicatiom-update" onClick={() => setShowLeaver(true)} >View</Button></td>
 										</tr>
 									)))}
-								{/* <tr className="data-table-row">
-									<td className="table-datacell datatype-string">Ice cream sandwich</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn">
-											Approved
-										</Button>
-									</td>
 
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">View</Button></td>
-								</tr> */}
-								{/* <tr className="data-table-row">
-									<td className="table-datacell datatype-string">Eclair</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn-error">
-											Not Approved
-										</Button>
-									</td>
-
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">View</Button></td>
-								</tr> */}
-								{/* <tr className="data-table-row">
-									<td className="table-datacell datatype-string">Cupcake</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									< td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									< td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn">
-											Approved
-										</Button>
-									</td>
-
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">View</Button>
-									</td>
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Gingerbread</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn-pending">
-											Pending
-										</Button>
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">View</Button></td>
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Jellybean</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn-error">
-											Not Approved
-										</Button>
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">View</Button></td>
-								</tr>
-								<tr>
-									<td className="table-datacell datatype-string">Lollipop</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn">
-											Approved
-										</Button>
-									</td>
-
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">Update</Button></td>
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Honeycomb</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn-pending">
-											Pending
-										</Button>
-									</td>
-
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">View</Button></td>
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">Donut</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn-error">
-											Not Approved
-										</Button>
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">View</Button></td>
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-string">KitKat</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">31-08-2022</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsCheckCircle size={25} color={"green"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<BsXCircle size={25} color={"red"} />
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button variant="outlined" id="leave-status-btn">
-											Approved
-										</Button>
-									</td>
-									<td className="table-datacell datatype-numeric">
-										<Button id="team-applicatiom-update">View</Button></td>
-								</tr> */}
 							</tbody>
 						</table>
 					</div>

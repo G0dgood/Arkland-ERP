@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { MdOutlineClose } from "react-icons/md";
 import Cookies from "js-cookie";
 import { Form, Formik } from "formik";
@@ -20,7 +20,6 @@ const AddTodo = (props: any) => {
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
-    console.log("values", values);
 
     const createTaskValues = { ...values };
     try {
@@ -203,7 +202,7 @@ const AddTodo = (props: any) => {
                         className="Add-btn-modal"
                         type="submit"
                       >
-                        {isLoading ? "Please wait..." : "Create"}
+                        {isLoading ? <Spinner animation="border" /> : "Create"}
                       </Button>
                     </div>
                   </div>

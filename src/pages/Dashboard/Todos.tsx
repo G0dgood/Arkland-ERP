@@ -22,13 +22,6 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
   const [taskCreateShow, setTaskCreateShow] = React.useState(false);
   const [newTodoCreated, setNewTodoCreated] = React.useState(false);
 
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
-  };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -109,26 +102,9 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
         </div>
 
         {
-          //   <div
-          //     style={{
-          //       display: "flex",
-          //       justifyContent: "center",
-          //       margin: "auto",
-          //       width: "40%",
-          //       alignItems: "center",
-          //     }}
-          //   >
-          //     <SyncLoader
-          //       cssOverride={override}
-          //       color={"#990000"}
-          //       loading={isLoading}
-          //     />
-          //   </div>
-          // ) : (
           isLoading ? (
             <div className="table-loader-announcement1">
               <SyncLoader
-                cssOverride={override}
                 color={"#990000"}
                 loading={isLoading}
               />
@@ -154,16 +130,15 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                   <div
                     className="main-todo-Event"
                     style={{ borderRadius: "4px" }}
+                    key={i}
                   >
                     <div className="main-todo-container">
                       <div className="main-todo-input">
-                        {" "}
                         <Checkbox />
                       </div>
                       <div>
-                        <div> {item.title}</div>
+                        <div> {item?.title}</div>
                         <div className="main-todo-input-time">
-                          {" "}
                           {moment(item?.expected_completion_date).format(
                             "DD-MMMM-YYYY"
                           )}
@@ -179,25 +154,6 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                   </div>
                 ))}
               </div>
-              {/* ) : (
-              <div className="main-todo-RiTodoLine" >
-                <div
-                  className="main-todo-Event"
-                  style={{ borderRadius: "4px" }}
-                >
-                  <div className="main-todo-container">
-                    <div
-                      style={{
-                        paddingLeft: "10px",
-                      }}
-                    >
-                      <div className="main-todo-input-time"> No task</div>
-                    </div>
-                  </div>
-                </div>
-                <RiTodoLine size={140} color="#99000008" className="todo-RiTodoLine" />
-              </div>
-            )} */}
             </div>
           )}
       </div>

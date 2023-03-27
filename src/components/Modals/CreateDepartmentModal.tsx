@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import Cookies from "js-cookie";
 import { Button } from "@material-ui/core";
 import { MdOutlineClose } from "react-icons/md";
@@ -121,7 +121,7 @@ const CreateDepartmentModal = (props: any) => {
                         className="Add-btn-modal"
                         type="submit"
                       >
-                        {isLoading ? "Please wait..." : "Create"}
+                        {isLoading ? <Spinner animation="border" /> : "Create"}
                       </Button>
                     </div>
                   </div>

@@ -105,20 +105,20 @@ const DepartmentsView = () => {
                   <div
                     className="ProjectView-card"
                     key={i}
-                    onClick={() => navigate(`/departments/${item.id}`)}
+                    onClick={() => navigate(`/departments/${item?.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
-                      <Button className={`iDotsRounded1`}>{item.name}</Button>
+                      <Button className={`iDotsRounded1`}>{item?.name}</Button>
                       <BiDotsHorizontalRounded color="#97979B" />
                     </div>
-                    <div className="iDotsRounded-text">{item.name}</div>
-                    <div className="iDotsRounded-text">{item.description}</div>
+                    <div className="iDotsRounded-text">{item?.name}</div>
+                    <div className="iDotsRounded-text">{item?.description}</div>
 
                     <div className="iDotsRounded-percent-people">
                       <div className="iDotsRounded-percent-list">
                         <span className="profile-containers">Status</span>
                         <span className="profile-containers">
-                          {item.status}
+                          {item?.status}
                         </span>
                       </div>
                       {/* <div className="percent-people-grid">
@@ -145,7 +145,7 @@ const DepartmentsView = () => {
                     <div className="projects-total-container">
                       <span className="projects-total1-span"></span>
                       <span className="projects-total1-span1">
-                        {departments.length}
+                        {departments?.length}
                       </span>
                     </div>
                   </div>

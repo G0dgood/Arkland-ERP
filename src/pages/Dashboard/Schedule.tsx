@@ -4,7 +4,7 @@ import { FiTrash2 } from "react-icons/fi";
 import { Button } from "@mui/material";
 import { SyncLoader } from "react-spinners";
 import moment from "moment";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { MdOutlineClose } from "react-icons/md";
 import { Form, Formik } from "formik";
 import InputField from "../../components/Inputs/InputField";
@@ -23,13 +23,7 @@ const Schedule = () => {
   const { tasks, isLoading, error, message, setLoading } =
     useFetchTasks(taskAction);
 
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
-  };
+
 
   const deleteTask = async (id: string) => {
     setLoading(true);
@@ -109,6 +103,8 @@ const Schedule = () => {
       })
     );
 
+
+
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">
@@ -118,18 +114,19 @@ const Schedule = () => {
         </div>
 
         {isLoading === true ? (
-          <div
-            style={{
-              margin: "auto",
-              width: "40%",
-              alignItems: "center",
-            }}
-          >
+          <div className="table-loader-announcement1">
             <SyncLoader
-              cssOverride={override}
               color={"#990000"}
               loading={isLoading}
             />
+          </div>
+        ) : tasks?.length === 0 || tasks == null ? (
+          <div className="table-loader-announcement1">
+            <div>
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
+              <img src="https://img.icons8.com/external-outline-design-circle/66/null/external-Todo-List-shopping-and-ecommerce-outline-design-circle.png" />
+              <p className="mt-3">No schedule found</p>
+            </div>
           </div>
         ) : (
           <div
@@ -138,62 +135,44 @@ const Schedule = () => {
               gridTemplateColumns: "1fr",
             }}
           >
-            {tasks?.length > 0 ? (
-              <div className="Announcement-container">
-                {tasks?.map((item: any, i: any) => (
-                  <div className="Announcement-sub-2">
-                    <div
-                      className="main-todo-Event"
-                      style={{ borderRadius: "4px" }}
-                    >
-                      <div className="main-todo-container">
-                        <div
-                          style={{
-                            paddingLeft: "10px",
-                          }}
-                        >
-                          <div>
-                            {item.title} due by{" "}
-                            {moment(item?.expected_completion_date).format(
-                              "DD-MMMM-YYYY"
-                            )}{" "}
-                          </div>
+            <div className="Announcement-container">
+              {tasks?.data?.map((item: any, i: any) => (
+                <div className="Announcement-sub-2" key={i}>
+                  <div
+                    className="main-todo-Event"
+                    style={{ borderRadius: "4px" }}
+                  >
+                    <div className="main-todo-container">
+                      <div
+                        style={{
+                          paddingLeft: "10px",
+                        }}
+                      >
+                        <div>
+                          {item?.title} due by{" "}
+                          {moment(item?.expected_completion_date).format(
+                            "DD-MMMM-YYYY"
+                          )}{" "}
+                        </div>
 
-                          <div className="main-todo-input-time">
-                            {tasks && tasks.length > 0
-                              ? item.notes[0]?.text
-                              : ""}
-                          </div>
+                        <div className="main-todo-input-time">
+                          {tasks && tasks?.length > 0
+                            ? item?.notes[0]?.text
+                            : ""}
                         </div>
                       </div>
-                      <div className="FiTrash2">
-                        <FiTrash2
-                          size={25}
-                          onClick={() => deleteTask(item?.id)}
-                        />
-                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div>
-                <div
-                  className="main-todo-Event"
-                  style={{ borderRadius: "4px" }}
-                >
-                  <div className="main-todo-container">
-                    <div
-                      style={{
-                        paddingLeft: "10px",
-                      }}
-                    >
-                      <div className="main-todo-input-time"> No task</div>
+                    <div className="FiTrash2">
+                      <FiTrash2
+                        size={25}
+                        onClick={() => deleteTask(item?.id)}
+                      />
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
+
           </div>
         )}
       </div>
@@ -213,7 +192,7 @@ const Schedule = () => {
         >
           <Modal.Header>
             <span></span>
-            <span className="span-center-title"> Create Task</span>
+            <span className="span-center-title">Create Task</span>
             <Button
               style={{ color: "#fff" }}
               onClick={() => setTaskCreateShow(false)}
@@ -337,7 +316,7 @@ const Schedule = () => {
                           className="Add-btn-modal"
                           type="submit"
                         >
-                          {isLoading ? "Please wait..." : "Create"}
+                          {isLoading ? <Spinner animation="border" /> : "Create"}
                         </Button>
                       </div>
                     </div>
