@@ -52,6 +52,8 @@ import { getProjects } from "./store/reducers/project";
 import { getTasks } from "./store/reducers/tasks";
 import WeeklyContainer from "./pages/WeeklyReport/WeeklyContainer";
 import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
+import TeamWeeklyReport from "./pages/WeeklyReport/TeamWeeklyReport";
+import TeamWeeklyReportUpdate from "./pages/WeeklyReport/TeamWeeklyReportUpdate";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -108,10 +110,11 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
         <Route path="/weeklycontainer" element={<WeeklyContainer />} />
-        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />}
-        />
+        <Route path="/teamleaveapplications" element={<TeamLeaveApplications />} />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
+        <Route path="/teamweekly" element={<TeamWeeklyReport />} />
         <Route path="/weeklyreportview/:id" element={<WeeklyReportView />} />
+        <Route path="/teamWeeklyreportupdate/:id" element={<TeamWeeklyReportUpdate />} />
         {/* </Route> */}
         {/* Protected routes as admins, HR, Project managers and team leads */}
         <Route
@@ -130,10 +133,7 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/projects" element={<Project />} />
 
           <Route path="/viewproject/:id" element={<ViewProjects />} />
-          <Route
-            path="/allleaveapplications"
-            element={<AllLeaveApplications />}
-          />
+          <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
           <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
           <Route path="/createemployee" element={<CreateEmployee />} />
           <Route path="/createprojects" element={<CreateProjects />} />

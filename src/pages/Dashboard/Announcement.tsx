@@ -57,13 +57,7 @@ const Announcement = () => {
   const handleNewAnnouncementCreated = () => {
     setNewAnnouncementCreated(!newAnnouncementCreated);
   };
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
-  };
+
   return (
     <div className="main-div-col-2-sub">
       <div className="Announcement-sub-1">
@@ -87,7 +81,6 @@ const Announcement = () => {
           isLoading ? (
             <div className="table-loader-announcement" >
               <SyncLoader
-                cssOverride={override}
                 color={"#990000"}
                 loading={isLoading}
               />

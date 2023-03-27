@@ -66,6 +66,8 @@ input[type="checkbox"] {
 
 .main-todo-title {
   margin-bottom: 1rem;
+   display: flex;
+  justify-content: space-between;
 }
 
 .main-todo-container {

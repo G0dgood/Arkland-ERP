@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
 import { Formik } from "formik";
@@ -244,7 +244,7 @@ const RequestWorkerModal = (props: any) => {
                       type="submit"
                       onClick={(e) => handleSubmit()}
                     >
-                      {isLoading ? "Processing..." : "          Request Worker"}
+                      {isLoading ? <Spinner animation="border" /> : "          Request Worker"}
                     </Button>
                   </div>
                 </div>

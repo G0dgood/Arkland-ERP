@@ -37,7 +37,7 @@ flex-grow: 1;
 			    display: grid;
     grid-template-columns: 2fr 4fr; 
 					    box-shadow: c.$box-card-shadow;
-									border: 1px solid c.color(grey);
+									border: 1px solid #ededed;
 }
 
 .weekly-top-card-1-sub p:nth-child(odd) {
@@ -45,11 +45,11 @@ flex-grow: 1;
     font-size: medium;
     font-weight: 700;
    color: c.color(primary-color);
-    border-right: 1px solid  c.color(grey);
+    border-right: 1px solid  #ededed;
 			  padding-left: 2rem !important;
 }
 .weekly-top-card-1-sub p {
-				border-top: 1px solid  c.color(grey); 
+				border-top: 1px solid  #ededed; 
 				padding: 8px;
 				margin: 0;
 				color: c.color(primary-color);
@@ -77,7 +77,7 @@ flex-grow: 1;
 				    display: grid;
     grid-template-columns: 1fr;
 				  box-shadow: c.$box-card-shadow;
-				border: 1px solid c.color(grey);
+				border: 1px solid #ededed;
 						color: c.color(primary-color);
 						font-weight: bold;
 }
@@ -90,7 +90,7 @@ flex-grow: 1;
 //     // border-right: 1px solid c.color(border);
 // }
 .weekly-grading-system p {
-				border-top: 1px solid c.color(border);
+				border-top: 1px solid #ededed;
 				padding: 5px;
 				margin: 0;
 				background-color: rgba(240, 248, 255, 0.497);

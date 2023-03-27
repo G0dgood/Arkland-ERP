@@ -1,8 +1,8 @@
+import React from 'react'
+import TableLoader from '../../components/TableLoader';
+import { NoRecordFound, TableFetch } from '../../components/TableOptions';
 
-import TableLoader from '../TableLoader'
-import { NoRecordFound, TableFetch } from '../TableOptions'
-
-const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
+const WeeklyReportTable = ({ setInputs, isLoading, data }: any) => {
 
 	const handleChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
@@ -105,4 +105,4 @@ const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
 	)
 }
 
-export default WeeklyReportTable5
+export default WeeklyReportTable
