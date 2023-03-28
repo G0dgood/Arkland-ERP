@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getRequestOptions } from "../utils/auth/header";
 
 function useAnnouncements() {
@@ -7,6 +7,14 @@ function useAnnouncements() {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
+
+  const updateAnnouncements = useCallback((data: any) => {
+    setAnnouncements(data);
+    setLoading(false);
+    setError("");
+    setRetryCount(0);
+    setMessage("");
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -52,14 +60,12 @@ function useAnnouncements() {
       }
     };
 
-    if (isMounted) {
-      fetchData();
-    }
+    fetchData();
 
     return () => {
       isMounted = false;
     };
-  }, [retryCount]);
+  }, [retryCount, updateAnnouncements]);
 
   return {
     announcements,

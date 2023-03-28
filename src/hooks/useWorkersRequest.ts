@@ -1,16 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
-import { InterfaceAction } from "../interfaces/base";
 import { getRequestOptions } from "../utils/auth/header";
 
-export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
-  const [departments, setDepartments] = useState([] as any);
+export const useWorkersRequest = () => {
+  const [requestWorkersList, setRequestWorkersList] = useState([] as any);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
 
-  const updateDepartments = useCallback((data: any) => {
-    setDepartments(data);
+  const updateWorkersRequest = useCallback((data: any) => {
+    setRequestWorkersList(data);
     setLoading(false);
     setError("");
     setRetryCount(0);
@@ -23,7 +22,7 @@ export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
       try {
         setLoading(true);
         const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/departments`,
+          `${process.env.REACT_APP_API}/hr/workers-requests`,
           getRequestOptions
         );
         const isJsonResponse = response.headers
@@ -36,7 +35,7 @@ export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
         }
 
         if (isMounted) {
-          setDepartments(responseData.data);
+          setRequestWorkersList([...responseData.data]);
           setLoading(false);
           setError("");
           setRetryCount(0);
@@ -65,10 +64,10 @@ export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
     return () => {
       isMounted = false;
     };
-  }, [retryCount, newDepartmentCreated, updateDepartments]);
+  }, [retryCount, updateWorkersRequest]);
 
   return {
-    departments,
+    requestWorkersList,
     isLoading,
     error,
     message,
@@ -76,18 +75,15 @@ export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
   };
 };
 
-export const useDepartmentById = (id: string) => {
-  const [department, setDepartment] = useState([] as any);
-  const [departmentMembers, setDepartmentMembers] = useState({} as any);
+export const useWorkersRequestById = (id: string) => {
+  const [requestWorkersList, setRequestWorkersList] = useState([] as any);
   const [isLoading, setLoading] = useState(false);
-  const [membersLoading, setMembersLoading] = useState(false);
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
 
-  const updateDepartmentById = useCallback((data: any) => {
-    setDepartment(data);
-    setDepartmentMembers(data);
+  const updateWorkersRequestById = useCallback((data: any) => {
+    setRequestWorkersList(data);
     setLoading(false);
     setError("");
     setRetryCount(0);
@@ -100,7 +96,7 @@ export const useDepartmentById = (id: string) => {
       try {
         setLoading(true);
         const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/departments/${id}`,
+          `${process.env.REACT_APP_API}/hr/workers-requests/${id}`,
           getRequestOptions
         );
         const isJsonResponse = response.headers
@@ -113,35 +109,17 @@ export const useDepartmentById = (id: string) => {
         }
 
         if (isMounted) {
-          setDepartment(responseData.data.department);
+          setRequestWorkersList(responseData.data);
           setLoading(false);
+          setError("");
+          setRetryCount(0);
+          setMessage("");
         }
-        setMembersLoading(true);
-        const responseDepartmentMembers = await fetch(
-          `${process.env.REACT_APP_API}/hr/employees?department=${id}`,
-          getRequestOptions
-        );
-        const isJsonResponseDepartmentMembers =
-          responseDepartmentMembers.headers
-            ?.get("content-type")
-            ?.includes("application/json");
-        const dataDepartmentsMembers =
-          isJsonResponseDepartmentMembers &&
-          (await responseDepartmentMembers.json());
-        if (!responseDepartmentMembers.ok) {
-          throw new Error(
-            dataDepartmentsMembers.message || responseDepartmentMembers.status
-          );
-        }
-        if (isMounted) {
-          setDepartmentMembers(dataDepartmentsMembers.data);
-        }
-        setMembersLoading(false);
-        setRetryCount(0);
       } catch (error: any) {
         setLoading(false);
         setError(error.message || "Something went wrong");
         setMessage(error.message || "Something went wrong");
+
         const statusCode = error.message;
         if (
           retryCount < 5 &&
@@ -161,13 +139,11 @@ export const useDepartmentById = (id: string) => {
     return () => {
       isMounted = false;
     };
-  }, [retryCount, id, updateDepartmentById]);
+  }, [retryCount, id, updateWorkersRequestById]);
 
   return {
-    department,
-    departmentMembers,
+    requestWorkersList,
     isLoading,
-    membersLoading,
     error,
     message,
     setLoading,

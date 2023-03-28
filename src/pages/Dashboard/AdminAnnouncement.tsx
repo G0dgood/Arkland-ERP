@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import moment from "moment";
 import { SyncLoader } from "react-spinners";
 import {
@@ -9,13 +9,11 @@ import {
 import { Button } from "@material-ui/core";
 import { Toast } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
-import { getRequestOptions } from "../../utils/auth/header";
 import useAnnouncements from "../../hooks/useAnnouncements";
 
 const AdminAnnouncement = () => {
   const { announcements, isLoading, error, message } = useAnnouncements();
   const [showToast, setShowToast] = React.useState(false);
-
 
   return (
     <div className="admin-main-div-col-2-sub">
@@ -51,11 +49,8 @@ const AdminAnnouncement = () => {
 
       <div>
         {isLoading === true ? (
-          <div className="table-loader-announcement" >
-            <SyncLoader
-              color={"#990000"}
-              loading={isLoading}
-            />
+          <div className="table-loader-announcement">
+            <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
         ) : announcements?.length === 0 || announcements == null ? (
           <div className="table-loader-announcement">
@@ -99,7 +94,6 @@ const AdminAnnouncement = () => {
                 </div>
               ))}
             </div>
-
           </>
         )}
       </div>

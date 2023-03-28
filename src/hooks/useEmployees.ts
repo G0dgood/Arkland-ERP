@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getRequestOptions } from "../utils/auth/header";
 
 export const useEmployees = () => {
@@ -7,6 +7,14 @@ export const useEmployees = () => {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
+
+  const updateEmployees = useCallback((data: any) => {
+    setEmployees(data);
+    setLoading(false);
+    setError("");
+    setRetryCount(0);
+    setMessage("");
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -52,14 +60,12 @@ export const useEmployees = () => {
       }
     };
 
-    if (isMounted) {
-      fetchData();
-    }
+    fetchData();
 
     return () => {
       isMounted = false;
     };
-  }, [retryCount]);
+  }, [retryCount, updateEmployees]);
 
   return {
     employees,
@@ -77,6 +83,15 @@ export const useEmployeeById = (id: string) => {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
+
+  const updateEmployeeById = useCallback((data: any) => {
+    setEmployee(data);
+    setSalary(data);
+    setLoading(false);
+    setError("");
+    setRetryCount(0);
+    setMessage("");
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -123,14 +138,12 @@ export const useEmployeeById = (id: string) => {
       }
     };
 
-    if (isMounted) {
-      fetchData();
-    }
+    fetchData();
 
     return () => {
       isMounted = false;
     };
-  }, [retryCount, id]);
+  }, [retryCount, id, updateEmployeeById]);
 
   return {
     employee,

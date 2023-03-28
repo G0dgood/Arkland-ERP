@@ -5,7 +5,6 @@ import { BsFillPinAngleFill, BsThreeDots } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
 import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 import { getRequestOptions } from "../../utils/auth/header";
-import { GrAnnounce } from "react-icons/gr";
 
 const Announcement = () => {
   const [announcements, setAnnouncements] = React.useState([] as any);
@@ -31,7 +30,9 @@ const Announcement = () => {
         const dataProjects =
           isJsonResponseAnnouncements && (await responseAnnouncements.json());
         if (!responseAnnouncements.ok) {
-          throw new Error(dataProjects?.message || responseAnnouncements.status);
+          throw new Error(
+            dataProjects?.message || responseAnnouncements.status
+          );
         }
         setAnnouncements(dataProjects?.data);
 
@@ -76,57 +77,51 @@ const Announcement = () => {
         </div>
       </div>
       <div>
-        {
-
-          isLoading ? (
-            <div className="table-loader-announcement" >
-              <SyncLoader
-                color={"#990000"}
-                loading={isLoading}
-              />
+        {isLoading ? (
+          <div className="table-loader-announcement">
+            <SyncLoader color={"#990000"} loading={isLoading} />
+          </div>
+        ) : announcements?.length === 0 || announcements == null ? (
+          <div className="table-loader-announcement">
+            <div>
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
+              <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-announcement-marketing-outline-others-phat-plus.png" />
+              <p className="mt-3">No announcement found</p>
             </div>
-          ) : announcements?.length === 0 || announcements == null ? (
-            <div className="table-loader-announcement">
-              <div>
-                {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-announcement-marketing-outline-others-phat-plus.png" />
-                <p className="mt-3">No announcement found</p>
-              </div>
-            </div>
-          ) : (
-            <div className="Announcement-container">
-              {announcements?.map((item: any, i: any) => (
-                <div className="Announcement-sub-2" key={i}>
-                  <div
-                    className="main-todo-Event"
-                    style={{ borderRadius: "4px" }}
-                  >
-                    <div className="main-todo-container">
-                      <div className="main-todo-note">
-                        <div>{item?.message}</div>
-                        <div className="main-todo-note-minutes">
-                          {moment
-                            .duration(moment().diff(item?.created_at))
-                            .humanize()}{" "}
-                          ago
-                        </div>
+          </div>
+        ) : (
+          <div className="Announcement-container">
+            {announcements?.map((item: any, i: any) => (
+              <div className="Announcement-sub-2" key={i}>
+                <div
+                  className="main-todo-Event"
+                  style={{ borderRadius: "4px" }}
+                >
+                  <div className="main-todo-container">
+                    <div className="main-todo-note">
+                      <div>{item?.message}</div>
+                      <div className="main-todo-note-minutes">
+                        {moment
+                          .duration(moment().diff(item?.created_at))
+                          .humanize()}{" "}
+                        ago
                       </div>
                     </div>
-                    <div className="FiTrash2">
-                      <span className="BsFillPinAngleFill">
-                        {" "}
-                        <BsFillPinAngleFill size={20} />
-                      </span>
-                      <span>
-                        <BsThreeDots size={25} />
-                      </span>
-                    </div>
+                  </div>
+                  <div className="FiTrash2">
+                    <span className="BsFillPinAngleFill">
+                      {" "}
+                      <BsFillPinAngleFill size={20} />
+                    </span>
+                    <span>
+                      <BsThreeDots size={25} />
+                    </span>
                   </div>
                 </div>
-              ))}
-            </div>
-          )
-        }
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

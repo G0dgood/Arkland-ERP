@@ -15,15 +15,22 @@ import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
 import { useAppSelector } from "../../hooks/useDispatch";
 import useFetchTasks from "../../hooks/useSchedule";
+import { DialogState } from "../../interfaces/base";
 
 const Schedule = () => {
   const token = Cookies.get("token");
   const [taskAction, setTaskAction] = React.useState({} as any);
   const [taskCreateShow, setTaskCreateShow] = React.useState(false);
+  const [deleteShow, setDeleteShow] = React.useState(false);
+  const [showDialog, setShowDialog] = React.useState<DialogState>({});
+
   const { tasks, isLoading, error, message, setLoading } =
     useFetchTasks(taskAction);
 
-
+  const handleDelete = (id: any) => {
+    setShowDialog({ [id]: true });
+    setDeleteShow(true);
+  };
 
   const deleteTask = async (id: string) => {
     setLoading(true);
@@ -103,8 +110,6 @@ const Schedule = () => {
       })
     );
 
-
-
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">
@@ -115,10 +120,7 @@ const Schedule = () => {
 
         {isLoading === true ? (
           <div className="table-loader-announcement1">
-            <SyncLoader
-              color={"#990000"}
-              loading={isLoading}
-            />
+            <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
         ) : tasks?.length === 0 || tasks == null ? (
           <div className="table-loader-announcement1">
@@ -135,44 +137,82 @@ const Schedule = () => {
               gridTemplateColumns: "1fr",
             }}
           >
-            <div className="Announcement-container">
-              {tasks?.data?.map((item: any, i: any) => (
-                <div className="Announcement-sub-2" key={i}>
-                  <div
-                    className="main-todo-Event"
-                    style={{ borderRadius: "4px" }}
-                  >
-                    <div className="main-todo-container">
-                      <div
-                        style={{
-                          paddingLeft: "10px",
-                        }}
-                      >
-                        <div>
-                          {item?.title} due by{" "}
-                          {moment(item?.expected_completion_date).format(
-                            "DD-MMMM-YYYY"
-                          )}{" "}
-                        </div>
+            {tasks?.length > 0 ? (
+              <div className="Announcement-container">
+                {tasks?.map((item: any, i: any) => (
+                  <div className="Announcement-sub-2" key={i}>
+                    <div
+                      className="main-todo-Event"
+                      style={{ borderRadius: "4px" }}
+                    >
+                      <div className="main-todo-container">
+                        <div
+                          style={{
+                            paddingLeft: "10px",
+                          }}
+                        >
+                          <div>
+                            {item?.title} due by{" "}
+                            {moment(item?.expected_completion_date).format(
+                              "DD-MMMM-YYYY"
+                            )}{" "}
+                          </div>
 
-                        <div className="main-todo-input-time">
-                          {tasks && tasks?.length > 0
-                            ? item?.notes[0]?.text
-                            : ""}
+                          <div className="main-todo-input-time">
+                            {tasks && tasks?.length > 0
+                              ? item?.notes[0]?.text
+                              : ""}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="FiTrash2">
-                      <FiTrash2
-                        size={25}
-                        onClick={() => deleteTask(item?.id)}
-                      />
+                      <div className="FiTrash2">
+                        <FiTrash2
+                          size={25}
+                          onClick={() => handleDelete(item?.id)}
+                        />
+                      </div>
+                      {showDialog[item?.id] && (
+                        <Modal
+                          size="lg"
+                          show={deleteShow}
+                          aria-labelledby="contained-modal-title-vcenter"
+                          centered
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title>Delete Task</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <p>Are you sure you want to delete this task?</p>
+                            <p>{item?.title}</p>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => {
+                                deleteTask(item?.id);
+                                setShowDialog({ [item?.id]: false });
+                              }}
+                            >
+                              Yes
+                            </button>
+                            <button
+                              className="btn btn-secondary"
+                              onClick={() =>
+                                setShowDialog({ [item?.id]: false })
+                              }
+                            >
+                              Cancel
+                            </button>
+                          </Modal.Footer>
+                        </Modal>
+                      )}
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-
+                ))}
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         )}
       </div>
@@ -316,7 +356,11 @@ const Schedule = () => {
                           className="Add-btn-modal"
                           type="submit"
                         >
-                          {isLoading ? <Spinner animation="border" /> : "Create"}
+                          {isLoading ? (
+                            <Spinner animation="border" />
+                          ) : (
+                            "Create"
+                          )}
                         </Button>
                       </div>
                     </div>
