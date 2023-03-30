@@ -159,8 +159,8 @@ const ViewSiteWorkerRequest = () => {
         const html = `Request declined`;
         const icon = "success";
         fireAlert(title, html, icon);
-        navigate(-1);
         setDeclinedLoading(false);
+        navigate(-1);
       } else {
         throw new Error(data.message || "Something went wrong!");
       }

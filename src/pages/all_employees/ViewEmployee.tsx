@@ -3,6 +3,7 @@ import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { SyncLoader } from "react-spinners";
+import { Spinner } from "react-bootstrap";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectBack from "../../assets/vectors/project-back.svg";
@@ -19,7 +20,13 @@ const override: CSSProperties = {
 const ViewEmployee = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { employee, salary, isLoading } = useEmployeeById(id ? id : "");
+  const {
+    employee,
+    salary,
+    isLoading,
+    isDeleteLoading,
+    handleEmployeeDeletion,
+  } = useEmployeeById(id ? id : "");
 
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = React.useState(() => {
@@ -72,8 +79,13 @@ const ViewEmployee = () => {
                       <Button
                         variant="contained"
                         className="Create-event-Calender"
+                        onClick={() => handleEmployeeDeletion()}
                       >
-                        Add event
+                        {isDeleteLoading ? (
+                          <Spinner animation="border" />
+                        ) : (
+                          "Delete Employee"
+                        )}
                       </Button>
                     </div>
                   </div>

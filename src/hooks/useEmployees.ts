@@ -1,5 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
+import Cookies from "js-cookie";
+import { useNavigate, useParams } from "react-router-dom";
 import { getRequestOptions } from "../utils/auth/header";
+import { fireAlert } from "../utils/Alert";
+const token = Cookies.get("token");
 
 export const useEmployees = () => {
   const [employees, setEmployees] = useState([] as any);
@@ -77,9 +81,11 @@ export const useEmployees = () => {
 };
 
 export const useEmployeeById = (id: string) => {
+  const navigate = useNavigate();
   const [employee, setEmployee] = useState([] as any);
   const [salary, setSalary] = useState({} as any);
   const [isLoading, setLoading] = useState(false);
+  const [isDeleteLoading, setDeleteLoading] = useState(false);
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
@@ -145,12 +151,45 @@ export const useEmployeeById = (id: string) => {
     };
   }, [retryCount, id, updateEmployeeById]);
 
+  const handleEmployeeDeletion = async () => {
+    setDeleteLoading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}/hr/employees/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        const title = "Employed deleted.";
+        const html = `Employee deleted`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+        setDeleteLoading(false);
+        navigate(-1);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setDeleteLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Employee deletion failed";
+      fireAlert(title, html, icon);
+    }
+  };
   return {
     employee,
     salary,
     isLoading,
-    error,
-    message,
-    setLoading,
+    isDeleteLoading,
+    handleEmployeeDeletion,
   };
 };
