@@ -12,12 +12,16 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-import { useAppSelector } from "../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { useWorkersRequest } from "../../hooks/useWorkersRequest";
+import { getProjects } from "../../store/reducers/project";
+import { getTeam } from "../../store/reducers/team";
+import { getTeamLeads } from "../../store/reducers/teamLeads";
 import { checkForName } from "../../utils/checkForName";
 
 const SiteWorkerRequest = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [showToast, setShowToast] = useState(false);
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -37,6 +41,17 @@ const SiteWorkerRequest = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
+  useEffect(() => {
+    if (!projects || projects.length === 0) {
+      dispatch(getProjects());
+    }
+    if (!teamLeads || teamLeads.length === 0) {
+      dispatch(getTeamLeads());
+    }
+    if (!team || team.length === 0) {
+      dispatch(getTeam());
+    }
+  }, [dispatch, projects, teamLeads, team]);
 
   const header = [
     { title: "PROJECT", prop: "project" },

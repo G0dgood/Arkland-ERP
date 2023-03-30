@@ -1,6 +1,7 @@
 import React, { CSSProperties } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "@material-ui/core";
 import { SyncLoader } from "react-spinners";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -14,9 +15,7 @@ const override: CSSProperties = {
   width: "99.8%",
   borderRadius: "50px",
 };
-interface Params {
-  id: string;
-}
+
 const ViewEmployee = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
@@ -59,13 +58,26 @@ const ViewEmployee = () => {
             <div className="project-main-div">
               <div className="project-main-div-col-1">
                 <div className="employee-main-div-col">
-                  <img
-                    src={projectBack}
-                    alt="User"
-                    className="project-back-img"
-                    onClick={() => navigate(-1)}
-                    title="Return"
-                  />
+                  <div className="employee-main-div-col-header">
+                    <div>
+                      <img
+                        src={projectBack}
+                        alt="User"
+                        className="project-back-img"
+                        onClick={() => navigate(-1)}
+                        title="Return"
+                      />
+                    </div>
+                    <div>
+                      <Button
+                        variant="contained"
+                        className="Create-event-Calender"
+                      >
+                        Add event
+                      </Button>
+                    </div>
+                  </div>
+
                   <h4 style={{ marginTop: "3rem" }}>Review Employee Details</h4>
                   <h6 style={{ marginTop: "3rem" }}>
                     Employee Essential Details
