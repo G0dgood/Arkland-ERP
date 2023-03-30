@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
+import { BsCheckCircle, BsExclamationLg, BsEyeFill } from "react-icons/bs";
 import { FiEdit, FiLock } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
@@ -60,14 +60,11 @@ const AllEmployees = () => {
   }, [collapseNav]);
 
   React.useEffect(() => {
-    if (
-      !roles ||
-      roles.length === 0 ||
-      !departments ||
-      departments.length === 0
-    ) {
-      dispatch(getDepartment());
+    if (!roles || roles.length === 0) {
       dispatch(getRoles());
+    }
+    if (!departments || departments.length === 0) {
+      dispatch(getDepartment());
     }
   }, [dispatch, roles, departments]);
 
@@ -77,8 +74,8 @@ const AllEmployees = () => {
     { title: "EMAIL", prop: "email" },
     { title: "ROLE", prop: "role" },
     { title: "DEPARTMENT", prop: "department" },
-    { title: "ACTIVE USER", prop: "active_user" },
-    { title: "VIEW", prop: "view" },
+    { title: "VIEW EMPLOYEE", prop: "view" },
+    { title: "ACTION" },
   ];
 
   return (
@@ -113,7 +110,7 @@ const AllEmployees = () => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
-                  // onClick={handleCreateEmployeeClick}
+                    // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee
@@ -190,9 +187,9 @@ const AllEmployees = () => {
                           </td>
                           <td className="table-datacell datatype-numeric">
                             <span>
-                              <BsCheckCircle
+                              <BsEyeFill
                                 size={25}
-                                color={"green"}
+                                color={"#d32f2f"}
                                 onClick={() =>
                                   navigate(`/employees/${item.id}`)
                                 }

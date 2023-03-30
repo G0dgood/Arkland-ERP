@@ -6,7 +6,7 @@ import { requestGetTeam } from "../request/team";
 export function* handleGetTeam(action: any) {
   let reRun = false;
   let retryCount = 0;
-  const maxRetries = 3;
+  const maxRetries = 5;
   const retryTimeout = 2000;
   while (retryCount < maxRetries) {
     try {

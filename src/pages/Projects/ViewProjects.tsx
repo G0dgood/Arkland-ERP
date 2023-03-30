@@ -33,6 +33,7 @@ import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
 import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 import { useProjectById } from "../../hooks/useProjects";
+import { DialogState } from "../../interfaces/base";
 
 const ViewProject = () => {
   const { id } = useParams<{ id: string }>();
@@ -40,6 +41,8 @@ const ViewProject = () => {
 
   const [value, onChange] = useState(new Date());
   const [showToast, setShowToast] = useState(false);
+  const [showDialog, setShowDialog] = useState<DialogState>({});
+  const [deleteShow, setDeleteShow] = useState(false);
 
   const override: CSSProperties = {
     display: "block",
@@ -65,6 +68,11 @@ const ViewProject = () => {
 
   const handleDeleteTask = (taskId: string) => {
     deleteTask(taskId);
+  };
+
+  const handleDelete = (id: any) => {
+    setShowDialog({ [id]: true });
+    setDeleteShow(true);
   };
 
   // --- Get current state of collapseNav from localStorage --- //
@@ -562,9 +570,49 @@ const ViewProject = () => {
                                   <div className="FiTrash2">
                                     <FiTrash2
                                       size={25}
-                                      onClick={() => handleDeleteTask(item?.id)}
+                                      onClick={() => handleDelete(item?.id)}
                                     />
                                   </div>
+                                  {showDialog[item?.id] && (
+                                    <Modal
+                                      size="lg"
+                                      show={deleteShow}
+                                      aria-labelledby="contained-modal-title-vcenter"
+                                      centered
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title>Delete Task</Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>
+                                        <p>
+                                          Are you sure you want to delete this
+                                          task?
+                                        </p>
+                                        <p>{item?.title}</p>
+                                      </Modal.Body>
+                                      <Modal.Footer>
+                                        <button
+                                          className="btn btn-danger"
+                                          onClick={() => {
+                                            deleteTask(item?.id);
+                                            setShowDialog({
+                                              [item?.id]: false,
+                                            });
+                                          }}
+                                        >
+                                          Yes
+                                        </button>
+                                        <button
+                                          className="btn btn-secondary"
+                                          onClick={() =>
+                                            setShowDialog({ [item?.id]: false })
+                                          }
+                                        >
+                                          Cancel
+                                        </button>
+                                      </Modal.Footer>
+                                    </Modal>
+                                  )}
                                 </div>
                               </div>
                             ))}

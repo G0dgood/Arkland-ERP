@@ -6,7 +6,7 @@ import { requestGetProjects } from "../request/project";
 export function* handleGetProjects(action: any) {
   let reRun = false;
   let retryCount = 0;
-  const maxRetries = 3;
+  const maxRetries = 5;
   const retryTimeout = 2000;
   while (retryCount < maxRetries) {
     try {

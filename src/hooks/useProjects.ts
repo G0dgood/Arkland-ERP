@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { InterfaceAction } from "../interfaces/base";
+import { useState, useEffect, useCallback } from "react";
 import { getRequestOptions } from "../utils/auth/header";
 import { fireAlert } from "../utils/Alert";
 import Cookies from "js-cookie";
@@ -12,6 +11,14 @@ export const useProjects = () => {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
+
+  const updateProjects = useCallback((data: any) => {
+    setProjects(data);
+    setLoading(false);
+    setError("");
+    setRetryCount(0);
+    setMessage("");
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -56,14 +63,12 @@ export const useProjects = () => {
       }
     };
 
-    if (isMounted) {
-      fetchData();
-    }
+    fetchData();
 
     return () => {
       isMounted = false;
     };
-  }, [retryCount]);
+  }, [retryCount, updateProjects]);
 
   return {
     projects,
@@ -86,6 +91,16 @@ export const useProjectById = (id: string) => {
   const [taskCreateShow, setTaskCreateShow] = useState(false);
   const [newTaskCreated, setNewTaskCreated] = useState({} as any);
   const [isTeamLoading, setTeamLoading] = useState(false);
+
+  const updateProjectById = useCallback((data: any) => {
+    setProjects(data);
+    setProjectsTasks(data);
+    setTeamMembers(data);
+    setLoading(false);
+    setError("");
+    setRetryCount(0);
+    setMessage("");
+  }, []);
 
   const handleNewTaskCreated = () => {
     setNewTaskCreated(!newTaskCreated);
@@ -171,14 +186,12 @@ export const useProjectById = (id: string) => {
       }
     };
 
-    if (isMounted) {
-      fetchData();
-    }
+    fetchData();
 
     return () => {
       isMounted = false;
     };
-  }, [retryCount, newTaskCreated]);
+  }, [retryCount, newTaskCreated, updateProjectById]);
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setProjectTasksLoading(true);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { InterfaceAction } from "../interfaces/base";
 import { getRequestOptions } from "../utils/auth/header";
 
@@ -8,6 +8,14 @@ export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
+
+  const updateDepartments = useCallback((data: any) => {
+    setDepartments(data);
+    setLoading(false);
+    setError("");
+    setRetryCount(0);
+    setMessage("");
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -52,14 +60,12 @@ export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
       }
     };
 
-    if (isMounted) {
-      fetchData();
-    }
+    fetchData();
 
     return () => {
       isMounted = false;
     };
-  }, [retryCount, newDepartmentCreated]);
+  }, [retryCount, newDepartmentCreated, updateDepartments]);
 
   return {
     departments,
@@ -78,6 +84,15 @@ export const useDepartmentById = (id: string) => {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
+
+  const updateDepartmentById = useCallback((data: any) => {
+    setDepartment(data);
+    setDepartmentMembers(data);
+    setLoading(false);
+    setError("");
+    setRetryCount(0);
+    setMessage("");
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -141,14 +156,12 @@ export const useDepartmentById = (id: string) => {
       }
     };
 
-    if (isMounted) {
-      fetchData();
-    }
+    fetchData();
 
     return () => {
       isMounted = false;
     };
-  }, [retryCount, id]);
+  }, [retryCount, id, updateDepartmentById]);
 
   return {
     department,
