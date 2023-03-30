@@ -89,7 +89,8 @@ const ViewSiteWorkerRequest = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { requestWorkersList, isLoading } = useWorkersRequestById(id ? id : "");
-  const { rolesWithEmployee } = useGetEmployeesWithRole();
+  const { rolesWithEmployee, isEmployeeWithRoleLoading } =
+    useGetEmployeesWithRole();
   const [approvedData, setApprovedData] = React.useState<any>({});
   const [isApprovedLoading, setLoading] = React.useState(false);
   const [isDelinedLoading, setDeclinedLoading] = React.useState(false);
@@ -158,8 +159,8 @@ const ViewSiteWorkerRequest = () => {
         const html = `Request declined`;
         const icon = "success";
         fireAlert(title, html, icon);
-        navigate(-1);
         setDeclinedLoading(false);
+        navigate(-1);
       } else {
         throw new Error(data.message || "Something went wrong!");
       }
@@ -189,14 +190,13 @@ const ViewSiteWorkerRequest = () => {
     { title: "ROLE NAME", prop: "role_name" },
     { title: "REQUESTED QUANTITY", prop: "requested_quantity" },
     { title: "CHOOSE EMPLOYEE TO ASSIGN" },
-    // { title: "ASSIGNED EMPLOYEES" },
   ];
 
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
-      {isLoading ? (
+      {isLoading && isEmployeeWithRoleLoading ? (
         <div
           style={{
             margin: "auto",
@@ -206,7 +206,7 @@ const ViewSiteWorkerRequest = () => {
           <SyncLoader
             cssOverride={override}
             color={"#990000"}
-            loading={isLoading}
+            loading={isLoading && isEmployeeWithRoleLoading}
           />
         </div>
       ) : (

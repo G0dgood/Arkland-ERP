@@ -200,7 +200,7 @@ export const useGetEmployeesWithRole = () => {
   const [rolesWithEmployee, setRolesWithEmployee] = useState<
     RoleWithEmployees[]
   >([]);
-  const [isLoading, setLoading] = useState(false);
+  const [isEmployeeWithRoleLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
@@ -286,7 +286,7 @@ export const useGetEmployeesWithRole = () => {
 
   return {
     rolesWithEmployee,
-    isLoading,
+    isEmployeeWithRoleLoading,
     error,
     message,
   };

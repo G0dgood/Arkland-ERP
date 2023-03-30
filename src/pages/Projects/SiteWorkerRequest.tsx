@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Toast } from "react-bootstrap";
-import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
+import { BsCheckCircle, BsExclamationLg, BsEyeFill } from "react-icons/bs";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
@@ -151,9 +151,9 @@ const SiteWorkerRequest = () => {
                       </td>
                       <td className="table-datacell datatype-numeric">
                         <span>
-                          <BsCheckCircle
+                          <BsEyeFill
                             size={25}
-                            color={"green"}
+                            color={"#d32f2f"}
                             onClick={() =>
                               navigate(`/site-worker-request/${item._id}`)
                             }

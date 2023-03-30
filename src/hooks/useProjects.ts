@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { getRequestOptions } from "../utils/auth/header";
-import { fireAlert } from "../utils/Alert";
 import Cookies from "js-cookie";
+import { fireAlert } from "../utils/Alert";
 
 const token = Cookies.get("token");
 
