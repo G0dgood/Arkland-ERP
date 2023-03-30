@@ -32,7 +32,7 @@ const RequestWorkerModal = (props: any) => {
           const icon = "success";
           fireAlert(title, html, icon);
           setLgShow(false);
-          navigate(`/site-worker-request`);
+          // navigate(`/site-worker-request`);
         }
       })
       .catch((err) => {
@@ -244,7 +244,11 @@ const RequestWorkerModal = (props: any) => {
                       type="submit"
                       onClick={(e) => handleSubmit()}
                     >
-                      {isLoading ? <Spinner animation="border" /> : "          Request Worker"}
+                      {isLoading ? (
+                        <Spinner animation="border" />
+                      ) : (
+                        "          Request Worker"
+                      )}
                     </Button>
                   </div>
                 </div>
