@@ -3,11 +3,12 @@ import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { SyncLoader } from "react-spinners";
-import { Spinner } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useEmployeeById } from "../../hooks/useEmployees";
+import { DialogState } from "../../interfaces/base";
 
 const override: CSSProperties = {
   display: "block",
@@ -27,6 +28,8 @@ const ViewEmployee = () => {
     isDeleteLoading,
     handleEmployeeDeletion,
   } = useEmployeeById(id ? id : "");
+  const [deleteShow, setDeleteShow] = React.useState(false);
+  const [showDialog, setShowDialog] = React.useState<any>({});
 
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = React.useState(() => {
@@ -41,7 +44,10 @@ const ViewEmployee = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-
+  const handleDelete = () => {
+    setShowDialog(true);
+    setDeleteShow(true);
+  };
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
@@ -79,15 +85,47 @@ const ViewEmployee = () => {
                       <Button
                         variant="contained"
                         className="Create-event-Calender"
-                        onClick={() => handleEmployeeDeletion()}
+                        onClick={() => handleDelete()}
                       >
-                        {isDeleteLoading ? (
+                        {/* {isDeleteLoading ? (
                           <Spinner animation="border" />
-                        ) : (
-                          "Delete Employee"
-                        )}
+                        ) : ( */}
+                        Delete Employee
+                        {/* )} */}
                       </Button>
                     </div>
+                    {showDialog && (
+                      <Modal
+                        size="lg"
+                        show={deleteShow}
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title>Delete Employee Data</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <p>Are you sure you want to delete employee data?</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => {
+                              handleEmployeeDeletion();
+                              setShowDialog(false);
+                            }}
+                          >
+                            Yes
+                          </button>
+                          <button
+                            className="btn btn-secondary"
+                            onClick={() => setShowDialog(false)}
+                          >
+                            Cancel
+                          </button>
+                        </Modal.Footer>
+                      </Modal>
+                    )}
                   </div>
 
                   <h4 style={{ marginTop: "3rem" }}>Review Employee Details</h4>
