@@ -2,6 +2,9 @@ import React, { CSSProperties } from "react";
 import { Button } from "@material-ui/core";
 import { useNavigate, useParams } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
+import { Spinner } from "react-bootstrap";
+
+import Cookies from "js-cookie";
 import Select from "react-select";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -13,6 +16,7 @@ import {
 import { useAppSelector } from "../../hooks/useDispatch";
 import { checkForName } from "../../utils/checkForName";
 import TableLoader from "../../components/TableLoader";
+import { fireAlert } from "../../utils/Alert";
 
 const override: CSSProperties = {
   display: "block",
@@ -21,7 +25,7 @@ const override: CSSProperties = {
   width: "99.8%",
   borderRadius: "50px",
 };
-type SelectedOptions = Record<string, string[]>;
+const token = Cookies.get("token");
 
 const EmployeeSelect = ({ onChange, value, options }: any) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -40,31 +44,40 @@ const EmployeeSelect = ({ onChange, value, options }: any) => {
   );
 };
 
-const MemoizedEmployeeSelect = React.memo(EmployeeSelect);
-
 const MemoizedEmployeeSelectWrapper = ({
   roleId,
   selectedRoleEmployees,
-}: // onChange,
-// selectedOptions,
-// requestId,
-any) => {
-  const [selectedOptions, setSelectedOptions] = React.useState<SelectedOptions>(
-    {}
-  );
+  onSelectedOptionsChange,
+}: any) => {
+  const [selectedOptions, setSelectedOptions] = React.useState<any>({});
+
+  React.useEffect(() => {
+    // Call the onSelectedOptionsChange callback function with the updated selectedOptions
+    onSelectedOptionsChange(selectedOptions);
+  }, [selectedOptions, onSelectedOptionsChange]);
 
   const handleChange = (requestId: string, selectedValues: any) => {
-    setSelectedOptions({
-      ...selectedOptions,
-      [requestId]: selectedValues,
-    });
+    const assignedEmployees = selectedValues.map(
+      (employee: any) => employee.value
+    );
+    const selectedRequest = {
+      approved_quantity: assignedEmployees.length,
+      assigned_employees: assignedEmployees,
+    };
+    setSelectedOptions((prevState: any) => ({
+      ...prevState,
+      approved_requests: {
+        ...prevState.approved_requests,
+        [requestId]: selectedRequest,
+      },
+    }));
   };
 
   const employees =
     selectedRoleEmployees.filter((item: any) => item.id === roleId)[0]
       ?.employees?.data || [];
   return (
-    <MemoizedEmployeeSelect
+    <EmployeeSelect
       onChange={(selectedValues: any) => handleChange(roleId, selectedValues)}
       value={selectedOptions[roleId]}
       options={employees}
@@ -77,22 +90,87 @@ const ViewSiteWorkerRequest = () => {
   const { id } = useParams<{ id: string }>();
   const { requestWorkersList, isLoading } = useWorkersRequestById(id ? id : "");
   const { rolesWithEmployee } = useGetEmployeesWithRole();
-  console.log("rolesWithEmployee", rolesWithEmployee);
+  const [approvedData, setApprovedData] = React.useState<any>({});
+  const [isApprovedLoading, setLoading] = React.useState(false);
+  const [isDelinedLoading, setDeclinedLoading] = React.useState(false);
+
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = React.useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
-  const [selectedOptions, setSelectedOptions] = React.useState<SelectedOptions>(
-    {}
-  );
+  const handleSelectedOptionsChange = (selectedOptions: any) => {
+    // Do something with the updated selectedOptions
+    setApprovedData(selectedOptions);
+  };
 
-  const handleSelectChange = (requestId: string, selectedValues: any) => {
-    console.log(selectedValues);
-    setSelectedOptions({
-      ...selectedOptions,
-      [requestId]: selectedValues,
-    });
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}/hr/workers-requests/${id}/approve`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(approvedData),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        const title = "Request approved.";
+        const html = `Request approved`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Request approval failed";
+      fireAlert(title, html, icon);
+    }
+  };
+
+  const declineSubmit = async () => {
+    setDeclinedLoading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}/hr/workers-requests/${id}/reject`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        const title = "Request declined.";
+        const html = `Request declined`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+        navigate(-1);
+        setDeclinedLoading(false);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setDeclinedLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Request approval failed";
+      fireAlert(title, html, icon);
+    }
   };
   React.useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
@@ -109,7 +187,7 @@ const ViewSiteWorkerRequest = () => {
 
   const header = [
     { title: "ROLE NAME", prop: "role_name" },
-    { title: "QUANTITY", prop: "requested_quantity" },
+    { title: "REQUESTED QUANTITY", prop: "requested_quantity" },
     { title: "CHOOSE EMPLOYEE TO ASSIGN" },
     // { title: "ASSIGNED EMPLOYEES" },
   ];
@@ -156,15 +234,24 @@ const ViewSiteWorkerRequest = () => {
                       <Button
                         variant="contained"
                         className="Create-event-Calender"
-                        // onClick={() => handleApproval()}
+                        onClick={() => handleSubmit()}
                       >
-                        Approve
+                        {isApprovedLoading ? (
+                          <Spinner animation="border" />
+                        ) : (
+                          "APPROVE"
+                        )}
                       </Button>
                       <Button
                         variant="contained"
                         className="Create-event-Calender"
+                        onClick={() => declineSubmit()}
                       >
-                        Decline
+                        {isDelinedLoading ? (
+                          <Spinner animation="border" />
+                        ) : (
+                          "Decline"
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -193,61 +280,59 @@ const ViewSiteWorkerRequest = () => {
                             teamLeads
                           )}
                         </p>
-                        <p>Request</p>
-                        <section className="md-ui component-data-table">
-                          {isLoading ? (
-                            <TableLoader isLoading={isLoading} />
-                          ) : (
-                            ""
-                          )}
-                          {/* <div className="main-table-wrapper"> */}
-                          <table className="main-table-content">
-                            <thead className="data-table-header">
-                              <tr className="data-table-row">
-                                {header.map((i, index) => {
-                                  return (
-                                    <>
-                                      <td
-                                        className="table-datacell datatype-numeric"
-                                        key={index}
-                                      >
-                                        {i.title}
-                                      </td>
-                                    </>
-                                  );
-                                })}
-                              </tr>
-                            </thead>
-                            <tbody className="data-table-content">
-                              {requestWorkersList?.requests?.map(
-                                (item: any, i: any) => {
-                                  return (
-                                    <tr className="data-table-row" key={i}>
-                                      <td className="table-datacell datatype-string">
-                                        {item?.role_name}
-                                      </td>
-                                      <td className="table-datacell datatype-string">
-                                        {item?.requested_quantity}
-                                      </td>
-                                      <td className="table-datacell datatype-numeric">
-                                        <MemoizedEmployeeSelectWrapper
-                                          roleId={item.role}
-                                          selectedRoleEmployees={
-                                            rolesWithEmployee
-                                          }
-                                        />
-                                      </td>
-                                    </tr>
-                                  );
-                                }
-                              )}
-                            </tbody>
-                          </table>
-                          {/* </div> */}
-                        </section>
-                        <p>Assign Workers</p>
                       </div>
                     </div>
+                    <p></p>
+                    <section className="md-ui component-data-table">
+                      {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+                      <div className="main-table-wrapper">
+                        <table className="main-table-content">
+                          <thead className="data-table-header">
+                            <tr className="data-table-row">
+                              {header.map((i, index) => {
+                                return (
+                                  <>
+                                    <td
+                                      className="table-datacell datatype-numeric"
+                                      key={index}
+                                    >
+                                      {i.title}
+                                    </td>
+                                  </>
+                                );
+                              })}
+                            </tr>
+                          </thead>
+                          <tbody className="data-table-content">
+                            {requestWorkersList?.requests?.map(
+                              (item: any, i: any) => {
+                                return (
+                                  <tr className="data-table-row" key={i}>
+                                    <td className="table-datacell datatype-string">
+                                      {item?.role_name}
+                                    </td>
+                                    <td className="table-datacell datatype-string">
+                                      {item?.requested_quantity}
+                                    </td>
+                                    <td className="table-datacell datatype-numeric">
+                                      <MemoizedEmployeeSelectWrapper
+                                        roleId={item.role}
+                                        selectedRoleEmployees={
+                                          rolesWithEmployee
+                                        }
+                                        onSelectedOptionsChange={
+                                          handleSelectedOptionsChange
+                                        }
+                                      />
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
                   </div>
                 </div>
               </div>
