@@ -11,7 +11,6 @@ import { MdOutlineAssessment } from "react-icons/md";
 import storage from "../utils/storage";
 
 const Sidebar = ({ collapseNav }: any) => {
-
   // @ts-ignore
   const userInfo: any = JSON.parse(storage?.get("user"));
   // --- SideNav Bubble (States) --- //
@@ -27,7 +26,10 @@ const Sidebar = ({ collapseNav }: any) => {
   const [logout, setLogout] = useState(false);
   const [weeklyreport, setWeeklyreport] = useState(false);
   const [teamweekly, setTeamWeekly] = useState(false);
-
+  const privileges = userInfo?.data?.privileges;
+  const isTeamLead = privileges.some((p: any) => p.role === "team lead");
+  const isSuperAdmin = privileges.some((p: any) => p.role === "super admin");
+  const isEmployee = privileges.some((p: any) => p.role === "employee");
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
       <Nav className="flex-column nav-menu">
@@ -73,12 +75,11 @@ const Sidebar = ({ collapseNav }: any) => {
           to="/teamkpi"
           // exact
           className={
-            window.location.pathname === "/teamkpi"
-              ? "active-here"
-              : "nav-link"
+            window.location.pathname === "/teamkpi" ? "active-here" : "nav-link"
           }
           onMouseEnter={() => setTeamKPI(true)}
-          onMouseLeave={() => setTeamKPI(false)}>
+          onMouseLeave={() => setTeamKPI(false)}
+        >
           <MdOutlineAssessment size={20} />
           <span className="nav-name">Team KPI</span>
           {teamKPI && collapseNav && (
@@ -126,7 +127,7 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-        {(userInfo?.data?.department?.name === "HR") && (
+        {(userInfo?.data?.department?.name === "HR" || isSuperAdmin) && (
           <NavLink
             to="/employees"
             // exact
@@ -147,45 +148,50 @@ const Sidebar = ({ collapseNav }: any) => {
             )}
           </NavLink>
         )}
-        <NavLink
-          to="/departments"
-          // exact
-          className={
-            window.location.pathname === "/departments"
-              ? "active-here"
-              : "nav-link"
-          }
-          onMouseEnter={() => setDepartments(true)}
-          onMouseLeave={() => setDepartments(false)}
-        >
-          <FiFolder size={20} />
-          <span className="nav-name">Departments</span>
-          {departments && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Departments</p>
-            </div>
-          )}
-        </NavLink>
-
-        <NavLink
-          to="/projects"
-          // exact
-          className={
-            window.location.pathname === "/projects"
-              ? "active-here"
-              : "nav-link"
-          }
-          onMouseEnter={() => setProjects(true)}
-          onMouseLeave={() => setProjects(false)}
-        >
-          <AiOutlineBank size={25} />
-          <span className="nav-name">Projects</span>
-          {projects && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Projects</p>
-            </div>
-          )}
-        </NavLink>
+        {(userInfo?.data?.department?.name === "HR" || isSuperAdmin) && (
+          <NavLink
+            to="/departments"
+            // exact
+            className={
+              window.location.pathname === "/departments"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setDepartments(true)}
+            onMouseLeave={() => setDepartments(false)}
+          >
+            <FiFolder size={20} />
+            <span className="nav-name">Departments</span>
+            {departments && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Departments</p>
+              </div>
+            )}
+          </NavLink>
+        )}
+        {(userInfo?.data?.department?.name === "HR" ||
+          isSuperAdmin ||
+          isTeamLead) && (
+          <NavLink
+            to="/projects"
+            // exact
+            className={
+              window.location.pathname === "/projects"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setProjects(true)}
+            onMouseLeave={() => setProjects(false)}
+          >
+            <AiOutlineBank size={25} />
+            <span className="nav-name">Projects</span>
+            {projects && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Projects</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
         <NavLink
           to="/leave"
