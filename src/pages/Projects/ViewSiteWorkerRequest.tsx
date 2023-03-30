@@ -3,7 +3,6 @@ import { Button } from "@material-ui/core";
 import { useNavigate, useParams } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
 import { Spinner } from "react-bootstrap";
-
 import Cookies from "js-cookie";
 import Select from "react-select";
 import Header from "../../components/Header";
@@ -72,7 +71,6 @@ const MemoizedEmployeeSelectWrapper = ({
       },
     }));
   };
-
   const employees =
     selectedRoleEmployees.filter((item: any) => item.id === roleId)[0]
       ?.employees?.data || [];
@@ -94,7 +92,7 @@ const ViewSiteWorkerRequest = () => {
   const [approvedData, setApprovedData] = React.useState<any>({});
   const [isApprovedLoading, setLoading] = React.useState(false);
   const [isDelinedLoading, setDeclinedLoading] = React.useState(false);
-
+  const [selectedOptions, setSelectedOptions] = React.useState<any>({});
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = React.useState(() => {
     // @ts-ignore
@@ -126,6 +124,8 @@ const ViewSiteWorkerRequest = () => {
         const html = `Request approved`;
         const icon = "success";
         fireAlert(title, html, icon);
+        setLoading(false);
+        navigate(-1);
       } else {
         throw new Error(data.message || "Something went wrong!");
       }
@@ -323,6 +323,7 @@ const ViewSiteWorkerRequest = () => {
                                         onSelectedOptionsChange={
                                           handleSelectedOptionsChange
                                         }
+                                        selectedOptions={selectedOptions}
                                       />
                                     </td>
                                   </tr>
