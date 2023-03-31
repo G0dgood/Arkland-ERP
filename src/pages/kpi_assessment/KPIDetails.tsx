@@ -42,6 +42,7 @@ const KPIDetails = () => {
 	const [isSuccess3, setisSuccess3] = useState(false);
 	const [isError3, setisError3] = useState(false);
 	const [message3, setMessage3] = useState('')
+	const [hodscore, setHodscore] = useState('')
 
 
 	const [input, setinput] = useState<any>({
@@ -153,7 +154,7 @@ const KPIDetails = () => {
 							</div>
 						</div>
 						{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-						<KPIInfoDetails data={data} />
+						<KPIInfoDetails data={data} setHodscore={setHodscore} hodscore={hodscore} />
 					</div>
 					<div className="info-area">
 						{/* @ts-ignore */}

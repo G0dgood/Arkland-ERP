@@ -3,12 +3,12 @@ import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
 import { fireAlert } from "../../utils/Alert";
 import Cookies from "js-cookie";
-import storage from "../../utils/storage";
 
 const KPIAssessment = () => {
+  const navigate = useNavigate();
   const token = Cookies.get("token");
   // @ts-ignore
-  const userInfo: any = JSON.parse(storage.getItem("userinfo"));
+  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"));
 
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -283,7 +283,7 @@ const KPIAssessment = () => {
         setisError(false);
       }, 1000);
     }
-  }, [html, title, icon, isSuccess, isError, html1]);
+  }, [html, title, icon, isSuccess, isError, html1, navigate]);
 
   const handelkpi = (e: any) => {
     e.preventDefault();
@@ -304,6 +304,9 @@ const KPIAssessment = () => {
         } else {
           setData(data);
           setisSuccess(true);
+          setTimeout(() => {
+            navigate("/kpicontainer");
+          }, 2000);
         }
         setisLoading(false);
       })

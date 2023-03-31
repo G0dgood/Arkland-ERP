@@ -88,7 +88,7 @@ const ViewSiteWorkerRequest = () => {
   const { id } = useParams<{ id: string }>();
   const { requestWorkersList, isLoading } = useWorkersRequestById(id ? id : "");
   const { rolesWithEmployee, isEmployeeWithRoleLoading } =
-    useGetEmployeesWithRole();
+    useGetEmployeesWithRole(requestWorkersList?.requests);
   const [approvedData, setApprovedData] = React.useState<any>({});
   const [isApprovedLoading, setLoading] = React.useState(false);
   const [isDelinedLoading, setDeclinedLoading] = React.useState(false);

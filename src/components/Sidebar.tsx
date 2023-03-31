@@ -134,6 +134,7 @@ const Sidebar = ({ collapseNav }: any) => {
         {(userInfo?.data?.department?.name === "HR" || isSuperAdmin) && (
           <NavLink
             to="/employeecontainer"
+            to="/employeecontainer"
             // exact
             className={
               window.location.pathname === "/employeecontainer"
@@ -152,6 +153,7 @@ const Sidebar = ({ collapseNav }: any) => {
             )}
           </NavLink>
         )}
+
         {(userInfo?.data?.department?.name === "HR" || isSuperAdmin) && (
           <NavLink
             to="/departments"
@@ -196,6 +198,47 @@ const Sidebar = ({ collapseNav }: any) => {
             )}
           </NavLink>
         )}
+
+        {/* {(userInfo?.data?.department?.name === "HR") && ( */}
+        <NavLink
+          to="/employeecontainer"
+          // exact
+          className={
+            window.location.pathname === "/employeecontainer"
+              ? "active-here"
+              : "nav-link"
+          }
+          onMouseEnter={() => setallEmployees(true)}
+          onMouseLeave={() => setallEmployees(false)}
+        >
+          <FiUser size={24} />
+          <span className="nav-name">All Employees</span>
+          {allemployees && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>All Employees</p>
+            </div>
+          )}
+        </NavLink>
+        {/* )} */}
+        <NavLink
+          to="/departments"
+          // exact
+          className={
+            window.location.pathname === "/departments"
+              ? "active-here"
+              : "nav-link"
+          }
+          onMouseEnter={() => setDepartments(true)}
+          onMouseLeave={() => setDepartments(false)}
+        >
+          <FiFolder size={20} />
+          <span className="nav-name">Departments</span>
+          {departments && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>Departments</p>
+            </div>
+          )}
+        </NavLink>
 
         <NavLink
           to="/leave"

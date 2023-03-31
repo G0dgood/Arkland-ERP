@@ -182,7 +182,8 @@ const Leave = () => {
       <Sidebar collapseNav={collapseNav} />
       <main>
         <div className="allemployees-container-main">
-          <div className="allemployees-container-sup">
+          <div></div>
+          {/* <div className="allemployees-container-sup">
             {(userInfo?.data?.department?.name === "HR" ||
               isSuperAdmin ||
               isTeamLead) && (
@@ -209,7 +210,7 @@ const Leave = () => {
                 </Button>
               </div>
             )}
-          </div>
+          </div> */}
 
           <div>
             <ApplyForLeave />
