@@ -196,7 +196,7 @@ interface RoleWithEmployees {
   employees: any[];
 }
 
-export const useGetEmployeesWithRole = () => {
+export const useGetEmployeesWithRole = (roles: any) => {
   const [rolesWithEmployee, setRolesWithEmployee] = useState<
     RoleWithEmployees[]
   >([]);
@@ -204,8 +204,7 @@ export const useGetEmployeesWithRole = () => {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
-  const roles: any = useAppSelector((state) => state.roles.roles);
-
+  // const roles: any = useAppSelector((state) => state.roles.roles);
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
@@ -213,10 +212,11 @@ export const useGetEmployeesWithRole = () => {
       try {
         const data = await Promise.all(
           roles.map(async (role: any) => {
-            const roleData = { id: role.id, name: role.name, employees: [] };
+
+            const roleData = { id: role.role, name: role.role_name, employees: [] };
             try {
               const response = await fetch(
-                `${process.env.REACT_APP_API}/hr/employees?role=${role.id}`,
+                `${process.env.REACT_APP_API}/hr/employees?role=${role.role}`,
                 getRequestOptions
               );
               const isJsonResponse = response.headers

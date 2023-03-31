@@ -168,7 +168,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
           setisSuccess(true)
           setTimeout(() => {
             navigate("/teamkpi");
-          }, 5000);
+          }, 2000);
 
         }
         setisLoading(false);

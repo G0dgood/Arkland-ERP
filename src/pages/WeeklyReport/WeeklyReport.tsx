@@ -257,7 +257,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 
 						</div>
 						<div className='select-RiDeleteBin5Line' onClick={handleRemoveField}>
-							<span>Delect Field : </span>
+							<span>Delete Field : </span>
 							<span><RiDeleteBin5Line size={30} /></span>
 
 						</div>

@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap';
 
-const KPIInfoDetails = ({ data, setHodscore }: any) => {
+const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 	const year = new Date().getFullYear().toString();
 
 	const [isLoading, setisLoading] = useState(false);
@@ -163,28 +163,29 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 
 	return (
 		<form>
-			{/* <div className="top-fields">
-				<p>{data?.month} | {year} </p>
-			</div>
-			<div className="evaluation-area_cont">
-				<div>
-					<div className="added-fields_cont">
-						{kpiData.map((item, i) =>
-							<div key={i} className="added-field">
-								<div className="factor_area">
-									<p>{item.Performance}</p>
-								</div>
-								<div className="rate_area">
-									<p>{item.num}</p>
-								</div>
-								<div className="btn_area">
-									<p>{item.reviewer}</p>
-								</div>
-							</div>
-						)}
-					</div>
-				</div>
-			</div> */}
+			{/* // <form>
+		// 	<div className="top-fields">
+		// 		<p>{data?.month} | {year} </p>
+		// 	</div>
+		// 	<div className="evaluation-area_cont">
+		// 		<div>
+		// 			<div className="added-fields_cont">
+		// 				{kpiData.map((item, i) => */}
+			{/* // 					<div key={i} className="added-field">
+		// 						<div className="factor_area">
+		// 							<p>{item.Performance}</p>
+		// 						</div>
+		// 						<div className="rate_area">
+		// 							<p>{item.num}</p>
+		// 						</div>
+		// 						<div className="btn_area">
+		// 							<p>{item.reviewer}</p>
+		// 						</div>
+		// 					</div>
+		// 				)}
+		// 			</div> */}
+			{/* // 		</div> */}
+			{/* // 	</div> */}
 
 			<div className="evaluation-area_cont">
 				<div>
@@ -199,9 +200,9 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 							<div className="rate_area">
 								<p>Staff Score</p>
 							</div>
-							<div className="btn_area">
+							{/* <div className="btn_area">
 								<p>HOD Grade</p>
-							</div>
+							</div> */}
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -213,7 +214,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.job_knowledge_employee}</p>
 							</div>
-							<div className="btn_area">
+							{/* <div className="btn_area">
 								{data?.status === 'active' ? data?.job_knowledge_reviewer :
 									<select value={employeegrade.employeegrade1}
 										onChange={(e) => handleOnChange4('employeegrade1', e.target.value)}>
@@ -223,7 +224,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 										)}
 									</select>
 								}
-							</div>
+							</div> */}
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -235,7 +236,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.efficiency_employee}</p>
 							</div>
-							<div className="btn_area">
+							{/* <div className="btn_area">
 								{data?.status === 'active' ? data?.efficiency_reviewer :
 									<select value={employeegrade.employeegrade2}
 										onChange={(e) => handleOnChange4('employeegrade2', e.target.value)}>
@@ -245,7 +246,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 										)}
 									</select>
 								}
-							</div>
+							</div> */}
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -257,7 +258,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.attendance_employee}</p>
 							</div>
-							<div className="btn_area">
+							{/* <div className="btn_area">
 								{data?.status === 'active' ? data?.attendance_reviewer :
 									<select value={employeegrade.employeegrade3}
 										onChange={(e) => handleOnChange4('employeegrade3', e.target.value)}>
@@ -267,7 +268,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 										)}
 									</select>
 								}
-							</div>
+							</div> */}
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -279,7 +280,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.communication_employee}</p>
 							</div>
-							<div className="btn_area">
+							{/* <div className="btn_area">
 								{data?.status === 'active' ? data?.communication_reviewer :
 									<select value={employeegrade.employeegrade4}
 										onChange={(e) => handleOnChange4('employeegrade4', e.target.value)}>
@@ -289,7 +290,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 										)}
 									</select>
 								}
-							</div>
+							</div> */}
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -301,7 +302,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.reliability_employee}</p>
 							</div>
-							<div className="btn_area">
+							{/* <div className="btn_area">
 								{data?.status === 'active' ? data?.reliability_reviewer :
 									<select value={employeegrade.employeegrade5}
 										onChange={(e) => handleOnChange4('employeegrade5', e.target.value)}>
@@ -311,7 +312,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 										)}
 									</select>
 								}
-							</div>
+							</div> */}
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -323,7 +324,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.collaboration_employee}</p>
 							</div>
-							<div className="btn_area">
+							{/* <div className="btn_area">
 								{data?.status === 'active' ? <p>{data?.collaboration_reviewer}</p> :
 									<select value={employeegrade.employeegrade6}
 										onChange={(e) => handleOnChange4('employeegrade6', e.target.value)}>
@@ -333,7 +334,7 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 										)}
 									</select>
 								}
-							</div>
+							</div> */}
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -345,20 +346,21 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 							<div className="rate_area">
 								<p>{!Amount ? "0" : Amount}</p>
 							</div>
-							<div className="btn_area">
-							</div>
+							{/* <div className="btn_area">
+								<p>{hodscore}</p>
+							</div> */}
 						</div>
 					</div>
-					{data?.status === 'active' ? "" :
-						<div>
-							{/* @ts-ignore    */}
-							<textarea rows="4" placeholder="Add an extended comment" required
+					{/* {data?.status === 'active' ? "" :
+						<div> */}
+					{/* @ts-ignore    */}
+					{/* <textarea rows="4" placeholder="Add an extended comment" required
 								value={input.comment}
 								onChange={(e) => handleOnChange('comment', e.target.value)} />
 							<Button variant="contained"
 								className="Add-btn-modal" type="submit">{isLoading ? <Spinner animation="border" /> : 'Submit'}</Button>
 						</div>
-					}
+					} */}
 				</div>
 			</div>
 		</form>

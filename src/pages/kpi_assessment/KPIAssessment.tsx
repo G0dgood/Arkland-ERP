@@ -3,9 +3,10 @@ import { Button } from '@material-ui/core';
 import axios, { AxiosResponse } from 'axios';
 import { fireAlert } from '../../utils/Alert';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const KPIAssessment = () => {
-
+	const navigate = useNavigate();
 	const token = Cookies.get("token");
 	// @ts-ignore
 	const userInfo: any = JSON.parse(localStorage.getItem("userinfo"))
@@ -266,6 +267,7 @@ const KPIAssessment = () => {
 			setTimeout(() => {
 				setisSuccess(false)
 			}, 5000);
+
 		} else if (isError) {
 			fireAlert(title1, html1, icon1);
 			setTimeout(() => {
@@ -273,7 +275,7 @@ const KPIAssessment = () => {
 			}, 1000);
 		}
 
-	}, [html, title, icon, isSuccess, isError, html1]);
+	}, [html, title, icon, isSuccess, isError, html1, navigate]);
 
 	const handelkpi = (e: any) => {
 		e.preventDefault();
@@ -294,6 +296,9 @@ const KPIAssessment = () => {
 				} else {
 					setData(data)
 					setisSuccess(true)
+					setTimeout(() => {
+						navigate("/kpicontainer");
+					}, 2000);
 				}
 				setisLoading(false);
 			})
