@@ -55,6 +55,10 @@ import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
 import TeamWeeklyReport from "./pages/WeeklyReport/TeamWeeklyReport";
 import TeamWeeklyReportUpdate from "./pages/WeeklyReport/TeamWeeklyReportUpdate";
 import ViewSiteWorkerRequest from "./pages/Projects/ViewSiteWorkerRequest";
+import EmployeeContainer from "./pages/all_employees/EmployeeContainer";
+import AllLeave from "./pages/Leave/AllLeave";
+import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
+import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -137,13 +141,17 @@ const AppRoutes: React.FC<any> = () => {
 
           <Route path="/employees" element={<AllEmployees />} />
           <Route path="/employees/:id" element={<ViewEmployee />} />
+          <Route path="/employeecontainer" element={<EmployeeContainer />} />
           <Route path="/projects" element={<Project />} />
-
           <Route path="/viewproject/:id" element={<ViewProjects />} />
           <Route
             path="/allleaveapplications"
             element={<AllLeaveApplications />}
           />
+          <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
+          <Route path="/allieave" element={<AllLeave />} />
+          <Route path="/finalleaveupdate/:id" element={<FinalLeaveUpdate />} />
+          <Route path="/hrupdateleave/:id" element={<HRUpdateLeave />} />
           <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
           <Route
             path="/site-worker-request/:id"

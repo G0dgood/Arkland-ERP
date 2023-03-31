@@ -635,6 +635,17 @@ textarea{
     border-radius: 3px !important;
     border: 1px solid #e2522e!important;
 }
+ .table-link-permission  {
+    background-color: rgba(240, 64, 0, .1) !important;
+    color: #e2522e!important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 3px !important;
+    border: 1px solid #e2522e!important;
+}
+
+.permission-bin-container{
+  margin-left: 1rem;
+}
  .table-link-active  {
   //  text-align: center;
     color: #29CC97 !important;
@@ -646,4 +657,58 @@ textarea{
 
 .BiUser-user{
   margin-right: 22rem;
+}
+
+
+/* --- Confirmation Modal --- */
+.kpi-modal .modal-content {
+  background-color: #fff;
+  border-radius: 5px;
+}
+.kpi-modal .modal-title {
+  color: #5c5c5c;
+  font-size: medium;
+}
+.kpi-modal .modal-body {
+  color: #5c5c5c !important;
+  margin: 0 auto;
+  text-align: center;
+  padding: 15px;
+}
+.kpi-modal .modal-body p {
+  font-weight: bold;
+  margin: 0;
+}
+.kpi-modal .modal-body p:first-child {
+  font-size: x-large;
+  margin-bottom: 15px;
+}
+.kpi-modal .modal-body p:nth-child(2),
+.kpi-modal .modal-body p:nth-child(3) {
+  font-size: medium;
+}
+.kpi-modal .modal-body .last-line {
+  margin-bottom: 30px;
+}
+.KPI-close-btn {
+  background-color: #124383;
+  color: #ffff;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15), 0 0 2px rgba(0, 0, 0, 0.15),
+    0 0 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+}
+
+.deleteKPIHandler{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deleteKPIHandler-mr{
+  margin-right: 1rem;
 }

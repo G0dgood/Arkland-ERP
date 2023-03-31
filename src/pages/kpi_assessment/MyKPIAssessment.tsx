@@ -4,7 +4,7 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import Pagination from '../../components/Pagination';
-import { NoRecordFound, TableFetch } from '../../components/TableOptions';
+import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import axios, { AxiosResponse } from 'axios';
 import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
@@ -23,19 +23,7 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 	const [isLoading, setisLoading] = useState(false);
 
 
-	const [collapseNav, setCollapseNav] = useState(() => {
-		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
-	});
 
-	useEffect(() => {
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-		localStorage.setItem("collapse", JSON.stringify(collapseNav));
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-	}, [collapseNav]);
-	const toggleSideNav = () => {
-		setCollapseNav(!collapseNav);
-	};
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -82,16 +70,16 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 	return (
 
 		<div  >
-			{/* <div className='SiteWorkermaindiv'>
+			<div className='SiteWorkermaindiv'>
 				<div className='SiteWorkermaindivsub'>
-					<Button variant="contained"
+					{/* <Button variant="contained"
 						className="back-btn-icon"
 						id="Add-btn-sub"
 						onClick={() => navigate("/leave")}>
 						<FaArrowLeft size={25} />
-					</Button>
+					</Button> */}
 
-					<span className='SupportmainTitleh3'>Leave Applications</span>
+					<span className='SupportmainTitleh3'>KPI Assessment</span>
 				</div>
 				<div>
 					<EntriesPerPage
@@ -101,13 +89,10 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 					/>
 				</div>
 				<div>
-					<MainSearch placeholder={'Search...          all leave'} />
-					{/* <form id="form-inline">
-							<input name="q" placeholder="Search ..." type="text" id="search-input" />
-							<button type="submit" className="search-btn">Search</button>
-						</form> */}
-			{/* </div>
-			</div> */}
+					<MainSearch placeholder={'Search...          KPI Assessment'} />
+
+				</div>
+			</div>
 			<section className="md-ui component-data-table">
 				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 				<div className="main-table-wrapper">

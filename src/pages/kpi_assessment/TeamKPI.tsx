@@ -66,10 +66,9 @@ const TeamKPI = () => {
 			.get(`${process.env.REACT_APP_API}/hr/appraisals?reviewer=${userInfo?.data?.employee?.id}`)
 			.then((res: AxiosResponse) => {
 				setData(res?.data?.data);
-				// console.log("res-res-res", res)
 				setisLoading(false);
 			})
-			.catch((err) => {
+			.catch((err: AxiosResponse) => {
 				console.log(err);
 				setisLoading(false);
 			});
@@ -82,13 +81,6 @@ const TeamKPI = () => {
 			<main>
 				<div className='SiteWorkermaindiv'>
 					<div className='SiteWorkermaindivsub'>
-						<Button variant="contained"
-							className="back-btn-icon"
-							id="Add-btn-sub"
-							onClick={() => navigate("/leave")}>
-							<FaArrowLeft size={25} />
-						</Button>
-
 						<span className='SupportmainTitleh3'>Team KPI Assessment</span>
 					</div>
 					<div>
@@ -100,10 +92,7 @@ const TeamKPI = () => {
 					</div>
 					<div>
 						<MainSearch placeholder={'Search...          Assessment'} />
-						{/* <form id="form-inline">
-							<input name="q" placeholder="Search ..." type="text" id="search-input" />
-							<button type="submit" className="search-btn">Search</button>
-						</form> */}
+
 					</div>
 				</div>
 				<section className="md-ui component-data-table">

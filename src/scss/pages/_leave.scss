@@ -64,3 +64,170 @@
 //   }
 // }
  
+
+
+.contact-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 144px 48px;
+  border-radius: 4px;
+  background-color: #f25c5d;
+}
+
+.contact-form {
+  position: relative;
+  flex-grow: 1;
+  padding: 0px 48px;
+  background-color: #ffffff;
+}
+
+.contact-form::before {
+  position: absolute;
+  content: "";
+  top: -96px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 192px);
+  background-color: #ffffff;
+  border-radius: 4px;
+  z-index: -100;
+}
+
+.contact-form .heading {
+  margin-bottom: 48px;
+}
+
+.contact-form .heading h2 {
+  margin-bottom: 8px;
+  color: #27272a;
+  font-size: 36px;
+}
+
+.contact-form .heading p {
+  color: #4b5563;
+  font-size: 16px;
+}
+
+// .contact-form .input {
+//   position: relative;
+//   margin-bottom: 24px;
+// }
+
+// .contact-form .input input,
+// .contact-form .input textarea {
+//   width: 100%;
+//   padding: 8px 8px 8px 42px;
+//   border: 1px solid #d4d4d8;
+//   border-radius: 4px;
+//   background-color: #fafafa;
+//   font-size: 14px;
+// }
+
+// .contact-form .input i {
+//   position: absolute;
+//   top: 10px;
+//   left: 12px;
+//   color: #4b5563;
+// }
+
+// .contact-form .button {
+//   padding: 12px 36px;
+//   border: none;
+//   border-radius: 4px;
+//   background-color:  c.color(  project-view-btn) ;
+//   box-shadow: inset 0 -2px 4px 0 #304ffe;
+//   color: #ffffff;
+//   font-size: 18px;
+//   font-weight: bold;
+//   cursor: pointer;
+// }
+
+// .contact-form .button:active {
+//   box-shadow: inset 0 0 4px 2px #304ffe;
+// }
+
+.leave-Update-titile-icon{
+	display: flex !important;
+	align-items: center !important;
+}
+
+.contact-info {
+  padding: 96px 48px;
+  color: #fff;
+}
+
+.contact-info .heading {
+  margin-bottom: 48px;
+  font-size: 24px;
+}
+
+.contact-info .contacts li {
+  // padding-left: 24px;
+  margin-bottom: 32px;
+  font-size: 14px;
+}
+ .contacts  {
+  padding: 0px 0px 0px 0px  !important;
+  margin: 0px 0px  0px  !important; 
+		width: 20rem !important;
+}
+
+.contact-info .contacts li i {
+  width: 24px;
+  // padding-right: 12px;
+}
+
+.contact-logo {
+  position: relative;
+  padding: 24px 32px 40px 32px;
+}
+
+.contact-logo::after {
+  position: absolute;
+  // content: "Arkland ";
+  top: 64px;
+  left: 32px;
+  font-size: 14px;
+  color: #e4e4e7;
+}
+
+@media screen and (max-width: 1024px) {
+  .contact-container {
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .contact-form {
+    padding: 96px 48px;
+  }
+}
+
+.contact-container-body{
+	  display: flex;
+  place-items: center;
+  justify-content: center;
+  // min-height: 100vh;
+}
+
+.BsFillBriefcaseFill{
+margin-right: 10px;
+}
+
+.leave-type-progress{
+	padding: 1rem;
+	background-color: #fff;
+	border-radius: 5px;
+	border: none !important;
+}
+
+.data-hod_approved{
+
+	display: flex;
+	justify-content: flex-end; 
+	margin-top: 2rem;
+}
+
+.data-hod_approved-span{
+	margin-right: 2rem !important;
+}

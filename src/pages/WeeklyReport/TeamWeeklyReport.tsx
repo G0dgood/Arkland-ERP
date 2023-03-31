@@ -1,14 +1,25 @@
 import { Button } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import TableLoader from '../../components/TableLoader'
-import { NoRecordFound, TableFetch } from '../../components/TableOptions'
+import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions'
 import moment from 'moment'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import axios, { AxiosResponse } from 'axios'
+import storage from '../../utils/storage'
 
 const TeamWeeklyReport = () => {
+	// @ts-ignore
+	const userInfo: any = JSON.parse(storage?.get("user"));
+
+
+
+	// --- Pagination --- //
+	const [entriesPerPage, setEntriesPerPage] = useState(() => {
+		return localStorage.getItem("reportsPerPage") || "10";
+	});
+
 	const [data, setData] = useState<any>([]);
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
@@ -36,11 +47,13 @@ const TeamWeeklyReport = () => {
 		setCollapseNav(!collapseNav);
 	};
 
+
 	React.useEffect(() => {
 		setisLoading(true);
 		axios
-			.get(`${process.env.REACT_APP_API}/hr/weekly-reports`)
+			.get(`${process.env.REACT_APP_API}/hr/weekly-reports?acknowledged_by=${userInfo?.data?.employee?._id}`)
 			.then((res: AxiosResponse) => {
+				console.log('res', res)
 				setData(res?.data?.data);
 				setisLoading(false);
 			})
@@ -48,7 +61,7 @@ const TeamWeeklyReport = () => {
 				setMessage(err?.message)
 				setisLoading(false);
 			});
-	}, []);
+	}, [userInfo?.data?.employee?._id]);
 
 
 
@@ -58,7 +71,22 @@ const TeamWeeklyReport = () => {
 			<Header toggleSideNav={toggleSideNav} />
 			<Sidebar collapseNav={collapseNav} />
 			<main>
+				<div className='SiteWorkermaindiv'>
+					<div className='SiteWorkermaindivsub'>
+						<span className='SupportmainTitleh3'>Team Week Report</span>
+					</div>
+					<div>
+						<EntriesPerPage
+							data={data}
+							entriesPerPage={entriesPerPage}
+							setEntriesPerPage={setEntriesPerPage}
+						/>
+					</div>
+					<div>
+						<MainSearch placeholder={'Search...          Team Weekly Report'} />
 
+					</div>
+				</div>
 				<section className="md-ui component-data-table">
 					{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 					<div className="main-table-wrapper">

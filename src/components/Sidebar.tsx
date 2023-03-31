@@ -21,15 +21,19 @@ const Sidebar = ({ collapseNav }: any) => {
   const [departments, setDepartments] = useState(false);
   const [projects, setProjects] = useState(false);
   const [leave, setLeave] = useState(false);
+  const [allleave, setAllLeave] = useState(false);
+  const [allleaveapplications, setAllleaveapplications] = useState(false);
   const [support, setSupport] = useState(false);
   const [policy, setPolicy] = useState(false);
   const [logout, setLogout] = useState(false);
   const [weeklyreport, setWeeklyreport] = useState(false);
+  const [teamleaveapplications, setTeamleaveapplications] = useState(false);
   const [teamweekly, setTeamWeekly] = useState(false);
   const privileges = userInfo?.data?.privileges;
   const isTeamLead = privileges.some((p: any) => p.role === "team lead");
   const isSuperAdmin = privileges.some((p: any) => p.role === "super admin");
   const isEmployee = privileges.some((p: any) => p.role === "employee");
+
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
       <Nav className="flex-column nav-menu">
@@ -120,10 +124,10 @@ const Sidebar = ({ collapseNav }: any) => {
           onMouseLeave={() => setTeamWeekly(false)}
         >
           <GoFile size={23} />
-          <span className="nav-name">Team Weekly</span>
+          <span className="nav-name">Team Weekly Report</span>
           {teamweekly && collapseNav && (
             <div className="sidenav-bubble">
-              <p>Team Weekly</p>
+              <p>Team Weekly Report</p>
             </div>
           )}
         </NavLink>
@@ -172,26 +176,69 @@ const Sidebar = ({ collapseNav }: any) => {
         {(userInfo?.data?.department?.name === "HR" ||
           isSuperAdmin ||
           isTeamLead) && (
-          <NavLink
-            to="/projects"
-            // exact
-            className={
-              window.location.pathname === "/projects"
-                ? "active-here"
-                : "nav-link"
-            }
-            onMouseEnter={() => setProjects(true)}
-            onMouseLeave={() => setProjects(false)}
-          >
-            <AiOutlineBank size={25} />
-            <span className="nav-name">Projects</span>
-            {projects && collapseNav && (
-              <div className="sidenav-bubble">
-                <p>Projects</p>
-              </div>
-            )}
-          </NavLink>
-        )}
+            <NavLink
+              to="/projects"
+              // exact
+              className={
+                window.location.pathname === "/projects"
+                  ? "active-here"
+                  : "nav-link"
+              }
+              onMouseEnter={() => setProjects(true)}
+              onMouseLeave={() => setProjects(false)}
+            >
+              <AiOutlineBank size={25} />
+              <span className="nav-name">Projects</span>
+              {projects && collapseNav && (
+                <div className="sidenav-bubble">
+                  <p>Projects</p>
+                </div>
+              )}
+            </NavLink>
+          )}
+
+        {/* {(userInfo?.data?.department?.name === "HR") && ( */}
+        <NavLink
+          to="/employeecontainer"
+          // exact
+          className={
+            window.location.pathname === "/employeecontainer"
+              ? "active-here"
+              : "nav-link"
+          }
+          onMouseEnter={() => setallEmployees(true)}
+          onMouseLeave={() => setallEmployees(false)}
+        >
+          <FiUser size={24} />
+          <span className="nav-name">All Employees</span>
+          {allemployees && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>All Employees</p>
+            </div>
+          )}
+        </NavLink>
+        {/* )} */}
+        <NavLink
+          to="/departments"
+          // exact
+          className={
+            window.location.pathname === "/departments"
+              ? "active-here"
+              : "nav-link"
+          }
+          onMouseEnter={() => setDepartments(true)}
+          onMouseLeave={() => setDepartments(false)}
+        >
+          <FiFolder size={20} />
+          <span className="nav-name">Departments</span>
+          {departments && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>Departments</p>
+            </div>
+          )}
+        </NavLink>
+
+
 
         <NavLink
           to="/leave"
@@ -207,6 +254,59 @@ const Sidebar = ({ collapseNav }: any) => {
           {leave && collapseNav && (
             <div className="sidenav-bubble">
               <p>Leave</p>
+            </div>
+          )}
+        </NavLink>
+        <NavLink
+          to="/teamleaveapplications"
+          // exact
+          className={
+            window.location.pathname === "/teamleaveapplications" ? "active-here" : "nav-link"
+          }
+          onMouseEnter={() => setTeamleaveapplications(true)}
+          onMouseLeave={() => setTeamleaveapplications(false)}
+        >
+          <BsBriefcase size={22} />
+          <span className="nav-name">Team Leave</span>
+          {teamleaveapplications && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>Team Leave</p>
+            </div>
+          )}
+        </NavLink>
+
+        <NavLink
+          to="/allieave"
+          // exact
+          className={
+            window.location.pathname === "/allieave" ? "active-here" : "nav-link"
+          }
+          onMouseEnter={() => setAllLeave(true)}
+          onMouseLeave={() => setAllLeave(false)}
+        >
+          <BsBriefcase size={22} />
+          <span className="nav-name">All Leave </span>
+          {allleave && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>All Leave</p>
+            </div>
+          )}
+        </NavLink>
+
+        <NavLink
+          to="/allleaveapplications"
+          // exact
+          className={
+            window.location.pathname === "/allleaveapplications" ? "active-here" : "nav-link"
+          }
+          onMouseEnter={() => setAllleaveapplications(true)}
+          onMouseLeave={() => setAllleaveapplications(false)}
+        >
+          <BsBriefcase size={22} />
+          <span className="nav-name">All Leave Applications</span>
+          {allleaveapplications && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>All Leave Applications</p>
             </div>
           )}
         </NavLink>

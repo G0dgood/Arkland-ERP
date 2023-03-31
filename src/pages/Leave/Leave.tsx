@@ -186,17 +186,17 @@ const Leave = () => {
             {(userInfo?.data?.department?.name === "HR" ||
               isSuperAdmin ||
               isTeamLead) && (
-              <div className="allemployees-sup-item1">
-                <Button
-                  variant="contained"
-                  className="Add-btn"
-                  onClick={() => navigate("/teamleaveapplications")}
-                >
-                  <GoPlus className="icon-space" />
-                  Team Leave Applications
-                </Button>
-              </div>
-            )}
+                <div className="allemployees-sup-item1">
+                  <Button
+                    variant="contained"
+                    className="Add-btn"
+                    onClick={() => navigate("/teamleaveapplications")}
+                  >
+                    <GoPlus className="icon-space" />
+                    Team Leave Applications
+                  </Button>
+                </div>
+              )}
 
             {(userInfo?.data?.department?.name === "HR" || isSuperAdmin) && (
               <div className="allemployees-sup-item2">

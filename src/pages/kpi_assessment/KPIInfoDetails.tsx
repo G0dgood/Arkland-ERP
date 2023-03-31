@@ -2,24 +2,24 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap';
 
-const KPIInfoDetails = ({ data }: any) => {
+const KPIInfoDetails = ({ data, setHodscore }: any) => {
 	const year = new Date().getFullYear().toString();
 
-	// const [isLoading, setisLoading] = useState(false);
-	// const [isSuccess, setisSuccess] = useState(false);
-	// const [message, setMessage] = useState('')
-	// const [datas, setData] = useState('')
-	// const [isError, setisError] = useState(false)
+	const [isLoading, setisLoading] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
+	const [message, setMessage] = useState('')
+	const [datas, setData] = useState('')
+	const [isError, setisError] = useState(false)
 
-	// const [input, setinput] = useState<any>({
-	// 	"job_knowledge": 0,
-	// 	"efficiency": 0,
-	// 	"attendance": 0,
-	// 	"communication": 0,
-	// 	"reliability": 0,
-	// 	"collaboration": 0,
-	// 	"comment": ""
-	// })
+	const [input, setinput] = useState<any>({
+		"job_knowledge": 0,
+		"efficiency": 0,
+		"attendance": 0,
+		"communication": 0,
+		"reliability": 0,
+		"collaboration": 0,
+		"comment": ""
+	})
 
 	const kpiData = [
 		{
@@ -54,115 +54,116 @@ const KPIInfoDetails = ({ data }: any) => {
 		},
 	];
 
-	// const [kpiData3, setkpiData3] = useState<any>({
-	// 	Weight1: 20,
-	// 	Weight2: 15,
-	// 	Weight3: 20,
-	// 	Weight4: 20,
-	// 	Weight5: 15,
-	// 	Weight6: 10,
-	// });
-	// const [employeegrade, setemployeegrade] = useState<any>({
-	// 	employeegrade1: 0,
-	// 	employeegrade2: 0,
-	// 	employeegrade3: 0,
-	// 	employeegrade4: 0,
-	// 	employeegrade5: 0,
-	// 	employeegrade6: 0,
-	// })
+	const [kpiData3, setkpiData3] = useState<any>({
+		Weight1: 20,
+		Weight2: 15,
+		Weight3: 20,
+		Weight4: 20,
+		Weight5: 15,
+		Weight6: 10,
+	});
+	const [employeegrade, setemployeegrade] = useState<any>({
+		employeegrade1: 0,
+		employeegrade2: 0,
+		employeegrade3: 0,
+		employeegrade4: 0,
+		employeegrade5: 0,
+		employeegrade6: 0,
+	})
 
 
-	// const Weight = kpiData3.Weight1 +
-	// 	kpiData3.Weight2 +
-	// 	kpiData3.Weight3 +
-	// 	kpiData3.Weight4 +
-	// 	kpiData3.Weight5 +
-	// 	kpiData3.Weight6
+	const Weight = kpiData3.Weight1 +
+		kpiData3.Weight2 +
+		kpiData3.Weight3 +
+		kpiData3.Weight4 +
+		kpiData3.Weight5 +
+		kpiData3.Weight6
 
 
-	// const totalScore1 = (kpiData3.Weight1 / 5) * employeegrade.employeegrade1
-	// const totalScore2 = (kpiData3.Weight2 / 5) * employeegrade.employeegrade2
-	// const totalScore3 = (kpiData3.Weight3 / 5) * employeegrade.employeegrade3
-	// const totalScore4 = (kpiData3.Weight4 / 5) * employeegrade.employeegrade4
-	// const totalScore5 = (kpiData3.Weight5 / 5) * employeegrade.employeegrade5
-	// const totalScore6 = (kpiData3.Weight6 / 5) * employeegrade.employeegrade6
+	const totalScore1 = (kpiData3.Weight1 / 5) * employeegrade.employeegrade1
+	const totalScore2 = (kpiData3.Weight2 / 5) * employeegrade.employeegrade2
+	const totalScore3 = (kpiData3.Weight3 / 5) * employeegrade.employeegrade3
+	const totalScore4 = (kpiData3.Weight4 / 5) * employeegrade.employeegrade4
+	const totalScore5 = (kpiData3.Weight5 / 5) * employeegrade.employeegrade5
+	const totalScore6 = (kpiData3.Weight6 / 5) * employeegrade.employeegrade6
 
 
-	// useEffect(() => {
-	// 	const kpi: any = totalScore1 + totalScore2 + totalScore3 + totalScore4 + totalScore5 + totalScore6
-	// 	setHodscore(kpi)
-	// }, [setHodscore, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6])
+	useEffect(() => {
+		const kpi: any = totalScore1 + totalScore2 + totalScore3 + totalScore4 + totalScore5 + totalScore6
+		setHodscore(kpi)
+	}, [setHodscore, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6])
 
-	//  @ts-ignore  
-	// const Amount: any = Object.values(kpiData).reduce((a, v) => (a = a + v?.num), 0);
+	// @ts-ignore
+	const Amount: any = Object.values(kpiData).reduce((a, v) => (a = a + v?.num), 0);
 
-	// const handleOnChange = (input: string, value: any) => {
-	// 	setinput((prevState: any) => ({
-	// 		...prevState,
-	// 		[input]: value,
-	// 	}));
-	// };
+	const handleOnChange = (input: string, value: any) => {
+		setinput((prevState: any) => ({
+			...prevState,
+			[input]: value,
+		}));
+	};
 
-	// const handleOnChange4 = (input: string, value: any) => {
-	// 	setemployeegrade((prevState: any) => ({
-	// 		...prevState,
-	// 		[input]: value,
-	// 	}));
-	// };
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			job_knowledge: totalScore1
-	// 		});
-	// 	});
-	// }, [setinput, totalScore1]);
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			efficiency: totalScore2
-	// 		});
-	// 	});
-	// }, [setinput, totalScore2]);
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			attendance: totalScore3
-	// 		});
-	// 	});
-	// }, [setinput, totalScore3]);
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			communication: totalScore4
-	// 		});
-	// 	});
-	// }, [setinput, totalScore4]);
+	const handleOnChange4 = (input: string, value: any) => {
+		setemployeegrade((prevState: any) => ({
+			...prevState,
+			[input]: value,
+		}));
+	};
+	useEffect(() => {
+		setinput((prevState: any) => {
+			return ({
+				...prevState,
+				job_knowledge: totalScore1
+			});
+		});
+	}, [setinput, totalScore1]);
+	useEffect(() => {
+		setinput((prevState: any) => {
+			return ({
+				...prevState,
+				efficiency: totalScore2
+			});
+		});
+	}, [setinput, totalScore2]);
 
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			reliability: totalScore5
-	// 		});
-	// 	});
-	// }, [setinput, totalScore5]);
+	useEffect(() => {
+		setinput((prevState: any) => {
+			return ({
+				...prevState,
+				attendance: totalScore3
+			});
+		});
+	}, [setinput, totalScore3]);
+	useEffect(() => {
+		setinput((prevState: any) => {
+			return ({
+				...prevState,
+				communication: totalScore4
+			});
+		});
+	}, [setinput, totalScore4]);
 
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			collaboration: totalScore6
-	// 		});
-	// 	});
-	// }, [setinput, totalScore6]);
+	useEffect(() => {
+		setinput((prevState: any) => {
+			return ({
+				...prevState,
+				reliability: totalScore5
+			});
+		});
+	}, [setinput, totalScore5]);
+
+	useEffect(() => {
+		setinput((prevState: any) => {
+			return ({
+				...prevState,
+				collaboration: totalScore6
+			});
+		});
+	}, [setinput, totalScore6]);
 
 	return (
 		<form>
-			<div className="top-fields">
+			{/* <div className="top-fields">
 				<p>{data?.month} | {year} </p>
 			</div>
 			<div className="evaluation-area_cont">
@@ -183,9 +184,9 @@ const KPIInfoDetails = ({ data }: any) => {
 						)}
 					</div>
 				</div>
-			</div>
+			</div> */}
 
-			{/* <div className="evaluation-area_cont">
+			<div className="evaluation-area_cont">
 				<div>
 					<div className="added-fields_cont">
 						<div className="added-field">
@@ -344,23 +345,22 @@ const KPIInfoDetails = ({ data }: any) => {
 							<div className="rate_area">
 								<p>{!Amount ? "0" : Amount}</p>
 							</div>
-							<div className="btn_area"> */}
-			{/* {data?.status === 'active' ? hod : <p> {hodscore}</p>} */}
-			{/* </div>
+							<div className="btn_area">
+							</div>
 						</div>
 					</div>
 					{data?.status === 'active' ? "" :
-						<div> */}
-			{/* @ts-ignore   */}
-			{/* <textarea rows="4" placeholder="Add an extended comment" required
+						<div>
+							{/* @ts-ignore    */}
+							<textarea rows="4" placeholder="Add an extended comment" required
 								value={input.comment}
 								onChange={(e) => handleOnChange('comment', e.target.value)} />
 							<Button variant="contained"
 								className="Add-btn-modal" type="submit">{isLoading ? <Spinner animation="border" /> : 'Submit'}</Button>
 						</div>
-					} */}
-			{/* </div>
-			</div> */}
+					}
+				</div>
+			</div>
 		</form>
 	)
 }
