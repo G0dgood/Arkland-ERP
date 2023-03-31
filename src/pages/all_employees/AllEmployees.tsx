@@ -50,15 +50,8 @@ const AllEmployees = ({ setEmployee }: any) => {
     if (!roles || roles.length === 0) {
       dispatch(getRoles());
     }
-<<<<<<< HEAD
-    if (!departments || departments.length === 0) {
-      dispatch(getDepartment());
-    }
-  }, [dispatch, roles, departments]);
-=======
     setEmployee(employees.length)
   }, [dispatch, roles, departments, setEmployee, employees.length]);
->>>>>>> 16e389b (update to leave)
 
   const header = [
     { title: "EMPLOYEE ID", prop: "employee_id" },
@@ -90,30 +83,6 @@ const AllEmployees = ({ setEmployee }: any) => {
           </Toast.Body>
         </Toast>
       )}
-<<<<<<< HEAD
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
-      <main>
-        <div>
-          <div className="allemployees-container">
-            <div className="allemployees-container-main">
-              <div className="allemployees-container-sup">
-                <div className="allemployees-sup-item1">
-                  <Button
-                    variant="contained"
-                    className="Add-btn"
-                    onClick={() => navigate("/createemployee")}
-                    // onClick={handleCreateEmployeeClick}
-                  >
-                    <GoPlus className="icon-space" />
-                    Create Employee
-                  </Button>
-                </div>
-
-                <div
-                  className="allemployees-sup-item2"
-                  onClick={() => navigate("/warninglist")}
-=======
       <div>
         <div className="allemployees-container">
           <div className="allemployees-container-main">
@@ -124,7 +93,6 @@ const AllEmployees = ({ setEmployee }: any) => {
                   className="Add-btn"
                   onClick={() => navigate("/createemployee")}
                 // onClick={handleCreateEmployeeClick}
->>>>>>> 16e389b (update to leave)
                 >
                   <GoPlus className="icon-space" />
                   Create Employee
@@ -148,91 +116,6 @@ const AllEmployees = ({ setEmployee }: any) => {
                 />
               </div>
             </div>
-<<<<<<< HEAD
-            <section className="md-ui component-data-table">
-              {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-              <div className="main-table-wrapper">
-                <table className="main-table-content">
-                  <thead className="data-table-header">
-                    <tr className="data-table-row">
-                      {header.map((i, index) => {
-                        return (
-                          <>
-                            <td
-                              className="table-datacell datatype-numeric"
-                              key={index}
-                            >
-                              {i.title}
-                            </td>
-                          </>
-                        );
-                      })}
-                    </tr>
-                  </thead>
-                  <tbody className="data-table-content">
-                    {isLoading ? (
-                      <TableFetch colSpan={9} />
-                    ) : employees?.length === 0 || employees === null ? (
-                      <NoRecordFound colSpan={9} />
-                    ) : (
-                      employees?.map((item: any, i: any) => (
-                        <tr className="data-table-row" key={i}>
-                          <td className="table-datacell datatype-string">
-                            {item?.employee_id}
-                          </td>
-                          <td className="table-datacell datatype-numeric">
-                            {item?.full_name}
-                          </td>
-                          <td className="table-datacell datatype-numeric">
-                            {item?.email}
-                          </td>
-                          <td className="table-datacell datatype-numeric">
-                            {checkForName(item?.role, roles)}
-                          </td>
-                          <td className="table-datacell datatype-numeric">
-                            {checkForName(item?.department, departments)}
-                          </td>
-                          <td className="table-datacell datatype-numeric">
-                            <span>
-                              <BsEyeFill
-                                size={25}
-                                color={"#d32f2f"}
-                                onClick={() =>
-                                  navigate(`/employees/${item.id}`)
-                                }
-                                title="View employee"
-                              />
-                            </span>
-                          </td>
-
-                          <td className="table-datacell datatype-numeric">
-                            <div className="table-active-items">
-                              <span>
-                                <span
-                                  className="edit-icon-color"
-                                  onClick={() => navigate("/admineditUser")}
-                                  title="Edit employee"
-                                >
-                                  <FiEdit size={25} />
-                                </span>
-                                {"  "}
-                                <span
-                                  className="lock-icon-color"
-                                  title="Lock employee account"
-                                >
-                                  <FiLock size={25} />
-                                </span>
-                              </span>
-                            </div>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-=======
             <div>
               <MainSearch
                 setSearchItem={setSearchItem}
@@ -240,7 +123,6 @@ const AllEmployees = ({ setEmployee }: any) => {
                 placeholder={"Search...          All Employee"}
               />
             </div>
->>>>>>> 16e389b (update to leave)
           </div>
           <section className="md-ui component-data-table">
             {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
@@ -291,7 +173,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                               size={25}
                               color={"green"}
                               onClick={() =>
-                                navigate(`/allieave/${item.id}`)
+                                navigate(`/employees/${item.id}`)
                               }
                               title="View employee"
                             />

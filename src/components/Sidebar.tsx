@@ -33,6 +33,7 @@ const Sidebar = ({ collapseNav }: any) => {
   const isTeamLead = privileges.some((p: any) => p.role === "team lead");
   const isSuperAdmin = privileges.some((p: any) => p.role === "super admin");
   const isEmployee = privileges.some((p: any) => p.role === "employee");
+
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
       <Nav className="flex-column nav-menu">
@@ -237,25 +238,7 @@ const Sidebar = ({ collapseNav }: any) => {
           )}
         </NavLink>
 
-        <NavLink
-          to="/projects"
-          // exact
-          className={
-            window.location.pathname === "/projects"
-              ? "active-here"
-              : "nav-link"
-          }
-          onMouseEnter={() => setProjects(true)}
-          onMouseLeave={() => setProjects(false)}
-        >
-          <AiOutlineBank size={25} />
-          <span className="nav-name">Projects</span>
-          {projects && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Projects</p>
-            </div>
-          )}
-        </NavLink>
+
 
         <NavLink
           to="/leave"
