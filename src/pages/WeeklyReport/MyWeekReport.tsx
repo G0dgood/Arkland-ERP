@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { NoRecordFound, TableFetch } from '../../components/TableOptions';
+import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import moment from 'moment';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -29,12 +29,19 @@ const MyWeekReport = ({ setkpidata }: any) => {
 	const icon = "error";
 
 
+	const [collapseNav, setCollapseNav] = useState(() => {
+		// @ts-ignore
+		return JSON?.parse(localStorage.getItem("collapse")) || false;
+	});
 
-
+	// --- Pagination --- //
+	const [entriesPerPage, setEntriesPerPage] = useState(() => {
+		return localStorage.getItem("reportsPerPage") || "10";
+	});
 
 	useEffect(() => {
 		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/weekly-reports`, {
+		fetch(`${process.env.REACT_APP_API}/hr/weekly-reports/list?employee=${userInfo?.data?.employee?._id}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -51,6 +58,7 @@ const MyWeekReport = ({ setkpidata }: any) => {
 					setisSuccess(true)
 					setData(data)
 					setkpidata(data?.data?.length)
+
 				}
 				setisLoading(false);
 			})
@@ -59,7 +67,7 @@ const MyWeekReport = ({ setkpidata }: any) => {
 				setisLoading(false);
 			});
 
-	}, [setkpidata, token])
+	}, [setkpidata, token, userInfo?.data?.employee?._id])
 
 
 
@@ -75,6 +83,22 @@ const MyWeekReport = ({ setkpidata }: any) => {
 
 	return (
 		<div  >
+			<div className='SiteWorkermaindiv'>
+				<div className='SiteWorkermaindivsub'>
+					<span className='SupportmainTitleh3'>Week Report</span>
+				</div>
+				<div>
+					<EntriesPerPage
+						data={data}
+						entriesPerPage={entriesPerPage}
+						setEntriesPerPage={setEntriesPerPage}
+					/>
+				</div>
+				<div>
+					<MainSearch placeholder={'Search...          Week Report'} />
+
+				</div>
+			</div>
 			<section className="md-ui component-data-table">
 				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 				<div className="main-table-wrapper">
@@ -93,7 +117,7 @@ const MyWeekReport = ({ setkpidata }: any) => {
 						<tbody className="data-table-content">
 							{isLoading ? (
 								<TableFetch colSpan={8} />
-							) : data?.length === 0 || data == null ? (
+							) : data?.data?.length === 0 || data === null || data?.data?.length === undefined ? (
 								<NoRecordFound colSpan={8} />
 							) : (
 								data?.data?.map((item: any, i: any) => (
@@ -118,7 +142,6 @@ const MyWeekReport = ({ setkpidata }: any) => {
 						</tbody>
 					</table>
 				</div>
-
 			</section >
 		</div>
 	)

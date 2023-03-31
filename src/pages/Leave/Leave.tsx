@@ -158,6 +158,7 @@ const Leave = () => {
   const html1 = message;
   const icon1 = "error";
 
+<<<<<<< HEAD
   useEffect(() => {
     if (isSuccess) {
       fireAlert(title, html, icon);
@@ -173,6 +174,16 @@ const Leave = () => {
       }, 5000);
     }
   }, [html, html1, isError, isSuccess]);
+=======
+	const token = Cookies.get("token");
+	const [data, setData] = useState<any>([]);
+	const [isError, setisError] = useState(false)
+	const [message, setMessage] = useState("");
+	const [isLoading, setisLoading] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
+	const [sortData, setSortData] = useState([]);
+	const [leaveid, setLeaveid] = useState(0);
+>>>>>>> 16e389b (update to leave)
 
   const [displayData, setDisplayData] = useState([]);
 
@@ -324,4 +335,136 @@ const Leave = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Leave;
+=======
+
+
+
+	const title = "Successful";
+	const html = message;
+	const icon = "success";
+	const title1 = "Leave error";
+	const html1 = message;
+	const icon1 = "error";
+
+
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+				setMessage("")
+			}, 5000);
+		} else if (isError) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError(false)
+				setMessage("")
+			}, 5000);
+		}
+	}, [html, html1, isError, isSuccess])
+
+	const [displayData, setDisplayData] = useState([]);
+
+	return (
+		<div id="screen-wrapper">
+			<Header toggleSideNav={toggleSideNav} />
+			<Sidebar collapseNav={collapseNav} />
+			<main>
+				<div className='allemployees-container-main' >
+					<div className='allemployees-container-sup'>
+						<div className='allemployees-sup-item1'>
+							<Button variant="contained" className="Add-btn" onClick={() => navigate("/teamleaveapplications")}>
+								<GoPlus className="icon-space" />
+								Team Leave Applications
+							</Button>
+						</div>
+						<div className='allemployees-sup-item2'>
+							<Button variant="contained" className="Add-btn" onClick={() => navigate("/allleaveapplications")}>
+								All Leave Applications
+							</Button>
+						</div>
+					</div>
+
+					<div>
+						<ApplyForLeave />
+					</div>
+				</div>
+
+				<section className="md-ui component-data-table">
+					{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+					<div className="main-table-wrapper">
+						<table className="main-table-content">
+							<thead className="data-table-header  " >
+								<tr className="data-table-row ">
+									<td className="table-datacell datatype-string">Leave Type</td>
+									<td className="table-datacell datatype-numeric">Start Date</td>
+									<td className="table-datacell datatype-numeric">End Date</td>
+									<td className="table-datacell datatype-numeric">HOD Approval</td>
+									<td className="table-datacell datatype-numeric">HR Approval</td>
+									<td className="table-datacell datatype-numeric">Final Approval</td>
+									<td className="table-datacell datatype-numeric">Status</td>
+									<td className="table-datacell datatype-numeric">View</td>
+								</tr>
+							</thead>
+							<tbody className="data-table-content">
+								{
+									isLoading ? (
+										<TableFetch colSpan={8} />
+									) : displayData?.length === 0 || displayData == null ? (
+										<NoRecordFound colSpan={8} />
+									) : (displayData?.map((item: any, i: any) => (
+										<tr className="data-table-row" key={i}>
+											<td className="table-datacell datatype-string">{item?.type}</td>
+											<td className="table-datacell datatype-numeric">{moment(item?.start_date).format("DD-MM-YYYY")}</td>
+											<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
+											<td className="table-datacell datatype-numeric">
+												{item?.hod_approved ?
+													<BsCheckCircle size={25} color={"green"} /> :
+													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+
+											</td>
+											<td className="table-datacell datatype-numeric">
+												{item?.hr_approved ?
+													<BsCheckCircle size={25} color={"green"} /> :
+													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+											</td>
+											<td className="table-datacell datatype-numeric">
+												{item?.finally_approved ?
+													<BsCheckCircle size={25} color={"green"} /> :
+													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+											</td>
+											<td className="table-datacell datatype-numeric"  >
+
+												<Button className={item.finally_approved === true ? "table-link-active" : "table-link"}>{item.finally_approved === false ? "IN PROGRESS" : 'LEAVE APPROVED'}</Button>
+											</td>
+											<td className="table-datacell datatype-numeric">
+												<Button id="team-applicatiom-update" onClick={() => {
+													setLeaveid(item?._id);
+													setShowLeaver(true);
+												}}>View</Button></td>
+										</tr>
+									)))}
+
+							</tbody>
+						</table>
+					</div>
+
+				</section>
+				<ViewLeave showLeave={showLeave} setShowLeaver={setShowLeaver} leaveid={leaveid} />
+				<footer className="main-table-footer">
+					<Pagination
+						setDisplayData={setDisplayData}
+						data={sortData}
+						entriesPerPage={entriesPerPage}
+						Total={"Leave"}
+					/>
+				</footer>
+			</main>
+		</div>
+	)
+}
+
+export default Leave
+>>>>>>> 16e389b (update to leave)

@@ -1,13 +1,11 @@
 import { Button } from '@mui/material';
-import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
-import { BiColumns } from 'react-icons/bi';
-import { array } from 'yup';
+
 import { fireAlert } from '../../utils/Alert';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import storage from '../../utils/storage';
+
 
 
 const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
@@ -124,23 +122,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
   const [datas, setData] = useState('')
   const [isError, setisError] = useState(false)
 
-  // const handelHodkpi = (e: any,) => {
-  //   console.log('id-id-id', id)
-  //   e.preventDefault();
-  //   setisLoading(true);
-  //   axios.patch(`${process.env.REACT_APP_API}/hr/appraisals`, input, id)
-  //     .then((res: AxiosResponse) => {
-  //       // setRequestWorkersList([...res.data.data]);
-  //       setisLoading(false);
-  //       setisSuccess(true)
-  //       console.log('res-res-res', res);
-  //     })
-  //     .catch((err) => {
-  //       console.log('res-res-res', err);
-  //       setMessage(err.data.message)
-  //       setisLoading(false);
-  //     });
-  // }
+
 
   const title = "Successful";
   const html = "KPI Updated!";
@@ -164,8 +146,6 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
 
   }, [html, title, icon, isSuccess, isError, html1]);
 
-  // console.log("datas", datas)
-  // console.log("message", message)
 
   const handelHodkpi = (e: any,) => {
     e.preventDefault();

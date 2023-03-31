@@ -32,6 +32,8 @@ const WeeklyReportView = () => {
 	const [inputs, setInputs] = useState([]);
 
 
+	// console.log('token', token)
+
 	const title = "Weekly Reports error";
 	const html = message;
 	const icon = "error";
@@ -48,7 +50,7 @@ const WeeklyReportView = () => {
 	React.useEffect(() => {
 		setisLoading(true);
 		axios
-			.get(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`)
+			.get(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}/view`)
 			.then((res: AxiosResponse) => {
 				setData(res?.data?.data);
 				setisLoading(false);

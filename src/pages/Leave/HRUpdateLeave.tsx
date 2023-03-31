@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react'
+import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs'
+import { MdOutlineClose } from 'react-icons/md'
+import TableLoader from '../../components/TableLoader'
+import Cookies from 'js-cookie'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@material-ui/core';
-import { BsCalendarDate, BsCalendarDateFill, BsChatLeftText, BsFillBriefcaseFill } from 'react-icons/bs';
-import { MdOutlineClose } from 'react-icons/md';
-import Cookies from 'js-cookie';
-import TableLoader from '../../components/TableLoader';
-import moment from 'moment';
-import axios, { AxiosResponse } from 'axios';
+import moment from 'moment'
+import { Spinner } from 'react-bootstrap'
+import { fireAlert } from '../../utils/Alert'
 
-const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
-
+const HRUpdateLeave = ({ setShowLeave }: any) => {
+	const navigate = useNavigate();
+	const { id } = useParams()
 	const token = Cookies.get("token");
-
-
 	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
 	const [isLoading1, setisLoading1] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
 	const [isSuccess1, setisSuccess1] = useState(false);
+	const [isError, setisError] = useState(false)
 	const [isError1, setisError1] = useState(false)
+	const [message, setMessage] = useState("");
 	const [message1, setMessage1] = useState("");
+
 
 	const [data, setData] = useState("");
 	const [count, setCount] = useState(0);
@@ -30,11 +32,11 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 		leave_type: ""
 	})
 	// @ts-ignore  
-	console.log('leaveid?.data?.description', inputs)
+	console.log('description', inputs)
 
 	useEffect(() => {
 		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${leaveid}`, {
+		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -59,53 +61,63 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 				console.error("Error:", error);
 				setisLoading(false);
 			});
-	}, [leaveid, token])
+	}, [id, token])
 
 
-	// const handleDelete = () => {
-	// 	setisLoading(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/appraisals/${leaveid}`, {
-	// 		method: "GET", // or 'PUT'
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (data?.success === false) {
-	// 				setMessage(data?.message)
-	// 				setisError(true)
-	// 			} else {
-	// 				setData(data?.data)
-	// 			}
-	// 			setisLoading(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setisLoading(false);
-	// 		});
-	// }
+
+	const handelupdate = () => {
+		setisLoading1(true);
+		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}/hr-approval`, {
+			method: "PATCH", // or 'PUT'
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data?.success === false) {
+					setMessage1(data?.message)
+					setisError1(true)
+				} else {
+					setisSuccess(true)
+					setTimeout(() => {
+						navigate("/allleaveapplications");
+					}, 2000);
+					setData(data?.data)
+				}
+				setisLoading1(false);
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				setisLoading1(false);
+			});
+	}
+
+	const title = "Successful";
+	const html = "Leave Created!";
+	const icon = "success";
+	const title1 = "Leave error";
+	const html1 = message1;
+	const icon1 = "error";
 
 
-	// const handleDelete = () => {
-	// 	setisLoading1(true);
-	// 	axios
-	// 		.delete(`${process.env.REACT_APP_API}/hr/appraisals/${id}`)
-	// 		.then((res: AxiosResponse) => {
-	// 			setData(res?.data);
-	// 			setisLoading1(false);
-	// 			setTimeout(() => {
-	// 				navigate("/kpicontainer");
-	// 			}, 5000);
-	// 		})
-	// 		.catch((data) => {
-	// 			console.log(data);
-	// 			setisLoading1(false);
-	// 		});
-	// }
-
-
+	useEffect(() => {
+		if (isSuccess1) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+				setMessage1("")
+			}, 5000);
+			// setLgShow(false)
+		} else if (isError1) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		}
+	}, [html, html1, isError1, isSuccess1, setMessage1])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
@@ -144,9 +156,8 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 		// @ts-ignore 
 	}, [data?.data?.finally_approved, data?.data?.hod_approved, data?.data?.hr_approved])
 
-
 	return (
-		<div className={showLeave ? "Drawer" : "Drawer1"}>
+		<div>
 			<header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
 					<span className="app-chat--icon">
@@ -157,12 +168,15 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 					</span>
 
 				</div>
-				<div className="ChatProgressView-close" onClick={() => setShowLeaver(false)}>
-					<MdOutlineClose
-						size={25}
-						style={{ color: "white", backgroundColor: "" }}
-						className="ChatProgressView-close-icon"
-					/>
+				<div className="ChatProgressView-close">
+					<Link
+						to={"/allleaveapplications"}>
+						<MdOutlineClose
+							size={25}
+							style={{ color: "white", backgroundColor: "" }}
+							className="ChatProgressView-close-icon"
+						/>
+					</Link>
 				</div>
 			</header>
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
@@ -172,7 +186,7 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 
 					</div>
 
-					<form className="contact-form">
+					<div className="contact-form">
 						<div className="heading">
 							{/* @ts-ignore */}
 							<h2>Leave Type : {data?.data?.type}</h2>
@@ -213,12 +227,20 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 							</div>
 						</div>
 						{/* @ts-ignore */}
-						{/* {data?.data?.hod_approved === false &&
-							<Button variant="contained"
-								className="Add-btn-modal" type="submit"> */}
-						{/* {isLoading ? <Spinner animation="border" /> : "APPLY"} */}
-						{/* Submit</Button>} */}
-					</form>
+						{data?.data?.hr_approved === false &&
+							// <Button variant="contained"
+							// 	className="Add-btn-modal" type="submit" onClick={handelupdate}>
+							// 	{isLoading1 ? <Spinner animation="border" /> : "Approve"}</Button>
+							<div className='deleteKPIHandler  mt-5'>
+								<span className='deleteKPIHandler-mr'>
+									<Button className="table-link">
+										Delete </Button></span>
+								<span ><Button className="table-link-active" onClick={handelupdate} >
+									{isLoading1 ? <Spinner animation="border" /> : "Approve"}
+								</Button></span>
+							</div>
+						}
+					</div>
 					<div className="contact-info">
 						<h3 className="heading">Leave Details</h3>
 						<ul className="contacts">
@@ -286,4 +308,4 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 	)
 }
 
-export default ViewLeave
+export default HRUpdateLeave

@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { Toast } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
 import Pagination from "../../components/Pagination";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import TableLoader from "../../components/TableLoader";
 import {
   EntriesPerPage,
@@ -23,7 +21,7 @@ import { getRoles } from "../../store/reducers/roles";
 import { getDepartment } from "../../store/reducers/department";
 import { useEmployees } from "../../hooks/useEmployees";
 
-const AllEmployees = () => {
+const AllEmployees = ({ setEmployee }: any) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { employees, isLoading, error, message } = useEmployees();
@@ -31,42 +29,36 @@ const AllEmployees = () => {
   const departments: any = useAppSelector(
     (state) => state?.department?.department
   );
-  const [sortData, setSortData] = useState([]);
+
   const [displayData, setDisplayData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
+
 
   useEffect(() => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
 
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
 
   React.useEffect(() => {
     if (!roles || roles.length === 0) {
       dispatch(getRoles());
     }
+<<<<<<< HEAD
     if (!departments || departments.length === 0) {
       dispatch(getDepartment());
     }
   }, [dispatch, roles, departments]);
+=======
+    setEmployee(employees.length)
+  }, [dispatch, roles, departments, setEmployee, employees.length]);
+>>>>>>> 16e389b (update to leave)
 
   const header = [
     { title: "EMPLOYEE ID", prop: "employee_id" },
@@ -79,7 +71,7 @@ const AllEmployees = () => {
   ];
 
   return (
-    <div id="screen-wrapper">
+    <div >
       {error && (
         <Toast
           onClose={() => setShowToast(false)}
@@ -98,6 +90,7 @@ const AllEmployees = () => {
           </Toast.Body>
         </Toast>
       )}
+<<<<<<< HEAD
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
       <main>
@@ -120,28 +113,42 @@ const AllEmployees = () => {
                 <div
                   className="allemployees-sup-item2"
                   onClick={() => navigate("/warninglist")}
+=======
+      <div>
+        <div className="allemployees-container">
+          <div className="allemployees-container-main">
+            <div className="allemployees-container-sup">
+              <div className="allemployees-sup-item1">
+                <Button
+                  variant="contained"
+                  className="Add-btn"
+                  onClick={() => navigate("/createemployee")}
+                // onClick={handleCreateEmployeeClick}
+>>>>>>> 16e389b (update to leave)
                 >
-                  <Button variant="contained" className="Add-btn">
-                    Warning List
-                  </Button>
-                </div>
-
-                <div>
-                  <EntriesPerPage
-                    // data={data}
-                    entriesPerPage={entriesPerPage}
-                    setEntriesPerPage={setEntriesPerPage}
-                  />
-                </div>
+                  <GoPlus className="icon-space" />
+                  Create Employee
+                </Button>
               </div>
+
+              <div
+                className="allemployees-sup-item2"
+                onClick={() => navigate("/warninglist")}
+              >
+                <Button variant="contained" className="Add-btn">
+                  Warning List
+                </Button>
+              </div>
+
               <div>
-                <MainSearch
-                  setSearchItem={setSearchItem}
-                  searchItem={searchItem}
-                  placeholder={"Search...          All Employee"}
+                <EntriesPerPage
+                  data={displayData}
+                  entriesPerPage={entriesPerPage}
+                  setEntriesPerPage={setEntriesPerPage}
                 />
               </div>
             </div>
+<<<<<<< HEAD
             <section className="md-ui component-data-table">
               {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
               <div className="main-table-wrapper">
@@ -225,17 +232,109 @@ const AllEmployees = () => {
                 </table>
               </div>
             </section>
+=======
+            <div>
+              <MainSearch
+                setSearchItem={setSearchItem}
+                searchItem={searchItem}
+                placeholder={"Search...          All Employee"}
+              />
+            </div>
+>>>>>>> 16e389b (update to leave)
           </div>
-          <footer className="main-table-footer">
-            <Pagination
-              setDisplayData={setDisplayData}
-              data={sortData}
-              entriesPerPage={entriesPerPage}
-              Total={"Employee"}
-            />
-          </footer>
+          <section className="md-ui component-data-table">
+            {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+            <div className="main-table-wrapper">
+              <table className="main-table-content">
+                <thead className="data-table-header">
+                  <tr className="data-table-row">
+                    {header.map((i, index) => {
+                      return (
+                        <>
+                          <td
+                            className="table-datacell datatype-numeric"
+                            key={index}
+                          >
+                            {i.title}
+                          </td>
+                        </>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody className="data-table-content">
+                  {isLoading ? (
+                    <TableFetch colSpan={9} />
+                  ) : displayData?.length === 0 || displayData === null ? (
+                    <NoRecordFound colSpan={9} />
+                  ) : (
+                    displayData?.map((item: any, i: any) => (
+                      <tr className="data-table-row" key={i}>
+                        <td className="table-datacell datatype-string">
+                          {item?.employee_id}
+                        </td>
+                        <td className="table-datacell datatype-numeric">
+                          {item?.full_name}
+                        </td>
+                        <td className="table-datacell datatype-numeric">
+                          {item?.email}
+                        </td>
+                        <td className="table-datacell datatype-numeric">
+                          {checkForName(item?.role, roles)}
+                        </td>
+                        <td className="table-datacell datatype-numeric">
+                          {checkForName(item?.department, departments)}
+                        </td>
+                        <td className="table-datacell datatype-numeric">
+                          <span>
+                            <BsCheckCircle
+                              size={25}
+                              color={"green"}
+                              onClick={() =>
+                                navigate(`/allieave/${item.id}`)
+                              }
+                              title="View employee"
+                            />
+                          </span>
+                        </td>
+
+                        <td className="table-datacell datatype-numeric">
+                          <div className="table-active-items">
+                            <span>
+                              <span
+                                className="edit-icon-color"
+                                onClick={() => navigate("/admineditUser")}
+                                title="Edit employee"
+                              >
+                                <FiEdit size={25} />
+                              </span>
+                              {"  "}
+                              <span
+                                className="lock-icon-color"
+                                title="Lock employee account"
+                              >
+                                <FiLock size={25} />
+                              </span>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </section>
         </div>
-      </main>
+        <footer className="main-table-footer">
+          <Pagination
+            setDisplayData={setDisplayData}
+            data={employees}
+            entriesPerPage={entriesPerPage}
+            Total={"Employee"}
+          />
+        </footer>
+      </div>
     </div>
   );
 };

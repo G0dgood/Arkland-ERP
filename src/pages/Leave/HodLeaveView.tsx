@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from '@material-ui/core';
-import { BsCalendarDate, BsCalendarDateFill, BsChatLeftText, BsFillBriefcaseFill } from 'react-icons/bs';
+import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs';
 import { MdOutlineClose } from 'react-icons/md';
-import Cookies from 'js-cookie';
 import TableLoader from '../../components/TableLoader';
+import { Button } from '@material-ui/core';
+import Cookies from 'js-cookie';
 import moment from 'moment';
-import axios, { AxiosResponse } from 'axios';
+import { Spinner } from 'react-bootstrap';
+import { fireAlert } from '../../utils/Alert';
+import { useNavigate } from 'react-router-dom';
 
-const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
-
+const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
+	const navigate = useNavigate();
 	const token = Cookies.get("token");
-
-
+	const [lgShow, setLgShow] = useState(false);
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
 	const [isError, setisError] = useState(false)
@@ -20,7 +21,6 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 	const [isSuccess1, setisSuccess1] = useState(false);
 	const [isError1, setisError1] = useState(false)
 	const [message1, setMessage1] = useState("");
-
 	const [data, setData] = useState("");
 	const [count, setCount] = useState(0);
 	const [inputs, setInputs] = useState({
@@ -29,8 +29,31 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 		description: "",
 		leave_type: ""
 	})
-	// @ts-ignore  
-	console.log('leaveid?.data?.description', inputs)
+
+	const title = "Successful";
+	const html = "Leave Created!";
+	const icon = "success";
+	const title1 = "Leave error";
+	const html1 = message1;
+	const icon1 = "error";
+
+
+	useEffect(() => {
+		if (isSuccess1) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+				setMessage1("")
+			}, 5000);
+			setLgShow(false)
+		} else if (isError1) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		}
+	}, [html, html1, isError1, isSuccess1, setMessage1])
 
 	useEffect(() => {
 		setisLoading(true);
@@ -61,73 +84,6 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 			});
 	}, [leaveid, token])
 
-
-	// const handleDelete = () => {
-	// 	setisLoading(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/appraisals/${leaveid}`, {
-	// 		method: "GET", // or 'PUT'
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (data?.success === false) {
-	// 				setMessage(data?.message)
-	// 				setisError(true)
-	// 			} else {
-	// 				setData(data?.data)
-	// 			}
-	// 			setisLoading(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setisLoading(false);
-	// 		});
-	// }
-
-
-	// const handleDelete = () => {
-	// 	setisLoading1(true);
-	// 	axios
-	// 		.delete(`${process.env.REACT_APP_API}/hr/appraisals/${id}`)
-	// 		.then((res: AxiosResponse) => {
-	// 			setData(res?.data);
-	// 			setisLoading1(false);
-	// 			setTimeout(() => {
-	// 				navigate("/kpicontainer");
-	// 			}, 5000);
-	// 		})
-	// 		.catch((data) => {
-	// 			console.log(data);
-	// 			setisLoading1(false);
-	// 		});
-	// }
-
-
-
-	const handleOnChange = (input: any, value: any) => {
-		setInputs((prevState: any) => ({
-			...prevState,
-			[input]: value,
-		}));
-	};
-
-	useEffect(() => {
-		setInputs((prevState: any) => {
-			return ({
-				...prevState,
-				// @ts-ignore  
-				description: data?.data?.description,
-				// @ts-ignore  
-				leave_type: data?.data?.type,
-
-			});
-		});
-		// @ts-ignore  
-	}, [setInputs, data?.data?.description, data?.data?.type]);
-
 	useEffect(() => {
 		// @ts-ignore  
 		if (data?.data?.hod_approved === true) {
@@ -144,6 +100,53 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 		// @ts-ignore 
 	}, [data?.data?.finally_approved, data?.data?.hod_approved, data?.data?.hr_approved])
 
+	useEffect(() => {
+		setInputs((prevState: any) => {
+			return ({
+				...prevState,
+				// @ts-ignore  
+				description: data?.data?.description,
+				// @ts-ignore  
+				leave_type: data?.data?.type,
+				// @ts-ignore  
+				start_date: data?.data?.start_date,
+				// @ts-ignore  
+				end_date: data?.data?.end_date,
+
+			});
+		});
+		// @ts-ignore  
+	}, [setInputs, data?.data?.description, data?.data?.type, data?.data?.start_date, data?.data?.end_date]);
+
+
+	const handelupdate = () => {
+		setisLoading1(true);
+		fetch(`${process.env.REACT_APP_API}/hr/leaves/${leaveid}/hod-approval`, {
+			method: "PATCH", // or 'PUT'
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data?.success === false) {
+					setMessage1(data?.message)
+					setisError1(true)
+				} else {
+					setisSuccess(true)
+					setTimeout(() => {
+						navigate("/kpicontainer");
+					}, 2000);
+					setData(data?.data)
+				}
+				setisLoading1(false);
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				setisLoading1(false);
+			});
+	}
 
 	return (
 		<div className={showLeave ? "Drawer" : "Drawer1"}>
@@ -180,44 +183,63 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 						</div>
 						<div  >
 							<h6>Name</h6>
-							<select id="Modal-textarea-input-sub"
-								value={inputs.leave_type}
-								onChange={(e) => handleOnChange("leave_type", e.target.value)}>
-								<option value=" ">Select Name...</option>
-								<option value="Paid Leave">Paid Leave</option>
-								<option value="Sick Leave">Sick Leave</option>
-								<option value="casual">Casual</option>
-							</select >
+							<input id='Modal-textarea-input-sub' type={'text'}
+								value={inputs.leave_type} />
 							<div className='Modal-data-time'>
 							</div>
 							<div className='Modal-data-time'>
 								<div className='Modal-two-input'>
 									<h6>Start Date</h6>
-									<input id='Modal-textarea-input-sub' placeholder='Select start date of leave' type={'date'}
-										value={inputs.start_date}
-										onChange={(e) => handleOnChange("start_date", e.target.value)} />
+									<input id='Modal-textarea-input-sub' type={'text'}
+										value={moment(inputs?.start_date).format("DD-MM-YYYY")} />
 								</div>
 								<div className='div-space' />
 								<div className='Modal-two-input'>
 									<h6>End Date</h6>
-									<input id='Modal-textarea-input-sub' placeholder='Select end date of leave' type={'date'}
-										value={inputs.end_date}
-										onChange={(e) => handleOnChange("end_date", e.target.value)} />
+									<input id='Modal-textarea-input-sub' type={'text'}
+										value={moment(inputs?.end_date).format("DD-MM-YYYY")}
+									/>
 								</div>
 							</div>
 							<div className='Modal-textarea-middle'>
 								<h6>Description</h6>
-								<textarea rows={6} className='Modal-textarea' placeholder='Enter detailed reason for leave'
+								<textarea rows={6} className='Modal-textarea'
 									value={inputs.description}
-									onChange={(e) => handleOnChange("description", e.target.value)} />
+								/>
 							</div>
 						</div>
-						{/* @ts-ignore */}
-						{/* {data?.data?.hod_approved === false &&
-							<Button variant="contained"
-								className="Add-btn-modal" type="submit"> */}
-						{/* {isLoading ? <Spinner animation="border" /> : "APPLY"} */}
-						{/* Submit</Button>} */}
+						<div className='data-hod_approved'>
+							<span className='data-hod_approved-span'>
+								{/* @ts-ignore */}
+								{data?.data?.hod_approved === false &&
+									<Button variant="contained"
+										className="table-link" type="submit">
+										{/* {isLoading ? <Spinner animation="border" /> : "APPLY"} */}
+										Delete</Button>}
+							</span>
+							<span>
+								{/* @ts-ignore */}
+								{data?.data?.hod_approved === false &&
+									// <Button variant="contained"
+									// 	className="table-link-active" onClick={handelupdate}>
+									// 	{isLoading1 ? <Spinner animation="border" /> : "Approve"}
+									// </Button>
+									<div className='deleteKPIHandler  mt-5'>
+										<span className='deleteKPIHandler-mr'>
+											<Button className="table-link">
+												Delete </Button></span>
+										<span ><Button className="table-link-active" onClick={handelupdate} >
+											{isLoading1 ? <Spinner animation="border" /> : "Approve"}
+										</Button>
+										</span>
+									</div>
+								}
+							</span>
+						</div>
+
+
+
+
 					</form>
 					<div className="contact-info">
 						<h3 className="heading">Leave Details</h3>
@@ -282,8 +304,9 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 					</div>
 				</section>
 			</div>
+
 		</div>
 	)
 }
 
-export default ViewLeave
+export default HodLeaveView
