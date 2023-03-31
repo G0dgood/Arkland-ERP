@@ -22,8 +22,6 @@ const DepartmentsView = () => {
   const { departments, isLoading, error, message } =
     useDepartments(newDepartmentCreated);
 
-
-
   const handleNewDepartmentCreated = () => {
     setNewDepartmentCreated(!newDepartmentCreated);
   };
@@ -35,7 +33,6 @@ const DepartmentsView = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-
 
   return (
     <div id="screen-wrapper">
@@ -56,12 +53,7 @@ const DepartmentsView = () => {
             </div>
             {isLoading ? (
               <div className="isLoading-container">
-
-                <SyncLoader
-                  color={"#990000"}
-                  loading={isLoading}
-                />
-
+                <SyncLoader color={"#990000"} loading={isLoading} />
               </div>
             ) : departments?.length === 0 ? (
               <div className="table-loader-announcement">
@@ -86,14 +78,14 @@ const DepartmentsView = () => {
                     <div className="iDotsRounded-text">{item?.name}</div>
                     <div className="iDotsRounded-text">{item?.description}</div>
 
-                    <div className="iDotsRounded-percent-people">
+                    {/* <div className="iDotsRounded-percent-people">
                       <div className="iDotsRounded-percent-list">
                         <span className="profile-containers">Status</span>
                         <span className="profile-containers">
                           {item?.status}
                         </span>
-                      </div>
-                      {/* <div className="percent-people-grid">
+                      </div> */}
+                    {/* <div className="percent-people-grid">
 						<div>
 						  <HiOutlinePaperClip />6
 						</div>
@@ -101,7 +93,7 @@ const DepartmentsView = () => {
 						  <HiOutlineChatBubbleOvalLeftEllipsis />4
 						</div>
 					  </div> */}
-                    </div>
+                    {/* </div> */}
                   </div>
                 ))}
               </div>

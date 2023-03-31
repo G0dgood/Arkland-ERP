@@ -133,10 +133,10 @@ const Sidebar = ({ collapseNav }: any) => {
         </NavLink>
         {(userInfo?.data?.department?.name === "HR" || isSuperAdmin) && (
           <NavLink
-            to="/employees"
+            to="/employeecontainer"
             // exact
             className={
-              window.location.pathname === "/employees"
+              window.location.pathname === "/employeecontainer"
                 ? "active-here"
                 : "nav-link"
             }
@@ -176,69 +176,26 @@ const Sidebar = ({ collapseNav }: any) => {
         {(userInfo?.data?.department?.name === "HR" ||
           isSuperAdmin ||
           isTeamLead) && (
-            <NavLink
-              to="/projects"
-              // exact
-              className={
-                window.location.pathname === "/projects"
-                  ? "active-here"
-                  : "nav-link"
-              }
-              onMouseEnter={() => setProjects(true)}
-              onMouseLeave={() => setProjects(false)}
-            >
-              <AiOutlineBank size={25} />
-              <span className="nav-name">Projects</span>
-              {projects && collapseNav && (
-                <div className="sidenav-bubble">
-                  <p>Projects</p>
-                </div>
-              )}
-            </NavLink>
-          )}
-
-        {/* {(userInfo?.data?.department?.name === "HR") && ( */}
-        <NavLink
-          to="/employeecontainer"
-          // exact
-          className={
-            window.location.pathname === "/employeecontainer"
-              ? "active-here"
-              : "nav-link"
-          }
-          onMouseEnter={() => setallEmployees(true)}
-          onMouseLeave={() => setallEmployees(false)}
-        >
-          <FiUser size={24} />
-          <span className="nav-name">All Employees</span>
-          {allemployees && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>All Employees</p>
-            </div>
-          )}
-        </NavLink>
-        {/* )} */}
-        <NavLink
-          to="/departments"
-          // exact
-          className={
-            window.location.pathname === "/departments"
-              ? "active-here"
-              : "nav-link"
-          }
-          onMouseEnter={() => setDepartments(true)}
-          onMouseLeave={() => setDepartments(false)}
-        >
-          <FiFolder size={20} />
-          <span className="nav-name">Departments</span>
-          {departments && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Departments</p>
-            </div>
-          )}
-        </NavLink>
-
-
+          <NavLink
+            to="/projects"
+            // exact
+            className={
+              window.location.pathname === "/projects"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setProjects(true)}
+            onMouseLeave={() => setProjects(false)}
+          >
+            <AiOutlineBank size={25} />
+            <span className="nav-name">Projects</span>
+            {projects && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Projects</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
         <NavLink
           to="/leave"
@@ -261,7 +218,9 @@ const Sidebar = ({ collapseNav }: any) => {
           to="/teamleaveapplications"
           // exact
           className={
-            window.location.pathname === "/teamleaveapplications" ? "active-here" : "nav-link"
+            window.location.pathname === "/teamleaveapplications"
+              ? "active-here"
+              : "nav-link"
           }
           onMouseEnter={() => setTeamleaveapplications(true)}
           onMouseLeave={() => setTeamleaveapplications(false)}
@@ -279,7 +238,9 @@ const Sidebar = ({ collapseNav }: any) => {
           to="/allieave"
           // exact
           className={
-            window.location.pathname === "/allieave" ? "active-here" : "nav-link"
+            window.location.pathname === "/allieave"
+              ? "active-here"
+              : "nav-link"
           }
           onMouseEnter={() => setAllLeave(true)}
           onMouseLeave={() => setAllLeave(false)}
@@ -297,7 +258,9 @@ const Sidebar = ({ collapseNav }: any) => {
           to="/allleaveapplications"
           // exact
           className={
-            window.location.pathname === "/allleaveapplications" ? "active-here" : "nav-link"
+            window.location.pathname === "/allleaveapplications"
+              ? "active-here"
+              : "nav-link"
           }
           onMouseEnter={() => setAllleaveapplications(true)}
           onMouseLeave={() => setAllleaveapplications(false)}

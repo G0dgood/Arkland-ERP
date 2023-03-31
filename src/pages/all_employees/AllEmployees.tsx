@@ -39,18 +39,18 @@ const AllEmployees = ({ setEmployee }: any) => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
-
-
   useEffect(() => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
-
 
   React.useEffect(() => {
     if (!roles || roles.length === 0) {
       dispatch(getRoles());
     }
-    setEmployee(employees.length)
+    if (!departments || departments.length === 0) {
+      dispatch(getDepartment());
+    }
+    // setEmployee(employees?.length);
   }, [dispatch, roles, departments, setEmployee, employees.length]);
 
   const header = [
@@ -64,7 +64,7 @@ const AllEmployees = ({ setEmployee }: any) => {
   ];
 
   return (
-    <div >
+    <div>
       {error && (
         <Toast
           onClose={() => setShowToast(false)}
@@ -92,7 +92,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                   variant="contained"
                   className="Add-btn"
                   onClick={() => navigate("/createemployee")}
-                // onClick={handleCreateEmployeeClick}
+                  // onClick={handleCreateEmployeeClick}
                 >
                   <GoPlus className="icon-space" />
                   Create Employee
@@ -172,9 +172,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                             <BsCheckCircle
                               size={25}
                               color={"green"}
-                              onClick={() =>
-                                navigate(`/employees/${item.id}`)
-                              }
+                              onClick={() => navigate(`/employees/${item.id}`)}
                               title="View employee"
                             />
                           </span>
