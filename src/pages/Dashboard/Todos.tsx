@@ -14,6 +14,7 @@ import { useAppSelector } from "../../hooks/useDispatch";
 import { NoRecordFound } from "../../components/TableOptions";
 import useFetchTasks from "../../hooks/useSchedule";
 import { DialogState } from "../../interfaces/base";
+import announcement from "../../assets/images/announcement.png"
 
 const Todos = ({ showDrawer, setShowDrawer }: any) => {
   const token = Cookies.get("token");
@@ -71,6 +72,9 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
       setShowDrawer(!showDrawer);
     }
   };
+
+  console.log('tasks?.length', tasks?.length)
+
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">
@@ -82,12 +86,10 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
           <div className="table-loader-announcement1">
             <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
-        ) : tasks?.length === 0 || tasks == null ? (
+        ) : tasks?.length === 0 || tasks === null ? (
           <div className="table-loader-announcement1">
-            {/* <RiTodoLine size={100} className="todo-RiTodoLine" /> */}
             <div>
-              {/* eslint-disable-next-line jsx-a11y/alt-text */}
-              <img src="https://img.icons8.com/external-outline-design-circle/66/null/external-Todo-List-shopping-and-ecommerce-outline-design-circle.png" />
+              <img src={announcement} alt="announcement" />
               <p className="mt-3">No task found</p>
             </div>
           </div>

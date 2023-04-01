@@ -146,10 +146,10 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 		if (data?.data?.hod_approved === true) {
 			setCount(1)
 			// @ts-ignore  
-		} if (data?.data?.hod_approved === true && data?.data?.hr_approved === true) {
+		} else if (data?.data?.hr_approved === true) {
 			setCount(2)
 			// @ts-ignore  
-		} else if (data?.data?.hod_approved === true && data?.data?.hr_approved === true && data?.data?.finally_approved === true) {
+		} else if (data?.data?.finally_approved === true) {
 			setCount(3)
 		} else {
 			setCount(0)
