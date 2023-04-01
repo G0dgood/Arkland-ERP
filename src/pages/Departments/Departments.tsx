@@ -36,19 +36,13 @@ const DepartmentsView = () => {
     setCollapseNav(!collapseNav);
   };
 
-  const [color, setcolor] = useState("")
-
   const randColor = () => {
     const realColor = "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
-
     console.log('realColor', realColor)
     return realColor
   }
-  // const realColor = "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
 
-  // console.log(randColor());
-
-  // className = { 'iDotsRounded1'} 
+  console.log(randColor());
 
   return (
     <div id="screen-wrapper">
@@ -93,7 +87,7 @@ const DepartmentsView = () => {
                     onClick={() => navigate(`/departments/${item?.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
-                      <Button style={{ backgroundColor: 'red' }} >{item?.name}</Button>
+                      <Button className={`iDotsRounded1`}>{item?.name}</Button>
                       <BiDotsHorizontalRounded color="#97979B" />
                     </div>
                     <div className="iDotsRounded-text">{item?.name}</div>
