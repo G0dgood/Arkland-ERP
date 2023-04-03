@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { InterfaceAction } from "../interfaces/base";
 import { getRequestOptions } from "../utils/auth/header";
+import { handleUnauthorizedError } from "../functions/auth";
 
 export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
   const [departments, setDepartments] = useState([] as any);
@@ -31,7 +32,9 @@ export const useDepartments = (newDepartmentCreated: InterfaceAction) => {
           ?.includes("application/json");
         const responseData = isJsonResponse && (await response.json());
 
-        if (!response.ok) {
+        if (response.status === 401) {
+          handleUnauthorizedError();
+        } else if (!response.ok) {
           throw new Error(responseData.message || response.status.toString());
         }
 
@@ -108,10 +111,11 @@ export const useDepartmentById = (id: string) => {
           ?.includes("application/json");
         const responseData = isJsonResponse && (await response.json());
 
-        if (!response.ok) {
+        if (response.status === 401) {
+          handleUnauthorizedError();
+        } else if (!response.ok) {
           throw new Error(responseData.message || response.status.toString());
         }
-
         if (isMounted) {
           setDepartment(responseData.data.department);
           setLoading(false);

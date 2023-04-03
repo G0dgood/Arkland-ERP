@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { call, put, delay } from "redux-saga/effects";
 import { setProjects } from "../../reducers/project";
 import { requestGetProjects } from "../request/project";
+import { getTeam } from "../../reducers/team";
 
 export function* handleGetProjects(action: any) {
   let reRun = false;
@@ -17,6 +18,7 @@ export function* handleGetProjects(action: any) {
       }
       yield put({ type: "PROJECTS_FETCH_SUCCESS", payload: response });
       yield put(setProjects(data?.data));
+      yield put(getTeam());
       return;
     } catch (error) {
       console.log(error);
@@ -26,9 +28,10 @@ export function* handleGetProjects(action: any) {
         yield delay(retryTimeout);
       }
     }
-    yield put({
-      type: "PROJECTS_FETCH_ERROR",
-      payload: "Failed to fetch teams.",
-    });
   }
+  yield put({
+    type: "PROJECTS_FETCH_ERROR",
+    payload: "Failed to fetch projects.",
+  });
+  throw Error("Failed to fetch projects");
 }

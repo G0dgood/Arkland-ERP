@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import { getRequestOptions } from "../utils/auth/header";
 import { fireAlert } from "../utils/Alert";
+import { handleUnauthorizedError } from "../functions/auth";
 const token = Cookies.get("token");
 
 export const useEmployees = () => {
@@ -34,7 +35,9 @@ export const useEmployees = () => {
           ?.includes("application/json");
         const responseData = isJsonResponse && (await response.json());
 
-        if (!response.ok) {
+        if (response.status === 401) {
+          handleUnauthorizedError();
+        } else if (!response.ok) {
           throw new Error(responseData.message || response.status.toString());
         }
 
@@ -112,8 +115,9 @@ export const useEmployeeById = (id: string) => {
           ?.get("content-type")
           ?.includes("application/json");
         const responseData = isJsonResponse && (await response.json());
-
-        if (!response.ok) {
+        if (response.status === 401) {
+          handleUnauthorizedError();
+        } else if (!response.ok) {
           throw new Error(responseData.message || response.status.toString());
         }
 

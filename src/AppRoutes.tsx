@@ -45,11 +45,9 @@ import ViewProjects from "./pages/Projects/ViewProjects";
 import TeamKPI from "./pages/kpi_assessment/TeamKPI";
 import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
 import KPIDetails from "./pages/kpi_assessment/KPIDetails";
-import ProjectView from "./pages/Projects/Project";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
 import { getProjects } from "./store/reducers/project";
-import { getTasks } from "./store/reducers/tasks";
 import WeeklyContainer from "./pages/WeeklyReport/WeeklyContainer";
 import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
 import TeamWeeklyReport from "./pages/WeeklyReport/TeamWeeklyReport";
@@ -60,14 +58,15 @@ import AllLeave from "./pages/Leave/AllLeave";
 import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
 import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
 
+export const removeData = () => {
+  Cookies.remove("isAuthenticated");
+  Cookies.remove("token");
+  storage.remove("user");
+  delete axios.defaults.headers.common["Authorization"];
+};
+
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
-  const removeData = () => {
-    Cookies.remove("isAuthenticated");
-    Cookies.remove("token");
-    storage.remove("user");
-    delete axios.defaults.headers.common["Authorization"];
-  };
 
   axios.interceptors.response.use(
     function (response) {
@@ -86,14 +85,10 @@ const AppRoutes: React.FC<any> = () => {
 
   React.useEffect(() => {
     if (Cookies.get("token")) {
-      dispatch(getDepartment());
-      dispatch(getRoles());
       dispatch(getEmployees());
-      dispatch(getTeamLeads());
-      dispatch(getTeam());
-      dispatch(getProjects());
     }
   }, [dispatch]);
+
   const user: any = storage?.get("user");
   const parsedUserData = JSON?.parse(user);
 
@@ -148,7 +143,7 @@ const AppRoutes: React.FC<any> = () => {
             path="/allleaveapplications"
             element={<AllLeaveApplications />}
           />
-          <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
+
           <Route path="/allieave" element={<AllLeave />} />
           <Route path="/finalleaveupdate/:id" element={<FinalLeaveUpdate />} />
           <Route path="/hrupdateleave/:id" element={<HRUpdateLeave />} />

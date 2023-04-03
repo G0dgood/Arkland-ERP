@@ -3,12 +3,15 @@ import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
 import { fireAlert } from "../../utils/Alert";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import storage from "../../utils/storage";
 
 const KPIAssessment = () => {
   const navigate = useNavigate();
   const token = Cookies.get("token");
   // @ts-ignore
-  const userInfo: any = JSON.parse(localStorage.getItem("userinfo"));
+  // const userInfo: any = JSON.parse(localStorage.getItem("userinfo"));
+  const userInfo: any = JSON.parse(storage?.get("user"));
 
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -354,7 +357,6 @@ const KPIAssessment = () => {
       fireAlert(title1, html1, icon1);
     }
   }, [html, title, icon, isSuccess, message, html1, title1]);
-
   return (
     <div>
       <div>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { getRequestOptions } from "../utils/auth/header";
+import { handleUnauthorizedError } from "../functions/auth";
 
 function useAnnouncements() {
   const [announcements, setAnnouncements] = useState([]);
@@ -29,8 +30,9 @@ function useAnnouncements() {
           ?.get("content-type")
           ?.includes("application/json");
         const responseData = isJsonResponse && (await response.json());
-
-        if (!response.ok) {
+        if (response.status === 401) {
+          handleUnauthorizedError();
+        } else if (!response.ok) {
           throw new Error(responseData.message || response.status.toString());
         }
 
