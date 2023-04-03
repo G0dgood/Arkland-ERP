@@ -73,7 +73,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
     }
   };
 
-  console.log('tasks?.length', tasks?.length)
+
 
   return (
     <div className="main-div-col-2">
@@ -89,7 +89,8 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
         ) : tasks?.length === 0 || tasks === null ? (
           <div className="table-loader-announcement1">
             <div>
-              <img src={announcement} alt="announcement" />
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
+              <img src="https://img.icons8.com/external-outline-design-circle/66/null/external-Todo-List-shopping-and-ecommerce-outline-design-circle.png" />
               <p className="mt-3">No task found</p>
             </div>
           </div>

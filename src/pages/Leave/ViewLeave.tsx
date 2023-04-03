@@ -6,9 +6,11 @@ import Cookies from 'js-cookie';
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
 import axios, { AxiosResponse } from 'axios';
+import { Link, useParams } from 'react-router-dom';
 
-const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
+const ViewLeave = ({ showLeave, setShowLeaver }: any) => {
 
+	const { id } = useParams()
 	const token = Cookies.get("token");
 
 
@@ -29,12 +31,11 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 		description: "",
 		leave_type: ""
 	})
-	// @ts-ignore  
-	console.log('leaveid?.data?.description', inputs)
+
 
 	useEffect(() => {
 		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${leaveid}`, {
+		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -48,10 +49,6 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 					setisError(true)
 				} else {
 					setData(data)
-					setisSuccess(true)
-					setTimeout(() => {
-						setMessage('')
-					}, 2000);
 				}
 				setisLoading(false);
 			})
@@ -59,51 +56,9 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 				console.error("Error:", error);
 				setisLoading(false);
 			});
-	}, [leaveid, token])
+	}, [id, token])
 
 
-	// const handleDelete = () => {
-	// 	setisLoading(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/appraisals/${leaveid}`, {
-	// 		method: "GET", // or 'PUT'
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (data?.success === false) {
-	// 				setMessage(data?.message)
-	// 				setisError(true)
-	// 			} else {
-	// 				setData(data?.data)
-	// 			}
-	// 			setisLoading(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setisLoading(false);
-	// 		});
-	// }
-
-
-	// const handleDelete = () => {
-	// 	setisLoading1(true);
-	// 	axios
-	// 		.delete(`${process.env.REACT_APP_API}/hr/appraisals/${id}`)
-	// 		.then((res: AxiosResponse) => {
-	// 			setData(res?.data);
-	// 			setisLoading1(false);
-	// 			setTimeout(() => {
-	// 				navigate("/kpicontainer");
-	// 			}, 5000);
-	// 		})
-	// 		.catch((data) => {
-	// 			console.log(data);
-	// 			setisLoading1(false);
-	// 		});
-	// }
 
 
 
@@ -130,13 +85,13 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 
 	useEffect(() => {
 		// @ts-ignore  
-		if (data?.data?.hod_approved === true) {
+		if (data?.data?.hod_approved === true && !data?.data?.hr_approved) {
 			setCount(1)
 			// @ts-ignore  
-		} else if (data?.data?.hr_approved === true) {
-			setCount(3)
+		} else if (data?.data?.hr_approved && data?.data?.hod_approved && !data?.data?.finally_approved) {
+			setCount(2)
 			// @ts-ignore  
-		} else if (data?.data?.finally_approved === true) {
+		} else if (data?.data?.hr_approved === true && data?.data?.hod_approved === true && data?.data?.finally_approved === true) {
 			setCount(3)
 		} else {
 			setCount(0)
@@ -146,31 +101,31 @@ const ViewLeave = ({ showLeave, setShowLeaver, leaveid }: any) => {
 
 
 	return (
-		<div className={showLeave ? "Drawer" : "Drawer1"}>
+		<div  >
 			<header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
-					<span className="app-chat--icon">
-						<BsFillBriefcaseFill />
-					</span>
+					<BsFillBriefcaseFill />
+
 					<span className="in-progresss">
-						UPDTAE LEAVE
+						My Leave Applications
 					</span>
 
 				</div>
-				<div className="ChatProgressView-close" onClick={() => setShowLeaver(false)}>
-					<MdOutlineClose
-						size={25}
-						style={{ color: "white", backgroundColor: "" }}
-						className="ChatProgressView-close-icon"
-					/>
+				<div className="ChatProgressView-close"  >
+					<Link
+						to={"/leave"}>
+						<MdOutlineClose
+							size={25}
+							style={{ color: "white", backgroundColor: "" }}
+							className="ChatProgressView-close-icon"
+						/>
+					</Link>
 				</div>
 			</header>
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">
-					<div className="contact-logo">
 
-					</div>
 
 					<form className="contact-form">
 						<div className="heading">

@@ -73,6 +73,7 @@
   margin: 144px 48px;
   border-radius: 4px;
   background-color: c.color(primary-color);
+  
 }
 
 .contact-form {
@@ -80,6 +81,8 @@
   flex-grow: 1;
   padding: 0px 48px;
   background-color: #ffffff;
+  
+  
 }
 
 .contact-form::before {
@@ -92,6 +95,7 @@
   background-color: #ffffff;
   border-radius: 4px;
   z-index: -100;
+      box-shadow: rgb(0 0 0 / 15%) 0px 0px 0px 1px, rgb(0 0 0 / 20%) 0px 0px 0px;
 }
 
 .contact-form .heading {
@@ -222,8 +226,7 @@ margin-right: 10px;
 }
 
 .data-hod_approved{
-
-	display: flex;
+	display: flex !important;
 	justify-content: flex-end; 
 	margin-top: 2rem;
 }

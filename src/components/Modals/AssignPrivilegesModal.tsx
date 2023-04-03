@@ -1,20 +1,17 @@
-
-
-import { useEffect, useState } from 'react'
-import { Modal, Spinner } from 'react-bootstrap'
-import { Button } from '@material-ui/core';
-import { MdOutlineClose } from 'react-icons/md';
-import { fireAlert } from "../../utils/Alert";
+import React, { useEffect, useState } from 'react'
+import { fireAlert } from '../../utils/Alert';
 import Cookies from 'js-cookie';
 import axios, { AxiosResponse } from 'axios';
+import { Button } from '@material-ui/core';
+import { Modal, Spinner } from 'react-bootstrap';
+import { MdOutlineClose } from 'react-icons/md';
+import TableLoader from '../TableLoader';
 
-
-const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
+const AssignPrivilegesModal = ({ setReload }: any) => {
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
-		name: "",
-		department: "",
-		description: "",
+		role: "",
+		user: "",
 	})
 
 	const token = Cookies.get("token");
@@ -23,13 +20,13 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
-	const [departments, setDepartments] = useState([]);
+	const [employees, setEmployees] = useState([]);
 
 
 
 	const handleLeave = () => {
 		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/employee-roles`, {
+		fetch(`${process.env.REACT_APP_API}/admin/privileges`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -59,9 +56,9 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 
 
 	const title = "Successful";
-	const html = "Role Created!";
+	const html = "Privileges Assigned!";
 	const icon = "success";
-	const title1 = "Role error";
+	const title1 = "Privileges error";
 	const html1 = message;
 	const icon1 = "error";
 
@@ -81,9 +78,8 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 				setisError(false)
 				setMessage("")
 				setInputs({
-					name: "",
-					department: "",
-					description: "",
+					role: "",
+					user: "",
 				})
 			}, 5000);
 		}
@@ -102,15 +98,19 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 	useEffect(() => {
 		setisLoading1(true);
 		axios
-			.get(`${process.env.REACT_APP_API}/hr/departments`)
+			.get(`${process.env.REACT_APP_API}/hr/employees`)
 			.then((res: AxiosResponse) => {
-				setDepartments(res?.data?.data);
+				setEmployees(res?.data?.data);
+				setisLoading1(false);
 			})
 			.catch((data) => {
 				console.log(data);
 				setisLoading1(false);
 			});
 	}, [])
+
+	console.log('', inputs)
+
 	const Role: any = [
 		"employee",
 		"team lead",
@@ -139,7 +139,7 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 					<span>
 
 					</span>
-					<span className='span-center-title'>Create Role</span>
+					<span className='span-center-title'>Assign Privilege</span>
 					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
@@ -150,8 +150,8 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 							<div className='Modal-two-input'>
 								<h6>Name</h6>
 								<select id="Modal-textarea-input-sub"
-									value={inputs.name}
-									onChange={(e) => handleOnChange("name", e.target.value)}>
+									value={inputs.role}
+									onChange={(e) => handleOnChange("role", e.target.value)}>
 									<option value=" ">Select Name...</option>
 									{Role?.map((Role: any) => (
 										<option key={Role} value={Role}>
@@ -165,24 +165,20 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 						</div>
 						<h6>Department</h6>
 						<select id="Modal-textarea-input-sub"
-							value={inputs.department}
-							onChange={(e) => handleOnChange("department", e.target.value)}>
-							<option value=" ">Select Departments...</option>
+							value={inputs.user}
+							onChange={(e) => handleOnChange("user", e.target.value)}>
+							<option value=" ">Select Employees...</option>
 
-							{departments?.map((employ: any) => (
-								<option key={employ?._id} value={employ?.id}>
-									{employ?.name}
+							{employees?.map((employ: any) => (
+								<option key={employ?._id} value={employ?._id}>
+									{employ?.full_name}
 								</option>
 							))}
 						</select >
+						{isLoading1 ? <TableLoader isLoading={isLoading1} /> : ""}
 						<div className='Modal-data-time'>
 						</div>
-						<div className='Modal-textarea-middle'>
-							<h6>Description</h6>
-							<textarea rows={6} className='Modal-textarea' placeholder='Enter role description'
-								value={inputs.description}
-								onChange={(e) => handleOnChange("description", e.target.value)} />
-						</div>
+
 						<div className='btn-modal-container'>
 							<Button variant="contained" className="Add-btn-modal" onClick={handleLeave}>
 								{isLoading ? <Spinner animation="border" /> : "Create"}
@@ -196,6 +192,4 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 	)
 }
 
-export default CreateRoleModal
-
-
+export default AssignPrivilegesModal

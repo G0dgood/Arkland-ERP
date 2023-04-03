@@ -42,7 +42,9 @@ const DepartmentsView = () => {
     return realColor
   }
 
-  console.log(randColor());
+  // console.log(randColor());
+
+  const numbers = [1, 2, 3, 4, 5];
 
   return (
     <div id="screen-wrapper">
@@ -87,7 +89,7 @@ const DepartmentsView = () => {
                     onClick={() => navigate(`/departments/${item?.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
-                      <Button className={`iDotsRounded1`}>{item?.name}</Button>
+                      <Button className={i % 2 === 0 ? `iDotsRounded1` : `iDotsRounded2`}>{item?.name}</Button>
                       <BiDotsHorizontalRounded color="#97979B" />
                     </div>
                     <div className="iDotsRounded-text">{item?.name}</div>

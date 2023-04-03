@@ -328,7 +328,6 @@ const AllLeave = () => {
 	const [showLeave, setShowLeave] = useState(false)
 	const [message, setMessage] = useState("");
 	const [isError, setisError] = useState(false)
-	const [isSuccess, setisSuccess] = useState(false);
 
 	useEffect(() => {
 		setisLoading(true);
@@ -346,7 +345,6 @@ const AllLeave = () => {
 					setisError(true)
 				} else {
 					setSortData(data?.data?.data)
-					setisSuccess(true)
 					setTimeout(() => {
 						setMessage('')
 					}, 2000);
@@ -468,12 +466,9 @@ const AllLeave = () => {
 												<Button className={item?.finally_approved === true ? "table-link-active" : "table-link"}>{item.finally_approved === false ? "IN PROGRESS" : 'LEAVE APPROVED'}</Button>
 											</td>
 											<td className="table-datacell datatype-numeric">
-												{/* <Button id="team-applicatiom-update" onClick={() => {
-													setLeaveid(item?._id);
-													setShowLeave(true);
-												}}>Update</Button> */}
 												<Link to={`/finalleaveupdate/${item?._id}`}  >
-													<Button id="team-applicatiom-update">{item?.status === 'active' ? 'View' : 'Update'}</Button>
+													{/* @ts-ignore */}
+													<Button id="team-applicatiom-update">{item?.finally_approved === false ? "Update" : "View"}</Button>
 												</Link>
 											</td>
 										</tr>
@@ -489,7 +484,7 @@ const AllLeave = () => {
 						setDisplayData={setDisplayData}
 						data={sortData}
 						entriesPerPage={entriesPerPage}
-						Total={"Employee"}
+						Total={"All Leave"}
 					/>
 				</footer>
 			</main>

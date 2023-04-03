@@ -125,7 +125,7 @@ const CreateRole = ({ setShowTitle }: any) => {
 		}
 	}, [data, searchItem]);
 
-	console.log('searchItem', searchItem)
+
 
 	const [displayData, setDisplayData] = useState([]);
 

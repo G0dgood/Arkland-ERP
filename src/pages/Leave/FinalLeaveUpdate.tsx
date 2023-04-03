@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useState } from 'react'
-import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs'
+import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill, BsBriefcase } from 'react-icons/bs'
 import { MdOutlineClose } from 'react-icons/md'
 import TableLoader from '../../components/TableLoader'
 import Cookies from 'js-cookie'
@@ -51,10 +51,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 					setisError(true)
 				} else {
 					setData(data)
-					setisSuccess(true)
-					setTimeout(() => {
-						setMessage('')
-					}, 2000);
+
 				}
 				setisLoading(false);
 			})
@@ -85,7 +82,6 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 					setTimeout(() => {
 						navigate("/allieave");
 					}, 2000);
-					setData(data?.data)
 				}
 				setisLoading1(false);
 			})
@@ -143,13 +139,13 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 
 	useEffect(() => {
 		// @ts-ignore  
-		if (data?.data?.hod_approved === true) {
+		if (data?.data?.hod_approved === true && !data?.data?.hr_approved) {
 			setCount(1)
 			// @ts-ignore  
-		} else if (data?.data?.hr_approved === true) {
+		} else if (data?.data?.hr_approved && data?.data?.hod_approved && !data?.data?.finally_approved) {
 			setCount(2)
 			// @ts-ignore  
-		} else if (data?.data?.finally_approved === true) {
+		} else if (data?.data?.hr_approved === true && data?.data?.hod_approved === true && data?.data?.finally_approved === true) {
 			setCount(3)
 		} else {
 			setCount(0)
@@ -161,13 +157,10 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 		<div>
 			<header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
-					<span className="app-chat--icon">
-						<BsFillBriefcaseFill />
-					</span>
+					<BsBriefcase />
 					<span className="in-progresss">
-						UPDTAE LEAVE
+						All Employee Leave Applications
 					</span>
-
 				</div>
 				<div className="ChatProgressView-close">
 					<Link
@@ -183,9 +176,9 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">
-					<div className="contact-logo">
+					{/* <div className="contact-logo">
 
-					</div>
+					</div> */}
 
 					<div className="contact-form">
 						<div className="heading">

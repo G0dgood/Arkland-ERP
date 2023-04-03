@@ -122,7 +122,7 @@ const ProjectView = () => {
                       onClick={() => navigate(`/viewproject/${item.id}`)}
                     >
                       <div className="iDotsHorizontalRounded">
-                        <Button className={`iDotsRounded1`}>{item.name}</Button>
+                        <Button className={i % 2 === 0 ? `iDotsRounded1` : `iDotsRounded2`}>{item.name}</Button>
                         <BiDotsHorizontalRounded color="#97979B" />
                       </div>
                       <div className="iDotsRounded-text">
