@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import { fireAlert } from '../../utils/Alert';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 
 const KPIAssessment = () => {
 	const navigate = useNavigate();
@@ -734,13 +735,9 @@ const KPIAssessment = () => {
 					<textarea id="shareCommentText" placeholder="Write a comment.." required
 						value={kpinputs.comment}
 						onChange={(e) => handleOnKPI("comment", e.target.value)}></textarea>
-					{/* <button className="btn btn-success"> Share</button> */}
 					<div className='con-btn-success'>
-						{/* <Button variant="contained" className="show-btn btn-success"  >
-							Show All
-						</Button> */}
 						<Button variant="contained" className="Add-btn" onClick={handelkpi}>
-							{isLoading ? "loading..." : "	Create KPI"}
+							{isLoading ? <Spinner animation="border" /> : "	Create KPI"}
 
 						</Button>
 					</div>

@@ -50,10 +50,7 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 					setisError(true)
 				} else {
 					setData(data)
-					setisSuccess(true)
-					setTimeout(() => {
-						setMessage('')
-					}, 2000);
+
 				}
 				setisLoading(false);
 			})
@@ -80,11 +77,11 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 					setMessage1(data?.message)
 					setisError1(true)
 				} else {
+					setisSuccess1(true)
 					setisSuccess(true)
 					setTimeout(() => {
 						navigate("/allleaveapplications");
 					}, 2000);
-					setData(data?.data)
 				}
 				setisLoading1(false);
 			})
@@ -95,7 +92,7 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 	}
 
 	const title = "Successful";
-	const html = "Leave Created!";
+	const html = "Leave Approve!";
 	const icon = "success";
 	const title1 = "Leave error";
 	const html1 = message1;
@@ -142,13 +139,13 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 
 	useEffect(() => {
 		// @ts-ignore  
-		if (data?.data?.hod_approved === true) {
+		if (data?.data?.hod_approved === true && !data?.data?.hr_approved) {
 			setCount(1)
 			// @ts-ignore  
-		} else if (data?.data?.hr_approved === true) {
-			setCount(3)
+		} else if (data?.data?.hr_approved && data?.data?.hod_approved && !data?.data?.finally_approved) {
+			setCount(2)
 			// @ts-ignore  
-		} else if (data?.data?.finally_approved === true) {
+		} else if (data?.data?.hr_approved === true && data?.data?.hod_approved === true && data?.data?.finally_approved === true) {
 			setCount(3)
 		} else {
 			setCount(0)
@@ -160,11 +157,9 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 		<div>
 			<header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
-					<span className="app-chat--icon">
-						<BsFillBriefcaseFill />
-					</span>
+					<BsFillBriefcaseFill />
 					<span className="in-progresss">
-						UPDTAE LEAVE
+						All Leave Applications
 					</span>
 
 				</div>
@@ -182,9 +177,9 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">
-					<div className="contact-logo">
+					{/* <div className="contact-logo">
 
-					</div>
+					</div> */}
 
 					<div className="contact-form">
 						<div className="heading">
@@ -234,10 +229,13 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 							<div className='deleteKPIHandler  mt-5'>
 								<span className='deleteKPIHandler-mr'>
 									<Button className="table-link">
-										Delete </Button></span>
-								<span ><Button className="table-link-active" onClick={handelupdate} >
-									{isLoading1 ? <Spinner animation="border" /> : "Approve"}
-								</Button></span>
+										Delete </Button>
+								</span>
+								<span >
+									<Button className="table-link-active" onClick={handelupdate} >
+										{isLoading1 ? <Spinner animation="border" /> : "Approve"}
+									</Button>
+								</span>
 							</div>
 						}
 					</div>
@@ -245,18 +243,23 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 						<h3 className="heading">Leave Details</h3>
 						<ul className="contacts">
 							<li>
-								<span className='BsFillBriefcaseFill'><BsFillBriefcaseFill /></span>
-
+								<span className='BsFillBriefcaseFill'>
+									<BsFillBriefcaseFill />
+								</span>
 								{/* @ts-ignore */}
 								Leave Type : {data?.data?.type}
 							</li>
 							<li>
-								<span className='BsFillBriefcaseFill'><BsCalendarDateFill /></span>
+								<span className='BsFillBriefcaseFill'>
+									<BsCalendarDateFill />
+								</span>
 								{/* @ts-ignore */}
 								State date : {moment(data?.data?.start_date).format("DD-MM-YYYY")}
 							</li>
 							<li>
-								<span className='BsFillBriefcaseFill'><BsCalendarDate /></span>
+								<span className='BsFillBriefcaseFill'>
+									<BsCalendarDate />
+								</span>
 								{/* @ts-ignore */}
 								End date :  {moment(data?.data?.end_date).format("DD-MM-YYYY")}
 							</li>

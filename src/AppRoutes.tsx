@@ -59,6 +59,8 @@ import EmployeeContainer from "./pages/all_employees/EmployeeContainer";
 import AllLeave from "./pages/Leave/AllLeave";
 import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
 import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
+import ViewLeave from "./pages/Leave/ViewLeave";
+import HodLeaveView from "./pages/Leave/HodLeaveView";
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -111,6 +113,8 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/kpicontainer" element={<KpiContainer />} />
         <Route path="/kpidetails/:id" element={<KPIDetails />} />
         <Route path="/leave" element={<Leave />} />
+        <Route path="/viewleave/:id" element={<ViewLeave />} />
+        <Route path="/hodleaveview/:id" element={<HodLeaveView />} />
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />

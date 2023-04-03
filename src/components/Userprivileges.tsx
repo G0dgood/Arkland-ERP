@@ -11,6 +11,7 @@ import { ImBin } from 'react-icons/im'
 import DeleteModals from './DeleteModals'
 import axios, { AxiosResponse } from 'axios'
 import { fireAlert } from '../utils/Alert'
+import AssignPrivilegesModal from './Modals/AssignPrivilegesModal'
 
 const Userprivileges = ({ showprivileges, setShowprivileges, setShowTitle }: any) => {
 
@@ -148,8 +149,9 @@ const Userprivileges = ({ showprivileges, setShowprivileges, setShowTitle }: any
 			<main>
 				<div className='SiteWorkermaindiv'>
 					<div className='SiteWorkermaindivsub'>
-
-						<span className='SupportmainTitleh3'>User Privileges</span>
+						{/* <span className='SupportmainTitleh3'> */}
+						<AssignPrivilegesModal setReload={setReload} />
+						{/* </span> */}
 					</div>
 					<div>
 						<EntriesPerPage
@@ -207,7 +209,7 @@ const Userprivileges = ({ showprivileges, setShowprivileges, setShowTitle }: any
 						setDisplayData={setDisplayData}
 						data={sortData}
 						entriesPerPage={entriesPerPage}
-						Total={"Employee"}
+						Total={"Privileges"}
 					/>
 				</footer>
 			</main>
