@@ -2,8 +2,6 @@ import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import { Toast } from "react-bootstrap";
 import { BsExclamationLg } from "react-icons/bs";
 import axios, { AxiosResponse } from "axios";
@@ -12,20 +10,22 @@ import {
   MainSearch,
   NoRecordFound,
   TableFetch,
-} from "../../components/TableOptions";
-import Pagination from "../../components/Pagination";
-import CreateWarningModal from "../../components/Modals/CreateWarningModal";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { checkForEmployee, checkForName } from "../../utils/checkForName";
-import { getEmployees } from "../../store/reducers/employees";
-import { getRequestOptions } from "../../utils/auth/header";
-import TableLoader from "../../components/TableLoader";
+} from "../../../components/TableOptions";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import Pagination from "../../../components/Pagination";
+import CreateWarningModal from "../../../components/Modals/CreateWarningModal";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useDispatch";
+import { checkForEmployee, checkForName } from "../../../utils/checkForName";
+import { getEmployees } from "../../../store/reducers/employees";
+import { getRequestOptions } from "../../../utils/auth/header";
+import TableLoader from "../../../components/TableLoader";
 
-const WarningList = () => {
+const TerminationList = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const employees: any = useAppSelector((state) => state.employees.employees);
-  const [warnings, setWarnings] = useState([] as any);
+  const [terminations, setTerminations] = useState([] as any);
   const [data, setData] = useState([]);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
@@ -40,7 +40,7 @@ const WarningList = () => {
       try {
         setisLoading(true);
         const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/warnings`,
+          `${process.env.REACT_APP_API}/hr/terminations`,
           getRequestOptions
         );
         const isJsonResponse = response.headers
@@ -50,7 +50,7 @@ const WarningList = () => {
         if (!response.ok) {
           throw new Error(data.message || response.status);
         }
-        setWarnings([...data.data]);
+        setTerminations([...data.data]);
         setisLoading(false);
         setError(false);
         setMessage("");
@@ -69,12 +69,12 @@ const WarningList = () => {
     setNewWarningCreated(!newWarningCreated);
   };
   const header = [
-    { title: "EMPLOYEE ID", prop: "employee" },
-    { title: "FULL NAME", prop: "last_name" },
-    { title: "MESSAGE", prop: "message" },
-    { title: "MISCONDUCT", prop: "misconduct" },
-    { title: "NUMBER OF WARNINGS", prop: "count" },
+    { title: "EMPLOYEE", prop: "employee" },
+    { title: "REASON", prop: "reason" },
+    { title: "DESCRIPTION", prop: "description" },
     { title: "STATUS", prop: "status" },
+    { title: "CREATE BY", prop: "created_by" },
+    { title: "APPROVED BY", prop: "approved_by" },
   ];
 
   const [collapseNav, setCollapseNav] = useState(() => {
@@ -160,7 +160,7 @@ const WarningList = () => {
             />
           </div>
           <div>
-            <MainSearch placeholder={"Search...          Warnings"} />
+            <MainSearch placeholder={"Search...          terminations"} />
           </div>
         </div>
         <section className="md-ui component-data-table">
@@ -186,14 +186,11 @@ const WarningList = () => {
               <tbody className="data-table-content">
                 {isLoading ? (
                   <TableFetch colSpan={8} />
-                ) : warnings?.length === 0 || warnings == null ? (
+                ) : terminations?.length === 0 || terminations == null ? (
                   <NoRecordFound colSpan={8} />
                 ) : (
-                  warnings.map((item: any, i: any) => (
-                    <tr
-                      className="data-table-row"
-                      onClick={() => navigate(`/warninglist/${item.id}`)}
-                    >
+                  terminations.map((item: any, i: any) => (
+                    <tr className="data-table-row">
                       <td className="table-datacell datatype-numeric">
                         {item?.employee}
                       </td>
@@ -232,4 +229,4 @@ const WarningList = () => {
   );
 };
 
-export default WarningList;
+export default TerminationList;

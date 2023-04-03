@@ -17,7 +17,7 @@ interface CreateWarningInterface {
   onNewWarningCreated?: any;
 }
 
-const CreateWarningModal = ({
+const TerminateEmployeeModal = ({
   id,
   onNewWarningCreated,
 }: CreateWarningInterface) => {
@@ -28,6 +28,7 @@ const CreateWarningModal = ({
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
+    console.log(values);
     const employeeId = id ? id : values.employee;
     const createWarningValues = { ...values, employee: employeeId };
     try {
@@ -79,7 +80,7 @@ const CreateWarningModal = ({
         className="Add-btn"
         onClick={() => setLgShow(true)}
       >
-        Create Warning
+        Terminate Employee
       </Button>
       <Modal
         size="lg"
@@ -89,7 +90,7 @@ const CreateWarningModal = ({
       >
         <Modal.Header>
           <span></span>
-          <span className="span-center-title"> Create Warning</span>
+          <span className="span-center-title"> Terminate Employee</span>
           <Button style={{ color: "#fff" }} onClick={() => setLgShow(false)}>
             <MdOutlineClose size={28} />
           </Button>
@@ -180,4 +181,4 @@ const CreateWarningModal = ({
   );
 };
 
-export default CreateWarningModal;
+export default TerminateEmployeeModal;

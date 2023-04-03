@@ -108,6 +108,15 @@ const AllEmployees = ({ setEmployee }: any) => {
                 </Button>
               </div>
 
+              <div
+                className="allemployees-sup-item2"
+                onClick={() => navigate("/terminations")}
+              >
+                <Button variant="contained" className="Add-btn">
+                  Terminations
+                </Button>
+              </div>
+
               <div>
                 <EntriesPerPage
                   data={displayData}

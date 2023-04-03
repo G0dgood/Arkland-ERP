@@ -9,6 +9,8 @@ import Sidebar from "../../components/Sidebar";
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useEmployeeById } from "../../hooks/useEmployees";
 import { DialogState } from "../../interfaces/base";
+import CreateWarningModal from "../../components/Modals/CreateWarningModal";
+import TerminateEmployeeModal from "../../components/Modals/TerminateEmployeeModal";
 
 const override: CSSProperties = {
   display: "block",
@@ -86,17 +88,15 @@ const ViewEmployee = () => {
                         title="Return"
                       />
                     </div>
-                    <div>
+                    <div className="employee-main-div-col-header-buttons">
+                      <CreateWarningModal id={id} />
+
                       <Button
                         variant="contained"
-                        className="Create-event-Calender"
+                        className="Add-btn"
                         onClick={() => handleDelete()}
                       >
-                        {/* {isDeleteLoading ? (
-                          <Spinner animation="border" />
-                        ) : ( */}
                         Delete Employee
-                        {/* )} */}
                       </Button>
                     </div>
                     {showDialog && (
@@ -120,7 +120,11 @@ const ViewEmployee = () => {
                               setShowDialog(false);
                             }}
                           >
-                            Yes
+                            {isDeleteLoading ? (
+                              <Spinner animation="border" />
+                            ) : (
+                              "Yes"
+                            )}
                           </button>
                           <button
                             className="btn btn-secondary"

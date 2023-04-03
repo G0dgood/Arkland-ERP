@@ -32,12 +32,8 @@ import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
 import PrivateRoute from "./components/PrivateRoute";
 import storage from "./utils/storage";
 import { useAppDispatch } from "./hooks/useDispatch";
-import { getDepartment } from "./store/reducers/department";
-import { getRoles } from "./store/reducers/roles";
 import { sessionExpired } from "./utils/sessionExpires";
 import { getEmployees } from "./store/reducers/employees";
-import { getTeamLeads } from "./store/reducers/teamLeads";
-import { getTeam } from "./store/reducers/team";
 import Departments from "./pages/Departments/Departments";
 import Project from "./pages/Projects/Project";
 import KpiContainer from "./pages/kpi_assessment/KpiContainer";
@@ -47,7 +43,6 @@ import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
 import KPIDetails from "./pages/kpi_assessment/KPIDetails";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
-import { getProjects } from "./store/reducers/project";
 import WeeklyContainer from "./pages/WeeklyReport/WeeklyContainer";
 import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
 import TeamWeeklyReport from "./pages/WeeklyReport/TeamWeeklyReport";
@@ -57,6 +52,8 @@ import EmployeeContainer from "./pages/all_employees/EmployeeContainer";
 import AllLeave from "./pages/Leave/AllLeave";
 import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
 import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
+import TerminationList from "./pages/all_employees/terminations/TerminationList";
+import ViewWarning from "./pages/all_employees/warnings/ViewWarning";
 
 export const removeData = () => {
   Cookies.remove("isAuthenticated");
@@ -155,6 +152,9 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/createemployee" element={<CreateEmployee />} />
           <Route path="/createprojects" element={<CreateProjects />} />
           <Route path="/warninglist" element={<WarningList />} />
+          <Route path="/warninglist/:id" element={<ViewWarning />} />
+
+          <Route path="/terminations" element={<TerminationList />} />
           <Route path="/dashboardcalender" element={<DashboardCalender />} />
           <Route path="/profile/edit" element={<EditUser />} />
           <Route path="/profile" element={<Profile />} />
