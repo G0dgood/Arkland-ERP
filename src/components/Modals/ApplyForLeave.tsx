@@ -38,7 +38,7 @@ const ApplyForLeave = (props: any) => {
 					setMessage(data?.message)
 					setisError(true)
 				} else {
-					console.log('data', data)
+					// console.log('data', data)
 					setisSuccess(true)
 				}
 				setisLoading(false);
@@ -102,9 +102,7 @@ const ApplyForLeave = (props: any) => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered>
 				<Modal.Header  >
-
 					<span>
-
 					</span>
 					<span className='span-center-title'>Apply For Leave</span>
 					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>

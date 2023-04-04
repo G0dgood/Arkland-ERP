@@ -208,52 +208,57 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
     setinput((prevState: any) => {
       return ({
         ...prevState,
-        job_knowledge: totalScore1
-      });
-    });
-  }, [setinput, totalScore1]);
-  useEffect(() => {
-    setinput((prevState: any) => {
-      return ({
-        ...prevState,
-        efficiency: totalScore2
-      });
-    });
-  }, [setinput, totalScore2]);
-  useEffect(() => {
-    setinput((prevState: any) => {
-      return ({
-        ...prevState,
-        attendance: totalScore3
-      });
-    });
-  }, [setinput, totalScore3]);
-  useEffect(() => {
-    setinput((prevState: any) => {
-      return ({
-        ...prevState,
-        communication: totalScore4
-      });
-    });
-  }, [setinput, totalScore4]);
-
-  useEffect(() => {
-    setinput((prevState: any) => {
-      return ({
-        ...prevState,
-        reliability: totalScore5
-      });
-    });
-  }, [setinput, totalScore5]);
-
-  useEffect(() => {
-    setinput((prevState: any) => {
-      return ({
-        ...prevState,
+        job_knowledge: totalScore1,
+        efficiency: totalScore2,
+        attendance: totalScore3,
+        communication: totalScore4,
+        reliability: totalScore5,
         collaboration: totalScore6
       });
     });
-  }, [setinput, totalScore6]);
+  }, [setinput, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
+  // useEffect(() => {
+  //   setinput((prevState: any) => {
+  //     return ({
+  //       ...prevState,
+  //       efficiency: totalScore2
+  //     });
+  //   });
+  // }, [setinput, totalScore2]);
+  // useEffect(() => {
+  //   setinput((prevState: any) => {
+  //     return ({
+  //       ...prevState,
+  //       attendance: totalScore3
+  //     });
+  //   });
+  // }, [setinput, totalScore3]);
+  // useEffect(() => {
+  //   setinput((prevState: any) => {
+  //     return ({
+  //       ...prevState,
+  //       communication: totalScore4
+  //     });
+  //   });
+  // }, [setinput, totalScore4]);
+
+  // useEffect(() => {
+  //   setinput((prevState: any) => {
+  //     return ({
+  //       ...prevState,
+  //       reliability: totalScore5
+  //     });
+  //   });
+  // }, [setinput, totalScore5]);
+
+  // useEffect(() => {
+  //   setinput((prevState: any) => {
+  //     return ({
+  //       ...prevState,
+  //       collaboration: totalScore6
+  //     });
+  //   });
+  // }, [setinput, totalScore6]);
 
   return (
     <form onSubmit={handelHodkpi}>
@@ -281,7 +286,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               <div className="factor_area">
                 <p>Job Knowledge</p>
                 <div>
-                  <p>{kpiData3.Weight1}</p>
+                  <p>{kpiData3?.Weight1}</p>
                 </div>
               </div>
               <div className="rate_area">
@@ -303,7 +308,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               <div className="factor_area">
                 <p>Efficiency</p>
                 <div>
-                  <p>{kpiData3.Weight2}</p>
+                  <p>{kpiData3?.Weight2}</p>
                 </div>
               </div>
               <div className="rate_area">
@@ -325,7 +330,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               <div className="factor_area">
                 <p>Attendance</p>
                 <div>
-                  <p>{kpiData3.Weight3}</p>
+                  <p>{kpiData3?.Weight3}</p>
                 </div>
               </div>
               <div className="rate_area">
@@ -355,7 +360,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               </div>
               <div className="btn_area">
                 {data?.status === 'active' ? data?.communication_reviewer :
-                  <select value={employeegrade.employeegrade4}
+                  <select value={employeegrade?.employeegrade4}
                     onChange={(e) => handleOnChange4('employeegrade4', e.target.value)}>
                     <option></option>
                     {[1, 2, 3, 4, 5].map(item =>
@@ -369,7 +374,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               <div className="factor_area">
                 <p>Team work</p>
                 <div>
-                  <p>{kpiData3.Weight5}</p>
+                  <p>{kpiData3?.Weight5}</p>
                 </div>
               </div>
               <div className="rate_area">
@@ -399,7 +404,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               </div>
               <div className="btn_area">
                 {data?.status === 'active' ? <p>{data?.collaboration_reviewer}</p> :
-                  <select value={employeegrade.employeegrade6}
+                  <select value={employeegrade?.employeegrade6}
                     onChange={(e) => handleOnChange4('employeegrade6', e.target.value)}>
                     <option></option>
                     {[1, 2, 3, 4, 5].map(item =>

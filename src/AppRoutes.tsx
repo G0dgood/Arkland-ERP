@@ -54,6 +54,8 @@ import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
 import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
 import TerminationList from "./pages/all_employees/terminations/TerminationList";
 import ViewWarning from "./pages/all_employees/warnings/ViewWarning";
+import ViewLeave from "./pages/Leave/ViewLeave";
+import HodLeaveView from "./pages/Leave/HodLeaveView";
 
 export const removeData = () => {
   Cookies.remove("isAuthenticated");
@@ -103,6 +105,8 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/kpicontainer" element={<KpiContainer />} />
         <Route path="/kpidetails/:id" element={<KPIDetails />} />
         <Route path="/leave" element={<Leave />} />
+        <Route path="/viewleave/:id" element={<ViewLeave />} />
+        <Route path="/hodleaveview/:id" element={<HodLeaveView />} />
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />

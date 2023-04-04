@@ -43,10 +43,6 @@ const AllLeaveApplications = () => {
 					setisError(true)
 				} else {
 					setSortData(data?.data?.data)
-					setisSuccess(true)
-					setTimeout(() => {
-						setMessage('')
-					}, 2000);
 				}
 				setisLoading(false);
 			})
@@ -165,12 +161,8 @@ const AllLeaveApplications = () => {
 												<Button className={item.hr_approved === true ? "table-link-active" : "table-link"}>{item.hr_approved === false ? "IN PROGRESS" : 'LEAVE APPROVED'}</Button>
 											</td>
 											<td className="table-datacell datatype-numeric">
-												{/* <Button id="team-applicatiom-update" onClick={() => {
-													setLeaveid(item?._id);
-													setShowLeave(true);
-												}}>Update</Button> */}
 												<Link to={`/hrupdateleave/${item?._id}`}  >
-													<Button id="team-applicatiom-update">{item?.status === 'active' ? 'View' : 'Update'}</Button>
+													<Button id="team-applicatiom-update">{item?.finally_approved === false ? "Update" : "View"}</Button>
 												</Link>
 											</td>
 										</tr>
@@ -186,7 +178,7 @@ const AllLeaveApplications = () => {
 						setDisplayData={setDisplayData}
 						data={sortData}
 						entriesPerPage={entriesPerPage}
-						Total={"Employee"}
+						Total={"All Leave Applications"}
 					/>
 				</footer>
 			</main>

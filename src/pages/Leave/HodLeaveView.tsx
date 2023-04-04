@@ -7,9 +7,11 @@ import Cookies from 'js-cookie';
 import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
+const HodLeaveView = ({ showLeave, setShowLeaver, }: any) => {
+
+	const { id } = useParams()
 	const navigate = useNavigate();
 	const token = Cookies.get("token");
 	const [lgShow, setLgShow] = useState(false);
@@ -18,7 +20,6 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 	const [isLoading1, setisLoading1] = useState(false);
-	const [isSuccess1, setisSuccess1] = useState(false);
 	const [isError1, setisError1] = useState(false)
 	const [message1, setMessage1] = useState("");
 	const [data, setData] = useState("");
@@ -31,7 +32,7 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 	})
 
 	const title = "Successful";
-	const html = "Leave Created!";
+	const html = "Leave Approve!";
 	const icon = "success";
 	const title1 = "Leave error";
 	const html1 = message1;
@@ -39,7 +40,7 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 
 
 	useEffect(() => {
-		if (isSuccess1) {
+		if (isSuccess) {
 			fireAlert(title, html, icon);
 			setTimeout(() => {
 				setisSuccess(false)
@@ -53,11 +54,11 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 				setMessage1("")
 			}, 5000);
 		}
-	}, [html, html1, isError1, isSuccess1, setMessage1])
+	}, [html, html1, isError1, isSuccess, setMessage1])
 
 	useEffect(() => {
 		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${leaveid}`, {
+		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -71,10 +72,7 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 					setisError(true)
 				} else {
 					setData(data)
-					setisSuccess(true)
-					setTimeout(() => {
-						setMessage('')
-					}, 2000);
+
 				}
 				setisLoading(false);
 			})
@@ -82,23 +80,25 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 				console.error("Error:", error);
 				setisLoading(false);
 			});
-	}, [leaveid, token])
+	}, [id, navigate, token])
 
 	useEffect(() => {
 		// @ts-ignore  
-		if (data?.data?.hod_approved === true) {
+		if (data?.data?.hod_approved === true && !data?.data?.hr_approved) {
 			setCount(1)
 			// @ts-ignore  
-		} else if (data?.data?.hr_approved === true) {
-			setCount(3)
+		} else if (data?.data?.hr_approved && data?.data?.hod_approved && !data?.data?.finally_approved) {
+			setCount(2)
 			// @ts-ignore  
-		} else if (data?.data?.finally_approved === true) {
+		} else if (data?.data?.hr_approved === true && data?.data?.hod_approved === true && data?.data?.finally_approved === true) {
 			setCount(3)
 		} else {
 			setCount(0)
 		}
 		// @ts-ignore 
 	}, [data?.data?.finally_approved, data?.data?.hod_approved, data?.data?.hr_approved])
+
+
 
 	useEffect(() => {
 		setInputs((prevState: any) => {
@@ -121,7 +121,7 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 
 	const handelupdate = () => {
 		setisLoading1(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${leaveid}/hod-approval`, {
+		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}/hod-approval`, {
 			method: "PATCH", // or 'PUT'
 			headers: {
 				"Content-Type": "application/json",
@@ -136,9 +136,8 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 				} else {
 					setisSuccess(true)
 					setTimeout(() => {
-						navigate("/kpicontainer");
+						navigate("/teamleaveapplications");
 					}, 2000);
-					setData(data?.data)
 				}
 				setisLoading1(false);
 			})
@@ -149,31 +148,32 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 	}
 
 	return (
-		<div className={showLeave ? "Drawer" : "Drawer1"}>
+		<div  >
 			<header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
-					<span className="app-chat--icon">
-						<BsFillBriefcaseFill />
-					</span>
+					<BsFillBriefcaseFill />
 					<span className="in-progresss">
-						UPDTAE LEAVE
+						My Team Leave Applications
 					</span>
 
 				</div>
-				<div className="ChatProgressView-close" onClick={() => setShowLeaver(false)}>
-					<MdOutlineClose
-						size={25}
-						style={{ color: "white", backgroundColor: "" }}
-						className="ChatProgressView-close-icon"
-					/>
+				<div className="ChatProgressView-close"  >
+					<Link
+						to={"/teamleaveapplications"}>
+						<MdOutlineClose
+							size={25}
+							style={{ color: "white", backgroundColor: "" }}
+							className="ChatProgressView-close-icon"
+						/>
+					</Link>
 				</div>
 			</header>
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">
-					<div className="contact-logo">
+					{/* <div className="contact-logo">
 
-					</div>
+					</div> */}
 
 					<form className="contact-form">
 						<div className="heading">
@@ -209,14 +209,7 @@ const HodLeaveView = ({ showLeave, setShowLeaver, leaveid }: any) => {
 							</div>
 						</div>
 						<div className='data-hod_approved'>
-							<span className='data-hod_approved-span'>
-								{/* @ts-ignore */}
-								{data?.data?.hod_approved === false &&
-									<Button variant="contained"
-										className="table-link" type="submit">
-										{/* {isLoading ? <Spinner animation="border" /> : "APPLY"} */}
-										Delete</Button>}
-							</span>
+
 							<span>
 								{/* @ts-ignore */}
 								{data?.data?.hod_approved === false &&

@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import { fireAlert } from "../../../utils/Alert";
 import { checkForName } from "../../../utils/checkForName";
+import { Spinner } from "react-bootstrap";
 
 const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
   const [isLoading, setLoading] = React.useState(false);
@@ -244,7 +245,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
           className={"Add-btn-edit"}
           onClick={handleSubmit}
         >
-          {isLoading ? "Processing..." : "          Create Employee"}
+          {isLoading ? <Spinner animation="border" /> : "          Create Employee"}
         </Button>
       </div>
     </div>

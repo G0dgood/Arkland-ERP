@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "@material-ui/core";
 import { FaArrowLeft } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import { MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
@@ -94,9 +94,7 @@ const TeamLeaveApplications = () => {
 			<main>
 				<div className='SiteWorkermaindiv'>
 					<div className='SiteWorkermaindivsub'>
-						{/* <Button variant="contained" className="back-btn-icon" id="Add-btn-sub" onClick={() => navigate("/teamleaveapplications")}>
-							<FaArrowLeft size={25} />
-						</Button> */}
+
 
 						<span className='SupportmainTitleh3'>My Team Leave Applications</span>
 					</div>
@@ -156,10 +154,14 @@ const TeamLeaveApplications = () => {
 											<Button className={item.hod_approved === true ? "table-link-active" : "table-link"}>{item.hod_approved === false ? "IN PROGRESS" : 'LEAVE APPROVED'}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Button id="team-applicatiom-update" onClick={() => {
+											{/* <Button id="team-applicatiom-update" onClick={() => {
 												setLeaveid(item?._id);
 												setShowLeaver(true);
-											}}>Update</Button>
+												// @ts-ignore
+											}}> {item?.hod_approved === false ? "Update" : "View"}</Button> */}
+											<Link to={`/hodleaveview/${item?._id}`}  >
+												<Button id="team-applicatiom-update">{item?.hod_approved === false ? "Update" : "View"}</Button>
+											</Link>
 										</td>
 									</tr>
 								)))}
@@ -168,7 +170,6 @@ const TeamLeaveApplications = () => {
 					</div>
 
 				</section>
-				<HodLeaveView showLeave={showLeave} setShowLeaver={setShowLeaver} leaveid={leaveid} />
 				<footer className="main-table-footer">
 					<Pagination
 						setDisplayData={setDisplayData}
