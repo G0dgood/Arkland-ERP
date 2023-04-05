@@ -73,7 +73,7 @@ const TeamWeeklyReport = () => {
 			<main>
 				<div className='SiteWorkermaindiv'>
 					<div className='SiteWorkermaindivsub'>
-						<span className='SupportmainTitleh3'>Team Week Report</span>
+						<span className='SupportmainTitleh3'>Team Weekly Report</span>
 					</div>
 					<div>
 						<EntriesPerPage

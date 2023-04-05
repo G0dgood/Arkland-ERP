@@ -116,9 +116,10 @@ const ApplyForLeave = ({ setReload }: any) => {
 							value={inputs.leave_type}
 							onChange={(e) => handleOnChange("leave_type", e.target.value)}>
 							<option value=" ">Select Name...</option>
-							<option value="Paid Leave">Paid Leave</option>
-							<option value="Sick Leave">Sick Leave</option>
-							<option value="casual">Casual</option>
+							<option value="annual">ANNUAL</option>
+							<option value="compassionate">COMPASSIONATE</option>
+							<option value="casual">CASUAL</option>
+							<option value="sick">SICK LEAVE</option>
 						</select >
 						<div className='Modal-data-time'>
 						</div>

@@ -10,7 +10,7 @@ import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
 import axios, { AxiosResponse } from 'axios'
 
-const HRUpdateLeave = ({ setShowLeave }: any) => {
+const HRUpdateLeave = () => {
 	const navigate = useNavigate();
 	const { id } = useParams()
 	const token = Cookies.get("token");
@@ -26,7 +26,7 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 	const [isLoading2, setisLoading2] = useState(false);
 
 
-	const [data, setData] = useState("");
+	const [data, setData] = useState<any>("");
 	const [count, setCount] = useState(0);
 	const [inputs, setInputs] = useState({
 		start_date: "",
@@ -34,8 +34,7 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 		description: "",
 		leave_type: ""
 	})
-	// @ts-ignore  
-	console.log('description', inputs)
+
 
 	useEffect(() => {
 		setisLoading(true);
@@ -80,7 +79,6 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 					setMessage1(data?.message)
 					setisError1(true)
 				} else {
-					setisSuccess1(true)
 					setisSuccess(true)
 					setTimeout(() => {
 						navigate("/allleaveapplications");
@@ -106,7 +104,7 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 
 
 	useEffect(() => {
-		if (isSuccess1) {
+		if (isSuccess) {
 			fireAlert(title, html, icon);
 			setTimeout(() => {
 				setisSuccess(false)
@@ -119,8 +117,14 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 				setisError1(false)
 				setMessage1("")
 			}, 5000);
+		} else if (isSuccess2) {
+			fireAlert(title2, html2, icon2);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
 		}
-	}, [html, html1, isError1, isSuccess1, setMessage1])
+	}, [html, html1, isError1, isSuccess, isSuccess1, isSuccess2, setMessage1])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
@@ -133,30 +137,23 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 		setInputs((prevState: any) => {
 			return ({
 				...prevState,
-				// @ts-ignore  
 				description: data?.data?.description,
-				// @ts-ignore  
 				leave_type: data?.data?.type,
 
 			});
 		});
-		// @ts-ignore  
 	}, [setInputs, data?.data?.description, data?.data?.type]);
 
 	useEffect(() => {
-		// @ts-ignore  
 		if (data?.data?.hod_approved === true && !data?.data?.hr_approved) {
 			setCount(1)
-			// @ts-ignore  
 		} else if (data?.data?.hr_approved && data?.data?.hod_approved && !data?.data?.finally_approved) {
 			setCount(2)
-			// @ts-ignore  
 		} else if (data?.data?.hr_approved === true && data?.data?.hod_approved === true && data?.data?.finally_approved === true) {
 			setCount(3)
 		} else {
 			setCount(0)
 		}
-		// @ts-ignore 
 	}, [data?.data?.finally_approved, data?.data?.hod_approved, data?.data?.hr_approved])
 
 
@@ -201,13 +198,10 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">
-					{/* <div className="contact-logo">
 
-					</div> */}
 
 					<div className="contact-form">
 						<div className="heading">
-							{/* @ts-ignore */}
 							<h2>Leave Type : {data?.data?.type}</h2>
 							<p>Fill in information to update your Leave!</p>
 						</div>
@@ -245,7 +239,6 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 									onChange={(e) => handleOnChange("description", e.target.value)} />
 							</div>
 						</div>
-						{/* @ts-ignore */}
 						{data?.data?.hr_approved === false &&
 							<div className='deleteKPIHandler  mt-5'>
 								<span className='deleteKPIHandler-mr'>
@@ -267,21 +260,18 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 								<span className='BsFillBriefcaseFill'>
 									<BsFillBriefcaseFill />
 								</span>
-								{/* @ts-ignore */}
 								Leave Type : {data?.data?.type}
 							</li>
 							<li>
 								<span className='BsFillBriefcaseFill'>
 									<BsCalendarDateFill />
 								</span>
-								{/* @ts-ignore */}
 								State date : {moment(data?.data?.start_date).format("DD-MM-YYYY")}
 							</li>
 							<li>
 								<span className='BsFillBriefcaseFill'>
 									<BsCalendarDate />
 								</span>
-								{/* @ts-ignore */}
 								End date :  {moment(data?.data?.end_date).format("DD-MM-YYYY")}
 							</li>
 
@@ -305,22 +295,23 @@ const HRUpdateLeave = ({ setShowLeave }: any) => {
 												<div className="small text-muted">{count + ' Aprovals'}</div>
 											</div>
 											<div className="align-self-center ml-3">
-												{/* @ts-ignore */}
 												{data?.data?.hod_approved === true &&
 													<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-												{/* @ts-ignore */}
 												{data?.data?.hr_approved === true &&
 													<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-												{/* @ts-ignore */}
 												{data?.data?.finally_approved === true &&
 													<img className="rounded-circle border" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
 											</div>
 										</div>
 									</div>
-									{/* @ts-ignore */}
-
-									<Button className={data?.data?.finally_approved === true ? "table-link-active" : "table-link"}>{data?.data?.finally_approved === false ? "IN PROGRESS" : 'LEAVE APPROVED'}</Button>
-
+									<Button className={data?.data?.status === "HOD approved" ? "table-link" :
+										data?.data?.status === "HR approved" ? "table-link-hr" :
+											data?.data?.status === "approved" ? "table-link-active" :
+												data?.data?.status === "rejected" ? "table-link-reject" : "table-link"}>
+										{data?.data?.status === "HOD approved" ? "HOD approved" :
+											data?.data?.status === "HR approved" ? "HR approved" :
+												data?.data?.status === "approved" ? "LEAVE approved" :
+													data?.data?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
 								</li>
 							</div>
 						</ul>
