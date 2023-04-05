@@ -9,9 +9,11 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useDepartments } from "../../hooks/useDepartments";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
+import { getUserPrivileges } from "../../functions/auth";
 
 const DepartmentsView = () => {
   const navigate = useNavigate();
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
   const [newDepartmentCreated, setNewDepartmentCreated] = React.useState(
     {} as any
   );
@@ -21,8 +23,6 @@ const DepartmentsView = () => {
   });
   const { departments, isLoading, error, message } =
     useDepartments(newDepartmentCreated);
-
-
 
   const handleNewDepartmentCreated = () => {
     setNewDepartmentCreated(!newDepartmentCreated);
@@ -35,20 +35,21 @@ const DepartmentsView = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-
   const randColor = () => {
-    const realColor = "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
-    console.log('realColor', realColor)
-    return realColor
-  }
-
-
+    const realColor =
+      "#" +
+      Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, "0")
+        .toUpperCase();
+    console.log("realColor", realColor);
+    return realColor;
+  };
 
   const isPrime = (num: number) => {
-    for (let i = 2; i < num; i++)
-      if (num % i === 0) return false;
+    for (let i = 2; i < num; i++) if (num % i === 0) return false;
     return num > 1;
-  }
+  };
 
   return (
     <div id="screen-wrapper">
@@ -59,22 +60,19 @@ const DepartmentsView = () => {
           <div className="ProjectViewContainer-subone">
             <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
               <h5>Department</h5>
-              <div className="Request-btn-modal-container">
-                <div className="Request-btn">
-                  <CreateDepartmentModal
-                    onNewDepartmentCreated={handleNewDepartmentCreated}
-                  />
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div className="Request-btn-modal-container">
+                  <div className="Request-btn">
+                    <CreateDepartmentModal
+                      onNewDepartmentCreated={handleNewDepartmentCreated}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             {isLoading ? (
               <div className="isLoading-container">
-
-                <SyncLoader
-                  color={"#990000"}
-                  loading={isLoading}
-                />
-
+                <SyncLoader color={"#990000"} loading={isLoading} />
               </div>
             ) : departments?.length === 0 ? (
               <div className="table-loader-announcement">
@@ -93,42 +91,25 @@ const DepartmentsView = () => {
                     onClick={() => navigate(`/departments/${item?.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
-                      <Button className={i % 2 === 0 ? `iDotsRounded1` : isPrime(parseInt(i, 10)) ? 'iDotsRounded2' : 'iDotsRounded3'}>{item?.name}</Button>
+                      <Button
+                        className={
+                          i % 2 === 0
+                            ? `iDotsRounded1`
+                            : isPrime(parseInt(i, 10))
+                            ? "iDotsRounded2"
+                            : "iDotsRounded3"
+                        }
+                      >
+                        {item?.name}
+                      </Button>
                       <BiDotsHorizontalRounded color="#97979B" />
                     </div>
                     <div className="iDotsRounded-text">{item?.name}</div>
                     <div className="iDotsRounded-text">{item?.description}</div>
-
-                    <div className="iDotsRounded-percent-people">
-                      <div className="iDotsRounded-percent-list">
-                        <span className="profile-containers">Status</span>
-                        <span className="profile-containers">
-                          {item?.status}
-                        </span>
-                      </div>
-                    </div>
                   </div>
                 ))}
               </div>
             )}
-          </div>
-          <div className="ProjectViewContainer-subtwo">
-            <div className="subtwo-content-one">
-              <div className="subtwo-content-three-sub3">
-                <p>Departments</p>
-                <div className="ProjectView-projects">
-                  <div className="projects-total1">
-                    <h6>TOTAL</h6>
-                    <div className="projects-total-container">
-                      <span className="projects-total1-span"></span>
-                      <span className="projects-total1-span1">
-                        {departments?.length}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </main>

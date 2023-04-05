@@ -9,19 +9,36 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false,
 });
 
+// export const sessionExpired = () => {
+//   if (Cookies.get("token")) {
+//     swalWithBootstrapButtons.fire({
+//       title: "Session Expired!",
+//       html: "Your session has expired. Please login and try again",
+//       icon: "warning",
+//       showCancelButton: false,
+//       confirmButtonText: "OK",
+//       cancelButtonText: "OK",
+//     });
+//   }
+// };
+
 export const sessionExpired = () => {
-  if (Cookies.get("token")) {
-    swalWithBootstrapButtons
-      .fire({
-        title: "Session Expired!",
-        html: "Your session has expired. Please login and try again",
-        icon: "warning",
-        showCancelButton: false,
-        confirmButtonText: "OK",
-        cancelButtonText: "OK",
-      })
-      .then((result) => {
-        window.location.href = "/";
-      });
-  }
+  return new Promise<void>((resolve) => {
+    if (Cookies.get("token")) {
+      swalWithBootstrapButtons
+        .fire({
+          title: "Session Expired!",
+          html: "Your session has expired. Please login and try again",
+          icon: "warning",
+          showCancelButton: false,
+          confirmButtonText: "OK",
+          cancelButtonText: "OK",
+        })
+        .then(() => {
+          resolve();
+        });
+    } else {
+      resolve();
+    }
+  });
 };

@@ -32,12 +32,8 @@ import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
 import PrivateRoute from "./components/PrivateRoute";
 import storage from "./utils/storage";
 import { useAppDispatch } from "./hooks/useDispatch";
-import { getDepartment } from "./store/reducers/department";
-import { getRoles } from "./store/reducers/roles";
 import { sessionExpired } from "./utils/sessionExpires";
 import { getEmployees } from "./store/reducers/employees";
-import { getTeamLeads } from "./store/reducers/teamLeads";
-import { getTeam } from "./store/reducers/team";
 import Departments from "./pages/Departments/Departments";
 import Project from "./pages/Projects/Project";
 import KpiContainer from "./pages/kpi_assessment/KpiContainer";
@@ -45,11 +41,8 @@ import ViewProjects from "./pages/Projects/ViewProjects";
 import TeamKPI from "./pages/kpi_assessment/TeamKPI";
 import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
 import KPIDetails from "./pages/kpi_assessment/KPIDetails";
-import ProjectView from "./pages/Projects/Project";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
 import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
-import { getProjects } from "./store/reducers/project";
-import { getTasks } from "./store/reducers/tasks";
 import WeeklyContainer from "./pages/WeeklyReport/WeeklyContainer";
 import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
 import TeamWeeklyReport from "./pages/WeeklyReport/TeamWeeklyReport";
@@ -59,17 +52,21 @@ import EmployeeContainer from "./pages/all_employees/EmployeeContainer";
 import AllLeave from "./pages/Leave/AllLeave";
 import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
 import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
+import TerminationList from "./pages/all_employees/terminations/TerminationList";
+import ViewWarning from "./pages/all_employees/warnings/ViewWarning";
 import ViewLeave from "./pages/Leave/ViewLeave";
 import HodLeaveView from "./pages/Leave/HodLeaveView";
+import ViewTerminations from "./pages/all_employees/terminations/ViewTerminations";
+
+export const removeData = () => {
+  Cookies.remove("isAuthenticated");
+  Cookies.remove("token");
+  storage.remove("user");
+  delete axios.defaults.headers.common["Authorization"];
+};
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
-  const removeData = () => {
-    Cookies.remove("isAuthenticated");
-    Cookies.remove("token");
-    storage.remove("user");
-    delete axios.defaults.headers.common["Authorization"];
-  };
 
   axios.interceptors.response.use(
     function (response) {
@@ -88,14 +85,10 @@ const AppRoutes: React.FC<any> = () => {
 
   React.useEffect(() => {
     if (Cookies.get("token")) {
-      dispatch(getDepartment());
-      dispatch(getRoles());
       dispatch(getEmployees());
-      dispatch(getTeamLeads());
-      dispatch(getTeam());
-      dispatch(getProjects());
     }
   }, [dispatch]);
+
   const user: any = storage?.get("user");
   const parsedUserData = JSON?.parse(user);
 
@@ -152,7 +145,7 @@ const AppRoutes: React.FC<any> = () => {
             path="/allleaveapplications"
             element={<AllLeaveApplications />}
           />
-          <Route path="/allleaveapplications" element={<AllLeaveApplications />} />
+
           <Route path="/allieave" element={<AllLeave />} />
           <Route path="/finalleaveupdate/:id" element={<FinalLeaveUpdate />} />
           <Route path="/hrupdateleave/:id" element={<HRUpdateLeave />} />
@@ -164,6 +157,10 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/createemployee" element={<CreateEmployee />} />
           <Route path="/createprojects" element={<CreateProjects />} />
           <Route path="/warninglist" element={<WarningList />} />
+          <Route path="/warninglist/:id" element={<ViewWarning />} />
+
+          <Route path="/terminations" element={<TerminationList />} />
+          <Route path="/terminations/:id" element={<ViewTerminations />} />
           <Route path="/dashboardcalender" element={<DashboardCalender />} />
           <Route path="/profile/edit" element={<EditUser />} />
           <Route path="/profile" element={<Profile />} />

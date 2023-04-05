@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { getRequestOptions } from "../utils/auth/header";
 import Cookies from "js-cookie";
 import { fireAlert } from "../utils/Alert";
+import { handleUnauthorizedError } from "../functions/auth";
 
 const token = Cookies.get("token");
 
@@ -34,10 +35,11 @@ export const useProjects = () => {
           ?.includes("application/json");
         const responseData = isJsonResponse && (await response.json());
 
-        if (!response.ok) {
+        if (response.status === 401) {
+          handleUnauthorizedError();
+        } else if (!response.ok) {
           throw new Error(responseData.message || response.status.toString());
         }
-
         if (isMounted) {
           setProjects([...responseData.data]);
           setLoading(false);
@@ -119,8 +121,13 @@ export const useProjectById = (id: string) => {
           ?.includes("application/json");
         const dataProjects =
           isJsonResponseProjects && (await responseProjects.json());
-        if (!responseProjects.ok) {
-          throw new Error(dataProjects.message || responseProjects.status);
+
+        if (responseProjects.status === 401) {
+          handleUnauthorizedError();
+        } else if (!responseProjects.ok) {
+          throw new Error(
+            dataProjects.message || responseProjects.status.toString()
+          );
         }
         setProjects(dataProjects.data);
 

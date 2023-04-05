@@ -2,30 +2,31 @@ import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import { Toast } from "react-bootstrap";
-import { BsExclamationLg } from "react-icons/bs";
+import { BsCheckCircle, BsClock, BsExclamationLg } from "react-icons/bs";
+import { SlClose } from "react-icons/sl";
 import axios, { AxiosResponse } from "axios";
 import {
   EntriesPerPage,
   MainSearch,
   NoRecordFound,
   TableFetch,
-} from "../../components/TableOptions";
-import Pagination from "../../components/Pagination";
-import CreateWarningModal from "../../components/Modals/CreateWarningModal";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { checkForEmployee, checkForName } from "../../utils/checkForName";
-import { getEmployees } from "../../store/reducers/employees";
-import { getRequestOptions } from "../../utils/auth/header";
-import TableLoader from "../../components/TableLoader";
+} from "../../../components/TableOptions";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import Pagination from "../../../components/Pagination";
+import CreateWarningModal from "../../../components/Modals/CreateWarningModal";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useDispatch";
+import { checkForEmployee, checkForName } from "../../../utils/checkForName";
+import { getEmployees } from "../../../store/reducers/employees";
+import { getRequestOptions } from "../../../utils/auth/header";
+import TableLoader from "../../../components/TableLoader";
 
-const WarningList = () => {
+const TerminationList = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const employees: any = useAppSelector((state) => state.employees.employees);
-  const [warnings, setWarnings] = useState([] as any);
+  const [terminations, setTerminations] = useState([] as any);
   const [data, setData] = useState([]);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
@@ -34,12 +35,13 @@ const WarningList = () => {
   const [message, setMessage] = useState("");
   const [newWarningCreated, setNewWarningCreated] = React.useState(false);
   const [showToast, setShowToast] = useState(false);
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         setisLoading(true);
         const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/warnings`,
+          `${process.env.REACT_APP_API}/hr/terminations`,
           getRequestOptions
         );
         const isJsonResponse = response.headers
@@ -49,7 +51,7 @@ const WarningList = () => {
         if (!response.ok) {
           throw new Error(data.message || response.status);
         }
-        setWarnings([...data.data]);
+        setTerminations([...data.data]);
         setisLoading(false);
         setError(false);
         setMessage("");
@@ -67,13 +69,13 @@ const WarningList = () => {
   const handleNewWarningCreated = () => {
     setNewWarningCreated(!newWarningCreated);
   };
+
   const header = [
-    { title: "EMPLOYEE ID", prop: "employee" },
-    { title: "FULL NAME", prop: "last_name" },
-    { title: "MESSAGE", prop: "message" },
-    { title: "MISCONDUCT", prop: "misconduct" },
-    { title: "NUMBER OF WARNINGS", prop: "count" },
+    { title: "EMPLOYEE", prop: "employee" },
+    { title: "REASON", prop: "reason" },
+    { title: "DESCRIPTION", prop: "description" },
     { title: "STATUS", prop: "status" },
+    { title: "CREATED BY", prop: "created_by" },
   ];
 
   const [collapseNav, setCollapseNav] = useState(() => {
@@ -145,11 +147,11 @@ const WarningList = () => {
               <FaArrowLeft size={25} />
             </Button>
 
-            <span className="SupportmainTitleh3">
+            {/* <span className="SupportmainTitleh3">
               <CreateWarningModal
                 onNewWarningCreated={handleNewWarningCreated}
               />
-            </span>
+            </span> */}
           </div>
           <div>
             <EntriesPerPage
@@ -159,7 +161,7 @@ const WarningList = () => {
             />
           </div>
           <div>
-            <MainSearch placeholder={"Search...          Warnings"} />
+            <MainSearch placeholder={"Search...          terminations"} />
           </div>
         </div>
         <section className="md-ui component-data-table">
@@ -185,31 +187,42 @@ const WarningList = () => {
               <tbody className="data-table-content">
                 {isLoading ? (
                   <TableFetch colSpan={8} />
-                ) : warnings?.length === 0 || warnings == null ? (
+                ) : terminations?.length === 0 || terminations == null ? (
                   <NoRecordFound colSpan={8} />
                 ) : (
-                  warnings.map((item: any, i: any) => (
+                  terminations.map((item: any, i: any) => (
                     <tr
                       className="data-table-row"
-                      onClick={() => navigate(`/warninglist/${item.id}`)}
+                      onClick={() => navigate(`/terminations/${item._id}`)}
                     >
                       <td className="table-datacell datatype-numeric">
-                        {item?.employee}
+                        {item?.employee?.full_name}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {checkForEmployee(item?.employee, employees)}
+                        {item?.reason}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item?.message}
+                        {item?.description}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item?.misconduct}
+                        {item?.status === "pending" ? (
+                          <BsClock
+                            size={25}
+                            color={"#bf8412"}
+                            className="icon-bold"
+                          />
+                        ) : item?.status === "rejected" ? (
+                          <SlClose
+                            size={25}
+                            color={"red"}
+                            className="icon-bold"
+                          />
+                        ) : (
+                          <BsCheckCircle size={25} color={"green"} />
+                        )}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item?.count}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.status}
+                        {item?.created_by?.full_name}
                       </td>
                     </tr>
                   ))
@@ -231,4 +244,4 @@ const WarningList = () => {
   );
 };
 
-export default WarningList;
+export default TerminationList;

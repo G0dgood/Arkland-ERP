@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { call, put, delay } from "redux-saga/effects";
 import { setRoles } from "../../reducers/roles";
 import { requestGetRoles } from "../request/roles";
+import { getDepartment } from "../../reducers/department";
 
 export function* handleGetRoles(action: any) {
   let reRun = false;
@@ -19,6 +20,7 @@ export function* handleGetRoles(action: any) {
       }
       yield put({ type: "ROLES_FETCH_SUCCESS", payload: response });
       yield put(setRoles(data?.data));
+      yield put(getDepartment());
       return;
     } catch (error) {
       console.log(error);
@@ -28,6 +30,7 @@ export function* handleGetRoles(action: any) {
         yield delay(retryTimeout);
       }
     }
-    yield put({ type: "ROLES_FETCH_ERROR", payload: "Failed to fetch roles." });
   }
+  yield put({ type: "ROLES_FETCH_ERROR", payload: "Failed to fetch roles." });
+  throw Error("Failed to fetch roles.");
 }

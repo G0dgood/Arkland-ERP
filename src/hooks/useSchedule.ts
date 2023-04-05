@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { InterfaceAction } from "../interfaces/base";
 import { getRequestOptions } from "../utils/auth/header";
+import { handleUnauthorizedError } from "../functions/auth";
 
 function useFetchTasks(taskAction: InterfaceAction) {
   const [tasks, setTasks] = useState({} as any);
@@ -31,7 +32,9 @@ function useFetchTasks(taskAction: InterfaceAction) {
           ?.includes("application/json");
         const responseData = isJsonResponse && (await response.json());
 
-        if (!response.ok) {
+        if (response.status === 401) {
+          handleUnauthorizedError();
+        } else if (!response.ok) {
           throw new Error(responseData.message || response.status.toString());
         }
 

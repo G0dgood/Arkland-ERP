@@ -27,9 +27,10 @@ export function* handleGetTasks(action: any) {
         yield delay(retryTimeout);
       }
     }
-    yield put({
-      type: "TASKS_FETCH_ERROR",
-      payload: "Failed to fetch tasks.",
-    });
   }
+  yield put({
+    type: "TASKS_FETCH_ERROR",
+    payload: "Failed to fetch tasks.",
+  });
+  throw Error("Failed to fetch tasks.");
 }

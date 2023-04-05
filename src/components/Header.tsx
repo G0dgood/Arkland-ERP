@@ -12,6 +12,7 @@ import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/storage";
 import MobileSideBar from "./MobileSideBar";
 import { useAppSelector } from "../hooks/useDispatch";
+import { removeData } from "../AppRoutes";
 
 const Header = ({ toggleSideNav }: any) => {
   // @ts-ignore
@@ -28,8 +29,9 @@ const Header = ({ toggleSideNav }: any) => {
       .catch((err) => {
         console.log(err);
       });
-    await Cookies.remove("token");
-    await storage.remove("user");
+    // await Cookies.remove("token");
+    // await storage.remove("user");
+    removeData();
     window.location.replace("/");
     window.location.reload();
   };

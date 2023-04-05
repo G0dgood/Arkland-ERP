@@ -20,6 +20,8 @@ import { checkForName } from "../../utils/checkForName";
 import { getRoles } from "../../store/reducers/roles";
 import { getDepartment } from "../../store/reducers/department";
 import { useEmployees } from "../../hooks/useEmployees";
+import storage from "../../utils/storage";
+import { getUserPrivileges } from "../../functions/auth";
 
 const AllEmployees = ({ setEmployee }: any) => {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const AllEmployees = ({ setEmployee }: any) => {
   const departments: any = useAppSelector(
     (state) => state?.department?.department
   );
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 
   const [displayData, setDisplayData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
@@ -39,18 +42,18 @@ const AllEmployees = ({ setEmployee }: any) => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
-
-
   useEffect(() => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
-
 
   React.useEffect(() => {
     if (!roles || roles.length === 0) {
       dispatch(getRoles());
     }
-    setEmployee(employees.length)
+    if (!departments || departments.length === 0) {
+      dispatch(getDepartment());
+    }
+    // setEmployee(employees?.length);
   }, [dispatch, roles, departments, setEmployee, employees.length]);
 
   const header = [
@@ -59,12 +62,12 @@ const AllEmployees = ({ setEmployee }: any) => {
     { title: "EMAIL", prop: "email" },
     { title: "ROLE", prop: "role" },
     { title: "DEPARTMENT", prop: "department" },
-    { title: "VIEW EMPLOYEE", prop: "view" },
+    { title: "CATEGORY", prop: "category" },
     { title: "ACTION" },
   ];
 
   return (
-    <div >
+    <div>
       {error && (
         <Toast
           onClose={() => setShowToast(false)}
@@ -87,26 +90,40 @@ const AllEmployees = ({ setEmployee }: any) => {
         <div className="allemployees-container">
           <div className="allemployees-container-main">
             <div className="allemployees-container-sup">
-              <div className="allemployees-sup-item1">
-                <Button
-                  variant="contained"
-                  className="Add-btn"
-                  onClick={() => navigate("/createemployee")}
-                // onClick={handleCreateEmployeeClick}
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div className="allemployees-sup-item1">
+                  <Button
+                    variant="contained"
+                    className="Add-btn"
+                    onClick={() => navigate("/createemployee")}
+                    // onClick={handleCreateEmployeeClick}
+                  >
+                    <GoPlus className="icon-space" />
+                    Create Employee
+                  </Button>
+                </div>
+              )}
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div
+                  className="allemployees-sup-item2"
+                  onClick={() => navigate("/warninglist")}
                 >
-                  <GoPlus className="icon-space" />
-                  Create Employee
-                </Button>
-              </div>
+                  <Button variant="contained" className="Add-btn">
+                    Warning List
+                  </Button>
+                </div>
+              )}
 
-              <div
-                className="allemployees-sup-item2"
-                onClick={() => navigate("/warninglist")}
-              >
-                <Button variant="contained" className="Add-btn">
-                  Warning List
-                </Button>
-              </div>
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div
+                  className="allemployees-sup-item2"
+                  onClick={() => navigate("/terminations")}
+                >
+                  <Button variant="contained" className="Add-btn">
+                    Terminations
+                  </Button>
+                </div>
+              )}
 
               <div>
                 <EntriesPerPage
@@ -151,7 +168,11 @@ const AllEmployees = ({ setEmployee }: any) => {
                     <NoRecordFound colSpan={9} />
                   ) : (
                     displayData?.map((item: any, i: any) => (
-                      <tr className="data-table-row" key={i}>
+                      <tr
+                        className="data-table-row"
+                        key={i}
+                        onClick={() => navigate(`/employees/${item.id}`)}
+                      >
                         <td className="table-datacell datatype-string">
                           {item?.employee_id}
                         </td>
@@ -168,18 +189,8 @@ const AllEmployees = ({ setEmployee }: any) => {
                           {checkForName(item?.department, departments)}
                         </td>
                         <td className="table-datacell datatype-numeric">
-                          <span>
-                            <BsCheckCircle
-                              size={25}
-                              color={"green"}
-                              onClick={() =>
-                                navigate(`/employees/${item.id}`)
-                              }
-                              title="View employee"
-                            />
-                          </span>
+                          {item?.category}
                         </td>
-
                         <td className="table-datacell datatype-numeric">
                           <div className="table-active-items">
                             <span>

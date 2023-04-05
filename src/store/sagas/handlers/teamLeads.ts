@@ -27,9 +27,10 @@ export function* handleGetTeamLeads(action: any) {
         yield delay(retryTimeout);
       }
     }
-    yield put({
-      type: "TEAMLEADS_FETCH_ERROR",
-      payload: "Failed to fetch departments.",
-    });
   }
+  yield put({
+    type: "TEAMLEADS_FETCH_ERROR",
+    payload: "Failed to fetch team leads.",
+  });
+  throw Error("Failed to fetch team leads");
 }

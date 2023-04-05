@@ -1,12 +1,11 @@
 import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
-import axios, { AxiosResponse } from "axios";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
 import { BsPlusLg } from "react-icons/bs";
+import Cookies from "js-cookie";
 import { fireAlert } from "../../utils/Alert";
 import InputField from "../Inputs/InputField";
 import ReactSelectField from "../Inputs/ReactSelectField";
@@ -17,7 +16,8 @@ import CustomInputField from "../Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
 
 const CreateProjectModal = (props: any) => {
-  const navigate = useNavigate();
+  const token = Cookies.get("token");
+
   const [isLoading, setLoading] = React.useState(false);
   const validate = Yup.object().shape({
     name: Yup.string().required("Name of project is required"),
@@ -25,30 +25,42 @@ const CreateProjectModal = (props: any) => {
   const [lgShow, setLgShow] = useState(false);
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
-    console.log("values", values);
+
     const createProjectValues = { ...values };
-    await axios
-      .post(`${process.env.REACT_APP_API}/hr/projects`, createProjectValues)
-      .then((res: AxiosResponse) => {
-        setLoading(false);
-        if (res.data.success === true || res.status === 200) {
-          const title = "Project created successfully";
-          const html = `Project created`;
-          const icon = "success";
-          fireAlert(title, html, icon);
-          resetForm(values);
-          setLgShow(false);
-          props.onNewProjectCreated();
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        const html = err.response?.data?.message;
-        const icon = "error";
-        const title = "Project creation failed";
-        fireAlert(title, html, icon);
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/hr/projects`, {
+        method: "POST",
+        body: JSON.stringify(createProjectValues),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
+      const data = await response.json();
+      if (response.ok) {
+        const title = "Project created successfully";
+        const html = `Project created`;
+
+        const icon = "success";
+        fireAlert(title, html, icon);
+        resetForm(values);
+        setLoading(false);
+        setLgShow(false);
+        props.onNewProjectCreated();
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Project creation failed";
+      fireAlert(title, html, icon);
+    }
   };
+
   const departments: any = useAppSelector(
     (state) => state.department.department
   );
@@ -287,7 +299,11 @@ const CreateProjectModal = (props: any) => {
                         className="Add-btn-modal"
                         type="submit"
                       >
-                        {isLoading ? <Spinner animation="border" /> : "Create Project"}
+                        {isLoading ? (
+                          <Spinner animation="border" />
+                        ) : (
+                          "Create Project"
+                        )}
                       </Button>
                     </div>
                   </div>
