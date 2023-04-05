@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { BsCheckCircle, BsClock } from 'react-icons/bs';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header'
 import Pagination from '../../components/Pagination';
 import Sidebar from '../../components/Sidebar'
@@ -11,11 +11,10 @@ import Cookies from 'js-cookie';
 import storage from '../../utils/storage';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
-import axios, { AxiosResponse } from 'axios';
 
 const AllLeaveApplications = () => {
 
-	const navigate = useNavigate();
+
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
 	const token = Cookies.get("token");
@@ -101,8 +100,6 @@ const AllLeaveApplications = () => {
 			<main>
 				<div className='SiteWorkermaindiv'>
 					<div className='SiteWorkermaindivsub'>
-
-
 						<span className='SupportmainTitleh3'>All Leave Applications</span>
 					</div>
 					<div>
@@ -114,7 +111,6 @@ const AllLeaveApplications = () => {
 					</div>
 					<div>
 						<MainSearch placeholder={'Search...         Leave Applications'} />
-
 					</div>
 				</div>
 				<section className="md-ui component-data-table">
@@ -166,7 +162,14 @@ const AllLeaveApplications = () => {
 														<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 											</td>
 											<td className="table-datacell datatype-numeric">
-												<Button className={item?.hod_approved === false && item?.status !== "rejected" ? "table-link" : item?.hod_approved === true ? "table-link-active" : "table-link-reject"}>{item?.hod_approved === false && item?.status !== "rejected" ? "IN PROGRESS" : item?.status === "rejected" ? "Rejected" : 'LEAVE APPROVED'}</Button>
+												<Button className={item?.status === "HOD approved" ? "table-link" :
+													item?.status === "HR approved" ? "table-link-hr" :
+														item?.status === "approved" ? "table-link-active" :
+															item?.status === "rejected" ? "table-link-reject" : "table-link"}>
+													{item?.status === "HOD approved" ? "HOD approved" :
+														item?.status === "HR approved" ? "HR approved" :
+															item?.status === "approved" ? "LEAVE approved" :
+																item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
 											</td>
 											<td className="table-datacell datatype-numeric">
 												<Link to={`/hrupdateleave/${item?._id}`}  >

@@ -24,7 +24,7 @@ const Sidebar = ({ collapseNav }: any) => {
   } = getUserPrivileges();
 
   const userString = storage?.get("user");
-  const userInfo = userString ? JSON.parse(userString) : null;
+
   // --- SideNav Bubble (States) --- //
   const [dashboard, setDashboard] = useState(false);
   const [kipassessment, setKPIAssessment] = useState(false);
@@ -125,26 +125,26 @@ const Sidebar = ({ collapseNav }: any) => {
           isHeadOfDepartment ||
           isHRHead ||
           isHrAdmin) && (
-          <NavLink
-            to="/teamweekly"
-            // exact
-            className={
-              window.location.pathname === "/teamweekly"
-                ? "active-here"
-                : "nav-link"
-            }
-            onMouseEnter={() => setTeamWeekly(true)}
-            onMouseLeave={() => setTeamWeekly(false)}
-          >
-            <GoFile size={23} />
-            <span className="nav-name">Team Weekly Report</span>
-            {teamweekly && collapseNav && (
-              <div className="sidenav-bubble">
-                <p>Team Weekly Report</p>
-              </div>
-            )}
-          </NavLink>
-        )}
+            <NavLink
+              to="/teamweekly"
+              // exact
+              className={
+                window.location.pathname === "/teamweekly"
+                  ? "active-here"
+                  : "nav-link"
+              }
+              onMouseEnter={() => setTeamWeekly(true)}
+              onMouseLeave={() => setTeamWeekly(false)}
+            >
+              <GoFile size={23} />
+              <span className="nav-name">Team Weekly Report</span>
+              {teamweekly && collapseNav && (
+                <div className="sidenav-bubble">
+                  <p>Team Weekly Report</p>
+                </div>
+              )}
+            </NavLink>
+          )}
 
         {(isSuperAdmin || isHRHead || isHrAdmin) && (
           <NavLink
@@ -261,10 +261,10 @@ const Sidebar = ({ collapseNav }: any) => {
             onMouseLeave={() => setAllLeave(false)}
           >
             <BsBriefcase size={22} />
-            <span className="nav-name">All Leave </span>
+            <span className="nav-name">All Leave Applications</span>
             {allleave && collapseNav && (
               <div className="sidenav-bubble">
-                <p>All Leave</p>
+                <p>All Leave Applications</p>
               </div>
             )}
           </NavLink>
@@ -282,10 +282,10 @@ const Sidebar = ({ collapseNav }: any) => {
             onMouseLeave={() => setAllleaveapplications(false)}
           >
             <BsBriefcase size={22} />
-            <span className="nav-name">All Leave Applications</span>
+            <span className="nav-name">HR Approve Leave</span>
             {allleaveapplications && collapseNav && (
               <div className="sidenav-bubble">
-                <p>All Leave Applications</p>
+                <p>HR Approve Applications</p>
               </div>
             )}
           </NavLink>
