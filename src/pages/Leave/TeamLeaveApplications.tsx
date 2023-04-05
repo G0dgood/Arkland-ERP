@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "@material-ui/core";
-import { FaArrowLeft } from 'react-icons/fa';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
@@ -11,11 +10,9 @@ import Pagination from '../../components/Pagination';
 import moment from 'moment';
 import { BsCheckCircle, BsClock } from 'react-icons/bs';
 import { SlClose } from 'react-icons/sl';
-import HodLeaveView from './HodLeaveView';
 import TableLoader from '../../components/TableLoader';
 
 const TeamLeaveApplications = () => {
-	const navigate = useNavigate();
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
 	const token = Cookies.get("token");
@@ -42,14 +39,12 @@ const TeamLeaveApplications = () => {
 	const toggleSideNav = () => {
 		setCollapseNav(!collapseNav);
 	}
-	const [data, setData] = useState("");
+
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 	const [sortData, setSortData] = useState([]);
-	const [showLeave, setShowLeaver] = useState(false)
-	const [leaveid, setLeaveid] = useState(0);
 
 
 
@@ -70,7 +65,6 @@ const TeamLeaveApplications = () => {
 					setisError(true)
 				} else {
 					setSortData(data?.data?.data)
-					console.log('data?.data?.data', data?.data?.data)
 					setisSuccess(true)
 					setTimeout(() => {
 						setMessage('')
@@ -113,11 +107,6 @@ const TeamLeaveApplications = () => {
 				</div>
 				<section className="md-ui component-data-table">
 					{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-					{/* <header className="main-table-header">
-							<h1 className="table-header--title">Nutrition</h1>
-							<span className="table-header--icons"><i className="material-icons">filter_list</i><i className="material-icons">more_vert</i>
-							</span>
-						</header> */}
 					<div className="main-table-wrapper">
 						<table className="main-table-content">
 							<thead className="data-table-header">
@@ -163,14 +152,15 @@ const TeamLeaveApplications = () => {
 													<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Button className={item?.hod_approved === false && item?.status !== "rejected" ? "table-link" : item?.hod_approved === true ? "table-link-active" : "table-link-reject"}>{item?.hod_approved === false && item?.status !== "rejected" ? "IN PROGRESS" : item?.status === "rejected" ? "Rejected" : 'LEAVE APPROVED'}</Button>
+											<Button className={item?.status === "HOD approved" ? "table-link" :
+												item?.status === "HR approved" ? "table-link-hr" :
+													item?.status === "approved" ? "table-link-active" :
+														item?.status === "rejected" ? "table-link-reject" : "table-link"}>{item?.status === "HOD approved" ? "HOD approved" :
+															item?.status === "HR approved" ? "HR approved" :
+																item?.status === "approved" ? "LEAVE approved" :
+																	item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{/* <Button id="team-applicatiom-update" onClick={() => {
-												setLeaveid(item?._id);
-												setShowLeaver(true);
-												// @ts-ignore
-											}}> {item?.hod_approved === false ? "Update" : "View"}</Button> */}
 											<Link to={`/hodleaveview/${item?._id}`}  >
 												{item?.status === "rejected" ? "" :
 													<Button id="team-applicatiom-update">{item?.hod_approved === false ? "Update" : "View"}</Button>
