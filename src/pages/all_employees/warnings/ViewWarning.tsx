@@ -15,6 +15,8 @@ import { useWarningEmployeeById } from "../../../hooks/useWarning";
 import InputField from "../../../components/Inputs/InputField";
 import TextAreaField from "../../../components/Inputs/TextAreaField";
 import SelectField from "../../../components/Inputs/SelectField";
+import { checkForEmployee } from "../../../utils/checkForName";
+import { useAppSelector } from "../../../hooks/useDispatch";
 
 const override: CSSProperties = {
   display: "block",
@@ -29,11 +31,10 @@ const ViewWarning = () => {
   const { id } = useParams<{ id: string }>();
   const { warning, isLoading, isTerminateLoading, handleEmployeeTermination } =
     useWarningEmployeeById(id ? id : "");
+  const employees: any = useAppSelector((state) => state.employees.employees);
 
   const [deleteShow, setDeleteShow] = React.useState(false);
   const [showDialog, setShowDialog] = React.useState<any>({});
-  const [isEssentialDetailsOpen, setIsEssentialDetailsOpen] =
-    React.useState(false);
 
   const reasonOptions = [
     "Select reason",
@@ -217,49 +218,50 @@ const ViewWarning = () => {
                   </div>
 
                   <h4 style={{ marginTop: "3rem" }}>Review Warning</h4>
-                  <h6
-                    style={{ marginTop: "3rem", cursor: "pointer" }}
-                    onClick={() =>
-                      setIsEssentialDetailsOpen(!isEssentialDetailsOpen)
-                    }
-                  >
-                    Warning Details {isEssentialDetailsOpen ? "▼" : "►"}
-                  </h6>
-                  {isEssentialDetailsOpen && (
-                    <div
-                      className="viewprofile-container"
-                      style={{ marginTop: "2rem" }}
-                    >
-                      <div>
-                        <div className="getjob-application-details">
-                          <p>Misconduct</p>
-                          <p>{warning?.misconduct}</p>
-                          <p>Employee</p>
-                          <p>{warning?.employee}</p>
-                          <p>Message</p>
-                          <p>{warning?.message} </p>
 
-                          {warning.has_response ? (
-                            <>
-                              <p>Response</p>
-                              <p> {warning?.response}</p>
-                            </>
-                          ) : (
-                            ""
-                          )}
+                  <div className="viewprofile-container">
+                    <div>
+                      <div className="getjob-application-details">
+                        <p>Employee</p>
+                        <p
+                          onClick={() =>
+                            navigate(`/employees/${warning?.employee}`)
+                          }
+                          style={{
+                            cursor: "pointer",
+                            color: "blue",
+                          }}
+                        >
+                          {checkForEmployee(warning?.employee, employees)}
+                        </p>
+                        <p>Misconduct</p>
+                        <p>{warning?.misconduct}</p>
 
-                          <p>Count</p>
-                          <p>{warning?.count}</p>
-                          <p>Status</p>
-                          <p> {warning?.status} </p>
-                          <p>Created by</p>
-                          <p>{warning?.created_by}</p>
-                          <p>Created at</p>
-                          <p>{warning?.created_at}</p>
-                        </div>
+                        <p>Message</p>
+                        <p>{warning?.message} </p>
+
+                        {warning.has_response ? (
+                          <>
+                            <p>Response</p>
+                            <p> {warning?.response}</p>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        <p>Count</p>
+                        <p>{warning?.count}</p>
+                        <p>Status</p>
+                        <p> {warning?.status} </p>
+                        <p>Created by</p>
+                        <p>{warning?.created_by}</p>
+                        <p>Created at</p>
+                        <p>
+                          {moment(warning?.created_at).format("DD-MM-YYYY")}
+                        </p>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>

@@ -95,7 +95,7 @@ const ViewTerminations = () => {
                         className="Add-btn"
                         onClick={() => handleDelete()}
                       >
-                        Terminate Employee
+                        APPROVE TERMINATION
                       </Button>
                     </div>
                     {showDialog && (
