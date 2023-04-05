@@ -9,9 +9,11 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { useDepartments } from "../../hooks/useDepartments";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
+import { getUserPrivileges } from "../../functions/auth";
 
 const DepartmentsView = () => {
   const navigate = useNavigate();
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
   const [newDepartmentCreated, setNewDepartmentCreated] = React.useState(
     {} as any
   );
@@ -58,13 +60,15 @@ const DepartmentsView = () => {
           <div className="ProjectViewContainer-subone">
             <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
               <h5>Department</h5>
-              <div className="Request-btn-modal-container">
-                <div className="Request-btn">
-                  <CreateDepartmentModal
-                    onNewDepartmentCreated={handleNewDepartmentCreated}
-                  />
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div className="Request-btn-modal-container">
+                  <div className="Request-btn">
+                    <CreateDepartmentModal
+                      onNewDepartmentCreated={handleNewDepartmentCreated}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             {isLoading ? (
               <div className="isLoading-container">

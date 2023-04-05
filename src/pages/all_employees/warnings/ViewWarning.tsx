@@ -14,6 +14,7 @@ import CreateWarningModal from "../../../components/Modals/CreateWarningModal";
 import { useWarningEmployeeById } from "../../../hooks/useWarning";
 import InputField from "../../../components/Inputs/InputField";
 import TextAreaField from "../../../components/Inputs/TextAreaField";
+import SelectField from "../../../components/Inputs/SelectField";
 
 const override: CSSProperties = {
   display: "block",
@@ -28,10 +29,19 @@ const ViewWarning = () => {
   const { id } = useParams<{ id: string }>();
   const { warning, isLoading, isTerminateLoading, handleEmployeeTermination } =
     useWarningEmployeeById(id ? id : "");
+
   const [deleteShow, setDeleteShow] = React.useState(false);
   const [showDialog, setShowDialog] = React.useState<any>({});
   const [isEssentialDetailsOpen, setIsEssentialDetailsOpen] =
     React.useState(false);
+
+  const reasonOptions = [
+    "Select reason",
+    "misconduct",
+    "resignation",
+    "redundancy",
+  ];
+
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = React.useState(() => {
     // @ts-ignore
@@ -127,15 +137,15 @@ const ViewWarning = () => {
                                     <div className="Modal-Body">
                                       <div className="col">
                                         <div className="form-group">
-                                          <InputField
+                                          <SelectField
+                                            options={reasonOptions}
                                             label="Reason"
-                                            placeholder="Enter reason"
                                             name="reason"
                                             className="form-group__gender"
                                             onChange={(event: any) => {
                                               setFieldValue(
                                                 "reason",
-                                                event?.value
+                                                event?.target.value
                                               );
                                             }}
                                           />
@@ -156,7 +166,7 @@ const ViewWarning = () => {
                                             onChange={(event: any) => {
                                               setFieldValue(
                                                 "description",
-                                                event?.value
+                                                event?.target.value
                                               );
                                             }}
                                           />

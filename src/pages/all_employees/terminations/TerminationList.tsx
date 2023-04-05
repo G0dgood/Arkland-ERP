@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Toast } from "react-bootstrap";
-import { BsExclamationLg } from "react-icons/bs";
+import { BsCheckCircle, BsClock, BsExclamationLg } from "react-icons/bs";
+import { SlClose } from "react-icons/sl";
 import axios, { AxiosResponse } from "axios";
 import {
   EntriesPerPage,
@@ -68,13 +69,13 @@ const TerminationList = () => {
   const handleNewWarningCreated = () => {
     setNewWarningCreated(!newWarningCreated);
   };
+
   const header = [
     { title: "EMPLOYEE", prop: "employee" },
     { title: "REASON", prop: "reason" },
     { title: "DESCRIPTION", prop: "description" },
     { title: "STATUS", prop: "status" },
-    { title: "CREATE BY", prop: "created_by" },
-    { title: "APPROVED BY", prop: "approved_by" },
+    { title: "CREATED BY", prop: "created_by" },
   ];
 
   const [collapseNav, setCollapseNav] = useState(() => {
@@ -146,11 +147,11 @@ const TerminationList = () => {
               <FaArrowLeft size={25} />
             </Button>
 
-            <span className="SupportmainTitleh3">
+            {/* <span className="SupportmainTitleh3">
               <CreateWarningModal
                 onNewWarningCreated={handleNewWarningCreated}
               />
-            </span>
+            </span> */}
           </div>
           <div>
             <EntriesPerPage
@@ -190,24 +191,38 @@ const TerminationList = () => {
                   <NoRecordFound colSpan={8} />
                 ) : (
                   terminations.map((item: any, i: any) => (
-                    <tr className="data-table-row">
+                    <tr
+                      className="data-table-row"
+                      onClick={() => navigate(`/terminations/${item._id}`)}
+                    >
                       <td className="table-datacell datatype-numeric">
-                        {item?.employee}
+                        {item?.employee?.full_name}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {checkForEmployee(item?.employee, employees)}
+                        {item?.reason}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item?.message}
+                        {item?.description}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item?.misconduct}
+                        {item?.status === "pending" ? (
+                          <BsClock
+                            size={25}
+                            color={"#bf8412"}
+                            className="icon-bold"
+                          />
+                        ) : item?.status === "rejected" ? (
+                          <SlClose
+                            size={25}
+                            color={"red"}
+                            className="icon-bold"
+                          />
+                        ) : (
+                          <BsCheckCircle size={25} color={"green"} />
+                        )}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {item?.count}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.status}
+                        {item?.created_by?.full_name}
                       </td>
                     </tr>
                   ))

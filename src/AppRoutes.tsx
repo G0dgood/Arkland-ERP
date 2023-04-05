@@ -56,6 +56,7 @@ import TerminationList from "./pages/all_employees/terminations/TerminationList"
 import ViewWarning from "./pages/all_employees/warnings/ViewWarning";
 import ViewLeave from "./pages/Leave/ViewLeave";
 import HodLeaveView from "./pages/Leave/HodLeaveView";
+import ViewTerminations from "./pages/all_employees/terminations/ViewTerminations";
 
 export const removeData = () => {
   Cookies.remove("isAuthenticated");
@@ -159,6 +160,7 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/warninglist/:id" element={<ViewWarning />} />
 
           <Route path="/terminations" element={<TerminationList />} />
+          <Route path="/terminations/:id" element={<ViewTerminations />} />
           <Route path="/dashboardcalender" element={<DashboardCalender />} />
           <Route path="/profile/edit" element={<EditUser />} />
           <Route path="/profile" element={<Profile />} />

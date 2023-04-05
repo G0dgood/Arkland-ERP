@@ -6,17 +6,17 @@ import { fireAlert } from "../utils/Alert";
 import { handleUnauthorizedError } from "../functions/auth";
 const token = Cookies.get("token");
 
-export const useWarningEmployeeById = (id: string) => {
+export const useTerminationsById = (id: string) => {
   const navigate = useNavigate();
-  const [warning, setWarning] = useState([] as any);
+  const [terminations, setTerminations] = useState([] as any);
   const [isLoading, setLoading] = useState(false);
   const [isTerminateLoading, setTerminateLoading] = useState(false);
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
 
-  const updatewarningById = useCallback((data: any) => {
-    setWarning(data);
+  const updateTerminationsById = useCallback((data: any) => {
+    setTerminations(data);
     setLoading(false);
     setError("");
     setRetryCount(0);
@@ -29,7 +29,7 @@ export const useWarningEmployeeById = (id: string) => {
       try {
         setLoading(true);
         const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/warnings/${id}`,
+          `${process.env.REACT_APP_API}/hr/terminations/${id}`,
           getRequestOptions
         );
         const isJsonResponse = response.headers
@@ -43,7 +43,7 @@ export const useWarningEmployeeById = (id: string) => {
         }
 
         if (isMounted) {
-          setWarning(responseData.data);
+          setTerminations(responseData.data);
           setLoading(false);
           setError("");
           setRetryCount(0);
@@ -73,23 +73,16 @@ export const useWarningEmployeeById = (id: string) => {
     return () => {
       isMounted = false;
     };
-  }, [retryCount, id, updatewarningById]);
+  }, [retryCount, id, updateTerminationsById]);
 
-  const handleEmployeeTermination = async (values?: any) => {
+  const handleEmployeeTermination = async () => {
     setTerminateLoading(true);
-    const employeeId = id ? id : values.employee;
-    const createWarningValues = {
-      ...values,
-      employee: warning.employee,
-      warning: warning.id,
-    };
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/terminations`,
+        `${process.env.REACT_APP_API}/hr/terminations/${id}`,
         {
-          method: "POST",
-          body: JSON.stringify(createWarningValues),
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -98,8 +91,8 @@ export const useWarningEmployeeById = (id: string) => {
       );
       const data = await response.json();
       if (response.ok) {
-        const title = "Employee termination requested.";
-        const html = `Request successful`;
+        const title = "Employee terminated.";
+        const html = `Termination successful`;
         const icon = "success";
         fireAlert(title, html, icon);
         setTerminateLoading(false);
@@ -117,7 +110,7 @@ export const useWarningEmployeeById = (id: string) => {
     }
   };
   return {
-    warning,
+    terminations,
     isLoading,
     isTerminateLoading,
     handleEmployeeTermination,

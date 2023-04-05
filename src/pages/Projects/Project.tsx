@@ -10,9 +10,12 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
 import { useProjects } from "../../hooks/useProjects";
+import { getUserPrivileges } from "../../functions/auth";
 
 const ProjectView = () => {
   const navigate = useNavigate();
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } =
+    getUserPrivileges();
   const [showToast, setShowToast] = useState(false);
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -31,12 +34,9 @@ const ProjectView = () => {
   };
 
   const isPrime = (num: number) => {
-    for (let i = 2; i < num; i++)
-      if (num % i === 0) return false;
+    for (let i = 2; i < num; i++) if (num % i === 0) return false;
     return num > 1;
-  }
-
-
+  };
 
   return (
     <div id="screen-wrapper">
@@ -66,22 +66,30 @@ const ProjectView = () => {
             <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
               <h5>Projects</h5>
               <div className="Request-btn-modal-container">
-                <div className="Request-btn">
-                  <CreateProjectModal />
-                </div>
-                <div>
-                  <Button
-                    className="subone-header-flex-btn"
-                    onClick={() => navigate("/site-worker-request")}
-                  >
-                    <BsPlusLg
-                      size={10}
-                      color="#fff"
-                      className="Create-plue-account"
-                    />{" "}
-                    Request Worker List
-                  </Button>
-                </div>
+                {(isHRHead ||
+                  isSuperAdmin ||
+                  isAdmin ||
+                  isHrAdmin ||
+                  isTeamLead) && (
+                  <div className="Request-btn">
+                    <CreateProjectModal />
+                  </div>
+                )}
+                {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                  <div>
+                    <Button
+                      className="subone-header-flex-btn"
+                      onClick={() => navigate("/site-worker-request")}
+                    >
+                      <BsPlusLg
+                        size={10}
+                        color="#fff"
+                        className="Create-plue-account"
+                      />{" "}
+                      Request Worker List
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
             <div className="subone-col-2">
@@ -106,10 +114,7 @@ const ProjectView = () => {
             </div>
             {isLoading ? (
               <div className="isLoading-container">
-                <SyncLoader
-                  color={"#990000"}
-                  loading={isLoading}
-                />
+                <SyncLoader color={"#990000"} loading={isLoading} />
               </div>
             ) : projects?.length === 0 ? (
               <div className="table-loader-announcement">
@@ -129,7 +134,17 @@ const ProjectView = () => {
                       onClick={() => navigate(`/viewproject/${item.id}`)}
                     >
                       <div className="iDotsHorizontalRounded">
-                        <Button className={i % 2 === 0 ? `iDotsRounded1` : isPrime(parseInt(i, 10)) ? 'iDotsRounded2' : 'iDotsRounded3'}>{item.name}</Button>
+                        <Button
+                          className={
+                            i % 2 === 0
+                              ? `iDotsRounded1`
+                              : isPrime(parseInt(i, 10))
+                              ? "iDotsRounded2"
+                              : "iDotsRounded3"
+                          }
+                        >
+                          {item.name}
+                        </Button>
                         <BiDotsHorizontalRounded color="#97979B" />
                       </div>
                       <div className="iDotsRounded-text">

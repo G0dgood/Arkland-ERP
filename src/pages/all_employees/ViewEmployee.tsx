@@ -11,6 +11,7 @@ import { useEmployeeById } from "../../hooks/useEmployees";
 import { DialogState } from "../../interfaces/base";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import TerminateEmployeeModal from "../../components/Modals/TerminateEmployeeModal";
+import { getUserPrivileges } from "../../functions/auth";
 
 const override: CSSProperties = {
   display: "block",
@@ -22,6 +23,7 @@ const override: CSSProperties = {
 
 const ViewEmployee = () => {
   const navigate = useNavigate();
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
   const { id } = useParams<{ id: string }>();
   const {
     employee,
@@ -38,6 +40,7 @@ const ViewEmployee = () => {
     React.useState(false);
   const [isReferencesOpen, setIsReferencesOpen] = React.useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = React.useState(false);
+
   // --- Get current state of collapseNav from localStorage --- //
   const [collapseNav, setCollapseNav] = React.useState(() => {
     // @ts-ignore
@@ -89,15 +92,19 @@ const ViewEmployee = () => {
                       />
                     </div>
                     <div className="employee-main-div-col-header-buttons">
-                      <CreateWarningModal id={id} />
+                      {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                        <CreateWarningModal id={id} />
+                      )}
 
-                      <Button
-                        variant="contained"
-                        className="Add-btn"
-                        onClick={() => handleDelete()}
-                      >
-                        Delete Employee
-                      </Button>
+                      {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                        <Button
+                          variant="contained"
+                          className="Add-btn"
+                          onClick={() => handleDelete()}
+                        >
+                          Delete Employee
+                        </Button>
+                      )}
                     </div>
                     {showDialog && (
                       <Modal
