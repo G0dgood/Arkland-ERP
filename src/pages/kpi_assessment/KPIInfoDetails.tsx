@@ -96,70 +96,75 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 	// @ts-ignore
 	const Amount: any = Object.values(kpiData).reduce((a, v) => (a = a + v?.num), 0);
 
-	const handleOnChange = (input: string, value: any) => {
-		setinput((prevState: any) => ({
-			...prevState,
-			[input]: value,
-		}));
-	};
+	// const handleOnChange = (input: string, value: any) => {
+	// 	setinput((prevState: any) => ({
+	// 		...prevState,
+	// 		[input]: value,
+	// 	}));
+	// };
 
-	const handleOnChange4 = (input: string, value: any) => {
-		setemployeegrade((prevState: any) => ({
-			...prevState,
-			[input]: value,
-		}));
-	};
+	// const handleOnChange4 = (input: string, value: any) => {
+	// 	setemployeegrade((prevState: any) => ({
+	// 		...prevState,
+	// 		[input]: value,
+	// 	}));
+	// };
 	useEffect(() => {
 		setinput((prevState: any) => {
 			return ({
 				...prevState,
-				job_knowledge: totalScore1
-			});
-		});
-	}, [setinput, totalScore1]);
-	useEffect(() => {
-		setinput((prevState: any) => {
-			return ({
-				...prevState,
-				efficiency: totalScore2
-			});
-		});
-	}, [setinput, totalScore2]);
-
-	useEffect(() => {
-		setinput((prevState: any) => {
-			return ({
-				...prevState,
-				attendance: totalScore3
-			});
-		});
-	}, [setinput, totalScore3]);
-	useEffect(() => {
-		setinput((prevState: any) => {
-			return ({
-				...prevState,
-				communication: totalScore4
-			});
-		});
-	}, [setinput, totalScore4]);
-
-	useEffect(() => {
-		setinput((prevState: any) => {
-			return ({
-				...prevState,
-				reliability: totalScore5
-			});
-		});
-	}, [setinput, totalScore5]);
-
-	useEffect(() => {
-		setinput((prevState: any) => {
-			return ({
-				...prevState,
+				job_knowledge: totalScore1,
+				efficiency: totalScore2,
+				attendance: totalScore3,
+				communication: totalScore4,
+				reliability: totalScore5,
 				collaboration: totalScore6
 			});
 		});
-	}, [setinput, totalScore6]);
+	}, [setinput, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
+	// useEffect(() => {
+	// 	setinput((prevState: any) => {
+	// 		return ({
+	// 			...prevState,
+	// 			efficiency: totalScore2
+	// 		});
+	// 	});
+	// }, [setinput, totalScore2]);
+
+	// useEffect(() => {
+	// 	setinput((prevState: any) => {
+	// 		return ({
+	// 			...prevState,
+	// 			attendance: totalScore3
+	// 		});
+	// 	});
+	// }, [setinput, totalScore3]);
+	// useEffect(() => {
+	// 	setinput((prevState: any) => {
+	// 		return ({
+	// 			...prevState,
+	// 			communication: totalScore4
+	// 		});
+	// 	});
+	// }, [setinput, totalScore4]);
+
+	// useEffect(() => {
+	// 	setinput((prevState: any) => {
+	// 		return ({
+	// 			...prevState,
+	// 			reliability: totalScore5
+	// 		});
+	// 	});
+	// }, [setinput, totalScore5]);
+
+	// useEffect(() => {
+	// 	setinput((prevState: any) => {
+	// 		return ({
+	// 			...prevState,
+	// 			collaboration: totalScore6
+	// 		});
+	// 	});
+	// }, [setinput, totalScore6]);
 
 	return (
 		<form>

@@ -77,7 +77,7 @@ const TeamWeeklyReport = () => {
 					</div>
 					<div>
 						<EntriesPerPage
-							data={data}
+							data={data?.data}
 							entriesPerPage={entriesPerPage}
 							setEntriesPerPage={setEntriesPerPage}
 						/>

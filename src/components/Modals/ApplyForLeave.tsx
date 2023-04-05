@@ -6,7 +6,7 @@ import { fireAlert } from "../../utils/Alert";
 import Cookies from 'js-cookie';
 
 
-const ApplyForLeave = (props: any) => {
+const ApplyForLeave = ({ setReload }: any) => {
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
 		start_date: "",
@@ -38,8 +38,8 @@ const ApplyForLeave = (props: any) => {
 					setMessage(data?.message)
 					setisError(true)
 				} else {
-					// console.log('data', data)
 					setisSuccess(true)
+					setReload(true)
 				}
 				setisLoading(false);
 			})

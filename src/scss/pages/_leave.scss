@@ -73,7 +73,7 @@
   margin: 144px 48px;
   border-radius: 4px;
   background-color: c.color(primary-color);
-  
+  // overflow: auto;
 }
 
 .contact-form {
@@ -88,10 +88,10 @@
 .contact-form::before {
   position: absolute;
   content: "";
-  top: -96px;
+  top: -116px;
   left: 0;
   width: 100%;
-  height: calc(100% + 192px);
+  height: calc(95% + 192px);
   background-color: #ffffff;
   border-radius: 4px;
   z-index: -100;
@@ -112,6 +112,8 @@
   color: #4b5563;
   font-size: 16px;
 }
+
+
 
 // .contact-form .input {
 //   position: relative;

@@ -42,9 +42,13 @@ const DepartmentsView = () => {
     return realColor
   }
 
-  // console.log(randColor());
 
-  const numbers = [1, 2, 3, 4, 5];
+
+  const isPrime = (num: number) => {
+    for (let i = 2; i < num; i++)
+      if (num % i === 0) return false;
+    return num > 1;
+  }
 
   return (
     <div id="screen-wrapper">
@@ -89,7 +93,7 @@ const DepartmentsView = () => {
                     onClick={() => navigate(`/departments/${item?.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
-                      <Button className={i % 2 === 0 ? `iDotsRounded1` : `iDotsRounded2`}>{item?.name}</Button>
+                      <Button className={i % 2 === 0 ? `iDotsRounded1` : isPrime(parseInt(i, 10)) ? 'iDotsRounded2' : 'iDotsRounded3'}>{item?.name}</Button>
                       <BiDotsHorizontalRounded color="#97979B" />
                     </div>
                     <div className="iDotsRounded-text">{item?.name}</div>

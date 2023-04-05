@@ -330,7 +330,7 @@
 
 import { Button } from '@material-ui/core';
 import { useEffect, useState } from 'react'
-import { BsCheckCircle, BsXCircle } from 'react-icons/bs';
+import { BsCheckCircle, BsClock, BsXCircle } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
@@ -341,9 +341,10 @@ import { fireAlert } from '../../utils/Alert';
 import Cookies from 'js-cookie';
 import storage from '../../utils/storage';
 import Pagination from '../../components/Pagination';
-import { NoRecordFound, TableFetch } from '../../components/TableOptions';
+import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
+import { SlClose } from 'react-icons/sl';
 
 const Leave = () => {
   const navigate = useNavigate();
@@ -388,34 +389,9 @@ const Leave = () => {
   const [isLoading, setisLoading] = useState(false);
   const [isSuccess, setisSuccess] = useState(false);
   const [sortData, setSortData] = useState([]);
-  const [leaveid, setLeaveid] = useState(0);
+  const [reload, setReload] = useState(false);
 
 
-  // const handleLeave = () => {
-  // 	setisLoading(true);
-  // 	fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
-  // 		method: "POST", // or 'PUT'
-  // 		headers: {
-  // 			"Content-Type": "application/json",
-  // 			Authorization: `Bearer ${token}`
-  // 		},
-  // 	})
-  // 		.then((response) => response.json())
-  // 		.then((data) => {
-  // 			if (data?.success === false) {
-  // 				setMessage(data?.message)
-  // 				setisError(true)
-  // 			} else {
-  // 				setData(data?.data)
-  // 				setisSuccess(true)
-  // 			}
-  // 			setisLoading(false);
-  // 		})
-  // 		.catch((error) => {
-  // 			console.error("Error:", error);
-  // 			setisLoading(false);
-  // 		});
-  // }
 
 
 
@@ -444,7 +420,7 @@ const Leave = () => {
         console.error("Error:", error);
         setisLoading(false);
       });
-  }, [token, userInfo?.data?.employee?._id])
+  }, [token, userInfo?.data?.employee?._id, reload])
 
 
 
@@ -481,11 +457,20 @@ const Leave = () => {
       <Sidebar collapseNav={collapseNav} />
       <main>
         <div className='allemployees-container-main' >
-          <div className='allemployees-container-sup'>
+          {/* <div className='allemployees-container-sup'>
+          </div> */}
+          <div className='SiteWorkermaindivsub'>
+            <span className='SupportmainTitleh3'>Create Leave</span>
           </div>
-
           <div>
-            <ApplyForLeave />
+            <EntriesPerPage
+              data={sortData}
+              entriesPerPage={entriesPerPage}
+              setEntriesPerPage={setEntriesPerPage}
+            />
+          </div>
+          <div>
+            <ApplyForLeave setReload={setReload} />
           </div>
         </div>
 
@@ -509,7 +494,7 @@ const Leave = () => {
                 {
                   isLoading ? (
                     <TableFetch colSpan={8} />
-                  ) : displayData?.length === 0 || displayData == null ? (
+                  ) : displayData?.length === 0 || displayData === null ? (
                     <NoRecordFound colSpan={8} />
                   ) : (displayData?.map((item: any, i: any) => (
                     <tr className="data-table-row" key={i}>
@@ -518,27 +503,31 @@ const Leave = () => {
                       <td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
                       <td className="table-datacell datatype-numeric">
                         {item?.hod_approved ?
-                          <BsCheckCircle size={25} color={"green"} /> :
-                          <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+                          <BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+                            <SlClose size={25} color={"red"} className="icon-bold" /> :
+                            <BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {item?.hr_approved ?
-                          <BsCheckCircle size={25} color={"green"} /> :
-                          <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+                          <BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+                            <SlClose size={25} color={"red"} className="icon-bold" /> :
+                            <BsClock size={25} color={"#bf8412"} className="icon-bold" />}
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {item?.finally_approved ?
-                          <BsCheckCircle size={25} color={"green"} /> :
-                          <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+                          <BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+                            <SlClose size={25} color={"red"} className="icon-bold" /> :
+                            <BsClock size={25} color={"#bf8412"} className="icon-bold" />}
                       </td>
                       <td className="table-datacell datatype-numeric"  >
 
-                        <Button className={item.finally_approved === true ? "table-link-active" : "table-link"}>{item.finally_approved === false ? "IN PROGRESS" : 'LEAVE APPROVED'}</Button>
+                        <Button className={item?.hod_approved === false && item?.status !== "rejected" ? "table-link" : item?.hod_approved === true ? "table-link-active" : "table-link-reject"}>{item?.hod_approved === false && item?.status !== "rejected" ? "IN PROGRESS" : item?.status === "rejected" ? "Rejected" : 'LEAVE APPROVED'}</Button>
                       </td>
                       <td className="table-datacell datatype-numeric">
                         <Link to={`/viewleave/${item?._id}`}  >
-                          <Button id="team-applicatiom-update">{item?.finally_approved === false ? "Update" : "View"}</Button>
+                          {item?.status === "rejected" ? "" :
+                            <Button id="team-applicatiom-update">{item?.hod_approved === false ? "Update" : "View"}</Button>}
                         </Link>
                       </td>
                     </tr>
