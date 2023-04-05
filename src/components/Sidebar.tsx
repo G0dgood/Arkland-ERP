@@ -36,6 +36,7 @@ const Sidebar = ({ collapseNav }: any) => {
   const isHeadOfDepartment = privileges.some(
     (p: any) => p.role === "head of department"
   );
+  const isHRHead = privileges.some((p: any) => p.role === "HR head");
 
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
@@ -124,7 +125,8 @@ const Sidebar = ({ collapseNav }: any) => {
         {(userInfo?.data?.department?.name === "HR" ||
           isSuperAdmin ||
           isTeamLead ||
-          isHeadOfDepartment) && (
+          isHeadOfDepartment ||
+          isHRHead) && (
           <NavLink
             to="/teamweekly"
             // exact
@@ -146,7 +148,9 @@ const Sidebar = ({ collapseNav }: any) => {
           </NavLink>
         )}
 
-        {(userInfo?.data?.department?.name === "HR" || isSuperAdmin) && (
+        {(userInfo?.data?.department?.name === "HR" ||
+          isSuperAdmin ||
+          isHRHead) && (
           <NavLink
             to="/employeecontainer"
             // exact
@@ -214,8 +218,8 @@ const Sidebar = ({ collapseNav }: any) => {
         )}
         {(userInfo?.data?.department?.name === "HR" ||
           isSuperAdmin ||
-          isTeamLead ||
-          isHeadOfDepartment) && (
+          isHeadOfDepartment ||
+          isHRHead) && (
           <NavLink
             to="/teamleaveapplications"
             // exact
@@ -257,7 +261,8 @@ const Sidebar = ({ collapseNav }: any) => {
 
         {(userInfo?.data?.department?.name === "HR" ||
           isSuperAdmin ||
-          isTeamLead) && (
+          isTeamLead ||
+          isHRHead) && (
           <NavLink
             to="/allieave"
             // exact
@@ -281,7 +286,8 @@ const Sidebar = ({ collapseNav }: any) => {
 
         {(userInfo?.data?.department?.name === "HR" ||
           isSuperAdmin ||
-          isTeamLead) && (
+          isTeamLead ||
+          isHRHead) && (
           <NavLink
             to="/allleaveapplications"
             // exact

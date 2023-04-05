@@ -2,7 +2,9 @@ import React, { CSSProperties } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import { MdOutlineClose } from "react-icons/md";
 import { SyncLoader } from "react-spinners";
+import { Formik, Form } from "formik";
 import { Modal, Spinner } from "react-bootstrap";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
@@ -10,6 +12,8 @@ import projectBack from "../../../assets/vectors/project-back.svg";
 import { useEmployeeById } from "../../../hooks/useEmployees";
 import CreateWarningModal from "../../../components/Modals/CreateWarningModal";
 import { useWarningEmployeeById } from "../../../hooks/useWarning";
+import InputField from "../../../components/Inputs/InputField";
+import TextAreaField from "../../../components/Inputs/TextAreaField";
 
 const override: CSSProperties = {
   display: "block",
@@ -94,19 +98,94 @@ const ViewWarning = () => {
                         aria-labelledby="contained-modal-title-vcenter"
                         centered
                       >
-                        <Modal.Header closeButton>
+                        <Modal.Header closeButton id="displayTermination">
+                          <span></span>
                           <Modal.Title>
                             Request Employee Termination
                           </Modal.Title>
+                          <Button
+                            style={{ color: "#fff" }}
+                            onClick={() => setDeleteShow(false)}
+                          >
+                            <MdOutlineClose size={28} />
+                          </Button>
                         </Modal.Header>
                         <Modal.Body>
-                          <p>Are you sure you want to request termination?</p>
+                          {/* <p>Are you sure you want to request termination?</p>
+                           */}
+                          <Modal.Body>
+                            <Formik
+                              initialValues={{
+                                reason: "",
+                                description: "",
+                              }}
+                              onSubmit={handleEmployeeTermination}
+                            >
+                              {({ setFieldValue }) => {
+                                return (
+                                  <Form>
+                                    <div className="Modal-Body">
+                                      <div className="col">
+                                        <div className="form-group">
+                                          <InputField
+                                            label="Reason"
+                                            placeholder="Enter reason"
+                                            name="reason"
+                                            className="form-group__gender"
+                                            onChange={(event: any) => {
+                                              setFieldValue(
+                                                "reason",
+                                                event?.value
+                                              );
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="col">
+                                        <div className="form-group">
+                                          <TextAreaField
+                                            style={{
+                                              height: "12rem",
+                                              lineHeight: "1",
+                                            }}
+                                            type="textarea"
+                                            label="Description"
+                                            placeholder="Enter description"
+                                            name="description"
+                                            className="form-group__gender"
+                                            onChange={(event: any) => {
+                                              setFieldValue(
+                                                "description",
+                                                event?.value
+                                              );
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="btn-modal-container">
+                                        <Button
+                                          variant="contained"
+                                          className="Add-btn-modal"
+                                          type="submit"
+                                        >
+                                          {isTerminateLoading ? (
+                                            <Spinner animation="border" />
+                                          ) : (
+                                            "Request Termination"
+                                          )}
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </Form>
+                                );
+                              }}
+                            </Formik>
+                          </Modal.Body>
                         </Modal.Body>
-                        <Modal.Footer>
+                        {/* <Modal.Footer>
                           <button
                             className="btn btn-danger"
                             onClick={() => {
-                              handleEmployeeTermination();
                               setShowDialog(false);
                             }}
                           >
@@ -122,7 +201,7 @@ const ViewWarning = () => {
                           >
                             Cancel
                           </button>
-                        </Modal.Footer>
+                        </Modal.Footer> */}
                       </Modal>
                     )}
                   </div>

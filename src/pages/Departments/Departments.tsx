@@ -34,10 +34,15 @@ const DepartmentsView = () => {
     setCollapseNav(!collapseNav);
   };
   const randColor = () => {
-    const realColor = "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0').toUpperCase();
-    console.log('realColor', realColor)
-    return realColor
-  }
+    const realColor =
+      "#" +
+      Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, "0")
+        .toUpperCase();
+    console.log("realColor", realColor);
+    return realColor;
+  };
 
   // console.log(randColor());
 
@@ -81,42 +86,21 @@ const DepartmentsView = () => {
                     onClick={() => navigate(`/departments/${item?.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
-                      <Button className={i % 2 === 0 ? `iDotsRounded1` : `iDotsRounded2`}>{item?.name}</Button>
+                      <Button
+                        className={
+                          i % 2 === 0 ? `iDotsRounded1` : `iDotsRounded2`
+                        }
+                      >
+                        {item?.name}
+                      </Button>
                       <BiDotsHorizontalRounded color="#97979B" />
                     </div>
                     <div className="iDotsRounded-text">{item?.name}</div>
                     <div className="iDotsRounded-text">{item?.description}</div>
-
-                    {/* <div className="iDotsRounded-percent-people">
-                      <div className="iDotsRounded-percent-list">
-                        <span className="profile-containers">Status</span>
-                        <span className="profile-containers">
-                          {item?.status}
-                        </span>
-                      </div>
-                    </div>
                   </div>
                 ))}
               </div>
             )}
-          </div>
-          <div className="ProjectViewContainer-subtwo">
-            <div className="subtwo-content-one">
-              <div className="subtwo-content-three-sub3">
-                <p>Departments</p>
-                <div className="ProjectView-projects">
-                  <div className="projects-total1">
-                    <h6>TOTAL</h6>
-                    <div className="projects-total-container">
-                      <span className="projects-total1-span"></span>
-                      <span className="projects-total1-span1">
-                        {departments?.length}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </main>

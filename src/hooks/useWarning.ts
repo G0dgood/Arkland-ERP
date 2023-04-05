@@ -75,14 +75,21 @@ export const useWarningEmployeeById = (id: string) => {
     };
   }, [retryCount, id, updatewarningById]);
 
-  const handleEmployeeTermination = async () => {
+  const handleEmployeeTermination = async (values?: any) => {
     setTerminateLoading(true);
+    const employeeId = id ? id : values.employee;
+    const createWarningValues = {
+      ...values,
+      employee: employeeId,
+      warning: warning.id,
+    };
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/employees/${id}`,
+        `${process.env.REACT_APP_API}/hr/terminations`,
         {
-          method: "DELETE",
+          method: "POST",
+          body: JSON.stringify(createWarningValues),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -91,8 +98,8 @@ export const useWarningEmployeeById = (id: string) => {
       );
       const data = await response.json();
       if (response.ok) {
-        const title = "Employed deleted.";
-        const html = `Employee deleted`;
+        const title = "Employee termination requested.";
+        const html = `Request successful`;
         const icon = "success";
         fireAlert(title, html, icon);
         setTerminateLoading(false);
@@ -105,7 +112,7 @@ export const useWarningEmployeeById = (id: string) => {
       setTerminateLoading(false);
       const html = error.message || "Something went wrong!";
       const icon = "error";
-      const title = "Employee deletion failed";
+      const title = "Request failed";
       fireAlert(title, html, icon);
     }
   };

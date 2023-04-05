@@ -34,7 +34,6 @@ const WarningList = () => {
   const [message, setMessage] = useState("");
   const [newWarningCreated, setNewWarningCreated] = React.useState(false);
   const [showToast, setShowToast] = useState(false);
-
   React.useEffect(() => {
     const fetchData = async () => {
       try {

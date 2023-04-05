@@ -59,7 +59,6 @@ const AllEmployees = ({ setEmployee }: any) => {
     { title: "EMAIL", prop: "email" },
     { title: "ROLE", prop: "role" },
     { title: "DEPARTMENT", prop: "department" },
-    { title: "VIEW EMPLOYEE", prop: "view" },
     { title: "ACTION" },
   ];
 
@@ -160,7 +159,11 @@ const AllEmployees = ({ setEmployee }: any) => {
                     <NoRecordFound colSpan={9} />
                   ) : (
                     displayData?.map((item: any, i: any) => (
-                      <tr className="data-table-row" key={i}>
+                      <tr
+                        className="data-table-row"
+                        key={i}
+                        onClick={() => navigate(`/employees/${item.id}`)}
+                      >
                         <td className="table-datacell datatype-string">
                           {item?.employee_id}
                         </td>
@@ -175,16 +178,6 @@ const AllEmployees = ({ setEmployee }: any) => {
                         </td>
                         <td className="table-datacell datatype-numeric">
                           {checkForName(item?.department, departments)}
-                        </td>
-                        <td className="table-datacell datatype-numeric">
-                          <span>
-                            <BsCheckCircle
-                              size={25}
-                              color={"green"}
-                              onClick={() => navigate(`/employees/${item.id}`)}
-                              title="View employee"
-                            />
-                          </span>
                         </td>
 
                         <td className="table-datacell datatype-numeric">
