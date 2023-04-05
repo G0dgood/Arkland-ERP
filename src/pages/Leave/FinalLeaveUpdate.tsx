@@ -19,7 +19,6 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 	const [isLoading, setisLoading] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
-	const [isSuccess1, setisSuccess1] = useState(false);
 	const [isError, setisError] = useState(false)
 	const [isError1, setisError1] = useState(false)
 	const [message, setMessage] = useState("");
@@ -95,7 +94,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 	}
 
 	const title = "Successful";
-	const html = "Leave Created!";
+	const html = "Leave Approved!";
 	const icon = "success";
 	const title1 = "Leave error";
 	const html1 = message1;
@@ -107,7 +106,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 
 
 	useEffect(() => {
-		if (isSuccess1) {
+		if (isSuccess) {
 			fireAlert(title, html, icon);
 			setTimeout(() => {
 				setisSuccess(false)
@@ -120,8 +119,14 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 				setisError1(false)
 				setMessage1("")
 			}, 5000);
+		} else if (isError1) {
+			fireAlert(title2, html2, icon2);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
 		}
-	}, [html, html1, isError1, isSuccess1, setMessage1])
+	}, [html, html1, isError1, isSuccess, setMessage1])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
