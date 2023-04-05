@@ -32,11 +32,14 @@ const Sidebar = ({ collapseNav }: any) => {
   const privileges = userInfo?.data?.privileges;
   const isTeamLead = privileges.some((p: any) => p.role === "team lead");
   const isSuperAdmin = privileges.some((p: any) => p.role === "super admin");
+  const isAdmin = privileges.some((p: any) => p.role === "admin");
   const isEmployee = privileges.some((p: any) => p.role === "employee");
   const isHeadOfDepartment = privileges.some(
     (p: any) => p.role === "head of department"
   );
   const isHRHead = privileges.some((p: any) => p.role === "HR head");
+  const isHr = privileges.some((p: any) => p.role === "HR head");
+  const isHOD = privileges.some((p: any) => p.role === "head of department");
 
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
@@ -78,30 +81,24 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-        {(userInfo?.data?.department?.name === "HR" ||
-          isSuperAdmin ||
-          isTeamLead ||
-          isHeadOfDepartment) && (
-          <NavLink
-            to="/teamkpi"
-            // exact
-            className={
-              window.location.pathname === "/teamkpi"
-                ? "active-here"
-                : "nav-link"
-            }
-            onMouseEnter={() => setTeamKPI(true)}
-            onMouseLeave={() => setTeamKPI(false)}
-          >
-            <MdOutlineAssessment size={20} />
-            <span className="nav-name">Team KPI</span>
-            {teamKPI && collapseNav && (
-              <div className="sidenav-bubble">
-                <p>Team KPI</p>
-              </div>
-            )}
-          </NavLink>
-        )}
+
+        <NavLink
+          to="/teamkpi"
+          // exact
+          className={
+            window.location.pathname === "/teamkpi" ? "active-here" : "nav-link"
+          }
+          onMouseEnter={() => setTeamKPI(true)}
+          onMouseLeave={() => setTeamKPI(false)}
+        >
+          <MdOutlineAssessment size={20} />
+          <span className="nav-name">Team KPI</span>
+          {teamKPI && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>Team KPI</p>
+            </div>
+          )}
+        </NavLink>
 
         <NavLink
           to="/weeklycontainer"
@@ -172,7 +169,7 @@ const Sidebar = ({ collapseNav }: any) => {
           </NavLink>
         )}
 
-        {(userInfo?.data?.department?.name === "HR" || isSuperAdmin) && (
+        {(isHr || isSuperAdmin || isAdmin) && (
           <NavLink
             to="/departments"
             // exact
@@ -193,9 +190,7 @@ const Sidebar = ({ collapseNav }: any) => {
             )}
           </NavLink>
         )}
-        {(userInfo?.data?.department?.name === "HR" ||
-          isSuperAdmin ||
-          isTeamLead) && (
+        {(isHr || isSuperAdmin || isTeamLead) && (
           <NavLink
             to="/projects"
             // exact
@@ -216,10 +211,25 @@ const Sidebar = ({ collapseNav }: any) => {
             )}
           </NavLink>
         )}
-        {(userInfo?.data?.department?.name === "HR" ||
-          isSuperAdmin ||
-          isHeadOfDepartment ||
-          isHRHead) && (
+
+        <NavLink
+          to="/leave"
+          // exact
+          className={
+            window.location.pathname === "/leave" ? "active-here" : "nav-link"
+          }
+          onMouseEnter={() => setLeave(true)}
+          onMouseLeave={() => setLeave(false)}
+        >
+          <BsBriefcase size={22} />
+          <span className="nav-name">Leave</span>
+          {leave && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>Leave</p>
+            </div>
+          )}
+        </NavLink>
+        {(isTeamLead || isHOD || isHr) && (
           <NavLink
             to="/teamleaveapplications"
             // exact
@@ -241,73 +251,45 @@ const Sidebar = ({ collapseNav }: any) => {
           </NavLink>
         )}
 
-        <NavLink
-          to="/leave"
-          // exact
-          className={
-            window.location.pathname === "/leave" ? "active-here" : "nav-link"
-          }
-          onMouseEnter={() => setAllLeave(true)}
-          onMouseLeave={() => setAllLeave(false)}
-        >
-          <BsBriefcase size={22} />
-          <span className="nav-name">Apply for Leave </span>
-          {allleave && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Apply for Leave</p>
-            </div>
-          )}
-        </NavLink>
-
-        {(userInfo?.data?.department?.name === "HR" ||
-          isSuperAdmin ||
-          isTeamLead ||
-          isHRHead) && (
+        {isSuperAdmin && (
           <NavLink
             to="/allieave"
             // exact
             className={
-              window.location.pathname === "/allieave"
-                ? "active-here"
-                : "nav-link"
+              window.location.pathname === "/leave" ? "active-here" : "nav-link"
             }
             onMouseEnter={() => setAllLeave(true)}
             onMouseLeave={() => setAllLeave(false)}
           >
             <BsBriefcase size={22} />
-            <span className="nav-name">All Leave </span>
+            <span className="nav-name">Apply for Leave </span>
             {allleave && collapseNav && (
               <div className="sidenav-bubble">
-                <p>All Leave</p>
+                <p>Apply for Leave</p>
               </div>
             )}
           </NavLink>
         )}
 
-        {(userInfo?.data?.department?.name === "HR" ||
-          isSuperAdmin ||
-          isTeamLead ||
-          isHRHead) && (
-          <NavLink
-            to="/allleaveapplications"
-            // exact
-            className={
-              window.location.pathname === "/allleaveapplications"
-                ? "active-here"
-                : "nav-link"
-            }
-            onMouseEnter={() => setAllleaveapplications(true)}
-            onMouseLeave={() => setAllleaveapplications(false)}
-          >
-            <BsBriefcase size={22} />
-            <span className="nav-name">All Leave Applications</span>
-            {allleaveapplications && collapseNav && (
-              <div className="sidenav-bubble">
-                <p>All Leave Applications</p>
-              </div>
-            )}
-          </NavLink>
-        )}
+        <NavLink
+          to="/allleaveapplications"
+          // exact
+          className={
+            window.location.pathname === "/allleaveapplications"
+              ? "active-here"
+              : "nav-link"
+          }
+          onMouseEnter={() => setAllleaveapplications(true)}
+          onMouseLeave={() => setAllleaveapplications(false)}
+        >
+          <BsBriefcase size={22} />
+          <span className="nav-name">All Leave Applications</span>
+          {allleaveapplications && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>All Leave Applications</p>
+            </div>
+          )}
+        </NavLink>
 
         <NavLink
           to="/support"

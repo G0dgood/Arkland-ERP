@@ -122,6 +122,7 @@ const ViewLeave = ({ showLeave, setShowLeaver }: any) => {
 					</Link>
 				</div>
 			</header>
+
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">

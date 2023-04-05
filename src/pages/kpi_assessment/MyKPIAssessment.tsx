@@ -83,7 +83,7 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 				</div>
 				<div>
 					<EntriesPerPage
-						data={data}
+						data={sortData}
 						entriesPerPage={entriesPerPage}
 						setEntriesPerPage={setEntriesPerPage}
 					/>

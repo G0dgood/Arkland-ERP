@@ -127,7 +127,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 		<div>
 			<Button variant="contained" className="Add-btn"
 				onClick={() => setLgShow(true)}>
-				Create Role
+				Assign Privilege
 			</Button>
 			<Modal
 				size="lg"

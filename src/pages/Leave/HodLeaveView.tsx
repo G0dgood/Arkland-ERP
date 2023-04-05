@@ -8,18 +8,20 @@ import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import axios, { AxiosResponse } from 'axios';
 
-const HodLeaveView = ({ showLeave, setShowLeaver, }: any) => {
+const HodLeaveView = () => {
 
 	const { id } = useParams()
 	const navigate = useNavigate();
 	const token = Cookies.get("token");
-	const [lgShow, setLgShow] = useState(false);
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
+	const [isSuccess2, setisSuccess2] = useState(false);
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 	const [isLoading1, setisLoading1] = useState(false);
+	const [isLoading2, setisLoading2] = useState(false);
 	const [isError1, setisError1] = useState(false)
 	const [message1, setMessage1] = useState("");
 	const [data, setData] = useState("");
@@ -37,6 +39,9 @@ const HodLeaveView = ({ showLeave, setShowLeaver, }: any) => {
 	const title1 = "Leave error";
 	const html1 = message1;
 	const icon1 = "error";
+	const title2 = "Successful";
+	const html2 = "Leave have been Deleted!";
+	const icon2 = "success";
 
 
 	useEffect(() => {
@@ -46,15 +51,20 @@ const HodLeaveView = ({ showLeave, setShowLeaver, }: any) => {
 				setisSuccess(false)
 				setMessage1("")
 			}, 5000);
-			setLgShow(false)
 		} else if (isError1) {
 			fireAlert(title1, html1, icon1);
 			setTimeout(() => {
 				setisError1(false)
 				setMessage1("")
 			}, 5000);
+		} else if (isSuccess2) {
+			fireAlert(title2, html2, icon2);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
 		}
-	}, [html, html1, isError1, isSuccess, setMessage1])
+	}, [html, html1, isError1, isSuccess, isSuccess2, setMessage1])
 
 	useEffect(() => {
 		setisLoading(true);
@@ -147,6 +157,53 @@ const HodLeaveView = ({ showLeave, setShowLeaver, }: any) => {
 			});
 	}
 
+	const handleDelete = () => {
+		setisLoading2(true);
+		axios
+			.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`)
+			.then((res: AxiosResponse) => {
+				console.log('AxiosResponse', res)
+				setisLoading2(false);
+				setisSuccess2(true)
+				setTimeout(() => {
+					navigate("/teamleaveapplications");
+				}, 2000);
+			})
+			.catch((data) => {
+				setisLoading2(false);
+			});
+	}
+
+	// useEffect(() => {
+	// 	setisLoading(true);
+	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves?department=${id}`, {
+	// 		method: "GET",
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			Authorization: `Bearer ${token}`
+	// 		},
+	// 	})
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			if (data?.success === false) {
+	// 				setMessage(data?.message)
+	// 				setisError(true)
+	// 			} else { 
+	// 				console.log('data?.data?.data', data?.data?.data)
+	// 				setisSuccess(true)
+	// 				setisLoading2(false);
+	// 				setTimeout(() => {
+	// 					navigate("/teamleaveapplications");
+	// 				}, 2000);
+	// 			}
+	// 			setisLoading(false);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("Error:", error);
+	// 			setisLoading(false);
+	// 		});
+	// }, [id, navigate, token])
+
 	return (
 		<div  >
 			<header className="ChatProgressView-header"  >
@@ -171,9 +228,6 @@ const HodLeaveView = ({ showLeave, setShowLeaver, }: any) => {
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">
-					{/* <div className="contact-logo">
-
-					</div> */}
 
 					<form className="contact-form">
 						<div className="heading">
@@ -213,14 +267,11 @@ const HodLeaveView = ({ showLeave, setShowLeaver, }: any) => {
 							<span>
 								{/* @ts-ignore */}
 								{data?.data?.hod_approved === false &&
-									// <Button variant="contained"
-									// 	className="table-link-active" onClick={handelupdate}>
-									// 	{isLoading1 ? <Spinner animation="border" /> : "Approve"}
-									// </Button>
 									<div className='deleteKPIHandler  mt-5'>
 										<span className='deleteKPIHandler-mr'>
-											<Button className="table-link">
-												Delete </Button></span>
+											<Button className="table-link" onClick={handleDelete}>
+												{isLoading2 ? <Spinner animation="border" /> : "Reject"}</Button>
+										</span>
 										<span ><Button className="table-link-active" onClick={handelupdate} >
 											{isLoading1 ? <Spinner animation="border" /> : "Approve"}
 										</Button>

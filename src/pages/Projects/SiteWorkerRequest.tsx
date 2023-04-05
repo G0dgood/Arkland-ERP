@@ -18,6 +18,7 @@ import { getProjects } from "../../store/reducers/project";
 import { getTeam } from "../../store/reducers/team";
 import { getTeamLeads } from "../../store/reducers/teamLeads";
 import { checkForName } from "../../utils/checkForName";
+import TableLoader from "../../components/TableLoader";
 
 const SiteWorkerRequest = () => {
   const navigate = useNavigate();
@@ -104,6 +105,7 @@ const SiteWorkerRequest = () => {
           </div>
         </div>
         <section className="md-ui component-data-table">
+          {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
           <div className="main-table-wrapper">
             <table className="main-table-content">
               <thead className="data-table-header">

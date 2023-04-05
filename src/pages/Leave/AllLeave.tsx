@@ -303,8 +303,8 @@
 
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { BsCheckCircle } from 'react-icons/bs';
-import { Link, useNavigate } from 'react-router-dom';
+import { BsCheckCircle, BsClock } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header'
 import Pagination from '../../components/Pagination';
 import Sidebar from '../../components/Sidebar'
@@ -313,10 +313,11 @@ import moment from 'moment';
 import Cookies from 'js-cookie';
 import storage from '../../utils/storage';
 import TableLoader from '../../components/TableLoader';
+import { SlClose } from 'react-icons/sl';
 
 const AllLeave = () => {
 
-	const navigate = useNavigate();
+
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
 	const token = Cookies.get("token");
@@ -407,7 +408,7 @@ const AllLeave = () => {
 					</div>
 					<div>
 						<EntriesPerPage
-							data={data}
+							data={sortData}
 							entriesPerPage={entriesPerPage}
 							setEntriesPerPage={setEntriesPerPage}
 						/>
@@ -449,26 +450,30 @@ const AllLeave = () => {
 											<td className="table-datacell datatype-numeric">{moment(item?.end_date).format("DD-MM-YYYY")}</td>
 											<td className="table-datacell datatype-numeric">
 												{item?.hod_approved ?
-													<BsCheckCircle size={25} color={"green"} /> :
-													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+													<BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+														<SlClose size={25} color={"red"} className="icon-bold" /> :
+														<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 											</td>
 											<td className="table-datacell datatype-numeric">
 												{item?.hr_approved ?
-													<BsCheckCircle size={25} color={"green"} /> :
-													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+													<BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+														<SlClose size={25} color={"red"} className="icon-bold" /> :
+														<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 											</td>
 											<td className="table-datacell datatype-numeric">
 												{item?.finally_approved ?
-													<BsCheckCircle size={25} color={"green"} /> :
-													<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+													<BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+														<SlClose size={25} color={"red"} className="icon-bold" /> :
+														<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 											</td>
 											<td className="table-datacell datatype-numeric">
-												<Button className={item?.finally_approved === true ? "table-link-active" : "table-link"}>{item.finally_approved === false ? "IN PROGRESS" : 'LEAVE APPROVED'}</Button>
+												<Button className={item?.hod_approved === false && item?.status !== "rejected" ? "table-link" : item?.hod_approved === true ? "table-link-active" : "table-link-reject"}>{item?.hod_approved === false && item?.status !== "rejected" ? "IN PROGRESS" : item?.status === "rejected" ? "Rejected" : 'LEAVE APPROVED'}</Button>
 											</td>
 											<td className="table-datacell datatype-numeric">
 												<Link to={`/finalleaveupdate/${item?._id}`}  >
 													{/* @ts-ignore */}
-													<Button id="team-applicatiom-update">{item?.finally_approved === false ? "Update" : "View"}</Button>
+													{item?.status === "rejected" ? "" :
+														<Button id="team-applicatiom-update">{item?.finally_approved === false ? "Update" : "View"}</Button>}
 												</Link>
 											</td>
 										</tr>
