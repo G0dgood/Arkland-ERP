@@ -5,10 +5,9 @@ import TableLoader from '../../components/TableLoader';
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import Pagination from '../../components/Pagination';
 import { Button } from '@material-ui/core';
-import { FaArrowLeft } from 'react-icons/fa';
 import axios, { AxiosResponse } from 'axios';
 import moment from 'moment';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import storage from '../../utils/storage';
 
 const TeamKPI = () => {
@@ -17,7 +16,7 @@ const TeamKPI = () => {
 
 
 
-	const navigate = useNavigate();
+
 	const [data, setData] = useState<any>([]);
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
@@ -54,7 +53,7 @@ const TeamKPI = () => {
 
 	const [displayData, setDisplayData] = useState([]);
 
-	console.log('displayData', displayData)
+
 
 
 
@@ -85,7 +84,7 @@ const TeamKPI = () => {
 					</div>
 					<div>
 						<EntriesPerPage
-							data={data}
+							data={sortData}
 							entriesPerPage={entriesPerPage}
 							setEntriesPerPage={setEntriesPerPage}
 						/>

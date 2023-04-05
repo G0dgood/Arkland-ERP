@@ -4,12 +4,13 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { Link, useNavigate } from "react-router-dom";
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import { MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
+import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import Cookies from 'js-cookie';
 import storage from '../../utils/storage';
 import Pagination from '../../components/Pagination';
 import moment from 'moment';
-import { BsCheckCircle } from 'react-icons/bs';
+import { BsCheckCircle, BsClock } from 'react-icons/bs';
+import { SlClose } from 'react-icons/sl';
 import HodLeaveView from './HodLeaveView';
 import TableLoader from '../../components/TableLoader';
 
@@ -69,6 +70,7 @@ const TeamLeaveApplications = () => {
 					setisError(true)
 				} else {
 					setSortData(data?.data?.data)
+					console.log('data?.data?.data', data?.data?.data)
 					setisSuccess(true)
 					setTimeout(() => {
 						setMessage('')
@@ -97,6 +99,13 @@ const TeamLeaveApplications = () => {
 
 
 						<span className='SupportmainTitleh3'>My Team Leave Applications</span>
+					</div>
+					<div>
+						<EntriesPerPage
+							data={sortData}
+							entriesPerPage={entriesPerPage}
+							setEntriesPerPage={setEntriesPerPage}
+						/>
 					</div>
 					<div>
 						<MainSearch placeholder={'Search...          Team Leave '} />
@@ -137,21 +146,24 @@ const TeamLeaveApplications = () => {
 										<td className="table-datacell datatype-numeric">{moment(item?.end_date).format("DD-MM-YYYY")}</td>
 										<td className="table-datacell datatype-numeric">
 											{item?.hod_approved ?
-												<BsCheckCircle size={25} color={"green"} /> :
-												<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+												<BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+													<SlClose size={25} color={"red"} className="icon-bold" /> :
+													<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 										</td>
 										<td className="table-datacell datatype-numeric">
 											{item?.hr_approved ?
-												<BsCheckCircle size={25} color={"green"} /> :
-												<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+												<BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+													<SlClose size={25} color={"red"} className="icon-bold" /> :
+													<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 										</td>
 										<td className="table-datacell datatype-numeric">
 											{item?.finally_approved ?
-												<BsCheckCircle size={25} color={"green"} /> :
-												<BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+												<BsCheckCircle size={25} color={"green"} /> : item?.status === "rejected" ?
+													<SlClose size={25} color={"red"} className="icon-bold" /> :
+													<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Button className={item.hod_approved === true ? "table-link-active" : "table-link"}>{item.hod_approved === false ? "IN PROGRESS" : 'LEAVE APPROVED'}</Button>
+											<Button className={item?.hod_approved === false && item?.status !== "rejected" ? "table-link" : item?.hod_approved === true ? "table-link-active" : "table-link-reject"}>{item?.hod_approved === false && item?.status !== "rejected" ? "IN PROGRESS" : item?.status === "rejected" ? "Rejected" : 'LEAVE APPROVED'}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
 											{/* <Button id="team-applicatiom-update" onClick={() => {
@@ -160,7 +172,9 @@ const TeamLeaveApplications = () => {
 												// @ts-ignore
 											}}> {item?.hod_approved === false ? "Update" : "View"}</Button> */}
 											<Link to={`/hodleaveview/${item?._id}`}  >
-												<Button id="team-applicatiom-update">{item?.hod_approved === false ? "Update" : "View"}</Button>
+												{item?.status === "rejected" ? "" :
+													<Button id="team-applicatiom-update">{item?.hod_approved === false ? "Update" : "View"}</Button>
+												}
 											</Link>
 										</td>
 									</tr>

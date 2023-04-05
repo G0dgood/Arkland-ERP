@@ -91,7 +91,7 @@ const ViewKPAssessment = () => {
 	// }, [id]);
 
 
-
+	// Performance  Percentage Calculation
 	React.useEffect(() => {
 		const finalscore: any = (data?.performance_percentage_employee + hodscore) / (hodscore === 0 ? 0 : 2)
 		setBroughtDownAverage(finalscore)
