@@ -304,7 +304,7 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { BsCheckCircle, BsClock } from 'react-icons/bs';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header'
 import Pagination from '../../components/Pagination';
 import Sidebar from '../../components/Sidebar'
@@ -317,7 +317,7 @@ import { SlClose } from 'react-icons/sl';
 
 const AllLeave = () => {
 
-	const navigate = useNavigate();
+
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
 	const token = Cookies.get("token");
