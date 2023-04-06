@@ -12,6 +12,7 @@ const InputField = ({
   style,
   value,
   readOnly,
+  defaultValue,
   onChange,
   required,
   disabled,
@@ -76,6 +77,7 @@ const InputField = ({
         placeholder={placeholder}
         inputMode={inputMode}
         // onChange={onChange}
+        defaultValue={defaultValue}
         style={style}
         maxLength={maxLength}
         value={value}

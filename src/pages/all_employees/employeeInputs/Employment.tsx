@@ -10,6 +10,11 @@ import ReactSelectField from "../../../components/Inputs/ReactSelectField";
 import { getDepartment } from "../../../store/reducers/department";
 import { getRoles } from "../../../store/reducers/roles";
 import { useAppDispatch } from "../../../hooks/useDispatch";
+import {
+  categoryOptions,
+  typeOfEmploymentOptions,
+  workLocationOptions,
+} from "../../../functions/helpers";
 
 const Employment = ({
   active,
@@ -21,27 +26,7 @@ const Employment = ({
   roleOptions,
 }: EmployeeFormProps) => {
   const validate = Yup.object().shape({});
-  const categoryOptions = [
-    "Select staff category",
-    "Master",
-    "Senior",
-    "Junior",
-  ];
-  const workLocationOptions = [
-    "Do you have any work location objection?",
-    "Yes",
-    "No",
-  ];
-  const typeOfEmploymentOptions = [
-    "Enter type of employment",
-    "full time",
-    "full time remote",
-    "part time",
-    "part time remote",
-    "contract",
-    "contract remote",
-    "casual worker",
-  ];
+
   const formatDate = (date: Date) => {
     const show = moment(date).format();
     return show;

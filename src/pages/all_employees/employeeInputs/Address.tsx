@@ -63,7 +63,7 @@ const Address = ({
                           label="City"
                           name="city"
                           placeholder="Enter employee's city"
-                        />{" "}
+                        />
                       </div>
                     </div>
                   </div>

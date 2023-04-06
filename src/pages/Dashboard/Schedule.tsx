@@ -17,6 +17,7 @@ import { useAppSelector } from "../../hooks/useDispatch";
 import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
 import { DialogState } from "../../interfaces/base";
 import { getUserPrivileges } from "../../functions/auth";
+import { checkForOptions } from "../../utils/checkForName";
 
 const Schedule = () => {
   const token = Cookies.get("token");
@@ -225,7 +226,7 @@ const Schedule = () => {
                               <div className="table-loader-announcement1">
                                 <SyncLoader
                                   color={"#990000"}
-                                  loading={isLoading}
+                                  loading={isScheduleLoading}
                                 />
                               </div>
                             ) : (
@@ -237,7 +238,12 @@ const Schedule = () => {
                                 <p>STATUS</p>
                                 <p>{schedule?.status}</p>
                                 <p>PRIORITY</p>
-                                <p>{schedule?.priority}</p>
+                                <p>
+                                  {checkForOptions(
+                                    schedule?.priority,
+                                    priorityOptions
+                                  )}
+                                </p>
                                 <p>NOTES</p>
                                 <p>{schedule?.notes?.[0].text}</p>
                                 <p>DATE OF COMPLETION</p>

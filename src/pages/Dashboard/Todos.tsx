@@ -173,7 +173,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                             <div className="table-loader-announcement1">
                               <SyncLoader
                                 color={"#990000"}
-                                loading={isLoading}
+                                loading={isScheduleLoading}
                               />
                             </div>
                           ) : (

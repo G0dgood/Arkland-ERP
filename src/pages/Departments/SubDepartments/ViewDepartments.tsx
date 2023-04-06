@@ -187,22 +187,6 @@ const ViewDepartments = () => {
                               title="View employee"
                             />
                           </span>
-                          <span>
-                            <span
-                              className="edit-icon-color"
-                              onClick={() => navigate("/admineditUser")}
-                              title="Edit employee"
-                            >
-                              <FiEdit size={25} />
-                            </span>
-                            {"  "}
-                            <span
-                              className="lock-icon-color"
-                              title="Lock employee account"
-                            >
-                              <FiLock size={25} />
-                            </span>
-                          </span>
                         </div>
                       </td>
                     </tr>
