@@ -1,6 +1,6 @@
 import React, { CSSProperties } from "react";
 import Cookies from "js-cookie";
-import { FiTrash2 } from "react-icons/fi";
+import { FiEye, FiTrash2 } from "react-icons/fi";
 import { Button } from "@mui/material";
 import { SyncLoader } from "react-spinners";
 import moment from "moment";
@@ -14,24 +14,39 @@ import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
 import { useAppSelector } from "../../hooks/useDispatch";
-import useFetchTasks from "../../hooks/useSchedule";
+import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
 import { DialogState } from "../../interfaces/base";
+import { getUserPrivileges } from "../../functions/auth";
+import { checkForOptions } from "../../utils/checkForName";
 
 const Schedule = () => {
   const token = Cookies.get("token");
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } =
+    getUserPrivileges();
+
   const [taskAction, setTaskAction] = React.useState({} as any);
+  const [viewAction, setViewAction] = React.useState([] as any);
   const [taskCreateShow, setTaskCreateShow] = React.useState(false);
+  const [viewShow, setViewShow] = React.useState(false);
+
   const [deleteShow, setDeleteShow] = React.useState(false);
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
+  const [showView, setShowView] = React.useState<DialogState>({});
 
   const { tasks, isLoading, error, message, setLoading } =
     useFetchTasks(taskAction);
+
+  const { schedule, isScheduleLoading } = useScheduleById(viewAction);
 
   const handleDelete = (id: any) => {
     setShowDialog({ [id]: true });
     setDeleteShow(true);
   };
-
+  const handleView = (id: any) => {
+    setViewAction([id]);
+    setShowView({ [id]: true });
+    setViewShow(true);
+  };
   const deleteTask = async (id: string) => {
     setLoading(true);
     try {
@@ -165,12 +180,92 @@ const Schedule = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="FiTrash2">
-                        <FiTrash2
+                      <div
+                        className="FiTrash2"
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        <FiEye
                           size={25}
-                          onClick={() => handleDelete(item?.id)}
+                          onClick={() => handleView(item?.id)}
+                          cursor="pointer"
+                          title="VIEW TODO"
                         />
+                        {(isHRHead ||
+                          isSuperAdmin ||
+                          isAdmin ||
+                          isHrAdmin ||
+                          isTeamLead) && (
+                          <FiTrash2
+                            size={25}
+                            onClick={() => handleDelete(item?.id)}
+                            cursor="pointer"
+                            title="DELETE TODO"
+                          />
+                        )}
                       </div>
+                      {showView[item?.id] && (
+                        <Modal
+                          size="lg"
+                          show={viewShow}
+                          aria-labelledby="contained-modal-title-vcenter"
+                          centered
+                        >
+                          <Modal.Header closeButton id="displayTermination">
+                            <Modal.Title>View Schedule</Modal.Title>
+                            <Button
+                              style={{ color: "#fff" }}
+                              onClick={() => setViewShow(false)}
+                            >
+                              <MdOutlineClose size={28} />
+                            </Button>
+                          </Modal.Header>
+                          <Modal.Body>
+                            {isScheduleLoading === true ? (
+                              <div className="table-loader-announcement1">
+                                <SyncLoader
+                                  color={"#990000"}
+                                  loading={isScheduleLoading}
+                                />
+                              </div>
+                            ) : (
+                              <div className="getjob-application-details">
+                                <p>ASSIGNED TO</p>
+                                <p>{schedule?.assigned_to}</p>
+                                <p>TITLE</p>
+                                <p>{schedule?.title}</p>
+                                <p>STATUS</p>
+                                <p>{schedule?.status}</p>
+                                <p>PRIORITY</p>
+                                <p>
+                                  {checkForOptions(
+                                    schedule?.priority,
+                                    priorityOptions
+                                  )}
+                                </p>
+                                <p>NOTES</p>
+                                <p>{schedule?.notes?.[0].text}</p>
+                                <p>DATE OF COMPLETION</p>
+                                <p>
+                                  {" "}
+                                  {moment(
+                                    schedule?.expected_completion_date
+                                  ).format("DD-MMMM-YYYY")}
+                                </p>
+                              </div>
+                            )}
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <button
+                              className="btn btn-secondary"
+                              onClick={() => setShowView({ [item?.id]: false })}
+                            >
+                              Cancel
+                            </button>
+                          </Modal.Footer>
+                        </Modal>
+                      )}
                       {showDialog[item?.id] && (
                         <Modal
                           size="lg"
@@ -178,8 +273,14 @@ const Schedule = () => {
                           aria-labelledby="contained-modal-title-vcenter"
                           centered
                         >
-                          <Modal.Header closeButton>
+                          <Modal.Header closeButton id="displayTermination">
                             <Modal.Title>Delete Task</Modal.Title>
+                            <Button
+                              style={{ color: "#fff" }}
+                              onClick={() => setDeleteShow(false)}
+                            >
+                              <MdOutlineClose size={28} />
+                            </Button>
                           </Modal.Header>
                           <Modal.Body>
                             <p>Are you sure you want to delete this task?</p>

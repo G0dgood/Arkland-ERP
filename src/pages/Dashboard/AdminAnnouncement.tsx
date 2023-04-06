@@ -17,11 +17,11 @@ const AdminAnnouncement = () => {
 
   return (
     <div className="admin-main-div-col-2-sub">
-      {error && (
+      {/* {error && (
         <Toast
           onClose={() => setShowToast(false)}
           show={true}
-          delay={4000}
+          delay={1000}
           autohide
         >
           <Toast.Body>
@@ -34,7 +34,7 @@ const AdminAnnouncement = () => {
             </span>
           </Toast.Body>
         </Toast>
-      )}
+      )} */}
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
           <span className="sub-text-contained">

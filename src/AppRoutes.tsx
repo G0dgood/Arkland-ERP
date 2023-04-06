@@ -134,39 +134,63 @@ const AppRoutes: React.FC<any> = () => {
             />
           }
         >
-          <Route path="/projects" element={<Project />} />
-
-          <Route path="/employees" element={<AllEmployees />} />
-          <Route path="/employees/:id" element={<ViewEmployee />} />
-          <Route path="/employeecontainer" element={<EmployeeContainer />} />
+          {/*Projects View */}
           <Route path="/projects" element={<Project />} />
           <Route path="/viewproject/:id" element={<ViewProjects />} />
+          <Route path="/createprojects" element={<CreateProjects />} />
+          {/*End Projects View */}
+
+          {/* KPI View */}
+          <Route path="/kpicontainer" element={<KpiContainer />} />
+          <Route path="/teamkpi" element={<TeamKPI />} />
+          <Route path="/viewkpiassessment/:id" element={<ViewKPAssessment />} />
+          {/*END KPI View */}
+
+          {/*Employees View */}
+          <Route path="/employees" element={<EmployeeContainer />} />
+          <Route path="/employeecontainer" element={<EmployeeContainer />} />
+          <Route path="/employees/:id" element={<ViewEmployee />} />
+          <Route path="/employees/edit/:id" element={<AdminEditUser />} />
+          <Route path="/createemployee" element={<CreateEmployee />} />
+          {/*End Employees View */}
+
+          {/*Leave View */}
           <Route
             path="/allleaveapplications"
             element={<AllLeaveApplications />}
           />
-
           <Route path="/allieave" element={<AllLeave />} />
           <Route path="/finalleaveupdate/:id" element={<FinalLeaveUpdate />} />
           <Route path="/hrupdateleave/:id" element={<HRUpdateLeave />} />
+          {/*End Leave View */}
+
+          {/*Worker Request View */}
           <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
           <Route
             path="/site-worker-request/:id"
             element={<ViewSiteWorkerRequest />}
           />
-          <Route path="/createemployee" element={<CreateEmployee />} />
-          <Route path="/createprojects" element={<CreateProjects />} />
+          {/*End Worker Request View */}
+
+          {/*Warning View */}
           <Route path="/warninglist" element={<WarningList />} />
           <Route path="/warninglist/:id" element={<ViewWarning />} />
+          {/*End warning View */}
 
+          {/*Terminations View */}
           <Route path="/terminations" element={<TerminationList />} />
           <Route path="/terminations/:id" element={<ViewTerminations />} />
-          <Route path="/dashboardcalender" element={<DashboardCalender />} />
-          <Route path="/profile/edit" element={<EditUser />} />
-          <Route path="/profile" element={<Profile />} />
+          {/*End terminations View */}
+
           {/* Departments */}
           <Route path="/departments" element={<Departments />} />
           <Route path="/departments/:id" element={<ViewDepartments />} />
+          {/*End Departments */}
+
+          <Route path="/dashboardcalender" element={<DashboardCalender />} />
+          <Route path="/profile/edit" element={<EditUser />} />
+          <Route path="/profile" element={<Profile />} />
+
           <Route path="/engineering" element={<Engineering />} />
           <Route path="/finance" element={<Finance />} />
           <Route path="/humanresource" element={<HumanResource />} />
@@ -174,11 +198,6 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/informationtech" element={<Informationtech />} />
           <Route path="/budget" element={<Budget />} />
           {/* AdminEditUser */}
-          <Route path="/admineditUser" element={<AdminEditUser />} />
-          {/* Project View */}
-          <Route path="/kpicontainer" element={<KpiContainer />} />
-          <Route path="/teamkpi" element={<TeamKPI />} />
-          <Route path="/viewkpiassessment/:id" element={<ViewKPAssessment />} />
         </Route>
       </Route>
     </Routes>

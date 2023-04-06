@@ -125,26 +125,26 @@ const Sidebar = ({ collapseNav }: any) => {
           isHeadOfDepartment ||
           isHRHead ||
           isHrAdmin) && (
-            <NavLink
-              to="/teamweekly"
-              // exact
-              className={
-                window.location.pathname === "/teamweekly"
-                  ? "active-here"
-                  : "nav-link"
-              }
-              onMouseEnter={() => setTeamWeekly(true)}
-              onMouseLeave={() => setTeamWeekly(false)}
-            >
-              <GoFile size={23} />
-              <span className="nav-name">Team Weekly Report</span>
-              {teamweekly && collapseNav && (
-                <div className="sidenav-bubble">
-                  <p>Team Weekly Report</p>
-                </div>
-              )}
-            </NavLink>
-          )}
+          <NavLink
+            to="/teamweekly"
+            // exact
+            className={
+              window.location.pathname === "/teamweekly"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setTeamWeekly(true)}
+            onMouseLeave={() => setTeamWeekly(false)}
+          >
+            <GoFile size={23} />
+            <span className="nav-name">Team Weekly Report</span>
+            {teamweekly && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Team Weekly Report</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
         {(isSuperAdmin || isHRHead || isHrAdmin) && (
           <NavLink
@@ -255,7 +255,9 @@ const Sidebar = ({ collapseNav }: any) => {
             to="/allieave"
             // exact
             className={
-              window.location.pathname === "/leave" ? "active-here" : "nav-link"
+              window.location.pathname === "/allieave"
+                ? "active-here"
+                : "nav-link"
             }
             onMouseEnter={() => setAllLeave(true)}
             onMouseLeave={() => setAllLeave(false)}

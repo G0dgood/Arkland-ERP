@@ -9,6 +9,7 @@ interface CountrySelectFieldProps {
   placeholder?: string;
   value?: any;
   noValue?: any;
+  defaultValue?: any;
   onChange?: any;
 }
 
@@ -17,6 +18,7 @@ const CountrySelectField = ({
   className,
   value,
   onChange,
+  defaultValue,
   ...props
 }: CountrySelectFieldProps) => {
   const [field, meta] = useField(props);
@@ -35,7 +37,12 @@ const CountrySelectField = ({
         {label}
       </label>
 
-      <Select options={options} value={value} onChange={onChange} />
+      <Select
+        options={options}
+        value={value}
+        onChange={onChange}
+        defaultValue={defaultValue}
+      />
       <ErrorMessage component="p" name={field.name} className="input__error" />
     </div>
   );

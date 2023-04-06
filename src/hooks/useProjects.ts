@@ -131,7 +131,7 @@ export const useProjectById = (id: string) => {
         }
         setProjects(dataProjects.data);
 
-        const urlForTeamMembers = `${process.env.REACT_APP_API}/hr/teams/${dataProjects.data.team}/employees`;
+        const urlForTeamMembers = `${process.env.REACT_APP_API}/hr/teams/${dataProjects?.data?.team}/employees`;
 
         setProjectTasksLoading(true);
         const responseProjectsTasks = await fetch(
