@@ -254,7 +254,7 @@ const ViewWarning = () => {
                         <p>Status</p>
                         <p> {warning?.status} </p>
                         <p>Created by</p>
-                        <p>{warning?.created_by}</p>
+                        <p>{warning?.created_by?.full_name}</p>
                         <p>Created at</p>
                         <p>
                           {moment(warning?.created_at).format("DD-MM-YYYY")}

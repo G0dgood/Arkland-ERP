@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiEdit, FiLock } from "react-icons/fi";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
-import { Toast } from "react-bootstrap";
 import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
+import { SyncLoader } from "react-spinners";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import {
+  EntriesPerPage,
   MainSearch,
   NoRecordFound,
   TableFetch,
@@ -18,21 +19,18 @@ import { useDepartmentById } from "../../../hooks/useDepartments";
 import { getDepartment } from "../../../store/reducers/department";
 import { getRoles } from "../../../store/reducers/roles";
 import TableLoader from "../../../components/TableLoader";
+import { Toast } from "react-bootstrap";
+import Pagination from "../../../components/Pagination";
 
 const ViewDepartments = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const { id } = useParams<{ id: string }>();
-  const {
-    department,
-    departmentMembers,
-    isLoading,
-    membersLoading,
-    error,
-    message,
-  } = useDepartmentById(id ? id : "");
+  const { departmentMembers, membersLoading, error, message } =
+    useDepartmentById(id ? id : "");
   const [showToast, setShowToast] = useState(false);
+  const [displayData, setDisplayData] = useState([]);
 
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -43,17 +41,26 @@ const ViewDepartments = () => {
   const departmentState: any = useAppSelector(
     (state) => state?.department?.department
   );
+
+  // --- Pagination --- //
+  const [entriesPerPage, setEntriesPerPage] = useState(() => {
+    return localStorage.getItem("reportsPerPage") || "10";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("reportsPerPage", entriesPerPage);
+  }, [entriesPerPage]);
+
   React.useEffect(() => {
-    if (
-      !roles ||
-      roles.length === 0 ||
-      !departmentState ||
-      departmentState.length === 0
-    ) {
-      dispatch(getDepartment());
+    if (!roles || roles.length === 0) {
       dispatch(getRoles());
     }
+    if (!departmentState || departmentState.length === 0) {
+      dispatch(getDepartment());
+    }
+    // setEmployee(employees?.length);
   }, [dispatch, roles, departmentState]);
+
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
     localStorage.setItem("collapse", JSON.stringify(collapseNav));
@@ -95,6 +102,7 @@ const ViewDepartments = () => {
       )} */}
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
+
       <main>
         <div className="SiteWorkermaindiv">
           <div className="SiteWorkermaindivsub">
@@ -102,26 +110,24 @@ const ViewDepartments = () => {
               variant="contained"
               className="back-btn-icon"
               id="Add-btn-sub"
-              onClick={() => navigate("/departments")}
+              onClick={() => navigate(-1)}
             >
               <FaArrowLeft size={25} />
             </Button>
-
-            <span className="SupportmainTitleh3">{department?.name}</span>
           </div>
           <div>
-            <MainSearch
-              placeholder={`Search...          ${department?.name}`}
+            <EntriesPerPage
+              data={displayData}
+              entriesPerPage={entriesPerPage}
+              setEntriesPerPage={setEntriesPerPage}
             />
+          </div>
+          <div>
+            <MainSearch placeholder={`Search...          `} />
           </div>
         </div>
         <section className="md-ui component-data-table">
           {membersLoading ? <TableLoader isLoading={membersLoading} /> : ""}
-          {/* <header className="main-table-header">
-							<h1 className="table-header--title">Nutrition</h1>
-							<span className="table-header--icons"><i className="material-icons">filter_list</i><i className="material-icons">more_vert</i>
-							</span>
-						</header> */}
           <div className="main-table-wrapper">
             <table className="main-table-content">
               <thead className="data-table-header">
@@ -145,7 +151,7 @@ const ViewDepartments = () => {
                   <TableFetch colSpan={8} />
                 ) : departmentMembers?.length === 0 ||
                   departmentMembers == null ? (
-                  <NoRecordFound colSpan={8} />
+                  <NoRecordFound colSpan={9} />
                 ) : (
                   departmentMembers.length > 0 &&
                   departmentMembers?.map((item: any, i: any) => (
@@ -206,6 +212,14 @@ const ViewDepartments = () => {
             </table>
           </div>
         </section>
+        <footer className="main-table-footer">
+          <Pagination
+            setDisplayData={setDisplayData}
+            data={departmentMembers.length > 0 ? departmentMembers : []}
+            entriesPerPage={EntriesPerPage}
+            Total={"Employee"}
+          />
+        </footer>
       </main>
     </div>
   );

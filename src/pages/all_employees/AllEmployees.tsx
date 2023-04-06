@@ -109,7 +109,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                   onClick={() => navigate("/warninglist")}
                 >
                   <Button variant="contained" className="Add-btn">
-                    Warning List
+                    Warnings
                   </Button>
                 </div>
               )}
