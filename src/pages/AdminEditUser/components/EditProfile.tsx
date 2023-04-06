@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { Button } from "@material-ui/core";
 import { Formik, Form } from "formik";
+import { useNavigate, useParams } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
+import Cookies from "js-cookie";
+import { Spinner } from "react-bootstrap";
 import InputField from "../../../components/Inputs/InputField";
 import SelectField from "../../../components/Inputs/SelectField";
 import {
@@ -17,21 +20,61 @@ import CustomInputField from "../../../components/Inputs/CustomInputField";
 import { formatDate } from "../../../utils/formatDate";
 import { typeOfEmploymentOptions } from "../../../functions/helpers";
 import CountrySelectField from "../../../components/Inputs/CountrySelectField";
-import storage from "../../../utils/storage";
-import { checkForName } from "../../../utils/checkForName";
-import { useAppSelector } from "../../../hooks/useDispatch";
+import { fireAlert } from "../../../utils/Alert";
+import { useEmployeeById } from "../../../hooks/useEmployees";
+import { SyncLoader } from "react-spinners";
 
+const token = Cookies.get("token");
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+  width: "99.8%",
+  borderRadius: "50px",
+};
 const EditProfile = ({ departmentOptions, roleOptions }: any) => {
-  const userString = storage?.get("user");
-  const userInfo = userString ? JSON.parse(userString) : null;
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
-  const onSubmit = (values: any) => {
-    setTimeout(() => {
-      console.log(JSON.stringify(values, null, 2));
-    }, 400);
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  const { employee, salary, isLoading } = useEmployeeById(id ? id : "");
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (values: any) => {
+    setLoading(true);
+    const allEmployeeValues = { ...values };
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}/hr/employees/${id}/update`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(allEmployeeValues),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setLoading(false);
+      if (response.ok) {
+        const title = "Employee update  successful";
+        const html = `Employee updated`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+        navigate(`/employeecontainer`);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      // console.log(error);
+      setLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Employee update failed";
+      fireAlert(title, html, icon);
+    }
   };
+
   const [disability, setDisability] = useState(false);
   const formatToTrue = (value?: any) => {
     if (value === "Yes") {
@@ -54,679 +97,656 @@ const EditProfile = ({ departmentOptions, roleOptions }: any) => {
   };
 
   return (
-    <Formik
-      initialValues={{
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone: "",
-        gender: "",
-        institution_attended: "",
-        course_studied: "",
-        qualification: "",
-        department: "",
-        role: "",
+    <div>
+      {isLoading ? (
+        <div
+          style={{
+            margin: "auto",
+            width: "20%",
+          }}
+        >
+          <SyncLoader
+            cssOverride={override}
+            color={"#990000"}
+            loading={isLoading}
+          />
+        </div>
+      ) : (
+        <Formik
+          initialValues={{
+            first_name: "",
+            last_name: "",
+            email: "",
+            phone: "",
+            gender: "",
+            institution_attended: "",
+            course_studied: "",
+            qualification: "",
+            department: "",
+            role: "",
 
-        bank_name: "",
-        bank_account_number: "",
-        bank_account_name: "",
-        basic_salary: "",
-        meal_allowance: "",
-        utility_allowance: "",
-        medical_allowance: "",
-        housing_allowance: "",
-        transportation_allowance: "",
+            bank_name: "",
+            bank_account_number: "",
+            bank_account_name: "",
+            basic_salary: "",
+            meal_allowance: "",
+            utility_allowance: "",
+            medical_allowance: "",
+            housing_allowance: "",
+            transportation_allowance: "",
 
-        date_of_birth: "",
-        next_of_kin: "",
-        next_of_kin_phone: "",
-        next_of_kin_email: "",
-        next_of_kin_address: "",
-        referee_name: "",
-        referee_phone: "",
-        emergency_contact_name: "",
-        emergency_contact_phone: "",
-        has_disability: false,
-        disability: "",
-        has_work_location_objection: false,
-        work_location_objection: false,
-        employment_date: "",
-        employment_duration: "",
-        employment_type: "",
-        employee_id: "",
-        category: "",
+            date_of_birth: "",
+            next_of_kin: "",
+            next_of_kin_phone: "",
+            next_of_kin_email: "",
+            next_of_kin_address: "",
+            referee_name: "",
+            referee_phone: "",
+            emergency_contact_name: "",
+            emergency_contact_phone: "",
+            has_disability: false,
+            disability: "",
+            has_work_location_objection: false,
+            work_location_objection: false,
+            employment_date: "",
+            employment_duration: "",
+            employment_type: "",
+            employee_id: "",
+            category: "",
 
-        tally_number: "",
-        address: "",
-        city: "",
-        zip_code: "",
-        state_of_origin: "",
-        country: "",
-        nin: "",
-        marital_status: "",
-      }}
-      onSubmit={onSubmit}
-    >
-      {({ values, submitForm, setFieldValue }) => {
-        return (
-          <Form id="my-form">
-            <div className="form-cont">
-              <form>
-                <div className="profile-form-form">
-                  <div className="form-grp">
-                    <InputField
-                      label="First Name"
-                      name="first_name"
-                      placeholder="Enter first name"
-                      defaultValue={
-                        userInfo?.data?.employee?.first_name ||
-                        values.first_name
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Last Name"
-                      name="last_name"
-                      placeholder="Enter last name"
-                      defaultValue={
-                        userInfo?.data?.employee?.last_name || values.last_name
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Email"
-                      name="email"
-                      placeholder="Enter email"
-                      defaultValue={
-                        userInfo?.data?.employee?.email || values.email
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="profile-form-form">
-                  <div className="form-grp">
-                    <PhoneInput
-                      value={userInfo?.data?.employee?.phone || values.phone}
-                      inputProps={{
-                        name: "phone",
-                        required: true,
-                      }}
-                      inputStyle={{
-                        background: "4f269f",
-                        height: "40px",
-                        width: "100%",
-                        maxWidth: "100%",
-                      }}
-                      specialLabel="Employee Phone Number"
-                      inputClass="w-100"
-                      containerClass="mb-3 agent-project__owner"
-                      onChange={(telephone) =>
-                        setFieldValue("phone", `${telephone}`)
-                      }
-                      country={"ng"}
-                      placeholder="Enter employee Phone Number"
-                      defaultErrorMessage="required"
-                      enableSearch={true}
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <SelectField
-                      label="Gender"
-                      name="gender"
-                      options={genderOptions}
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue("gender", event?.target.value);
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.gender || values.gender
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <CustomInputField
-                      style={{
-                        lineHeight: 1,
-                      }}
-                      type="date"
-                      label="Date of Birth"
-                      name="date_of_birth"
-                      onChange={(event: any) => {
-                        setFieldValue(
-                          "date_of_birth",
-                          formatDate(event?.target.value)
-                        );
-                      }}
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <CustomInputField
-                      type="number"
-                      label="NIN"
-                      name="nin"
-                      placeholder="Enter National Identity Number"
-                      onChange={(event: any) => {
-                        setFieldValue("nin", event?.target.value);
-                      }}
-                      defaultValue={userInfo?.data?.employee?.nin || values.nin}
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <SelectField
-                      label="Marital Status"
-                      name="marital_status"
-                      options={martialStatusOptions}
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue("marital_status", event?.target.value);
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.marital_status ||
-                        values.marital_status
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="profile-form-form">
-                  <div className="form-grp">
-                    <InputField
-                      label="Institution Attended"
-                      name="institution_attended"
-                      placeholder="Enter Institution Attended"
-                      defaultValue={
-                        userInfo?.data?.employee?.institution_attended ||
-                        values.institution_attended
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Course Studied"
-                      name="course_studied"
-                      placeholder="Enter Course Studied"
-                      defaultValue={
-                        userInfo?.data?.employee?.course_studied ||
-                        values.course_studied
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <SelectField
-                      label="Qualification"
-                      name="qualification"
-                      options={ACADEMIC_QUALIFICATIONS}
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue("qualification", event?.target.value);
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.qualification ||
-                        values.qualification
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <ReactSelectField
-                      options={departmentOptions}
-                      label="Department"
-                      name="department"
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue("department", event?.value);
-                      }}
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <ReactSelectField
-                      label="Role"
-                      name="role"
-                      options={roleOptions}
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue("role", event?.value);
-                      }}
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <SelectField
-                      label="Staff Category"
-                      name="category"
-                      options={categoryOptions}
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue("category", event?.target.value);
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.category || values.category
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="profile-form-form">
-                  <div className="form-grp">
-                    <InputField
-                      label="Bank Name"
-                      name="bank_name"
-                      placeholder="Enter bank name"
-                      defaultValue={
-                        userInfo?.data?.employee?.bank_name || values.bank_name
-                      }
-                    />
-                  </div>
-
-                  <div className="form-grp">
-                    <CustomInputField
-                      type="number"
-                      maxLength={10}
-                      label="Bank Account Number"
-                      name="bank_account_number"
-                      placeholder="Enter bank account number"
-                      onChange={(event: any) => {
-                        setFieldValue(
-                          "bank_account_number",
-                          event?.target.value
-                        );
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.bank_account_number ||
-                        values.bank_account_number
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Bank Account Name"
-                      name="bank_account_name"
-                      placeholder="Enter bank account name"
-                      defaultValue={
-                        userInfo?.data?.employee?.bank_account_name ||
-                        values.bank_account_name
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="profile-form-form">
-                  <div className="form-grp">
-                    <InputField
-                      label="Next of Kin"
-                      name="next_of_kin"
-                      placeholder="Enter name of next of kin"
-                      defaultValue={
-                        userInfo?.data?.employee?.next_of_kin ||
-                        values.next_of_kin
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <PhoneInput
-                      value={
-                        userInfo?.data?.employee?.next_of_kin_phone ||
-                        values.next_of_kin_phone
-                      }
-                      inputProps={{
-                        name: "next_of_kin_phone",
-                        required: true,
-                      }}
-                      inputStyle={{
-                        background: "4f269f",
-                        height: "40px",
-                        width: "100%",
-                        maxWidth: "31.25rem",
-                      }}
-                      specialLabel="Next of Kin Phone Number"
-                      inputClass="w-100"
-                      containerClass="mb-3 agent-project__owner"
-                      onChange={(telephone) =>
-                        setFieldValue("next_of_kin_phone", `${"+" + telephone}`)
-                      }
-                      country={"ng"}
-                      placeholder="Enter Next of Kin Phone Number"
-                      defaultErrorMessage="required"
-                      enableSearch={true}
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Next of Kin Email"
-                      name="next_of_kin_email"
-                      placeholder="Enter email of next of kin"
-                      defaultValue={
-                        userInfo?.data?.employee?.next_of_kin_email ||
-                        values.next_of_kin_email
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Next of Kin Address"
-                      name="next_of_kin_address"
-                      placeholder="Enter home address of next of kin"
-                      defaultValue={
-                        userInfo?.data?.employee?.next_of_kin_address ||
-                        values.next_of_kin_address
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Referee Name"
-                      name="referee_name"
-                      placeholder="Enter referee name"
-                      defaultValue={
-                        userInfo?.data?.employee?.referee_name ||
-                        values.referee_name
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <PhoneInput
-                      value={
-                        userInfo?.data?.employee?.referee_phone ||
-                        values.referee_phone
-                      }
-                      inputProps={{
-                        name: "referee_phone",
-                        required: true,
-                      }}
-                      inputStyle={{
-                        background: "4f269f",
-                        height: "40px",
-                        width: "100%",
-                        maxWidth: "31.25rem",
-                      }}
-                      specialLabel="Referee Phone Number"
-                      inputClass="w-100"
-                      containerClass="mb-3 agent-project__owner"
-                      onChange={(telephone) =>
-                        setFieldValue("referee_phone", `${"+" + telephone}`)
-                      }
-                      country={"ng"}
-                      placeholder="Enter Referee Phone Number"
-                      defaultErrorMessage="required"
-                      enableSearch={true}
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Emergency Contact Name"
-                      name="emergency_contact_name"
-                      placeholder="Enter name of emergency contact"
-                      defaultValue={
-                        userInfo?.data?.employee?.emergency_contact_name ||
-                        values.emergency_contact_name
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <PhoneInput
-                      value={
-                        userInfo?.data?.employee?.emergency_contact_phone ||
-                        values.emergency_contact_phone
-                      }
-                      inputProps={{
-                        name: "emergency_contact_phone",
-                        required: true,
-                      }}
-                      inputStyle={{
-                        background: "4f269f",
-                        height: "40px",
-                        width: "100%",
-                        maxWidth: "31.25rem",
-                      }}
-                      specialLabel="Emergency Contact Phone"
-                      inputClass="w-100"
-                      containerClass="mb-3 agent-project__owner"
-                      onChange={(telephone) =>
-                        setFieldValue(
-                          "emergency_contact_phone",
-                          `${"+" + telephone}`
-                        )
-                      }
-                      country={"ng"}
-                      placeholder="Enter phone number of emergency contact"
-                      defaultErrorMessage="required"
-                      enableSearch={true}
-                    />
-                  </div>
-                </div>
-
-                <div className="profile-form-form">
-                  <div className="form-grp">
-                    <SelectField
-                      label="Does Employee have disability"
-                      name="has_disability"
-                      options={disabilityOptions}
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue(
-                          "has_disability",
-                          formatToTrue(event?.target.value)
-                        );
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.emergency_contact_name ||
-                        values.emergency_contact_name
-                      }
-                    />
-                  </div>
-                  {disability ? (
-                    <div className="form-grp">
-                      <InputField
-                        label="Enter Disability"
-                        name="disability"
-                        placeholder="Enter type of disability"
-                        defaultValue={
-                          userInfo?.data?.employee?.disability ||
-                          values.disability
-                        }
-                      />
+            tally_number: "",
+            address: "",
+            city: "",
+            zip_code: "",
+            state_of_origin: "",
+            country: "",
+            nin: "",
+            marital_status: "",
+          }}
+          onSubmit={handleSubmit}
+        >
+          {({ values, submitForm, setFieldValue }) => {
+            return (
+              <Form id="my-form">
+                <div className="form-cont">
+                  <form>
+                    <div className="profile-form-form">
+                      <div className="form-grp">
+                        <InputField
+                          label="First Name"
+                          name="first_name"
+                          placeholder="Enter first name"
+                          defaultValue={
+                            employee?.first_name || values.first_name
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Last Name"
+                          name="last_name"
+                          placeholder="Enter last name"
+                          defaultValue={employee?.last_name || values.last_name}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Email"
+                          name="email"
+                          placeholder="Enter email"
+                          defaultValue={employee?.email || values.email}
+                        />
+                      </div>
                     </div>
-                  ) : (
-                    ""
-                  )}
-                  <div className="form-grp">
-                    <SelectField
-                      label="Work Location Objection"
-                      name="has_work_location_objection"
-                      options={workLocationOptions}
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue(
-                          "has_work_location_objection",
-                          formatWorkLocations(event?.target.value)
-                        );
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.has_work_location_objection ||
-                        values.has_work_location_objection
-                      }
-                    />
-                  </div>
-                  {workLocations ? (
-                    <div className="form-grp">
-                      <InputField
-                        label="Enter work location objection"
-                        name="work_location_objection"
-                        placeholder="Enter work location object"
-                        defaultValue={
-                          userInfo?.data?.employee?.work_location_objection ||
-                          values.work_location_objection
-                        }
-                      />
+                    <div className="profile-form-form">
+                      <div className="form-grp">
+                        <PhoneInput
+                          value={employee?.phone || values.phone}
+                          inputProps={{
+                            name: "phone",
+                            required: true,
+                          }}
+                          inputStyle={{
+                            background: "4f269f",
+                            height: "40px",
+                            width: "100%",
+                            maxWidth: "100%",
+                          }}
+                          specialLabel="Employee Phone Number"
+                          inputClass="w-100"
+                          containerClass="mb-3 agent-project__owner"
+                          onChange={(telephone) =>
+                            setFieldValue("phone", `${telephone}`)
+                          }
+                          country={"ng"}
+                          placeholder="Enter employee Phone Number"
+                          defaultErrorMessage="required"
+                          enableSearch={true}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <SelectField
+                          label="Gender"
+                          name="gender"
+                          options={genderOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue("gender", event?.target.value);
+                          }}
+                          defaultValue={employee?.gender || values.gender}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <CustomInputField
+                          style={{
+                            lineHeight: 1,
+                          }}
+                          type="date"
+                          label="Date of Birth"
+                          name="date_of_birth"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "date_of_birth",
+                              formatDate(event?.target.value)
+                            );
+                          }}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <CustomInputField
+                          type="number"
+                          label="NIN"
+                          name="nin"
+                          placeholder="Enter National Identity Number"
+                          onChange={(event: any) => {
+                            setFieldValue("nin", event?.target.value);
+                          }}
+                          defaultValue={employee?.nin || values.nin}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <SelectField
+                          label="Marital Status"
+                          name="marital_status"
+                          options={martialStatusOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "marital_status",
+                              event?.target.value
+                            );
+                          }}
+                          defaultValue={
+                            employee?.marital_status || values.marital_status
+                          }
+                        />
+                      </div>
                     </div>
-                  ) : (
-                    ""
-                  )}
-                  <div className="form-grp">
-                    <CustomInputField
-                      style={{
-                        lineHeight: 1,
-                      }}
-                      type="date"
-                      label="Employment Date"
-                      name="employment_date"
-                      onChange={(event: any) => {
-                        setFieldValue(
-                          "employment_date",
-                          formatDate(event?.target.value)
-                        );
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.employment_date ||
-                        values.employment_date
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <SelectField
-                      label="Employment Type"
-                      name="employment_type"
-                      options={typeOfEmploymentOptions}
-                      className="form-group__gender"
-                      onChange={(event: any) => {
-                        setFieldValue("employment_type", event?.target.value);
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.employment_type ||
-                        values.employment_type
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <CustomInputField
-                      type="number"
-                      label="Employment Duration (Months)"
-                      name="employment_duration"
-                      placeholder="Enter duration of employment"
-                      onChange={(event: any) => {
-                        setFieldValue(
-                          "employment_duration",
-                          event?.target.value
-                        );
-                      }}
-                      defaultValue={
-                        userInfo?.data?.employee?.employment_duration ||
-                        values.employment_duration
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Employment ID"
-                      name="employee_id"
-                      placeholder="Enter employment ID"
-                      defaultValue={
-                        userInfo?.data?.employee?.employee_id ||
-                        values.employee_id
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="profile-form-form">
-                  <div className="form-grp">
-                    <InputField
-                      label="Tally Number"
-                      name="tally_number"
-                      placeholder="Enter tally number"
-                      defaultValue={
-                        userInfo?.data?.employee?.tally_number ||
-                        values.tally_number
-                      }
-                    />
-                  </div>
+                    <div className="profile-form-form">
+                      <div className="form-grp">
+                        <InputField
+                          label="Institution Attended"
+                          name="institution_attended"
+                          placeholder="Enter Institution Attended"
+                          defaultValue={
+                            employee?.institution_attended ||
+                            values.institution_attended
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Course Studied"
+                          name="course_studied"
+                          placeholder="Enter Course Studied"
+                          defaultValue={
+                            employee?.course_studied || values.course_studied
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <SelectField
+                          label="Qualification"
+                          name="qualification"
+                          options={ACADEMIC_QUALIFICATIONS}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue("qualification", event?.target.value);
+                          }}
+                          defaultValue={
+                            employee?.qualification || values.qualification
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <ReactSelectField
+                          options={departmentOptions}
+                          label="Department"
+                          name="department"
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue("department", event?.value);
+                          }}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <ReactSelectField
+                          label="Role"
+                          name="role"
+                          options={roleOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue("role", event?.value);
+                          }}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <SelectField
+                          label="Staff Category"
+                          name="category"
+                          options={categoryOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue("category", event?.target.value);
+                          }}
+                          defaultValue={employee?.category || values.category}
+                        />
+                      </div>
+                    </div>
+                    <div className="profile-form-form">
+                      <div className="form-grp">
+                        <InputField
+                          label="Bank Name"
+                          name="bank_name"
+                          placeholder="Enter bank name"
+                          defaultValue={salary?.bank_name || values.bank_name}
+                        />
+                      </div>
 
-                  <div className="form-grp">
-                    <CountrySelectField
-                      className="agent-project__owner"
-                      label="Country"
-                      name="country"
-                      placeholder="Select country"
-                      onChange={(value: any) =>
-                        setFieldValue("country", { value }.value.label)
-                      }
-                      defaultValue={
-                        userInfo?.data?.employee?.country || values.country
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="State of Origin"
-                      name="state_of_origin"
-                      placeholder="Enter state of origin"
-                      defaultValue={
-                        userInfo?.data?.employee?.state_of_origin ||
-                        values.state_of_origin
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Employee Address"
-                      name="address"
-                      placeholder="Enter employee's address"
-                      defaultValue={
-                        userInfo?.data?.employee?.address || values.address
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="City"
-                      name="city"
-                      placeholder="Enter employee's city"
-                      defaultValue={
-                        userInfo?.data?.employee?.city || values.city
-                      }
-                    />
-                  </div>
-                  <div className="form-grp">
-                    <InputField
-                      label="Zip Code"
-                      name="zip_code"
-                      placeholder="Enter employee's zip code"
-                      defaultValue={
-                        userInfo?.data?.employee?.zip_code || values.zip_code
-                      }
-                    />
-                  </div>
+                      <div className="form-grp">
+                        <CustomInputField
+                          type="number"
+                          maxLength={10}
+                          label="Bank Account Number"
+                          name="bank_account_number"
+                          placeholder="Enter bank account number"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "bank_account_number",
+                              event?.target.value
+                            );
+                          }}
+                          defaultValue={
+                            salary?.bank_account_number ||
+                            values.bank_account_number
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Bank Account Name"
+                          name="bank_account_name"
+                          placeholder="Enter bank account name"
+                          defaultValue={
+                            salary?.bank_account_name ||
+                            values.bank_account_name
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="profile-form-form">
+                      <div className="form-grp">
+                        <InputField
+                          label="Next of Kin"
+                          name="next_of_kin"
+                          placeholder="Enter name of next of kin"
+                          defaultValue={
+                            employee?.next_of_kin || values.next_of_kin
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <PhoneInput
+                          value={
+                            employee?.next_of_kin_phone ||
+                            values.next_of_kin_phone
+                          }
+                          inputProps={{
+                            name: "next_of_kin_phone",
+                            required: true,
+                          }}
+                          inputStyle={{
+                            background: "4f269f",
+                            height: "40px",
+                            width: "100%",
+                            maxWidth: "31.25rem",
+                          }}
+                          specialLabel="Next of Kin Phone Number"
+                          inputClass="w-100"
+                          containerClass="mb-3 agent-project__owner"
+                          onChange={(telephone) =>
+                            setFieldValue(
+                              "next_of_kin_phone",
+                              `${"+" + telephone}`
+                            )
+                          }
+                          country={"ng"}
+                          placeholder="Enter Next of Kin Phone Number"
+                          defaultErrorMessage="required"
+                          enableSearch={true}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Next of Kin Email"
+                          name="next_of_kin_email"
+                          placeholder="Enter email of next of kin"
+                          defaultValue={
+                            employee?.next_of_kin_email ||
+                            values.next_of_kin_email
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Next of Kin Address"
+                          name="next_of_kin_address"
+                          placeholder="Enter home address of next of kin"
+                          defaultValue={
+                            employee?.next_of_kin_address ||
+                            values.next_of_kin_address
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Referee Name"
+                          name="referee_name"
+                          placeholder="Enter referee name"
+                          defaultValue={
+                            employee?.referee_name || values.referee_name
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <PhoneInput
+                          value={
+                            employee?.referee_phone || values.referee_phone
+                          }
+                          inputProps={{
+                            name: "referee_phone",
+                            required: true,
+                          }}
+                          inputStyle={{
+                            background: "4f269f",
+                            height: "40px",
+                            width: "100%",
+                            maxWidth: "31.25rem",
+                          }}
+                          specialLabel="Referee Phone Number"
+                          inputClass="w-100"
+                          containerClass="mb-3 agent-project__owner"
+                          onChange={(telephone) =>
+                            setFieldValue("referee_phone", `${"+" + telephone}`)
+                          }
+                          country={"ng"}
+                          placeholder="Enter Referee Phone Number"
+                          defaultErrorMessage="required"
+                          enableSearch={true}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Emergency Contact Name"
+                          name="emergency_contact_name"
+                          placeholder="Enter name of emergency contact"
+                          defaultValue={
+                            employee?.emergency_contact_name ||
+                            values.emergency_contact_name
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <PhoneInput
+                          value={
+                            employee?.emergency_contact_phone ||
+                            values.emergency_contact_phone
+                          }
+                          inputProps={{
+                            name: "emergency_contact_phone",
+                            required: true,
+                          }}
+                          inputStyle={{
+                            background: "4f269f",
+                            height: "40px",
+                            width: "100%",
+                            maxWidth: "31.25rem",
+                          }}
+                          specialLabel="Emergency Contact Phone"
+                          inputClass="w-100"
+                          containerClass="mb-3 agent-project__owner"
+                          onChange={(telephone) =>
+                            setFieldValue(
+                              "emergency_contact_phone",
+                              `${"+" + telephone}`
+                            )
+                          }
+                          country={"ng"}
+                          placeholder="Enter phone number of emergency contact"
+                          defaultErrorMessage="required"
+                          enableSearch={true}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="profile-form-form">
+                      <div className="form-grp">
+                        <SelectField
+                          label="Does Employee have disability"
+                          name="has_disability"
+                          options={disabilityOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "has_disability",
+                              formatToTrue(event?.target.value)
+                            );
+                          }}
+                          defaultValue={
+                            employee?.emergency_contact_name ||
+                            values.emergency_contact_name
+                          }
+                        />
+                      </div>
+                      {disability ? (
+                        <div className="form-grp">
+                          <InputField
+                            label="Enter Disability"
+                            name="disability"
+                            placeholder="Enter type of disability"
+                            defaultValue={
+                              employee?.disability || values.disability
+                            }
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-grp">
+                        <SelectField
+                          label="Work Location Objection"
+                          name="has_work_location_objection"
+                          options={workLocationOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "has_work_location_objection",
+                              formatWorkLocations(event?.target.value)
+                            );
+                          }}
+                          defaultValue={
+                            employee?.has_work_location_objection ||
+                            values.has_work_location_objection
+                          }
+                        />
+                      </div>
+                      {workLocations ? (
+                        <div className="form-grp">
+                          <InputField
+                            label="Enter work location objection"
+                            name="work_location_objection"
+                            placeholder="Enter work location object"
+                            defaultValue={
+                              employee?.work_location_objection ||
+                              values.work_location_objection
+                            }
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-grp">
+                        <CustomInputField
+                          style={{
+                            lineHeight: 1,
+                          }}
+                          type="date"
+                          label="Employment Date"
+                          name="employment_date"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "employment_date",
+                              formatDate(event?.target.value)
+                            );
+                          }}
+                          defaultValue={
+                            employee?.employment_date || values.employment_date
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <SelectField
+                          label="Employment Type"
+                          name="employment_type"
+                          options={typeOfEmploymentOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "employment_type",
+                              event?.target.value
+                            );
+                          }}
+                          defaultValue={
+                            employee?.employment_type || values.employment_type
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <CustomInputField
+                          type="number"
+                          label="Employment Duration (Months)"
+                          name="employment_duration"
+                          placeholder="Enter duration of employment"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "employment_duration",
+                              event?.target.value
+                            );
+                          }}
+                          defaultValue={
+                            employee?.employment_duration ||
+                            values.employment_duration
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Employment ID"
+                          name="employee_id"
+                          placeholder="Enter employment ID"
+                          defaultValue={
+                            employee?.employee_id || values.employee_id
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="profile-form-form">
+                      <div className="form-grp">
+                        <InputField
+                          label="Tally Number"
+                          name="tally_number"
+                          placeholder="Enter tally number"
+                          defaultValue={
+                            employee?.tally_number || values.tally_number
+                          }
+                        />
+                      </div>
+
+                      <div className="form-grp">
+                        <CountrySelectField
+                          className="agent-project__owner"
+                          label="Country"
+                          name="country"
+                          placeholder="Select country"
+                          onChange={(value: any) =>
+                            setFieldValue("country", { value }.value.label)
+                          }
+                          defaultValue={employee?.country || values.country}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="State of Origin"
+                          name="state_of_origin"
+                          placeholder="Enter state of origin"
+                          defaultValue={
+                            employee?.state_of_origin || values.state_of_origin
+                          }
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Employee Address"
+                          name="address"
+                          placeholder="Enter employee's address"
+                          defaultValue={employee?.address || values.address}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="City"
+                          name="city"
+                          placeholder="Enter employee's city"
+                          defaultValue={employee?.city || values.city}
+                        />
+                      </div>
+                      <div className="form-grp">
+                        <InputField
+                          label="Zip Code"
+                          name="zip_code"
+                          placeholder="Enter employee's zip code"
+                          defaultValue={employee?.zip_code || values.zip_code}
+                        />
+                      </div>
+                    </div>
+                  </form>
                 </div>
-                {/* <div className="profile-form-flex">
-          <div className="form-grp">
-            <label htmlFor="status">Marital Status</label>
-            <select
-              id="status"
-              value={maritalStatus}
-              onChange={(e) => setMaritalStatus(e.target.value)}>
-              <option></option>
-              <option value="Single">Single</option>
-              <option value="Married">Married</option>
-            </select>
-          </div>
-          <div className="form-grp">
-            <label htmlFor="religion">Religion</label>
-            <input
-              type="text"
-              id="religion"
-              value={religion}
-              onChange={(e) => setReligion(e.target.value)}
-            />
-          </div>
-        </div> */}
                 <div className="form_btn">
-                  <Button variant="outlined" className={"Add-btn-edit"}>
-                    Update
+                  <Button
+                    variant="outlined"
+                    type="submit"
+                    className={"Add-btn-edit"}
+                  >
+                    {loading ? <Spinner animation="border" /> : "Update"}
                   </Button>
                 </div>
-              </form>
-            </div>
-          </Form>
-        );
-      }}
-    </Formik>
+              </Form>
+            );
+          }}
+        </Formik>
+      )}
+    </div>
   );
 };
 
