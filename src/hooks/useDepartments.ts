@@ -102,25 +102,25 @@ export const useDepartmentById = (id: string) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/departments/${id}`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const responseData = isJsonResponse && (await response.json());
+        // const response = await fetch(
+        //   `${process.env.REACT_APP_API}/hr/departments/${id}`,
+        //   getRequestOptions
+        // );
+        // const isJsonResponse = response.headers
+        //   ?.get("content-type")
+        //   ?.includes("application/json");
+        // const responseData = isJsonResponse && (await response.json());
 
-        if (response.status === 401) {
-          handleUnauthorizedError();
-        } else if (!response.ok) {
-          throw new Error(responseData.message || response.status.toString());
-        }
-        if (isMounted) {
-          setDepartment(responseData.data.department);
-          setLoading(false);
-        }
-        setMembersLoading(true);
+        // if (response.status === 401) {
+        //   handleUnauthorizedError();
+        // } else if (!response.ok) {
+        //   throw new Error(responseData.message || response.status.toString());
+        // }
+        // if (isMounted) {
+        //   setDepartment(responseData.data.department);
+        //   setLoading(false);
+        // }
+        // setMembersLoading(true);
         const responseDepartmentMembers = await fetch(
           `${process.env.REACT_APP_API}/hr/employees?department=${id}`,
           getRequestOptions
@@ -168,9 +168,9 @@ export const useDepartmentById = (id: string) => {
   }, [retryCount, id, updateDepartmentById]);
 
   return {
-    department,
+    // department,
     departmentMembers,
-    isLoading,
+    // isLoading,
     membersLoading,
     error,
     message,

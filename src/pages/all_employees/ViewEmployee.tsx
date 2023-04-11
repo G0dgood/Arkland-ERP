@@ -8,9 +8,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useEmployeeById } from "../../hooks/useEmployees";
-import { DialogState } from "../../interfaces/base";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
-import TerminateEmployeeModal from "../../components/Modals/TerminateEmployeeModal";
 import { getUserPrivileges } from "../../functions/auth";
 
 const override: CSSProperties = {
@@ -95,7 +93,15 @@ const ViewEmployee = () => {
                       {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                         <CreateWarningModal id={id} />
                       )}
-
+                      {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                        <Button
+                          variant="contained"
+                          className="Add-btn"
+                          onClick={() => navigate(`/employees/edit/${id}`)}
+                        >
+                          Edit Employee
+                        </Button>
+                      )}
                       {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                         <Button
                           variant="contained"

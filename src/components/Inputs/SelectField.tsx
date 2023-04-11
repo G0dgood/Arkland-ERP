@@ -10,6 +10,7 @@ interface SelectFieldProps {
   noValue?: any;
   options?: any;
   onChange?: any;
+  defaultValue?: any;
 }
 
 const SelectField = ({
@@ -18,6 +19,7 @@ const SelectField = ({
   values,
   noValue,
   options,
+  defaultValue,
   onChange,
   ...props
 }: SelectFieldProps) => {
@@ -63,6 +65,7 @@ const SelectField = ({
         autoComplete="off"
         onChange={onChange}
         value={values}
+        defaultValue={defaultValue}
       >
         {noValue && <option value="">{noValue}</option>}
         {options &&

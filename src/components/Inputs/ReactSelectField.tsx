@@ -8,6 +8,7 @@ interface ReactSelectFieldProps {
   placeholder?: string;
   value?: any;
   noValue?: any;
+  defaultValue?: any;
   onChange?: any;
   options?: any;
 }
@@ -17,6 +18,7 @@ const ReactSelectField = ({
   className,
   value,
   options,
+  defaultValue,
   onChange,
   ...props
 }: ReactSelectFieldProps) => {
@@ -34,7 +36,13 @@ const ReactSelectField = ({
         {label}
       </label>
 
-      <Select options={options} value={value} onChange={onChange} />
+      <Select
+        options={options}
+        value={value}
+        onChange={onChange}
+        defaultValue={defaultValue}
+        defaultInputValue={defaultValue}
+      />
       <ErrorMessage component="p" name={field.name} className="input__error" />
     </div>
   );

@@ -63,7 +63,7 @@ const AllEmployees = ({ setEmployee }: any) => {
     { title: "ROLE", prop: "role" },
     { title: "DEPARTMENT", prop: "department" },
     { title: "CATEGORY", prop: "category" },
-    { title: "ACTION" },
+    // { title: "ACTION" },
   ];
 
   return (
@@ -109,7 +109,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                   onClick={() => navigate("/warninglist")}
                 >
                   <Button variant="contained" className="Add-btn">
-                    Warning List
+                    Warnings
                   </Button>
                 </div>
               )}
@@ -191,26 +191,26 @@ const AllEmployees = ({ setEmployee }: any) => {
                         <td className="table-datacell datatype-numeric">
                           {item?.category}
                         </td>
-                        <td className="table-datacell datatype-numeric">
-                          <div className="table-active-items">
-                            <span>
-                              <span
+                        {/* <td className="table-datacell datatype-numeric"> */}
+                        {/* <div className="table-active-items"> */}
+                        {/* <span> */}
+                        {/* <span
                                 className="edit-icon-color"
                                 onClick={() => navigate("/admineditUser")}
                                 title="Edit employee"
                               >
                                 <FiEdit size={25} />
-                              </span>
-                              {"  "}
-                              <span
+                              </span> */}
+                        {"  "}
+                        {/* <span
                                 className="lock-icon-color"
                                 title="Lock employee account"
                               >
                                 <FiLock size={25} />
-                              </span>
-                            </span>
-                          </div>
-                        </td>
+                              </span> */}
+                        {/* </span> */}
+                        {/* </div> */}
+                        {/* </td> */}
                       </tr>
                     ))
                   )}

@@ -35,7 +35,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
         const html = `Request to create an employee sent`;
         const icon = "success";
         fireAlert(title, html, icon);
-        navigate(`/employees`);
+        navigate(`/employeecontainer`);
       } else {
         throw new Error(data.message || "Something went wrong!");
       }
@@ -245,7 +245,11 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
           className={"Add-btn-edit"}
           onClick={handleSubmit}
         >
-          {isLoading ? <Spinner animation="border" /> : "          Create Employee"}
+          {isLoading ? (
+            <Spinner animation="border" />
+          ) : (
+            "          Create Employee"
+          )}
         </Button>
       </div>
     </div>

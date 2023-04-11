@@ -9,6 +9,19 @@ export function checkForName(id: any, dataParam?: any): any {
   return name;
 }
 
+export function checkForOptions(id: any, dataParam?: any): any {
+  let name = [] as any;
+  dataParam &&
+    dataParam.forEach((data: any) => {
+      console.log(id);
+
+      if (id && id?.toString() === data.value) {
+        name = data.label;
+      }
+    });
+  return name;
+}
+
 export function checkForEmployee(id: any, employee?: any): any {
   let name = [] as any;
   employee &&

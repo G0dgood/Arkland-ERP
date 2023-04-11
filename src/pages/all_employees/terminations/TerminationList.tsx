@@ -146,12 +146,7 @@ const TerminationList = () => {
             >
               <FaArrowLeft size={25} />
             </Button>
-
-            {/* <span className="SupportmainTitleh3">
-              <CreateWarningModal
-                onNewWarningCreated={handleNewWarningCreated}
-              />
-            </span> */}
+            <span className="SupportmainTitleh3">TERMINATIONS</span>
           </div>
           <div>
             <EntriesPerPage

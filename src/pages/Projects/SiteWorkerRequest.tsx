@@ -58,6 +58,8 @@ const SiteWorkerRequest = () => {
     { title: "PROJECT", prop: "project" },
     { title: "TEAM", prop: "team" },
     { title: "TEAM LEAD", prop: "team_lead" },
+    { title: "REQUESTED ROLE", prop: "role_name" },
+    { title: "REQUESTED NUMBER", prop: "requested_quantity" },
     { title: "DATE SENT", prop: "created_at" },
     { title: "IS URGENT", prop: "is_urgent" },
     { title: "STATUS", prop: "status" },
@@ -143,7 +145,13 @@ const SiteWorkerRequest = () => {
                         {checkForName(item.team_lead, teamLeads)}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {moment(item?.created_at).format("DD-MM-YYYY")}
+                        {item?.requests?.[0].role_name}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {item?.requests?.[0].requested_quantity}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {moment(item?.created_at).format("DD-MMMM-YYYY")}
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {item.is_urgent === false ? "No" : "Yes"}
