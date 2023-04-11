@@ -40,10 +40,6 @@ const AdminAnnouncement = () => {
           <span className="sub-text-contained">
             <h4>Announcement</h4>
           </span>
-          <span> </span>
-        </div>
-        <div>
-          <p>Today, {moment(Date.now()).format("DD-MMMM-YYYY")}</p>
         </div>
       </div>
 

@@ -2,16 +2,14 @@
 
 .weekly-top-container{
 	width: 100%;
-	min-height: 20% !important;
-	// background-color: bisque;
+	min-height: 20% !important; 
 	 display: grid;
   grid-template-columns: 3fr 2fr;
 		padding: 1rem;
 }
 .weeklycontainer{
 	background-color: c.color(white);
-	width: 100%;
-	// height: 100%;
+	width: 100%; 
 	border: 1px solid c.color(container-border);
 }
 
@@ -52,7 +50,7 @@ flex-grow: 1;
 				border-top: 1px solid  #ededed; 
 				padding: 8px;
 				margin: 0;
-				color: c.color(primary-color);
+				color: gray;
 				font-weight: bold;
 				background-color: rgba(240, 248, 255, 0.497);
 }
@@ -73,7 +71,7 @@ flex-grow: 1;
     border-radius: 3px;
     box-shadow: 0 0 1px c.color(border); 
 				width: 50%;
-				height: 80%;
+				// height: 80%;
 				    display: grid;
     grid-template-columns: 1fr;
 				  box-shadow: c.$box-card-shadow;
@@ -205,6 +203,13 @@ flex-grow: 1;
 	// left: 150px; 
 }
 
+.weekly-number{
+	white-space: nowrap; 
+}
+.weekly-number h4{ 
+	margin-bottom: 0px !important;
+}
+
 // .WeeKlyReport{
 // 	margin-top: 1rem;
 // }
@@ -217,7 +222,7 @@ flex-grow: 1;
 	margin-left: 1rem;
 }
 
-.weekly-report-title{
+.weekly-report-title{ 
 	text-align: center;
 	font-size: bold;
 	color: c.color(primary-color);
@@ -256,5 +261,49 @@ flex-grow: 1;
 .weekly-delete{
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
 	width: 60%;
+}
+
+@media screen and (max-width: 1000px) {
+  .weekly-top-container{
+display: block;
+		}
+
+		.weekly-top-container-card-2{
+			margin-top: 2rem;
+		
+		}
+		.weekly-grading-system {
+	width: 100% !important;
+		}
+
+		.weeklyreporttop-container-card-1 {
+     padding-right: 0px !important;  
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.weekly-report-title{
+	overflow-x: scroll;
+	text-align: center;
+	font-size: bold;
+	color: c.color(primary-color);
+	display: flex;
+	justify-content: space-evenly !important;
+	align-items: center;
+	align-self: center;
+	margin: 1rem;
+}
+
+.weekly-number h4{ 
+	margin-bottom: 0px !important;
+	margin-right: 1rem;
+	
+}
+.weekly-delete-btn{
+	margin-right: 1rem;
+	
+}
 }

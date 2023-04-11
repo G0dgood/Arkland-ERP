@@ -51,7 +51,7 @@ const TeamWeeklyReport = () => {
 	React.useEffect(() => {
 		setisLoading(true);
 		axios
-			.get(`${process.env.REACT_APP_API}/hr/weekly-reports?acknowledged_by=${userInfo?.data?.employee?._id}`)
+			.get(`${process.env.REACT_APP_API}/weekly-reports/list-for-department`)
 			.then((res: AxiosResponse) => {
 				console.log('res', res)
 				setData(res?.data?.data);

@@ -11,16 +11,19 @@ import { AiOutlineLogout } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/storage";
 import MobileSideBar from "./MobileSideBar";
-import { useAppSelector } from "../hooks/useDispatch";
 import { removeData } from "../AppRoutes";
+import LogoutOption from "./LogoutOption";
 
 const Header = ({ toggleSideNav }: any) => {
+  const navigate = useNavigate();
   // @ts-ignore
   const userInfo: any = JSON.parse(storage?.get("user"));
 
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
-  const handleLogoutUser = async () => {
+  const [isLoading1, setisLoading1] = useState(false);
+  const handleLogout = async () => {
+    setisLoading1(true)
     await axios
       .patch(`${process.env.REACT_APP_API}/me/logout`)
       .then(() => {
@@ -28,12 +31,15 @@ const Header = ({ toggleSideNav }: any) => {
       })
       .catch((err) => {
         console.log(err);
+        setisLoading1(false)
       });
-    // await Cookies.remove("token");
-    // await storage.remove("user");
+    Cookies.remove("token");
+    storage.remove("user");
     removeData();
-    window.location.replace("/");
-    window.location.reload();
+    navigate("/");
+    setisLoading1(false)
+    // window.location.replace("/");
+    // window.location.reload();
   };
 
   window.addEventListener("offline", (e) => setnetwork("offline"));
@@ -48,6 +54,7 @@ const Header = ({ toggleSideNav }: any) => {
 
   const [isOpen, setIsopen] = useState(false);
   const [hideNav, setHideNav] = useState<any>(false);
+  const [showLogout, setShowLogout] = useState<any>(false);
 
   const ToggleSidebar = () => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
@@ -64,6 +71,7 @@ const Header = ({ toggleSideNav }: any) => {
           // }
         }}
       />
+      <LogoutOption setShowLogout={setShowLogout} showLogout={showLogout} handleLogout={handleLogout} isLoading1={isLoading1} />
       <div className="header-container">
         <div className="header-left">
           <TfiAlignJustify
@@ -106,9 +114,9 @@ const Header = ({ toggleSideNav }: any) => {
                   Profile
                 </NavLink>
                 <NavLink
-                  to="/"
+                  to=""
                   className="drop-logout"
-                  onClick={handleLogoutUser}
+                  onClick={() => setShowLogout(true)}
                 >
                   <AiOutlineLogout size={20} className="dropdown-icons-tools" />
                   Logout
