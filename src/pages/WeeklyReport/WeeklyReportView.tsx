@@ -61,7 +61,6 @@ const WeeklyReportView = () => {
 				setisLoading(false);
 			});
 	}, [id, navigate]);
-	console.log('data', data)
 
 
 	const handleDelete = () => {
@@ -138,7 +137,7 @@ const WeeklyReportView = () => {
 					</Link>
 				</div>
 			</header>
-			<main>
+			<div>
 
 				<div className='weekly-top-container'>
 					<div className='weeklyreporttop-container-card-1'>
@@ -169,11 +168,11 @@ const WeeklyReportView = () => {
 				</div>
 				<div className='weekly-report-title'>
 					<div className='weekly-delete'>
-						<div>
+						<div className='weekly-number'>
 							<h4>Week {data?.week}
 							</h4>
 						</div>
-						<div>
+						<div className='weekly-delete-btn'>
 							{data?.status === "acknowledged" ? "" : <Button className={"table-link"} onClick={handleDelete}>{isLoading1 ? <Spinner animation="border" /> : 'Delete'}</Button>}
 
 						</div>
@@ -187,7 +186,7 @@ const WeeklyReportView = () => {
 					{isLoading1 ? <TableLoader isLoading={isLoading1} /> : ''}
 					<WeeklyReportTable5 data={data?.activities} isLoading={isLoading} setInputs={setInputs} />
 				</div>
-			</main>
+			</div>
 		</div>
 	)
 }

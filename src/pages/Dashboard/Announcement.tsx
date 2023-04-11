@@ -66,9 +66,6 @@ const Announcement = () => {
           <span className="sub-text-contained">
             <h4>Announcement</h4>
           </span>
-          <span>
-            <p>Today, 21 Jun 2022</p>
-          </span>
         </div>
         <div>
           <CreateAnnouncementModal
