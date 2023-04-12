@@ -120,11 +120,10 @@ const Schedule = () => {
   employees &&
     employees.forEach((employee: any) =>
       availablleEmployees.push({
-        value: employee?.id,
+        value: employee?.user,
         label: employee?.full_name,
       })
     );
-
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">
@@ -232,7 +231,7 @@ const Schedule = () => {
                             ) : (
                               <div className="getjob-application-details">
                                 <p>ASSIGNED TO</p>
-                                <p>{schedule?.assigned_to}</p>
+                                <p>{schedule?.assigned_to?.full_name}</p>
                                 <p>TITLE</p>
                                 <p>{schedule?.title}</p>
                                 <p>STATUS</p>
