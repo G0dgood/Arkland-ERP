@@ -92,6 +92,7 @@ export const useEmployeeById = (id: string) => {
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
+  const [updateloading, setUpdateLoading] = useState(false);
 
   const updateEmployeeById = useCallback((data: any) => {
     setEmployee(data);
@@ -189,11 +190,49 @@ export const useEmployeeById = (id: string) => {
       fireAlert(title, html, icon);
     }
   };
+
+  const handleSubmit = async (values: any) => {
+    setUpdateLoading(true);
+    const allEmployeeValues = { ...values };
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}/hr/employees/${id}/update`,
+        {
+          method: "PATCH",
+          body: JSON.stringify(allEmployeeValues),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setUpdateLoading(false);
+      if (response.ok) {
+        const title = "Employee update  successful";
+        const html = `Employee updated`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+        navigate(`/employeecontainer`);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      // console.log(error);
+      setUpdateLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Employee update failed";
+      fireAlert(title, html, icon);
+    }
+  };
   return {
     employee,
     salary,
     isLoading,
+    updateloading,
     isDeleteLoading,
+    handleSubmit,
     handleEmployeeDeletion,
   };
 };
