@@ -1,14 +1,32 @@
 import moment from "moment";
 import React, { CSSProperties } from "react";
+import { Button } from "@mui/material";
 
 import { BsFillPinAngleFill, BsThreeDots } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
 import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 import { getRequestOptions } from "../../utils/auth/header";
+import { getUserPrivileges } from "../../functions/auth";
+import AttendanceModal from "../../components/Modals/AttendanceModal";
+import Cookies from "js-cookie";
+import { fireAlert } from "../../utils/Alert";
+import { Spinner } from "react-bootstrap";
+const token = Cookies.get("token");
 
 const Announcement = () => {
+  const {
+    isHRHead,
+    isHeadOfDepartment,
+    isTeamLead,
+    isSuperAdmin,
+    isAdmin,
+    isEmployee,
+    isHrAdmin,
+  } = getUserPrivileges();
+
   const [announcements, setAnnouncements] = React.useState([] as any);
   const [isLoading, setLoading] = React.useState(false);
+  const [clockInLoading, setClockInLoading] = React.useState(false);
   const [error, setError] = React.useState<any>();
   const [message, setMessage] = React.useState("");
   const [newAnnouncementCreated, setNewAnnouncementCreated] =
@@ -58,6 +76,40 @@ const Announcement = () => {
   const handleNewAnnouncementCreated = () => {
     setNewAnnouncementCreated(!newAnnouncementCreated);
   };
+  const handleSubmit = async () => {
+    setClockInLoading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}/hr/attendances`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setClockInLoading(false);
+      if (response.ok) {
+        const title = "Clocked in successfully.";
+        const html = `Clocked in`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+        setClockInLoading(false);
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setClockInLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Unable to clock in";
+      fireAlert(title, html, icon);
+    }
+  };
 
   return (
     <div className="main-div-col-2-sub">
@@ -67,11 +119,24 @@ const Announcement = () => {
             <h4>Announcement</h4>
           </span>
         </div>
-        <div>
-          <CreateAnnouncementModal
-            onNewAnnouncementCreated={handleNewAnnouncementCreated}
-          />
-        </div>
+        {(isSuperAdmin ||
+          isTeamLead ||
+          isHeadOfDepartment ||
+          isHRHead ||
+          isHrAdmin) && (
+          <div>
+            <CreateAnnouncementModal
+              onNewAnnouncementCreated={handleNewAnnouncementCreated}
+            />
+          </div>
+        )}
+        <Button
+          variant="contained"
+          className="Add-btn"
+          onClick={() => handleSubmit()}
+        >
+          {clockInLoading ? <Spinner animation="border" /> : " Clock in"}
+        </Button>
       </div>
       <div>
         {isLoading ? (

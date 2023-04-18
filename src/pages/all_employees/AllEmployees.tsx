@@ -20,7 +20,6 @@ import { checkForName } from "../../utils/checkForName";
 import { getRoles } from "../../store/reducers/roles";
 import { getDepartment } from "../../store/reducers/department";
 import { useEmployees } from "../../hooks/useEmployees";
-import storage from "../../utils/storage";
 import { getUserPrivileges } from "../../functions/auth";
 
 const AllEmployees = ({ setEmployee }: any) => {

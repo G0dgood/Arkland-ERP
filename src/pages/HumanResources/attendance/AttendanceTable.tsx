@@ -1,0 +1,191 @@
+import { Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import TableLoader from "../../../components/TableLoader";
+import { NoRecordFound, TableFetch } from "../../../components/TableOptions";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import { useAttendance } from "../../../hooks/useAttendance";
+import { checkForName } from "../../../utils/checkForName";
+import { useAppSelector } from "../../../hooks/useDispatch";
+
+const AttendanceTable = () => {
+  // @ts-ignore
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const { attenances, isLoading, error, message } = useAttendance(
+    startDate,
+    endDate
+  );
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    if (name === "start_date") {
+      setStartDate(value);
+    } else if (name === "end_date") {
+      setEndDate(value);
+    }
+  };
+
+  // --- Pagination --- //
+  const [entriesPerPage, setEntriesPerPage] = useState(() => {
+    return localStorage.getItem("reportsPerPage") || "10";
+  });
+
+  const [collapseNav, setCollapseNav] = useState(() => {
+    // @ts-ignore
+    return JSON.parse(localStorage.getItem("collapse")) || false;
+  });
+
+  useEffect(() => {
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+    localStorage.setItem("collapse", JSON.stringify(collapseNav));
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+  }, [collapseNav]);
+  const toggleSideNav = () => {
+    setCollapseNav(!collapseNav);
+  };
+  const departments: any = useAppSelector(
+    (state) => state?.department?.department
+  );
+  const header = [
+    { title: "NAME", prop: "employee_name" },
+    { title: "DEPARTMENT", prop: "employee_department" },
+    { title: "ARRIVAL", prop: "time_in" },
+    { title: "CHECKED-IN OFFICE", prop: "ip_checked" },
+    { title: "HR ASSISTED CHECK-IN", prop: "is_hr_assisted" },
+    // { title: "DATE", prop: "created_at" },
+    // { title: "ACTION" },
+  ];
+
+  return (
+    <div id="screen-wrapper">
+      <Header toggleSideNav={toggleSideNav} />
+      <Sidebar collapseNav={collapseNav} />
+      <main>
+        <div className="SiteWorkermaindiv">
+          <div className="SiteWorkermaindivsub">
+            <span className="SupportmainTitleh3">EMPLOYEE ATTENDANCE</span>
+          </div>
+          <div className="entries-perpage">
+            {/* Date range picker */}
+            <form
+              style={{
+                display: "flex",
+                gap: "20px",
+              }}
+            >
+              <div className="input">
+                <label htmlFor="start_date" className="input__label">
+                  Start Date
+                </label>
+                <input
+                  className="input__field"
+                  style={{
+                    lineHeight: "1",
+                  }}
+                  type="date"
+                  id="start_date"
+                  name="start_date"
+                  value={startDate}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="input">
+                <label htmlFor="end_date" className="input__label">
+                  End Date
+                </label>
+                <input
+                  className="input__field"
+                  style={{
+                    lineHeight: "1",
+                  }}
+                  type="date"
+                  id="end_date"
+                  name="end_date"
+                  value={endDate}
+                  onChange={handleChange}
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+        <section className="md-ui component-data-table">
+          {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+          <div className="main-table-wrapper">
+            <table className="main-table-content">
+              <thead className="data-table-header">
+                <tr className="data-table-row">
+                  {header.map((i, index) => {
+                    return (
+                      <>
+                        <td
+                          className="table-datacell datatype-numeric"
+                          key={index}
+                        >
+                          {i.title}
+                        </td>
+                      </>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody className="data-table-content">
+                {isLoading ? (
+                  <TableFetch colSpan={8} />
+                ) : attenances?.length === 0 || attenances == null ? (
+                  <NoRecordFound colSpan={8} />
+                ) : (
+                  attenances?.map((item: any, i: any) => (
+                    <tr className="data-table-row" key={i}>
+                      <td className="table-datacell datatype-numeric">
+                        {item?.employee_name}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {checkForName(item.department, departments)}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {new Date(item?.time_in).toLocaleString()}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        <Button
+                          className={
+                            item?.ip_checked === true
+                              ? "table-link"
+                              : "table-link-active"
+                          }
+                        >
+                          {item?.ip_checked === true ? "Yes" : "No"}
+                        </Button>
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        <Button
+                          className={
+                            item?.is_hr_assisted === true
+                              ? "table-link"
+                              : "table-link-active"
+                          }
+                        >
+                          {item?.is_hr_assisted === true ? "Yes" : "No"}
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+      {/* <footer className="main-table-footer">
+				<Pagination
+					setDisplayData={setDisplayData}
+					data={sortData}
+					entriesPerPage={entriesPerPage}
+					Total={"Assessment"}
+				/>
+			</footer> */}
+    </div>
+  );
+};
+
+export default AttendanceTable;

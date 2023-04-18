@@ -23,7 +23,7 @@ const Header = ({ toggleSideNav }: any) => {
   const [dropDown, setDropDown] = useState(false);
   const [isLoading1, setisLoading1] = useState(false);
   const handleLogout = async () => {
-    setisLoading1(true)
+    setisLoading1(true);
     await axios
       .patch(`${process.env.REACT_APP_API}/me/logout`)
       .then(() => {
@@ -31,15 +31,13 @@ const Header = ({ toggleSideNav }: any) => {
       })
       .catch((err) => {
         console.log(err);
-        setisLoading1(false)
+        setisLoading1(false);
       });
     Cookies.remove("token");
     storage.remove("user");
     removeData();
     navigate("/");
-    setisLoading1(false)
-    // window.location.replace("/");
-    // window.location.reload();
+    setisLoading1(false);
   };
 
   window.addEventListener("offline", (e) => setnetwork("offline"));
@@ -71,7 +69,12 @@ const Header = ({ toggleSideNav }: any) => {
           // }
         }}
       />
-      <LogoutOption setShowLogout={setShowLogout} showLogout={showLogout} handleLogout={handleLogout} isLoading1={isLoading1} />
+      <LogoutOption
+        setShowLogout={setShowLogout}
+        showLogout={showLogout}
+        handleLogout={handleLogout}
+        isLoading1={isLoading1}
+      />
       <div className="header-container">
         <div className="header-left">
           <TfiAlignJustify

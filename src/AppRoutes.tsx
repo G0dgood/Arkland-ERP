@@ -57,6 +57,10 @@ import ViewWarning from "./pages/all_employees/warnings/ViewWarning";
 import ViewLeave from "./pages/Leave/ViewLeave";
 import HodLeaveView from "./pages/Leave/HodLeaveView";
 import ViewTerminations from "./pages/all_employees/terminations/ViewTerminations";
+import HumanResources from "./pages/HumanResources/HumanResources";
+import AttendanceTable from "./pages/HumanResources/attendance/AttendanceTable";
+import EmployeeAttendance from "./pages/EmployeeAttendance/EmployeeAttendance";
+import EmployeeAttendanceTable from "./pages/EmployeeAttendance/table/EmployeeAttendanceTable";
 
 export const removeData = () => {
   Cookies.remove("isAuthenticated");
@@ -125,6 +129,7 @@ const AppRoutes: React.FC<any> = () => {
         />
         {/* </Route> */}
         {/* Protected routes as admins, HR, Project managers and team leads */}
+
         <Route
           element={
             <PrivateRoute
@@ -134,6 +139,14 @@ const AppRoutes: React.FC<any> = () => {
             />
           }
         >
+          {/* Attendance */}
+          <Route path="/attendance" element={<EmployeeAttendance />} />
+          <Route
+            path="/attendance/list"
+            element={<EmployeeAttendanceTable />}
+          />
+          {/*View Employee Attendance */}
+
           {/*Projects View */}
           <Route path="/projects" element={<Project />} />
           <Route path="/viewproject/:id" element={<ViewProjects />} />
@@ -145,6 +158,16 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/teamkpi" element={<TeamKPI />} />
           <Route path="/viewkpiassessment/:id" element={<ViewKPAssessment />} />
           {/*END KPI View */}
+
+          {/* Human Resources View */}
+
+          <Route path="/humanresources" element={<HumanResources />} />
+          <Route
+            path="/humanresources/attendances"
+            element={<AttendanceTable />}
+          />
+
+          {/* End Human Resources View */}
 
           {/*Employees View */}
           <Route path="/employees" element={<EmployeeContainer />} />
