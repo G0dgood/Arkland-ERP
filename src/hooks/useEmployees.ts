@@ -6,9 +6,10 @@ import { fireAlert } from "../utils/Alert";
 import { handleUnauthorizedError } from "../functions/auth";
 const token = Cookies.get("token");
 
-export const useEmployees = () => {
+export const useEmployees = (status: any) => {
   const [employees, setEmployees] = useState([] as any);
   const [isLoading, setLoading] = useState(false);
+  const [isApprovalLoading, seApprovalLoading] = useState(false);
   const [error, setError] = useState("");
   const [retryCount, setRetryCount] = useState(0);
   const [message, setMessage] = useState("");
@@ -26,10 +27,11 @@ export const useEmployees = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/employees`,
-          getRequestOptions
-        );
+        const apiUrl = new URL(`${process.env.REACT_APP_API}/hr/employees`);
+        if (status) {
+          apiUrl.searchParams.set("status", status);
+        }
+        const response = await fetch(apiUrl.toString(), getRequestOptions);
         const isJsonResponse = response.headers
           ?.get("content-type")
           ?.includes("application/json");
@@ -72,7 +74,7 @@ export const useEmployees = () => {
     return () => {
       isMounted = false;
     };
-  }, [retryCount, updateEmployees]);
+  }, [retryCount, status, updateEmployees]);
 
   return {
     employees,
