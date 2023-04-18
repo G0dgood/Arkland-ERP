@@ -33,47 +33,17 @@ const override: CSSProperties = {
   width: "99.8%",
   borderRadius: "50px",
 };
-const EditProfile = ({ departmentOptions, roleOptions }: any) => {
+const EditProfile = ({
+  employee,
+  salary,
+  isLoading,
+  updateloading,
+  handleSubmit,
+  departmentOptions,
+  roleOptions,
+}: any) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
-  const { employee, salary, isLoading } = useEmployeeById(id ? id : "");
-  const [loading, setLoading] = useState(false);
-  const handleSubmit = async (values: any) => {
-    setLoading(true);
-    const allEmployeeValues = { ...values };
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/employees/${id}/update`,
-        {
-          method: "PATCH",
-          body: JSON.stringify(allEmployeeValues),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Employee update  successful";
-        const html = `Employee updated`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        navigate(`/employeecontainer`);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      // console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Employee update failed";
-      fireAlert(title, html, icon);
-    }
-  };
 
   const [disability, setDisability] = useState(false);
   const formatToTrue = (value?: any) => {
@@ -738,7 +708,7 @@ const EditProfile = ({ departmentOptions, roleOptions }: any) => {
                     type="submit"
                     className={"Add-btn-edit"}
                   >
-                    {loading ? <Spinner animation="border" /> : "Update"}
+                    {updateloading ? <Spinner animation="border" /> : "Update"}
                   </Button>
                 </div>
               </Form>

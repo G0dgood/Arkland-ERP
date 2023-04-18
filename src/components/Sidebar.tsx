@@ -19,7 +19,6 @@ const Sidebar = ({ collapseNav }: any) => {
     isTeamLead,
     isSuperAdmin,
     isAdmin,
-    isEmployee,
     isHrAdmin,
   } = getUserPrivileges();
 
@@ -41,6 +40,8 @@ const Sidebar = ({ collapseNav }: any) => {
   const [weeklyreport, setWeeklyreport] = useState(false);
   const [teamleaveapplications, setTeamleaveapplications] = useState(false);
   const [teamweekly, setTeamWeekly] = useState(false);
+  const [humanResources, setHumanResources] = useState(false);
+  const [attendance, setAttendance] = useState(false);
 
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
@@ -145,7 +146,46 @@ const Sidebar = ({ collapseNav }: any) => {
             )}
           </NavLink>
         )}
+        {(isSuperAdmin || isAdmin || isHRHead || isHrAdmin) && (
+          <NavLink
+            to="/humanresources"
+            // exact
+            className={
+              window.location.pathname === "/humanresources"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setHumanResources(true)}
+            onMouseLeave={() => setHumanResources(false)}
+          >
+            <GoFile size={23} />
+            <span className="nav-name">Human Resources</span>
+            {humanResources && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Human Resources</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
+        <NavLink
+          to="/attendance"
+          className={
+            window.location.pathname === "/attendance"
+              ? "active-here"
+              : "nav-link"
+          }
+          onMouseEnter={() => setAttendance(true)}
+          onMouseLeave={() => setAttendance(false)}
+        >
+          <GoFile size={23} />
+          <span className="nav-name">Attendance</span>
+          {attendance && collapseNav && (
+            <div className="sidenav-bubble">
+              <p>Attendance</p>
+            </div>
+          )}
+        </NavLink>
         {(isSuperAdmin || isHRHead || isHrAdmin) && (
           <NavLink
             to="/employeecontainer"

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { BiUser } from "react-icons/bi";
 import Header from "../../components/Header";
@@ -9,10 +9,13 @@ import ResetPassword from "./components/ResetPassword";
 import { useAppSelector } from "../../hooks/useDispatch";
 import { checkForName } from "../../utils/checkForName";
 import storage from "../../utils/storage";
+import { useEmployeeById } from "../../hooks/useEmployees";
 
 const AdminEditUser = () => {
-  const userString = storage?.get("user");
-  const userInfo = userString ? JSON.parse(userString) : null;
+  const { id } = useParams<{ id: string }>();
+  const { employee, salary, isLoading, updateloading, handleSubmit } =
+    useEmployeeById(id ? id : "");
+
   const [activeTab, setActiveTab] = useState(0);
   const departments: any = useAppSelector(
     (state) => state?.department?.department
@@ -43,6 +46,11 @@ const AdminEditUser = () => {
     {
       component: (
         <EditProfile
+          employee={employee}
+          salary={salary}
+          isLoading={isLoading}
+          updateloading={updateloading}
+          handleSubmit={handleSubmit}
           departmentOptions={availablleDepartments}
           roleOptions={availablleRoles}
         />
@@ -63,9 +71,9 @@ const AdminEditUser = () => {
           <div className="user-info">
             <BiUser size={80} />
             <div>
-              <h3> {userInfo?.data?.employee?.full_name} </h3>
-              <p>{userInfo?.data?.employee?.email} </p>
-              <p>{checkForName(userInfo?.data?.employee?.role, roles)} </p>
+              <h3> {employee?.full_name} </h3>
+              <p>{employee?.email} </p>
+              <p>{employee?.role?.name} </p>
             </div>
           </div>
           <div className="profile-container">
