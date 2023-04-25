@@ -1,100 +1,103 @@
-import React from 'react'
 
-const WeeklyReportTable5 = () => {
+import TableLoader from '../TableLoader'
+import { NoRecordFound, TableFetch } from '../TableOptions'
+
+const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
+
+	const handleChange = (input: any, value: any) => {
+		setInputs((prevState: any) => ({
+			...prevState,
+			[input]: value,
+		}));
+	};
+
 	return (
 		<div>
 			<div id="table-wrapper">
-
+				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 				<table>
 					<tr>
-						<th>Activities Completed This Week</th>
-						<th colSpan={3}> <span className="Activities-title">Activities In Progress</span>
+						<th>
+							<span className="weekly-report-padding">Activities Completed This Week</span>
+						</th>
+						<th colSpan={3}>
+							<span className="Activities-title">Activities In Progress</span>
 							<div className="table-iner-span">
 								<span>Activities</span>
 								<span>Next Action</span>
 								<span>Due Date</span>
 							</div>
 						</th>
-						<th>Activities To Be Started Next Week</th>
-						<th>Issues For Immediate Attention</th>
-						<th>Challenges and Limitations</th>
+						<th><span className="weekly-report-padding">Activities To Be Started Next Week</span></th>
+						<th><span className="weekly-report-padding">Issues For Immediate Attention</span></th>
+						<th><span className="weekly-report-padding">Challenges and Limitations</span></th>
 					</tr>
 
-
-					<tr>
-						<td  > <div id="td-span-row">
-							Created payment plan  </div></td>
-						<td >  One of Us Is Lying</td>
-						<td>Young Adult Fiction2</td>
-						<td>Young Adult Fiction3</td>
-						<td>Young Adult Fiction4</td>
-						<td>Young Adult Fiction5</td>
-						<td>368</td>
-					</tr>
-
-					<tr>
-						<td >Karen M. McManus</td>
-						<td >One of Us Is Next</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>377</td>
-					</tr>
-					<tr>
-						<td>Karen M. McManus</td>
-						<td>One of Us Is Next</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>377</td>
-					</tr>
-					<tr>
-						<td>Karen M. McManus</td>
-						<td>One of Us Is Next</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>377</td>
-					</tr>
-					<tr>
-						<td>Karen M. McManus</td>
-						<td>One of Us Is Next</td>
-						<td>Young Adult Fiction</td>
-						<td>Created payment plan view and modification  editing </td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>377</td>
-					</tr>
-					<tr>
-						<td>Karen M. McManus</td>
-						<td>One of Us Is Next</td>
-						<td>Created payment plan view  fication editing </td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>377</td>
-					</tr>
-					<tr>
-						<td>Karen M. McManus</td>
-						<td>Improving the UI, working on  nd working on the completion of the payment plan</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>377</td>
-					</tr>
-					<tr>
-						<td>Karen M. McManus</td>
-						<td>One of Us Is Next</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>Young Adult Fiction</td>
-						<td>377</td>
-					</tr>
+					{isLoading ? (
+						<TableFetch colSpan={8} />
+					) : data?.length === 0 ? (
+						<NoRecordFound colSpan={8} />
+					) : (
+						data?.map((item: any, i: any) => (
+							<tr key={i}>
+								<td >
+									<div id="td-span-row">
+										<textarea
+											id='kpi-textarea'
+											className='Performance-Indicator-input2'
+											value={item.completed}
+											onChange={(e) => handleChange("completed", e.target.value)}
+											rows={5}
+											placeholder="Activities Completed This Week" />
+									</div>
+								</td>
+								<td >
+									<textarea
+										id='kpi-textarea'
+										className='Performance-Indicator-input2'
+										value={item.in_progress}
+										onChange={(e) => handleChange("in_progress", e.target.value)}
+										rows={5}
+										placeholder="Activities" />
+								</td>
+								<td>	<textarea
+									id='kpi-textarea'
+									className='Performance-Indicator-input2'
+									value={item.next}
+									onChange={(e) => handleChange("next", e.target.value)}
+									rows={5}
+									placeholder="Next Action" /></td>
+								<td>	<input
+									id='kpi-textarea'
+									type="date"
+									className='Performance-Indicator-input2'
+									value={item.due_date_for_next}
+									onChange={(e) => handleChange("due_date_for_next", e.target.value)}
+									placeholder="Due Date" /></td>
+								<td>	<textarea
+									id='kpi-textarea'
+									className='Performance-Indicator-input2'
+									value={item.next_week_tasks}
+									onChange={(e) => handleChange("next_week_tasks", e.target.value)}
+									rows={5}
+									placeholder="Activities To Be Started Next Week" /></td>
+								<td>	<textarea
+									id='kpi-textarea'
+									className='Performance-Indicator-input2'
+									value={item.issues}
+									onChange={(e) => handleChange("issues", e.target.value)}
+									rows={5}
+									placeholder="Issues For Immediate Attention" /></td>
+								<td>
+									<textarea
+										id='kpi-textarea'
+										className='Performance-Indicator-input2'
+										value={item.blockers}
+										// onChange={(e) => handleChange("blockers", e.target.value, item.id)}
+										rows={5} placeholder="Challenges and Limitations" />
+								</td>
+							</tr>
+						)))}
 
 				</table>
 			</div>

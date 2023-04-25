@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import axios, { AxiosResponse } from "axios";
 import { Formik } from "formik";
@@ -8,6 +8,9 @@ import { MdOutlineClose } from "react-icons/md";
 import { BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
 import { useAppSelector } from "../../hooks/useDispatch";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
 
 const RequestWorkerModal = (props: any) => {
   const navigate = useNavigate();
@@ -17,32 +20,43 @@ const RequestWorkerModal = (props: any) => {
 
   const handleSubmit = async (values?: any) => {
     setLoading(true);
+
     const createWorkerRequest = { ...request, ...values };
+
     console.log("createWorkerRequest", createWorkerRequest);
-    await axios
-      .post(
-        `${process.env.REACT_APP_API}/hr/workers-requests`,
-        createWorkerRequest
-      )
-      .then((res: AxiosResponse) => {
-        setLoading(false);
-        if (res?.data?.success === true || res?.status === 200) {
-          const title = "Request for worker submitted";
-          const html = `Request submitted`;
-          const icon = "success";
-          fireAlert(title, html, icon);
-          setLgShow(false);
-          navigate(`/site-worker-request`);
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        const html = err?.response?.data?.message;
-        const icon = "error";
-        const title = "Request submission failed";
-        fireAlert(title, html, icon);
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API}/hr/workers-requests`, {
+        method: "POST",
+        body: JSON.stringify(createWorkerRequest),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
+      const data = await response.json();
+      if (response.ok) {
+        const title = "Request for worker submitted";
+        const html = `Request submitted`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+        setLoading(false);
+        setLgShow(false);
+
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Request submission failed";
+      fireAlert(title, html, icon);
+    }
   };
+
+
 
   let increaseQuantity = (role: string, role_name: string) => {
     let updatedValues = {
@@ -244,7 +258,11 @@ const RequestWorkerModal = (props: any) => {
                       type="submit"
                       onClick={(e) => handleSubmit()}
                     >
-                      {isLoading ? "Processing..." : "          Request Worker"}
+                      {isLoading ? (
+                        <Spinner animation="border" />
+                      ) : (
+                        "          Request Worker"
+                      )}
                     </Button>
                   </div>
                 </div>

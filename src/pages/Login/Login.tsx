@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Spinner } from "react-bootstrap";
 import { Toast } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import * as Yup from "yup";
@@ -59,18 +59,17 @@ const Login = () => {
         }
         resetForm(values);
         // set token in axios header
-        axios.defaults.headers.common["authorization"] = data.token;
+        axios.defaults.headers.common["authorization"] = data?.token;
         // set token in cookie
         Cookies.set("token", data.token);
         storage.set("user", JSON.stringify({ data }));
-        // localStorage.setItem("userinfo", JSON.stringify({ data }));
         // navigate("/home");
         window.location.replace("/home");
       })
       .catch((error) => {
         setLoading(false);
         setError(true);
-        setMessage(error);
+        setMessage(error?.message);
         setTimeout(() => {
           setError(false);
           setMessage("");
@@ -170,7 +169,7 @@ const Login = () => {
                       </div>
 
                       <Button type="submit">
-                        {isLoading ? "Please wait..." : "Login"}
+                        {isLoading ? <Spinner animation="border" /> : "Login"}
                       </Button>
                     </Form>
                   )}

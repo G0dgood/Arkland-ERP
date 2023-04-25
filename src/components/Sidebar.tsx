@@ -8,8 +8,22 @@ import { FiPieChart, FiUser, FiFolder, FiLogOut } from "react-icons/fi";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { GoFile } from "react-icons/go";
 import { MdOutlineAssessment } from "react-icons/md";
+import storage from "../utils/storage";
+import { getUserPrivileges } from "../functions/auth";
 
 const Sidebar = ({ collapseNav }: any) => {
+  // @ts-ignore
+  const {
+    isHRHead,
+    isHeadOfDepartment,
+    isTeamLead,
+    isSuperAdmin,
+    isAdmin,
+    isHrAdmin,
+  } = getUserPrivileges();
+
+  const userString = storage?.get("user");
+
   // --- SideNav Bubble (States) --- //
   const [dashboard, setDashboard] = useState(false);
   const [kipassessment, setKPIAssessment] = useState(false);
@@ -18,10 +32,16 @@ const Sidebar = ({ collapseNav }: any) => {
   const [departments, setDepartments] = useState(false);
   const [projects, setProjects] = useState(false);
   const [leave, setLeave] = useState(false);
+  const [allleave, setAllLeave] = useState(false);
+  const [allleaveapplications, setAllleaveapplications] = useState(false);
   const [support, setSupport] = useState(false);
   const [policy, setPolicy] = useState(false);
   const [logout, setLogout] = useState(false);
   const [weeklyreport, setWeeklyreport] = useState(false);
+  const [teamleaveapplications, setTeamleaveapplications] = useState(false);
+  const [teamweekly, setTeamWeekly] = useState(false);
+  const [humanResources, setHumanResources] = useState(false);
+  const [attendance, setAttendance] = useState(false);
 
   return (
     <div id={collapseNav ? "collapse-sidenavbar" : "open-sidenavbar"}>
@@ -68,12 +88,11 @@ const Sidebar = ({ collapseNav }: any) => {
           to="/teamkpi"
           // exact
           className={
-            window.location.pathname === "/teamkpi"
-              ? "active-here"
-              : "nav-link"
+            window.location.pathname === "/teamkpi" ? "active-here" : "nav-link"
           }
           onMouseEnter={() => setTeamKPI(true)}
-          onMouseLeave={() => setTeamKPI(false)}>
+          onMouseLeave={() => setTeamKPI(false)}
+        >
           <MdOutlineAssessment size={20} />
           <span className="nav-name">Team KPI</span>
           {teamKPI && collapseNav && (
@@ -84,10 +103,10 @@ const Sidebar = ({ collapseNav }: any) => {
         </NavLink>
 
         <NavLink
-          to="/weeklyreport"
+          to="/weeklycontainer"
           // exact
           className={
-            window.location.pathname === "/weeklyreport"
+            window.location.pathname === "/weeklycontainer"
               ? "active-here"
               : "nav-link"
           }
@@ -102,66 +121,135 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
+        {(isSuperAdmin ||
+          isTeamLead ||
+          isHeadOfDepartment ||
+          isHRHead ||
+          isHrAdmin) && (
+          <NavLink
+            to="/teamweekly"
+            // exact
+            className={
+              window.location.pathname === "/teamweekly"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setTeamWeekly(true)}
+            onMouseLeave={() => setTeamWeekly(false)}
+          >
+            <GoFile size={23} />
+            <span className="nav-name">Team Weekly Report</span>
+            {teamweekly && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Team Weekly Report</p>
+              </div>
+            )}
+          </NavLink>
+        )}
+        {(isSuperAdmin || isAdmin || isHRHead || isHrAdmin) && (
+          <NavLink
+            to="/humanresources"
+            // exact
+            className={
+              window.location.pathname === "/humanresources"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setHumanResources(true)}
+            onMouseLeave={() => setHumanResources(false)}
+          >
+            <GoFile size={23} />
+            <span className="nav-name">Human Resources</span>
+            {humanResources && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Human Resources</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
         <NavLink
-          to="/employees"
-          // exact
+          to="/attendance"
           className={
-            window.location.pathname === "/employees"
+            window.location.pathname === "/attendance"
               ? "active-here"
               : "nav-link"
           }
-          onMouseEnter={() => setallEmployees(true)}
-          onMouseLeave={() => setallEmployees(false)}
+          onMouseEnter={() => setAttendance(true)}
+          onMouseLeave={() => setAttendance(false)}
         >
-          <FiUser size={24} />
-          <span className="nav-name">All Employees</span>
-          {allemployees && collapseNav && (
+          <GoFile size={23} />
+          <span className="nav-name">Attendance</span>
+          {attendance && collapseNav && (
             <div className="sidenav-bubble">
-              <p>All Employees</p>
+              <p>Attendance</p>
             </div>
           )}
         </NavLink>
+        {(isSuperAdmin || isHRHead || isHrAdmin) && (
+          <NavLink
+            to="/employeecontainer"
+            // exact
+            className={
+              window.location.pathname === "/employeecontainer"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setallEmployees(true)}
+            onMouseLeave={() => setallEmployees(false)}
+          >
+            <FiUser size={24} />
+            <span className="nav-name">All Employees</span>
+            {allemployees && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>All Employees</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
-        <NavLink
-          to="/departments"
-          // exact
-          className={
-            window.location.pathname === "/departments"
-              ? "active-here"
-              : "nav-link"
-          }
-          onMouseEnter={() => setDepartments(true)}
-          onMouseLeave={() => setDepartments(false)}
-        >
-          <FiFolder size={20} />
-          <span className="nav-name">Departments</span>
-          {departments && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Departments</p>
-            </div>
-          )}
-        </NavLink>
-
-        <NavLink
-          to="/projects"
-          // exact
-          className={
-            window.location.pathname === "/projects"
-              ? "active-here"
-              : "nav-link"
-          }
-          onMouseEnter={() => setProjects(true)}
-          onMouseLeave={() => setProjects(false)}
-        >
-          <AiOutlineBank size={25} />
-          <span className="nav-name">Projects</span>
-          {projects && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Projects</p>
-            </div>
-          )}
-        </NavLink>
+        {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+          <NavLink
+            to="/departments"
+            // exact
+            className={
+              window.location.pathname === "/departments"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setDepartments(true)}
+            onMouseLeave={() => setDepartments(false)}
+          >
+            <FiFolder size={20} />
+            <span className="nav-name">Departments</span>
+            {departments && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Departments</p>
+              </div>
+            )}
+          </NavLink>
+        )}
+        {(isHRHead || isSuperAdmin || isTeamLead || isHrAdmin) && (
+          <NavLink
+            to="/projects"
+            // exact
+            className={
+              window.location.pathname === "/projects"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setProjects(true)}
+            onMouseLeave={() => setProjects(false)}
+          >
+            <AiOutlineBank size={25} />
+            <span className="nav-name">Projects</span>
+            {projects && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Projects</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
         <NavLink
           to="/leave"
@@ -180,6 +268,70 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
+        {(isTeamLead || isHeadOfDepartment || isHRHead || isHrAdmin) && (
+          <NavLink
+            to="/teamleaveapplications"
+            // exact
+            className={
+              window.location.pathname === "/teamleaveapplications"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setTeamleaveapplications(true)}
+            onMouseLeave={() => setTeamleaveapplications(false)}
+          >
+            <BsBriefcase size={22} />
+            <span className="nav-name">Team Leave</span>
+            {teamleaveapplications && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Team Leave</p>
+              </div>
+            )}
+          </NavLink>
+        )}
+
+        {isSuperAdmin && (
+          <NavLink
+            to="/allieave"
+            // exact
+            className={
+              window.location.pathname === "/allieave"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setAllLeave(true)}
+            onMouseLeave={() => setAllLeave(false)}
+          >
+            <BsBriefcase size={22} />
+            <span className="nav-name">All Leave Applications</span>
+            {allleave && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>All Leave Applications</p>
+              </div>
+            )}
+          </NavLink>
+        )}
+        {(isHRHead || isHrAdmin) && (
+          <NavLink
+            to="/allleaveapplications"
+            // exact
+            className={
+              window.location.pathname === "/allleaveapplications"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setAllleaveapplications(true)}
+            onMouseLeave={() => setAllleaveapplications(false)}
+          >
+            <BsBriefcase size={22} />
+            <span className="nav-name">HR Approve Leave</span>
+            {allleaveapplications && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>HR Approve Applications</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
         <NavLink
           to="/support"

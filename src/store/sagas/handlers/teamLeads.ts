@@ -6,7 +6,7 @@ import { requestGetTeamLeads } from "../request/teamLeads";
 export function* handleGetTeamLeads(action: any) {
   let reRun = false;
   let retryCount = 0;
-  const maxRetries = 3;
+  const maxRetries = 5;
   const retryTimeout = 2000;
 
   while (retryCount < maxRetries) {
@@ -27,9 +27,10 @@ export function* handleGetTeamLeads(action: any) {
         yield delay(retryTimeout);
       }
     }
-    yield put({
-      type: "TEAMLEADS_FETCH_ERROR",
-      payload: "Failed to fetch departments.",
-    });
   }
+  yield put({
+    type: "TEAMLEADS_FETCH_ERROR",
+    payload: "Failed to fetch team leads.",
+  });
+  throw Error("Failed to fetch team leads");
 }

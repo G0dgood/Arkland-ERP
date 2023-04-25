@@ -18,6 +18,37 @@ input[type="checkbox"] {
   background-color: #1a1a1a;
 }
 
+
+ 
+
+.todo-RiTodoLine{
+  margin: auto;
+  color: #cacaca !important;
+}
+
+.table-loader-announcement{
+  display: flex !important;
+  justify-content: center !important;
+  color: #cacaca !important;
+  align-items: center !important;
+    text-align: center !important;
+    align-self: center !important;
+    margin: 5rem !important;
+     height: 100%;  
+}
+.table-loader-announcement1{
+  display: flex !important;
+  justify-content: center !important;
+  color: #cacaca !important;
+  align-items: center !important;
+    text-align: center !important;
+    align-self: center !important;
+    margin: 2rem !important;
+     height: 100%; 
+    //  margin: auto !important;
+    // padding:5rem !important;
+    // padding-bottom: 1.5rem !important;
+}
 .main-todo-input {
   padding-right: 1rem;
 }
@@ -35,6 +66,8 @@ input[type="checkbox"] {
 
 .main-todo-title {
   margin-bottom: 1rem;
+   display: flex;
+  justify-content: space-between;
 }
 
 .main-todo-container {
@@ -226,7 +259,7 @@ input[type="checkbox"] {
 
 .main-div-col-1-sub {
   width: 100%;
-  height: 30%;
+  height: 24%;
   display: grid;
   grid-template-columns: 4fr 1fr;
 }
@@ -279,7 +312,8 @@ input[type="checkbox"] {
 }
 .Announcement-sub-1 {
   width: 100%;
-  height: 20%;
+  // height: 20%;
+  padding: 0.4rem 0.4rem 1rem 0.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

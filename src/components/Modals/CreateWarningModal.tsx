@@ -12,7 +12,15 @@ import { useAppSelector } from "../../hooks/useDispatch";
 import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
 
-const CreateWarningModal = (props: any) => {
+interface CreateWarningInterface {
+  id?: string;
+  onNewWarningCreated?: any;
+}
+
+const CreateWarningModal = ({
+  id,
+  onNewWarningCreated,
+}: CreateWarningInterface) => {
   const token = Cookies.get("token");
   const [isLoading, setLoading] = React.useState(false);
   const subordinationOptions = ["Type of misconduct", "insubordination"];
@@ -20,8 +28,8 @@ const CreateWarningModal = (props: any) => {
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
     setLoading(true);
-    console.log("values", values);
-    const createWarningValues = { ...values };
+    const employeeId = id ? id : values.employee;
+    const createWarningValues = { ...values, employee: employeeId };
     try {
       const response = await fetch(`${process.env.REACT_APP_API}/hr/warnings`, {
         method: "POST",
@@ -40,7 +48,8 @@ const CreateWarningModal = (props: any) => {
         resetForm(values);
         fireAlert(title, html, icon);
         setLgShow(false);
-        props.onNewWarningCreated();
+        onNewWarningCreated();
+        // props.onNewWarningCreated();
       } else {
         throw new Error(data.message || "Something went wrong!");
       }
@@ -98,19 +107,23 @@ const CreateWarningModal = (props: any) => {
               return (
                 <Form>
                   <div className="Modal-Body">
-                    <div className="col">
-                      <div className="form-group">
-                        <ReactSelectField
-                          options={availablleEmployees}
-                          label="Employee ID"
-                          name="employee"
-                          className="form-group__gender"
-                          onChange={(event: any) => {
-                            setFieldValue("employee", event?.value);
-                          }}
-                        />
+                    {!id ? (
+                      <div className="col">
+                        <div className="form-group">
+                          <ReactSelectField
+                            options={availablleEmployees}
+                            label="Employee ID"
+                            name="employee"
+                            className="form-group__gender"
+                            onChange={(event: any) => {
+                              setFieldValue("employee", event?.value);
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      ""
+                    )}
 
                     <div className="modal-input-sub-space">
                       <div className="col">

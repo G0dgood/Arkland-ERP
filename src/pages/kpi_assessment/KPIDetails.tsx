@@ -42,6 +42,7 @@ const KPIDetails = () => {
 	const [isSuccess3, setisSuccess3] = useState(false);
 	const [isError3, setisError3] = useState(false);
 	const [message3, setMessage3] = useState('')
+	const [hodscore, setHodscore] = useState('')
 
 
 	const [input, setinput] = useState<any>({
@@ -115,67 +116,6 @@ const KPIDetails = () => {
 				setisLoading1(false);
 			});
 	}
-	// const handleDelete = (e: any) => {
-	// 	e.preventDefault();
-	// 	setisLoading1(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/appraisals/${id}/review`, {
-	// 		method: "DELETE", // or 'PUT'
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (data?.success === false) {
-	// 				setMessage1(data?.message)
-	// 				setisError1(true)
-	// 			} else {
-	// 				setData(data)
-	// 				setisSuccess1(true)
-	// 				setTimeout(() => {
-	// 					navigate("/kpicontainer");
-	// 				}, 5000);
-	// 			}
-
-	// 			console.log('response', data)
-	// 			setisLoading1(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setisLoading1(false);
-	// 		});
-	// }
-
-
-	// const handleReview = (e: any) => {
-
-	// 	setisLoading3(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/appraisals/${id}`, {
-	// 		method: "GET", // or 'PUT'
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (data?.success === false) {
-	// 				setMessage3(data?.message)
-	// 				setisError3(true)
-	// 			} else {
-	// 				setData(data?.data)
-	// 			}
-	// 			setisLoading3(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setisLoading3(false);
-	// 		});
-	// }
-
-
-
 
 	return (
 		<div>
@@ -214,7 +154,7 @@ const KPIDetails = () => {
 							</div>
 						</div>
 						{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-						<KPIInfoDetails data={data} />
+						<KPIInfoDetails data={data} setHodscore={setHodscore} hodscore={hodscore} />
 					</div>
 					<div className="info-area">
 						{/* @ts-ignore */}

@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { checkForEmployee, checkForName } from "../../utils/checkForName";
 import { getEmployees } from "../../store/reducers/employees";
 import { getRequestOptions } from "../../utils/auth/header";
+import TableLoader from "../../components/TableLoader";
 
 const WarningList = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +34,6 @@ const WarningList = () => {
   const [message, setMessage] = useState("");
   const [newWarningCreated, setNewWarningCreated] = React.useState(false);
   const [showToast, setShowToast] = useState(false);
-
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -140,7 +140,7 @@ const WarningList = () => {
               variant="contained"
               className="back-btn-icon"
               id="Add-btn-sub"
-              onClick={() => navigate("/employees")}
+              onClick={() => navigate("/employeecontainer")}
             >
               <FaArrowLeft size={25} />
             </Button>
@@ -164,6 +164,7 @@ const WarningList = () => {
         </div>
         <section className="md-ui component-data-table">
           <div className="main-table-wrapper">
+            {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
             <table className="main-table-content">
               <thead className="data-table-header">
                 <tr className="data-table-row">
@@ -188,7 +189,10 @@ const WarningList = () => {
                   <NoRecordFound colSpan={8} />
                 ) : (
                   warnings.map((item: any, i: any) => (
-                    <tr className="data-table-row">
+                    <tr
+                      className="data-table-row"
+                      onClick={() => navigate(`/warninglist/${item.id}`)}
+                    >
                       <td className="table-datacell datatype-numeric">
                         {item?.employee}
                       </td>

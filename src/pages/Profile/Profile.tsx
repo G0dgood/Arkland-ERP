@@ -35,6 +35,7 @@ const Profile = () => {
 			<Sidebar collapseNav={collapseNav} />
 			<main>
 				<div className="profile-body">
+					<img className="demo-bg" src={logo} alt="" />
 					<div className="profile-body-container-sup">
 						<span>
 							<FiChevronLeft size={30} />

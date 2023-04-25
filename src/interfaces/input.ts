@@ -7,6 +7,7 @@ export interface InputFieldProps {
   handleChange?: any;
   type?: string;
   disabled?: boolean;
+  defaultValue?: any;
   minLength?: number;
   inputMode?: any;
   style?: any;

@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 
 
 
-const KPINavTab = ({ isCheck, setIsCheck, kpidata, }: any) => {
+const KPINavTab = ({ isCheck, setIsCheck, infodata, text1, text2 }: any) => {
 
 	const checkbox = useRef();
 
@@ -27,8 +27,8 @@ const KPINavTab = ({ isCheck, setIsCheck, kpidata, }: any) => {
 					ref={checkbox}
 					onClick={handleClick}
 				/>
-				<label id="tab" htmlFor="radio-1">My Kpi Assessment
-					<span id="notification">{kpidata === undefined ? 0 : kpidata}</span>
+				<label id="tab" htmlFor="radio-1">{text1}
+					<span id="notification">{infodata === undefined ? 0 : infodata}</span>
 				</label>
 				<input
 					type="radio"
@@ -39,7 +39,7 @@ const KPINavTab = ({ isCheck, setIsCheck, kpidata, }: any) => {
 					onClick={handleClick}
 				/>
 				<label id="tab" htmlFor="radio-2">
-					KPI Assessment</label>
+					{text2}</label>
 				<span id="glider">
 				</span>
 			</div>

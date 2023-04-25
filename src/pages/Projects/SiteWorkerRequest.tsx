@@ -1,11 +1,10 @@
 import { Button } from "@material-ui/core";
-import axios, { AxiosResponse } from "axios";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Toast } from "react-bootstrap";
-import { BsExclamationLg } from "react-icons/bs";
+import { BsCheckCircle, BsExclamationLg, BsEyeFill } from "react-icons/bs";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import {
@@ -13,54 +12,27 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-import { useAppSelector } from "../../hooks/useDispatch";
-import { getRequestOptions } from "../../utils/auth/header";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { useWorkersRequest } from "../../hooks/useWorkersRequest";
+import { getProjects } from "../../store/reducers/project";
+import { getTeam } from "../../store/reducers/team";
+import { getTeamLeads } from "../../store/reducers/teamLeads";
 import { checkForName } from "../../utils/checkForName";
+import TableLoader from "../../components/TableLoader";
 
 const SiteWorkerRequest = () => {
-  const [isLoading, setisLoading] = useState(false);
-  const [requestWorkersList, setRequestWorkersList] = useState([] as any);
-  const [error, setError] = useState<any>();
-  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [showToast, setShowToast] = useState(false);
-
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setisLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/workers-requests`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
-        }
-        setRequestWorkersList([...data.data]);
-        setisLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setisLoading(false);
-        setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 5000);
-      }
-    };
-    fetchData();
-  }, []);
-
+  const { requestWorkersList, isLoading, error, message } = useWorkersRequest();
   const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+  const team: any = useAppSelector((state) => state.team.team);
+  const projects: any = useAppSelector((state) => state.projects.projects);
 
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
@@ -70,12 +42,28 @@ const SiteWorkerRequest = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
+  useEffect(() => {
+    if (!projects || projects.length === 0) {
+      dispatch(getProjects());
+    }
+    if (!teamLeads || teamLeads.length === 0) {
+      dispatch(getTeamLeads());
+    }
+    if (!team || team.length === 0) {
+      dispatch(getTeam());
+    }
+  }, [dispatch, projects, teamLeads, team]);
 
   const header = [
-    { title: "FROM", prop: "team_lead" },
+    { title: "PROJECT", prop: "project" },
+    { title: "TEAM", prop: "team" },
+    { title: "TEAM LEAD", prop: "team_lead" },
+    { title: "REQUESTED ROLE", prop: "role_name" },
+    { title: "REQUESTED NUMBER", prop: "requested_quantity" },
     { title: "DATE SENT", prop: "created_at" },
     { title: "IS URGENT", prop: "is_urgent" },
     { title: "STATUS", prop: "status" },
+    { title: "VIEW", prop: "view" },
   ];
 
   return (
@@ -105,7 +93,7 @@ const SiteWorkerRequest = () => {
           <div className="SiteWorkermaindivsub">
             <Button variant="contained" className="Add-btn" id="Add-btn-sub">
               <NavLink
-                to="/projectview"
+                to="/projects"
                 className="drop-logout"
                 id="white-btn-color"
               >
@@ -119,6 +107,7 @@ const SiteWorkerRequest = () => {
           </div>
         </div>
         <section className="md-ui component-data-table">
+          {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
           <div className="main-table-wrapper">
             <table className="main-table-content">
               <thead className="data-table-header">
@@ -147,16 +136,40 @@ const SiteWorkerRequest = () => {
                   requestWorkersList.map((item: any, i: any) => (
                     <tr className="data-table-row">
                       <td className="table-datacell datatype-numeric">
+                        {checkForName(item.project, projects)}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {checkForName(item.team, team)}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
                         {checkForName(item.team_lead, teamLeads)}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {moment(item?.created_at).format("DD-MM-YYYY")}
+                        {item?.requests?.[0].role_name}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {item?.requests?.[0].requested_quantity}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {moment(item?.created_at).format("DD-MMMM-YYYY")}
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {item.is_urgent === false ? "No" : "Yes"}
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {item.status}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        <span>
+                          <BsEyeFill
+                            size={25}
+                            color={"#d32f2f"}
+                            onClick={() =>
+                              navigate(`/site-worker-request/${item._id}`)
+                            }
+                            title="View request"
+                          />
+                        </span>
                       </td>
                     </tr>
                   ))

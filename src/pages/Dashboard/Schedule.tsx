@@ -1,70 +1,52 @@
 import React, { CSSProperties } from "react";
 import Cookies from "js-cookie";
-import { FiTrash2 } from "react-icons/fi";
+import { FiEye, FiTrash2 } from "react-icons/fi";
 import { Button } from "@mui/material";
 import { SyncLoader } from "react-spinners";
 import moment from "moment";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { MdOutlineClose } from "react-icons/md";
 import { Form, Formik } from "formik";
 import InputField from "../../components/Inputs/InputField";
 import ReactSelectField from "../../components/Inputs/ReactSelectField";
-import { getRequestOptions } from "../../utils/auth/header";
 import { fireAlert } from "../../utils/Alert";
 import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
 import { useAppSelector } from "../../hooks/useDispatch";
+import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
+import { DialogState } from "../../interfaces/base";
+import { getUserPrivileges } from "../../functions/auth";
+import { checkForOptions } from "../../utils/checkForName";
 
 const Schedule = () => {
   const token = Cookies.get("token");
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } =
+    getUserPrivileges();
 
-  const [isLoading, setLoading] = React.useState(false);
-  const [tasks, setTasks] = React.useState({} as any);
   const [taskAction, setTaskAction] = React.useState({} as any);
-  const [error, setError] = React.useState<any>();
-  const [message, setMessage] = React.useState("");
+  const [viewAction, setViewAction] = React.useState([] as any);
   const [taskCreateShow, setTaskCreateShow] = React.useState(false);
+  const [viewShow, setViewShow] = React.useState(false);
 
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
+  const [deleteShow, setDeleteShow] = React.useState(false);
+  const [showDialog, setShowDialog] = React.useState<DialogState>({});
+  const [showView, setShowView] = React.useState<DialogState>({});
+
+  const { tasks, isLoading, error, message, setLoading } =
+    useFetchTasks(taskAction);
+
+  const { schedule, isScheduleLoading } = useScheduleById(viewAction);
+
+  const handleDelete = (id: any) => {
+    setShowDialog({ [id]: true });
+    setDeleteShow(true);
   };
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const responseTasks = await fetch(
-          `${process.env.REACT_APP_API}/tasks`,
-          getRequestOptions
-        );
-        const isJsonResponseTasks = responseTasks.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const dataTasks = isJsonResponseTasks && (await responseTasks.json());
-        if (!responseTasks.ok) {
-          throw new Error(dataTasks.message || responseTasks.status);
-        }
-        setTasks(dataTasks.data);
-        setLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setLoading(false);
-        // setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 5000);
-      }
-    };
-    fetchData();
-  }, [taskAction]);
-
+  const handleView = (id: any) => {
+    setViewAction([id]);
+    setShowView({ [id]: true });
+    setViewShow(true);
+  };
   const deleteTask = async (id: string) => {
     setLoading(true);
     try {
@@ -138,7 +120,7 @@ const Schedule = () => {
   employees &&
     employees.forEach((employee: any) =>
       availablleEmployees.push({
-        value: employee?.id,
+        value: employee?.user,
         label: employee?.full_name,
       })
     );
@@ -146,22 +128,21 @@ const Schedule = () => {
     <div className="main-div-col-2">
       <div className="main-todo-1">
         <div className="main-todo-title">
-          <h4>Upcoming Schedule</h4> <span>Today, 21 Jun 2022</span>
+          <h4>Upcoming Schedule</h4>
+          <span>Today, {moment(Date.now()).format("DD-MMMM-YYYY")}</span>
         </div>
 
         {isLoading === true ? (
-          <div
-            style={{
-              margin: "auto",
-              width: "40%",
-              alignItems: "center",
-            }}
-          >
-            <SyncLoader
-              cssOverride={override}
-              color={"#990000"}
-              loading={isLoading}
-            />
+          <div className="table-loader-announcement1">
+            <SyncLoader color={"#990000"} loading={isLoading} />
+          </div>
+        ) : tasks?.length === 0 || tasks == null ? (
+          <div className="table-loader-announcement1">
+            <div>
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
+              <img src="https://img.icons8.com/external-outline-design-circle/66/null/external-Todo-List-shopping-and-ecommerce-outline-design-circle.png" />
+              <p className="mt-3">No schedule found</p>
+            </div>
           </div>
         ) : (
           <div
@@ -173,7 +154,7 @@ const Schedule = () => {
             {tasks?.length > 0 ? (
               <div className="Announcement-container">
                 {tasks?.map((item: any, i: any) => (
-                  <div className="Announcement-sub-2">
+                  <div className="Announcement-sub-2" key={i}>
                     <div
                       className="main-todo-Event"
                       style={{ borderRadius: "4px" }}
@@ -185,45 +166,152 @@ const Schedule = () => {
                           }}
                         >
                           <div>
-                            {item.title} on{" "}
+                            {item?.title} due by{" "}
                             {moment(item?.expected_completion_date).format(
                               "DD-MMMM-YYYY"
                             )}{" "}
                           </div>
 
                           <div className="main-todo-input-time">
-                            {" "}
-                            {tasks.length > 0 ? item.notes[0]?.text : ""}
+                            {tasks && tasks?.length > 0
+                              ? item?.notes[0]?.text
+                              : ""}
                           </div>
                         </div>
                       </div>
-                      <div className="FiTrash2">
-                        <FiTrash2
+                      <div
+                        className="FiTrash2"
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        <FiEye
                           size={25}
-                          onClick={() => deleteTask(item?.id)}
+                          onClick={() => handleView(item?.id)}
+                          cursor="pointer"
+                          title="VIEW TODO"
                         />
+                        {(isHRHead ||
+                          isSuperAdmin ||
+                          isAdmin ||
+                          isHrAdmin ||
+                          isTeamLead) && (
+                          <FiTrash2
+                            size={25}
+                            onClick={() => handleDelete(item?.id)}
+                            cursor="pointer"
+                            title="DELETE TODO"
+                          />
+                        )}
                       </div>
+                      {showView[item?.id] && (
+                        <Modal
+                          size="lg"
+                          show={viewShow}
+                          aria-labelledby="contained-modal-title-vcenter"
+                          centered
+                        >
+                          <Modal.Header closeButton id="displayTermination">
+                            <Modal.Title>View Schedule</Modal.Title>
+                            <Button
+                              style={{ color: "#fff" }}
+                              onClick={() => setViewShow(false)}
+                            >
+                              <MdOutlineClose size={28} />
+                            </Button>
+                          </Modal.Header>
+                          <Modal.Body>
+                            {isScheduleLoading === true ? (
+                              <div className="table-loader-announcement1">
+                                <SyncLoader
+                                  color={"#990000"}
+                                  loading={isScheduleLoading}
+                                />
+                              </div>
+                            ) : (
+                              <div className="getjob-application-details">
+                                <p>ASSIGNED TO</p>
+                                <p>{schedule?.assigned_to?.full_name}</p>
+                                <p>TITLE</p>
+                                <p>{schedule?.title}</p>
+                                <p>STATUS</p>
+                                <p>{schedule?.status}</p>
+                                <p>PRIORITY</p>
+                                <p>
+                                  {checkForOptions(
+                                    schedule?.priority,
+                                    priorityOptions
+                                  )}
+                                </p>
+                                <p>NOTES</p>
+                                <p>{schedule?.notes?.[0].text}</p>
+                                <p>DATE OF COMPLETION</p>
+                                <p>
+                                  {" "}
+                                  {moment(
+                                    schedule?.expected_completion_date
+                                  ).format("DD-MMMM-YYYY")}
+                                </p>
+                              </div>
+                            )}
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <button
+                              className="btn btn-secondary"
+                              onClick={() => setShowView({ [item?.id]: false })}
+                            >
+                              Cancel
+                            </button>
+                          </Modal.Footer>
+                        </Modal>
+                      )}
+                      {showDialog[item?.id] && (
+                        <Modal
+                          size="lg"
+                          show={deleteShow}
+                          aria-labelledby="contained-modal-title-vcenter"
+                          centered
+                        >
+                          <Modal.Header closeButton id="displayTermination">
+                            <Modal.Title>Delete Task</Modal.Title>
+                            <Button
+                              style={{ color: "#fff" }}
+                              onClick={() => setDeleteShow(false)}
+                            >
+                              <MdOutlineClose size={28} />
+                            </Button>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <p>Are you sure you want to delete this task?</p>
+                            <p>{item?.title}</p>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => {
+                                deleteTask(item?.id);
+                                setShowDialog({ [item?.id]: false });
+                              }}
+                            >
+                              Yes
+                            </button>
+                            <button
+                              className="btn btn-secondary"
+                              onClick={() =>
+                                setShowDialog({ [item?.id]: false })
+                              }
+                            >
+                              Cancel
+                            </button>
+                          </Modal.Footer>
+                        </Modal>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div>
-                <div
-                  className="main-todo-Event"
-                  style={{ borderRadius: "4px" }}
-                >
-                  <div className="main-todo-container">
-                    <div
-                      style={{
-                        paddingLeft: "10px",
-                      }}
-                    >
-                      <div className="main-todo-input-time"> No task</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ""
             )}
           </div>
         )}
@@ -244,7 +332,7 @@ const Schedule = () => {
         >
           <Modal.Header>
             <span></span>
-            <span className="span-center-title"> Create Task</span>
+            <span className="span-center-title">Create Task</span>
             <Button
               style={{ color: "#fff" }}
               onClick={() => setTaskCreateShow(false)}
@@ -368,7 +456,11 @@ const Schedule = () => {
                           className="Add-btn-modal"
                           type="submit"
                         >
-                          {isLoading ? "Please wait..." : "Create"}
+                          {isLoading ? (
+                            <Spinner animation="border" />
+                          ) : (
+                            "Create"
+                          )}
                         </Button>
                       </div>
                     </div>

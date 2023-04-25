@@ -12,7 +12,6 @@ import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
 import Support from "./pages/Support/Support";
 import Policy from "./pages/Policy/Policy";
 import SiteWorkerRequest from "./pages/Projects/SiteWorkerRequest";
-// import ViewProjects from "./pages/Projects/ViewProjects";
 import CreateProjects from "./pages/Projects/CreateProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
@@ -33,31 +32,45 @@ import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
 import PrivateRoute from "./components/PrivateRoute";
 import storage from "./utils/storage";
 import { useAppDispatch } from "./hooks/useDispatch";
-import { getDepartment } from "./store/reducers/department";
-import { getRoles } from "./store/reducers/roles";
 import { sessionExpired } from "./utils/sessionExpires";
 import { getEmployees } from "./store/reducers/employees";
-import { getTeamLeads } from "./store/reducers/teamLeads";
-import { getTeam } from "./store/reducers/team";
 import Departments from "./pages/Departments/Departments";
 import Project from "./pages/Projects/Project";
 import KpiContainer from "./pages/kpi_assessment/KpiContainer";
 import ViewProjects from "./pages/Projects/ViewProjects";
 import TeamKPI from "./pages/kpi_assessment/TeamKPI";
-import DepartmentsView from "./pages/Departments/Departments";
 import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
 import KPIDetails from "./pages/kpi_assessment/KPIDetails";
-import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
+import ViewDepartments from "./pages/Departments/SubDepartments/ViewDepartments";
+import WeeklyContainer from "./pages/WeeklyReport/WeeklyContainer";
+import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
+import TeamWeeklyReport from "./pages/WeeklyReport/TeamWeeklyReport";
+import TeamWeeklyReportUpdate from "./pages/WeeklyReport/TeamWeeklyReportUpdate";
+import ViewSiteWorkerRequest from "./pages/Projects/ViewSiteWorkerRequest";
+import EmployeeContainer from "./pages/all_employees/EmployeeContainer";
+import AllLeave from "./pages/Leave/AllLeave";
+import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
+import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
+import TerminationList from "./pages/all_employees/terminations/TerminationList";
+import ViewWarning from "./pages/all_employees/warnings/ViewWarning";
+import ViewLeave from "./pages/Leave/ViewLeave";
+import HodLeaveView from "./pages/Leave/HodLeaveView";
+import ViewTerminations from "./pages/all_employees/terminations/ViewTerminations";
+import HumanResources from "./pages/HumanResources/HumanResources";
+import AttendanceTable from "./pages/HumanResources/attendance/AttendanceTable";
+import EmployeeAttendance from "./pages/EmployeeAttendance/EmployeeAttendance";
+import EmployeeAttendanceTable from "./pages/EmployeeAttendance/table/EmployeeAttendanceTable";
+
+export const removeData = () => {
+  Cookies.remove("isAuthenticated");
+  Cookies.remove("token");
+  storage.remove("user");
+  delete axios.defaults.headers.common["Authorization"];
+};
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
-  const removeData = () => {
-    Cookies.remove("isAuthenticated");
-    Cookies.remove("token");
-    storage.remove("user");
-    delete axios.defaults.headers.common["Authorization"];
-  };
 
   axios.interceptors.response.use(
     function (response) {
@@ -65,7 +78,7 @@ const AppRoutes: React.FC<any> = () => {
     },
     function (error) {
       const status = error?.response ? error?.response?.status : null;
-      const url = error.response ? error.response.config.url : null;
+      const url = error.response ? error.response?.config?.url : null;
 
       if (status === 401) {
         sessionExpired();
@@ -76,13 +89,10 @@ const AppRoutes: React.FC<any> = () => {
 
   React.useEffect(() => {
     if (Cookies.get("token")) {
-      // dispatch(getDepartment());
-      // dispatch(getRoles());
       dispatch(getEmployees());
-      // dispatch(getTeamLeads());
-      // dispatch(getTeam());
     }
   }, [dispatch]);
+
   const user: any = storage?.get("user");
   const parsedUserData = JSON?.parse(user);
 
@@ -100,16 +110,26 @@ const AppRoutes: React.FC<any> = () => {
         <Route path="/kpicontainer" element={<KpiContainer />} />
         <Route path="/kpidetails/:id" element={<KPIDetails />} />
         <Route path="/leave" element={<Leave />} />
+        <Route path="/viewleave/:id" element={<ViewLeave />} />
+        <Route path="/hodleaveview/:id" element={<HodLeaveView />} />
         <Route path="/support" element={<Support />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/weeklyreporttable" element={<WeeklyReportTable />} />
+        <Route path="/weeklycontainer" element={<WeeklyContainer />} />
         <Route
           path="/teamleaveapplications"
           element={<TeamLeaveApplications />}
         />
         <Route path="/weeklyreport" element={<WeeklyReport />} />
+        <Route path="/teamweekly" element={<TeamWeeklyReport />} />
+        <Route path="/weeklyreportview/:id" element={<WeeklyReportView />} />
+        <Route
+          path="/teamWeeklyreportupdate/:id"
+          element={<TeamWeeklyReportUpdate />}
+        />
         {/* </Route> */}
         {/* Protected routes as admins, HR, Project managers and team leads */}
+
         <Route
           element={
             <PrivateRoute
@@ -119,28 +139,82 @@ const AppRoutes: React.FC<any> = () => {
             />
           }
         >
-          <Route path="/projects" element={<Project />} />
+          {/* Attendance */}
+          <Route path="/attendance" element={<EmployeeAttendance />} />
+          <Route
+            path="/attendance/list"
+            element={<EmployeeAttendanceTable />}
+          />
+          {/*View Employee Attendance */}
 
-          <Route path="/employees" element={<AllEmployees />} />
-          <Route path="/employees/:id" element={<ViewEmployee />} />
+          {/*Projects View */}
           <Route path="/projects" element={<Project />} />
-
           <Route path="/viewproject/:id" element={<ViewProjects />} />
+          <Route path="/createprojects" element={<CreateProjects />} />
+          {/*End Projects View */}
+
+          {/* KPI View */}
+          <Route path="/kpicontainer" element={<KpiContainer />} />
+          <Route path="/teamkpi" element={<TeamKPI />} />
+          <Route path="/viewkpiassessment/:id" element={<ViewKPAssessment />} />
+          {/*END KPI View */}
+
+          {/* Human Resources View */}
+
+          <Route path="/humanresources" element={<HumanResources />} />
+          <Route
+            path="/humanresources/attendances"
+            element={<AttendanceTable />}
+          />
+
+          {/* End Human Resources View */}
+
+          {/*Employees View */}
+          <Route path="/employees" element={<EmployeeContainer />} />
+
+          <Route path="/employeecontainer" element={<EmployeeContainer />} />
+          <Route path="/employees/:id" element={<ViewEmployee />} />
+          <Route path="/employees/edit/:id" element={<AdminEditUser />} />
+          <Route path="/createemployee" element={<CreateEmployee />} />
+          {/*End Employees View */}
+
+          {/*Leave View */}
           <Route
             path="/allleaveapplications"
             element={<AllLeaveApplications />}
           />
+          <Route path="/allieave" element={<AllLeave />} />
+          <Route path="/finalleaveupdate/:id" element={<FinalLeaveUpdate />} />
+          <Route path="/hrupdateleave/:id" element={<HRUpdateLeave />} />
+          {/*End Leave View */}
+
+          {/*Worker Request View */}
           <Route path="/site-worker-request" element={<SiteWorkerRequest />} />
-          <Route path="/createemployee" element={<CreateEmployee />} />
-          <Route path="/createprojects" element={<CreateProjects />} />
+          <Route
+            path="/site-worker-request/:id"
+            element={<ViewSiteWorkerRequest />}
+          />
+          {/*End Worker Request View */}
+
+          {/*Warning View */}
           <Route path="/warninglist" element={<WarningList />} />
-          <Route path="/dashboardcalender" element={<DashboardCalender />} />
-          <Route path="/profile/edit" element={<EditUser />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/warninglist/:id" element={<ViewWarning />} />
+          {/*End warning View */}
+
+          {/*Terminations View */}
+          <Route path="/terminations" element={<TerminationList />} />
+          <Route path="/terminations/:id" element={<ViewTerminations />} />
+          {/*End terminations View */}
+
           {/* Departments */}
           <Route path="/departments" element={<Departments />} />
           <Route path="/departments/:id" element={<ViewDepartments />} />
-          {/* <Route path="/procurement" element={<Procurement />} /> */}
+          {/*End Departments */}
+
+          <Route path="/dashboardcalender" element={<DashboardCalender />} />
+          <Route path="/profile/edit" element={<EditUser />} />
+          <Route path="/profile" element={<Profile />} />
+
           <Route path="/engineering" element={<Engineering />} />
           <Route path="/finance" element={<Finance />} />
           <Route path="/humanresource" element={<HumanResource />} />
@@ -148,11 +222,6 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/informationtech" element={<Informationtech />} />
           <Route path="/budget" element={<Budget />} />
           {/* AdminEditUser */}
-          <Route path="/admineditUser" element={<AdminEditUser />} />
-          {/* Project View */}
-          <Route path="/kpicontainer" element={<KpiContainer />} />
-          <Route path="/teamkpi" element={<TeamKPI />} />
-          <Route path="/viewkpiassessment/:id" element={<ViewKPAssessment />} />
         </Route>
       </Route>
     </Routes>

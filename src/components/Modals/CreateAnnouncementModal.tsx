@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { MdOutlineClose } from "react-icons/md";
 import { Form, Formik } from "formik";
 import Cookies from "js-cookie";
@@ -152,7 +152,7 @@ const CreateAnnouncementModal = (props: any) => {
                         className="Add-btn-modal"
                         type="submit"
                       >
-                        {loading ? "Please wait..." : "Create"}
+                        {loading ? <Spinner animation="border" /> : "Create"}
                       </Button>
                     </div>
                   </div>

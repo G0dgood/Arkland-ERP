@@ -7,50 +7,23 @@ import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal
 import { getRequestOptions } from "../../utils/auth/header";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import { useDepartments } from "../../hooks/useDepartments";
+import { MdOutlineMapsHomeWork } from "react-icons/md";
+import { getUserPrivileges } from "../../functions/auth";
 
 const DepartmentsView = () => {
   const navigate = useNavigate();
-  const [isLoading, setisLoading] = useState(false);
-  const [error, setError] = useState<any>();
-  const [departments, setDepartments] = useState([] as any);
-  const [message, setMessage] = useState("");
-  const [newDepartmentCreated, setNewDepartmentCreated] = React.useState(false);
-
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
+  const [newDepartmentCreated, setNewDepartmentCreated] = React.useState(
+    {} as any
+  );
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setisLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/departments`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
-        }
-        setDepartments([...data.data]);
-        setisLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setisLoading(false);
-        setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 3000);
-      }
-    };
-    fetchData();
-  }, [newDepartmentCreated]);
-  console.log(departments);
+  const { departments, isLoading, error, message } =
+    useDepartments(newDepartmentCreated);
+
   const handleNewDepartmentCreated = () => {
     setNewDepartmentCreated(!newDepartmentCreated);
   };
@@ -62,12 +35,20 @@ const DepartmentsView = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
+  const randColor = () => {
+    const realColor =
+      "#" +
+      Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, "0")
+        .toUpperCase();
+    console.log("realColor", realColor);
+    return realColor;
+  };
+
+  const isPrime = (num: number) => {
+    for (let i = 2; i < num; i++) if (num % i === 0) return false;
+    return num > 1;
   };
 
   return (
@@ -79,26 +60,27 @@ const DepartmentsView = () => {
           <div className="ProjectViewContainer-subone">
             <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
               <h5>Department</h5>
-              <div className="Request-btn-modal-container">
-                <div className="Request-btn">
-                  <CreateDepartmentModal
-                    onNewDepartmentCreated={handleNewDepartmentCreated}
-                  />
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div className="Request-btn-modal-container">
+                  <div className="Request-btn">
+                    <CreateDepartmentModal
+                      onNewDepartmentCreated={handleNewDepartmentCreated}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             {isLoading ? (
-              <div
-                style={{
-                  margin: "auto",
-                  width: "20%",
-                }}
-              >
-                <SyncLoader
-                  cssOverride={override}
-                  color={"#990000"}
-                  loading={isLoading}
-                />
+              <div className="isLoading-container">
+                <SyncLoader color={"#990000"} loading={isLoading} />
+              </div>
+            ) : departments?.length === 0 ? (
+              <div className="table-loader-announcement">
+                <div>
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                  <img src="https://img.icons8.com/wired/64/null/department.png" />
+                  <p className="mt-3">No department found</p>
+                </div>
               </div>
             ) : (
               <div className="subone-col-3">
@@ -106,53 +88,28 @@ const DepartmentsView = () => {
                   <div
                     className="ProjectView-card"
                     key={i}
-                    onClick={() => navigate(`/departments/${item.id}`)}
+                    onClick={() => navigate(`/departments/${item?.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
-                      <Button className={`iDotsRounded1`}>{item.name}</Button>
+                      <Button
+                        className={
+                          i % 2 === 0
+                            ? `iDotsRounded1`
+                            : isPrime(parseInt(i, 10))
+                            ? "iDotsRounded2"
+                            : "iDotsRounded3"
+                        }
+                      >
+                        {item?.name}
+                      </Button>
                       <BiDotsHorizontalRounded color="#97979B" />
                     </div>
-                    <div className="iDotsRounded-text">{item.name}</div>
-                    <div className="iDotsRounded-text">{item.description}</div>
-
-                    <div className="iDotsRounded-percent-people">
-                      <div className="iDotsRounded-percent-list">
-                        <span className="profile-containers">Status</span>
-                        <span className="profile-containers">
-                          {item.status}
-                        </span>
-                      </div>
-                      {/* <div className="percent-people-grid">
-						<div>
-						  <HiOutlinePaperClip />6
-						</div>
-						<div>
-						  <HiOutlineChatBubbleOvalLeftEllipsis />4
-						</div>
-					  </div> */}
-                    </div>
+                    <div className="iDotsRounded-text">{item?.name}</div>
+                    <div className="iDotsRounded-text">{item?.description}</div>
                   </div>
                 ))}
               </div>
             )}
-          </div>
-          <div className="ProjectViewContainer-subtwo">
-            <div className="subtwo-content-one">
-              <div className="subtwo-content-three-sub3">
-                <p>Departments</p>
-                <div className="ProjectView-projects">
-                  <div className="projects-total1">
-                    <h6>TOTAL</h6>
-                    <div className="projects-total-container">
-                      <span className="projects-total1-span"></span>
-                      <span className="projects-total1-span1">
-                        {departments.length}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </main>

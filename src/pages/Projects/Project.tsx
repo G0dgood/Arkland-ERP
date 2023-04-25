@@ -1,31 +1,27 @@
-import React, { useEffect, useState, CSSProperties } from "react";
+import { useEffect, useState, CSSProperties } from "react";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { BsExclamationLg, BsPlusLg } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
 import { ProgressBar, Toast } from "react-bootstrap";
 import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
+import { FaTimes } from "react-icons/fa";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
-import { useAppDispatch } from "../../hooks/useDispatch";
-import { getTeamLeads } from "../../store/reducers/teamLeads";
-import { FaTimes } from "react-icons/fa";
-import { getRequestOptions } from "../../utils/auth/header";
-import { getRoles } from "../../store/reducers/roles";
+import { useProjects } from "../../hooks/useProjects";
+import { getUserPrivileges } from "../../functions/auth";
 
 const ProjectView = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isLoading, setisLoading] = useState(false);
-  const [projects, setProjects] = useState([] as any);
-  const [message, setMessage] = useState("");
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } =
+    getUserPrivileges();
   const [showToast, setShowToast] = useState(false);
-  const [error, setError] = useState<any>();
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
+  const { projects, isLoading, error, message } = useProjects();
 
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
@@ -37,49 +33,11 @@ const ProjectView = () => {
     setCollapseNav(!collapseNav);
   };
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setisLoading(true);
-        const response = await fetch(
-          `${process.env.REACT_APP_API}/hr/projects`,
-          getRequestOptions
-        );
-        const isJsonResponse = response.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const data = isJsonResponse && (await response.json());
-        if (!response.ok) {
-          throw new Error(data.message || response.status);
-        }
-        setProjects([...data.data]);
-        setisLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setisLoading(false);
-        // setError(true);
-        setMessage(error.message || "Something went wrong");
-        setTimeout(() => {
-          fetchData();
-        }, 5000);
-      }
-    };
-    fetchData();
-  }, []);
-
-  React.useEffect(() => {
-    dispatch(getTeamLeads());
-    dispatch(getRoles());
-  }, [dispatch]);
-
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-    width: "99.8%",
-    borderRadius: "50px",
+  const isPrime = (num: number) => {
+    for (let i = 2; i < num; i++) if (num % i === 0) return false;
+    return num > 1;
   };
+
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
@@ -108,22 +66,30 @@ const ProjectView = () => {
             <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
               <h5>Projects</h5>
               <div className="Request-btn-modal-container">
-                <div className="Request-btn">
-                  <CreateProjectModal />
-                </div>
-                <div>
-                  <Button
-                    className="subone-header-flex-btn"
-                    onClick={() => navigate("/site-worker-request")}
-                  >
-                    <BsPlusLg
-                      size={10}
-                      color="#fff"
-                      className="Create-plue-account"
-                    />{" "}
-                    Request Worker List
-                  </Button>
-                </div>
+                {(isHRHead ||
+                  isSuperAdmin ||
+                  isAdmin ||
+                  isHrAdmin ||
+                  isTeamLead) && (
+                  <div className="Request-btn">
+                    <CreateProjectModal />
+                  </div>
+                )}
+                {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                  <div>
+                    <Button
+                      className="subone-header-flex-btn"
+                      onClick={() => navigate("/site-worker-request")}
+                    >
+                      <BsPlusLg
+                        size={10}
+                        color="#fff"
+                        className="Create-plue-account"
+                      />{" "}
+                      Request Worker List
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
             <div className="subone-col-2">
@@ -147,18 +113,16 @@ const ProjectView = () => {
               </div>
             </div>
             {isLoading ? (
-              <div
-                style={{
-                  margin: "auto",
-                  width: "10%",
-                  alignItems: "center",
-                }}
-              >
-                <SyncLoader
-                  cssOverride={override}
-                  color={"#990000"}
-                  loading={isLoading}
-                />
+              <div className="isLoading-container">
+                <SyncLoader color={"#990000"} loading={isLoading} />
+              </div>
+            ) : projects?.length === 0 ? (
+              <div className="table-loader-announcement">
+                <div>
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                  <img src="https://img.icons8.com/dotty/80/null/test-passed.png" />
+                  <p className="mt-3">No project found</p>
+                </div>
               </div>
             ) : (
               <>
@@ -170,7 +134,17 @@ const ProjectView = () => {
                       onClick={() => navigate(`/viewproject/${item.id}`)}
                     >
                       <div className="iDotsHorizontalRounded">
-                        <Button className={`iDotsRounded1`}>{item.name}</Button>
+                        <Button
+                          className={
+                            i % 2 === 0
+                              ? `iDotsRounded1`
+                              : isPrime(parseInt(i, 10))
+                              ? "iDotsRounded2"
+                              : "iDotsRounded3"
+                          }
+                        >
+                          {item.name}
+                        </Button>
                         <BiDotsHorizontalRounded color="#97979B" />
                       </div>
                       <div className="iDotsRounded-text">

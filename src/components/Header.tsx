@@ -11,16 +11,19 @@ import { AiOutlineLogout } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/storage";
 import MobileSideBar from "./MobileSideBar";
-import { useAppSelector } from "../hooks/useDispatch";
+import { removeData } from "../AppRoutes";
+import LogoutOption from "./LogoutOption";
 
 const Header = ({ toggleSideNav }: any) => {
-
+  const navigate = useNavigate();
   // @ts-ignore
   const userInfo: any = JSON.parse(storage?.get("user"));
 
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
-  const handleLogoutUser = async () => {
+  const [isLoading1, setisLoading1] = useState(false);
+  const handleLogout = async () => {
+    setisLoading1(true);
     await axios
       .patch(`${process.env.REACT_APP_API}/me/logout`)
       .then(() => {
@@ -28,11 +31,13 @@ const Header = ({ toggleSideNav }: any) => {
       })
       .catch((err) => {
         console.log(err);
+        setisLoading1(false);
       });
-    window.location.replace("/");
-    await Cookies.remove("token");
-    await storage.remove("user");
-    window.location.reload();
+    Cookies.remove("token");
+    storage.remove("user");
+    removeData();
+    navigate("/");
+    setisLoading1(false);
   };
 
   window.addEventListener("offline", (e) => setnetwork("offline"));
@@ -45,14 +50,13 @@ const Header = ({ toggleSideNav }: any) => {
     }
   }, [network]);
 
-
   const [isOpen, setIsopen] = useState(false);
   const [hideNav, setHideNav] = useState<any>(false);
+  const [showLogout, setShowLogout] = useState<any>(false);
 
   const ToggleSidebar = () => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
   };
-
 
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)}>
@@ -65,17 +69,29 @@ const Header = ({ toggleSideNav }: any) => {
           // }
         }}
       />
+      <LogoutOption
+        setShowLogout={setShowLogout}
+        showLogout={showLogout}
+        handleLogout={handleLogout}
+        isLoading1={isLoading1}
+      />
       <div className="header-container">
         <div className="header-left">
-          <TfiAlignJustify className="mobileSidebarbtn" size={25} onClick={toggleSideNav} />
-          <TfiAlignJustify className="mobileSidebarbtntwo" size={25} onClick={ToggleSidebar} />
+          <TfiAlignJustify
+            className="mobileSidebarbtn"
+            size={25}
+            onClick={toggleSideNav}
+          />
+          <TfiAlignJustify
+            className="mobileSidebarbtntwo"
+            size={25}
+            onClick={ToggleSidebar}
+          />
 
           <div className="header-logo">
             <img src={logo} alt="ASL" />
           </div>
-          <span className="header-logo-text">
-            {/* Line Manager */}
-          </span>
+          <span className="header-logo-text">{/* Line Manager */}</span>
           <span className="header-logo-text1">
             {userInfo?.data?.employee?.email}
           </span>
@@ -83,8 +99,8 @@ const Header = ({ toggleSideNav }: any) => {
 
         <div
           className="d-flex header-user-details"
-          onClick={() => setDropDown(!dropDown)}
-          onMouseEnter={() => setDropDown(true)}
+          // onClick={() => setDropDown(!dropDown)}
+          onClick={() => setDropDown(true)}
         >
           <span className="dropdown-names">
             {userInfo?.data?.employee?.full_name}
@@ -101,9 +117,9 @@ const Header = ({ toggleSideNav }: any) => {
                   Profile
                 </NavLink>
                 <NavLink
-                  to="/"
+                  to=""
                   className="drop-logout"
-                  onClick={handleLogoutUser}
+                  onClick={() => setShowLogout(true)}
                 >
                   <AiOutlineLogout size={20} className="dropdown-icons-tools" />
                   Logout
@@ -113,7 +129,11 @@ const Header = ({ toggleSideNav }: any) => {
           )}
         </div>
       </div>
-      <MobileSideBar ToggleSidebar={ToggleSidebar} isOpen={isOpen} setHideNav={setHideNav} />
+      <MobileSideBar
+        ToggleSidebar={ToggleSidebar}
+        isOpen={isOpen}
+        setHideNav={setHideNav}
+      />
     </div>
   );
 };

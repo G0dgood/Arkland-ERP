@@ -10,6 +10,7 @@ const CustomInputField = ({
   maxLength,
   minLength,
   inputMode,
+  defaultValue,
   style,
   value,
   readOnly,
@@ -50,6 +51,7 @@ const CustomInputField = ({
         onBlur={handleBlur}
         onInput={handleChange}
         autoComplete="off"
+        defaultValue={defaultValue}
         placeholder={placeholder}
         inputMode={inputMode}
         onChange={onChange}

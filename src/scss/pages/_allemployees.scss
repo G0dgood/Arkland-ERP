@@ -33,6 +33,16 @@
   display: flex;
   flex-direction: column;
   padding: 1.1rem;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+
+    &-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+  }
 }
 
 @media only screen and (max-width: 1220px) {
@@ -48,4 +58,71 @@
 }
 .lock-icon-color :hover {
   color: crimson !important;
+}
+
+.upwrap {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-start;
+  border: 2px solid #444;
+  border-radius: 10px;
+  width: auto;
+}
+
+.custom-radio-button {
+  width: 20px;
+  height: 20px;
+  /*border: 2px solid #444;
+   border-radius: 50%;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-radio-button input {
+  display: none;
+}
+
+.custom-radio-button .checkmark {
+  width: calc(100% - 6px);
+  height: calc(100% - 6px);
+  background-color: gray;
+  border-radius: 50%;
+  display: inline-block;
+  /*opacity: 0;*/
+  transition: opacity 0.3s ease;
+  opacity: 0.3;
+}
+
+.custom-radio-button input:checked + .checkmark {
+  opacity: 1;
+  display: inline-block;
+  z-index: 2;
+  background-color: green;
+}
+
+.custom-radio-button input:checked + .checkmark {
+  opacity: 1;
+  display: inline-block;
+  z-index: 2;
+  background-color: green;
+}
+
+.custom-radio-button input:not(:checked) + .checkmark:hover {
+  background-color: green;
+}
+
+label .label_text {
+  z-index: -100;
+  display: none;
+}
+
+.period_text {
+  text-align: center;
 }

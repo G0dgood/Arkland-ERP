@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   // --- Get current state of collapseNav from localStorage --- //
 
-  // console.log('userInfo', userInfo)
+
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;

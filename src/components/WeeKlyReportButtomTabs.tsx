@@ -6,10 +6,7 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const subNavData: any = [
-		// {
-		// 	id: 1,
-		// 	category: "COVER PAGE",
-		// },
+
 		{
 			id: 2,
 			category: "Week 1",
@@ -41,8 +38,8 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 	// @ts-ignore
 	const categories = [...new Set(subNavData.map((item: any) => item?.category))];
 
-	const showInfo = (catagory: any) => {
-		setResult(catagory)
+	const showInfo = (category: any) => {
+		setResult(category)
 	}
 
 
@@ -59,18 +56,13 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 
 
-
-
-
-
-
 	return (
 		<div className='WeeKlyReport'>
 			<span className='WeeKlyReport-sub'>
-				{categories.map((catagory, i) =>
+				{categories.map((category, i) =>
 					<button className="ccsnl-btn WeeKlyReport-tab"
-						onClick={() => showInfo(catagory)}
-						key={i}>{catagory} </button>)}
+						onClick={() => showInfo(category)}
+						key={i}>{category} </button>)}
 			</span>
 		</div>
 	)
