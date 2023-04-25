@@ -102,7 +102,7 @@ const AllEmployees = () => {
   const [displayData, setDisplayData] = useState([]);
 
   const header = [
-    { title: "EMPLOYEE ID", prop: "employee_id" },
+    // { title: "EMPLOYEE ID", prop: "employee_id" },
     { title: "FIRST NAME", prop: "first_name" },
     { title: "MIDDLE NAME", prop: "middle_name" },
     { title: "LAST NAME", prop: "last_name" },
@@ -205,9 +205,9 @@ const AllEmployees = () => {
                     ) : (
                       employees?.map((item: any, i: any) => (
                         <tr className="data-table-row">
-                          <td className="table-datacell datatype-string">
+                          {/* <td className="table-datacell datatype-string">
                             {item?.id}
-                          </td>
+                          </td> */}
                           <td className="table-datacell datatype-numeric">
                             {item?.first_name}
                           </td>
