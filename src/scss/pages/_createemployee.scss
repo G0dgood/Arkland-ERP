@@ -46,6 +46,7 @@
   color: c.color(white);
   cursor: pointer;
   white-space: nowrap;
+  margin: 0px !important;
 }
 
 .addemployee-space {
@@ -53,14 +54,16 @@
 }
 
 .back-to-employee-container {
-  margin-bottom: 0.5rem;
+  // margin-bottom: 0.5rem;
+  display: flex; 
 }
 
 .back-to-employee-button {
-  border: 2px solid c.color(red) !important;
+  border: 2px solid c.color(white) !important;
   padding: 4px 2rem !important;
-  color: c.color(red) !important;
+  color: c.color(white) !important;
   font-weight: bold !important;
+  margin-right: 1rem !important;
 }
 
 .addemployee-back {
@@ -376,6 +379,16 @@ form {
   justify-content: space-between;
 }
 
+.cleaveInput {
+  input {
+    padding: 0.4rem !important;
+    background-color: white;
+  }
+}
+
+.special-label {
+  font-size: 14px;
+}
 .form-group {
   margin-top: 1rem;
 
@@ -383,6 +396,12 @@ form {
     color: c.color(grey-200);
     font-size: 12px;
     padding: 0.575rem 0.75rem;
+  }
+
+  &__cleaveInput {
+    input {
+      padding: 0.4rem !important;
+    }
   }
 
   &__status .form-control {
@@ -415,5 +434,6 @@ form {
 
 .more-view{
   width: 100% !important;
-  height: 100vh !important;
+  height: 100% !important;
+  // height: 100vh !important;
 }

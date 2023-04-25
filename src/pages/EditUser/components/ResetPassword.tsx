@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Button } from "@material-ui/core";
 
 const ResetPassword = () => {
@@ -25,7 +25,7 @@ const ResetPassword = () => {
         </div>
       </form>
     </div>
-  )
+  );
 };
 
 export default ResetPassword;

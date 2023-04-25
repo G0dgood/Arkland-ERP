@@ -1,4 +1,4 @@
-
+@use "../abstracts/colors" as c;
 
 #login-wrapper {
   position: relative;
@@ -11,72 +11,72 @@
   height: 100vh;
 }
 .carousel-item img {
-	height: 100%; 
-	filter: brightness(40%);
-	background-position: center;
+  height: 100%;
+  filter: brightness(40%);
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .login-container {
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	height: 100%;
-	width: 100%;
-	overflow-x: hidden;
-	overflow-y: auto;
-	z-index: 50;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 50;
 }
 .login-content-layout {
-	position: relative;
-	display: grid;
-	grid-template-columns: 1fr minmax(min-content, 1280px) 1fr;
-	grid-template-rows: 20px minmax(min-content, 1fr) 20px;
-	min-height: 100%;
-	gap: 0 20px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr minmax(min-content, 1280px) 1fr;
+  grid-template-rows: 20px minmax(min-content, 1fr) 20px;
+  min-height: 100%;
+  gap: 0 20px;
 }
 .login-content-grid {
-	align-items: center;
-	margin: 0 auto;
-	display: grid;
-	grid-column: 2/3;
-	grid-row: 2/3;
-	grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+  margin: 0 auto;
+  display: grid;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  grid-template-columns: repeat(12, 1fr);
 }
 .logo-section {
-	grid-column: 2/5;
+  grid-column: 2/5;
 }
 .logo-section div {
-	width: 17rem;
+  width: 17rem;
 }
 .logo-section p {
- 	color: #fff;
-	font-size: large;
-	padding-left: 5rem;
-	font-style: italic;
+  color: #fff;
+  font-size: large;
+  padding-left: 5rem;
+  font-style: italic;
 }
 
 .login-form-container {
-	position: relative;
-	grid-column: 8/12;
-	background-color: #fff;
-	padding: 0 50px;
-	padding-top: 35px;
-	padding-bottom: 50px;
+  position: relative;
+  grid-column: 8/12;
+  background-color: #fff;
+  padding: 0 50px;
+  padding-top: 35px;
+  padding-bottom: 50px;
   width: 500px;
-	border-radius: 3px;
-	box-shadow: 0 0 1px rgba(0, 0, 0, 0.15), 0 0 2px rgba(0, 0, 0, 0.15),
+  border-radius: 3px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15), 0 0 2px rgba(0, 0, 0, 0.15),
     0 0 16px rgba(218, 209, 209, 0.15);
 }
- 
+
 .login-form-container button {
   background-color: #990000;
   color: #ffff;
   border-radius: 4px;
-  width: 100%; 
+  width: 100%;
   height: 55px;
-  margin-top: 4rem;
+  margin-top: 1rem;
   font-weight: bold;
   border: none;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.15), 0 0 2px rgba(0, 0, 0, 0.15),
@@ -84,112 +84,138 @@
   transition: all 0.3s ease-out;
   -webkit-transition: all 0.3s ease-out;
 }
+
+.forgot-password-button {
+  margin-top: 0.5rem !important;
+}
+
 .login-form-container button:hover {
   background-color: #990000;
 }
- 
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #2E2E2E;
-  opacity: 1; /* Firefox */ 
-		font-weight: 500;
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #2e2e2e;
+  opacity: 1; /* Firefox */
+  font-weight: 500;
 }
-.Forgot-password{
-	display: flex;
-	justify-content: space-between;
-	margin-top: 1rem;
-	font-weight: 500 !important;
-	align-items: center;
-}
-.Forgot-click-here{
-	font-weight: bold;
-	font-style: italic;
-}
-.Forgot-here-input{
-	width: 50px;
-	height: 50px;
-	border: 1px solid #2E2E2E !important;
-}
-.form-ctrl-login{
-	width: 100%;
-	height: 3.5rem;
-	border: 2px solid #C5C5C5 !important;
-	border-radius: 4px;
-	padding: 1rem;
-}
-.logo-image{
-	width: 250px;
-	height: 200px;
-	margin: auto;
-	display: flex;
-	justify-content: center;
-}
+.Forgot-password {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-weight: 500 !important;
+  align-items: center;
+  font-size: 10px;
 
-  
+  a {
+    color: #000000 !important;
+  }
+}
+.forgot-click-here {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 10px;
+  line-height: 18px;
+  border-bottom: 3px solid #000000;
+}
+.Forgot-here-input {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #2e2e2e !important;
+}
+.form-ctrl {
+  margin-bottom: 0px !important;
+}
+.form-ctrl-login {
+  width: 100%;
+  height: 3.5rem;
+  border: 2px solid #c5c5c5 !important;
+  border-radius: 4px;
+  padding: 1rem;
+}
+.logo-image {
+  width: 250px;
+  height: 200px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
 
 @media only screen and (max-width: 980px) {
-	.logo-section {
-		display: none;
-	}
-	.login-form-container {
-		grid-column: 2/12;
-	}
+  .logo-section {
+    display: none;
+  }
+  .login-form-container {
+    grid-column: 2/12;
+  }
 }
 
-.carousel-indicators{
-	display: none !important;
+.carousel-indicators {
+  display: none !important;
 }
 
+// * --- Success Toast --- */
+.success-toast .toast {
+  border: 2px solid c.color(green);
 
+  .toast-body p {
+    color: white;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .toast-body svg {
+    color: white;
+  }
+}
 
 // * --- Login Toast --- */
-  .toast {
-	background-color: #f7e0e0;
-	color:#f25c5d;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	z-index: 50;
-	animation: display-toast .55s ease-in-out;
+.toast {
+  background-color: #f7e0e0;
+  color: #f25c5d;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 50;
+  animation: display-toast 0.55s ease-in-out;
   border: 2px solid #dc4a4d;
 }
 @keyframes display-toast {
-	0% {
-		right: 20px;
-	}
-	25% {
-		right: 15px;
-	}
-	50% {
-		right: 10px;
-	}
-	75% {
-		right: 5px;
-	}
-	100% {
-		right: 10px;
-	}
+  0% {
+    right: 20px;
+  }
+  25% {
+    right: 15px;
+  }
+  50% {
+    right: 10px;
+  }
+  75% {
+    right: 5px;
+  }
+  100% {
+    right: 10px;
+  }
 }
 
- .toast-body {
-	/* background-color: #f25c5d; */
-	color: #f25c5d;
-	display: grid;
-	grid-template-columns: .05fr 1fr .05fr;
-	gap: 0 10px;
-	padding: 12px 20px;
+.toast-body {
+  /* background-color: #f25c5d; */
+  color: #f25c5d;
+  display: grid;
+  grid-template-columns: 0.05fr 1fr 0.05fr;
+  gap: 0 10px;
+  padding: 12px 20px;
 }
- .toast-body p {
-	color: #f25c5d;
+.toast-body p {
+  color: #f25c5d;
   font-weight: bold;
-	margin: 0;
+  margin: 0;
 }
- .toast-body span {
-	cursor: pointer;
-	margin: 0 auto;
+.toast-body span {
+  cursor: pointer;
+  margin: 0 auto;
 }
- .toast-body span .BsExclamationLg {
-	color: #236e99;
-	text-shadow: 0 0 5px rgba(0, 0, 0, .1);
+.toast-body span .BsExclamationLg {
+  color: #236e99;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
-

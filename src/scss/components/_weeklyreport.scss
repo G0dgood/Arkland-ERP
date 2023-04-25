@@ -2,16 +2,14 @@
 
 .weekly-top-container{
 	width: 100%;
-	min-height: 20% !important;
-	// background-color: bisque;
+	min-height: 20% !important; 
 	 display: grid;
   grid-template-columns: 3fr 2fr;
 		padding: 1rem;
 }
 .weeklycontainer{
 	background-color: c.color(white);
-	width: 100%;
-	height: 100%;
+	width: 100%; 
 	border: 1px solid c.color(container-border);
 }
 
@@ -37,7 +35,7 @@ flex-grow: 1;
 			    display: grid;
     grid-template-columns: 2fr 4fr; 
 					    box-shadow: c.$box-card-shadow;
-									border: 1px solid c.color(grey);
+									border: 1px solid #ededed;
 }
 
 .weekly-top-card-1-sub p:nth-child(odd) {
@@ -45,14 +43,14 @@ flex-grow: 1;
     font-size: medium;
     font-weight: 700;
    color: c.color(primary-color);
-    border-right: 1px solid  c.color(grey);
+    border-right: 1px solid  #ededed;
 			  padding-left: 2rem !important;
 }
 .weekly-top-card-1-sub p {
-				border-top: 1px solid  c.color(grey); 
+				border-top: 1px solid  #ededed; 
 				padding: 8px;
 				margin: 0;
-				color: c.color(primary-color);
+				color: gray;
 				font-weight: bold;
 				background-color: rgba(240, 248, 255, 0.497);
 }
@@ -73,11 +71,11 @@ flex-grow: 1;
     border-radius: 3px;
     box-shadow: 0 0 1px c.color(border); 
 				width: 50%;
-				height: 80%;
+				// height: 80%;
 				    display: grid;
     grid-template-columns: 1fr;
 				  box-shadow: c.$box-card-shadow;
-				border: 1px solid c.color(grey);
+				border: 1px solid #ededed;
 						color: c.color(primary-color);
 						font-weight: bold;
 }
@@ -90,7 +88,7 @@ flex-grow: 1;
 //     // border-right: 1px solid c.color(border);
 // }
 .weekly-grading-system p {
-				border-top: 1px solid c.color(border);
+				border-top: 1px solid #ededed;
 				padding: 5px;
 				margin: 0;
 				background-color: rgba(240, 248, 255, 0.497);
@@ -196,9 +194,20 @@ flex-grow: 1;
 }
 
 .Activities-title{
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	text-align: center;
-	position: relative;
-	left: 150px; 
+	font-size:x-large;
+	// position: relative;
+	// left: 150px; 
+}
+
+.weekly-number{
+	white-space: nowrap; 
+}
+.weekly-number h4{ 
+	margin-bottom: 0px !important;
 }
 
 // .WeeKlyReport{
@@ -213,8 +222,88 @@ flex-grow: 1;
 	margin-left: 1rem;
 }
 
-.weekly-report-title{
+.weekly-report-title{ 
 	text-align: center;
 	font-size: bold;
 	color: c.color(primary-color);
+	display: flex;
+	justify-content: space-around;
+	align-self: center;
+	margin: 1rem;
+}
+
+.weekly-report-padding{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-self: center;
+	padding: 1rem;
+	text-align: center !important;
+	width: 100%;
+}
+
+.select-RiDeleteBin5Line{
+ 
+ 
+}
+.select-RiDeleteBin5Line :hover{
+	 background-color: rgba(220, 20, 60, 0.207);
+		border-radius: 10px; 
+ 
+}
+
+.WeeKlyReport-submit-container{
+	padding: 1rem;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.weekly-delete{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 60%;
+}
+
+@media screen and (max-width: 1000px) {
+  .weekly-top-container{
+display: block;
+		}
+
+		.weekly-top-container-card-2{
+			margin-top: 2rem;
+		
+		}
+		.weekly-grading-system {
+	width: 100% !important;
+		}
+
+		.weeklyreporttop-container-card-1 {
+     padding-right: 0px !important;  
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.weekly-report-title{
+	overflow-x: scroll;
+	text-align: center;
+	font-size: bold;
+	color: c.color(primary-color);
+	display: flex;
+	justify-content: space-evenly !important;
+	align-items: center;
+	align-self: center;
+	margin: 1rem;
+}
+
+.weekly-number h4{ 
+	margin-bottom: 0px !important;
+	margin-right: 1rem;
+	
+}
+.weekly-delete-btn{
+	margin-right: 1rem;
+	
+}
 }

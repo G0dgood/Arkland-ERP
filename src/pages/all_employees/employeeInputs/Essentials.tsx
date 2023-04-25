@@ -1,171 +1,404 @@
 import React from "react";
 import { Form, Formik } from "formik";
-import DatePicker from "react-datepicker";
 import * as Yup from "yup";
 import moment from "moment";
+import PhoneInput from "react-phone-input-2";
 import InputField from "../../../components/Inputs/InputField";
 import SelectField from "../../../components/Inputs/SelectField";
+import { EmployeeFormProps } from "../../../interfaces/employee";
+import CustomInputField from "../../../components/Inputs/CustomInputField";
+import {
+  ACADEMIC_QUALIFICATIONS,
+  disabilityOptions,
+  genderOptions,
+  isExpatriateOptions,
+  martialStatusOptions,
+  visaOptions,
+} from "../../../functions/helpers";
+// import { formatToTrue } from "../../../utils/format";
 
-const Essentials = () => {
-  const handleSubmit = (values: any) => {};
-  const genderOptions = ["Select your gender", "Male", "Female"];
+const Essentials = ({
+  active,
+  employee,
+  setEmployee,
+  setActive,
+  bindSubmitForm,
+}: EmployeeFormProps) => {
   const validate = Yup.object().shape({
     first_name: Yup.string().required("First name is required"),
     middle_name: Yup.string(),
     last_name: Yup.string().required("Last name is required"),
-    email: Yup.string().required("Email is required"),
     phone: Yup.string().required("Phone number is required"),
-    date_of_birth: Yup.string().required("Date of birth is required"),
   });
-  const formatDate = (date: Date) => moment(date).format("YYYY-MM-DD");
-  const dateChange = (date: Date, dateType: any) => {
-    if (dateType === "dob") {
+  const formatDate = (date: Date) => {
+    const show = moment(date).format();
+    return show;
+  };
+  const [is_expatriateValue, set_is_expatriateValue] = React.useState(false);
+  const [disability, setDisability] = React.useState(false);
+  const formatToTrue = (value?: any) => {
+    if (value === "Yes") {
+      setDisability(!false);
+      return true;
+    } else if (value === "No" || "Does employee have disability?") {
+      setDisability(!true);
+      return false;
     }
   };
+  const visaController = (value?: string) => {
+    if (value === "Yes") {
+      set_is_expatriateValue(true);
+      return true;
+    } else if (value === "No") {
+      set_is_expatriateValue(false);
+      return false;
+    }
+  };
+
+  const handleSubmit = (values?: any) => {
+    // console.log("Values", values);
+    setEmployee({ ...employee, ...values });
+    setActive(2);
+  };
   return (
-    <div className="EssentialsContainer">
+    <div className={active === 1 ? "EssentialsContainer" : "d-none"}>
       <Formik
         initialValues={{
           first_name: "",
+          middle_name: "",
+          last_name: "",
+          marital_status: "",
+          personal_email: "",
+          email: "",
+          phone: "",
+          gender: "",
+          date_of_birth: "",
+          has_disability: "",
+          disability: "",
+          visa_type: "",
+          is_expatriate: "",
+          visa_duration: "",
+          passport_number: "",
+          institution_attended: "",
+          nin: "",
+          course_studied: "",
+          qualification: "",
         }}
         onSubmit={handleSubmit}
         validationSchema={validate}
       >
-        {(formik) => (
-          <Form>
-            <div className="testbox">
-              <form>
-                <div className="row-item">
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="First Name"
-                        name="first_name"
-                        placeholder="Enter first name"
-                      />
+        {({ values, handleChange, setFieldValue, submitForm }) => {
+          if (active === 1) {
+            bindSubmitForm(submitForm);
+          }
+          return (
+            <Form>
+              <div className="testbox">
+                <form>
+                  <div className="row-item">
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="First Name"
+                          name="first_name"
+                          placeholder="Enter first name"
+                        />
+                      </div>
+                    </div>
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="Middle Name"
+                          name="middle_name"
+                          placeholder="Enter middle name"
+                        />
+                      </div>
+                    </div>
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="Last Name"
+                          name="last_name"
+                          placeholder="Enter last name"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="imput-space" />
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Middle Name"
-                        name="middle_name"
-                        placeholder="Enter middle name"
-                      />
+                  <div className="row-item">
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="Official Email"
+                          name="email"
+                          placeholder="Enter official email"
+                        />
+                      </div>
+                    </div>
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="Personal Email"
+                          name="personal_email"
+                          placeholder="Enter personal email"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="imput-space" />
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Last Name"
-                        name="last_name"
-                        placeholder="Enter last name"
-                      />
+                  <div className="row-item">
+                    <div className="col">
+                      <div className="form-group">
+                        <PhoneInput
+                          value=""
+                          inputProps={{
+                            name: "phone",
+                            required: true,
+                          }}
+                          inputStyle={{
+                            background: "4f269f",
+                            height: "40px",
+                            width: "100%",
+                            maxWidth: "100%",
+                          }}
+                          specialLabel="Employee Phone Number"
+                          inputClass="w-100"
+                          containerClass="mb-3 agent-project__owner"
+                          onChange={(telephone) =>
+                            setFieldValue("phone", `${telephone}`)
+                          }
+                          country={"ng"}
+                          placeholder="Enter employee Phone Number"
+                          defaultErrorMessage="required"
+                          enableSearch={true}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
+                          label="Gender"
+                          name="gender"
+                          options={genderOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue("gender", event?.target.value);
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="imput-space" />
-                <div className="row-item">
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Email"
-                        name="email"
-                        placeholder="Enter email"
-                      />
+                  <div className="row-item">
+                    <div className="col">
+                      <div className="form-group">
+                        <CustomInputField
+                          style={{
+                            lineHeight: 1,
+                          }}
+                          type="date"
+                          label="Date of Birth"
+                          name="date_of_birth"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "date_of_birth",
+                              formatDate(event?.target.value)
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
+                          label="Marital Status"
+                          name="marital_status"
+                          options={martialStatusOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "marital_status",
+                              event?.target.value
+                            );
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="imput-space" />
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Phone"
-                        name="phone"
-                        placeholder="Enter Phone"
-                      />
+                  <div className="row-item">
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
+                          label="Disability"
+                          name="disability"
+                          options={disabilityOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "has_disability",
+                              formatToTrue(event?.target.value)
+                            );
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="imput-space" />
+                    {disability ? (
+                      <div className="col">
+                        <div className="form-group">
+                          <InputField
+                            label="Enter Disability"
+                            name="disability"
+                            placeholder="Enter type of disability"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    <div className="imput-space" />
+
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="Institution Attended"
+                          name="institution_attended"
+                          placeholder="Enter Institution Attended"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="row-item">
-                  <div className="col">
-                    <div className="form-group">
-                      <SelectField
-                        label="Gender"
-                        name="gender"
-                        options={genderOptions}
-                        className="form-group__gender"
-                      />
+                  <div className="row-item">
+                    <div className="col">
+                      <div className="form-group">
+                        <InputField
+                          label="Course Studied"
+                          name="course_studied"
+                          placeholder="Enter Course Studied"
+                        />
+                      </div>
+                    </div>
+                    <div className="imput-space" />
+
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
+                          label="Qualification"
+                          name="qualification"
+                          options={ACADEMIC_QUALIFICATIONS}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue("qualification", event?.target.value);
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="imput-space" />
+                    <div className="col">
+                      <div className="form-group">
+                        <SelectField
+                          label="Expatriate"
+                          name="is_expatriate"
+                          options={isExpatriateOptions}
+                          className="form-group__gender"
+                          onChange={(event: any) => {
+                            setFieldValue(
+                              "is_expatriate",
+                              visaController(event?.target.value)
+                            );
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="imput-space" />
-                  <div className="col">
-                    <div className="form-group">
-                      <span className="input__label">Date of Birth</span>
-                      <DatePicker
-                        showMonthDropdown
-                        showYearDropdown
-                        dropdownMode="select"
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="DD/MM/YYYY"
-                        onChange={(value: any) =>
-                          formik.setFieldValue(
-                            "dob",
-                            formatDate({ value }.value)
-                          )
-                        }
-                        className="select-input form-group__datepicker "
-                      />
+                  {is_expatriateValue ? (
+                    <div className="row-item">
+                      <div className="col">
+                        <div className="form-group">
+                          <SelectField
+                            label="Choose visa type"
+                            name="visa_type"
+                            options={visaOptions}
+                            className="form-group__gender"
+                            onChange={(event: any) => {
+                              setFieldValue("visa_type", event?.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="imput-space" />
+                      <div className="col">
+                        <div className="form-group">
+                          <InputField
+                            label="Passport Number"
+                            name="passport_number"
+                            placeholder="Enter employee's passport number"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="row-item">
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Disability"
-                        name="disability"
-                        placeholder="Enter Disability"
-                      />
+                  ) : (
+                    <div className="row-item">
+                      <div className="col">
+                        <div
+                          className="form-group"
+                          style={{
+                            width: "50%",
+                          }}
+                        >
+                          <CustomInputField
+                            type="number"
+                            label="NIN"
+                            name="nin"
+                            placeholder="Enter National Identity Number"
+                            onChange={(event: any) => {
+                              setFieldValue("nin", event?.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="imput-space" />
                     </div>
-                  </div>
-                  <div className="imput-space" />
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Institution Attended"
-                        name="institution_attended"
-                        placeholder="Enter Institution Attended"
-                      />
+                  )}
+                  {is_expatriateValue ? (
+                    <div className="row-item">
+                      <div className="col">
+                        <div
+                          className="form-group"
+                          style={{
+                            width: "50%",
+                          }}
+                        >
+                          <CustomInputField
+                            type="number"
+                            label="Visa Duration (Months)"
+                            name="visa_duration"
+                            placeholder="Enter employee's visa duration"
+                            onChange={(event: any) => {
+                              setFieldValue(
+                                "visa_duration",
+                                event?.target.value
+                              );
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="imput-space" />
                     </div>
-                  </div>
-                </div>
-                <div className="row-item">
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Course Studied"
-                        name="course_studied"
-                        placeholder="Enter Course Studied"
-                      />
-                    </div>
-                  </div>
-                  <div className="imput-space" />
-                  <div className="col">
-                    <div className="form-group">
-                      <InputField
-                        label="Qualification"
-                        name="qualification"
-                        placeholder="Enter Qualification"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </Form>
-        )}
+                  ) : (
+                    ""
+                  )}
+                </form>
+              </div>
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );

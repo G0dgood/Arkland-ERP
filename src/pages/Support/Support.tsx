@@ -1,9 +1,28 @@
-import { useEffect, useState } from 'react'
-import Header from '../../components/Header';
-import AddNewSupportMessageModal from '../../components/Modals/AddNewSupportMessageModal';
-import Sidebar from '../../components/Sidebar';
 
-const Support = () => {
+import React, { useEffect, useState } from 'react'
+import Header from '../../components/Header'
+import Sidebar from '../../components/Sidebar'
+import { Modal } from 'react-bootstrap';
+import MyMessage from '../../components/SupportComponents/MyMessage';
+import AllMessages from '../../components/SupportComponents/AllMessages';
+import ChatBoard from '../../components/SupportComponents/ChatBoard';
+import NewMessage from '../../components/SupportComponents/NewMessage';
+
+const Support = (props: any) => {
+
+
+
+	// --- New Message Modal --- //
+	const [show, setShow] = useState(false)
+	const handleClose = () => setShow(false)
+	const handleShow = () => setShow(true)
+
+	const [activeTab, setActiveTab] = useState(0)
+	const tabs = ["My message", "All message"]
+	const tabPanels = [
+		{ component: <MyMessage handleShow={handleShow} /> },
+		{ component: <AllMessages /> }
+	]
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
 		return JSON.parse(localStorage.getItem("collapse")) || false;
@@ -18,126 +37,43 @@ const Support = () => {
 		setCollapseNav(!collapseNav);
 	};
 
+
 	return (
 		<div id="screen-wrapper">
 			<Header toggleSideNav={toggleSideNav} />
 			<Sidebar collapseNav={collapseNav} />
 			<main>
-				<div className='SupportmainTitle'>
-					<div>
-						<h3 className='SupportmainTitleh3'>Support</h3>
+				<h4 className="page-title">Support Messaging</h4>
+				<ul className="nav-tabs">
+					{tabs.map((item, i) =>
+						// @ts-ignore
+						<li key={i} className={activeTab === i && "active"} onClick={() => setActiveTab(i)}>{item}</li>
+					)}
+				</ul>
+				<div className="msg-area">
+					<div className="msg-table">
+						{tabPanels[activeTab].component}
 					</div>
-					<div>
-
-						{/* <Button variant="contained" className="Add-btn">
-							New Message
-						</Button> */}
-
-						<AddNewSupportMessageModal />
+					<div className="msg-board">
+						<ChatBoard />
 					</div>
 				</div>
 
-				<section className="md-ui component-data-table">
-					{/* <header className="main-table-header">
-							<h1 className="table-header--title">Nutrition</h1>
-							<span className="table-header--icons"><i className="material-icons">filter_list</i><i className="material-icons">more_vert</i>
-							</span>
-						</header> */}
-					<div className="main-table-wrapper">
-						<table className="main-table-content">
-							<thead className="data-table-header">
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric">DATE SENT</td>
-									<td className="table-datacell datatype-numeric">SUBJECT</td>
-									<td className="table-datacell datatype-numeric">VIEW</td>
+				<Modal
+					// @ts-ignore
+					size="md"
+					show={show}
+					onHide={handleClose}
+					backdrop="static"
+					keyboard={false}>
+					<Modal.Header closeButton>
+						<Modal.Title>Start New Message</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<NewMessage />
+					</Modal.Body>
+				</Modal>
 
-								</tr>
-							</thead>
-							<tbody className="data-table-content">
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric">25-08-2022 </td>
-									<td className="table-datacell datatype-numeric">Request for New Laptop</td>
-									<td className="table-datacell datatype-numeric">31-08-2022 </td>
-
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric">J </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-
-								</tr>
-								<tr>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-
-								</tr>
-								<tr className="data-table-row">
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-									<td className="table-datacell datatype-numeric"> </td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					{/* <footer className="main-table-footer">
-							<span className="rows-selection">
-								<span className="rows-selection-label">Rows per page:</span>
-								<span className="rows-selection-dropdown">10<i className="material-icons">arrow_drop_down</i></span>
-							</span>
-							<span className="rows-amount">1-10 of 100</span>
-							<span className="table-pagination">
-								<i className="material-icons">keyboard_arrow_left</i>
-								<i className="material-icons">keyboard_arrow_right</i>
-							</span>
-						</footer> */}
-				</section>
 			</main>
 		</div>
 	)

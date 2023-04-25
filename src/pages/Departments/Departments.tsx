@@ -1,88 +1,120 @@
-import { useEffect, useState } from 'react'
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
-import { FiBarChart, FiShoppingCart, FiTool, FiUsers } from 'react-icons/fi';
-import { RiWallet2Line } from 'react-icons/ri';
-import { BiBox } from 'react-icons/bi';
-import { AiOutlineDesktop } from 'react-icons/ai';
-import { MainSearch } from '../../components/TableOptions';
-import CreateDepartmentModal from '../../components/Modals/CreateDepartmentModal';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, CSSProperties } from "react";
+import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
+import SyncLoader from "react-spinners/SyncLoader";
+import { Button } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
+import { getRequestOptions } from "../../utils/auth/header";
+import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
+import { useDepartments } from "../../hooks/useDepartments";
+import { MdOutlineMapsHomeWork } from "react-icons/md";
+import { getUserPrivileges } from "../../functions/auth";
 
-const Departments = () => {
-	const navigate = useNavigate();
-	const [collapseNav, setCollapseNav] = useState(() => {
-		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
-	});
+const DepartmentsView = () => {
+  const navigate = useNavigate();
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
+  const [newDepartmentCreated, setNewDepartmentCreated] = React.useState(
+    {} as any
+  );
+  const [collapseNav, setCollapseNav] = useState(() => {
+    // @ts-ignore
+    return JSON.parse(localStorage.getItem("collapse")) || false;
+  });
+  const { departments, isLoading, error, message } =
+    useDepartments(newDepartmentCreated);
 
-	useEffect(() => {
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-		localStorage.setItem("collapse", JSON.stringify(collapseNav));
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-	}, [collapseNav]);
-	const toggleSideNav = () => {
-		setCollapseNav(!collapseNav);
-	};
+  const handleNewDepartmentCreated = () => {
+    setNewDepartmentCreated(!newDepartmentCreated);
+  };
+  useEffect(() => {
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+    localStorage.setItem("collapse", JSON.stringify(collapseNav));
+    // --- Set state of collapseNav to localStorage on pageLoad --- //
+  }, [collapseNav]);
+  const toggleSideNav = () => {
+    setCollapseNav(!collapseNav);
+  };
+  const randColor = () => {
+    const realColor =
+      "#" +
+      Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, "0")
+        .toUpperCase();
+    console.log("realColor", realColor);
+    return realColor;
+  };
 
-	return (
-		<div id="screen-wrapper">
-			<Header toggleSideNav={toggleSideNav} />
-			<Sidebar collapseNav={collapseNav} />
-			<main>
-				<div className='departments-main-container'>
-					<div>
-						<	CreateDepartmentModal />
+  const isPrime = (num: number) => {
+    for (let i = 2; i < num; i++) if (num % i === 0) return false;
+    return num > 1;
+  };
 
-					</div>
-					<MainSearch placeholder={'Search...          Depertments'} />
-				</div>
+  return (
+    <div id="screen-wrapper">
+      <Header toggleSideNav={toggleSideNav} />
+      <Sidebar collapseNav={collapseNav} />
+      <main>
+        <div className="ProjectViewContainer">
+          <div className="ProjectViewContainer-subone">
+            <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
+              <h5>Department</h5>
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div className="Request-btn-modal-container">
+                  <div className="Request-btn">
+                    <CreateDepartmentModal
+                      onNewDepartmentCreated={handleNewDepartmentCreated}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+            {isLoading ? (
+              <div className="isLoading-container">
+                <SyncLoader color={"#990000"} loading={isLoading} />
+              </div>
+            ) : departments?.length === 0 ? (
+              <div className="table-loader-announcement">
+                <div>
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                  <img src="https://img.icons8.com/wired/64/null/department.png" />
+                  <p className="mt-3">No department found</p>
+                </div>
+              </div>
+            ) : (
+              <div className="subone-col-3">
+                {departments?.map((item: any, i: any) => (
+                  <div
+                    className="ProjectView-card"
+                    key={i}
+                    onClick={() => navigate(`/departments/${item?.id}`)}
+                  >
+                    <div className="iDotsHorizontalRounded">
+                      <Button
+                        className={
+                          i % 2 === 0
+                            ? `iDotsRounded1`
+                            : isPrime(parseInt(i, 10))
+                            ? "iDotsRounded2"
+                            : "iDotsRounded3"
+                        }
+                      >
+                        {item?.name}
+                      </Button>
+                      <BiDotsHorizontalRounded color="#97979B" />
+                    </div>
+                    <div className="iDotsRounded-text">{item?.name}</div>
+                    <div className="iDotsRounded-text">{item?.description}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
 
-				<div className='Department-item'>
-					<div className='Department-item-sub-main' onClick={() => navigate("/procurement")}>
-						<div className='Department-container-item-sub' >
-							<FiShoppingCart size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Procurement</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/engineering")}>
-						<div className='Department-container-item-sub'>
-							<FiTool size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Engineering</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/finance")}>
-						<div className='Department-container-item-sub'>
-							<RiWallet2Line size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Finance</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/humanresource")}>
-						<div className='Department-container-item-sub'>
-							<FiUsers size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Human Resource</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/inventory")}>
-						<div className='Department-container-item-sub'>
-							<BiBox size={50} />
-						</div>
-						<p className='Department-item-sub-p'>Inventory</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/informationtech")}>
-						<div className='Department-container-item-sub'><AiOutlineDesktop size={50} /></div>
-						<p className='Department-item-sub-p'>IT</p>
-					</div>
-					<div className='Department-item-sub-main' onClick={() => navigate("/budget")}>
-						<div className='Department-container-item-sub'><FiBarChart size={50} /></div>
-						<p className='Department-item-sub-p'>Budget</p>
-					</div>
-				</div>
-			</main>
-		</div>
-	)
-}
-
-
-
-export default Departments
+export default DepartmentsView;

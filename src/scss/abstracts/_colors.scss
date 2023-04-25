@@ -12,10 +12,11 @@ $colors: (
   black: #252a32,
   black-100: rgb(26, 26, 26),
   light: #f1f5f8,
+  green: #228b22,
   red: #d32f2f,
   blue: #148cb8,
   grey: #5c5c5c,
-  border: #b2b2b2, 
+  border: #b2b2b2,
   light-border: #ededed,
   container-border: #e8e8e8,
   project-view-btn: #bf8412,
@@ -23,8 +24,8 @@ $colors: (
   light-grey-border: #e3e3e3,
   table-color: #e0e0e0,
   circle-next-color: #686868,
-  search-color: #E6E6E6,
-primary-opacity-color:#C99B9B,
+  search-color: #e6e6e6,
+  primary-opacity-color: #c99b9b
 );
 
 @function color($key) {

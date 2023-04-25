@@ -25,6 +25,7 @@ const toStartOfDay = (date: string | number | Date) => {
 };
 
 const pad = (input: string | number) => {
+  // @ts-ignore
   return input < 10 ? "0" + input : input;
 };
 
