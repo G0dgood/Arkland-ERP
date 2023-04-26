@@ -6,7 +6,6 @@ import AdminDashboard from "./AdminDashboard";
 import storage from "../../utils/storage";
 
 const Dashboard = () => {
-
   // @ts-ignore
   const userInfo: any = JSON?.parse(storage?.get("user"));
 
