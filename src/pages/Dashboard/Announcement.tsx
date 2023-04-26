@@ -260,7 +260,7 @@ const Announcement = () => {
                       centered
                     >
                       <Modal.Header closeButton id="displayTermination">
-                        <Modal.Title>View Todo</Modal.Title>
+                        <Modal.Title>View Announcement</Modal.Title>
                         <Button
                           style={{ color: "#fff" }}
                           onClick={() => setViewShow(false)}

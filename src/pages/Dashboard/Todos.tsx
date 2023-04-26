@@ -83,7 +83,6 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
       setShowDrawer(!showDrawer);
     }
   };
-
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">
@@ -179,7 +178,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                           ) : (
                             <div className="getjob-application-details">
                               <p>ASSIGNED TO</p>
-                              <p>{schedule?.assigned_to}</p>
+                              <p>{schedule?.assigned_to?.full_name}</p>
                               <p>TITLE</p>
                               <p>{schedule?.title}</p>
                               <p>STATUS</p>

@@ -28,8 +28,8 @@ export const useAttendance = (startDate: any, endDate: any) => {
         setLoading(true);
         const apiUrl = new URL(`${process.env.REACT_APP_API}/hr/attendances`);
         if (startDate && endDate) {
-          apiUrl.searchParams.set("start_date", startDate);
-          apiUrl.searchParams.set("end_date", endDate);
+          apiUrl.searchParams.set("startDate", startDate);
+          apiUrl.searchParams.set("endDate", endDate);
         }
         const response = await fetch(apiUrl.toString(), getRequestOptions);
         const isJsonResponse = response.headers
