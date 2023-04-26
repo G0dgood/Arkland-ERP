@@ -19,9 +19,9 @@ const AttendanceTable = () => {
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
-    if (name === "start_date") {
+    if (name === "startDate") {
       setStartDate(value);
-    } else if (name === "end_date") {
+    } else if (name === "endDate") {
       setEndDate(value);
     }
   };
@@ -75,7 +75,7 @@ const AttendanceTable = () => {
               }}
             >
               <div className="input">
-                <label htmlFor="start_date" className="input__label">
+                <label htmlFor="startDate" className="input__label">
                   Start Date
                 </label>
                 <input
@@ -84,14 +84,14 @@ const AttendanceTable = () => {
                     lineHeight: "1",
                   }}
                   type="date"
-                  id="start_date"
-                  name="start_date"
+                  id="startDate"
+                  name="startDate"
                   value={startDate}
                   onChange={handleChange}
                 />
               </div>
               <div className="input">
-                <label htmlFor="end_date" className="input__label">
+                <label htmlFor="endDate" className="input__label">
                   End Date
                 </label>
                 <input
@@ -100,8 +100,8 @@ const AttendanceTable = () => {
                     lineHeight: "1",
                   }}
                   type="date"
-                  id="end_date"
-                  name="end_date"
+                  id="endDate"
+                  name="endDate"
                   value={endDate}
                   onChange={handleChange}
                 />
