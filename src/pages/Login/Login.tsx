@@ -69,7 +69,7 @@ const Login = () => {
       .catch((error) => {
         setLoading(false);
         setError(true);
-        setMessage(error?.message);
+        setMessage(error);
         setTimeout(() => {
           setError(false);
           setMessage("");

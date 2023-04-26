@@ -3,14 +3,17 @@ import React, { CSSProperties } from "react";
 import { Button } from "@mui/material";
 
 import { BsFillPinAngleFill, BsThreeDots } from "react-icons/bs";
+import { FiEye, FiTrash2 } from "react-icons/fi";
+import { Modal, Spinner } from "react-bootstrap";
+import Cookies from "js-cookie";
+import { MdOutlineClose } from "react-icons/md";
 import SyncLoader from "react-spinners/SyncLoader";
 import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 import { getRequestOptions } from "../../utils/auth/header";
 import { getUserPrivileges } from "../../functions/auth";
-import AttendanceModal from "../../components/Modals/AttendanceModal";
-import Cookies from "js-cookie";
 import { fireAlert } from "../../utils/Alert";
-import { Spinner } from "react-bootstrap";
+import { DialogState } from "../../interfaces/base";
+import { useAnnouncementsById } from "../../hooks/useAnnouncements";
 const token = Cookies.get("token");
 
 const Announcement = () => {
@@ -25,12 +28,22 @@ const Announcement = () => {
   } = getUserPrivileges();
 
   const [announcements, setAnnouncements] = React.useState([] as any);
+  const [announcementAction, setAnnouncementAction] = React.useState([] as any);
+
   const [isLoading, setLoading] = React.useState(false);
   const [clockInLoading, setClockInLoading] = React.useState(false);
   const [error, setError] = React.useState<any>();
   const [message, setMessage] = React.useState("");
   const [newAnnouncementCreated, setNewAnnouncementCreated] =
     React.useState(false);
+  const [viewAction, setViewAction] = React.useState([] as any);
+  const [showView, setShowView] = React.useState<DialogState>({});
+  const [showDialog, setShowDialog] = React.useState<DialogState>({});
+  const [deleteShow, setDeleteShow] = React.useState(false);
+
+  const [viewShow, setViewShow] = React.useState(false);
+  const { ViewAnnouncements, isAnnouncementsLoading } =
+    useAnnouncementsById(viewAction);
 
   React.useEffect(() => {
     let isMounted = true;
@@ -72,7 +85,7 @@ const Announcement = () => {
     return () => {
       isMounted = false;
     };
-  }, [newAnnouncementCreated]);
+  }, [newAnnouncementCreated, announcementAction]);
   const handleNewAnnouncementCreated = () => {
     setNewAnnouncementCreated(!newAnnouncementCreated);
   };
@@ -111,8 +124,59 @@ const Announcement = () => {
     }
   };
 
+  const deleteAnnouncement = async (id: string) => {
+    console.log("idDee", id);
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API}/hr/announcements/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setLoading(false);
+      if (response.ok) {
+        const title = "Announcement deleted.";
+        const html = `Announcement deleted`;
+        const icon = "success";
+        fireAlert(title, html, icon);
+        setAnnouncementAction(true);
+        setShowDialog({ [id]: false });
+      } else {
+        throw new Error(data.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setLoading(false);
+      const html = error.message || "Something went wrong!";
+      const icon = "error";
+      const title = "Announcement deletion failed";
+      fireAlert(title, html, icon);
+    }
+  };
+  const handleView = (id: any) => {
+    setViewAction([id]);
+    setShowView({ [id]: true });
+    setViewShow(true);
+  };
+
+  const handleDelete = (id: any) => {
+    setShowDialog({ [id]: true });
+    setDeleteShow(true);
+  };
   return (
-    <div className="main-div-col-2-sub">
+    <div
+      className="main-div-col-2-sub"
+      style={{
+        height: "74.5%",
+        overflow: "auto",
+      }}
+    >
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
           <span className="sub-text-contained">
@@ -171,14 +235,110 @@ const Announcement = () => {
                     </div>
                   </div>
                   <div className="FiTrash2">
-                    <span className="BsFillPinAngleFill">
-                      {" "}
-                      <BsFillPinAngleFill size={20} />
-                    </span>
                     <span>
-                      <BsThreeDots size={25} />
+                      <FiEye
+                        size={25}
+                        onClick={() => handleView(item?.id)}
+                        cursor="pointer"
+                        title="VIEW ANNOUNCEMENT"
+                      />
+                    </span>
+                    <span className="BsFillPinAngleFill">
+                      <FiTrash2
+                        size={25}
+                        onClick={() => handleDelete(item?.id)}
+                        cursor="pointer"
+                        title="DELETE TODO"
+                      />
                     </span>
                   </div>
+                  {showView[item?.id] && (
+                    <Modal
+                      size="lg"
+                      show={viewShow}
+                      aria-labelledby="contained-modal-title-vcenter"
+                      centered
+                    >
+                      <Modal.Header closeButton id="displayTermination">
+                        <Modal.Title>View Todo</Modal.Title>
+                        <Button
+                          style={{ color: "#fff" }}
+                          onClick={() => setViewShow(false)}
+                        >
+                          <MdOutlineClose size={28} />
+                        </Button>
+                      </Modal.Header>
+                      <Modal.Body>
+                        {isAnnouncementsLoading === true ? (
+                          <div className="table-loader-announcement1">
+                            <SyncLoader
+                              color={"#990000"}
+                              loading={isAnnouncementsLoading}
+                            />
+                          </div>
+                        ) : (
+                          <div className="getjob-application-details">
+                            <p>MESSAGE</p>
+                            <p>{ViewAnnouncements?.message}</p>
+                            <p>AUDIENCE</p>
+                            <p>{ViewAnnouncements?.audience_scope}</p>
+                            <p>STATUS</p>
+                            <p>{ViewAnnouncements?.status}</p>
+                            <p>DATE OF CREATION</p>
+                            <p>
+                              {moment(ViewAnnouncements?.created_at).format(
+                                "DD-MMMM-YYYY"
+                              )}
+                            </p>
+                          </div>
+                        )}
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => setShowView({ [item?.id]: false })}
+                        >
+                          Cancel
+                        </button>
+                      </Modal.Footer>
+                    </Modal>
+                  )}
+
+                  {showDialog[item?.id] && (
+                    <Modal
+                      size="lg"
+                      show={deleteShow}
+                      aria-labelledby="contained-modal-title-vcenter"
+                      centered
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Delete Announcement</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <p>
+                          Are you sure you want to delete this announcement?
+                        </p>
+                        <p>{item?.title}</p>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => {
+                            deleteAnnouncement(item?.id);
+                            // setShowDialog({ [item?.id]: false });
+                          }}
+                        >
+                          Yes
+                        </button>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => setShowDialog({ [item?.id]: false })}
+                        >
+                          Cancel
+                        </button>
+                      </Modal.Footer>
+                    </Modal>
+                  )}
                 </div>
               </div>
             ))}

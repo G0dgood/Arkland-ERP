@@ -56,7 +56,7 @@ const AdminEditUser = () => {
         />
       ),
     },
-    { component: <ResetPassword /> },
+    { component: <ResetPassword email={employee?.email} /> },
   ];
 
   return (
