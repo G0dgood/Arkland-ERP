@@ -61,6 +61,7 @@ import HumanResources from "./pages/HumanResources/HumanResources";
 import AttendanceTable from "./pages/HumanResources/attendance/AttendanceTable";
 import EmployeeAttendance from "./pages/EmployeeAttendance/EmployeeAttendance";
 import EmployeeAttendanceTable from "./pages/EmployeeAttendance/table/EmployeeAttendanceTable";
+import { getUserPrivileges } from "./functions/auth";
 
 export const removeData = () => {
   Cookies.remove("isAuthenticated");
@@ -68,6 +69,8 @@ export const removeData = () => {
   storage.remove("user");
   delete axios.defaults.headers.common["Authorization"];
 };
+const { isHRHead, isHeadOfDepartment, isSuperAdmin, isAdmin, isHrAdmin } =
+  getUserPrivileges();
 
 const AppRoutes: React.FC<any> = () => {
   const dispatch = useAppDispatch();
@@ -88,7 +91,13 @@ const AppRoutes: React.FC<any> = () => {
   );
 
   React.useEffect(() => {
-    if (Cookies.get("token")) {
+    if (
+      (Cookies.get("token") && isHRHead) ||
+      isHeadOfDepartment ||
+      isSuperAdmin ||
+      isAdmin ||
+      isHrAdmin
+    ) {
       dispatch(getEmployees());
     }
   }, [dispatch]);

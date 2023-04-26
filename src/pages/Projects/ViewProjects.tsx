@@ -97,12 +97,11 @@ const ViewProject = () => {
     teamMembers.length > 0 &&
       teamMembers.forEach((teamMember: any) =>
         availablleTeamMembers.push({
-          value: teamMember.id,
+          value: teamMember.employee?.user,
           label: teamMember.employee_name,
         })
       );
   }
-
   return (
     <div id="screen-wrapper">
       {error && (
@@ -338,7 +337,7 @@ const ViewProject = () => {
                                     className="project-main-div-col-2-sub-container1-subTitle"
                                     style={{ textTransform: "uppercase" }}
                                   >
-                                    {item?.team_name}
+                                    {item?.employee?.role?.name}
                                   </p>
                                 </div>
                               </div>

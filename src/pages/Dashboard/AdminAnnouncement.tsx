@@ -9,7 +9,7 @@ import {
 import { Button } from "@material-ui/core";
 import { Toast } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
-import useAnnouncements from "../../hooks/useAnnouncements";
+import { useAnnouncements } from "../../hooks/useAnnouncements";
 
 const AdminAnnouncement = () => {
   const { announcements, isLoading, error, message } = useAnnouncements();
