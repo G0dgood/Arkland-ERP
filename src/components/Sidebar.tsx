@@ -83,24 +83,31 @@ const Sidebar = ({ collapseNav }: any) => {
             </div>
           )}
         </NavLink>
-
-        <NavLink
-          to="/teamkpi"
-          // exact
-          className={
-            window.location.pathname === "/teamkpi" ? "active-here" : "nav-link"
-          }
-          onMouseEnter={() => setTeamKPI(true)}
-          onMouseLeave={() => setTeamKPI(false)}
-        >
-          <MdOutlineAssessment size={20} />
-          <span className="nav-name">Team KPI</span>
-          {teamKPI && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Team KPI</p>
-            </div>
-          )}
-        </NavLink>
+        {(isSuperAdmin ||
+          isTeamLead ||
+          isHeadOfDepartment ||
+          isHRHead ||
+          isHrAdmin) && (
+          <NavLink
+            to="/teamkpi"
+            // exact
+            className={
+              window.location.pathname === "/teamkpi"
+                ? "active-here"
+                : "nav-link"
+            }
+            onMouseEnter={() => setTeamKPI(true)}
+            onMouseLeave={() => setTeamKPI(false)}
+          >
+            <MdOutlineAssessment size={20} />
+            <span className="nav-name">Team KPI</span>
+            {teamKPI && collapseNav && (
+              <div className="sidenav-bubble">
+                <p>Team KPI</p>
+              </div>
+            )}
+          </NavLink>
+        )}
 
         <NavLink
           to="/weeklycontainer"
