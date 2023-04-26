@@ -44,7 +44,7 @@ const Login = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...values }),
     };
-    fetch(`${process.env.REACT_APP_API}/auth/login`, requestOptions)
+    fetch(`https://arkland-erp.herokuapp.com/api/v1/auth/login`, requestOptions)
       .then(async (response) => {
         // @ts-ignore
         setLoading(false);

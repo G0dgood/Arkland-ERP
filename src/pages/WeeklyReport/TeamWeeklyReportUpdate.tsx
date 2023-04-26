@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { fireAlert } from '../../utils/Alert';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
@@ -8,6 +8,7 @@ import TableLoader from '../../components/TableLoader';
 import { MdOutlineClose } from 'react-icons/md';
 import { BsChatLeftText } from 'react-icons/bs';
 import WeeklyReportTable from './WeeklyReportTable';
+import Cookies from 'js-cookie';
 
 const TeamWeeklyReportUpdate = () => {
 
@@ -16,60 +17,112 @@ const TeamWeeklyReportUpdate = () => {
 
 
 	const [data, setData] = useState<any>([]);
-	const [sortData, setSortData] = useState([]);
-	const [searchItem, setSearchItem] = useState("");
 	const [isLoading, setisLoading] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
+	const [isError1, setisError1] = useState(false)
+	const [message1, setMessage1] = useState("");
 
 	const [inputs, setInputs] = useState([]);
+	const token = Cookies.get("token");
 
-
-	const title = "Weekly Reports error";
+	const title = "Weekly Report Update error";
 	const html = message;
 	const icon = "error";
+	const title1 = "Weekly Report Update error";
+	const html1 = message1;
+	const icon1 = "error";
+	const title2 = "Weekly Report Acknowledged";
+	const html2 = "Acknowledged";
+	const icon2 = "success";
 
-	const title1 = "Weekly Reports Acknowledged";
-	const html1 = "Weekly Reports Acknowledged";
-	const icon1 = "success";
 
 
-	React.useEffect(() => {
+
+
+	useEffect(() => {
 		setisLoading(true);
-		axios
-			.get(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`)
-			.then((res: AxiosResponse) => {
-				setData(res?.data?.data);
+		fetch(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}/view`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+
+				if (data?.success === false) {
+					setMessage(data?.message)
+					setisError(true)
+				} else {
+					setData(data?.data)
+				}
 				setisLoading(false);
 			})
-			.catch((err) => {
-				console.log(err);
-				setMessage(err?.message)
+			.catch((error) => {
+				console.error("Error:", error);
 				setisLoading(false);
 			});
-	}, [id, navigate]);
+
+	}, [id, token])
 
 
+	const handleacknowlage = () => {
+		setisLoading1(true)
+		fetch(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}/acknowledge`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
 
-	const handleUpate = () => {
-		setisLoading1(true);
-		axios
-			.patch(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`,)
-			.then((res: AxiosResponse) => {
+				if (data?.success === false) {
+					setMessage1(data?.message)
+					setisError1(true)
+				} else {
+					setData(data?.data)
+					setisSuccess(true)
+					setTimeout(() => {
+						navigate("/teamweekly");
+					}, 2000);
+				}
 				setisLoading1(false);
-				fireAlert(title1, html1, icon1);
-				setTimeout(() => {
-					navigate("/teamweekly");
-				}, 2000);
 			})
-			.catch((data) => {
-				console.log(data);
-				fireAlert(title, html, icon);
+			.catch((error) => {
+				console.error("Error:", error);
 				setisLoading1(false);
 			});
 	}
+
+
+
+
+	useEffect(() => {
+		if (isError) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisError(false)
+				setMessage("")
+			}, 5000);
+		} else if (isError1) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		} else if (isSuccess) {
+			fireAlert(title2, html2, icon2);
+			setTimeout(() => {
+				setisSuccess(false)
+			}, 5000);
+		}
+	}, [html, html1, isError, isError1, isSuccess])
 
 	return (
 		<div  >
@@ -92,52 +145,50 @@ const TeamWeeklyReportUpdate = () => {
 					</Link>
 				</div>
 			</header>
-			<main>
 
-				<div className='weekly-top-container'>
-					<div className='weeklyreporttop-container-card-1'>
-						<div className='weekly-top-card-1-sub'>
-							<p>EMPLOYEE NAME</p>
-							<p className='weekly-top-card-1-sub-second-child'>{data?.employee_name}</p>
-							<p>EMPLOYEE TITLE</p>
-							<p>{data?.employee_title}</p>
-							<p>DEPARTMENT</p>
-							<p>I.T</p>
-							<p>SUPERVISOR</p>
-							<p>{data?.employee_supervisor}</p>
-							<p>SELF ASSESSMENT</p>
-							<p>{data?.self_assessment}</p>
-							<p>DATE</p>
-							<p>30/11/2022</p>
-						</div>
-					</div>
-					<div className='weekly-top-container-card-2'>
-						<div className='weekly-grading-system'>
-							<p>SELF ASSESSMENT OPTIONS</p>
-							<p>Execellent</p>
-							<p>Above Average</p>
-							<p>Average</p>
-							<p>Above Average</p>
-						</div>
+			<div className='weekly-top-container'>
+				<div className='weeklyreporttop-container-card-1'>
+					<div className='weekly-top-card-1-sub'>
+						<p>EMPLOYEE NAME</p>
+						<p className='weekly-top-card-1-sub-second-child'>{data?.employee_name}</p>
+						<p>EMPLOYEE TITLE</p>
+						<p>{data?.employee_title}</p>
+						<p>DEPARTMENT</p>
+						<p>I.T</p>
+						<p>SUPERVISOR</p>
+						<p>{data?.employee_supervisor}</p>
+						<p>SELF ASSESSMENT</p>
+						<p>{data?.self_assessment}</p>
+						<p>DATE</p>
+						<p>30/11/2022</p>
 					</div>
 				</div>
-				<div className='weekly-report-title'>
-					<div className='weekly-delete'>
-						<div>
-							<h4>Week {data?.week}
-							</h4>
-						</div>
-						<div>
-							{data?.status === "acknowledged" ? "" : <Button className="table-link-active" onClick={handleUpate}>	{isLoading1 ? <Spinner animation="border" /> : 'acknowledge'}</Button>}
+				<div className='weekly-top-container-card-2'>
+					<div className='weekly-grading-system'>
+						<p>SELF ASSESSMENT OPTIONS</p>
+						<p>Execellent</p>
+						<p>Above Average</p>
+						<p>Average</p>
+						<p>Above Average</p>
+					</div>
+				</div>
+			</div>
+			<div className='weekly-report-title'>
+				<div className='weekly-delete'>
+					<div>
+						<h4>Week {data?.week}
+						</h4>
+					</div>
+					<div>
+						{data?.status === "acknowledged" ? "" : <Button className="table-link-active" onClick={handleacknowlage}>	{isLoading1 ? <Spinner animation="border" /> : 'acknowledge'}</Button>}
 
-						</div>
 					</div>
 				</div>
-				<div>
-					{isLoading ? <TableLoader isLoading={isLoading} /> : ''}
-					<WeeklyReportTable data={data?.activities} isLoading={isLoading1} setInputs={setInputs} />
-				</div>
-			</main>
+			</div>
+			<div>
+				{isLoading1 ? <TableLoader isLoading={isLoading1} /> : ''}
+				<WeeklyReportTable data={data?.activities} isLoading={isLoading} />
+			</div>
 		</div>
 	)
 }

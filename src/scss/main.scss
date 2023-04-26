@@ -10,8 +10,8 @@
 @use "./css/bootstrap.css";
 @use "./components/weeklyreport";
 @use "./components/todoshowall";
-@use "./components/mobileSideBar";
-@use "./components/sekeletonLoader";
+@use "./components/mobileSideBar"; 
+@use "./components/Notification"; 
 
 // pages
 @use "./pages/kpiassessment";
@@ -55,7 +55,11 @@
   background: #f1f1f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(64, 61, 59);
+ 
+  // background: rgb(64, 61, 59);
+ 
+  background: rgba(64, 61, 59, 0.386); 
+ 
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(64, 61, 59, 0.8);
@@ -367,6 +371,17 @@ form.searchbox button:hover {
   color: c.color(primary-color);
 }
 
+ 
 .in-progresss {
   font-weight: bold;
 }
+ 
+  .in-progresss{
+    font-weight: bold;
+  }
+
+  .text-white-socket{
+    font-size: small;
+  }
+ 
+ 

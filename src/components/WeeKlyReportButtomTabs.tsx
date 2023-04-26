@@ -50,9 +50,7 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 
 	}, [result, setData])
 
-	// if (result === "ALL") {
-	// 	setFilter(subNavData)
-	// } 
+
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { MainSearch } from "../TableOptions";
 
 const AllMessages = () => {
@@ -9,12 +8,7 @@ const AllMessages = () => {
       </div>
 
       <section className="md-ui component-data-table">
-        {" "}
-        {/* <header className="main-table-header">
- 							<h1 className="table-header--title">Nutrition</h1>
- 							<span className="table-header--icons"><i className="material-icons">filter_list</i><i className="material-icons">more_vert</i>
- 							</span>
- 						</header> */}{" "}
+
         <div className="main-table-wrapper">
           <table className="main-table-content">
             <thead className="data-table-header">
@@ -80,17 +74,6 @@ const AllMessages = () => {
             </tbody>
           </table>
         </div>
-        {/* <footer className="main-table-footer">
- 							<span className="rows-selection">
- 								<span className="rows-selection-label">Rows per page:</span>
- 								<span className="rows-selection-dropdown">10<i className="material-icons">arrow_drop_down</i></span>
- 							</span>
- 							<span className="rows-amount">1-10 of 100</span>
- 							<span className="table-pagination">
- 								<i className="material-icons">keyboard_arrow_left</i>
- 								<i className="material-icons">keyboard_arrow_right</i>
- 							</span>
- 						</footer> */}
       </section>
     </div>
   );

@@ -9,13 +9,13 @@ import TableLoader from '../../components/TableLoader';
 import { Button } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 const KPIDetails = () => {
 
 	const { id } = useParams()
 	const navigate = useNavigate();
-	const token = Cookies.get("token");
+	// const token = Cookies.get("token");
 
 	const gradeSystem = [
 		{ rate: 5, definition: "Outstanding" },
@@ -25,35 +25,33 @@ const KPIDetails = () => {
 		{ rate: 1, definition: "Below Average/Poor" },
 	]
 
-	const [isLoading2, setisLoading2] = useState(false);
+	// const [isLoading2, setisLoading2] = useState(false);
 	const [isSuccess1, setisSuccess1] = useState(false);
 	const [message1, setMessage1] = useState('')
-	const [datas1, setData1] = useState('')
 	const [isError1, setisError1] = useState(false)
 
 
 	const [data, setData] = useState<any>([]);
 	const [isLoading, setisLoading] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isError, seisError] = useState(false);
+	// const [isSuccess, setisSuccess] = useState(false);
+	// const [isError, seisError] = useState(false);
 
-	const [isLoading3, setisLoading3] = useState(false);
-	const [isSuccess3, setisSuccess3] = useState(false);
+
 	const [isError3, setisError3] = useState(false);
 	const [message3, setMessage3] = useState('')
 	const [hodscore, setHodscore] = useState('')
 
 
-	const [input, setinput] = useState<any>({
-		"job_knowledge": 0,
-		"efficiency": 0,
-		"attendance": 0,
-		"communication": 0,
-		"reliability": 0,
-		"collaboration": 0,
-		"comment": ""
-	})
+	// const [input, setinput] = useState<any>({
+	// 	"job_knowledge": 0,
+	// 	"efficiency": 0,
+	// 	"attendance": 0,
+	// 	"communication": 0,
+	// 	"reliability": 0,
+	// 	"collaboration": 0,
+	// 	"comment": ""
+	// })
 
 	const title = "Successful";
 	const html = "KPI Deleted";
@@ -78,9 +76,14 @@ const KPIDetails = () => {
 			setTimeout(() => {
 				setisError1(false);
 			}, 10000);
+		} else if (isError3) {
+			fireAlert(title3, html3, icon3);
+			setTimeout(() => {
+				setisError1(false);
+			}, 10000);
 		}
 
-	}, [html, title, icon, isSuccess1, isError1, html1]);
+	}, [html, title, icon, isSuccess1, isError1, html1, isError3, html3]);
 
 
 
@@ -89,8 +92,12 @@ const KPIDetails = () => {
 		axios
 			.get(`${process.env.REACT_APP_API}/hr/appraisals/${id}`)
 			.then((res: AxiosResponse) => {
-
-				setData(res?.data?.data);
+				if (res?.data?.success === false) {
+					setMessage1(res?.data?.message)
+					setisError1(true)
+				} else {
+					setData(res?.data?.data);
+				}
 				setisLoading(false);
 			})
 			.catch((err) => {
@@ -105,11 +112,17 @@ const KPIDetails = () => {
 		axios
 			.delete(`${process.env.REACT_APP_API}/hr/appraisals/${id}`)
 			.then((res: AxiosResponse) => {
-				setData(res?.data);
+				if (res?.data?.success === false) {
+					setMessage3(res?.data?.message)
+					setisError3(true)
+				} else {
+					setData(res?.data);
+					setTimeout(() => {
+						navigate("/kpicontainer");
+					}, 5000);
+				}
 				setisLoading1(false);
-				setTimeout(() => {
-					navigate("/kpicontainer");
-				}, 5000);
+
 			})
 			.catch((data) => {
 				console.log(data);
@@ -183,7 +196,7 @@ const KPIDetails = () => {
 						</div>
 						<div className="kpi-summary">
 							<div className="kpi-summary-title">
-								<p>MY comment</p>
+								<p>{data?.employee_name}'s  comment</p>
 							</div>
 							{/* @ts-ignore */}
 							<textarea rows="4" placeholder="Add an extended comment" required className='m-t-5' value={data?.employee_comment} />

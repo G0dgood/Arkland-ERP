@@ -10,27 +10,15 @@ import { Spinner } from "react-bootstrap";
 const KPIAssessment = () => {
   const navigate = useNavigate();
   const token = Cookies.get("token");
-  // @ts-ignore
-  // const userInfo: any = JSON.parse(localStorage.getItem("userinfo"));
+  // @ts-ignore 
   const userInfo: any = JSON.parse(storage?.get("user"));
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON?.parse(localStorage.getItem("collapse")) || false;
-  });
 
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
-  //
+
+
+
   const [employees, setEmployees] = useState<any>();
 
-  // console.log('employees', employees)
 
   const [employeegrade, setemployeegrade] = useState<any>({
     employeegrade1: 0,
@@ -41,27 +29,8 @@ const KPIAssessment = () => {
     employeegrade6: 0,
   });
 
-  const [inputs, setInputs] = useState({
-    job_knowledge: 15,
-    efficiency: 15,
-    attendance: 15,
-    communication: 15,
-    reliability: 15,
-    collaboration: 20,
-  });
 
-  // const [_kpiData, setKpiData] = useState<Record<'one' | 'two', any>>({
-  // 	one: {
-  // 		performance: 'Job Knowledge',
-  // 		description: "Measures employee's relevant knowledge and essential skills, such as work practices, policies and procedures needed to do a particular job",
-  // 		weight: 20,
-  // 	},
-  // 	two: {
-  // 		performance: 'Efficiency',
-  // 		description: "Maintaining the same standards and behaviors that lead to producing a high quality of work",
-  // 		weight: 15,
-  // 	},
-  // });
+
 
   // const handleOnChangeKpiData = (num: 'one' | 'two', input: string, value: string | number) => {
   // 	setKpiData((prevState) => ({ ...prevState, [num]: { ...prevState.[num], [input]: value } }))
@@ -71,10 +40,10 @@ const KPIAssessment = () => {
   const [kpiData1, setkpiData1] = useState<any>({
     Performance1: "Job Knowledge",
     Performance2: "Efficiency",
-    Performance3: " Attendance",
-    Performance4: "Software Development",
-    Performance5: "Team work",
-    Performance6: "Debugging",
+    Performance3: "Attendance",
+    Performance4: "Communication",
+    Performance5: "Reliability",
+    Performance6: "Collaboration",
   });
 
   const [kpiData2, setkpiData2] = useState<any>({
@@ -185,67 +154,16 @@ const KPIAssessment = () => {
       return {
         ...prevState,
         job_knowledge: totalScore1,
-      };
-    });
-  }, [kpinputs.job_knowledge, setKpInputs, totalScore1]);
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         efficiency: totalScore2,
-      };
-    });
-  }, [kpinputs.efficiency, setKpInputs, totalScore2]);
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         attendance: totalScore3,
-      };
-    });
-  }, [kpinputs.attendance, setKpInputs, totalScore3]);
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         communication: totalScore4,
-      };
-    });
-  }, [kpinputs.communication, setKpInputs, totalScore4]);
-
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         reliability: totalScore5,
-      };
-    });
-  }, [kpinputs.reliability, setKpInputs, totalScore5]);
-
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         collaboration: totalScore6,
       };
     });
-  }, [kpinputs.collaboration, setKpInputs, totalScore6]);
+  }, [kpinputs.job_knowledge, setKpInputs, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
 
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
-        employee: userInfo?.data?.employee?.id,
-      };
-    });
-  }, [
-    kpinputs.employee,
-    setKpInputs,
-    totalScore6,
-    userInfo?.data?.employee?.id,
-  ]);
 
-  const [data, setData] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [isSuccess, setisSuccess] = useState(false);
   const [message, setMessage] = useState("");
@@ -258,22 +176,7 @@ const KPIAssessment = () => {
   const html1 = message;
   const icon1 = "error";
 
-  // const handelkpi = () => {
-  // 	setisLoading(true);
-  // 	axios
-  // 		.post(`${process.env.REACT_APP_API}/hr/appraisals`, kpinputs)
-  // 		.then((res: AxiosResponse) => {
-  // 			// setRequestWorkersList([...res.data.data]);
-  // 			setisLoading(false);
-  // 			setisSuccess(true)
 
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log('res-res-res', err);
-  // 			setMessage(err.data.message)
-  // 			setisLoading(false);
-  // 		});
-  // }
 
   useEffect(() => {
     if (isSuccess) {
@@ -306,7 +209,6 @@ const KPIAssessment = () => {
           setMessage(data?.message);
           setisError(true);
         } else {
-          setData(data);
           setisSuccess(true);
           setTimeout(() => {
             navigate("/kpicontainer");
@@ -358,6 +260,7 @@ const KPIAssessment = () => {
       fireAlert(title1, html1, icon1);
     }
   }, [html, title, icon, isSuccess, message, html1, title1]);
+
   return (
     <div>
       <div>
@@ -377,8 +280,8 @@ const KPIAssessment = () => {
               <p>{userInfo?.data?.role?.name}</p>
               <p>Employee ID</p>
               <p>{userInfo?.data?.employee?.employee_id} </p>
-              <p>Review Date</p>
-              <p> </p>
+              <p>Date</p>
+              <p> {new Date().toDateString()}</p>
             </div>
           </div>
           <div className="kpi-top-container-card-2">
@@ -408,10 +311,7 @@ const KPIAssessment = () => {
             <div className="quarter" style={{ marginBottom: "0.5rem" }}>
               <div className="entries-perpage">
                 Year:
-                <select
-                  name="year"
-                  // value={year}
-                >
+                <select name="year"  >
                   <option>{year}</option>
                 </select>
               </div>
@@ -422,6 +322,7 @@ const KPIAssessment = () => {
                   name="month"
                   value={kpinputs.month}
                   onChange={(e) => handleOnKPI("month", e.target.value)}
+                  required
                 >
                   <option> </option>
                   <option value="1">January</option>
@@ -441,11 +342,12 @@ const KPIAssessment = () => {
             </div>
 
             <div className="line-manager entries-perpage ">
-              <div>Line Manager:</div>
+              <div>HOD :</div>
               <select
                 name="line-manager"
                 value={kpinputs.reviewer}
                 onChange={(e) => handleOnKPI("reviewer", e.target.value)}
+                required
               >
                 <option> </option>
                 {employees?.map((employ: any) => (
@@ -481,8 +383,6 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     Employee Score
                   </td>
-                  {/* <td className="table-datacell datatype-numeric">Supervisor Grade</td>
-										<td className="table-datacell datatype-numeric">Supervisor Score</td> */}
                 </tr>
               </thead>
 
@@ -514,11 +414,8 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
-                      type="number"
                       value={kpiData3.Weight1}
-                      onChange={(e) =>
-                        handleOnChange3("Weight1", e.target.value)
-                      }
+
                     />
                   </td>
 
@@ -533,11 +430,9 @@ const KPIAssessment = () => {
                       }
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -574,10 +469,8 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight2}
-                      onChange={(e) =>
-                        handleOnChange3("userId", e.target.value)
-                      }
-                    />{" "}
+
+                    />
                   </td>
                   <td className="table-datacell datatype-numeric">
                     <select
@@ -590,11 +483,9 @@ const KPIAssessment = () => {
                       }
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -631,9 +522,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight3}
-                      onChange={(e) =>
-                        handleOnChange3("Weight3", e.target.value)
-                      }
+
                     />{" "}
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -647,11 +536,9 @@ const KPIAssessment = () => {
                       }
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -707,11 +594,9 @@ const KPIAssessment = () => {
                       }
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -748,9 +633,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight5}
-                      onChange={(e) =>
-                        handleOnChange3("Weight5", e.target.value)
-                      }
+
                     />{" "}
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -764,11 +647,9 @@ const KPIAssessment = () => {
                       }
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -805,9 +686,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight6}
-                      onChange={(e) =>
-                        handleOnChange4("Weight6", e.target.value)
-                      }
+
                     />{" "}
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -821,11 +700,9 @@ const KPIAssessment = () => {
                       }
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -853,28 +730,12 @@ const KPIAssessment = () => {
                 <td className="table-datacell datatype-numeric table-datacell-color2">
                   {kpiscore}
                 </td>
-                {/* <td className="table-datacell datatype-numeric table-datacell-color">  </td>
-								<td className="table-datacell datatype-numeric table-datacell-color2"> </td> */}
               </tr>
             </table>
           </div>
         </section>
 
-        {/* <div className='emp-reconmentdetion'>
-						<div className='emp-reconmentdetion-sub'>
-							<div className='reconmentdetion-sub-title'>
-								Comments & Recommandations - Employee
-							</div>
-							<textarea rows={12} />
-						</div>
-						<div className='emp-reconmentdetion-sub-space' />
-						<div className='emp-reconmentdetion-sub'>
-							<div className='reconmentdetion-sub-title'>
-								Comments & Recommandations - Appraradir
-							</div>
-							<textarea rows={12} />
-						</div>
-					</div> */}
+
       </div>
       <div className="board">
         <div className="shareCommentContainer">

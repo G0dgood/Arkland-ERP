@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
-
 import { fireAlert } from '../../utils/Alert';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -9,12 +8,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
+
   const year = new Date().getFullYear().toString();
   const token = Cookies.get("token");
   const navigate = useNavigate();
 
 
-  const [kpiData3, setkpiData3] = useState<any>({
+  const kpiData3 = ({
     Weight1: 20,
     Weight2: 15,
     Weight3: 20,
@@ -119,7 +119,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
   const [isLoading, setisLoading] = useState(false);
   const [isSuccess, setisSuccess] = useState(false);
   const [message, setMessage] = useState('')
-  const [datas, setData] = useState('')
+  // const [datas, setData] = useState('')
   const [isError, setisError] = useState(false)
 
 
@@ -164,7 +164,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
           setMessage(data?.message)
           setisError(true)
         } else {
-          setData(data)
+          // setData(data)
           setisSuccess(true)
           setTimeout(() => {
             navigate("/teamkpi");
@@ -217,48 +217,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
       });
     });
   }, [setinput, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
-  // useEffect(() => {
-  //   setinput((prevState: any) => {
-  //     return ({
-  //       ...prevState,
-  //       efficiency: totalScore2
-  //     });
-  //   });
-  // }, [setinput, totalScore2]);
-  // useEffect(() => {
-  //   setinput((prevState: any) => {
-  //     return ({
-  //       ...prevState,
-  //       attendance: totalScore3
-  //     });
-  //   });
-  // }, [setinput, totalScore3]);
-  // useEffect(() => {
-  //   setinput((prevState: any) => {
-  //     return ({
-  //       ...prevState,
-  //       communication: totalScore4
-  //     });
-  //   });
-  // }, [setinput, totalScore4]);
 
-  // useEffect(() => {
-  //   setinput((prevState: any) => {
-  //     return ({
-  //       ...prevState,
-  //       reliability: totalScore5
-  //     });
-  //   });
-  // }, [setinput, totalScore5]);
-
-  // useEffect(() => {
-  //   setinput((prevState: any) => {
-  //     return ({
-  //       ...prevState,
-  //       collaboration: totalScore6
-  //     });
-  //   });
-  // }, [setinput, totalScore6]);
 
   return (
     <form onSubmit={handelHodkpi}>

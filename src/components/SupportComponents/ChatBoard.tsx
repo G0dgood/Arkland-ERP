@@ -1,4 +1,3 @@
-import React from "react";
 import { MdSend } from "react-icons/md";
 import EmptyChat from "../../assets/images/empty_chat.svg";
 
@@ -16,12 +15,12 @@ const ChatBoard = () => {
           <input
             type="text"
             placeholder="Type a message"
-            // disabled
+          // disabled
           />
           <button
             style={{ margin: "6px" }}
             type="submit"
-            // disabled
+          // disabled
           >
             <MdSend size={22} />
           </button>

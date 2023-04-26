@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { BiUser } from 'react-icons/bi'
 import { Link, useParams } from 'react-router-dom'
 import HodEvaluation from './HodEvaluate'
-// import axios, { AxiosResponse } from 'axios'
 import { BsChatLeftText } from 'react-icons/bs'
 import { MdOutlineClose } from 'react-icons/md'
 import TableLoader from '../../components/TableLoader'
@@ -76,19 +75,6 @@ const ViewKPAssessment = () => {
 	}, [id, token]);
 
 
-	// React.useEffect(() => {
-	// 	setisLoading(true);
-	// 	axios
-	// 		.get(`${process.env.REACT_APP_API}/hr/appraisals/${id}`)
-	// 		.then((res: AxiosResponse) => {
-	// 			setData(res?.data?.data);
-	// 			setisLoading(false);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 			setisLoading(false);
-	// 		});
-	// }, [id]);
 
 
 	// Performance  Percentage Calculation
@@ -175,7 +161,7 @@ const ViewKPAssessment = () => {
 						{data?.status === 'active' ? <div>
 							<div className="kpi-summary">
 								<div className="kpi-summary-title">
-									<p>MY comment</p>
+									<p>{data?.employee_name}'s  comment</p>
 								</div>
 								{/* @ts-ignore */}
 								<textarea rows="4" placeholder="Add an extended comment" required className='m-t-5' value={data?.employee_comment} />

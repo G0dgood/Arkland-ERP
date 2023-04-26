@@ -1,37 +1,29 @@
 import { Button } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import TableLoader from '../../components/TableLoader'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions'
 import moment from 'moment'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
-import axios, { AxiosResponse } from 'axios'
-import storage from '../../utils/storage'
+import Cookies from 'js-cookie'
+import Pagination from '../../components/Pagination'
+import { fireAlert } from '../../utils/Alert'
 
 const TeamWeeklyReport = () => {
-	// @ts-ignore
-	const userInfo: any = JSON.parse(storage?.get("user"));
-
-
-
+	const token = Cookies.get("token");
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
 	});
 
-	const [data, setData] = useState<any>([]);
-	const [sortData, setSortData] = useState([]);
-	const [searchItem, setSearchItem] = useState("");
-	const [isLoading, setisLoading] = useState(false);
 
+	const [sortData, setSortData] = useState([]);
+	const [isLoading, setisLoading] = useState(false);
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 
 
-	const title = "Weekly Reports error";
-	const html = message;
-	const icon = "error";
 
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
@@ -47,24 +39,50 @@ const TeamWeeklyReport = () => {
 		setCollapseNav(!collapseNav);
 	};
 
+	const title = "Weekly Reports error";
+	const html = message;
+	const icon = "error";
 
-	React.useEffect(() => {
+
+	useEffect(() => {
 		setisLoading(true);
-		axios
-			.get(`${process.env.REACT_APP_API}/weekly-reports/list-for-department`)
-			.then((res: AxiosResponse) => {
-				console.log('res', res)
-				setData(res?.data?.data);
+		fetch(`${process.env.REACT_APP_API}/hr/weekly-reports/list-for-department`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+
+				if (data?.success === false) {
+					setMessage(data?.message)
+				} else {
+					setSortData(data?.data)
+				}
 				setisLoading(false);
 			})
-			.catch((err) => {
-				setMessage(err?.message)
+			.catch((error) => {
+				console.error("Error:", error);
 				setisLoading(false);
 			});
-	}, [userInfo?.data?.employee?._id]);
+
+	}, [token])
 
 
+	useEffect(() => {
+		if (isError) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisError(false)
+				setMessage("")
+			}, 5000);
+		}
+	}, [html, isError])
 
+
+	const [displayData, setDisplayData] = useState([]);
 
 	return (
 		<div id="screen-wrapper">
@@ -77,7 +95,7 @@ const TeamWeeklyReport = () => {
 					</div>
 					<div>
 						<EntriesPerPage
-							data={data?.data}
+							data={sortData}
 							entriesPerPage={entriesPerPage}
 							setEntriesPerPage={setEntriesPerPage}
 						/>
@@ -105,10 +123,10 @@ const TeamWeeklyReport = () => {
 							<tbody className="data-table-content">
 								{isLoading ? (
 									<TableFetch colSpan={8} />
-								) : data?.length === 0 || data == null ? (
+								) : displayData?.length === 0 || displayData == null ? (
 									<NoRecordFound colSpan={8} />
 								) : (
-									data?.map((item: any, i: any) => (
+									displayData?.map((item: any, i: any) => (
 										<tr className="data-table-row" key={i}>
 											<td className="table-datacell datatype-numeric"> {item?.employee_name}</td>
 											<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
@@ -132,15 +150,15 @@ const TeamWeeklyReport = () => {
 					</div>
 
 				</section >
+				<footer className="main-table-footer">
+					<Pagination
+						setDisplayData={setDisplayData}
+						data={sortData}
+						entriesPerPage={entriesPerPage}
+						Total={"Assessment"}
+					/>
+				</footer>
 			</main>
-			{/* <footer className="main-table-footer">
-				<Pagination
-					setDisplayData={setDisplayData}
-					data={sortData}
-					entriesPerPage={entriesPerPage}
-					Total={"Assessment"}
-				/>
-			</footer> */}
 		</div >
 	)
 }
