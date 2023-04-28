@@ -1,34 +1,37 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import Cookies from "js-cookie";
-import { Modal, Spinner } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { SyncLoader } from "react-spinners";
 import moment from "moment";
 import Checkbox from "@material-ui/core/Checkbox";
 import { FiEye, FiTrash2 } from "react-icons/fi";
-import { RiTodoLine } from "react-icons/ri";
+// import { RiTodoLine } from "react-icons/ri";
 import { Button } from "@mui/material";
-import { getRequestOptions } from "../../utils/auth/header";
+// import { getRequestOptions } from "../../utils/auth/header";
 import AddTodo from "../../components/Modals/AddTodo";
 import { fireAlert } from "../../utils/Alert";
-import { useAppSelector } from "../../hooks/useDispatch";
-import { NoRecordFound } from "../../components/TableOptions";
+// import { useAppSelector } from "../../hooks/useDispatch";
+// import { NoRecordFound } from "../../components/TableOptions";
 import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
 import { DialogState } from "../../interfaces/base";
-import announcement from "../../assets/images/announcement.png";
+// import announcement from "../../assets/images/announcement.png";
 import { MdOutlineClose } from "react-icons/md";
 
 const Todos = ({ showDrawer, setShowDrawer }: any) => {
+
+
+
   const token = Cookies.get("token");
   const [taskAction, setTaskAction] = React.useState([] as any);
   const [viewAction, setViewAction] = React.useState([] as any);
-  const [taskCreateShow, setTaskCreateShow] = React.useState(false);
+  // const [taskCreateShow, setTaskCreateShow] = React.useState(false);
   const [newTodoCreated, setNewTodoCreated] = React.useState(false);
   const [deleteShow, setDeleteShow] = React.useState(false);
   const [viewShow, setViewShow] = React.useState(false);
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
   const [showView, setShowView] = React.useState<DialogState>({});
-
-  const { tasks, isLoading, error, message, setLoading } =
+  // error, message,
+  const { tasks, isLoading, setLoading } =
     useFetchTasks(taskAction);
 
   const { schedule, isScheduleLoading } = useScheduleById(viewAction);
@@ -158,12 +161,10 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                         aria-labelledby="contained-modal-title-vcenter"
                         centered
                       >
-                        <Modal.Header closeButton id="displayTermination">
-                          <Modal.Title>View Todo</Modal.Title>
-                          <Button
-                            style={{ color: "#fff" }}
-                            onClick={() => setViewShow(false)}
-                          >
+                        <Modal.Header>
+                          <span>{/*  */}</span>
+                          <span className="span-center-title">View Todo</span>
+                          <Button style={{ color: "#fff" }} onClick={() => setViewShow(false)}>
                             <MdOutlineClose size={28} />
                           </Button>
                         </Modal.Header>
@@ -212,10 +213,13 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                         size="lg"
                         show={deleteShow}
                         aria-labelledby="contained-modal-title-vcenter"
-                        centered
-                      >
-                        <Modal.Header closeButton>
-                          <Modal.Title>Delete Task</Modal.Title>
+                        centered >
+                        <Modal.Header>
+                          <span>{/*  */}</span>
+                          <span className="span-center-title">Delete Task</span>
+                          <Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
+                            <MdOutlineClose size={28} />
+                          </Button>
                         </Modal.Header>
                         <Modal.Body>
                           <p>Are you sure you want to delete this task?</p>

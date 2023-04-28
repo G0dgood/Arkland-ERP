@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios";
-import { call, put, delay, take } from "redux-saga/effects";
+import { call, put, delay } from "redux-saga/effects";
 import { setDepartment } from "../../reducers/department";
 import { requestGetDepartments } from "../request/department";
 import { getProjects } from "../../reducers/project";
 
-export function* handleGetDepartments(action: any) {
+export function* handleGetDepartments( ) {
   let retryCount = 0;
   const maxRetries = 5;
   const retryTimeout = 2000;
