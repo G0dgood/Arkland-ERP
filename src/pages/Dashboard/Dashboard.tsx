@@ -4,8 +4,25 @@ import Sidebar from "../../components/Sidebar";
 import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
 import storage from "../../utils/storage";
+import { getUserPrivileges } from "../../functions/auth";
 
 const Dashboard = () => {
+
+  const {
+    isHRHead,
+    isHeadOfDepartment,
+    isTeamLead,
+    isSuperAdmin,
+    isAdmin,
+    isHrAdmin,
+  } = getUserPrivileges();
+
+
+
+
+
+
+
   // @ts-ignore
   const userInfo: any = JSON?.parse(storage?.get("user"));
 
@@ -26,24 +43,16 @@ const Dashboard = () => {
     setCollapseNav(!collapseNav);
   };
 
-  // window.onload = function () {
-  //  const nav: any = document.getElementById('nav');
-  //  const burger: any = document.getElementById('burger');
-  //  const overlay: any = document.getElementById('overlay1');
 
-  //  burger.addEventListener('click', () => {
-  //   burger.classList.toggle('active');
-  //   nav.classList.toggle('active');
-  //   overlay.classList.toggle('active');
-  //  });
-  // }
 
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
       <main>
-        {userInfo?.data?.department?.name === "HR" ? (
+        {(isSuperAdmin ||
+          isHRHead ||
+          isHrAdmin) ? (
           <AdminDashboard />
         ) : (
           <StaffDashboard />

@@ -193,7 +193,7 @@ const AppRoutes: React.FC<any> = () => {
             path="/allleaveapplications"
             element={<AllLeaveApplications />}
           />
-          <Route path="/allieave" element={<AllLeave />} />
+          <Route path="/allleave" element={<AllLeave />} />
           <Route path="/finalleaveupdate/:id" element={<FinalLeaveUpdate />} />
           <Route path="/hrupdateleave/:id" element={<HRUpdateLeave />} />
           {/*End Leave View */}

@@ -129,13 +129,7 @@ const Announcement = () => {
     setDeleteShow(true);
   };
   return (
-    <div
-      className="main-div-col-2-sub"
-      style={{
-        height: "74.5%",
-        overflow: "auto",
-      }}
-    >
+    <div className="main-div-col-2-sub">
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
           <span className="sub-text-contained">
@@ -166,7 +160,7 @@ const Announcement = () => {
           <div className="table-loader-announcement">
             <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
-        ) : announcements?.length === 0 || announcements == null ? (
+        ) : announcements?.length === 0 || announcements === undefined ? (
           <div className="table-loader-announcement">
             <div>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -176,11 +170,12 @@ const Announcement = () => {
           </div>
         ) : (
           <div className="Announcement-container">
-            {announcements?.map((item: any, i: any) => (
-              <div className="Announcement-sub-2" key={i}>
+            <div className="Announcement-sub-2">
+              {announcements?.map((item: any, i: any) => (
                 <div
                   className="main-todo-Event"
                   style={{ borderRadius: "4px" }}
+                  key={i}
                 >
                   <div className="main-todo-container">
                     <div className="main-todo-note">
@@ -309,8 +304,8 @@ const Announcement = () => {
                     </Modal>
                   )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </div>

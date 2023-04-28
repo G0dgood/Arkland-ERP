@@ -14,6 +14,7 @@ import axios, { AxiosResponse } from "axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import storage from "../../utils/storage";
+import { fireAlert } from "../../utils/Alert";
 
 const TeamKPI = () => {
   // @ts-ignore
@@ -23,6 +24,22 @@ const TeamKPI = () => {
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [isError, setisError] = useState(false)
+  const [message, setMessage] = useState("");
+
+  const title1 = "KPI error";
+  const html1 = message;
+  const icon1 = "error";
+
+
+  useEffect(() => {
+    if (isError) {
+      fireAlert(title1, html1, icon1);
+      setTimeout(() => {
+        setisError(false)
+      }, 10000);
+    }
+  }, [isError, html1]);
 
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
@@ -62,7 +79,12 @@ const TeamKPI = () => {
         `${process.env.REACT_APP_API}/hr/appraisals?reviewer=${userInfo?.data?.employee?.id}`
       )
       .then((res: AxiosResponse) => {
-        setData(res?.data?.data);
+        if (res?.data?.success === false) {
+          setMessage(res?.data?.message)
+          setisError(true)
+        } else {
+          setData(res?.data?.data);
+        }
         setisLoading(false);
       })
       .catch((err: AxiosResponse) => {
@@ -108,7 +130,7 @@ const TeamKPI = () => {
               <tbody className="data-table-content">
                 {isLoading ? (
                   <TableFetch colSpan={8} />
-                ) : displayData?.length === 0 || displayData == null ? (
+                ) : displayData?.length === 0 || displayData === undefined ? (
                   <NoRecordFound colSpan={8} />
                 ) : (
                   displayData.map((item: any, i: any) => (
@@ -123,28 +145,28 @@ const TeamKPI = () => {
                         {item?.month === 1
                           ? "January"
                           : item?.month === 2
-                          ? "February"
-                          : item?.month === 3
-                          ? "March"
-                          : item?.month === 4
-                          ? "April"
-                          : item?.month === 5
-                          ? "May"
-                          : item?.month === 6
-                          ? "June"
-                          : item?.month === 7
-                          ? "July"
-                          : item?.month === 8
-                          ? "	August"
-                          : item?.month === 9
-                          ? "September"
-                          : item?.month === 10
-                          ? "October"
-                          : item?.month === 11
-                          ? "November"
-                          : item?.month === 12
-                          ? "December"
-                          : ""}
+                            ? "February"
+                            : item?.month === 3
+                              ? "March"
+                              : item?.month === 4
+                                ? "April"
+                                : item?.month === 5
+                                  ? "May"
+                                  : item?.month === 6
+                                    ? "June"
+                                    : item?.month === 7
+                                      ? "July"
+                                      : item?.month === 8
+                                        ? "	August"
+                                        : item?.month === 9
+                                          ? "September"
+                                          : item?.month === 10
+                                            ? "October"
+                                            : item?.month === 11
+                                              ? "November"
+                                              : item?.month === 12
+                                                ? "December"
+                                                : ""}
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {item?.performance_percentage_employee}%
@@ -154,16 +176,13 @@ const TeamKPI = () => {
                           className={
                             item?.status === "active"
                               ? "table-link-active"
-                              : "table-link"
-                          }
-                        >
+                              : "table-link"}  >
                           {item?.status === "active"
                             ? "Completed"
                             : item?.status}
                         </Button>
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {/* <ViewKPImodal id={item?._id} /> */}
                         <Link to={`/viewkpiassessment/${item?._id}`}>
                           <Button id="team-applicatiom-update">
                             {item?.status === "active" ? "View" : "Update"}

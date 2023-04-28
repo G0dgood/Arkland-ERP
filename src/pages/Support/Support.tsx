@@ -1,28 +1,16 @@
+/* eslint-disable jsx-a11y/alt-text */
 
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
-import { Modal } from 'react-bootstrap';
-import MyMessage from '../../components/SupportComponents/MyMessage';
-import AllMessages from '../../components/SupportComponents/AllMessages';
-import ChatBoard from '../../components/SupportComponents/ChatBoard';
-import NewMessage from '../../components/SupportComponents/NewMessage';
+import Chatmain from './Chatmain';
+import Chatsidebar from './Chatsidebar';
+import Chatdetails from './Chatdetails';
+import { BsChatRightText } from 'react-icons/bs';
+import { io } from "socket.io-client";
 
 const Support = (props: any) => {
 
-
-
-	// --- New Message Modal --- //
-	const [show, setShow] = useState(false)
-	const handleClose = () => setShow(false)
-	const handleShow = () => setShow(true)
-
-	const [activeTab, setActiveTab] = useState(0)
-	const tabs = ["My message", "All message"]
-	const tabPanels = [
-		{ component: <MyMessage handleShow={handleShow} /> },
-		{ component: <AllMessages /> }
-	]
 	const [collapseNav, setCollapseNav] = useState(() => {
 		// @ts-ignore
 		return JSON.parse(localStorage.getItem("collapse")) || false;
@@ -37,46 +25,41 @@ const Support = (props: any) => {
 		setCollapseNav(!collapseNav);
 	};
 
+	const [userID, setUserID] = useState<any>(0)
+
+	// console.log('userID', userID)
 
 	return (
 		<div id="screen-wrapper">
 			<Header toggleSideNav={toggleSideNav} />
 			<Sidebar collapseNav={collapseNav} />
 			<main>
-				<h4 className="page-title">Support Messaging</h4>
-				<ul className="nav-tabs">
-					{tabs.map((item, i) =>
-						// @ts-ignore
-						<li key={i} className={activeTab === i && "active"} onClick={() => setActiveTab(i)}>{item}</li>
-					)}
-				</ul>
-				<div className="msg-area">
-					<div className="msg-table">
-						{tabPanels[activeTab].component}
+				<div className="app-chat">
+					<div className="header-chat">
+						<div className="logo">
+							<BsChatRightText size={30} color="#990000" />
+						</div>
+						<div className="user-settings">
+							<img className="user-profile  account-profile" src={userID?.img} alt={userID?.name} />
+						</div>
 					</div>
-					<div className="msg-board">
-						<ChatBoard />
+					<div className="wrapper-chat">
+						{/* chat side bar */}
+						<Chatsidebar setUserID={setUserID} />
+						{/* Chat main */}
+						<Chatmain userID={userID} />
+						{/* Chat details */}
+						<Chatdetails userID={userID} />
 					</div>
 				</div>
-
-				<Modal
-					// @ts-ignore
-					size="md"
-					show={show}
-					onHide={handleClose}
-					backdrop="static"
-					keyboard={false}>
-					<Modal.Header closeButton>
-						<Modal.Title>Start New Message</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<NewMessage />
-					</Modal.Body>
-				</Modal>
-
 			</main>
 		</div>
 	)
 }
 
 export default Support
+
+
+
+
+

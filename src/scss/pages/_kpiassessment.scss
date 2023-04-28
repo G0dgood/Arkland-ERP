@@ -5,22 +5,82 @@
   min-height: 20% !important;
   // background-color: bisque;
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 3fr 2fr 2fr;
+  gap: 2rem;
 }
 
 .grading-system-contain {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+ grid-template-columns: 3fr 2fr 2fr;
+}
+
+@media screen and (max-width: 1500px) {
+  .kpi-top-container {
+   display: grid;
+  grid-template-columns: 3fr 2fr ;
+   transform: scale(0.9) !important;
+  }
+.grading-system-contain {
+  display: grid;
+ grid-template-columns: 3fr 2fr ;
+}
+.datacell-button-bottom-select {
+    margin-left: 0px !important;
+    display: block;
+    justify-content: flex-end;
+}
+   
+}
+
+// @media (max-width: 700px) {
+//   #tabs {
+//     transform: scale(0.6) !important;
+//   }
+// }
+
+@media screen and (max-width: 1200px) {
+  .grading-system-title {
+   display: none!important;
+}
+  .kpi-top-container-card-1 {
+     padding-right: 0px !important; 
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+  }
+  .kpi-top-container {
+   display: grid;
+  grid-template-columns: 1fr ;
+  transform: scale(0.8) !important;
+  }
+  .kpi-top-container-card-2 {
+    // margin-top: 2rem !important;
+    // margin-bottom: 2rem !important;
+    height: 100%;
+}
+.grading-system-contain {
+  
+  display: grid;
+ grid-template-columns: 1fr ;
+}
+.datacell-button-bottom-select {
+    //  margin-top: 2rem !important;
+    margin-left: 0px !important;
+    display: block;
+    justify-content: flex-end;
+}
+   
 }
 
 .kpi-top-container-card-1 {
-  padding-right: 2rem !important;
+  // padding-right: 2rem !important;
   display: flex;
   flex-flow: column;
   height: 100%;
+  // width: 70%;
 }
 .kpi-top-container-card-2 {
-  width: 100%;
+  // width: 70%;
   height: 100%;
 }
 
@@ -63,8 +123,7 @@ align-items: center;
   border-top: none !important;
 }
 
-.kpi-top-card-1 {
-  width: 100%;
+.kpi-top-card-1 { 
   height: 55px;
   background-color: c.color(primary-color);
   border-radius: 4px;
@@ -138,7 +197,7 @@ align-items: center;
 
 .table-datacell-button-bottom {
   display: flex;
-  justify-content: flex-end;
+  // justify-content: flex-end;
   margin-top: 2rem;
 }
 
@@ -353,7 +412,8 @@ textarea{
  
 
  .datacell-button-bottom-select{
-  display: flex;
+  margin-left: 2rem;
+  display: block;
   justify-content: flex-end;
 }
 
@@ -727,4 +787,9 @@ textarea{
 
 .deleteKPIHandler-mr{
   margin-right: 1rem;
+}
+
+
+.Grade-title{
+  font-weight: bold;
 }

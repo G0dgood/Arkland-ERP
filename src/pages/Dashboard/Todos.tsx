@@ -94,7 +94,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
           <div className="table-loader-announcement1">
             <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
-        ) : tasks?.length === 0 || tasks === null ? (
+        ) : tasks?.length === 0 || tasks === undefined ? (
           <div className="table-loader-announcement1">
             <div>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -186,7 +186,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                               <p>PRIORITY</p>
                               <p>{schedule?.priority}</p>
                               <p>NOTES</p>
-                              <p>{schedule?.notes?.[0].text}</p>
+                              <p>{schedule?.notes?.[0]?.text}</p>
                               <p>DATE OF COMPLETION</p>
                               <p>
                                 {" "}
