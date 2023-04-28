@@ -188,7 +188,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 				</div>
 				<div className="ChatProgressView-close">
 					<Link
-						to={"/allieave"}>
+						to={"/allleave"}>
 						<MdOutlineClose
 							size={25}
 							style={{ color: "white", backgroundColor: "" }}

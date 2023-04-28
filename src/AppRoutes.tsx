@@ -61,7 +61,8 @@ import HumanResources from "./pages/HumanResources/HumanResources";
 import AttendanceTable from "./pages/HumanResources/attendance/AttendanceTable";
 import EmployeeAttendance from "./pages/EmployeeAttendance/EmployeeAttendance";
 import EmployeeAttendanceTable from "./pages/EmployeeAttendance/table/EmployeeAttendanceTable";
-import { getUserPrivileges } from "./functions/auth";
+import { getUserPrivileges, handleUnauthorizedError } from "./functions/auth";
+import UpdatePassword from "./pages/auth/forgot-password/UpdatePassword";
 
 export const removeData = () => {
   Cookies.remove("isAuthenticated");
@@ -84,8 +85,7 @@ const AppRoutes: React.FC<any> = () => {
       const url = error.response ? error.response?.config?.url : null;
 
       if (status === 401) {
-        sessionExpired();
-        removeData();
+        handleUnauthorizedError();
       }
     }
   );
@@ -114,6 +114,7 @@ const AppRoutes: React.FC<any> = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* General user routes */}
       <Route element={<PrivateRoute isAllowed={!!parsedUserData} />}>
+        <Route path="/update-password" element={<UpdatePassword />} />
         <Route path="/home" element={<Dashboard />} />
         <Route path="/kpiassessment" element={<KPIAssessment />} />
         <Route path="/kpicontainer" element={<KpiContainer />} />
@@ -192,7 +193,7 @@ const AppRoutes: React.FC<any> = () => {
             path="/allleaveapplications"
             element={<AllLeaveApplications />}
           />
-          <Route path="/allieave" element={<AllLeave />} />
+          <Route path="/allleave" element={<AllLeave />} />
           <Route path="/finalleaveupdate/:id" element={<FinalLeaveUpdate />} />
           <Route path="/hrupdateleave/:id" element={<HRUpdateLeave />} />
           {/*End Leave View */}

@@ -8,7 +8,7 @@ import { FiPieChart, FiUser, FiFolder, FiLogOut } from "react-icons/fi";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { GoFile } from "react-icons/go";
 import { MdOutlineAssessment } from "react-icons/md";
-import storage from "../utils/storage";
+// import storage from "../utils/storage";
 import { getUserPrivileges } from "../functions/auth";
 
 const Sidebar = ({ collapseNav }: any) => {
@@ -22,7 +22,7 @@ const Sidebar = ({ collapseNav }: any) => {
     isHrAdmin,
   } = getUserPrivileges();
 
-  const userString = storage?.get("user");
+  // const userString = storage?.get("user");
 
   // --- SideNav Bubble (States) --- //
   const [dashboard, setDashboard] = useState(false);
@@ -299,7 +299,7 @@ const Sidebar = ({ collapseNav }: any) => {
 
         {isSuperAdmin && (
           <NavLink
-            to="/allieave"
+            to="/allleave"
             // exact
             className={
               window.location.pathname === "/allieave"

@@ -5,11 +5,11 @@ import { Spinner } from 'react-bootstrap';
 const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 	const year = new Date().getFullYear().toString();
 
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [message, setMessage] = useState('')
-	const [datas, setData] = useState('')
-	const [isError, setisError] = useState(false)
+	// const [isLoading, setisLoading] = useState(false);
+	// const [isSuccess, setisSuccess] = useState(false);
+	// const [message, setMessage] = useState('')
+	// const [datas, setData] = useState('')
+	// const [isError, setisError] = useState(false)
 
 	const [input, setinput] = useState<any>({
 		"job_knowledge": 0,
@@ -54,7 +54,7 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 		},
 	];
 
-	const [kpiData3, setkpiData3] = useState<any>({
+	const kpiData3: any = ({
 		Weight1: 20,
 		Weight2: 15,
 		Weight3: 20,
@@ -62,7 +62,7 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 		Weight5: 15,
 		Weight6: 10,
 	});
-	const [employeegrade, setemployeegrade] = useState<any>({
+	const employeegrade: any = ({
 		employeegrade1: 0,
 		employeegrade2: 0,
 		employeegrade3: 0,
@@ -96,19 +96,7 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 	// @ts-ignore
 	const Amount: any = Object.values(kpiData).reduce((a, v) => (a = a + v?.num), 0);
 
-	// const handleOnChange = (input: string, value: any) => {
-	// 	setinput((prevState: any) => ({
-	// 		...prevState,
-	// 		[input]: value,
-	// 	}));
-	// };
 
-	// const handleOnChange4 = (input: string, value: any) => {
-	// 	setemployeegrade((prevState: any) => ({
-	// 		...prevState,
-	// 		[input]: value,
-	// 	}));
-	// };
 	useEffect(() => {
 		setinput((prevState: any) => {
 			return ({
@@ -122,49 +110,20 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 			});
 		});
 	}, [setinput, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			efficiency: totalScore2
-	// 		});
-	// 	});
-	// }, [setinput, totalScore2]);
 
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			attendance: totalScore3
-	// 		});
-	// 	});
-	// }, [setinput, totalScore3]);
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			communication: totalScore4
-	// 		});
-	// 	});
-	// }, [setinput, totalScore4]);
 
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			reliability: totalScore5
-	// 		});
-	// 	});
-	// }, [setinput, totalScore5]);
+	const reviews = [
+		{ 'reviewer': data?.job_knowledge_employee },
+		{ 'reviewer': data?.efficiency_reviewer },
+		{ 'reviewer': data?.attendance_reviewer },
+		{ 'reviewer': data?.communication_reviewer },
+		{ 'reviewer': data?.reliability_reviewer },
+		{ 'reviewer': data?.collaboration_reviewer },
+	];
 
-	// useEffect(() => {
-	// 	setinput((prevState: any) => {
-	// 		return ({
-	// 			...prevState,
-	// 			collaboration: totalScore6
-	// 		});
-	// 	});
-	// }, [setinput, totalScore6]);
+	//  @ts-ignore  
+	const hod: any = Object.values(reviews).reduce((a, v) => (a = a + v?.reviewer), 0);
+
 
 	return (
 		<form>
@@ -198,16 +157,16 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 						<div className="added-field">
 							<div className="factor_area">
 								<p> </p>
-								<div>
+								<div className='Grade-title'>
 									<p>Weight</p>
 								</div>
 							</div>
-							<div className="rate_area">
+							<div className="Grade-title">
 								<p>Staff Score</p>
 							</div>
-							{/* <div className="btn_area">
+							<div className="Grade-title">
 								<p>HOD Grade</p>
-							</div> */}
+							</div>
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -219,17 +178,9 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.job_knowledge_employee}</p>
 							</div>
-							{/* <div className="btn_area">
-								{data?.status === 'active' ? data?.job_knowledge_reviewer :
-									<select value={employeegrade.employeegrade1}
-										onChange={(e) => handleOnChange4('employeegrade1', e.target.value)}>
-										<option></option>
-										{[1, 2, 3, 4, 5].map(item =>
-											<option key={item} value={item}>{item}</option>
-										)}
-									</select>
-								}
-							</div> */}
+							<div className="btn_area">
+								{data?.job_knowledge_reviewer}
+							</div>
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -241,17 +192,9 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.efficiency_employee}</p>
 							</div>
-							{/* <div className="btn_area">
-								{data?.status === 'active' ? data?.efficiency_reviewer :
-									<select value={employeegrade.employeegrade2}
-										onChange={(e) => handleOnChange4('employeegrade2', e.target.value)}>
-										<option></option>
-										{[1, 2, 3, 4, 5].map(item =>
-											<option key={item} value={item}>{item}</option>
-										)}
-									</select>
-								}
-							</div> */}
+							<div className="btn_area">
+								{data?.efficiency_reviewer}
+							</div>
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -263,17 +206,9 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.attendance_employee}</p>
 							</div>
-							{/* <div className="btn_area">
-								{data?.status === 'active' ? data?.attendance_reviewer :
-									<select value={employeegrade.employeegrade3}
-										onChange={(e) => handleOnChange4('employeegrade3', e.target.value)}>
-										<option></option>
-										{[1, 2, 3, 4, 5].map(item =>
-											<option key={item} value={item}>{item}</option>
-										)}
-									</select>
-								}
-							</div> */}
+							<div className="btn_area">
+								{data?.attendance_reviewer}
+							</div>
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -285,17 +220,9 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.communication_employee}</p>
 							</div>
-							{/* <div className="btn_area">
-								{data?.status === 'active' ? data?.communication_reviewer :
-									<select value={employeegrade.employeegrade4}
-										onChange={(e) => handleOnChange4('employeegrade4', e.target.value)}>
-										<option></option>
-										{[1, 2, 3, 4, 5].map(item =>
-											<option key={item} value={item}>{item}</option>
-										)}
-									</select>
-								}
-							</div> */}
+							<div className="btn_area">
+								{data?.communication_reviewer}
+							</div>
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -307,17 +234,9 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.reliability_employee}</p>
 							</div>
-							{/* <div className="btn_area">
-								{data?.status === 'active' ? data?.reliability_reviewer :
-									<select value={employeegrade.employeegrade5}
-										onChange={(e) => handleOnChange4('employeegrade5', e.target.value)}>
-										<option></option>
-										{[1, 2, 3, 4, 5].map(item =>
-											<option key={item} value={item}>{item}</option>
-										)}
-									</select>
-								}
-							</div> */}
+							<div className="btn_area">
+								{data?.reliability_reviewer}
+							</div>
 						</div>
 						<div className="added-field">
 							<div className="factor_area">
@@ -329,31 +248,23 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 							<div className="rate_area">
 								<p>{data?.collaboration_employee}</p>
 							</div>
-							{/* <div className="btn_area">
-								{data?.status === 'active' ? <p>{data?.collaboration_reviewer}</p> :
-									<select value={employeegrade.employeegrade6}
-										onChange={(e) => handleOnChange4('employeegrade6', e.target.value)}>
-										<option></option>
-										{[1, 2, 3, 4, 5].map(item =>
-											<option key={item} value={item}>{item}</option>
-										)}
-									</select>
-								}
-							</div> */}
+							<div className="btn_area">
+								<p>{data?.collaboration_reviewer}</p>
+							</div>
 						</div>
 						<div className="added-field">
-							<div className="factor_area">
+							<div className="factor_area Grade-title">
 								<p>Total </p>
 								<div>
 									<p>{Weight}</p>
 								</div>
 							</div>
-							<div className="rate_area">
+							<div className="rate_area Grade-title">
 								<p>{!Amount ? "0" : Amount}</p>
 							</div>
-							{/* <div className="btn_area">
-								<p>{hodscore}</p>
-							</div> */}
+							<div className="btn_area Grade-title">
+								<p>{!hod ? "0" : hod}</p>
+							</div>
 						</div>
 					</div>
 					{/* {data?.status === 'active' ? "" :

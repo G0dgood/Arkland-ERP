@@ -6,7 +6,7 @@ import { fireAlert } from "../utils/Alert";
 import { handleUnauthorizedError } from "../functions/auth";
 const token = Cookies.get("token");
 
-export const useEmployees = (status: any) => {
+export const useEmployees = (status: any, action: any) => {
   const [employees, setEmployees] = useState([] as any);
   const [isLoading, setLoading] = useState(false);
   const [isApprovalLoading, seApprovalLoading] = useState(false);
@@ -74,7 +74,7 @@ export const useEmployees = (status: any) => {
     return () => {
       isMounted = false;
     };
-  }, [retryCount, status, updateEmployees]);
+  }, [retryCount, status, action, updateEmployees]);
 
   return {
     employees,

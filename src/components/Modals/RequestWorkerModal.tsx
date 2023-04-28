@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
-import axios, { AxiosResponse } from "axios";
+// import axios, { AxiosResponse } from "axios";
 import { Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
 import { BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 const token = Cookies.get("token");
 
 const RequestWorkerModal = (props: any) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isLoading, setLoading] = React.useState(false);
   const [lgShow, setLgShow] = useState(false);
   const [request, setRequest] = React.useState([] as any);
@@ -22,8 +22,6 @@ const RequestWorkerModal = (props: any) => {
     setLoading(true);
 
     const createWorkerRequest = { ...request, ...values };
-
-    console.log("createWorkerRequest", createWorkerRequest);
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API}/hr/workers-requests`, {

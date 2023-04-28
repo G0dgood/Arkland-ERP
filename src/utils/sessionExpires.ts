@@ -42,3 +42,24 @@ export const sessionExpired = () => {
     }
   });
 };
+
+export const updatePassword = () => {
+  return new Promise<void>((resolve) => {
+    if (Cookies.get("token")) {
+      swalWithBootstrapButtons
+        .fire({
+          title: "Password Update!",
+          html: "Your password needs to be updated. Please update your password and try again",
+          icon: "warning",
+          showCancelButton: false,
+          confirmButtonText: "OK",
+          cancelButtonText: "OK",
+        })
+        .then(() => {
+          resolve();
+        });
+    } else {
+      resolve();
+    }
+  });
+};

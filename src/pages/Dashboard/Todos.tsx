@@ -83,7 +83,6 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
       setShowDrawer(!showDrawer);
     }
   };
-
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">
@@ -95,7 +94,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
           <div className="table-loader-announcement1">
             <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
-        ) : tasks?.length === 0 || tasks === null ? (
+        ) : tasks?.length === 0 || tasks === undefined ? (
           <div className="table-loader-announcement1">
             <div>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -179,7 +178,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                           ) : (
                             <div className="getjob-application-details">
                               <p>ASSIGNED TO</p>
-                              <p>{schedule?.assigned_to}</p>
+                              <p>{schedule?.assigned_to?.full_name}</p>
                               <p>TITLE</p>
                               <p>{schedule?.title}</p>
                               <p>STATUS</p>
@@ -187,7 +186,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                               <p>PRIORITY</p>
                               <p>{schedule?.priority}</p>
                               <p>NOTES</p>
-                              <p>{schedule?.notes?.[0].text}</p>
+                              <p>{schedule?.notes?.[0]?.text}</p>
                               <p>DATE OF COMPLETION</p>
                               <p>
                                 {" "}

@@ -13,6 +13,7 @@ import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/Tabl
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
 import { SlClose } from 'react-icons/sl';
+import LeaveApplicationEligibiltyModal from '../../components/Modals/LeaveApplicationEligibiltyModal';
 
 const Leave = () => {
 
@@ -44,6 +45,13 @@ const Leave = () => {
   }, [entriesPerPage]);
 
 
+  // --- Leave Application Eligibility
+  const dateJoined: any = new Date(userInfo?.data?.employee?.employment_date);
+  const currentDate: any = new Date();
+  const diffTime = Math.abs(currentDate - dateJoined);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const daysLeft = 365 - diffDays;
+
 
 
 
@@ -55,7 +63,7 @@ const Leave = () => {
   const [isSuccess, setisSuccess] = useState(false);
   const [sortData, setSortData] = useState([]);
   const [reload, setReload] = useState(false);
-
+  const [showLogout, setShowLogout] = useState<any>(false);
 
 
 
@@ -132,7 +140,9 @@ const Leave = () => {
             />
           </div>
           <div>
-            <ApplyForLeave setReload={setReload} />
+
+            <ApplyForLeave setReload={setReload} diffDays={diffDays} daysLeft={daysLeft} showLogout={showLogout} setShowLogout={setShowLogout} />
+
           </div>
         </div>
 
@@ -220,4 +230,9 @@ const Leave = () => {
 }
 
 export default Leave
+
+
+
+
+
 
