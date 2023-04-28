@@ -12,6 +12,7 @@ import moment from "moment";
 import TableLoader from "../../components/TableLoader";
 import { Link } from "react-router-dom";
 import storage from "../../utils/storage";
+import { fireAlert } from "../../utils/Alert";
 
 const MyKPIAssessment = ({ setkpidata }: any) => {
   // @ts-ignore
@@ -21,6 +22,22 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [isError, setisError] = useState(false)
+  const [message, setMessage] = useState("");
+
+
+  const title1 = "KPI error";
+  const html1 = message;
+  const icon1 = "error";
+
+  useEffect(() => {
+    if (isError) {
+      fireAlert(title1, html1, icon1);
+      setTimeout(() => {
+        setisError(false)
+      }, 10000);
+    }
+  }, [isError, html1]);
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -43,15 +60,21 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 
   const [displayData, setDisplayData] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setisLoading(true);
     axios
       .get(
         `${process.env.REACT_APP_API}/hr/appraisals?employee=${userInfo?.data?.employee?._id}`
       )
       .then((res: AxiosResponse) => {
-        setData(res?.data?.data);
-        setkpidata(res?.data?.data?.length);
+        if (res?.data?.success === false) {
+          setMessage(res?.data?.message)
+          setisError(true)
+        } else {
+          setData(res?.data?.data);
+          setkpidata(res?.data?.data?.length);
+        }
+
         setisLoading(false);
       })
       .catch((err) => {
@@ -117,28 +140,28 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
                       {item?.month === 1
                         ? "January"
                         : item?.month === 2
-                        ? "February"
-                        : item?.month === 3
-                        ? "March"
-                        : item?.month === 4
-                        ? "April"
-                        : item?.month === 5
-                        ? "May"
-                        : item?.month === 6
-                        ? "June"
-                        : item?.month === 7
-                        ? "July"
-                        : item?.month === 8
-                        ? "	August"
-                        : item?.month === 9
-                        ? "September"
-                        : item?.month === 10
-                        ? "October"
-                        : item?.month === 11
-                        ? "November"
-                        : item?.month === 12
-                        ? "December"
-                        : ""}
+                          ? "February"
+                          : item?.month === 3
+                            ? "March"
+                            : item?.month === 4
+                              ? "April"
+                              : item?.month === 5
+                                ? "May"
+                                : item?.month === 6
+                                  ? "June"
+                                  : item?.month === 7
+                                    ? "July"
+                                    : item?.month === 8
+                                      ? "	August"
+                                      : item?.month === 9
+                                        ? "September"
+                                        : item?.month === 10
+                                          ? "October"
+                                          : item?.month === 11
+                                            ? "November"
+                                            : item?.month === 12
+                                              ? "December"
+                                              : ""}
                     </td>
                     <td className="table-datacell datatype-numeric">
                       {item?.performance_percentage_employee}%

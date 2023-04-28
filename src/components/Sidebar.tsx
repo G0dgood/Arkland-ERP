@@ -88,26 +88,26 @@ const Sidebar = ({ collapseNav }: any) => {
           isHeadOfDepartment ||
           isHRHead ||
           isHrAdmin) && (
-          <NavLink
-            to="/teamkpi"
-            // exact
-            className={
-              window.location.pathname === "/teamkpi"
-                ? "active-here"
-                : "nav-link"
-            }
-            onMouseEnter={() => setTeamKPI(true)}
-            onMouseLeave={() => setTeamKPI(false)}
-          >
-            <MdOutlineAssessment size={20} />
-            <span className="nav-name">Team KPI</span>
-            {teamKPI && collapseNav && (
-              <div className="sidenav-bubble">
-                <p>Team KPI</p>
-              </div>
-            )}
-          </NavLink>
-        )}
+            <NavLink
+              to="/teamkpi"
+              // exact
+              className={
+                window.location.pathname === "/teamkpi"
+                  ? "active-here"
+                  : "nav-link"
+              }
+              onMouseEnter={() => setTeamKPI(true)}
+              onMouseLeave={() => setTeamKPI(false)}
+            >
+              <MdOutlineAssessment size={20} />
+              <span className="nav-name">Team KPI</span>
+              {teamKPI && collapseNav && (
+                <div className="sidenav-bubble">
+                  <p>Team KPI</p>
+                </div>
+              )}
+            </NavLink>
+          )}
 
         <NavLink
           to="/weeklycontainer"
@@ -133,47 +133,26 @@ const Sidebar = ({ collapseNav }: any) => {
           isHeadOfDepartment ||
           isHRHead ||
           isHrAdmin) && (
-          <NavLink
-            to="/teamweekly"
-            // exact
-            className={
-              window.location.pathname === "/teamweekly"
-                ? "active-here"
-                : "nav-link"
-            }
-            onMouseEnter={() => setTeamWeekly(true)}
-            onMouseLeave={() => setTeamWeekly(false)}
-          >
-            <GoFile size={23} />
-            <span className="nav-name">Team Weekly Report</span>
-            {teamweekly && collapseNav && (
-              <div className="sidenav-bubble">
-                <p>Team Weekly Report</p>
-              </div>
-            )}
-          </NavLink>
-        )}
-        {(isSuperAdmin || isAdmin || isHRHead || isHrAdmin) && (
-          <NavLink
-            to="/humanresources"
-            // exact
-            className={
-              window.location.pathname === "/humanresources"
-                ? "active-here"
-                : "nav-link"
-            }
-            onMouseEnter={() => setHumanResources(true)}
-            onMouseLeave={() => setHumanResources(false)}
-          >
-            <GoFile size={23} />
-            <span className="nav-name">Human Resources</span>
-            {humanResources && collapseNav && (
-              <div className="sidenav-bubble">
-                <p>Human Resources</p>
-              </div>
-            )}
-          </NavLink>
-        )}
+            <NavLink
+              to="/teamweekly"
+              // exact
+              className={
+                window.location.pathname === "/teamweekly"
+                  ? "active-here"
+                  : "nav-link"
+              }
+              onMouseEnter={() => setTeamWeekly(true)}
+              onMouseLeave={() => setTeamWeekly(false)}
+            >
+              <GoFile size={23} />
+              <span className="nav-name">Team Weekly Report</span>
+              {teamweekly && collapseNav && (
+                <div className="sidenav-bubble">
+                  <p>Team Weekly Report</p>
+                </div>
+              )}
+            </NavLink>
+          )}
 
         <NavLink
           to="/attendance"
@@ -299,7 +278,7 @@ const Sidebar = ({ collapseNav }: any) => {
 
         {isSuperAdmin && (
           <NavLink
-            to="/allieave"
+            to="/allleave"
             // exact
             className={
               window.location.pathname === "/allieave"

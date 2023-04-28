@@ -178,4 +178,95 @@
     display: none !important;
   }
 }
- 
+
+.hand-noficational-place{
+  display: flex;
+  align-items: center; 
+}
+
+.hand-noficational-place-sup{
+  margin-right: 6rem;
+}
+  
+
+.Messages-button {
+	position: relative;
+	border-radius: 4px;  
+	cursor: pointer;
+	user-select: none;
+	transition: all .3s;
+  	border-radius: 50%; 
+	
+	&:hover {
+		transform: scale(1.03); 
+	}
+	
+	&:active {
+		transform: scale(.96);
+		
+		.badge {
+			transform: scale(1.2);
+		}
+	}
+}
+
+.Messages-button .badge {
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	display: block;
+	position: absolute;
+	background:  c.color(primary-color);
+	border: 2px solid white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: -10px;
+	right: -5px;
+	transition: all .3s;
+  padding: 0.5rem !important;
+}
+
+.user-details-noti{ 
+   animation-duration: 500ms;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
+  color: #444444; 
+  position: absolute;
+  right: 16.8rem;
+  top: 4rem;  
+  z-index: 1000; 
+ scroll-padding-top: 0px !important;
+}
+
+.user-details-noti ol, ul {
+    padding-left: 0px !important;
+}
+
+.user-details-notiol, ul, dl {
+    margin-top: 0;
+    margin-bottom: 0px !important;
+}
+
+@media screen and (max-width: 600px) {
+  .dropdown-names {
+    display: none !important;
+  }
+
+  .user-details-noti{ 
+   animation-duration: 500ms;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
+  color: #444444; 
+  position: absolute;
+  right: 7rem;
+  top: 4rem;  
+  z-index: 1000; 
+ scroll-padding-top: 0px !important;
+}
+.Messages-button .badge {
+   display: none !important;
+}
+}

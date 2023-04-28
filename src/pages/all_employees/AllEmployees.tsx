@@ -58,14 +58,14 @@ const AllEmployees = ({ setEmployee }: any) => {
   }, [entriesPerPage]);
 
   React.useEffect(() => {
-    if (!roles || roles.length === 0) {
+    if (!roles || roles?.length === 0) {
       dispatch(getRoles());
     }
-    if (!departments || departments.length === 0) {
+    if (!departments || departments?.length === 0) {
       dispatch(getDepartment());
     }
     // setEmployee(employees?.length);
-  }, [dispatch, roles, departments, setEmployee, employees.length]);
+  }, [dispatch, roles, departments, setEmployee, employees?.length]);
 
   const header = [
     { title: "FULL NAME", prop: "full_name" },
@@ -117,6 +117,9 @@ const AllEmployees = ({ setEmployee }: any) => {
       setShowDialog({ [id]: false });
     }
   };
+
+  console.log('displayData?.length', displayData?.length)
+
   return (
     <div>
       {error && (
@@ -147,7 +150,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
-                    // onClick={handleCreateEmployeeClick}
+                  // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee
@@ -224,7 +227,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                 <tbody className="data-table-content">
                   {isLoading ? (
                     <TableFetch colSpan={9} />
-                  ) : displayData?.length === 0 || displayData === null ? (
+                  ) : displayData?.length === 0 || displayData === undefined ? (
                     <NoRecordFound colSpan={9} />
                   ) : (
                     displayData?.map((item: any, i: any) => (

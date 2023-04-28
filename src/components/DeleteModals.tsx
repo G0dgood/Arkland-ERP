@@ -7,9 +7,6 @@ import { MdOutlineClose } from 'react-icons/md';
 const DeleteModals = ({ isLoading1, handleDelete, showdelete, setShowDelete, Header }: any) => {
 
 
-
-
-
 	const handleDeleteClose = () => setShowDelete(false);
 
 

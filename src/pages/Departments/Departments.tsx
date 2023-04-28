@@ -74,7 +74,7 @@ const DepartmentsView = () => {
               <div className="isLoading-container">
                 <SyncLoader color={"#990000"} loading={isLoading} />
               </div>
-            ) : departments?.length === 0 ? (
+            ) : departments?.length === 0 || departments?.length === undefined ? (
               <div className="table-loader-announcement">
                 <div>
                   {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -96,8 +96,8 @@ const DepartmentsView = () => {
                           i % 2 === 0
                             ? `iDotsRounded1`
                             : isPrime(parseInt(i, 10))
-                            ? "iDotsRounded2"
-                            : "iDotsRounded3"
+                              ? "iDotsRounded2"
+                              : "iDotsRounded3"
                         }
                       >
                         {item?.name}

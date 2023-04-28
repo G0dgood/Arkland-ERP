@@ -6,6 +6,19 @@ import AdminDashboard from "./AdminDashboard";
 import storage from "../../utils/storage";
 
 const Dashboard = () => {
+
+
+
+
+
+  // console.log('socket', socket)
+  // // send a message to the server
+  // // socket.emit("hello from client", 5, "6", { 7: Uint8Array.from([8]) });
+
+  // // receive a message from the server
+
+
+
   // @ts-ignore
   const userInfo: any = JSON?.parse(storage?.get("user"));
 
@@ -26,17 +39,7 @@ const Dashboard = () => {
     setCollapseNav(!collapseNav);
   };
 
-  // window.onload = function () {
-  //  const nav: any = document.getElementById('nav');
-  //  const burger: any = document.getElementById('burger');
-  //  const overlay: any = document.getElementById('overlay1');
 
-  //  burger.addEventListener('click', () => {
-  //   burger.classList.toggle('active');
-  //   nav.classList.toggle('active');
-  //   overlay.classList.toggle('active');
-  //  });
-  // }
 
   return (
     <div id="screen-wrapper">

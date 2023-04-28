@@ -171,12 +171,7 @@ const Announcement = () => {
   };
   return (
     <div
-      className="main-div-col-2-sub"
-      style={{
-        height: "74.5%",
-        overflow: "auto",
-      }}
-    >
+      className="main-div-col-2-sub" >
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
           <span className="sub-text-contained">
@@ -188,12 +183,12 @@ const Announcement = () => {
           isHeadOfDepartment ||
           isHRHead ||
           isHrAdmin) && (
-          <div>
-            <CreateAnnouncementModal
-              onNewAnnouncementCreated={handleNewAnnouncementCreated}
-            />
-          </div>
-        )}
+            <div>
+              <CreateAnnouncementModal
+                onNewAnnouncementCreated={handleNewAnnouncementCreated}
+              />
+            </div>
+          )}
         <Button
           variant="contained"
           className="Add-btn"
@@ -207,7 +202,7 @@ const Announcement = () => {
           <div className="table-loader-announcement">
             <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
-        ) : announcements?.length === 0 || announcements == null ? (
+        ) : announcements?.length === 0 || announcements === undefined ? (
           <div className="table-loader-announcement">
             <div>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -217,12 +212,9 @@ const Announcement = () => {
           </div>
         ) : (
           <div className="Announcement-container">
-            {announcements?.map((item: any, i: any) => (
-              <div className="Announcement-sub-2" key={i}>
-                <div
-                  className="main-todo-Event"
-                  style={{ borderRadius: "4px" }}
-                >
+            <div className="Announcement-sub-2" >
+              {announcements?.map((item: any, i: any) => (
+                <div className="main-todo-Event" style={{ borderRadius: "4px" }} key={i} >
                   <div className="main-todo-container">
                     <div className="main-todo-note">
                       <div>{item?.message}</div>
@@ -252,96 +244,10 @@ const Announcement = () => {
                       />
                     </span>
                   </div>
-                  {showView[item?.id] && (
-                    <Modal
-                      size="lg"
-                      show={viewShow}
-                      aria-labelledby="contained-modal-title-vcenter"
-                      centered
-                    >
-                      <Modal.Header closeButton id="displayTermination">
-                        <Modal.Title>View Announcement</Modal.Title>
-                        <Button
-                          style={{ color: "#fff" }}
-                          onClick={() => setViewShow(false)}
-                        >
-                          <MdOutlineClose size={28} />
-                        </Button>
-                      </Modal.Header>
-                      <Modal.Body>
-                        {isAnnouncementsLoading === true ? (
-                          <div className="table-loader-announcement1">
-                            <SyncLoader
-                              color={"#990000"}
-                              loading={isAnnouncementsLoading}
-                            />
-                          </div>
-                        ) : (
-                          <div className="getjob-application-details">
-                            <p>MESSAGE</p>
-                            <p>{ViewAnnouncements?.message}</p>
-                            <p>AUDIENCE</p>
-                            <p>{ViewAnnouncements?.audience_scope}</p>
-                            <p>STATUS</p>
-                            <p>{ViewAnnouncements?.status}</p>
-                            <p>DATE OF CREATION</p>
-                            <p>
-                              {moment(ViewAnnouncements?.created_at).format(
-                                "DD-MMMM-YYYY"
-                              )}
-                            </p>
-                          </div>
-                        )}
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <button
-                          className="btn btn-secondary"
-                          onClick={() => setShowView({ [item?.id]: false })}
-                        >
-                          Cancel
-                        </button>
-                      </Modal.Footer>
-                    </Modal>
-                  )}
 
-                  {showDialog[item?.id] && (
-                    <Modal
-                      size="lg"
-                      show={deleteShow}
-                      aria-labelledby="contained-modal-title-vcenter"
-                      centered
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Delete Announcement</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <p>
-                          Are you sure you want to delete this announcement?
-                        </p>
-                        <p>{item?.title}</p>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => {
-                            deleteAnnouncement(item?.id);
-                            // setShowDialog({ [item?.id]: false });
-                          }}
-                        >
-                          Yes
-                        </button>
-                        <button
-                          className="btn btn-secondary"
-                          onClick={() => setShowDialog({ [item?.id]: false })}
-                        >
-                          Cancel
-                        </button>
-                      </Modal.Footer>
-                    </Modal>
-                  )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -350,3 +256,7 @@ const Announcement = () => {
 };
 
 export default Announcement;
+
+
+
+

@@ -10,27 +10,44 @@ import { Spinner } from "react-bootstrap";
 const KPIAssessment = () => {
   const navigate = useNavigate();
   const token = Cookies.get("token");
-  // @ts-ignore
-  // const userInfo: any = JSON.parse(localStorage.getItem("userinfo"));
+  // @ts-ignore 
   const userInfo: any = JSON.parse(storage?.get("user"));
+  const gradeSystem = [
+    { rate: 5, definition: "Outstanding" },
+    { rate: 4, definition: "Very Good" },
+    { rate: 3, definition: "Good" },
+    { rate: 2, definition: "Average" },
+    { rate: 1, definition: "Below Average/Poor" },
+  ]
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON?.parse(localStorage.getItem("collapse")) || false;
-  });
-
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
-  //
+  const [kpicheck, setkpicheck] = useState<any>();
   const [employees, setEmployees] = useState<any>();
 
-  // console.log('employees', employees)
+  const [kpinputs, setKpInputs] = useState({
+    month: 0,
+    employee: "",
+    reviewer: "",
+    job_knowledge: 0,
+    efficiency: 0,
+    attendance: 0,
+    communication: 0,
+    reliability: 0,
+    collaboration: 0,
+    comment: "",
+  });
+  const [inputs, setInputs] = useState({
+    month: 0,
+    employee: "",
+    reviewer: "",
+    job_knowledge: 0,
+    efficiency: 0,
+    attendance: 0,
+    communication: 0,
+    reliability: 0,
+    collaboration: 0,
+    comment: "",
+  });
+
 
   const [employeegrade, setemployeegrade] = useState<any>({
     employeegrade1: 0,
@@ -41,43 +58,24 @@ const KPIAssessment = () => {
     employeegrade6: 0,
   });
 
-  const [inputs, setInputs] = useState({
-    job_knowledge: 15,
-    efficiency: 15,
-    attendance: 15,
-    communication: 15,
-    reliability: 15,
-    collaboration: 20,
-  });
 
-  // const [_kpiData, setKpiData] = useState<Record<'one' | 'two', any>>({
-  // 	one: {
-  // 		performance: 'Job Knowledge',
-  // 		description: "Measures employee's relevant knowledge and essential skills, such as work practices, policies and procedures needed to do a particular job",
-  // 		weight: 20,
-  // 	},
-  // 	two: {
-  // 		performance: 'Efficiency',
-  // 		description: "Maintaining the same standards and behaviors that lead to producing a high quality of work",
-  // 		weight: 15,
-  // 	},
-  // });
+
 
   // const handleOnChangeKpiData = (num: 'one' | 'two', input: string, value: string | number) => {
   // 	setKpiData((prevState) => ({ ...prevState, [num]: { ...prevState.[num], [input]: value } }))
   // }
 
   // @ts-ignore
-  const [kpiData1, setkpiData1] = useState<any>({
+  const kpiData1: any = ({
     Performance1: "Job Knowledge",
     Performance2: "Efficiency",
-    Performance3: " Attendance",
-    Performance4: "Software Development",
-    Performance5: "Team work",
-    Performance6: "Debugging",
+    Performance3: "Attendance",
+    Performance4: "Communication",
+    Performance5: "Reliability",
+    Performance6: "Collaboration",
   });
 
-  const [kpiData2, setkpiData2] = useState<any>({
+  const kpiData2: any = ({
     IndicatorDescription1:
       "Measures employee's relevant knowledge and essential skills, such as work practices, policies and procedures needed to do a particular job",
     IndicatorDescription2:
@@ -91,13 +89,13 @@ const KPIAssessment = () => {
       "Helps debug technical problems. Submits issues so that we can document and improve our service.",
   });
 
-  const [kpiData3, setkpiData3] = useState<any>({
+  const kpiData3: any = ({
     Weight1: 20,
     Weight2: 15,
-    Weight3: 20,
-    Weight4: 20,
+    Weight3: 15,
+    Weight4: 15,
     Weight5: 15,
-    Weight6: 10,
+    Weight6: 20,
   });
 
   const Weight =
@@ -108,45 +106,21 @@ const KPIAssessment = () => {
     kpiData3.Weight5 +
     kpiData3.Weight6;
 
-  const handleOnChange1 = (input: string, value: any) => {
-    setkpiData1((prevState: any) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
-
-  const handleOnChange2 = (input: string, value: any) => {
-    setkpiData2((prevState: any) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
-
-  const handleOnChange3 = (input: string, value: any) => {
-    setkpiData3((prevState: any) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
-  const handleOnChange4 = (input: string, value: any) => {
-    setemployeegrade((prevState: any) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
-  const handleOnKPI = (input: string, value: any) => {
+  const handleOnChange = (input: string, value: any) => {
     setKpInputs((prevState: any) => ({
       ...prevState,
       [input]: value,
     }));
   };
 
-  const totalScore1 = (kpiData3.Weight1 / 5) * employeegrade.employeegrade1;
-  const totalScore2 = (kpiData3.Weight2 / 5) * employeegrade.employeegrade2;
-  const totalScore3 = (kpiData3.Weight3 / 5) * employeegrade.employeegrade3;
-  const totalScore4 = (kpiData3.Weight4 / 5) * employeegrade.employeegrade4;
-  const totalScore5 = (kpiData3.Weight5 / 5) * employeegrade.employeegrade5;
-  const totalScore6 = (kpiData3.Weight6 / 5) * employeegrade.employeegrade6;
+
+
+  const totalScore1 = (kpiData3.Weight1 / 5) * kpinputs.job_knowledge;
+  const totalScore2 = (kpiData3.Weight2 / 5) * kpinputs.efficiency;
+  const totalScore3 = (kpiData3.Weight3 / 5) * kpinputs.attendance;
+  const totalScore4 = (kpiData3.Weight4 / 5) * kpinputs.communication;
+  const totalScore5 = (kpiData3.Weight5 / 5) * kpinputs.reliability;
+  const totalScore6 = (kpiData3.Weight6 / 5) * kpinputs.collaboration;
 
   const [kpiscore, setkpiscore] = useState();
   useEffect(() => {
@@ -167,85 +141,30 @@ const KPIAssessment = () => {
     totalScore6,
   ]);
 
-  const [kpinputs, setKpInputs] = useState({
-    month: 0,
-    employee: "",
-    reviewer: "",
-    job_knowledge: 0,
-    efficiency: 0,
-    attendance: 0,
-    communication: 0,
-    reliability: 0,
-    collaboration: 0,
-    comment: "",
-  });
+
+  console.log('kpinputs', inputs)
+
+
 
   useEffect(() => {
-    setKpInputs((prevState: any) => {
+    setInputs((prevState: any) => {
       return {
         ...prevState,
         job_knowledge: totalScore1,
-      };
-    });
-  }, [kpinputs.job_knowledge, setKpInputs, totalScore1]);
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         efficiency: totalScore2,
-      };
-    });
-  }, [kpinputs.efficiency, setKpInputs, totalScore2]);
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         attendance: totalScore3,
-      };
-    });
-  }, [kpinputs.attendance, setKpInputs, totalScore3]);
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         communication: totalScore4,
-      };
-    });
-  }, [kpinputs.communication, setKpInputs, totalScore4]);
-
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         reliability: totalScore5,
-      };
-    });
-  }, [kpinputs.reliability, setKpInputs, totalScore5]);
-
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
         collaboration: totalScore6,
+        employee: userInfo?.data?.employee?._id,
+        month: kpinputs.month,
+        reviewer: kpinputs.reviewer,
+        comment: kpinputs.comment,
       };
     });
-  }, [kpinputs.collaboration, setKpInputs, totalScore6]);
+  }, [kpinputs.comment, kpinputs.job_knowledge, kpinputs.month, kpinputs.reviewer, setInputs, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6, userInfo?.data?.employee?._id]);
 
-  useEffect(() => {
-    setKpInputs((prevState: any) => {
-      return {
-        ...prevState,
-        employee: userInfo?.data?.employee?.id,
-      };
-    });
-  }, [
-    kpinputs.employee,
-    setKpInputs,
-    totalScore6,
-    userInfo?.data?.employee?.id,
-  ]);
 
-  const [data, setData] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [isSuccess, setisSuccess] = useState(false);
   const [message, setMessage] = useState("");
@@ -258,22 +177,7 @@ const KPIAssessment = () => {
   const html1 = message;
   const icon1 = "error";
 
-  // const handelkpi = () => {
-  // 	setisLoading(true);
-  // 	axios
-  // 		.post(`${process.env.REACT_APP_API}/hr/appraisals`, kpinputs)
-  // 		.then((res: AxiosResponse) => {
-  // 			// setRequestWorkersList([...res.data.data]);
-  // 			setisLoading(false);
-  // 			setisSuccess(true)
 
-  // 		})
-  // 		.catch((err) => {
-  // 			console.log('res-res-res', err);
-  // 			setMessage(err.data.message)
-  // 			setisLoading(false);
-  // 		});
-  // }
 
   useEffect(() => {
     if (isSuccess) {
@@ -298,7 +202,7 @@ const KPIAssessment = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(kpinputs),
+      body: JSON.stringify(inputs),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -306,7 +210,6 @@ const KPIAssessment = () => {
           setMessage(data?.message);
           setisError(true);
         } else {
-          setData(data);
           setisSuccess(true);
           setTimeout(() => {
             navigate("/kpicontainer");
@@ -358,6 +261,7 @@ const KPIAssessment = () => {
       fireAlert(title1, html1, icon1);
     }
   }, [html, title, icon, isSuccess, message, html1, title1]);
+
   return (
     <div>
       <div>
@@ -377,8 +281,8 @@ const KPIAssessment = () => {
               <p>{userInfo?.data?.role?.name}</p>
               <p>Employee ID</p>
               <p>{userInfo?.data?.employee?.employee_id} </p>
-              <p>Review Date</p>
-              <p> </p>
+              <p>Date</p>
+              <p> {new Date().toDateString()}</p>
             </div>
           </div>
           <div className="kpi-top-container-card-2">
@@ -397,71 +301,71 @@ const KPIAssessment = () => {
               <p>Below Average/Poor</p>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="datacell-button-bottom-select">
-        <div
-          className="table-datacell-button-bottom"
-          style={{ marginRight: "20px" }}
-        >
-          <div className="performance-intro-header">
-            <div className="quarter" style={{ marginBottom: "0.5rem" }}>
-              <div className="entries-perpage">
-                Year:
-                <select
-                  name="year"
-                  // value={year}
-                >
-                  <option>{year}</option>
-                </select>
-              </div>
-              <div style={{ width: "30px" }} />
-              <div className="entries-perpage">
-                Month:
-                <select
-                  name="month"
-                  value={kpinputs.month}
-                  onChange={(e) => handleOnKPI("month", e.target.value)}
-                >
-                  <option> </option>
-                  <option value="1">January</option>
-                  <option value="2">February</option>
-                  <option value="3">March</option>
-                  <option value="4">April</option>
-                  <option value="5">May</option>
-                  <option value="6">June</option>
-                  <option value="7">July</option>
-                  <option value="8">August</option>
-                  <option value="9">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
-                </select>
-              </div>
-            </div>
 
-            <div className="line-manager entries-perpage ">
-              <div>Line Manager:</div>
-              <select
-                name="line-manager"
-                value={kpinputs.reviewer}
-                onChange={(e) => handleOnKPI("reviewer", e.target.value)}
-              >
-                <option> </option>
-                {employees?.map((employ: any) => (
-                  <option key={employ?._id} value={employ?.id}>
-                    {employ?.full_name}
-                  </option>
-                ))}
-              </select>
+          <div>
+            <div className="datacell-button-bottom-select">
+              <div className="table-datacell-button-bottom" style={{ marginRight: "20px" }}  >
+                <div className="performance-intro-header">
+                  <div className="quarter" style={{ marginBottom: "0.5rem" }}>
+                    <div className="entries-perpage">
+                      Year:
+                      <select name="year"  >
+                        <option>{year}</option>
+                      </select>
+                    </div>
+                    <div style={{ width: "30px" }} />
+                    <div className="entries-perpage">
+                      Month:
+                      <select
+                        name="month"
+                        value={kpinputs.month}
+                        required
+                        onChange={(e) => handleOnChange("month", e.target.value)}
+                      >
+                        <option> </option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="line-manager entries-perpage ">
+                    <div>HOD :</div>
+                    <select
+                      name="line-manager"
+                      value={kpinputs.reviewer}
+                      onChange={(e) => handleOnChange("reviewer", e.target.value)}
+                      required
+                    >
+                      <option> </option>
+                      {employees?.map((employ: any) => (
+                        <option key={employ?._id} value={employ?.id}>
+                          {employ?.full_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="table-datacell-button-bottom">
+                <div className="table-datacell-button-bottom-color1">KPI SCORE:</div>
+                <div className="table-datacell-button-bottom-color2">{kpiscore}</div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="table-datacell-button-bottom">
-          <div className="table-datacell-button-bottom-color1">KPI SCORE:</div>
-          <div className="table-datacell-button-bottom-color2">{kpiscore}</div>
-        </div>
       </div>
+
       <div className="kpi-top-container-card-3">
         <section className="md-ui component-data-table">
           <div className="main-table-wrapper">
@@ -481,8 +385,6 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     Employee Score
                   </td>
-                  {/* <td className="table-datacell datatype-numeric">Supervisor Grade</td>
-										<td className="table-datacell datatype-numeric">Supervisor Score</td> */}
                 </tr>
               </thead>
 
@@ -494,7 +396,7 @@ const KPIAssessment = () => {
                       className="Performance-Indicator-input"
                       value={kpiData1.Performance1}
                       onChange={(e) =>
-                        handleOnChange1("Performance1", e.target.value)
+                        handleOnChange("Performance1", e.target.value)
                       }
                     />
                   </td>
@@ -505,7 +407,7 @@ const KPIAssessment = () => {
                       className="Performance-Indicator-input2"
                       value={kpiData2.IndicatorDescription2}
                       onChange={(e) =>
-                        handleOnChange2("IndicatorDescription1", e.target.value)
+                        handleOnChange("IndicatorDescription1", e.target.value)
                       }
                       rows={4}
                     />
@@ -514,11 +416,8 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
-                      type="number"
                       value={kpiData3.Weight1}
-                      onChange={(e) =>
-                        handleOnChange3("Weight1", e.target.value)
-                      }
+
                     />
                   </td>
 
@@ -527,17 +426,13 @@ const KPIAssessment = () => {
                       className="performance-field"
                       name="score"
                       required
-                      value={employeegrade.employeegrade1}
-                      onChange={(e) =>
-                        handleOnChange4("employeegrade1", e.target.value)
-                      }
+                      value={kpinputs.job_knowledge}
+                      onChange={(e) => handleOnChange("job_knowledge", e.target.value)}
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -554,9 +449,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input"
                       value={kpiData1.Performance2}
-                      onChange={(e) =>
-                        handleOnChange1("Performance2", e.target.value)
-                      }
+
                     />
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -564,9 +457,6 @@ const KPIAssessment = () => {
                       id="kpi-textarea"
                       className="Performance-Indicator-input2"
                       value={kpiData2.IndicatorDescription2}
-                      onChange={(e) =>
-                        handleOnChange2("IndicatorDescription2", e.target.value)
-                      }
                       rows={5}
                     />{" "}
                   </td>
@@ -574,27 +464,21 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight2}
-                      onChange={(e) =>
-                        handleOnChange3("userId", e.target.value)
-                      }
-                    />{" "}
+
+                    />
                   </td>
                   <td className="table-datacell datatype-numeric">
                     <select
                       className="performance-field"
                       name="score"
                       required
-                      value={employeegrade.employeegrade2}
-                      onChange={(e) =>
-                        handleOnChange4("employeegrade2", e.target.value)
-                      }
+                      value={kpinputs.efficiency}
+                      onChange={(e) => handleOnChange("efficiency", e.target.value)}
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -611,9 +495,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input"
                       value={kpiData1.Performance3}
-                      onChange={(e) =>
-                        handleOnChange1("Performance3", e.target.value)
-                      }
+
                     />
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -621,9 +503,7 @@ const KPIAssessment = () => {
                       id="kpi-textarea"
                       className="Performance-Indicator-input2"
                       value={kpiData2.IndicatorDescription3}
-                      onChange={(e) =>
-                        handleOnChange2("IndicatorDescription3", e.target.value)
-                      }
+
                       rows={5}
                     />{" "}
                   </td>
@@ -631,9 +511,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight3}
-                      onChange={(e) =>
-                        handleOnChange3("Weight3", e.target.value)
-                      }
+
                     />{" "}
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -641,17 +519,13 @@ const KPIAssessment = () => {
                       className="performance-field"
                       name="score"
                       required
-                      value={employeegrade.employeegrade3}
-                      onChange={(e) =>
-                        handleOnChange4("employeegrade3", e.target.value)
-                      }
+                      value={kpinputs.attendance}
+                      onChange={(e) => handleOnChange("attendance", e.target.value)}
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -668,9 +542,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input"
                       value={kpiData1.Performance4}
-                      onChange={(e) =>
-                        handleOnChange1("Performance4", e.target.value)
-                      }
+
                     />
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -678,12 +550,8 @@ const KPIAssessment = () => {
                       id="kpi-textarea"
                       className="Performance-Indicator-input2"
                       value={kpiData2.IndicatorDescription4}
-                      onChange={(e) =>
-                        handleOnChange2(
-                          "kpiData2.IndicatorDescription4",
-                          e.target.value
-                        )
-                      }
+
+
                       rows={5}
                     />{" "}
                   </td>
@@ -691,9 +559,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight4}
-                      onChange={(e) =>
-                        handleOnChange3("Weight3", e.target.value)
-                      }
+
                     />{" "}
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -701,17 +567,13 @@ const KPIAssessment = () => {
                       className="performance-field"
                       name="score"
                       required
-                      value={employeegrade.employeegrade4}
-                      onChange={(e) =>
-                        handleOnChange4("employeegrade4", e.target.value)
-                      }
+                      value={kpinputs.communication}
+                      onChange={(e) => handleOnChange("communication", e.target.value)}
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -728,9 +590,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input"
                       value={kpiData1.Performance5}
-                      onChange={(e) =>
-                        handleOnChange1("Performance5", e.target.value)
-                      }
+
                     />
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -738,9 +598,7 @@ const KPIAssessment = () => {
                       id="kpi-textarea"
                       className="Performance-Indicator-input2"
                       value={kpiData2.IndicatorDescription5}
-                      onChange={(e) =>
-                        handleOnChange2("IndicatorDescription5", e.target.value)
-                      }
+
                       rows={5}
                     />{" "}
                   </td>
@@ -748,9 +606,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight5}
-                      onChange={(e) =>
-                        handleOnChange3("Weight5", e.target.value)
-                      }
+
                     />{" "}
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -758,17 +614,13 @@ const KPIAssessment = () => {
                       className="performance-field"
                       name="score"
                       required
-                      value={employeegrade.employeegrade5}
-                      onChange={(e) =>
-                        handleOnChange4("employeegrade5", e.target.value)
-                      }
+                      value={kpinputs.reliability}
+                      onChange={(e) => handleOnChange("reliability", e.target.value)}
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -785,9 +637,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input"
                       value={kpiData1.Performance6}
-                      onChange={(e) =>
-                        handleOnChange1("Performance6", e.target.value)
-                      }
+
                     />
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -795,9 +645,6 @@ const KPIAssessment = () => {
                       id="kpi-textarea"
                       className="Performance-Indicator-input2"
                       value={kpiData2.IndicatorDescription6}
-                      onChange={(e) =>
-                        handleOnChange2("IndicatorDescription6", e.target.value)
-                      }
                       rows={5}
                     />{" "}
                   </td>
@@ -805,9 +652,7 @@ const KPIAssessment = () => {
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight6}
-                      onChange={(e) =>
-                        handleOnChange4("Weight6", e.target.value)
-                      }
+
                     />{" "}
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -815,17 +660,13 @@ const KPIAssessment = () => {
                       className="performance-field"
                       name="score"
                       required
-                      value={employeegrade.employeegrade6}
-                      onChange={(e) =>
-                        handleOnChange4("employeegrade6", e.target.value)
-                      }
+                      value={kpinputs.collaboration}
+                      onChange={(e) => handleOnChange("collaboration", e.target.value)}
                     >
                       <option></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {[1, 2, 3, 4, 5].map(item =>
+                        <option key={item} value={item}>{item}</option>
+                      )}
                     </select>
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -853,28 +694,12 @@ const KPIAssessment = () => {
                 <td className="table-datacell datatype-numeric table-datacell-color2">
                   {kpiscore}
                 </td>
-                {/* <td className="table-datacell datatype-numeric table-datacell-color">  </td>
-								<td className="table-datacell datatype-numeric table-datacell-color2"> </td> */}
               </tr>
             </table>
           </div>
         </section>
 
-        {/* <div className='emp-reconmentdetion'>
-						<div className='emp-reconmentdetion-sub'>
-							<div className='reconmentdetion-sub-title'>
-								Comments & Recommandations - Employee
-							</div>
-							<textarea rows={12} />
-						</div>
-						<div className='emp-reconmentdetion-sub-space' />
-						<div className='emp-reconmentdetion-sub'>
-							<div className='reconmentdetion-sub-title'>
-								Comments & Recommandations - Appraradir
-							</div>
-							<textarea rows={12} />
-						</div>
-					</div> */}
+
       </div>
       <div className="board">
         <div className="shareCommentContainer">
@@ -883,7 +708,7 @@ const KPIAssessment = () => {
             placeholder="Write a comment.."
             required
             value={kpinputs.comment}
-            onChange={(e) => handleOnKPI("comment", e.target.value)}
+            onChange={(e) => handleOnChange("comment", e.target.value)}
           ></textarea>
           <div className="con-btn-success">
             <Button variant="contained" className="Add-btn" onClick={handelkpi}>
