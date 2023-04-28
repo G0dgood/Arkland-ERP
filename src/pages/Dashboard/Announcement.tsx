@@ -1,19 +1,20 @@
 import moment from "moment";
-import React, { CSSProperties } from "react";
+import React from "react";
 import { Button } from "@mui/material";
-
-import { BsFillPinAngleFill, BsThreeDots } from "react-icons/bs";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { Modal, Spinner } from "react-bootstrap";
 import Cookies from "js-cookie";
 import { MdOutlineClose } from "react-icons/md";
 import SyncLoader from "react-spinners/SyncLoader";
 import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
-import { getRequestOptions } from "../../utils/auth/header";
 import { getUserPrivileges } from "../../functions/auth";
 import { fireAlert } from "../../utils/Alert";
 import { DialogState } from "../../interfaces/base";
-import { useAnnouncementsById } from "../../hooks/useAnnouncements";
+import {
+  useAnnouncements,
+  useAnnouncementsById,
+} from "../../hooks/useAnnouncements";
+
 const token = Cookies.get("token");
 
 const Announcement = () => {
@@ -27,65 +28,22 @@ const Announcement = () => {
     isHrAdmin,
   } = getUserPrivileges();
 
-  const [announcements, setAnnouncements] = React.useState([] as any);
   const [announcementAction, setAnnouncementAction] = React.useState([] as any);
-
-  const [isLoading, setLoading] = React.useState(false);
+  const [isDeleteLoading, setLoading] = React.useState(false);
   const [clockInLoading, setClockInLoading] = React.useState(false);
-  const [error, setError] = React.useState<any>();
-  const [message, setMessage] = React.useState("");
   const [newAnnouncementCreated, setNewAnnouncementCreated] =
     React.useState(false);
   const [viewAction, setViewAction] = React.useState([] as any);
   const [showView, setShowView] = React.useState<DialogState>({});
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
   const [deleteShow, setDeleteShow] = React.useState(false);
-
   const [viewShow, setViewShow] = React.useState(false);
+
+  const { announcements, isLoading, error, message } =
+    useAnnouncements(announcementAction);
   const { ViewAnnouncements, isAnnouncementsLoading } =
     useAnnouncementsById(viewAction);
 
-  React.useEffect(() => {
-    let isMounted = true;
-    let retryCount = 0;
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const responseAnnouncements = await fetch(
-          `${process.env.REACT_APP_API}/hr/announcements`,
-          getRequestOptions
-        );
-        const isJsonResponseAnnouncements = responseAnnouncements.headers
-          ?.get("content-type")
-          ?.includes("application/json");
-        const dataProjects =
-          isJsonResponseAnnouncements && (await responseAnnouncements.json());
-        if (!responseAnnouncements.ok) {
-          throw new Error(
-            dataProjects?.message || responseAnnouncements.status
-          );
-        }
-        setAnnouncements(dataProjects?.data);
-
-        setLoading(false);
-        setError(false);
-        setMessage("");
-      } catch (error: any) {
-        setLoading(false);
-        setMessage(error.message || "Something went wrong");
-        if (retryCount < 5) {
-          setTimeout(() => {
-            retryCount++;
-            fetchData();
-          }, 5000);
-        }
-      }
-    };
-    fetchData();
-    return () => {
-      isMounted = false;
-    };
-  }, [newAnnouncementCreated, announcementAction]);
   const handleNewAnnouncementCreated = () => {
     setNewAnnouncementCreated(!newAnnouncementCreated);
   };
@@ -125,7 +83,6 @@ const Announcement = () => {
   };
 
   const deleteAnnouncement = async (id: string) => {
-    console.log("idDee", id);
     setLoading(true);
     try {
       const response = await fetch(
@@ -243,14 +200,20 @@ const Announcement = () => {
                         title="VIEW ANNOUNCEMENT"
                       />
                     </span>
-                    <span className="BsFillPinAngleFill">
-                      <FiTrash2
-                        size={25}
-                        onClick={() => handleDelete(item?.id)}
-                        cursor="pointer"
-                        title="DELETE TODO"
-                      />
-                    </span>
+                    {(isSuperAdmin ||
+                      isTeamLead ||
+                      isHeadOfDepartment ||
+                      isHRHead ||
+                      isHrAdmin) && (
+                      <span className="BsFillPinAngleFill">
+                        <FiTrash2
+                          size={25}
+                          onClick={() => handleDelete(item?.id)}
+                          cursor="pointer"
+                          title="DELETE ANNOUNCEMENT"
+                        />
+                      </span>
+                    )}
                   </div>
                   {showView[item?.id] && (
                     <Modal
@@ -328,7 +291,11 @@ const Announcement = () => {
                             // setShowDialog({ [item?.id]: false });
                           }}
                         >
-                          Yes
+                          {isDeleteLoading ? (
+                            <Spinner animation="border" />
+                          ) : (
+                            "Yes"
+                          )}
                         </button>
                         <button
                           className="btn btn-secondary"

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { getRequestOptions } from "../utils/auth/header";
 import { handleUnauthorizedError } from "../functions/auth";
 
-export const useAnnouncements = () => {
+export const useAnnouncements = (action: any) => {
   const [announcements, setAnnouncements] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -67,7 +67,7 @@ export const useAnnouncements = () => {
     return () => {
       isMounted = false;
     };
-  }, [retryCount, updateAnnouncements]);
+  }, [retryCount, action, updateAnnouncements]);
 
   return {
     announcements,

@@ -1,6 +1,7 @@
-import { sessionExpired } from "../utils/sessionExpires";
+import { sessionExpired, updatePassword } from "../utils/sessionExpires";
 import { removeData } from "../AppRoutes";
 import storage from "../utils/storage";
+import { getRequestOptions } from "../utils/auth/header";
 
 export interface User {
   data: {
@@ -46,10 +47,21 @@ export function getUserPrivileges(): {
   };
 }
 
-export function handleUnauthorizedError() {
-  sessionExpired().then(() => {
-    removeData();
-    window.location.replace("/");
-    window.location.reload();
-  });
+export async function handleUnauthorizedError() {
+  const meResponse = await fetch(
+    `${process.env.REACT_APP_API}/me`,
+    getRequestOptions
+  );
+  const meData = await meResponse.json();
+  if (!meData?.success) {
+    updatePassword().then(() => {
+      window.location.replace("/update-password");
+    });
+  } else {
+    sessionExpired().then(() => {
+      removeData();
+      window.location.replace("/");
+      window.location.reload();
+    });
+  }
 }

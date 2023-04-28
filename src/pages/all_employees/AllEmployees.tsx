@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal, Spinner, Toast } from "react-bootstrap";
 import Cookies from "js-cookie";
 import { FaTimes } from "react-icons/fa";
+import { MdOutlineClose } from "react-icons/md";
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
 import {
@@ -24,7 +25,6 @@ import { getDepartment } from "../../store/reducers/department";
 import { useEmployees } from "../../hooks/useEmployees";
 import { getUserPrivileges } from "../../functions/auth";
 import { DialogState } from "../../interfaces/base";
-import { MdOutlineClose } from "react-icons/md";
 import { fireAlert } from "../../utils/Alert";
 
 const token = Cookies.get("token");
@@ -32,21 +32,22 @@ const token = Cookies.get("token");
 const AllEmployees = ({ setEmployee }: any) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("in review");
 
-  const { employees, isLoading, error, message } = useEmployees(status);
   const roles: any = useAppSelector((state) => state?.roles?.roles);
   const departments: any = useAppSelector(
     (state) => state?.department?.department
   );
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 
+  const [action, setAction] = useState(false);
   const [displayData, setDisplayData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [approvalLoading, setApprovalLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
   const [deleteShow, setDeleteShow] = React.useState(false);
+  const { employees, isLoading, error, message } = useEmployees(status, action);
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -104,6 +105,7 @@ const AllEmployees = ({ setEmployee }: any) => {
         fireAlert(title, html, icon);
         // navigate(`/employeecontainer`);
         setShowDialog({ [id]: false });
+        setAction(true);
       } else {
         throw new Error(data.message || "Something went wrong!");
       }
@@ -292,7 +294,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                             centered
                           >
                             <Modal.Header closeButton id="displayTermination">
-                              <Modal.Title>Delete Task</Modal.Title>
+                              <Modal.Title>Approve Employee</Modal.Title>
                               <Button
                                 style={{ color: "#fff" }}
                                 onClick={() => setDeleteShow(false)}
