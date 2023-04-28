@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { MdOpenInFull } from "react-icons/md";
 // @ts-ignore
 import img from "../../assets/images/mann2.svg";
-import { useNavigate } from "react-router-dom";
-import CreateEvent from "../../components/Modals/CreateEvent";
 import TodoShowAll from "../../components/TodoShowAll";
 import Todos from "./Todos";
 import Announcement from "./Announcement";
 
 const StaffDashboard = () => {
-  const navigate = useNavigate();
+  const Quote = require('inspirational-quotes');
+
+
   const [showDrawer, setShowDrawer] = useState<any>(false);
 
   const locale = "en";
@@ -62,15 +62,15 @@ const StaffDashboard = () => {
                   Welcome to Your Dashboard!
                 </h4>
                 <p className="main-min-text2">
-                  Your Team have 4 Tasks to finish all task today. You already
-                  completed 50% today. Your team progress is very good.
+                  {Quote.getQuote().text}<span className="main-min-text2-span"> - {Quote.getQuote().author}</span>
                 </p>
+
               </div>
             </div>
           </div>
           <div className="main-div-col-2-sub-min">
             <span className="OpenInFull">
-              <MdOpenInFull onClick={() => navigate("/dashboardcalender")} />
+              <MdOpenInFull />
             </span>
             <h1 className="event-time">{time}</h1>
             <h1 className="event-days">{day}</h1>

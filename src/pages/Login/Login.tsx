@@ -18,12 +18,12 @@ import fifth from "../../assets/images/PHOENIX.jpg";
 import logo from "../../assets/images/ASLLOGO.svg";
 import InputField from "../../components/Inputs/InputField";
 import storage from "../../utils/storage";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/useDispatch";
+// import { useNavigate } from "react-router-dom";
+// import { useAppDispatch } from "../../hooks/useDispatch";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useAppDispatch();
   const [isLoading, setLoading] = React.useState(false);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [error, setError] = useState<any>();
