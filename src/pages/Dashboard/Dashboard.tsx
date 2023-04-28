@@ -4,18 +4,22 @@ import Sidebar from "../../components/Sidebar";
 import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
 import storage from "../../utils/storage";
+import { getUserPrivileges } from "../../functions/auth";
 
 const Dashboard = () => {
 
+  const {
+    isHRHead,
+    isHeadOfDepartment,
+    isTeamLead,
+    isSuperAdmin,
+    isAdmin,
+    isHrAdmin,
+  } = getUserPrivileges();
 
 
 
 
-  // console.log('socket', socket)
-  // // send a message to the server
-  // // socket.emit("hello from client", 5, "6", { 7: Uint8Array.from([8]) });
-
-  // // receive a message from the server
 
 
 
@@ -46,7 +50,9 @@ const Dashboard = () => {
       <Header toggleSideNav={toggleSideNav} />
       <Sidebar collapseNav={collapseNav} />
       <main>
-        {userInfo?.data?.department?.name === "HR" ? (
+        {(isSuperAdmin ||
+          isHRHead ||
+          isHrAdmin) ? (
           <AdminDashboard />
         ) : (
           <StaffDashboard />
