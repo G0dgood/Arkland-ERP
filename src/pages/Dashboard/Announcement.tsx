@@ -13,6 +13,8 @@ import { DialogState } from "../../interfaces/base";
 import {
   useAnnouncements,
   useAnnouncementsById,
+  useUsersAnnouncements,
+  useUsersAnnouncementsById,
 } from "../../hooks/useAnnouncements";
 
 const token = Cookies.get("token");
@@ -40,9 +42,9 @@ const Announcement = () => {
   const [viewShow, setViewShow] = React.useState(false);
 
   const { announcements, isLoading, error, message } =
-    useAnnouncements(announcementAction);
+    useUsersAnnouncements(announcementAction);
   const { ViewAnnouncements, isAnnouncementsLoading } =
-    useAnnouncementsById(viewAction);
+    useUsersAnnouncementsById(viewAction);
 
   const handleNewAnnouncementCreated = () => {
     setNewAnnouncementCreated(!newAnnouncementCreated);
