@@ -234,7 +234,7 @@
   box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
   color: #444444; 
   position: absolute;
-  right: 16.8rem;
+  right: 16rem;
   top: 4rem;  
   z-index: 1000; 
  scroll-padding-top: 0px !important;
@@ -247,6 +247,22 @@
 .user-details-notiol, ul, dl {
     margin-top: 0;
     margin-bottom: 0px !important;
+}
+
+@media screen and (max-width: 1520px) {
+ .user-details-noti{ 
+   animation-duration: 500ms;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
+  color: #444444; 
+  position: absolute;
+  right: 13.6rem;
+  top: 0rem;  
+  z-index: 1000; 
+ scroll-padding-top: 0px !important;
+}
+
 }
 
 @media screen and (max-width: 600px) {
@@ -262,7 +278,7 @@
   color: #444444; 
   position: absolute;
   right: 7rem;
-  top: 4rem;  
+  top: 0rem;  
   z-index: 1000; 
  scroll-padding-top: 0px !important;
 }

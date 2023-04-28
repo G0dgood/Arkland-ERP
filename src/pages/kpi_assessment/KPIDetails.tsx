@@ -26,7 +26,6 @@ const KPIDetails = () => {
 	]
 
 	// const [isLoading2, setisLoading2] = useState(false);
-	const [isSuccess1, setisSuccess1] = useState(false);
 	const [message1, setMessage1] = useState('')
 	const [isError1, setisError1] = useState(false)
 
@@ -38,6 +37,7 @@ const KPIDetails = () => {
 	// const [isError, seisError] = useState(false);
 
 
+	const [isSuccess3, setisSuccess3] = useState(false);
 	const [isError3, setisError3] = useState(false);
 	const [message3, setMessage3] = useState('')
 	const [hodscore, setHodscore] = useState('')
@@ -66,10 +66,10 @@ const KPIDetails = () => {
 	const icon3 = "error";
 
 	useEffect(() => {
-		if (isSuccess1) {
+		if (isSuccess3) {
 			fireAlert(title, html, icon);
 			setTimeout(() => {
-				setisSuccess1(false)
+				setisSuccess3(false)
 			}, 5000);
 		} else if (isError1) {
 			fireAlert(title1, html1, icon1);
@@ -79,11 +79,11 @@ const KPIDetails = () => {
 		} else if (isError3) {
 			fireAlert(title3, html3, icon3);
 			setTimeout(() => {
-				setisError1(false);
+				setisError3(false);
 			}, 10000);
 		}
 
-	}, [html, title, icon, isSuccess1, isError1, html1, isError3, html3]);
+	}, [html, title, icon, isSuccess3, isError1, html1, isError3, html3]);
 
 
 
@@ -117,9 +117,10 @@ const KPIDetails = () => {
 					setisError3(true)
 				} else {
 					setData(res?.data);
+					setisSuccess3(true);
 					setTimeout(() => {
 						navigate("/kpicontainer");
-					}, 5000);
+					}, 1000);
 				}
 				setisLoading1(false);
 

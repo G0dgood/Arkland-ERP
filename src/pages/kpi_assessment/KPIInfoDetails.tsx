@@ -5,11 +5,11 @@ import { Spinner } from 'react-bootstrap';
 const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 	const year = new Date().getFullYear().toString();
 
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [message, setMessage] = useState('')
-	const [datas, setData] = useState('')
-	const [isError, setisError] = useState(false)
+	// const [isLoading, setisLoading] = useState(false);
+	// const [isSuccess, setisSuccess] = useState(false);
+	// const [message, setMessage] = useState('')
+	// const [datas, setData] = useState('')
+	// const [isError, setisError] = useState(false)
 
 	const [input, setinput] = useState<any>({
 		"job_knowledge": 0,

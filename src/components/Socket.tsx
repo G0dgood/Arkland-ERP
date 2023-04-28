@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import noti from './NotificationSound/IPhoneNotification.mp3'
 
 
-const Socket = () => {
+const Socket = ({ setRefresh }: any) => {
 
 	// Audio File
 	const myAudio = new Audio(noti);
@@ -20,6 +20,9 @@ const Socket = () => {
 		if (notification) {
 			toast.success(<p className='text-white-socket'>{notification?.details}</p>);
 			myAudio.play()
+			setRefresh(true)
+		} else if (notification.success === false) {
+			setRefresh(false)
 		}
 		console.log('new-notification', notification)
 	});

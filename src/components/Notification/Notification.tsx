@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
+import { RiMessage3Line } from "react-icons/ri";
 
 const Notification = ({ info }: any) => {
 
@@ -24,9 +25,9 @@ const Notification = ({ info }: any) => {
       </ul>
       <div id="faq-container-noti">
 
-        {!info ? <div className="noti-no-record">
-          <h6>No Notifications</h6>
-          <span>You have no</span></div> :
+        {true ? <div className="noti-no-record">
+          <h6> <RiMessage3Line size={40} color="#999999" style={{ marginRight: "5px" }} />  </h6>
+          <span>No Notifications</span></div> :
           info?.map((item: any, i: number) => (
             <div key={i} className={opens.includes(i) ? "faq active" : "faq"} onClick={() => handleOpens(i)}>
               <h3 className="faq-title">{item.type}</h3>
