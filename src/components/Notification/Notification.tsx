@@ -25,7 +25,7 @@ const Notification = ({ info }: any) => {
       </ul>
       <div id="faq-container-noti">
 
-        {true ? <div className="noti-no-record">
+        {!info ? <div className="noti-no-record">
           <h6> <RiMessage3Line size={40} color="#999999" style={{ marginRight: "5px" }} />  </h6>
           <span>No Notifications</span></div> :
           info?.map((item: any, i: number) => (
