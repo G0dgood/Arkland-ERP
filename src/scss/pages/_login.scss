@@ -142,12 +142,22 @@
 }
 
 @media only screen and (max-width: 980px) {
+  .login-form-container {
+
+    transform: scale(0.7) !important;
+  }
   .logo-section {
     display: none;
   }
   .login-form-container {
     grid-column: 2/12;
   }
+}
+@media only screen and (max-width: 400px) {
+  .login-form-container { 
+    transform: scale(0.5) !important;
+  }
+   
 }
 
 .carousel-indicators {

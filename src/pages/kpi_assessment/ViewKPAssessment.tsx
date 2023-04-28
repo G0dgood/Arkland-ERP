@@ -168,17 +168,20 @@ const ViewKPAssessment = () => {
 							</div>
 							<div className="kpi-summary">
 								<div className="kpi-summary-title">
-									<p>HOD comment</p>
+									<p>HOD's comment</p>
 								</div>
 								{/* @ts-ignore */}
 								<textarea rows="4" placeholder="Add an extended comment" required className='m-t-5' value={data?.reviewer_comment} />
 							</div>
 						</div> :
-							<div>
-								<p className="hod-comment review">{data?.employee_name}'s Comment</p>
+							<div className="kpi-summary">
+								<div className="kpi-summary-title">
+									<p>{data?.employee_name}'s  comment</p>
+								</div>
 								{/* @ts-ignore */}
-								<textarea class="inputField" rows="3" disabled="true" value={data?.employee_comment}></textarea>
-							</div>}
+								<textarea rows="4" placeholder="Add an extended comment" required className='m-t-5' value={data?.employee_comment} />
+							</div>
+						}
 
 
 					</div>

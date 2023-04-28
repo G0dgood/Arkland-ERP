@@ -7,6 +7,7 @@ import Chatmain from './Chatmain';
 import Chatsidebar from './Chatsidebar';
 import Chatdetails from './Chatdetails';
 import { BsChatRightText } from 'react-icons/bs';
+import { io } from "socket.io-client";
 
 const Support = (props: any) => {
 
@@ -24,10 +25,9 @@ const Support = (props: any) => {
 		setCollapseNav(!collapseNav);
 	};
 
-
 	const [userID, setUserID] = useState<any>(0)
 
-	console.log('userID', userID)
+	// console.log('userID', userID)
 
 	return (
 		<div id="screen-wrapper">

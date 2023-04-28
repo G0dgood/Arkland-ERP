@@ -230,14 +230,14 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
             <div className="added-field">
               <div className="factor_area">
                 <p> </p>
-                <div>
+                <div className='Grade-title'>
                   <p>Weight</p>
                 </div>
               </div>
-              <div className="rate_area">
+              <div className="rate_area Grade-title">
                 <p>Staff Score</p>
               </div>
-              <div className="btn_area">
+              <div className="btn_area Grade-title">
                 <p>HOD Grade</p>
               </div>
             </div>
@@ -374,16 +374,16 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               </div>
             </div>
             <div className="added-field">
-              <div className="factor_area">
-                <p>Total </p>
+              <div className="factor_area Grade-title">
+                <p>Total</p>
                 <div>
                   <p>{Weight}</p>
                 </div>
               </div>
-              <div className="rate_area">
+              <div className="rate_area Grade-title">
                 <p>{!Amount ? "0" : Amount}</p>
               </div>
-              <div className="btn_area">
+              <div className="btn_area Grade-title">
                 {data?.status === 'active' ? hod : <p> {hodscore}</p>}
               </div>
             </div>

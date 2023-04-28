@@ -77,7 +77,7 @@ const StaffDashboard = () => {
             <p className="event-months">
               {date.toUpperCase()} {month} {year}
             </p>
-            <CreateEvent />
+            {/* <CreateEvent /> */}
           </div>
         </div>
         {/* Announcement */}

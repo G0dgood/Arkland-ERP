@@ -21,7 +21,7 @@ const Socket = () => {
 			toast.success(<p className='text-white-socket'>{notification?.details}</p>);
 			myAudio.play()
 		}
-		// console.log('new-notification', notification)
+		console.log('new-notification', notification)
 	});
 
 	socket.on("new-message", (message) => {

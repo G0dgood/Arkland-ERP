@@ -1,11 +1,6 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { MdPostAdd } from "react-icons/md";
 import { NoRecordFound } from "../TableOptions";
 
-
 const WeeklyReportTable = ({ newWeeklyField, setNewWeeklyField }: any) => {
-
-
 
 
 	const handleChange = (input: any, value: any, index: any,) => {
