@@ -7,20 +7,13 @@ import { useNavigate } from "react-router-dom";
 import storage from "../../utils/storage";
 import { Spinner } from "react-bootstrap";
 
-const KPIAssessment = () => {
+const KPIAssessment = ({ setIsCheck }: any) => {
   const navigate = useNavigate();
   const token = Cookies.get("token");
   // @ts-ignore 
   const userInfo: any = JSON.parse(storage?.get("user"));
-  const gradeSystem = [
-    { rate: 5, definition: "Outstanding" },
-    { rate: 4, definition: "Very Good" },
-    { rate: 3, definition: "Good" },
-    { rate: 2, definition: "Average" },
-    { rate: 1, definition: "Below Average/Poor" },
-  ]
 
-  const [kpicheck, setkpicheck] = useState<any>();
+  // const [kpicheck, setkpicheck] = useState<any>();
   const [employees, setEmployees] = useState<any>();
 
   const [kpinputs, setKpInputs] = useState({
@@ -47,17 +40,6 @@ const KPIAssessment = () => {
     collaboration: 0,
     comment: "",
   });
-
-
-  const [employeegrade, setemployeegrade] = useState<any>({
-    employeegrade1: 0,
-    employeegrade2: 0,
-    employeegrade3: 0,
-    employeegrade4: 0,
-    employeegrade5: 0,
-    employeegrade6: 0,
-  });
-
 
 
 
@@ -142,10 +124,6 @@ const KPIAssessment = () => {
   ]);
 
 
-  console.log('kpinputs', inputs)
-
-
-
   useEffect(() => {
     setInputs((prevState: any) => {
       return {
@@ -222,17 +200,20 @@ const KPIAssessment = () => {
       });
   };
 
+
+
   React.useEffect(() => {
-    setisLoading(true);
+    // setisLoading(true);
     axios
       .get(`${process.env.REACT_APP_API}/hr/employees`)
       .then((res: AxiosResponse) => {
-        setEmployees([...res?.data?.data]);
-        setisLoading(false);
+        setEmployees(res?.data?.data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
+        // console.log('res', res?.data?.data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
+        // setisLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setisLoading(false);
+        // setisLoading(false);
       });
   }, []);
 
@@ -241,26 +222,29 @@ const KPIAssessment = () => {
   useEffect(() => {
     if (isSuccess) {
       fireAlert(title, html, icon);
-      // @ts-ignore
-      setemployeegrade({
-        employeegrade1: 0,
-        employeegrade2: 0,
-        employeegrade3: 0,
-        employeegrade4: 0,
-        employeegrade5: 0,
-        employeegrade6: 0,
-      });
-      // @ts-ignore
       setKpInputs({
+        month: 0,
+        employee: "",
+        reviewer: "",
+        job_knowledge: 0,
+        efficiency: 0,
+        attendance: 0,
+        communication: 0,
+        reliability: 0,
+        collaboration: 0,
         comment: "",
       });
       setTimeout(() => {
         setisSuccess(false);
-      }, 5000);
+        setIsCheck(false)
+      }, 2000);
     } else if (message) {
       fireAlert(title1, html1, icon1);
+      setTimeout(() => {
+        setMessage('');
+      }, 5000);
     }
-  }, [html, title, icon, isSuccess, message, html1, title1]);
+  }, [html, title, icon, isSuccess, message, html1, title1, setIsCheck]);
 
   return (
     <div>
@@ -359,7 +343,7 @@ const KPIAssessment = () => {
               </div>
               <div className="table-datacell-button-bottom">
                 <div className="table-datacell-button-bottom-color1">KPI SCORE:</div>
-                <div className="table-datacell-button-bottom-color2">{kpiscore}</div>
+                <div className="table-datacell-button-bottom-color2">{!kpiscore ? 0 : kpiscore}</div>
               </div>
             </div>
           </div>
@@ -438,7 +422,7 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
-                      value={totalScore1}
+                      value={!totalScore1 ? "" : totalScore1}
                     />{" "}
                   </td>
                 </tr>
@@ -484,7 +468,7 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
-                      value={totalScore2}
+                      value={!totalScore2 ? "" : totalScore2}
                     />{" "}
                   </td>
                 </tr>
@@ -531,7 +515,7 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
-                      value={totalScore3}
+                      value={!totalScore3 ? "" : totalScore3}
                     />{" "}
                   </td>
                 </tr>
@@ -579,7 +563,7 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
-                      value={totalScore4}
+                      value={!totalScore4 ? "" : totalScore4}
                     />{" "}
                   </td>
                 </tr>
@@ -626,7 +610,7 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
-                      value={totalScore5}
+                      value={!totalScore5 ? "" : totalScore5}
                     />{" "}
                   </td>
                 </tr>
@@ -672,7 +656,7 @@ const KPIAssessment = () => {
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
-                      value={totalScore6}
+                      value={!totalScore6 ? "" : totalScore6}
                     />{" "}
                   </td>
                 </tr>

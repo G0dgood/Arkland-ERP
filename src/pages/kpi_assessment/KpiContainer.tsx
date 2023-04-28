@@ -43,7 +43,7 @@ const KpiContainer = () => {
         </div>
         <div style={{ marginTop: "2rem" }}>
           {isCheck === false ? <MyKPIAssessment setkpidata={setkpidata} /> : ""}
-          {isCheck === true ? <KPIAssessment /> : ""}
+          {isCheck === true ? <KPIAssessment setIsCheck={setIsCheck} /> : ""}
         </div>
       </main>
     </div>

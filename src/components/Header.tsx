@@ -23,6 +23,8 @@ const Header = ({ toggleSideNav }: any) => {
   // @ts-ignore
   const userInfo: any = JSON.parse(storage?.get("user"));
 
+
+  const [refresh, setRefresh] = useState<any>(false);
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
@@ -98,13 +100,13 @@ const Header = ({ toggleSideNav }: any) => {
         console.log('err', err);
         setLoading(false);
       });
-  }, []);
+  }, [refresh]);
 
 
 
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)} >
-      <Socket />
+      <Socket setRefresh={setRefresh} />
       <Toaster
         position="top-center"
         toastOptions={{
