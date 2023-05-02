@@ -53,7 +53,7 @@ export async function handleUnauthorizedError() {
     getRequestOptions
   );
   const meData = await meResponse.json();
-  if (!meData?.success) {
+  if (meData?.data?.user?.require_new_password === true) {
     updatePassword().then(() => {
       window.location.replace("/update-password");
     });
