@@ -9,7 +9,7 @@ import { GiStahlhelm } from "react-icons/gi";
 const AdminDashboard = () => {
   const employees = useAppSelector((state) => state.employees.employees);
   const departments = useAppSelector((state) => state.department.department);
-  const projects = useAppSelector((state) => state.projects?.projects);
+  const projects = useAppSelector((state) => state.projects.projects);
 
   return (
     <div className="main-div">
@@ -18,7 +18,7 @@ const AdminDashboard = () => {
           <div className="AdminDashboard-first-3-card-color-1">
             <h5 className="AdminDashboard-first-h5">Total Employees</h5>
             <h2 className="AdminDashboard-first-h3">
-              {!employees?.length ? 0 : employees.length}
+              {!employees?.length ? 0 : employees?.length}
             </h2>
             <p className="AdminDashboard-first-p">
               <RiUser6Fill size={20} />
@@ -27,7 +27,7 @@ const AdminDashboard = () => {
           <div className="AdminDashboard-first-3-card-color-2">
             <h5 className="AdminDashboard-second-h5">Departments</h5>
             <h2 className="AdminDashboard-second-h3">
-              {!departments.length ? 0 : departments.length}
+              {!departments?.length ? 0 : departments?.length}
             </h2>
             <p className="AdminDashboard-second-p">
               <BiBuildingHouse size={20} />
@@ -36,7 +36,7 @@ const AdminDashboard = () => {
           <div className="AdminDashboard-first-3-card-color-3">
             <h5 className="AdminDashboard-third-h5">Projects</h5>
             <h2 className="AdminDashboard-third-h3">
-              {!projects?.length ? 0 : projects.length}
+              {!projects?.length ? 0 : projects?.length}
             </h2>
             <p className="AdminDashboard-third-p">
               <GiStahlhelm size={20} />
