@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { BsCheckCircle, BsExclamationLg, BsEyeFill } from "react-icons/bs";
-import { FiCheckCircle, FiEdit, FiEye, FiLock } from "react-icons/fi";
+import { BsExclamationLg } from "react-icons/bs";
+import { FiCheckCircle, FiEye } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { Modal, Spinner, Toast } from "react-bootstrap";
@@ -14,7 +14,7 @@ import TableLoader from "../../components/TableLoader";
 import {
   EmployeeStatus,
   EntriesPerPage,
-  MainSearch,
+  // MainSearch,
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
@@ -43,7 +43,7 @@ const AllEmployees = ({ setEmployee }: any) => {
 
   const [action, setAction] = useState(false);
   const [displayData, setDisplayData] = useState([]);
-  const [searchItem, setSearchItem] = useState("");
+  // const [searchItem, setSearchItem] = useState("");
   const [approvalLoading, setApprovalLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showDialog, setShowDialog] = React.useState<DialogState>({});

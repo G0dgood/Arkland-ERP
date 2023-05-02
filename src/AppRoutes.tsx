@@ -5,7 +5,6 @@ import { Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
-import AllEmployees from "./pages/all_employees/AllEmployees";
 import Cookies from "js-cookie";
 import Leave from "./pages/Leave/Leave";
 import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
@@ -18,7 +17,6 @@ import CreateEmployee from "./pages/all_employees/CreateEmployee";
 import WarningList from "./pages/all_employees/WarningList";
 import WeeklyReport from "./pages/WeeklyReport/WeeklyReport";
 import WeeklyReportTable from "./components/table_component/WeeklyReportTable";
-import DashboardCalender from "./components/DashboardCalender";
 import Profile from "./pages/Profile/Profile";
 import EditUser from "./pages/EditUser/EditUser";
 import Engineering from "./pages/Departments/SubDepartments/Engineering";
@@ -82,7 +80,7 @@ const AppRoutes: React.FC<any> = () => {
     },
     function (error) {
       const status = error?.response ? error?.response?.status : null;
-      const url = error.response ? error.response?.config?.url : null;
+      // const url = error.response ? error.response?.config?.url : null;
 
       if (status === 401) {
         handleUnauthorizedError();
@@ -221,7 +219,6 @@ const AppRoutes: React.FC<any> = () => {
           <Route path="/departments/:id" element={<ViewDepartments />} />
           {/*End Departments */}
 
-          <Route path="/dashboardcalender" element={<DashboardCalender />} />
           <Route path="/profile/edit" element={<EditUser />} />
           <Route path="/profile" element={<Profile />} />
 
