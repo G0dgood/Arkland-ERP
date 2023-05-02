@@ -5,7 +5,7 @@ import { useAppSelector } from "../../hooks/useDispatch";
 
 const AdminDashboard = () => {
   const employees = useAppSelector((state) => state.employees.employees);
-
+  const departments = useAppSelector((state) => state.department.department);
   return (
     <div className="main-div">
       <div className="main-div-col-1">

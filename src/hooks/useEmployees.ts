@@ -6,7 +6,13 @@ import { fireAlert } from "../utils/Alert";
 import { handleUnauthorizedError } from "../functions/auth";
 const token = Cookies.get("token");
 
-export const useEmployees = (status: any, action: any) => {
+export const useEmployees = (
+  status?: string,
+  action?: any,
+  role?: string | undefined,
+  department?: string | undefined,
+  category?: string | undefined
+) => {
   const [employees, setEmployees] = useState([] as any);
   const [isLoading, setLoading] = useState(false);
   const [isApprovalLoading, seApprovalLoading] = useState(false);
@@ -21,7 +27,7 @@ export const useEmployees = (status: any, action: any) => {
     setRetryCount(0);
     setMessage("");
   }, []);
-
+  console.log(role);
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
@@ -30,6 +36,15 @@ export const useEmployees = (status: any, action: any) => {
         const apiUrl = new URL(`${process.env.REACT_APP_API}/hr/employees`);
         if (status) {
           apiUrl.searchParams.set("status", status);
+        }
+        if (role) {
+          apiUrl.searchParams.set("role", role);
+        }
+        if (department) {
+          apiUrl.searchParams.set("department", department);
+        }
+        if (category) {
+          apiUrl.searchParams.set("category", category);
         }
         const response = await fetch(apiUrl.toString(), getRequestOptions);
         const isJsonResponse = response.headers
@@ -74,7 +89,7 @@ export const useEmployees = (status: any, action: any) => {
     return () => {
       isMounted = false;
     };
-  }, [retryCount, status, action, updateEmployees]);
+  }, [retryCount, status, role, action, updateEmployees]);
 
   return {
     employees,
