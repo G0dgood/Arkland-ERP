@@ -33,8 +33,9 @@ const AllEmployees = ({ setEmployee }: any) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [status, setStatus] = useState("in review");
+  const [roles, setRoles] = useState("");
 
-  const roles: any = useAppSelector((state) => state?.roles?.roles);
+  const rolesData: any = useAppSelector((state) => state?.roles?.roles);
   const departments: any = useAppSelector(
     (state) => state?.department?.department
   );
@@ -47,7 +48,11 @@ const AllEmployees = ({ setEmployee }: any) => {
   const [showToast, setShowToast] = useState(false);
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
   const [deleteShow, setDeleteShow] = React.useState(false);
-  const { employees, isLoading, error, message } = useEmployees(status, action);
+  const { employees, isLoading, error, message } = useEmployees(
+    status,
+    action,
+    roles
+  );
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -120,7 +125,7 @@ const AllEmployees = ({ setEmployee }: any) => {
     }
   };
 
-  // console.log('displayData?.length', displayData?.length)
+  console.log("displayData?.length", displayData?.length);
 
   return (
     <div>
@@ -152,7 +157,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
-                  // onClick={handleCreateEmployeeClick}
+                    // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee
@@ -188,6 +193,8 @@ const AllEmployees = ({ setEmployee }: any) => {
                   data={displayData}
                   status={status}
                   setStatus={setStatus}
+                  roles={rolesData}
+                  setRoles={setRoles}
                 />
               </div>
             </div>

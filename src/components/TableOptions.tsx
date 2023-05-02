@@ -25,7 +25,16 @@ const EntriesPerPage = ({ data, entriesPerPage, setEntriesPerPage }: any) => (
 );
 
 // EntriesPerPage
-const EmployeeStatus = ({ data, status, setStatus }: any) => (
+const EmployeeStatus = ({
+  status,
+  setStatus,
+  roles,
+  setRole,
+  departments,
+  setDepartment,
+  category,
+  setCategory,
+}: any) => (
   <div className="entries-perpage">
     {/* {data?.length > 1 && ( */}
     <>
@@ -37,6 +46,25 @@ const EmployeeStatus = ({ data, status, setStatus }: any) => (
       </select>
       Status
     </>
+    <select value={roles} onChange={(e) => setRole(e.target.value)}>
+      <option value="">All Roles</option>
+      {roles &&
+        roles?.map((role: any) => (
+          <option key={role.id} value={role.id}>
+            {role.name}
+          </option>
+        ))}
+    </select>
+    Role
+    {/* <select value={departments} onChange={(e) => setDepartment(e.target.value)}>
+      <option value="">All Departments</option>
+      {departments.map((department: any) => (
+        <option key={department.id} value={department.id}>
+          {department.name}
+        </option>
+      ))}
+    </select>
+    Department */}
     {/* )} */}
   </div>
 );

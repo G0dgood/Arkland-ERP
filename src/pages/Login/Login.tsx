@@ -60,6 +60,14 @@ const Login = () => {
         resetForm(values);
         // set token in axios header
         axios.defaults.headers.common["authorization"] = data?.token;
+        // encrypt token using AES
+        // const key = CryptoJS.lib.WordArray.random(16);
+        // const encryptedToken = CryptoJS.AES.encrypt(data.token, key).toString();
+        // // set encrypted token in HttpOnly cookie
+        // document.cookie = `token=${encryptedToken}; HttpOnly; secure; SameSite=Strict`;
+        // // store encryption key in local storage
+        // localStorage.setItem("encryptionKey", key.toString());
+
         // set token in cookie
         Cookies.set("token", data.token);
         storage.set("user", JSON.stringify({ data }));
