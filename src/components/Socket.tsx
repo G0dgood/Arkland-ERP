@@ -13,7 +13,7 @@ const Socket = ({ setRefresh }: any) => {
 	const socket = io("https://arkland-erp.herokuapp.com");
 	socket.emit("notification-connection", { token: token });
 	socket.on("notification-connected", (res) => {
-		console.log('res', res)
+		// console.log('res', res)
 	});
 
 	socket.on("new-notification", (notification) => {
@@ -24,7 +24,7 @@ const Socket = ({ setRefresh }: any) => {
 		} else if (notification.success === false) {
 			setRefresh(false)
 		}
-		console.log('new-notification', notification)
+		// console.log('new-notification', notification)
 	});
 
 	socket.on("new-message", (message) => {

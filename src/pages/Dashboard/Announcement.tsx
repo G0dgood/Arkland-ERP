@@ -141,12 +141,12 @@ const Announcement = () => {
           isHeadOfDepartment ||
           isHRHead ||
           isHrAdmin) && (
-          <div>
-            <CreateAnnouncementModal
-              onNewAnnouncementCreated={handleNewAnnouncementCreated}
-            />
-          </div>
-        )}
+            <div>
+              <CreateAnnouncementModal
+                onNewAnnouncementCreated={handleNewAnnouncementCreated}
+              />
+            </div>
+          )}
         <Button
           variant="contained"
           className="Add-btn"
@@ -202,15 +202,15 @@ const Announcement = () => {
                       isHeadOfDepartment ||
                       isHRHead ||
                       isHrAdmin) && (
-                      <span className="BsFillPinAngleFill">
-                        <FiTrash2
-                          size={25}
-                          onClick={() => handleDelete(item?.id)}
-                          cursor="pointer"
-                          title="DELETE ANNOUNCEMENT"
-                        />
-                      </span>
-                    )}
+                        <span className="BsFillPinAngleFill">
+                          <FiTrash2
+                            size={25}
+                            onClick={() => handleDelete(item?.id)}
+                            cursor="pointer"
+                            title="DELETE ANNOUNCEMENT"
+                          />
+                        </span>
+                      )}
                   </div>
                   {showView[item?.id] && (
                     <Modal
@@ -219,12 +219,10 @@ const Announcement = () => {
                       aria-labelledby="contained-modal-title-vcenter"
                       centered
                     >
-                      <Modal.Header closeButton id="displayTermination">
-                        <Modal.Title>View Announcement</Modal.Title>
-                        <Button
-                          style={{ color: "#fff" }}
-                          onClick={() => setViewShow(false)}
-                        >
+                      <Modal.Header>
+                        <span></span>
+                        <span className="span-center-title">View Announcement</span>
+                        <Button style={{ color: "#fff" }} onClick={() => setViewShow(false)}>
                           <MdOutlineClose size={28} />
                         </Button>
                       </Modal.Header>

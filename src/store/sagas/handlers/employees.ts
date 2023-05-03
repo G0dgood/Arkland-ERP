@@ -5,7 +5,7 @@ import { requestGetEmployees } from "../request/employees";
 import { getRoles } from "../../reducers/roles";
 
 export function* handleGetEmployees(action: any) {
-  let reRun = false;
+  // let reRun = false;
   let retryCount = 0;
   const maxRetries = 5;
   const retryTimeout = 2000;
@@ -23,7 +23,7 @@ export function* handleGetEmployees(action: any) {
     } catch (error) {
       console.log(error);
       retryCount++;
-      reRun = true;
+      // reRun = true;
       if (retryCount < maxRetries) {
         yield delay(retryTimeout);
       }

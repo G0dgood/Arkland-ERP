@@ -196,13 +196,13 @@ const Schedule = () => {
                           isAdmin ||
                           isHrAdmin ||
                           isTeamLead) && (
-                          <FiTrash2
-                            size={25}
-                            onClick={() => handleDelete(item?.id)}
-                            cursor="pointer"
-                            title="DELETE TODO"
-                          />
-                        )}
+                            <FiTrash2
+                              size={25}
+                              onClick={() => handleDelete(item?.id)}
+                              cursor="pointer"
+                              title="DELETE TODO"
+                            />
+                          )}
                       </div>
                       {showView[item?.id] && (
                         <Modal
@@ -211,12 +211,10 @@ const Schedule = () => {
                           aria-labelledby="contained-modal-title-vcenter"
                           centered
                         >
-                          <Modal.Header closeButton id="displayTermination">
-                            <Modal.Title>View Schedule</Modal.Title>
-                            <Button
-                              style={{ color: "#fff" }}
-                              onClick={() => setViewShow(false)}
-                            >
+                          <Modal.Header>
+                            <span></span>
+                            <span className="span-center-title">View Schedule</span>
+                            <Button style={{ color: "#fff" }} onClick={() => setViewShow(false)}>
                               <MdOutlineClose size={28} />
                             </Button>
                           </Modal.Header>
