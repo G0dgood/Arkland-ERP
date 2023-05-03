@@ -22,8 +22,14 @@ const Header = ({ toggleSideNav }: any) => {
   // const navigate = useNavigate();
   // @ts-ignore
   const userInfo: any = JSON.parse(storage?.get("user"));
+  // @ts-ignore
+  const newnoti: any = JSON.parse(storage?.get("notifications"));
 
 
+
+
+  const [yes, setyes] = useState<any>(false);
+  const [info, setInfo] = useState<any>([]);
   const [refresh, setRefresh] = useState<any>(false);
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
@@ -42,6 +48,7 @@ const Header = ({ toggleSideNav }: any) => {
       });
     Cookies.remove("token");
     storage.remove("user");
+    storage.remove("notifications");
     removeData();
     // navigate("/");
     setisLoading1(false)
@@ -76,31 +83,50 @@ const Header = ({ toggleSideNav }: any) => {
     }
   }
 
-  const [loading, setLoading] = useState<any>(false);
-  const [info, setInfo] = useState<any>("");
-  const [dataLength, setDataLength] = useState<number>(0);
+
 
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`https://arkland-erp.herokuapp.com/api/v1/notifications`)
-      .then((data) => {
-        // console.log('real-error', data)
-        if (data?.data.success === false) {
-          console.log('ERROR', data)
-        } else {
-          setInfo(data?.data?.data?.data);
-          setDataLength(data?.data?.data?.data?.length)
-        }
-        setLoading(false);
+    if (newnoti?.length > 1 || yes) {
+      setInfo(newnoti);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [yes])
 
-      })
-      .catch((err) => {
-        console.log('err', err);
-        setLoading(false);
-      });
-  }, [refresh]);
+
+
+  useEffect(() => {
+    if (newnoti?.length < 1 || newnoti?.length === undefined || newnoti === null) {
+
+      axios
+        .get(`${process.env.REACT_APP_API}/notifications`)
+        .then((data) => {
+          // console.log('real-error', data)
+          if (data?.data.success === false) {
+            console.log('ERROR', data)
+          } else {
+            storage.set("notifications", JSON.stringify(!data?.data?.data?.data ? "" : data?.data?.data?.data));
+            setyes(true);
+            setTimeout(() => {
+              setyes(false);
+            }, 3000);
+          }
+
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    }
+
+  }, [newnoti, newnoti?.length, refresh]);
+
+
+
+
+
+
+
+
 
 
 
@@ -150,7 +176,7 @@ const Header = ({ toggleSideNav }: any) => {
               <span className="content">
                 <IoIosNotifications size={30} />
               </span>
-              <span className="badge">{dataLength}</span>
+              <span className="badge">{!info?.length ? 0 : info?.length}</span>
             </div>
             {dropDownNoti &&
               (<div className="user-details-noti">

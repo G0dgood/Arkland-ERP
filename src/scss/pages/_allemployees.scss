@@ -1,6 +1,7 @@
 .allemployees-container-main {
   display: flex !important;
   justify-content: space-between !important;
+  overflow-y: scroll;
 }
 
 .allemployees-container {

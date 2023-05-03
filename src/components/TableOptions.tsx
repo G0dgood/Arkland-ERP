@@ -36,7 +36,6 @@ const EmployeeStatus = ({
   setCategory,
 }: any) => (
   <div className="entries-perpage">
-    {/* {data?.length > 1 && ( */}
     <>
       Filter by
       <select value={status} onChange={(e) => setStatus(e.target.value)}>

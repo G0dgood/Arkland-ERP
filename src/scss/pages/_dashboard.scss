@@ -1021,7 +1021,7 @@ input[type="checkbox"] {
 
 .Average-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   margin-top: 2rem;
   column-gap: 2rem;
 }
@@ -1035,10 +1035,11 @@ input[type="checkbox"] {
   padding: 1.5rem;
 }
 
-.Average-container-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
+// .Average-container-card {
+  // width: 100%;
+  // display: grid;
+  // grid-template-columns: 1fr 1fr;
+// }
 
 .Average-container-card-children {
   font-weight: bold;
@@ -1157,12 +1158,7 @@ input[type="checkbox"] {
   color: #ee61cf;
 }
 
-.Average-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 2rem;
-  column-gap: 2rem;
-}
+ 
 
 .Average-container-card {
   width: 100%;
@@ -1173,10 +1169,10 @@ input[type="checkbox"] {
   padding: 1.5rem;
 }
 
-.Average-container-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
+// .Average-container-card {
+//   display: grid;
+//   grid-template-columns: 1fr 1fr;
+// }
 
 .Average-container-card-sup {
   // margin: 2rem;

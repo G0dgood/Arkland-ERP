@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { SyncLoader } from "react-spinners";
 import { Button } from "@material-ui/core";
-import { Modal, Spinner, Toast } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import Cookies from "js-cookie";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { MdOutlineClose } from "react-icons/md";
@@ -36,7 +36,7 @@ const AdminAnnouncement = () => {
     isTeamLead,
     isSuperAdmin,
     isAdmin,
-    isEmployee,
+    // isEmployee,
     isHrAdmin,
   } = getUserPrivileges();
 
@@ -203,15 +203,15 @@ const AdminAnnouncement = () => {
                         isAdmin ||
                         isHRHead ||
                         isHrAdmin) && (
-                        <span className="BsFillPinAngleFill">
-                          <FiTrash2
-                            size={25}
-                            onClick={() => handleDelete(item?.id)}
-                            cursor="pointer"
-                            title="DELETE ANNOUNCEMENT"
-                          />
-                        </span>
-                      )}
+                          <span className="BsFillPinAngleFill">
+                            <FiTrash2
+                              size={25}
+                              onClick={() => handleDelete(item?.id)}
+                              cursor="pointer"
+                              title="DELETE ANNOUNCEMENT"
+                            />
+                          </span>
+                        )}
                     </div>
                     {showView[item?.id] && (
                       <Modal
@@ -220,12 +220,10 @@ const AdminAnnouncement = () => {
                         aria-labelledby="contained-modal-title-vcenter"
                         centered
                       >
-                        <Modal.Header closeButton id="displayTermination">
-                          <Modal.Title>View Announcement</Modal.Title>
-                          <Button
-                            style={{ color: "#fff" }}
-                            onClick={() => setViewShow(false)}
-                          >
+                        <Modal.Header>
+                          <span></span>
+                          <span className="span-center-title">View Announcement</span>
+                          <Button style={{ color: "#fff" }} onClick={() => setViewShow(false)}>
                             <MdOutlineClose size={28} />
                           </Button>
                         </Modal.Header>
