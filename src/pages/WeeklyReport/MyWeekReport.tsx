@@ -31,10 +31,7 @@ const MyWeekReport = ({ setkpidata }: any) => {
   const html = message;
   const icon = "error";
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON?.parse(localStorage.getItem("collapse")) || false;
-  });
+
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {

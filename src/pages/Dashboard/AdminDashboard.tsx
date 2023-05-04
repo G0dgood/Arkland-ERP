@@ -6,13 +6,23 @@ import { BiBuildingHouse } from "react-icons/bi";
 import { GiStahlhelm } from "react-icons/gi";
 import DonutChat from "../../components/AdminDashboardChat/DonutChat";
 import Barchat from "../../components/AdminDashboardChat/Barchat";
+import { MdOpenInFull } from "react-icons/md";
+// import Tooltip from 'react-bootstrap/Tooltip';
+import FullBarChart from "../../components/AdminDashboardChat/FullBarChart";
+import { useState } from "react";
 
 const AdminDashboard = () => {
   const employees = useAppSelector((state) => state.employees.employees);
   const departments = useAppSelector((state) => state.department.department);
   const projects = useAppSelector((state) => state.projects.projects);
 
+  const [show, setShow] = useState<any>(false);
+  const [fullscreen, setFullscreen] = useState<any>(false);
 
+  function handleShow() {
+    setFullscreen(true);
+    setShow(true);
+  }
 
 
   return (
@@ -49,39 +59,13 @@ const AdminDashboard = () => {
         </div>
         <div className="Average-container">
           <div className="Average-container-card">
-            {/* <div className="Average-container-card-sup"> */}
-            {/* <div>
-                <h6 className="Average-container-card-headings">Average</h6>
-                <h6 className="Average-container-card-headings">Performance</h6>
-              </div>
-              <div>
-                <h3 className="Average-container-card-children">78%</h3>
-              </div> */}
-            {/* </div> */}
-            {/* <div>
-              <div className="Average-container-card-view">
-                <img src={imgs} alt="Average" className="graph-img" />
-              </div>
-              <div className="Average-container-card-month">
-                <span className="Average-container-card-month-span">
-                  +5% Past month
-                </span>
-              </div>
-            </div> */}
-            <Barchat departments={departments} />
+
+            <MdOpenInFull className="barchat-OpenInFull" onClick={handleShow} />
+            <Barchat departments={departments} employees={employees} />
+            <FullBarChart departments={departments} employees={employees} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
           </div>
           <div className="Average-container-card">
-            {/* <div className="Average-container-card-sup">
-              <div>
-                <h6 className="Average-container-card-headings">Total</h6>
-                <h6 className="Average-container-card-headings">Employees</h6>
-              </div>
-              <div>
-                <h3 className="Average-container-card-children">
-                  {employees?.length}
-                </h3>
-              </div>
-            </div> */}
+
             <DonutChat employees={employees} />
           </div>
         </div>
@@ -92,6 +76,7 @@ const AdminDashboard = () => {
       {/* Todos start */}
       <Schedule />
       {/* Todos end */}
+
     </div>
   );
 };

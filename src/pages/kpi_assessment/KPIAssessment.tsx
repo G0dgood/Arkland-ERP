@@ -209,7 +209,7 @@ const KPIAssessment = ({ setIsCheck }: any) => {
       .then((res: AxiosResponse) => {
         setEmployees(res?.data?.data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
         // console.log('res', res?.data?.data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
-        // setisLoading(false);
+        // console.log('res?.data?.data', res?.data?.data)
       })
       .catch((err) => {
         console.log(err);

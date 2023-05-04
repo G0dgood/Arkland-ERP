@@ -383,5 +383,24 @@ form.searchbox button:hover {
   .text-white-socket{
     font-size: small;
   }
+
+
+  #btn-delete-field{
+  border: 1px solid  c.color(primary-color) !important;
+  border-radius: .5em !important;
+  cursor: pointer !important; 
+  font-size: 12px !important;
+  font-weight: bold !important;
+  padding: 0.2rem .8em !important; 
+  color: c.color(primary-color) !important;
+  }
+ 
+  // #btn-delete-field :hover{  
+  // color: c.color(white-100) !important; 
+  // }
+
+  .btn-delete-field-icon{
+    margin-right: 0.5rem;
+  }
  
  

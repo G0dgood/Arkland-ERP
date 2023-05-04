@@ -1,30 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header'
-import Sidebar from '../../components/Sidebar'
+import { useEffect, useState } from 'react'
 import WeeklyReportTable from '../../components/table_component/WeeklyReportTable';
-import WeeklyReportTable5 from '../../components/table_component/WeeklyReportTable5';
-import WeeKlyReportButtomTabs from '../../components/WeeKlyReportButtomTabs';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdPostAdd } from 'react-icons/md';
 import Cookies from 'js-cookie';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import storage from '../../utils/storage';
+import { Button } from '@material-ui/core';
+import moment from 'moment';
 
 const WeeklyReport = ({ setIsCheck }: any) => {
-	const navigate = useNavigate();
+
+	// @ts-ignore
+	const userInfo: any = JSON.parse(storage?.get("user"));
+
+
 	const token = Cookies.get("token");
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
-	const [collapseNav, setCollapseNav] = useState(() => {
-		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
-	});
-
-
-
+	const [count, setCount] = useState<number>(0)
 
 
 	const [inputs, setInputs] = useState<any>({
@@ -32,9 +28,6 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 		week: "0",
 		activities: [],
 	})
-
-
-
 
 	const [newWeeklyField, setNewWeeklyField] = useState<any>([
 		{
@@ -49,11 +42,9 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 		}
 	]);
 
-
-
-
 	// --- Adds New Performance Field --- //
 	const handleAddField = () => {
+		setCount(count + 1)
 		setNewWeeklyField([
 			...newWeeklyField,
 			{
@@ -71,6 +62,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 
 	// --- Remove New Weekly Field   --- //
 	const handleRemoveField = (index: any) => {
+		setCount(count - 1)
 		const field = [...newWeeklyField];
 		field.splice(index, 1);
 		setNewWeeklyField(field);
@@ -190,17 +182,13 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 						<div className='weeklyreporttop-container-card-1'>
 							<div className='weekly-top-card-1-sub'>
 								<p>EMPLOYEE NAME</p>
-								<p className='weekly-top-card-1-sub-second-child'>Okoro Godwin Chinedu</p>
-								<p>EMPLOYEE TITLE</p>
-								<p>Software Developer</p>
-								<p>DEPARTMENT</p>
-								<p>I.T</p>
-								<p>SUPERVISOR</p>
-								<p>Mr Samuel</p>
+								<p className='weekly-top-card-1-sub-second-child'>{userInfo?.data?.employee?.full_name.toUpperCase()}</p>
 								<p>SELF ASSESSMENT</p>
-								<p>Execellent</p>
+								<p>{inputs.assessment.toUpperCase()}</p>
+								<p>WEEK</p>
+								<p>{inputs.week.toUpperCase()}</p>
 								<p>DATE</p>
-								<p>30/11/2022</p>
+								<p>{moment().format("MM DD YYYY")}</p>
 							</div>
 						</div>
 						<div className='weekly-top-container-card-2'>
@@ -209,18 +197,17 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 								<p>Execellent</p>
 								<p>Above Average</p>
 								<p>Average</p>
-								<p>Above Average</p>
+								<p>Below Average</p>
 							</div>
 						</div>
 					</div>
 					<div className='weekly-report-title'>
+
 						<div>
-							<h4>Week {inputs.week}</h4>
-						</div>
-						<div>
-							<span>Select Week : </span>
+							<span id='weekly-report-title-text'>SELECT WEEKLY : </span>
 							<span>
 								<select
+									id='weekly-report-select'
 									required
 									value={inputs.week}
 									onChange={(e) => handleOnChange("week", e.target.value)} >
@@ -235,33 +222,34 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 						</div>
 
 						<div>
-							<span>SELF ASSESSMENT OPTIONS : </span>
-							<span>		<select required
+							<span id='weekly-report-title-text'>SELF ASSESSMENT OPTIONS : </span>
+							<span>		<select
+								id='weekly-report-select'
+								required
 								value={inputs.assessment}
 								onChange={(e) => handleOnChange("assessment", e.target.value)}>
 								<option value=""></option>
 								<option value="excellent">Execellent</option>
 								<option value="Above Average">Above Average</option>
 								<option value="Average">Average</option>
-								<option value="Above Average4">Above Average</option>
+								<option value="Below Average">Below Average</option>
 							</select>
 							</span>
 						</div>
 
 
-						<div className='select-RiDeleteBin5Line' onClick={handleAddField}>
-							<span>Add Field : </span>
-							<span>
-								<MdPostAdd size={30} />
-							</span>
-
+						<div >
+							<Button onClick={handleAddField} id='btn-delete-field'>
+								<MdPostAdd size={15} className='btn-delete-field-icon' />
+								Add Field
+							</Button>
 						</div>
-						<div className='select-RiDeleteBin5Line' onClick={handleRemoveField}>
-							<span>Delete Field : </span>
-							<span><RiDeleteBin5Line size={30} /></span>
-
-						</div>
-
+						{count > 0 && <div onClick={handleRemoveField} >
+							<Button id='btn-delete-field'>
+								<RiDeleteBin5Line size={14} className='btn-delete-field-icon' />
+								Delete
+							</Button>
+						</div>}
 					</div>
 				</div>
 			</div>
@@ -271,10 +259,9 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 					<button className="ccsnl-btn WeeKlyReport-tab"
 						onClick={handleLeave}>
 						{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
-
 				</div>
 			</div>
-		</div>
+		</div >
 	)
 }
 
