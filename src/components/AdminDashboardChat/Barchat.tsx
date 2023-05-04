@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { groupBy } from "lodash";
+import { useEffect, useState } from "react";
 
 Chartjs.register(
   ArcElement,
@@ -21,25 +22,41 @@ Chartjs.register(
 );
 
 
-const Barchat = ({ departments }: any) => {
+const Barchat = ({ employees, departments }: any) => {
 
 
-  const Name = groupBy(departments, "name");
+  const [clientInfo, setClientInfo] = useState([]);
+
+
+  const Name = groupBy(clientInfo, "client");
   const people: any = [];
 
   Object?.entries(Name)?.forEach((item) =>
     people?.push(item[1]?.length)
   );
 
-
-
+  // filters number of employees in each department
+  useEffect(() => {
+    const newData: any = [];
+    departments?.forEach((abc: any) => {
+      employees?.forEach((xyz: any) => {
+        const obj = abc?._id === xyz?.department?._id;
+        if (obj) {
+          newData.push({
+            tickets: departments?._id?.filter((jkl: any) => jkl?._id === xyz?._id).length, client: xyz?.department?.name,
+          });
+        }
+      });
+    });
+    setClientInfo(newData);
+  }, [departments, employees]);
 
   const data = {
-    labels: Object?.keys(Name)?.splice(0, 7),
+    labels: Object?.keys(Name)?.splice(0, 9),
     datasets: [
       {
-        label: "Department",
-        data: people?.splice(0, 7),
+        label: "People in Department",
+        data: people?.splice(0, 9),
         backgroundColor: "#990000",
         barPercentage: 0.2,
       },
@@ -50,6 +67,7 @@ const Barchat = ({ departments }: any) => {
       className="chat-container"
       style={{ height: "100%", width: "100%", borderRadius: "50px" }}
     >
+
       <Bar
         data={data}
         options={{ maintainAspectRatio: false }}

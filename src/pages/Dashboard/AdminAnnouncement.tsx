@@ -191,7 +191,7 @@ const AdminAnnouncement = () => {
                     <div className="FiTrash2">
                       <span>
                         <FiEye
-                          size={25}
+                          size={20}
                           onClick={() => handleView(item?.id)}
                           cursor="pointer"
                           title="VIEW ANNOUNCEMENT"
@@ -205,7 +205,7 @@ const AdminAnnouncement = () => {
                         isHrAdmin) && (
                           <span className="BsFillPinAngleFill">
                             <FiTrash2
-                              size={25}
+                              size={20}
                               onClick={() => handleDelete(item?.id)}
                               cursor="pointer"
                               title="DELETE ANNOUNCEMENT"

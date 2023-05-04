@@ -54,7 +54,6 @@ const EmployeeAttendanceTable = () => {
     (state) => state?.department?.department
   );
   const header = [
-    { title: "EMPLOYEE ID", prop: "employee" },
     { title: "NAME", prop: "employee_name" },
     { title: "DEPARTMENT", prop: "employee_department" },
     { title: "ARRIVAL", prop: "time_in" },
@@ -112,9 +111,7 @@ const EmployeeAttendanceTable = () => {
                 ) : (
                   attenances?.map((item: any, i: any) => (
                     <tr className="data-table-row" key={i}>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.employee}
-                      </td>
+
                       <td className="table-datacell datatype-numeric">
                         {item?.employee_name}
                       </td>

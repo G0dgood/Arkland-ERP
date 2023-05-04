@@ -13,7 +13,7 @@ import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/Tabl
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
 import { SlClose } from 'react-icons/sl';
-import LeaveApplicationEligibiltyModal from '../../components/Modals/LeaveApplicationEligibiltyModal';
+// import LeaveApplicationEligibiltyModal from '../../components/Modals/LeaveApplicationEligibiltyModal';
 
 const Leave = () => {
 

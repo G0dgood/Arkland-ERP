@@ -124,12 +124,6 @@ const Header = ({ toggleSideNav }: any) => {
 
 
 
-
-
-
-
-
-
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)} >
       <Socket setRefresh={setRefresh} />

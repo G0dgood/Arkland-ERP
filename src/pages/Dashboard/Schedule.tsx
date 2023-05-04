@@ -128,7 +128,7 @@ const Schedule = () => {
     <div className="main-div-col-2">
       <div className="main-todo-1">
         <div className="main-todo-title">
-          <h4>Upcoming Schedule</h4>
+          <h6>{"UPCOMING SCHEDULE"}</h6>
           <span>Today, {moment(Date.now()).format("DD-MMMM-YYYY")}</span>
         </div>
 
@@ -145,31 +145,16 @@ const Schedule = () => {
             </div>
           </div>
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-            }}
-          >
+          <div style={{ display: "grid", gridTemplateColumns: "1fr" }}>
             {tasks?.length > 0 ? (
               <div className="Announcement-container">
                 {tasks?.map((item: any, i: any) => (
                   <div className="Announcement-sub-2" key={i}>
-                    <div
-                      className="main-todo-Event"
-                      style={{ borderRadius: "4px" }}
-                    >
+                    <div className="main-todo-Event" style={{ borderRadius: "4px" }} >
                       <div className="main-todo-container">
-                        <div
-                          style={{
-                            paddingLeft: "10px",
-                          }}
-                        >
-                          <div>
-                            {item?.title} due by{" "}
-                            {moment(item?.expected_completion_date).format(
-                              "DD-MMMM-YYYY"
-                            )}{" "}
+                        <div style={{ paddingLeft: "10px" }} >
+                          <div className="main-todo-input-title"> {item?.title} due by{" "}
+                            {moment(item?.expected_completion_date).format("DD-MMMM-YYYY")}{" "}
                           </div>
 
                           <div className="main-todo-input-time">
@@ -179,14 +164,11 @@ const Schedule = () => {
                           </div>
                         </div>
                       </div>
-                      <div
-                        className="FiTrash2"
-                        style={{
-                          display: "flex",
-                        }}
-                      >
+
+                      <div className="FiTrash2" style={{ display: "flex", }} >
+
                         <FiEye
-                          size={25}
+                          size={20}
                           onClick={() => handleView(item?.id)}
                           cursor="pointer"
                           title="VIEW TODO"
@@ -197,7 +179,7 @@ const Schedule = () => {
                           isHrAdmin ||
                           isTeamLead) && (
                             <FiTrash2
-                              size={25}
+                              size={20}
                               onClick={() => handleDelete(item?.id)}
                               cursor="pointer"
                               title="DELETE TODO"
@@ -209,8 +191,8 @@ const Schedule = () => {
                           size="lg"
                           show={viewShow}
                           aria-labelledby="contained-modal-title-vcenter"
-                          centered
-                        >
+                          centered >
+
                           <Modal.Header>
                             <span></span>
                             <span className="span-center-title">View Schedule</span>
@@ -218,6 +200,7 @@ const Schedule = () => {
                               <MdOutlineClose size={28} />
                             </Button>
                           </Modal.Header>
+
                           <Modal.Body>
                             {isScheduleLoading === true ? (
                               <div className="table-loader-announcement1">
@@ -246,8 +229,7 @@ const Schedule = () => {
                                 <p>DATE OF COMPLETION</p>
                                 <p>
                                   {" "}
-                                  {moment(
-                                    schedule?.expected_completion_date
+                                  {moment(schedule?.expected_completion_date
                                   ).format("DD-MMMM-YYYY")}
                                 </p>
                               </div>

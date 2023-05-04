@@ -43,8 +43,6 @@ export const options = {
 
 
 
-
-
 const DonutChat = ({ employees }: any) => {
 
 
@@ -72,9 +70,6 @@ const DonutChat = ({ employees }: any) => {
     }
 
   }, [employees]);
-
-
-
 
 
   const data = {

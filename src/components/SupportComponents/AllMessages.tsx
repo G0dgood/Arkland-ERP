@@ -6,7 +6,6 @@ const AllMessages = () => {
       <div className="msg-search">
         <MainSearch placeholder={"Search...   "} />
       </div>
-
       <section className="md-ui component-data-table">
 
         <div className="main-table-wrapper">

@@ -3,7 +3,6 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import KPINavTab from "../kpi_assessment/KPINavTab";
 import WeeklyReport from "./WeeklyReport";
-import TeamWeeklyReport from "./TeamWeeklyReport";
 import MyWeekReport from "./MyWeekReport";
 
 const WeeklyContainer = () => {
