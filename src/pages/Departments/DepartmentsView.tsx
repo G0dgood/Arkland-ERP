@@ -7,6 +7,7 @@ import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal
 import { getRequestOptions } from "../../utils/auth/header";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import { NoRecordFound, TableFetch } from "../../components/TableOptions";
 
 const DepartmentsView = () => {
   const navigate = useNavigate();
@@ -69,6 +70,9 @@ const DepartmentsView = () => {
     borderRadius: "50px",
   };
 
+
+  console.log('isLoading', isLoading)
+
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
@@ -87,24 +91,25 @@ const DepartmentsView = () => {
               </div>
             </div>
             {isLoading ? (
-              <div
-                style={{
-                  margin: "auto",
-                  width: "20%",
-                }}
-              >
-                <SyncLoader
-                  cssOverride={override}
-                  color={"#990000"}
-                  loading={isLoading}
-                />
-              </div>
+              // <div
+              //   style={{
+              //     margin: "auto",
+              //     width: "20%",
+              //   }}
+              // >
+              //   <SyncLoader
+              //     cssOverride={override}
+              //     color={"#990000"}
+              //     loading={isLoading}
+              //   />
+              // </div>
+              <TableFetch colSpan={9} />
+            ) : departments?.length === 0 || departments === undefined ? (
+              <NoRecordFound colSpan={9} />
             ) : (
               <div className="subone-col-3">
                 {departments?.map((item: any, i: any) => (
-                  <div
-                    className="ProjectView-card"
-                    key={i}
+                  <div className="ProjectView-card" key={i}
                     onClick={() => navigate(`/departments/${item?.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">

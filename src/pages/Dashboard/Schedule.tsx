@@ -18,7 +18,6 @@ import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
 import { DialogState } from "../../interfaces/base";
 import { getUserPrivileges } from "../../functions/auth";
 import { checkForOptions } from "../../utils/checkForName";
-import { trash-2 } from "../../assets/vectors/trash-2.svg";
 
 const Schedule = () => {
   const token = Cookies.get("token");
@@ -179,15 +178,12 @@ const Schedule = () => {
                           isAdmin ||
                           isHrAdmin ||
                           isTeamLead) && (
-                            // <FiTrash2
-                            //   size={20}
-                            //   onClick={() => handleDelete(item?.id)}
-                            //   cursor="pointer"
-                            //   title="DELETE TODO"
-                            // />
-                            <div>
-                              <img src={trash} alt="" />
-                              fff</div>
+                            <FiTrash2
+                              size={20}
+                              onClick={() => handleDelete(item?.id)}
+                              cursor="pointer"
+                              title="DELETE TODO"
+                            />
                           )}
                       </div>
                       {showView[item?.id] && (
