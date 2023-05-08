@@ -18,6 +18,7 @@ import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
 import { DialogState } from "../../interfaces/base";
 import { getUserPrivileges } from "../../functions/auth";
 import { checkForOptions } from "../../utils/checkForName";
+import { trash-2 } from "../../assets/vectors/trash-2.svg";
 
 const Schedule = () => {
   const token = Cookies.get("token");
@@ -33,7 +34,7 @@ const Schedule = () => {
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
   const [showView, setShowView] = React.useState<DialogState>({});
 
-  const { tasks, isLoading, error, message, setLoading } =
+  const { tasks, isLoading, setLoading } =
     useFetchTasks(taskAction);
 
   const { schedule, isScheduleLoading } = useScheduleById(viewAction);
@@ -136,7 +137,7 @@ const Schedule = () => {
           <div className="table-loader-announcement1">
             <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
-        ) : tasks?.length === 0 || tasks == null ? (
+        ) : tasks?.length === 0 || tasks === undefined ? (
           <div className="table-loader-announcement1">
             <div>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -178,12 +179,15 @@ const Schedule = () => {
                           isAdmin ||
                           isHrAdmin ||
                           isTeamLead) && (
-                            <FiTrash2
-                              size={20}
-                              onClick={() => handleDelete(item?.id)}
-                              cursor="pointer"
-                              title="DELETE TODO"
-                            />
+                            // <FiTrash2
+                            //   size={20}
+                            //   onClick={() => handleDelete(item?.id)}
+                            //   cursor="pointer"
+                            //   title="DELETE TODO"
+                            // />
+                            <div>
+                              <img src={trash} alt="" />
+                              fff</div>
                           )}
                       </div>
                       {showView[item?.id] && (

@@ -25,7 +25,7 @@ const KPIDetails = () => {
 		{ rate: 1, definition: "Below Average/Poor" },
 	]
 
-	// const [isLoading2, setisLoading2] = useState(false);
+
 	const [message1, setMessage1] = useState('')
 	const [isError1, setisError1] = useState(false)
 
@@ -33,8 +33,6 @@ const KPIDetails = () => {
 	const [data, setData] = useState<any>([]);
 	const [isLoading, setisLoading] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
-	// const [isSuccess, setisSuccess] = useState(false);
-	// const [isError, seisError] = useState(false);
 
 
 	const [isSuccess3, setisSuccess3] = useState(false);
@@ -43,15 +41,7 @@ const KPIDetails = () => {
 	const [hodscore, setHodscore] = useState('')
 
 
-	// const [input, setinput] = useState<any>({
-	// 	"job_knowledge": 0,
-	// 	"efficiency": 0,
-	// 	"attendance": 0,
-	// 	"communication": 0,
-	// 	"reliability": 0,
-	// 	"collaboration": 0,
-	// 	"comment": ""
-	// })
+
 
 	const title = "Successful";
 	const html = "KPI Deleted";
@@ -134,7 +124,7 @@ const KPIDetails = () => {
 	return (
 		<div>
 			<header className="ChatProgressView-header"  >
-				<div>
+				<div className='leave-Update-titile-icon'>
 					<span className="app-chat--icon">
 						<BsChatLeftText />	<span>My Assessment Performance</span> 		<Button className={data?.status === 'active' ? "table-link-active" : "table-link"}>
 							{data?.status === 'active' ? 'Completed' : data?.status}</Button>

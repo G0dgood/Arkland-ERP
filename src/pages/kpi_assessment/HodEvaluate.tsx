@@ -17,10 +17,10 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
   const kpiData3 = ({
     Weight1: 20,
     Weight2: 15,
-    Weight3: 20,
-    Weight4: 20,
+    Weight3: 15,
+    Weight4: 15,
     Weight5: 15,
-    Weight6: 10,
+    Weight6: 20,
   });
   const [employeegrade, setemployeegrade] = useState<any>({
     employeegrade1: 0,
@@ -100,7 +100,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
 
 
   const [input, setinput] = useState<any>({
-    "month": 3,
+    "month": 0,
     "job_knowledge": 0,
     "efficiency": 0,
     "attendance": 0,
@@ -119,7 +119,6 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
   const [isLoading, setisLoading] = useState(false);
   const [isSuccess, setisSuccess] = useState(false);
   const [message, setMessage] = useState('')
-  // const [datas, setData] = useState('')
   const [isError, setisError] = useState(false)
 
 
@@ -355,7 +354,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               <div className="factor_area">
                 <p>Debugging</p>
                 <div>
-                  <p>{kpiData3.Weight5}</p>
+                  <p>{kpiData3.Weight6}</p>
                 </div>
               </div>
               <div className="rate_area">
