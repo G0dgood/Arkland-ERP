@@ -172,10 +172,7 @@ const AdminAnnouncement = () => {
             <div className="Admin-Announcement-container">
               {announcements?.map((item: any, i: any) => (
                 <div className="Announcement-sub-2">
-                  <div
-                    className="main-todo-Event"
-                    style={{ borderRadius: "4px" }}
-                  >
+                  <div className="main-todo-Event" style={{ borderRadius: "4px" }} >
                     <div className="main-todo-container">
                       <div className="main-todo-note">
                         <div>{item.message}</div>

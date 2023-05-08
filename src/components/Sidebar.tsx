@@ -38,7 +38,6 @@ const Sidebar = ({ collapseNav }: any) => {
   const [allleaveapplications, setAllleaveapplications] = useState(false);
   const [support, setSupport] = useState(false);
   const [policy, setPolicy] = useState(false);
-  const [logout, setLogout] = useState(false);
   const [weeklyreport, setWeeklyreport] = useState(false);
   const [teamleaveapplications, setTeamleaveapplications] = useState(false);
   const [teamweekly, setTeamWeekly] = useState(false);
@@ -379,23 +378,7 @@ const Sidebar = ({ collapseNav }: any) => {
           )}
         </NavLink>
 
-        <NavLink
-          to="/"
-          // exact
-          className={
-            window.location.pathname === "/logout" ? "active-here" : "nav-link"
-          }
-          onMouseEnter={() => setLogout(true)}
-          onMouseLeave={() => setLogout(false)}
-        >
-          <FiLogOut size={22} />
-          <span className="nav-name">Log out</span>
-          {logout && collapseNav && (
-            <div className="sidenav-bubble">
-              <p>Log out</p>
-            </div>
-          )}
-        </NavLink>
+
       </Nav>
     </div>
   );

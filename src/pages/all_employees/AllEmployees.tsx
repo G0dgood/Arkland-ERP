@@ -26,6 +26,7 @@ import { useEmployees } from "../../hooks/useEmployees";
 import { getUserPrivileges } from "../../functions/auth";
 import { DialogState } from "../../interfaces/base";
 import { fireAlert } from "../../utils/Alert";
+import EmployeesDownloader from "../../components/Downloader/EmployeesDownloader";
 
 const token = Cookies.get("token");
 
@@ -125,7 +126,7 @@ const AllEmployees = ({ setEmployee }: any) => {
     }
   };
 
-  console.log("displayData?.length", displayData?.length);
+  // console.log("displayData?.length", employees);
 
   return (
     <div>
@@ -157,7 +158,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                     variant="contained"
                     className="Add-btn"
                     onClick={() => navigate("/createemployee")}
-                    // onClick={handleCreateEmployeeClick}
+                  // onClick={handleCreateEmployeeClick}
                   >
                     <GoPlus className="icon-space" />
                     Create Employee
@@ -212,6 +213,9 @@ const AllEmployees = ({ setEmployee }: any) => {
                 placeholder={"Search...          All Employee"}
               />
             </div> */}
+            <div>
+              <EmployeesDownloader data={employees} />
+            </div>
           </div>
           <section className="md-ui component-data-table">
             {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
@@ -251,7 +255,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                           {checkForName(item?.role, roles)}
                         </td>
                         <td className="table-datacell datatype-numeric">
-                          {checkForName(item?.department, departments)}
+                          {item?.department?.name}
                         </td>
                         <td className="table-datacell datatype-numeric">
                           {item?.category}

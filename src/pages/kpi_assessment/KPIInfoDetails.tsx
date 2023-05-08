@@ -1,9 +1,9 @@
-import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
-import { Spinner } from 'react-bootstrap';
 
-const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
-	const year = new Date().getFullYear().toString();
+import React, { useEffect, useState } from 'react'
+
+
+const KPIInfoDetails = ({ data, setHodscore }: any) => {
+	// const year = new Date().getFullYear().toString();
 
 	// const [isLoading, setisLoading] = useState(false);
 	// const [isSuccess, setisSuccess] = useState(false);
@@ -57,10 +57,10 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 	const kpiData3: any = ({
 		Weight1: 20,
 		Weight2: 15,
-		Weight3: 20,
-		Weight4: 20,
+		Weight3: 15,
+		Weight4: 15,
 		Weight5: 15,
-		Weight6: 10,
+		Weight6: 20,
 	});
 	const employeegrade: any = ({
 		employeegrade1: 0,
@@ -127,29 +127,7 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 
 	return (
 		<form>
-			{/* // <form>
-		// 	<div className="top-fields">
-		// 		<p>{data?.month} | {year} </p>
-		// 	</div>
-		// 	<div className="evaluation-area_cont">
-		// 		<div>
-		// 			<div className="added-fields_cont">
-		// 				{kpiData.map((item, i) => */}
-			{/* // 					<div key={i} className="added-field">
-		// 						<div className="factor_area">
-		// 							<p>{item.Performance}</p>
-		// 						</div>
-		// 						<div className="rate_area">
-		// 							<p>{item.num}</p>
-		// 						</div>
-		// 						<div className="btn_area">
-		// 							<p>{item.reviewer}</p>
-		// 						</div>
-		// 					</div>
-		// 				)}
-		// 			</div> */}
-			{/* // 		</div> */}
-			{/* // 	</div> */}
+
 
 			<div className="evaluation-area_cont">
 				<div>
@@ -242,7 +220,7 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 							<div className="factor_area">
 								<p>Debugging</p>
 								<div>
-									<p>{kpiData3.Weight5}</p>
+									<p>{kpiData3.Weight6}</p>
 								</div>
 							</div>
 							<div className="rate_area">
@@ -267,16 +245,6 @@ const KPIInfoDetails = ({ data, setHodscore, hodscore }: any) => {
 							</div>
 						</div>
 					</div>
-					{/* {data?.status === 'active' ? "" :
-						<div> */}
-					{/* @ts-ignore    */}
-					{/* <textarea rows="4" placeholder="Add an extended comment" required
-								value={input.comment}
-								onChange={(e) => handleOnChange('comment', e.target.value)} />
-							<Button variant="contained"
-								className="Add-btn-modal" type="submit">{isLoading ? <Spinner animation="border" /> : 'Submit'}</Button>
-						</div>
-					} */}
 				</div>
 			</div>
 		</form>
