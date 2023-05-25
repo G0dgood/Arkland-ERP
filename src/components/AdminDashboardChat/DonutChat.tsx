@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import { Doughnut } from "react-chartjs-2";
 import { ArcElement } from 'chart.js'
 
@@ -95,12 +94,12 @@ const DonutChat = ({ employees }: any) => {
   return (
     <div
       className="chat-container"
-      style={{ height: "100%", width: "100%", position: "relative" }}
+      style={{ height: "100%", width: "100%" }}
     >
       <Doughnut
         data={data}
-        height="150px"
-        width="50%"
+        // height="100%"
+        // width="100%"
         options={{ maintainAspectRatio: false }}
       />
 

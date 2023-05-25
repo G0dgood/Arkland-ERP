@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
-import Sidebar from '../../components/Sidebar'
 import { Button } from '@material-ui/core';
 import { MdEditNote } from 'react-icons/md';
 import { FiChevronLeft } from 'react-icons/fi';
@@ -15,24 +14,8 @@ const Profile = () => {
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
 
-
-	const [collapseNav, setCollapseNav] = useState(() => {
-		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
-	});
-
-	useEffect(() => {
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-		localStorage.setItem("collapse", JSON.stringify(collapseNav));
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-	}, [collapseNav]);
-	const toggleSideNav = () => {
-		setCollapseNav(!collapseNav);
-	};
 	return (
-		<div id="screen-wrapper">
-			<Header toggleSideNav={toggleSideNav} />
-			<Sidebar collapseNav={collapseNav} />
+		<div  >
 			<main>
 				<div className="profile-body">
 					<img className="demo-bg" src={logo} alt="" />

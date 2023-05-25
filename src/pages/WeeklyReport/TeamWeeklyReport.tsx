@@ -1,28 +1,31 @@
 import { Button } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import TableLoader from '../../components/TableLoader'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions'
 import moment from 'moment'
 import Header from '../../components/Header'
-import Sidebar from '../../components/Sidebar'
-import Cookies from 'js-cookie'
 import Pagination from '../../components/Pagination'
 import { fireAlert } from '../../utils/Alert'
+import WeeklyReportDownloader from '../../components/Downloader/WeeklyReportDownloader'
+import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch'
+import { getHODWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
+import Sidebar from '../../components/SidebarAndDropdown/Sidebar'
 
 const TeamWeeklyReport = () => {
-	const token = Cookies.get("token");
+	const dispatch = useAppDispatch();
+	const { HODdata, HODisError, HODisLoading, HODmessage } = useAppSelector((state: any) => state.Weeklyreport)
+
+	useEffect(() => {
+		// @ts-ignore
+		dispatch(getHODWeeklyReport());
+	}, [dispatch]);
+
+
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
 	});
-
-
-	const [sortData, setSortData] = useState([]);
-	const [isLoading, setisLoading] = useState(false);
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
-
 
 
 	const [collapseNav, setCollapseNav] = useState(() => {
@@ -40,49 +43,23 @@ const TeamWeeklyReport = () => {
 	};
 
 	const title = "Weekly Reports error";
-	const html = message;
+	const html = HODmessage;
 	const icon = "error";
 
 
-	useEffect(() => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/weekly-reports/list-for-department`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
 
-				if (data?.success === false) {
-					setMessage(data?.message)
-				} else {
-					setSortData(data?.data)
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-
-	}, [token])
 
 
 	useEffect(() => {
-		if (isError) {
+		if (HODisError) {
 			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisError(false)
-				setMessage("")
-			}, 5000);
 		}
-	}, [html, isError])
+	}, [html, HODisError])
 
 
 	const [displayData, setDisplayData] = useState([]);
+
+
 
 	return (
 		<div id="screen-wrapper">
@@ -95,18 +72,19 @@ const TeamWeeklyReport = () => {
 					</div>
 					<div>
 						<EntriesPerPage
-							data={sortData}
+							data={HODdata?.data}
 							entriesPerPage={entriesPerPage}
 							setEntriesPerPage={setEntriesPerPage}
 						/>
 					</div>
+					<WeeklyReportDownloader data={HODdata?.data} />
 					<div>
 						<MainSearch placeholder={'Search...          Team Weekly Report'} />
 
 					</div>
 				</div>
 				<section className="md-ui component-data-table">
-					{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+					{HODisLoading ? <TableLoader isLoading={HODisLoading} /> : ""}
 					<div className="main-table-wrapper">
 						<table className="main-table-content">
 							<thead className="data-table-header">
@@ -121,7 +99,7 @@ const TeamWeeklyReport = () => {
 								</tr>
 							</thead>
 							<tbody className="data-table-content">
-								{isLoading ? (
+								{HODisLoading ? (
 									<TableFetch colSpan={8} />
 								) : displayData?.length === 0 || displayData == null ? (
 									<NoRecordFound colSpan={8} />
@@ -153,7 +131,7 @@ const TeamWeeklyReport = () => {
 				<footer className="main-table-footer">
 					<Pagination
 						setDisplayData={setDisplayData}
-						data={sortData}
+						data={HODdata?.data}
 						entriesPerPage={entriesPerPage}
 						Total={"Assessment"}
 					/>

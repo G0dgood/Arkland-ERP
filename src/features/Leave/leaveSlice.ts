@@ -5,46 +5,43 @@ import leaveService from './leaveService'
 
 const initialState = {
 
-  data:   [],
+  data:    '',
   isError: false,
   isSuccess: false,
   isLoading: false, 
   message: '',
   error: '',
-  dataall:   [],
-  isErrorall: false,
-  isSuccessall: false,
-  isLoadingall: false, 
-  messageall: '',
-  errorall: '',
+
+  allLeavedata:   [],
+  allLeaveisError: false,
+  allLeaveisSuccess: false,
+  allLeaveisLoading: false, 
+  allLeavemessage: '',
+  allLeaveerror: '',
   
 }
  
  
 
 // Leave 
-export const createLeave = createAsyncThunk('leave/createLeave', async ( input,thunkAPI) => {
+export const createLeave = createAsyncThunk('leave/createLeave', async ( data,thunkAPI) => {
   try {
-    return await leaveService.createLeave(input)
+    return await leaveService.createLeave(data)
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 
       error.response.data.message) ||
-      error.message ||error.toString()  
-      console.log('error.response.data ',error.response.message)
-      console.log('error.response.data ',error.response.data.message)
-      console.log('error.response.data ',error.message)
-      console.log('error.response.data ',error)
+      error.message ||error.toString()   
     
     return thunkAPI.rejectWithValue(message)
   }
 })
  
-// Get All Leave 
-export const getCreateLeave = createAsyncThunk('leave/getCreateLeave', async ( data,thunkAPI) => {
+// Get My Leave 
+export const getCreateLeave:any = createAsyncThunk('leave/getCreateLeave', async(data:any, thunkAPI) => {
   try {
-    return await leaveService.getCreateLeave( )
-  } catch (error: any) {
+    return await leaveService.getCreateLeave(data)
+  } catch (error: any) { 
     const message = (error.response && 
       error.response.data && 
       error.response.data.message) ||
@@ -67,20 +64,20 @@ export const leaveSlice = createSlice({
       state.isSuccess = false
       state.isError = false
       state.message = '' 
-      state.isLoadingall = false
-      state.isSuccessall = false
-      state.isErrorall = false
-      state.messageall = '' 
+
+      state.allLeaveisLoading = false
+      state.allLeaveisSuccess = false
+      state.allLeaveisError = false
+      state.allLeavemessage = '' 
     },
     
   },
   extraReducers: (builder) => {
     builder 
       .addCase(createLeave.pending, (state) => {
-        state.isLoading = true
-        
+        state.isLoading = true 
       })
-      .addCase(createLeave.fulfilled, (state, action) => {
+      .addCase(createLeave.fulfilled, (state:any, action) => {
         state.isLoading = false
         state.isSuccess = true
         state.data = action.payload 
@@ -91,20 +88,22 @@ export const leaveSlice = createSlice({
         state.message = action.payload
         state.data = [] 
       })
+
+      // GET LEAVE APPLICATIONS
       .addCase(getCreateLeave.pending, (state) => {
-        state.isLoadingall = true
+        state.allLeaveisLoading= true
         
       })
       .addCase(getCreateLeave.fulfilled, (state, action) => {
-        state.isLoadingall = false
-        state.isSuccessall = true
-        state.dataall = action.payload 
+        state.allLeaveisLoading= false
+        state.allLeaveisSuccess= true
+        state.allLeavedata= action.payload?.data?.data 
       })
       .addCase(getCreateLeave.rejected, (state:any, action) => {
-        state.isLoadingall = false
-        state.isErrorall = true
-        state.messageall = action.payload
-        state.dataall = [] 
+        state.allLeaveisLoading= false
+        state.allLeaveisError= true
+        state.allLeavemessage= action.payload
+        state.allLeavedata= [] 
       })
      
       

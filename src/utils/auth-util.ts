@@ -1,5 +1,4 @@
 import storage from "./storage";
-import { ENCRYPTION_KEY } from "./constants";
 
 export const handle_logout = () => {
   storage.clear();

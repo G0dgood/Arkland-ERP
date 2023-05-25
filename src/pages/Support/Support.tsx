@@ -1,29 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
 
-import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header'
-import Sidebar from '../../components/Sidebar'
+import { useState } from 'react'
+
 import Chatmain from './Chatmain';
 import Chatsidebar from './Chatsidebar';
 import Chatdetails from './Chatdetails';
 import { BsChatRightText } from 'react-icons/bs';
-import { io } from "socket.io-client";
 
 const Support = (props: any) => {
 
-	const [collapseNav, setCollapseNav] = useState(() => {
-		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
-	});
 
-	useEffect(() => {
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-		localStorage.setItem("collapse", JSON.stringify(collapseNav));
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-	}, [collapseNav]);
-	const toggleSideNav = () => {
-		setCollapseNav(!collapseNav);
-	};
 
 	const [userID, setUserID] = useState<any>(0)
 
@@ -32,9 +18,7 @@ const Support = (props: any) => {
 
 
 	return (
-		<div id="screen-wrapper">
-			<Header toggleSideNav={toggleSideNav} />
-			<Sidebar collapseNav={collapseNav} />
+		<div  >
 			<main>
 				<div className="app-chat">
 					<div className="header-chat">

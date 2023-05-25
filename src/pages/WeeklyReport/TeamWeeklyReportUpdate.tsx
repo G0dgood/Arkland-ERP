@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import React, { useEffect, useState } from 'react'
+
+import { useEffect, useState } from 'react'
 import { fireAlert } from '../../utils/Alert';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
@@ -9,6 +9,7 @@ import { MdOutlineClose } from 'react-icons/md';
 import { BsChatLeftText } from 'react-icons/bs';
 import WeeklyReportTable from './WeeklyReportTable';
 import Cookies from 'js-cookie';
+import moment from 'moment';
 
 const TeamWeeklyReportUpdate = () => {
 
@@ -25,7 +26,6 @@ const TeamWeeklyReportUpdate = () => {
 	const [isError1, setisError1] = useState(false)
 	const [message1, setMessage1] = useState("");
 
-	const [inputs, setInputs] = useState([]);
 	const token = Cookies.get("token");
 
 	const title = "Weekly Report Update error";
@@ -160,7 +160,7 @@ const TeamWeeklyReportUpdate = () => {
 						<p>SELF ASSESSMENT</p>
 						<p>{data?.self_assessment}</p>
 						<p>DATE</p>
-						<p>30/11/2022</p>
+						<p>{moment().format("MM DD YYYY")}</p>
 					</div>
 				</div>
 				<div className='weekly-top-container-card-2'>

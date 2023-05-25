@@ -25,8 +25,6 @@ const LeaveApplicationEligibiltyModal = ({ lgShow, setLgShow, daysLeft }: any) =
 					<h2>Not Eligible</h2>
 					<p>You have <code>{daysLeft}</code> days left</p>
 					<p className="last-line"> </p>
-
-
 				</Modal.Body>
 			</Modal>
 		</div>

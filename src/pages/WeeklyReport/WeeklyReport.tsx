@@ -2,27 +2,21 @@ import { useEffect, useState } from 'react'
 import WeeklyReportTable from '../../components/table_component/WeeklyReportTable';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdPostAdd } from 'react-icons/md';
-import Cookies from 'js-cookie';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
 import storage from '../../utils/storage';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
+import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch';
+import { createweeklyReport, reset } from '../../features/WeeklyReport/WeeklyReportSlice';
 
 const WeeklyReport = ({ setIsCheck }: any) => {
+	const dispatch = useAppDispatch();
+	const { createisError, createisLoading, createmessage, createisSuccess }: any = useAppSelector((state: any) => state.Weeklyreport)
 
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
-
-
-	const token = Cookies.get("token");
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
 	const [count, setCount] = useState<number>(0)
-
-
 	const [inputs, setInputs] = useState<any>({
 		assessment: "",
 		week: "0",
@@ -94,67 +88,31 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const html = "Week Report Created!";
 	const icon = "success";
 	const title1 = "Week Report error";
-	const html1 = message;
+	const html1 = createmessage;
 	const icon1 = "error";
 
 	const handleLeave = () => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/weekly-reports`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-			body: JSON.stringify(allinput),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-					setisError(true)
-				} else {
-					setisSuccess(true)
-					setTimeout(() => {
-						setIsCheck(false)
-					}, 2000);
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
+		// @ts-ignore
+		dispatch(createweeklyReport(allinput));
 	}
 
 
+
 	useEffect(() => {
-		if (isSuccess) {
+		if (createisSuccess) {
 			fireAlert(title, html, icon);
+			setInputs({
+				assessment: " ",
+				week: "",
+				activities: []
+			})
 			setTimeout(() => {
-				setisSuccess(false)
-				setMessage("")
-				setInputs({
-					assessment: " ",
-					week: "",
-					activities: []
-				})
-				// setNewWeeklyField(
-				// 	{
-				// 		completed: "",
-				// 		in_progress: "",
-				// 		next: "",
-				// 		due_date_for_next: "",
-				// 		next_week_tasks: [""],
-				// 		issues: [""],
-				// 		blockers: [""]
-				// 	}
-				// )
-			}, 5000);
-		} else if (isError) {
+				dispatch(reset());
+				setIsCheck(false)
+			}, 2000);
+		} else if (createisError) {
 			fireAlert(title1, html1, icon1);
 			setTimeout(() => {
-				setisError(false)
-				setMessage("")
 				setInputs({
 					assessment: " ",
 					week: "",
@@ -171,8 +129,9 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 					]
 				})
 			}, 5000);
+			reset()
 		}
-	}, [html, html1, isError, isSuccess])
+	}, [html, html1, createisError, createisSuccess, setIsCheck, dispatch])
 
 	return (
 		<div className='weeklycontainer'>
@@ -258,7 +217,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 				<div className='WeeKlyReport-submit-container'>
 					<button className="ccsnl-btn WeeKlyReport-tab"
 						onClick={handleLeave}>
-						{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
+						{createisLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
 				</div>
 			</div>
 		</div >

@@ -6,7 +6,6 @@ import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
 import { SyncLoader } from "react-spinners";
 import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
 import {
   EntriesPerPage,
   MainSearch,
@@ -21,6 +20,7 @@ import { getRoles } from "../../../store/reducers/roles";
 import TableLoader from "../../../components/TableLoader";
 import { Toast } from "react-bootstrap";
 import Pagination from "../../../components/Pagination";
+import Sidebar from "../../../components/SidebarAndDropdown/Sidebar";
 
 const ViewDepartments = () => {
   const navigate = useNavigate();

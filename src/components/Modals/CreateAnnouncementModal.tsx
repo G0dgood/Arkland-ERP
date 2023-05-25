@@ -1,142 +1,180 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-import { Modal, Spinner } from "react-bootstrap";
+import { Form, Modal, Spinner } from "react-bootstrap";
 import { MdOutlineClose } from "react-icons/md";
-import { Form, Formik } from "formik";
-import Cookies from "js-cookie";
 import { fireAlert } from "../../utils/Alert";
-import { useAppSelector } from "../../hooks/useDispatch";
-import ReactSelectField from "../Inputs/ReactSelectField";
-import TextAreaField from "../Inputs/TextAreaField";
-import CustomSelectField from "../Inputs/CustomSelectField";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { createAnnouncement, reset } from "../../features/Announcement/announcemetSlice";
 
-const token = Cookies.get("token");
-const CreateAnnouncementModal = (props: any) => {
+
+const CreateAnnouncementModal = () => {
+  const dispatch = useAppDispatch();
+  const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.announcement)
   const [lgShow, setLgShow] = useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [selectedOption, setSelectedOption] = React.useState(null);
+  const [inputs, setInputs] = useState<any>({
+    message: "",
+    audience_scope: "",
+  })
+
   const announcementOptions = [
-    "Select audience scope",
     "general",
-    // "user role",
     "employee role",
     "team",
     "department",
     "project",
   ];
 
-  const [newAnnouncementCreated, setNewAnnouncementCreated] =
-    React.useState(false);
+  // const [newAnnouncementCreated, setNewAnnouncementCreated] =
+  //   React.useState(false);
 
-  const roles: any = useAppSelector((state) => state?.roles?.roles);
-  const availablleRoles = [] as any;
+  // const roles: any = useAppSelector((state) => state?.roles?.roles);
+  // const availablleRoles = [] as any;
 
-  roles &&
-    roles.forEach((role: any) =>
-      availablleRoles.push({
-        value: role?.id,
-        label: role?.name,
-      })
-    );
+  // roles &&
+  //   roles.forEach((role: any) =>
+  //     availablleRoles.push({
+  //       value: role?.id,
+  //       label: role?.name,
+  //     })
+  //   );
 
-  const teams: any = useAppSelector((state) => state?.team?.team);
-  const availablleTeams = [] as any;
+  // const teams: any = useAppSelector((state) => state?.team?.team);
+  // const availablleTeams = [] as any;
 
-  teams &&
-    teams.forEach((team: any) =>
-      availablleTeams.push({
-        value: team?.id,
-        label: team?.name,
-      })
-    );
+  // teams &&
+  //   teams.forEach((team: any) =>
+  //     availablleTeams.push({
+  //       value: team?.id,
+  //       label: team?.name,
+  //     })
+  //   );
 
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
-  const availablleDepartments = [] as any;
+  // const departments: any = useAppSelector(
+  //   (state) => state?.department?.department
+  // );
+  // const availablleDepartments = [] as any;
 
-  departments &&
-    departments.forEach((department: any) =>
-      availablleDepartments.push({
-        value: department?.id,
-        label: department?.name,
-      })
-    );
+  // departments &&
+  //   departments.forEach((department: any) =>
+  //     availablleDepartments.push({
+  //       value: department?.id,
+  //       label: department?.name,
+  //     })
+  //   );
 
-  const projects: any = useAppSelector((state) => state?.projects?.projects);
-  const availablleProject = [] as any;
+  // const projects: any = useAppSelector((state) => state?.projects?.projects);
+  // const availablleProject = [] as any;
 
-  projects &&
-    projects.forEach((project: any) =>
-      availablleProject.push({
-        value: project?.id,
-        label: project?.name,
-      })
-    );
-  const handleOptionChange = (event: any) => {
-    setSelectedOption(event);
-    return event;
-  };
+  // projects &&
+  //   projects.forEach((project: any) =>
+  //     availablleProject.push({
+  //       value: project?.id,
+  //       label: project?.name,
+  //     })
+  //   );
+  // const handleOptionChange = (event: any) => {
+  //   setSelectedOption(event);
+  //   return event;
+  // };
 
-  const handleNewAnnouncementCreated = () => {
-    setNewAnnouncementCreated(!newAnnouncementCreated);
-  };
+  // const handleNewAnnouncementCreated = () => {
+  //   setNewAnnouncementCreated(!newAnnouncementCreated);
+  // };
 
-  const handleSubmit = async (values: any, { resetForm }: any) => {
-    setLoading(true);
-    console.log("values", values);
+  // const handleSubmit = async (values: any, { resetForm }: any) => {
+  //   setLoading(true);
+  //   console.log("values", values);
 
-    const createAnnouncementValues = Object.entries(values)
-      .filter(([key, value]) => value !== "")
-      .reduce((acc, [key, value]) => {
-        return {
-          ...acc,
-          [key]: value,
-        };
-      }, {});
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/announcements`,
-        {
-          method: "POST",
-          body: JSON.stringify(createAnnouncementValues),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Announcement created successfully.";
-        const html = `Announcement created`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        handleNewAnnouncementCreated();
-        setLgShow(false);
-        props.onNewAnnouncementCreated();
-        resetForm(values);
-        setLoading(false);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Announcement creation failed";
+  //   const createAnnouncementValues = Object.entries(values)
+  //     .filter(([key, value]) => value !== "")
+  //     .reduce((acc, [key, value]) => {
+  //       return {
+  //         ...acc,
+  //         [key]: value,
+  //       };
+  //     }, {});
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.REACT_APP_API}/hr/announcements`,
+  //       {
+  //         method: "POST",
+  //         body: JSON.stringify(createAnnouncementValues),
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     setLoading(false);
+  //     if (response.ok) {
+  //       const title = "Announcement created successfully.";
+  //       const html = `Announcement created`;
+  //       const icon = "success";
+  //       fireAlert(title, html, icon);
+  //       handleNewAnnouncementCreated();
+  //       setLgShow(false);
+  //       props.onNewAnnouncementCreated();
+  //       resetForm(values);
+  //       setLoading(false);
+  //     } else {
+  //       throw new Error(data.message || "Something went wrong!");
+  //     }
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     setLoading(false);
+  //     const html = error.message || "Something went wrong!";
+  //     const icon = "error";
+  //     const title = "Announcement creation failed";
+  //     fireAlert(title, html, icon);
+  //   }
+  // };
+
+  const title = "Successful";
+  const html = "Announcement Created!";
+  const icon = "success";
+  const title1 = "Announcement creation failed";
+  const html1 = createmessage;
+  const icon1 = "error";
+
+
+  useEffect(() => {
+    if (createisSuccess) {
       fireAlert(title, html, icon);
+      setInputs({
+        message: "",
+        audience_scope: ""
+      })
+      setLgShow(false)
+
+      dispatch(reset());
+    } else if (createisError) {
+      fireAlert(title1, html1, icon1);
+      dispatch(reset());
     }
+  }, [createisError, createisSuccess, dispatch, html, html1])
+
+  const handleOnChange = (input: any, value: any) => {
+    setInputs((prevState: any) => ({
+      ...prevState,
+      [input]: value,
+    }));
   };
+
+  const handleCreate = (e: any) => {
+    e.preventDefault();
+    // @ts-ignore
+    dispatch(createAnnouncement(inputs));
+  }
+
+
+
   return (
     <div>
       <Button
         variant="contained"
         className="Add-btn"
-        onClick={() => setLgShow(true)}
-      >
+        onClick={() => setLgShow(true)} >
         Create Announcement
       </Button>
 
@@ -154,43 +192,23 @@ const CreateAnnouncementModal = (props: any) => {
           </Button>
         </Modal.Header>
         <Modal.Body>
-          <Formik
-            initialValues={{
-              message: "",
-              audience_scope: "",
-              employee_role: "",
-              team: "",
-              department: "",
-              project: "",
-            }}
-            onSubmit={handleSubmit}
-          >
-            {({ values, handleChange, setFieldValue, submitForm }) => {
-              return (
-                <Form>
-                  <div className="Modal-Body">
-                    <div className="Modal-textarea-middle">
-                      <div className="col">
-                        <div className="form-group">
-                          <TextAreaField
-                            style={{
-                              height: "8rem",
-                              lineHeight: "1",
-                            }}
-                            type="textarea"
-                            label="Enter broadcast message"
-                            name="message"
-                            placeholder="Enter broadcast message"
-                            onChange={(event: any) => {
-                              setFieldValue("message", event?.target.value);
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="modal-input-sub-space">
-                      <div className="col">
-                        <div className="form-group">
+
+          <Form onSubmit={handleCreate}>
+            <div className="Modal-Body">
+              <div className="Modal-textarea-middle">
+                <div className="col">
+                  <div className="form-group">
+                    <textarea rows={6} className='Modal-textarea' placeholder='Enter broadcast message'
+                      value={inputs.message}
+                      onChange={(e) => handleOnChange("message", e.target.value)} />
+                  </div>
+
+
+                </div>
+              </div>
+              <div className="modal-input-sub-space">
+                <div className="col">
+                  {/* <div className="form-group">
                           <CustomSelectField
                             options={announcementOptions}
                             label="Select audience"
@@ -204,10 +222,10 @@ const CreateAnnouncementModal = (props: any) => {
                             }}
                             values={values.audience_scope}
                           />
-                        </div>
-                      </div>
+                        </div> */}
+                </div>
 
-                      {selectedOption === "employee role" && (
+                {/* {selectedOption === "employee role" && (
                         <div className="col">
                           <div className="form-group">
                             <ReactSelectField
@@ -269,23 +287,33 @@ const CreateAnnouncementModal = (props: any) => {
                             />
                           </div>
                         </div>
-                      )}
-                    </div>
+                      )} */}
+                <select id="Modal-textarea-input-sub"
 
-                    <div className="btn-modal-container">
-                      <Button
-                        variant="contained"
-                        className="Add-btn-modal"
-                        type="submit"
-                      >
-                        {loading ? <Spinner animation="border" /> : "Create"}
-                      </Button>
-                    </div>
-                  </div>
-                </Form>
-              );
-            }}
-          </Formik>
+                  value={inputs.audience_scope}
+                  onChange={(e) => handleOnChange("audience_scope", e.target.value)}>
+                  <option>Select audience scope</option>
+                  {announcementOptions?.map((employ: any) => (
+                    <option key={employ} value={employ}>
+                      {employ}
+                    </option>
+                  ))}
+                </select >
+              </div>
+
+              <div className="btn-modal-container" >
+                <Button
+                  variant="contained"
+                  className="Add-btn-modal"
+                  type="submit"
+                  disabled={createisLoading}
+                >
+                  {createisLoading ? <Spinner animation="border" /> : "Create"}
+                </Button>
+              </div>
+            </div>
+          </Form>
+
         </Modal.Body>
       </Modal>
     </div>

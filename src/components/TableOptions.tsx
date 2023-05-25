@@ -90,7 +90,7 @@ const NoRecordFound = ({ colSpan }: any) => (
 // Search
 const MainSearch = ({ placeholder, result, onChange }: any) => {
   return (
-    // <div className='GoSearch-container'>
+
     <div className="search-entries">
       <Search placeHolder={placeholder} value={result} onChange={onChange} />
     </div>

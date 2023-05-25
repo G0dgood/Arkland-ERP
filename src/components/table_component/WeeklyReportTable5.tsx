@@ -1,5 +1,5 @@
 
-import TableLoader from '../TableLoader'
+
 import { NoRecordFound, TableFetch } from '../TableOptions'
 
 const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
@@ -14,7 +14,6 @@ const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
 	return (
 		<div>
 			<div id="table-wrapper">
-				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 				<table>
 					<tr>
 						<th>

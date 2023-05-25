@@ -1,13 +1,9 @@
-import React from "react";
 import { Button } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-
 import InputField from "../../../components/Inputs/InputField";
-import SelectField from "../../../components/Inputs/SelectField";
 import CountrySelectField from "../../../components/Inputs/CountrySelectField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
-import CustomInputField from "../../../components/Inputs/CustomInputField";
 
 const Address = ({
   active,

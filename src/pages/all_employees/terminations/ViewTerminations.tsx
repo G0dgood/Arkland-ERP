@@ -1,23 +1,12 @@
 import React, { CSSProperties } from "react";
-import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { MdOutlineClose } from "react-icons/md";
 import { SyncLoader } from "react-spinners";
-import { Formik, Form } from "formik";
 import { Modal, Spinner } from "react-bootstrap";
-import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
 import projectBack from "../../../assets/vectors/project-back.svg";
-import { useEmployeeById } from "../../../hooks/useEmployees";
-import CreateWarningModal from "../../../components/Modals/CreateWarningModal";
-import { useWarningEmployeeById } from "../../../hooks/useWarning";
-import InputField from "../../../components/Inputs/InputField";
-import TextAreaField from "../../../components/Inputs/TextAreaField";
-import SelectField from "../../../components/Inputs/SelectField";
 import { useTerminationsById } from "../../../hooks/useTerminations";
-import { checkForEmployee } from "../../../utils/checkForName";
-import { useAppSelector } from "../../../hooks/useDispatch";
+
 
 const override: CSSProperties = {
   display: "block",
@@ -39,27 +28,13 @@ const ViewTerminations = () => {
   const [deleteShow, setDeleteShow] = React.useState(false);
   const [showDialog, setShowDialog] = React.useState<any>({});
 
-  // --- Get current state of collapseNav from localStorage --- //
-  const [collapseNav, setCollapseNav] = React.useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
-  React.useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
+
   const handleDelete = () => {
     setShowDialog(true);
     setDeleteShow(true);
   };
   return (
-    <div id="screen-wrapper">
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
+    <div  >
       {isLoading ? (
         <div
           style={{

@@ -1,37 +1,38 @@
-import { useEffect, useState, CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { BsExclamationLg, BsPlusLg } from "react-icons/bs";
 import SyncLoader from "react-spinners/SyncLoader";
 import { ProgressBar, Toast } from "react-bootstrap";
-import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import CreateProjectModal from "../../components/Modals/CreateProjectModal";
-import { useProjects } from "../../hooks/useProjects";
-import { getUserPrivileges } from "../../functions/auth";
+
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { allProject } from "../../features/Project/projectSlice";
 
 const ProjectView = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } =
-    getUserPrivileges();
-  const [showToast, setShowToast] = useState(false);
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
-  const { projects, isLoading, error, message } = useProjects();
+
+  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.project)
+
+
+
 
   useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
+    // @ts-ignore
+    dispatch(allProject());
+  }, [dispatch]);
 
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
+  // const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } = getUserPrivileges();
+
+  // const [data, setShowToast1] = useState<any>([]);
+  // const [isError, setShowToast2] = useState<any>(false);
+  // const [isLoading, setShowToast3] = useState<any>(false);
+
+  const [showToast, setShowToast] = useState<any>(false);
+
+
 
   const isPrime = (num: number) => {
     for (let i = 2; i < num; i++) if (num % i === 0) return false;
@@ -39,12 +40,10 @@ const ProjectView = () => {
   };
 
   return (
-    <div id="screen-wrapper">
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
+    <div  >
       <main>
         <div className="ProjectViewContainer">
-          {error && (
+          {isError && (
             <Toast
               onClose={() => setShowToast(false)}
               show={true}
@@ -66,16 +65,16 @@ const ProjectView = () => {
             <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
               <h5>Projects</h5>
               <div className="Request-btn-modal-container">
-                {(isHRHead ||
+                {/* {(isHRHead ||
                   isSuperAdmin ||
                   isAdmin ||
                   isHrAdmin ||
                   isTeamLead) && (
-                  <div className="Request-btn">
-                    <CreateProjectModal />
-                  </div>
-                )}
-                {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                    <div className="Request-btn">
+                      <CreateProjectModal />
+                    </div>
+                  )} */}
+                {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                   <div>
                     <Button
                       className="subone-header-flex-btn"
@@ -89,7 +88,7 @@ const ProjectView = () => {
                       Request Worker List
                     </Button>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
             <div className="subone-col-2">
@@ -116,7 +115,7 @@ const ProjectView = () => {
               <div className="isLoading-container">
                 <SyncLoader color={"#990000"} loading={isLoading} />
               </div>
-            ) : projects?.length === 0 ? (
+            ) : data?.length === 0 ? (
               <div className="table-loader-announcement">
                 <div>
                   {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -127,7 +126,7 @@ const ProjectView = () => {
             ) : (
               <>
                 <div className="subone-col-3">
-                  {projects?.map((item: any, i: any) => (
+                  {data?.map((item: any, i: any) => (
                     <div
                       className="ProjectView-card"
                       key={i}
@@ -139,8 +138,8 @@ const ProjectView = () => {
                             i % 2 === 0
                               ? `iDotsRounded1`
                               : isPrime(parseInt(i, 10))
-                              ? "iDotsRounded2"
-                              : "iDotsRounded3"
+                                ? "iDotsRounded2"
+                                : "iDotsRounded3"
                           }
                         >
                           {item.name}
@@ -217,7 +216,7 @@ const ProjectView = () => {
                     <div className="projects-total-container">
                       <span className="projects-total1-span"></span>
                       <span className="projects-total1-span1">
-                        {projects.length}
+                        {data?.length}
                       </span>
                     </div>
                   </div>

@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
 import { getRequestOptions } from "../../utils/auth/header";
 import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import { NoRecordFound, TableFetch } from "../../components/TableOptions";
+import Sidebar from "../../components/SidebarAndDropdown/Sidebar";
 
 const DepartmentsView = () => {
   const navigate = useNavigate();

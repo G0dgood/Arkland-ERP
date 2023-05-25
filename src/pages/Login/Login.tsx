@@ -18,12 +18,10 @@ import fifth from "../../assets/images/PHOENIX.jpg";
 import logo from "../../assets/images/ASLLOGO.svg";
 import InputField from "../../components/Inputs/InputField";
 import storage from "../../utils/storage";
-// import { useNavigate } from "react-router-dom";
-// import { useAppDispatch } from "../../hooks/useDispatch";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  // const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isLoading, setLoading] = React.useState(false);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [error, setError] = useState<any>();
@@ -68,11 +66,11 @@ const Login = () => {
         // // store encryption key in local storage
         // localStorage.setItem("encryptionKey", key.toString());
 
+        // navigate("/home");
+        window.location.replace("/home");
         // set token in cookie
         Cookies.set("token", data.token);
         storage.set("user", JSON.stringify({ data }));
-        // navigate("/home");
-        window.location.replace("/home");
       })
       .catch((error) => {
         setLoading(false);

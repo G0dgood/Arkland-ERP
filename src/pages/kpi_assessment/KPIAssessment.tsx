@@ -6,8 +6,17 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import storage from "../../utils/storage";
 import { Spinner } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { createAssessment } from "../../features/KPIAssessment/assessmentSlice";
+import { allEmployee } from "../../features/Employee/employeeSlice";
 
 const KPIAssessment = ({ setIsCheck }: any) => {
+
+  const dispatch = useAppDispatch();
+  // const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.assessment)
+
+
+
   const navigate = useNavigate();
   const token = Cookies.get("token");
   // @ts-ignore 
@@ -161,17 +170,20 @@ const KPIAssessment = ({ setIsCheck }: any) => {
     if (isSuccess) {
       fireAlert(title, html, icon);
       setTimeout(() => {
-        setisSuccess(false);
-      }, 5000);
+        navigate("/kpicontainer");
+      }, 2000);
     } else if (isError) {
       fireAlert(title1, html1, icon1);
       setTimeout(() => {
         setisError(false);
       }, 1000);
     }
-  }, [html, title, icon, isSuccess, isError, html1, navigate]);
+  }, [html, title, icon, html1, navigate, isSuccess, isError]);
+
 
   const handelkpi = (e: any) => {
+    // @ts-ignore
+    // dispatch(createAssessment(inputs));
     e.preventDefault();
     setisLoading(true);
     fetch(`${process.env.REACT_APP_API}/hr/appraisals`, {
@@ -199,23 +211,19 @@ const KPIAssessment = ({ setIsCheck }: any) => {
         setisLoading(false);
       });
   };
+  const { data } = useAppSelector((state: any) => state.employee)
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allEmployee());
+  }, [dispatch]);
 
 
 
   React.useEffect(() => {
-    // setisLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API}/hr/employees`)
-      .then((res: AxiosResponse) => {
-        setEmployees(res?.data?.data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
-        // console.log('res', res?.data?.data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
-        // console.log('res?.data?.data', res?.data?.data)
-      })
-      .catch((err) => {
-        console.log(err);
-        // setisLoading(false);
-      });
-  }, []);
+
+    setEmployees(data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
+
+  }, [data]);
 
   const year = new Date().getFullYear().toString();
 
@@ -238,13 +246,14 @@ const KPIAssessment = ({ setIsCheck }: any) => {
         setisSuccess(false);
         setIsCheck(false)
       }, 2000);
-    } else if (message) {
+    } else if (isError) {
       fireAlert(title1, html1, icon1);
-      setTimeout(() => {
-        setMessage('');
-      }, 5000);
+      // setTimeout(() => {
+      //   setisError(false);
+      // }, 1000);
     }
-  }, [html, title, icon, isSuccess, message, html1, title1, setIsCheck]);
+
+  }, [html, title, icon, html1, title1, setIsCheck, isSuccess, isError]);
 
   return (
     <div>

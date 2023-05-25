@@ -10,6 +10,7 @@ import axios, { AxiosResponse } from 'axios';
 
 
 const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
+
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
 		name: "",

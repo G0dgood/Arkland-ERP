@@ -1,8 +1,8 @@
 @use "../abstracts/colors" as c;
 
-.container {
-  display: flex;
-}
+// .container {
+//   display: flex;
+// }
 input[type="checkbox"] {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -195,10 +195,9 @@ input[type="checkbox"] {
   margin-top: 2.5rem;
   padding-left: 5px;
   box-sizing: border-box !important;
-  flex-wrap: wrap;
-
+  flex-wrap: wrap; 
   height: 70%;
-
+overflow-y: scroll;
   &-header {
     font-style: normal;
     font-weight: 700;
@@ -259,7 +258,7 @@ input[type="checkbox"] {
 .admin-main-div-col-2-sub {
   margin-top: 2rem;
   width: 100%;
-  height: 52%;
+  // height: 52%;
   background-color: c.color(white);
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
@@ -289,6 +288,7 @@ input[type="checkbox"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 .Announcement-container {
@@ -365,7 +365,19 @@ input[type="checkbox"] {
 }
 
 .FiTrash2 {
-  padding-right: 0.7rem;
+  // padding-right: 0.7rem;
+  color: #686868;
+  display: flex; 
+  justify-content: center;
+  align-self: center;
+  align-items: center; 
+}
+.FiTrash2 :hover{  
+  color:c.color(primary-color);
+  display: flex; 
+  justify-content: center;
+  align-self: center;
+  align-items: center; 
 }
 
 @media only screen and (max-width: 720px) {
@@ -402,11 +414,15 @@ input[type="checkbox"] {
     overflow-x: scroll !important;
     white-space: nowrap !important;
     transform: scale(0.9) !important;
+    overflow-x: scroll;
   }
 }
 
  
 @media only screen and (max-width: 1200px) {
+  .Announcement-sub-1 { 
+    overflow-x: scroll;
+  }
    .Announcement-sub-2 {
   overflow-y: scroll !important; 
    max-height: 300px   !important;
@@ -443,7 +459,7 @@ input[type="checkbox"] {
 @media only screen and (max-width: 1400px) {
   .Announcement-sub-2  {
  overflow-y: scroll !important; 
-  max-height: 400px !important ;
+  max-height: 500px !important ;
 }
   .main-min-text {
     overflow-y: scroll !important;
@@ -881,7 +897,14 @@ input[type="checkbox"] {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 2rem;
+  @media only screen and (max-width: 1200px) {
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+  }
 }
+
+
+
 .AdminDashboard-first-3-card-color-1 {
   width: 100%;
   height: 140px;
@@ -961,6 +984,13 @@ input[type="checkbox"] {
   grid-template-columns: 2fr 1fr;
   margin-top: 2rem;
   column-gap: 2rem;
+   @media only screen and (max-width: 1624px) { 
+    grid-template-columns: 1fr;
+     gap: 1rem;
+  }
+  // .bar-chat-first{
+  //   display: none !important;
+  // }
 }
 
  
@@ -1001,11 +1031,7 @@ cursor: pointer;
   font-weight: 500;
 }
 
-.AdminDashboard-first-3-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 2rem;
-}
+ 
 .AdminDashboard-first-3-card-color-1 {
   width: 100%;
   height: 140px;
@@ -1092,6 +1118,138 @@ cursor: pointer;
   padding: 1.5rem;
 }
 
+
+
+.panel {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 0 !important;
+   padding-bottom: 20px;
+}
+
+.panel-heading {
+  background: #005b90 !important;;
+  border-radius: 0;
+  padding: 15px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+   
+}
+
+.panel-heading .panel-title {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  color: #dce0f3;
+
+}
+
+/* #areaChart path[Attributes Style] {
+  fill: #39c7aa;
+  stroke: none;
+  fill-opacity: 1;
+} */
+
+
+.container-panel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem ;
+}
+
+@media only screen and (max-width: 1500px) {
+	.container-panel {
+    width: 100%;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+}
+@media only screen and (max-width: 1300px) {
+	.container-panel {
+    width: 100%;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr  ;
+}
+}
+@media only screen and (max-width: 980px) {
+	.container-panel {
+    width: 100%;
+display: grid;
+grid-template-columns: 1fr 1fr   ;
+margin: auto;
+}
+}
+@media only screen and (max-width: 660px) {
+	.container-panel {
+    width: 100%;
+display: grid;
+grid-template-columns: 1fr;
+margin: auto;
+}
+}
+
+.panel-panel {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  width: 300px;
+  height: 160px;
+  margin: 10px;
+  font-size: 32px;
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+.panel-panel a {
+  position: relative;
+  display: block;
+  padding: 12px 25px 25px 25px;
+  color: #fff;
+  text-decoration: none;
+  z-index: 2;
+}
+.panel-panel a span {
+  display: block;
+  /* font-size: 3rem; */
+  color:   #124383  !important; 
+  font-weight: 700;
+  line-height: 96px;
+  font-family: "Poppins" !important;
+}
+/* .panel-panel a span p{ 
+  font-family: "Poppins" !important;
+} */
+.panel-panel:after {
+  position: absolute;
+  font-family: FontAwesome;
+  color: #000000;
+  z-index: 1;
+  transition: all 0.5s;
+  line-height: normal;
+}
+.panel-panel.post {
+  background-color: #b8aa0e;
+}
+.panel-panel.post:after { 
+  font-size: 200px;
+  color: #a5980d;
+  top: 45px;
+  right: 60px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+#rad-badge-success-small{
+  display: flex;
+  justify-content: space-between;
+}
+/* .panel-panel.post:hover:after {
+  top: 8px;
+} */
+.panel-panel.comment {
+  color:   #124383 ; 
+  font-family: "Poppins" !important;
+}
  
  
  

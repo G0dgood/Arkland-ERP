@@ -4,7 +4,7 @@ import { Nav } from "react-bootstrap";
 import { BsBriefcase, BsShield } from "react-icons/bs";
 import { BiSupport } from "react-icons/bi";
 import { AiOutlineBank } from "react-icons/ai";
-import { FiPieChart, FiUser, FiFolder, FiLogOut } from "react-icons/fi";
+import { FiPieChart, FiUser, FiFolder } from "react-icons/fi";
 import { TfiLayoutGrid2 } from "react-icons/tfi";
 import { GoFile } from "react-icons/go";
 import { MdOutlineAssessment } from "react-icons/md";
@@ -208,7 +208,7 @@ const Sidebar = ({ collapseNav }: any) => {
             onMouseLeave={() => setallEmployees(false)}
           >
             <FiUser size={24} />
-            <span className="nav-name">All Employees</span>
+            <span className="nav-name"> Employees</span>
             {allemployees && collapseNav && (
               <div className="sidenav-bubble">
                 <p>All Employees</p>

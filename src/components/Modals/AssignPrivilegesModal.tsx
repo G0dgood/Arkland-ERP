@@ -109,7 +109,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 			});
 	}, [])
 
-	console.log('', inputs)
+
 
 	const Role: any = [
 		"employee",

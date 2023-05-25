@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 
 
 const KPIInfoDetails = ({ data, setHodscore }: any) => {
@@ -127,8 +127,6 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 
 	return (
 		<form>
-
-
 			<div className="evaluation-area_cont">
 				<div>
 					<div className="added-fields_cont">

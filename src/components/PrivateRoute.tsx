@@ -1,22 +1,36 @@
-import { ReactElement } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+// import { ReactElement } from "react";
+// import { Navigate, Outlet } from "react-router-dom";
 
-interface PrivateRouteProps {
-  isAllowed?: boolean;
-  redirectPath?: string;
-  children?: ReactElement;
+// interface PrivateRouteProps {
+//   isAllowed?: boolean;
+//   redirectPath?: string;
+//   children?: ReactElement;
+// }
+
+// const PrivateRoute = ({
+//   isAllowed,
+//   redirectPath = "/",
+//   children,
+// }: PrivateRouteProps) => {
+//   if (!isAllowed) {
+//     return <Navigate to={redirectPath} replace />;
+//   }
+
+//   return children ? children : <Outlet />;
+// };
+
+// export default PrivateRoute;
+
+
+import React from 'react'
+
+const PrivateRoute = () => {
+  return (
+    <div>
+
+    </div>
+  )
 }
 
-const PrivateRoute = ({
-  isAllowed,
-  redirectPath = "/",
-  children,
-}: PrivateRouteProps) => {
-  if (!isAllowed) {
-    return <Navigate to={redirectPath} replace />;
-  }
+export default PrivateRoute
 
-  return children ? children : <Outlet />;
-};
-
-export default PrivateRoute;

@@ -5,7 +5,7 @@ import { FiTrash2 } from 'react-icons/fi'
 
 const Drawer = ({ showDrawer }: any) => {
 
-	console.log('true', showDrawer)
+
 
 
 	return (

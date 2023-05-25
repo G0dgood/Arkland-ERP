@@ -15,6 +15,7 @@ const KPINavTab = ({ isCheck, setIsCheck, infodata, text1, text2 }: any) => {
 		}
 	}
 
+
 	return (
 		<div id="containerNav">
 			<div id="tabs">

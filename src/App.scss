@@ -21,3 +21,33 @@
 html {
   scroll-behavior: smooth;
 }
+
+
+$sidebar-bg-color: #fff;
+$submenu-bg-color: rgba(255, 255, 255, 0.05);
+$submenu-bg-color-collapsed: rgba(29, 29, 29, 0.95);
+$sidebar-color: rgb(26, 26, 26);
+$highlight-color: #d8d8d8;
+$icon-bg-color: rgba(255, 255, 255, 0.05);
+$icon-size: 35px;
+
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+
+.pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-content {
+    flex-grow: 1;
+    padding-top: 2rem !important;
+    border-right: 1px solid #e8e8e8 !important;
+}
+
+.Side__Content:hover {
+    
+   background-color: #c99b9b;
+    color: #fff !important;
+    
+  }
+.active{
+  //  border-left: 7px solid #005b90  !important; 
+   color: #fff !important;
+   background-color: #990000 !important;
+  }
+ 

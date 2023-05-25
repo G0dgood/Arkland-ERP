@@ -1,9 +1,7 @@
 import { Button } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import TableLoader from "../../../components/TableLoader";
 import { NoRecordFound, TableFetch } from "../../../components/TableOptions";
-import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
 import { useAttendance } from "../../../hooks/useAttendance";
 import { checkForName } from "../../../utils/checkForName";
 import { useAppSelector } from "../../../hooks/useDispatch";
@@ -31,19 +29,7 @@ const AttendanceTable = () => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
 
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
   const departments: any = useAppSelector(
     (state) => state?.department?.department
   );
@@ -58,124 +44,120 @@ const AttendanceTable = () => {
   ];
 
   return (
-    <div id="screen-wrapper">
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
-      <main>
-        <div className="SiteWorkermaindiv">
-          <div className="SiteWorkermaindivsub">
-            <span className="SupportmainTitleh3">EMPLOYEE ATTENDANCE</span>
-          </div>
-          <div className="entries-perpage">
-            {/* Date range picker */}
-            <form
-              style={{
-                display: "flex",
-                gap: "20px",
-              }}
-            >
-              <div className="input">
-                <label htmlFor="startDate" className="input__label">
-                  Start Date
-                </label>
-                <input
-                  className="input__field"
-                  style={{
-                    lineHeight: "1",
-                  }}
-                  type="date"
-                  id="startDate"
-                  name="startDate"
-                  value={startDate}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input">
-                <label htmlFor="endDate" className="input__label">
-                  End Date
-                </label>
-                <input
-                  className="input__field"
-                  style={{
-                    lineHeight: "1",
-                  }}
-                  type="date"
-                  id="endDate"
-                  name="endDate"
-                  value={endDate}
-                  onChange={handleChange}
-                />
-              </div>
-            </form>
-          </div>
+    <div  >
+      <div className="SiteWorkermaindiv">
+        <div className="SiteWorkermaindivsub">
+          <span className="SupportmainTitleh3">EMPLOYEE ATTENDANCE</span>
         </div>
-        <section className="md-ui component-data-table">
-          {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-          <div className="main-table-wrapper">
-            <table className="main-table-content">
-              <thead className="data-table-header">
-                <tr className="data-table-row">
-                  {header.map((i, index) => {
-                    return (
-                      <>
-                        <td
-                          className="table-datacell datatype-numeric"
-                          key={index}
-                        >
-                          {i.title}
-                        </td>
-                      </>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody className="data-table-content">
-                {isLoading ? (
-                  <TableFetch colSpan={8} />
-                ) : attenances?.length === 0 || attenances == null ? (
-                  <NoRecordFound colSpan={8} />
-                ) : (
-                  attenances?.map((item: any, i: any) => (
-                    <tr className="data-table-row" key={i}>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.employee_name}
+        <div className="entries-perpage">
+          {/* Date range picker */}
+          <form
+            style={{
+              display: "flex",
+              gap: "20px",
+            }}
+          >
+            <div className="input">
+              <label htmlFor="startDate" className="input__label">
+                Start Date
+              </label>
+              <input
+                className="input__field"
+                style={{
+                  lineHeight: "1",
+                }}
+                type="date"
+                id="startDate"
+                name="startDate"
+                value={startDate}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input">
+              <label htmlFor="endDate" className="input__label">
+                End Date
+              </label>
+              <input
+                className="input__field"
+                style={{
+                  lineHeight: "1",
+                }}
+                type="date"
+                id="endDate"
+                name="endDate"
+                value={endDate}
+                onChange={handleChange}
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+      <section className="md-ui component-data-table">
+        {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+        <div className="main-table-wrapper">
+          <table className="main-table-content">
+            <thead className="data-table-header">
+              <tr className="data-table-row">
+                {header.map((i, index) => {
+                  return (
+                    <>
+                      <td
+                        className="table-datacell datatype-numeric"
+                        key={index}
+                      >
+                        {i.title}
                       </td>
-                      <td className="table-datacell datatype-numeric">
-                        {checkForName(item.department, departments)}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {new Date(item?.time_in).toLocaleString()}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        <Button
-                          className={
-                            item?.ip_checked === true
-                              ? "table-link"
-                              : "table-link-active"
-                          }
-                        >
-                          {item?.ip_checked === true ? "Yes" : "No"}
-                        </Button>
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        <Button
-                          className={
-                            item?.is_hr_assisted === true
-                              ? "table-link"
-                              : "table-link-active"
-                          }
-                        >
-                          {item?.is_hr_assisted === true ? "Yes" : "No"}
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </main>
+                    </>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody className="data-table-content">
+              {isLoading ? (
+                <TableFetch colSpan={8} />
+              ) : attenances?.length === 0 || attenances == null ? (
+                <NoRecordFound colSpan={8} />
+              ) : (
+                attenances?.map((item: any, i: any) => (
+                  <tr className="data-table-row" key={i}>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.employee_name}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {checkForName(item.department, departments)}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {new Date(item?.time_in).toLocaleString()}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      <Button
+                        className={
+                          item?.ip_checked === true
+                            ? "table-link"
+                            : "table-link-active"
+                        }
+                      >
+                        {item?.ip_checked === true ? "Yes" : "No"}
+                      </Button>
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      <Button
+                        className={
+                          item?.is_hr_assisted === true
+                            ? "table-link"
+                            : "table-link-active"
+                        }
+                      >
+                        {item?.is_hr_assisted === true ? "Yes" : "No"}
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
       {/* <footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}

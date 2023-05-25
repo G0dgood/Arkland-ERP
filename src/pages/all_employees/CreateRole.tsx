@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions'
 import { BsCheckCircle } from 'react-icons/bs'
 import { Button } from '@material-ui/core'
-import { FaArrowLeft, FaDownload } from 'react-icons/fa'
-import Header from '../../components/Header'
-import Sidebar from '../../components/Sidebar'
 import Pagination from '../../components/Pagination'
-import { GoPlus } from 'react-icons/go'
 import { ImBin } from 'react-icons/im'
-import { NavLink, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import moment from 'moment'
 import TableLoader from '../../components/TableLoader'
@@ -16,12 +11,11 @@ import DeleteModals from '../../components/DeleteModals'
 import axios, { AxiosResponse } from 'axios'
 import CreateRoleModal from '../../components/Modals/CreateRoleModal'
 import { fireAlert } from '../../utils/Alert'
-import Userprivileges from '../../components/Userprivileges'
 
 
 const CreateRole = ({ setShowTitle }: any) => {
 	const token = Cookies.get("token");
-	const navigate = useNavigate();
+
 	const [data, setData] = useState([]);
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
@@ -30,12 +24,10 @@ const CreateRole = ({ setShowTitle }: any) => {
 	const [isSuccess, setisSuccess] = useState(false);
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
-	const [deleteStatus, setDeleteStatus] = useState(false)
 	const [showdelete, setShowDelete] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
 	const [rolesid, setRolesid] = useState(0);
 	const [reload, setReload] = useState(false);
-	const [showprivileges, setShowprivileges] = useState(false)
 
 	useEffect(() => {
 		setisLoading(true);
@@ -131,16 +123,11 @@ const CreateRole = ({ setShowTitle }: any) => {
 
 
 
-
 	return (
-		<div >
+		<div  >
 			<div className='SiteWorkermaindiv'>
 				<div className='SiteWorkermaindivsub'>
 					<CreateRoleModal setReload={setReload} />
-					<span className='permission-bin-container'>
-						<Button className="table-link-permission" onClick={() => { setShowprivileges(true); setShowTitle(true) }}>
-							Privileges </Button>
-					</span>
 				</div>
 				<div>
 					<EntriesPerPage
@@ -194,7 +181,6 @@ const CreateRole = ({ setShowTitle }: any) => {
 				</div>
 				<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} handleDelete={handleDelete} isLoading1={isLoading1} />
 			</section>
-			<Userprivileges showprivileges={showprivileges} setShowprivileges={setShowprivileges} setShowTitle={setShowTitle} />
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}

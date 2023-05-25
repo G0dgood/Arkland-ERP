@@ -2,9 +2,9 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../components/Header';
-import Sidebar from '../../../components/Sidebar';
 import { FaArrowLeft } from 'react-icons/fa';
 import { MainSearch } from '../../../components/TableOptions';
+import Sidebar from '../../../components/SidebarAndDropdown/Sidebar';
 
 const Engineering = () => {
 

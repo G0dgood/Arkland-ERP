@@ -1,28 +1,36 @@
-import React, { useEffect, useState, CSSProperties } from "react";
-import { BiDotsHorizontalRounded, BiEditAlt, BiTime } from "react-icons/bi";
+import React, { useEffect, useState } from "react";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import SyncLoader from "react-spinners/SyncLoader";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
-import { getRequestOptions } from "../../utils/auth/header";
 import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { useDepartments } from "../../hooks/useDepartments";
-import { MdOutlineMapsHomeWork } from "react-icons/md";
+import Sidebar from '../../components/SidebarAndDropdown/Sidebar';
 import { getUserPrivileges } from "../../functions/auth";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { allDepartments } from "../../features/Department/departmentSlice";
 
 const DepartmentsView = () => {
+  const dispatch = useAppDispatch();
+  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.department)
+
+
+
+
   const navigate = useNavigate();
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
-  const [newDepartmentCreated, setNewDepartmentCreated] = React.useState(
-    {} as any
-  );
+  const [newDepartmentCreated, setNewDepartmentCreated] = React.useState({} as any);
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
   });
-  const { departments, isLoading, error, message } =
-    useDepartments(newDepartmentCreated);
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allDepartments());
+  }, [dispatch]);
+  // const { departments, isLoading, error, message } =
+  //   useDepartments(newDepartmentCreated);
 
   const handleNewDepartmentCreated = () => {
     setNewDepartmentCreated(!newDepartmentCreated);
@@ -35,26 +43,37 @@ const DepartmentsView = () => {
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
-  const randColor = () => {
-    const realColor =
-      "#" +
-      Math.floor(Math.random() * 16777215)
-        .toString(16)
-        .padStart(6, "0")
-        .toUpperCase();
-    console.log("realColor", realColor);
-    return realColor;
-  };
+
+  // const randColor = () => {
+  //   const realColor =
+  //     "#" +
+  //     Math.floor(Math.random() * 16777215)
+  //       .toString(16)
+  //       .padStart(6, "0")
+  //       .toUpperCase();
+  //   console.log("realColor", realColor);
+  //   return realColor;
+  // };
 
   const isPrime = (num: number) => {
     for (let i = 2; i < num; i++) if (num % i === 0) return false;
     return num > 1;
   };
 
+  const [subnav, setSubnav] = useState(() => {
+    // @ts-ignore
+    return JSON.parse(localStorage.getItem("Provider")) || false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("Provider", JSON.stringify(subnav));
+  }, [subnav]);
+
+
   return (
     <div id="screen-wrapper">
       <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
+      <Sidebar collapseNav={collapseNav} setSubnav={setSubnav} subnav={subnav} />
       <main>
         <div className="ProjectViewContainer">
           <div className="ProjectViewContainer-subone">
@@ -74,7 +93,7 @@ const DepartmentsView = () => {
               <div className="isLoading-container">
                 <SyncLoader color={"#990000"} loading={isLoading} />
               </div>
-            ) : departments?.length === 0 || departments?.length === undefined ? (
+            ) : data?.length === 0 || data?.length === undefined ? (
               <div className="table-loader-announcement">
                 <div>
                   {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -84,7 +103,7 @@ const DepartmentsView = () => {
               </div>
             ) : (
               <div className="subone-col-3">
-                {departments?.map((item: any, i: any) => (
+                {data?.map((item: any, i: any) => (
                   <div
                     className="ProjectView-card"
                     key={i}

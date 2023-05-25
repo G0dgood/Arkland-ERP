@@ -1,6 +1,6 @@
 import Schedule from "./Schedule";
 import AdminAnnouncement from "./AdminAnnouncement";
-import { useAppSelector } from "../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { RiUser6Fill } from "react-icons/ri";
 import { BiBuildingHouse } from "react-icons/bi";
 import { GiStahlhelm } from "react-icons/gi";
@@ -9,12 +9,23 @@ import Barchat from "../../components/AdminDashboardChat/Barchat";
 import { MdOpenInFull } from "react-icons/md";
 // import Tooltip from 'react-bootstrap/Tooltip';
 import FullBarChart from "../../components/AdminDashboardChat/FullBarChart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { allEmployee } from "../../features/Employee/employeeSlice";
+import { allProject } from "../../features/Project/projectSlice";
+import { allDepartments } from "../../features/Department/departmentSlice";
 
 const AdminDashboard = () => {
-  const employees = useAppSelector((state) => state.employees.employees);
-  const departments = useAppSelector((state) => state.department.department);
-  const projects = useAppSelector((state) => state.projects.projects);
+  const dispatch = useAppDispatch();
+  const { data: employees } = useAppSelector((state: any) => state.employee)
+  const { data: departments } = useAppSelector((state: any) => state.department)
+  const { data: projects } = useAppSelector((state: any) => state.project)
+
+
+
+
+  // const employees = useAppSelector((state) => state.employees.employees);
+  // const departments = useAppSelector((state) => state.department.department);
+  // const projects = useAppSelector((state) => state.projects.projects);
 
   const [show, setShow] = useState<any>(false);
   const [fullscreen, setFullscreen] = useState<any>(false);
@@ -23,6 +34,23 @@ const AdminDashboard = () => {
     setFullscreen(true);
     setShow(true);
   }
+
+
+  useEffect(() => {
+    if (!departments) {
+      // @ts-ignore
+      dispatch(allDepartments());
+    }
+    if (!employees) {
+      // @ts-ignore
+      dispatch(allEmployee());
+    }
+    if (!projects) {
+      // @ts-ignore
+      dispatch(allProject());
+    }
+
+  }, [departments, dispatch, employees, projects]);
 
 
   return (
@@ -57,24 +85,59 @@ const AdminDashboard = () => {
             </p>
           </div>
         </div>
-        <div className="Average-container">
-          <div className="Average-container-card">
+        {/* <div className="rad-body-wrapper"> */}
+        {/* <div style={{ width: "52vw" }}>
+          <div className="row">
+            <div className="col-lg-8 col-md-12 col-xs-12">
+              <div className="panel panel-default">
+                {/* <div className="panel-heading">
+                  <h3 className="panel-title">Line Chart</h3>
+                </div> */}
+        {/* <div className="panel-body">
+                  <div id="lineChart" className="rad-chart">
+                    <MdOpenInFull className="barchat-OpenInFull" onClick={handleShow} />
+                    <Barchat departments={departments} employees={employees} />
+                    <FullBarChart departments={departments} employees={employees} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-6 col-xs-12">
+              <div className="panel panel-default"> */}
+        {/* <div className="panel-heading">
+                  <h3 className="panel-title">Area Chart</h3>
+                </div> */}
+        {/* <div className="panel-body">
+                  <div id="areaChart" className="rad-chart">
+                    <DonutChat employees={employees} />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div> */}
+        {/* </div> */}
+        <div className="row" >
+          <div className="Average-container-card" style={{ width: "34vw", margin: "1rem" }} >
 
             <MdOpenInFull className="barchat-OpenInFull" onClick={handleShow} />
-            <Barchat departments={departments} employees={employees} />
-            <FullBarChart departments={departments} employees={employees} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
+            <Barchat departments={!departments?.length ? [] : departments} employees={!employees?.length ? [] : employees} />
+            <FullBarChart departments={!departments?.length ? [] : departments} employees={!employees?.length ? [] : employees} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
           </div>
-          <div className="Average-container-card">
+          <div className="Average-container-card" style={{ width: "15vw", margin: "1rem" }}>
 
-            <DonutChat employees={employees} />
+            <DonutChat employees={!employees?.length ? 0 : employees} />
           </div>
         </div>
-        <AdminAnnouncement />
+        {/* <AdminAnnouncement /> */}
         {/* <Announcement /> */}
       </div>
 
       {/* Todos start */}
-      <Schedule />
+      {/* <Schedule /> */}
       {/* Todos end */}
 
     </div>

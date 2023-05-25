@@ -49,16 +49,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
     }
   };
 
-  // function checkNameOfRole(id: any): any {
-  //   let name = [] as any;
-  //   roles &&
-  //     roles?.forEach((role: any) => {
-  //       if (id === role?.id) {
-  //         name = role?.name;
-  //       }
-  //     });
-  //   return name;
-  // }
+
   function checkDepartment(id: any): any {
     let name = [] as any;
     departments &&

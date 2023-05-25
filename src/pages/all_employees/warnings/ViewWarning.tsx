@@ -7,7 +7,7 @@ import { SyncLoader } from "react-spinners";
 import { Formik, Form } from "formik";
 import { Modal, Spinner } from "react-bootstrap";
 import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
+
 import projectBack from "../../../assets/vectors/project-back.svg";
 import { useEmployeeById } from "../../../hooks/useEmployees";
 import CreateWarningModal from "../../../components/Modals/CreateWarningModal";
@@ -17,6 +17,7 @@ import TextAreaField from "../../../components/Inputs/TextAreaField";
 import SelectField from "../../../components/Inputs/SelectField";
 import { checkForEmployee } from "../../../utils/checkForName";
 import { useAppSelector } from "../../../hooks/useDispatch";
+import Sidebar from "../../../components/SidebarAndDropdown/Sidebar";
 
 const override: CSSProperties = {
   display: "block",

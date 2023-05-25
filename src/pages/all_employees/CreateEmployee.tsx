@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { number } from "yup";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import AddEmployeeNav from "./AddEmployeeNav";
 import AddEmployeeTitle from "./AddEmployeeTitle";
 import Address from "./employeeInputs/Address";
@@ -77,18 +74,7 @@ const CreateEmployee = () => {
   useEffect(() => {
     setActive(active);
   }, [active]);
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
+
 
   const submitMyFormRef: any = React.useRef(null);
 
@@ -131,9 +117,7 @@ const CreateEmployee = () => {
       <Helmet>
         <title>Create employee | Arkland ERP</title>
       </Helmet>
-      <div id="screen-wrapper">
-        <Header toggleSideNav={toggleSideNav} />
-        <Sidebar collapseNav={collapseNav} />
+      <div  >
         <main>
           <div className="addemployeecontainer">
             <AddEmployeeTitle
@@ -189,8 +173,8 @@ const CreateEmployee = () => {
                 employee={employee}
                 departments={departments}
                 roles={roles}
-                // setActive={setActive}
-                // bindSubmitForm={bindSubmitForm}
+              // setActive={setActive}
+              // bindSubmitForm={bindSubmitForm}
               />
             </div>
           </div>

@@ -5,33 +5,27 @@ import { useNavigate } from "react-router-dom";
 import { Toast } from "react-bootstrap";
 import { BsCheckCircle, BsClock, BsExclamationLg } from "react-icons/bs";
 import { SlClose } from "react-icons/sl";
-import axios, { AxiosResponse } from "axios";
 import {
   EntriesPerPage,
   MainSearch,
   NoRecordFound,
   TableFetch,
 } from "../../../components/TableOptions";
-import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
 import Pagination from "../../../components/Pagination";
-import CreateWarningModal from "../../../components/Modals/CreateWarningModal";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useDispatch";
-import { checkForEmployee, checkForName } from "../../../utils/checkForName";
-import { getEmployees } from "../../../store/reducers/employees";
+
 import { getRequestOptions } from "../../../utils/auth/header";
 import TableLoader from "../../../components/TableLoader";
 
 const TerminationList = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const employees: any = useAppSelector((state) => state.employees.employees);
+
   const [terminations, setTerminations] = useState([] as any);
   const [data, setData] = useState([]);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [isLoading, setisLoading] = useState(false);
-  const [error, setError] = useState<any>();
+
   const [message, setMessage] = useState("");
   const [newWarningCreated, setNewWarningCreated] = React.useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -53,11 +47,10 @@ const TerminationList = () => {
         }
         setTerminations([...data.data]);
         setisLoading(false);
-        setError(false);
         setMessage("");
       } catch (error: any) {
         setisLoading(false);
-        setError(true);
+        setShowToast(true);
         setMessage(error.message || "Something went wrong");
         setTimeout(() => {
           fetchData();
@@ -66,31 +59,17 @@ const TerminationList = () => {
     };
     fetchData();
   }, [newWarningCreated]);
-  const handleNewWarningCreated = () => {
-    setNewWarningCreated(!newWarningCreated);
-  };
+
 
   const header = [
-    { title: "EMPLOYEE", prop: "employee" },
+    { title: "EMPLOYEE NAME", prop: "employee" },
     { title: "REASON", prop: "reason" },
     { title: "DESCRIPTION", prop: "description" },
     { title: "STATUS", prop: "status" },
     { title: "CREATED BY", prop: "created_by" },
   ];
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
 
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -114,8 +93,8 @@ const TerminationList = () => {
   const [displayData, setDisplayData] = useState([]);
 
   return (
-    <div id="screen-wrapper">
-      {error && (
+    <div >
+      {showToast && (
         <Toast
           onClose={() => setShowToast(false)}
           show={true}
@@ -133,108 +112,104 @@ const TerminationList = () => {
           </Toast.Body>
         </Toast>
       )}
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
-      <main>
-        <div className="SiteWorkermaindiv">
-          <div className="SiteWorkermaindivsub">
-            <Button
-              variant="contained"
-              className="back-btn-icon"
-              id="Add-btn-sub"
-              onClick={() => navigate("/employeecontainer")}
-            >
-              <FaArrowLeft size={25} />
-            </Button>
-            <span className="SupportmainTitleh3">TERMINATIONS</span>
-          </div>
-          <div>
-            <EntriesPerPage
-              data={data}
-              entriesPerPage={entriesPerPage}
-              setEntriesPerPage={setEntriesPerPage}
-            />
-          </div>
-          <div>
-            <MainSearch placeholder={"Search...          terminations"} />
-          </div>
+      <div className="SiteWorkermaindiv">
+        <div className="SiteWorkermaindivsub">
+          <Button
+            variant="contained"
+            className="back-btn-icon"
+            id="Add-btn-sub"
+            onClick={() => navigate("/employeecontainer")}
+          >
+            <FaArrowLeft size={25} />
+          </Button>
+          <span className="SupportmainTitleh3">TERMINATIONS</span>
         </div>
-        <section className="md-ui component-data-table">
-          <div className="main-table-wrapper">
-            {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-            <table className="main-table-content">
-              <thead className="data-table-header">
-                <tr className="data-table-row">
-                  {header.map((i, index) => {
-                    return (
-                      <>
-                        <td
-                          className="table-datacell datatype-numeric"
-                          key={index}
-                        >
-                          {i?.title}
-                        </td>
-                      </>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody className="data-table-content">
-                {isLoading ? (
-                  <TableFetch colSpan={8} />
-                ) : terminations?.length === 0 || terminations == null ? (
-                  <NoRecordFound colSpan={8} />
-                ) : (
-                  terminations.map((item: any, i: any) => (
-                    <tr
-                      className="data-table-row"
-                      onClick={() => navigate(`/terminations/${item._id}`)}
-                    >
-                      <td className="table-datacell datatype-numeric">
-                        {item?.employee?.full_name}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.reason}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.description}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.status === "pending" ? (
-                          <BsClock
-                            size={25}
-                            color={"#bf8412"}
-                            className="icon-bold"
-                          />
-                        ) : item?.status === "rejected" ? (
-                          <SlClose
-                            size={25}
-                            color={"red"}
-                            className="icon-bold"
-                          />
-                        ) : (
-                          <BsCheckCircle size={25} color={"green"} />
-                        )}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.created_by?.full_name}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <footer className="main-table-footer">
-          <Pagination
-            setDisplayData={setDisplayData}
-            data={sortData}
+        <div>
+          <EntriesPerPage
+            data={data}
             entriesPerPage={entriesPerPage}
-            Total={"Employee"}
+            setEntriesPerPage={setEntriesPerPage}
           />
-        </footer>
-      </main>
+        </div>
+        <div>
+          <MainSearch placeholder={"Search...          terminations"} />
+        </div>
+      </div>
+      <section className="md-ui component-data-table">
+        <div className="main-table-wrapper">
+          {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+          <table className="main-table-content">
+            <thead className="data-table-header">
+              <tr className="data-table-row">
+                {header.map((i, index) => {
+                  return (
+                    <>
+                      <td
+                        className="table-datacell datatype-numeric"
+                        key={index}
+                      >
+                        {i?.title}
+                      </td>
+                    </>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody className="data-table-content">
+              {isLoading ? (
+                <TableFetch colSpan={8} />
+              ) : displayData?.length === 0 || displayData == null ? (
+                <NoRecordFound colSpan={8} />
+              ) : (
+                displayData.map((item: any, i: any) => (
+                  <tr
+                    className="data-table-row"
+                    onClick={() => navigate(`/terminations/${item._id}`)}
+                  >
+                    <td className="table-datacell datatype-numeric">
+                      {item?.employee?.full_name}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.reason}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.description}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.status === "pending" ? (
+                        <BsClock
+                          size={25}
+                          color={"#bf8412"}
+                          className="icon-bold"
+                        />
+                      ) : item?.status === "rejected" ? (
+                        <SlClose
+                          size={25}
+                          color={"red"}
+                          className="icon-bold"
+                        />
+                      ) : (
+                        <BsCheckCircle size={25} color={"green"} />
+                      )}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.created_by?.full_name}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <footer className="main-table-footer">
+        <Pagination
+          setDisplayData={setDisplayData}
+          data={terminations}
+          entriesPerPage={entriesPerPage}
+          Total={"Employee"}
+        />
+      </footer>
     </div>
   );
 };

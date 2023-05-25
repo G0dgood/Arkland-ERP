@@ -12,6 +12,7 @@
 @use "./components/todoshowall";
 @use "./components/mobileSideBar"; 
 @use "./components/Notification"; 
+@use "./components/UploadBase.scss"; 
 
 // pages
 @use "./pages/kpiassessment";
@@ -29,6 +30,7 @@
 @use "./pages/createemployee";
 @use "./pages/profile";
 @use "./pages/editUser";
+@use "./pages/NotFound";
 
 @use "./abstracts/colors" as c;
 
@@ -71,6 +73,7 @@ body {
   margin: 0;
   letter-spacing: normal;
   box-sizing: border-box !important;
+  font-size: small !important;
 }
 
 td {
@@ -114,9 +117,24 @@ input {
 main {
   grid-area: main;
   padding: 30px;
-  overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-y: scroll
 }
+
+// .YEPft {
+//     margin-left: 16px;
+// }
+// .YEPft :hover{
+//     color: #fff !important;
+// }
+
+// #SidebarLabel-container{
+//   color: #c74b2c  !important;
+//   font-weight: bold ;
+// }
+// #SidebarLabel-container :hover{
+//   color: #fff !important;
+//   font-weight: bold !important;
+// }
 
 .View-btn {
   background-color: #bf8412 !important;

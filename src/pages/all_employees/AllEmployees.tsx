@@ -27,33 +27,53 @@ import { getUserPrivileges } from "../../functions/auth";
 import { DialogState } from "../../interfaces/base";
 import { fireAlert } from "../../utils/Alert";
 import EmployeesDownloader from "../../components/Downloader/EmployeesDownloader";
+import { allEmployee } from "../../features/Employee/employeeSlice";
+import UploadEmployee from "../../components/UploadEmployee";
+import ApproveEmployeeModal from "../../components/Modals/ApproveEmployeeModal";
 
 const token = Cookies.get("token");
 
-const AllEmployees = ({ setEmployee }: any) => {
-  const navigate = useNavigate();
+const AllEmployees = ({ setEmployee, setData }: any) => {
   const dispatch = useAppDispatch();
+  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.employee)
+  const { approveisSuccess } = useAppSelector((state: any) => state.employee)
+  const [reset, setReset] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allEmployee());
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    if (approveisSuccess || reset) {
+      // @ts-ignore
+      dispatch(allEmployee());
+    }
+  }, [approveisSuccess, dispatch, reset]);
+
   const [status, setStatus] = useState("in review");
   const [roles, setRoles] = useState("");
 
   const rolesData: any = useAppSelector((state) => state?.roles?.roles);
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
+  // const departments: any = useAppSelector(
+  //   (state) => state?.department?.department
+  // );
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 
-  const [action, setAction] = useState(false);
+
   const [displayData, setDisplayData] = useState([]);
   // const [searchItem, setSearchItem] = useState("");
   const [approvalLoading, setApprovalLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
   const [deleteShow, setDeleteShow] = React.useState(false);
-  const { employees, isLoading, error, message } = useEmployees(
-    status,
-    action,
-    roles
-  );
+  // const { employees, isLoading, error, message } = useEmployees(
+  //   status,
+  //   action,
+  //   roles
+  // );
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -64,15 +84,19 @@ const AllEmployees = ({ setEmployee }: any) => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
 
-  React.useEffect(() => {
-    if (!roles || roles?.length === 0) {
-      dispatch(getRoles());
-    }
-    if (!departments || departments?.length === 0) {
-      dispatch(getDepartment());
-    }
-    // setEmployee(employees?.length);
-  }, [dispatch, roles, departments, setEmployee, employees?.length]);
+  useEffect(() => {
+    setData(data?.length);
+  }, [data?.length, setData]);
+
+  // React.useEffect(() => {
+  //   if (!roles || roles?.length === 0) {
+  //     dispatch(getRoles());
+  //   }
+  //   if (!departments || departments?.length === 0) {
+  //     dispatch(getDepartment());
+  //   }
+  //   // setEmployee(employees?.length);
+  // }, [dispatch, roles, departments, setEmployee, employees?.length]);
 
   const header = [
     { title: "FULL NAME", prop: "full_name" },
@@ -81,56 +105,57 @@ const AllEmployees = ({ setEmployee }: any) => {
     { title: "DEPARTMENT", prop: "department" },
     { title: "CATEGORY", prop: "category" },
     { title: "STATUS", prop: "status" },
+    { title: "APPROVE", prop: "status" },
     { title: "ACTION" },
   ];
 
-  const handleApproval = (id: any) => {
-    setShowDialog({ [id]: true });
-    setDeleteShow(true);
-  };
+  // const handleApproval = (id: any) => {
+  //   setShowDialog({ [id]: true });
+  //   setDeleteShow(true);
+  // };
 
-  const handleSubmit = async (id: any) => {
-    setApprovalLoading(true);
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/employees/${id}/approve`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setApprovalLoading(false);
-      if (response.ok) {
-        const title = "Employee approved successful";
-        const html = `Employee approved`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        // navigate(`/employeecontainer`);
-        setShowDialog({ [id]: false });
-        setAction(true);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      // console.log(error);
-      setApprovalLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Employee approval failed";
-      fireAlert(title, html, icon);
-      setShowDialog({ [id]: false });
-    }
-  };
+  // const handleSubmit = async (id: any) => {
+  //   setApprovalLoading(true);
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.REACT_APP_API}/hr/employees/${id}/approve`,
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     setApprovalLoading(false);
+  //     if (response.ok) {
+  //       const title = "Employee approved successful";
+  //       const html = `Employee approved`;
+  //       const icon = "success";
+  //       fireAlert(title, html, icon);
+  //       // navigate(`/employeecontainer`);
+  //       setShowDialog({ [id]: false });
+  //       // setAction(true);
+  //     } else {
+  //       throw new Error(data.message || "Something went wrong!");
+  //     }
+  //   } catch (error: any) {
+  //     // console.log(error);
+  //     setApprovalLoading(false);
+  //     const html = error.message || "Something went wrong!";
+  //     const icon = "error";
+  //     const title = "Employee approval failed";
+  //     fireAlert(title, html, icon);
+  //     setShowDialog({ [id]: false });
+  //   }
+  // };
 
   // console.log("displayData?.length", employees);
 
   return (
     <div>
-      {error && (
+      {isError && (
         <Toast
           onClose={() => setShowToast(false)}
           show={true}
@@ -166,7 +191,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                 </div>
               )}
 
-              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                 <div
                   className="allemployees-sup-item2"
                   onClick={() => navigate("/warninglist")}
@@ -175,9 +200,9 @@ const AllEmployees = ({ setEmployee }: any) => {
                     Warnings
                   </Button>
                 </div>
-              )}
-
-              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+              )} */}
+              <UploadEmployee />
+              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                 <div
                   className="allemployees-sup-item2"
                   onClick={() => navigate("/terminations")}
@@ -186,7 +211,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                     Terminations
                   </Button>
                 </div>
-              )}
+              )} */}
             </div>
             <div className="allemployees-sup-item2">
               <div>
@@ -214,7 +239,7 @@ const AllEmployees = ({ setEmployee }: any) => {
               />
             </div> */}
             <div>
-              <EmployeesDownloader data={employees} />
+              {/* <EmployeesDownloader data={data} /> */}
             </div>
           </div>
           <section className="md-ui component-data-table">
@@ -264,24 +289,18 @@ const AllEmployees = ({ setEmployee }: any) => {
                           {item?.status}
                         </td>
                         <td className="table-datacell datatype-numeric">
+                          {item?.status === "in review" ? (
+                            <ApproveEmployeeModal id={item?.id} data={item} setReset={setReset} />
+                          ) : (
+                            <Button className="table-link-active"  >
+                              Approved
+                            </Button>
+                          )}
+                        </td>
+                        <td className="table-datacell datatype-numeric">
                           <div className="table-active-items">
-                            {/* <span> */}
-                            {item?.status === "in review" ? (
-                              <span
-                                className="edit-icon-color"
-                                title="Approve employee"
-                                color="#d32f2f"
-                                onClick={() => handleApproval(item?.id)}
-                              >
-                                <FiCheckCircle
-                                  size={25}
-                                  title="Approve Employee"
-                                  color="green"
-                                />
-                              </span>
-                            ) : (
-                              ""
-                            )}
+
+
 
                             <span
                               className="lock-icon-color"
@@ -300,52 +319,7 @@ const AllEmployees = ({ setEmployee }: any) => {
                             {/* </span> */}
                           </div>
                         </td>
-                        {showDialog[item?.id] && (
-                          <Modal
-                            size="lg"
-                            show={deleteShow}
-                            aria-labelledby="contained-modal-title-vcenter"
-                            centered
-                          >
-                            <Modal.Header closeButton id="displayTermination">
-                              <Modal.Title>Approve Employee</Modal.Title>
-                              <Button
-                                style={{ color: "#fff" }}
-                                onClick={() => setDeleteShow(false)}
-                              >
-                                <MdOutlineClose size={28} />
-                              </Button>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <p>
-                                Are you sure you want to approve this employee?
-                              </p>
-                              <p>{item?.title}</p>
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <button
-                                className="btn btn-danger"
-                                onClick={() => {
-                                  handleSubmit(item?.id);
-                                }}
-                              >
-                                {approvalLoading ? (
-                                  <Spinner animation="border" />
-                                ) : (
-                                  "Yes"
-                                )}
-                              </button>
-                              <button
-                                className="btn btn-secondary"
-                                onClick={() =>
-                                  setShowDialog({ [item?.id]: false })
-                                }
-                              >
-                                Cancel
-                              </button>
-                            </Modal.Footer>
-                          </Modal>
-                        )}
+
                       </tr>
                     ))
                   )}
@@ -357,7 +331,7 @@ const AllEmployees = ({ setEmployee }: any) => {
         <footer className="main-table-footer">
           <Pagination
             setDisplayData={setDisplayData}
-            data={employees}
+            data={data}
             entriesPerPage={entriesPerPage}
             Total={"Employee"}
           />

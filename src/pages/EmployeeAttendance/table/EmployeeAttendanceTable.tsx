@@ -1,7 +1,5 @@
 import { Button } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
 import TableLoader from "../../../components/TableLoader";
 import {
   EntriesPerPage,
@@ -9,10 +7,6 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../../components/TableOptions";
-import moment from "moment";
-import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
-import storage from "../../../utils/storage";
 import { useEmployeeAttendance } from "../../../hooks/useAttendance";
 import { checkForName } from "../../../utils/checkForName";
 import { useAppSelector } from "../../../hooks/useDispatch";
@@ -26,7 +20,7 @@ const EmployeeAttendanceTable = () => {
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
-  console.log("attemd 0", attenances);
+
   const [data, setData] = useState<any>([]);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
@@ -37,19 +31,7 @@ const EmployeeAttendanceTable = () => {
   const html = message;
   const icon = "error";
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
 
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
   const departments: any = useAppSelector(
     (state) => state?.department?.department
   );
@@ -64,9 +46,7 @@ const EmployeeAttendanceTable = () => {
   ];
 
   return (
-    <div id="screen-wrapper">
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
+    <div  >
       <main>
         <div className="SiteWorkermaindiv">
           <div className="SiteWorkermaindivsub">

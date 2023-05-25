@@ -3,7 +3,6 @@ import moment from "moment";
 import { SyncLoader } from "react-spinners";
 import { Button } from "@material-ui/core";
 import { Modal, Spinner } from "react-bootstrap";
-import Cookies from "js-cookie";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { MdOutlineClose } from "react-icons/md";
 import {
@@ -12,8 +11,8 @@ import {
 } from "../../hooks/useAnnouncements";
 import { getUserPrivileges } from "../../functions/auth";
 import { DialogState } from "../../interfaces/base";
-import { fireAlert } from "../../utils/Alert";
-const token = Cookies.get("token");
+
+
 
 const AdminAnnouncement = () => {
   const [viewAction, setViewAction] = React.useState([] as any);
@@ -25,7 +24,7 @@ const AdminAnnouncement = () => {
   const [announcementAction, setAnnouncementAction] = React.useState(false);
   const [clockInLoading, setClockInLoading] = React.useState(false);
 
-  const { announcements, isLoading, error, message } =
+  const { announcements, isLoading, } =
     useAnnouncements(announcementAction);
   const { ViewAnnouncements, isAnnouncementsLoading } =
     useAnnouncementsById(viewAction);
@@ -40,105 +39,11 @@ const AdminAnnouncement = () => {
     isHrAdmin,
   } = getUserPrivileges();
 
-  const handleView = (id: any) => {
-    setViewAction([id]);
-    setShowView({ [id]: true });
-    setViewShow(true);
-  };
 
-  const handleDelete = (id: any) => {
-    setShowDialog({ [id]: true });
-    setDeleteShow(true);
-  };
-  const handleSubmit = async () => {
-    setClockInLoading(true);
 
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/attendances`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setClockInLoading(false);
-      if (response.ok) {
-        const title = "Clocked in successfully.";
-        const html = `Clocked in`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        setClockInLoading(false);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setClockInLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Unable to clock in";
-      fireAlert(title, html, icon);
-    }
-  };
 
-  const deleteAnnouncement = async (id: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/announcements/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Announcement deleted.";
-        const html = `Announcement deleted`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        setAnnouncementAction(true);
-        setShowDialog({ [id]: false });
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Announcement deletion failed";
-      fireAlert(title, html, icon);
-    }
-  };
   return (
     <div className="admin-main-div-col-2-sub">
-      {/* {error && (
-        <Toast
-          onClose={() => setShowToast(false)}
-          show={true}
-          delay={1000}
-          autohide
-        >
-          <Toast.Body>
-            <span>
-              <BsExclamationLg />
-            </span>
-            <p>{message}</p>
-            <span onClick={() => setShowToast(false)}>
-              <FaTimes />
-            </span>
-          </Toast.Body>
-        </Toast>
-      )} */}
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
           <span className="sub-text-contained">
@@ -148,14 +53,14 @@ const AdminAnnouncement = () => {
         <Button
           variant="contained"
           className="Add-btn"
-          onClick={() => handleSubmit()}
+        // onClick={() => handleSubmit()}
         >
           {clockInLoading ? <Spinner animation="border" /> : " Clock in"}
         </Button>
       </div>
 
       <div>
-        {isLoading === true ? (
+        {isLoading ? (
           <div className="table-loader-announcement">
             <SyncLoader color={"#990000"} loading={isLoading} />
           </div>
@@ -189,7 +94,7 @@ const AdminAnnouncement = () => {
                       <span>
                         <FiEye
                           size={20}
-                          onClick={() => handleView(item?.id)}
+                          // onClick={() => handleView(item?.id)}
                           cursor="pointer"
                           title="VIEW ANNOUNCEMENT"
                         />
@@ -203,7 +108,7 @@ const AdminAnnouncement = () => {
                           <span className="BsFillPinAngleFill">
                             <FiTrash2
                               size={20}
-                              onClick={() => handleDelete(item?.id)}
+                              // onClick={() => handleDelete(item?.id)}
                               cursor="pointer"
                               title="DELETE ANNOUNCEMENT"
                             />
@@ -280,7 +185,7 @@ const AdminAnnouncement = () => {
                           <button
                             className="btn btn-danger"
                             onClick={() => {
-                              deleteAnnouncement(item?.id);
+                              // deleteAnnouncement(item?.id);
                             }}
                           >
                             {isDeleteLoading ? (

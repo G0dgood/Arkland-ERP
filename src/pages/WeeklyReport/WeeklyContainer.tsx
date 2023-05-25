@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from '../../components/SidebarAndDropdown/Sidebar';
 import KPINavTab from "../kpi_assessment/KPINavTab";
 import WeeklyReport from "./WeeklyReport";
 import MyWeekReport from "./MyWeekReport";
@@ -8,6 +8,9 @@ import MyWeekReport from "./MyWeekReport";
 const WeeklyContainer = () => {
   const [isCheck, setIsCheck] = useState(false);
   const [kpidata, setkpidata] = useState(0);
+
+
+
   const [collapseNav, setCollapseNav] = useState<any>(() => {
     // @ts-ignore
     return JSON.parse(localStorage.getItem("collapse")) || false;
@@ -37,8 +40,8 @@ const WeeklyContainer = () => {
           />
         </div>
         <div style={{ marginTop: "2rem" }}>
-          {isCheck === false ? <MyWeekReport setkpidata={setkpidata} /> : ""}
-          {isCheck === true ? <WeeklyReport setIsCheck={setIsCheck} /> : ""}
+          {isCheck === false ? <MyWeekReport setkpidata={setkpidata} /> : <WeeklyReport setIsCheck={setIsCheck} />}
+          {/* {isCheck === true ? <WeeklyReport setIsCheck={setIsCheck} /> : ""} */}
         </div>
       </main>
     </div>

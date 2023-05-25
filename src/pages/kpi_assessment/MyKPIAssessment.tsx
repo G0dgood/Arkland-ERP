@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
 import {
   EntriesPerPage,
@@ -7,23 +7,30 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-import axios, { AxiosResponse } from "axios";
 import moment from "moment";
 import TableLoader from "../../components/TableLoader";
 import { Link } from "react-router-dom";
 import storage from "../../utils/storage";
 import { fireAlert } from "../../utils/Alert";
+import { useAppDispatch, useAppSelector } from "../../hooks/userDispatch";
+import { getAssessment, reset } from "../../features/KPIAssessment/assessmentSlice";
+
+
 
 const MyKPIAssessment = ({ setkpidata }: any) => {
+  const dispatch = useAppDispatch();
+
+  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.assessment)
+
+
+
   // @ts-ignore
   const userInfo: any = JSON.parse(storage?.get("user"));
 
-  const [data, setData] = useState<any>([]);
+
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
-  const [isLoading, setisLoading] = useState(false);
-  const [isError, setisError] = useState(false)
-  const [message, setMessage] = useState("");
+
 
 
   const title1 = "KPI error";
@@ -33,11 +40,9 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
   useEffect(() => {
     if (isError) {
       fireAlert(title1, html1, icon1);
-      setTimeout(() => {
-        setisError(false)
-      }, 10000);
     }
-  }, [isError, html1]);
+    dispatch(reset());
+  }, [isError, html1, dispatch]);
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -55,33 +60,18 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
         return JSON?.stringify(object)?.toString()?.includes(searchItem);
       });
       setSortData(result);
+      setkpidata(result?.length)
     }
-  }, [data, searchItem]);
+  }, [data, searchItem, setkpidata]);
 
   const [displayData, setDisplayData] = useState([]);
 
-  useEffect(() => {
-    setisLoading(true);
-    axios
-      .get(
-        `${process.env.REACT_APP_API}/hr/appraisals?employee=${userInfo?.data?.employee?._id}`
-      )
-      .then((res: AxiosResponse) => {
-        if (res?.data?.success === false) {
-          setMessage(res?.data?.message)
-          setisError(true)
-        } else {
-          setData(res?.data?.data);
-          setkpidata(res?.data?.data?.length);
-        }
 
-        setisLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setisLoading(false);
-      });
-  }, [setkpidata, userInfo?.data?.employee?._id]);
+  const id = userInfo?.data?.employee?._id
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(getAssessment(id));
+  }, [dispatch, id]);
 
   return (
     <div>

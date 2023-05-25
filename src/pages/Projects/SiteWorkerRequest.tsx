@@ -2,11 +2,11 @@ import { Button } from "@material-ui/core";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Toast } from "react-bootstrap";
-import { BsCheckCircle, BsExclamationLg, BsEyeFill } from "react-icons/bs";
+import { BsExclamationLg, BsEyeFill } from "react-icons/bs";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
+
+
 import {
   MainSearch,
   NoRecordFound,
@@ -67,7 +67,7 @@ const SiteWorkerRequest = () => {
   ];
 
   return (
-    <div id="screen-wrapper">
+    <div  >
       {error && (
         <Toast
           onClose={() => setShowToast(false)}
@@ -86,99 +86,98 @@ const SiteWorkerRequest = () => {
           </Toast.Body>
         </Toast>
       )}
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
-      <main>
-        <div className="SiteWorkermaindiv">
-          <div className="SiteWorkermaindivsub">
-            <Button variant="contained" className="Add-btn" id="Add-btn-sub">
-              <NavLink
-                to="/projects"
-                className="drop-logout"
-                id="white-btn-color"
-              >
-                <FaArrowLeft size={30} />
-              </NavLink>
-            </Button>
-            <span className="SupportmainTitleh3">SITE WORKER REQUEST</span>
-          </div>
-          <div>
-            <MainSearch placeholder={"Search...          Site Workers"} />
-          </div>
+
+
+      <div className="SiteWorkermaindiv">
+        <div className="SiteWorkermaindivsub">
+          <Button variant="contained" className="Add-btn" id="Add-btn-sub">
+            <NavLink
+              to="/projects"
+              className="drop-logout"
+              id="white-btn-color"
+            >
+              <FaArrowLeft size={30} />
+            </NavLink>
+          </Button>
+          <span className="SupportmainTitleh3">SITE WORKER REQUEST</span>
         </div>
-        <section className="md-ui component-data-table">
-          {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-          <div className="main-table-wrapper">
-            <table className="main-table-content">
-              <thead className="data-table-header">
-                <tr className="data-table-row">
-                  {header.map((i, index) => {
-                    return (
-                      <>
-                        <td
-                          className="table-datacell datatype-numeric"
-                          key={index}
-                        >
-                          {i.title}
-                        </td>
-                      </>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody className="data-table-content">
-                {isLoading ? (
-                  <TableFetch colSpan={8} />
-                ) : requestWorkersList?.length === 0 ||
-                  requestWorkersList == null ? (
-                  <NoRecordFound colSpan={8} />
-                ) : (
-                  requestWorkersList.map((item: any, i: any) => (
-                    <tr className="data-table-row">
-                      <td className="table-datacell datatype-numeric">
-                        {checkForName(item.project, projects)}
+        <div>
+          <MainSearch placeholder={"Search...          Site Workers"} />
+        </div>
+      </div>
+      <section className="md-ui component-data-table">
+        {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+        <div className="main-table-wrapper">
+          <table className="main-table-content">
+            <thead className="data-table-header">
+              <tr className="data-table-row">
+                {header.map((i, index) => {
+                  return (
+                    <>
+                      <td
+                        className="table-datacell datatype-numeric"
+                        key={index}
+                      >
+                        {i.title}
                       </td>
-                      <td className="table-datacell datatype-numeric">
-                        {checkForName(item.team, team)}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {checkForName(item.team_lead, teamLeads)}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.requests?.[0].role_name}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.requests?.[0].requested_quantity}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {moment(item?.created_at).format("DD-MMMM-YYYY")}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item.is_urgent === false ? "No" : "Yes"}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item.status}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        <span>
-                          <BsEyeFill
-                            size={25}
-                            color={"#d32f2f"}
-                            onClick={() =>
-                              navigate(`/site-worker-request/${item._id}`)
-                            }
-                            title="View request"
-                          />
-                        </span>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </main>
+                    </>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody className="data-table-content">
+              {isLoading ? (
+                <TableFetch colSpan={8} />
+              ) : requestWorkersList?.length === 0 ||
+                requestWorkersList == null ? (
+                <NoRecordFound colSpan={8} />
+              ) : (
+                requestWorkersList.map((item: any, i: any) => (
+                  <tr className="data-table-row">
+                    <td className="table-datacell datatype-numeric">
+                      {checkForName(item.project, projects)}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {checkForName(item.team, team)}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {checkForName(item.team_lead, teamLeads)}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.requests?.[0].role_name}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.requests?.[0].requested_quantity}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {moment(item?.created_at).format("DD-MMMM-YYYY")}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item.is_urgent === false ? "No" : "Yes"}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item.status}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      <span>
+                        <BsEyeFill
+                          size={25}
+                          color={"#d32f2f"}
+                          onClick={() =>
+                            navigate(`/site-worker-request/${item._id}`)
+                          }
+                          title="View request"
+                        />
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
     </div>
   );
 };

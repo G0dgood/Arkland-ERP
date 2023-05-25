@@ -8,37 +8,24 @@ const initialState = {
   user:   null,
   isError: false,
   isSuccess: false,
-  isLoading: false,
-  userToken:null,
-  message: '',
-  error: '',
+  isLoading: false, 
+  message: '', 
 }
  
 
 // Login user
-export const login = createAsyncThunk('auth/login', async (values, thunkAPI) => {
-  
-    return await authService.login(values).then((res) => {
-      console.log('err-err',res)
-      
-    })
-    .catch((err) => {
-      console.log('err',err);
-    });
- 
-  // catch (error: any) {
-  //   const message =
-  //     (error.response || 
-  //       error.response.data ||
-  //       error.response.data.message) ||
-  //     error.message ||
-  //     error.toString() 
-  //       // @ts-ignore
-  //   console.log('message', message)
-    
-  //     return thunkAPI.rejectWithValue(message) 
-  // }
+export const login = createAsyncThunk('auth/login', async (data,thunkAPI) => {
+  try {
+    return await authService.login(data )
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()  
+    return thunkAPI.rejectWithValue(message)
+  }
 })
+
 
 // logout
 // export const logout = createAsyncThunk('auth/logout', async () => {
@@ -58,9 +45,7 @@ export const authSlice = createSlice({
       state.isError = false
       state.message = '' 
     },
-    setUserInfo: (state, action) => {
-      state.user = action.payload
-    },
+    
 
     // logoutUser: state => {
     //   AsyncStorage.removeItem('user')
@@ -77,22 +62,17 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state:any, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.user = action.payload
-        state.userToken = action.payload
+        state.user = action.payload.data 
       })
       .addCase(login.rejected, (state:any, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
-        state.user = null
-        state.userToken = null
+        state.user = null 
       })
-      // .addCase(logout.fulfilled, (state) => {
-      //   state.user = null 
-      //   state.userToken = null 
-      // })
+      
   },
 })
 
-export const { reset, setUserInfo  } = authSlice.actions
+export const { reset  } = authSlice.actions
 export default authSlice.reducer

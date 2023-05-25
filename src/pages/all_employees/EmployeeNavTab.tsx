@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 
-const EmployeeNavTab = ({ isCheck, setIsCheck, infodata, text1, text2 }: any) => {
+const EmployeeNavTab = ({ isCheck, setIsCheck, infodata, text1, text2, data }: any) => {
 
 	const checkbox = useRef();
 
@@ -26,7 +26,7 @@ const EmployeeNavTab = ({ isCheck, setIsCheck, infodata, text1, text2 }: any) =>
 					onClick={handleClick}
 				/>
 				<label id="tab" htmlFor="radio-1">{text1}
-					<span id="notification">{infodata === undefined ? 0 : infodata}</span>
+					<span id="notification">{data === undefined ? 0 : data}</span>
 				</label>
 				<input
 					type="radio"

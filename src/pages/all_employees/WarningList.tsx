@@ -2,11 +2,8 @@ import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import { Toast } from "react-bootstrap";
 import { BsExclamationLg } from "react-icons/bs";
-import axios, { AxiosResponse } from "axios";
 import {
   EntriesPerPage,
   MainSearch,
@@ -15,16 +12,13 @@ import {
 } from "../../components/TableOptions";
 import Pagination from "../../components/Pagination";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { checkForEmployee, checkForName } from "../../utils/checkForName";
-import { getEmployees } from "../../store/reducers/employees";
 import { getRequestOptions } from "../../utils/auth/header";
 import TableLoader from "../../components/TableLoader";
 
 const WarningList = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const employees: any = useAppSelector((state) => state.employees.employees);
+
   const [warnings, setWarnings] = useState([] as any);
   const [data, setData] = useState([]);
   const [sortData, setSortData] = useState([]);
@@ -34,6 +28,7 @@ const WarningList = () => {
   const [message, setMessage] = useState("");
   const [newWarningCreated, setNewWarningCreated] = React.useState(false);
   const [showToast, setShowToast] = useState(false);
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +45,7 @@ const WarningList = () => {
           throw new Error(data.message || response.status);
         }
         setWarnings([...data.data]);
+        console.log('data.data', data.data)
         setisLoading(false);
         setError(false);
         setMessage("");
@@ -64,11 +60,11 @@ const WarningList = () => {
     };
     fetchData();
   }, [newWarningCreated]);
+
   const handleNewWarningCreated = () => {
     setNewWarningCreated(!newWarningCreated);
   };
   const header = [
-    { title: "EMPLOYEE ID", prop: "employee" },
     { title: "FULL NAME", prop: "last_name" },
     { title: "MESSAGE", prop: "message" },
     { title: "MISCONDUCT", prop: "misconduct" },
@@ -76,19 +72,8 @@ const WarningList = () => {
     { title: "STATUS", prop: "status" },
   ];
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
 
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
+
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -112,7 +97,7 @@ const WarningList = () => {
   const [displayData, setDisplayData] = useState([]);
 
   return (
-    <div id="screen-wrapper">
+    <div  >
       {error && (
         <Toast
           onClose={() => setShowToast(false)}
@@ -131,102 +116,95 @@ const WarningList = () => {
           </Toast.Body>
         </Toast>
       )}
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
-      <main>
-        <div className="SiteWorkermaindiv">
-          <div className="SiteWorkermaindivsub">
-            <Button
-              variant="contained"
-              className="back-btn-icon"
-              id="Add-btn-sub"
-              onClick={() => navigate("/employeecontainer")}
-            >
-              <FaArrowLeft size={25} />
-            </Button>
+      <div className="SiteWorkermaindiv">
+        <div className="SiteWorkermaindivsub">
+          <Button
+            variant="contained"
+            className="back-btn-icon"
+            id="Add-btn-sub"
+            onClick={() => navigate("/employeecontainer")}
+          >
+            <FaArrowLeft size={25} />
+          </Button>
 
-            <span className="SupportmainTitleh3">
-              <CreateWarningModal
-                onNewWarningCreated={handleNewWarningCreated}
-              />
-            </span>
-          </div>
-          <div>
-            <EntriesPerPage
-              data={data}
-              entriesPerPage={entriesPerPage}
-              setEntriesPerPage={setEntriesPerPage}
+          <span className="SupportmainTitleh3">
+            <CreateWarningModal
+              onNewWarningCreated={handleNewWarningCreated}
             />
-          </div>
-          <div>
-            <MainSearch placeholder={"Search...          Warnings"} />
-          </div>
+          </span>
         </div>
-        <section className="md-ui component-data-table">
-          <div className="main-table-wrapper">
-            {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-            <table className="main-table-content">
-              <thead className="data-table-header">
-                <tr className="data-table-row">
-                  {header.map((i, index) => {
-                    return (
-                      <>
-                        <td
-                          className="table-datacell datatype-numeric"
-                          key={index}
-                        >
-                          {i?.title}
-                        </td>
-                      </>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody className="data-table-content">
-                {isLoading ? (
-                  <TableFetch colSpan={8} />
-                ) : warnings?.length === 0 || warnings == null ? (
-                  <NoRecordFound colSpan={8} />
-                ) : (
-                  warnings.map((item: any, i: any) => (
-                    <tr
-                      className="data-table-row"
-                      onClick={() => navigate(`/warninglist/${item.id}`)}
-                    >
-                      <td className="table-datacell datatype-numeric">
-                        {item?.employee}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {checkForEmployee(item?.employee, employees)}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.message}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.misconduct}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.count}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.status}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <footer className="main-table-footer">
-          <Pagination
-            setDisplayData={setDisplayData}
-            data={sortData}
+        <div>
+          <EntriesPerPage
+            data={data}
             entriesPerPage={entriesPerPage}
-            Total={"Employee"}
+            setEntriesPerPage={setEntriesPerPage}
           />
-        </footer>
-      </main>
+        </div>
+        <div>
+          <MainSearch placeholder={"Search...          Warnings"} />
+        </div>
+      </div>
+      <section className="md-ui component-data-table">
+        <div className="main-table-wrapper">
+          {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+          <table className="main-table-content">
+            <thead className="data-table-header">
+              <tr className="data-table-row">
+                {header.map((i, index) => {
+                  return (
+                    <>
+                      <td
+                        className="table-datacell datatype-numeric"
+                        key={index}
+                      >
+                        {i?.title}
+                      </td>
+                    </>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody className="data-table-content">
+              {isLoading ? (
+                <TableFetch colSpan={8} />
+              ) : displayData?.length === 0 || displayData == null ? (
+                <NoRecordFound colSpan={8} />
+              ) : (
+                displayData.map((item: any, i: any) => (
+                  <tr
+                    className="data-table-row"
+                    onClick={() => navigate(`/warninglist/${item.id}`)}
+                  >
+                    <td className="table-datacell datatype-numeric">
+                      ??
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.message}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.misconduct}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.count}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.status}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <footer className="main-table-footer">
+        <Pagination
+          setDisplayData={setDisplayData}
+          data={warnings}
+          entriesPerPage={entriesPerPage}
+          Total={"Employee"}
+        />
+      </footer>
     </div>
   );
 };

@@ -1,8 +1,6 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Header from '../../../components/Header';
-import Sidebar from '../../../components/Sidebar';
 import { FaArrowLeft } from 'react-icons/fa';
 import { MainSearch } from '../../../components/TableOptions';
 
@@ -23,9 +21,7 @@ const Budget = () => {
 		setCollapseNav(!collapseNav);
 	}
 	return (
-		<div id="screen-wrapper">
-			<Header toggleSideNav={toggleSideNav} />
-			<Sidebar collapseNav={collapseNav} />
+		<div  >
 			<main>
 				<div className='SiteWorkermaindiv'>
 					<div className='SiteWorkermaindivsub'>

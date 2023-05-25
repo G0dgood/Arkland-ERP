@@ -19,7 +19,6 @@ import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import projectAvatar from "../../assets/vectors/project-avatar.svg";
 import projectBack from "../../assets/vectors/project-back.svg";
 import redPlus from "../../assets/vectors/red-plus.svg";
@@ -34,6 +33,7 @@ import { formatDate } from "../../utils/formatDate";
 import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 import { useProjectById } from "../../hooks/useProjects";
 import { DialogState } from "../../interfaces/base";
+import Sidebar from "../../components/SidebarAndDropdown/Sidebar";
 
 const ViewProject = () => {
   const { id } = useParams<{ id: string }>();
@@ -89,21 +89,21 @@ const ViewProject = () => {
     setCollapseNav(!collapseNav);
   };
 
-  const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
-  const availablleTeamMembers = [] as any;
-  if (teamMembers.length < 0) {
-    return null;
-  } else {
-    teamMembers.length > 0 &&
-      teamMembers.forEach((teamMember: any) =>
-        availablleTeamMembers.push({
-          value: teamMember.employee?.user,
-          label: teamMember.employee_name,
-        })
-      );
-  }
+  // const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+  // const availablleTeamMembers = [] as any;
+  // if (teamMembers.length < 0) {
+  //   return null;
+  // } else {
+  //   teamMembers.length > 0 &&
+  //     teamMembers.forEach((teamMember: any) =>
+  //       availablleTeamMembers.push({
+  //         value: teamMember.employee?.user,
+  //         label: teamMember.employee_name,
+  //       })
+  //     );
+  // }
   return (
-    <div id="screen-wrapper">
+    <div >
       {error && (
         <Toast
           onClose={() => setShowToast(false)}
@@ -121,9 +121,7 @@ const ViewProject = () => {
             </span>
           </Toast.Body>
         </Toast>
-      )}
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
+      )} 
       {isLoading ? (
         <div
           style={{
@@ -137,8 +135,7 @@ const ViewProject = () => {
             loading={isLoading}
           />
         </div>
-      ) : (
-        <main>
+      ) : ( 
           <div className="project-main-div">
             <div className="project-main-div-col-1">
               <div className="project-main-div-col-1-sub">
@@ -156,9 +153,9 @@ const ViewProject = () => {
                     style={{ color: "black" }}
                   />
                   <p className="project-sub-img__name">
-                    {projects &&
+                    {/* {projects &&
                       teamLeads &&
-                      checkForTeams(projects?.lead, teamLeads)}
+                      checkForTeams(projects?.lead, teamLeads)} */}
                   </p>
                   <p className="project-sub-img__title">PROJECT MANAGER</p>
                 </div>
@@ -460,7 +457,7 @@ const ViewProject = () => {
                                   <div className="modal-input-sub-space">
                                     <div className="col">
                                       <div className="form-group">
-                                        <ReactSelectField
+                                        {/* <ReactSelectField
                                           options={availablleTeamMembers}
                                           label="Who is this task assigned to?"
                                           name="assigned_to"
@@ -471,7 +468,7 @@ const ViewProject = () => {
                                               event?.value
                                             );
                                           }}
-                                        />
+                                        /> */}
                                       </div>
                                     </div>
                                   </div>
@@ -636,8 +633,7 @@ const ViewProject = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </main>
+          </div> 
       )}
     </div>
   );

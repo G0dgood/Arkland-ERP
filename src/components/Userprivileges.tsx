@@ -12,8 +12,10 @@ import DeleteModals from './DeleteModals'
 import axios, { AxiosResponse } from 'axios'
 import { fireAlert } from '../utils/Alert'
 import AssignPrivilegesModal from './Modals/AssignPrivilegesModal'
+import Header from './Header'
+import Sidebar from './SidebarAndDropdown/Sidebar'
 
-const Userprivileges = ({ showprivileges, setShowprivileges, setShowTitle }: any) => {
+const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 
 	const token = Cookies.get("token");
 	const [data, setData] = useState([]);
@@ -49,7 +51,7 @@ const Userprivileges = ({ showprivileges, setShowprivileges, setShowTitle }: any
 	const onChange = (e: any) => {
 		setResult(e.target.value);
 	}
-	const [displayData, setDisplayData] = useState([]);
+
 
 
 	const title = "Successful";
@@ -125,27 +127,27 @@ const Userprivileges = ({ showprivileges, setShowprivileges, setShowTitle }: any
 
 	}
 
+	const [displayData, setDisplayData] = useState([]);
+
+	const [collapseNav, setCollapseNav] = useState(() => {
+		// @ts-ignore
+		return JSON.parse(localStorage.getItem("collapse")) || false;
+	});
+
+	useEffect(() => {
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+		localStorage.setItem("collapse", JSON.stringify(collapseNav));
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+	}, [collapseNav]);
+	const toggleSideNav = () => {
+		setCollapseNav(!collapseNav);
+	};
+
 
 	return (
-		<div className={showprivileges ? "Drawer" : "Drawer1"}>
-			<header className="ChatProgressView-header"  >
-				<div className='leave-Update-titile-icon'>
-					<span className="app-chat--icon">
-						<MdOutlinePermIdentity size={20} />
-					</span>
-					<span className="in-progresss">
-						USER PRIVILEGES
-					</span>
-
-				</div>
-				<div className="ChatProgressView-close" onClick={() => { setShowprivileges(false); setShowTitle(false) }}>
-					<MdOutlineClose
-						size={25}
-						style={{ color: "white", backgroundColor: "" }}
-						className="ChatProgressView-close-icon"
-					/>
-				</div>
-			</header>
+		<div id="screen-wrapper">
+			<Header toggleSideNav={toggleSideNav} />
+			<Sidebar collapseNav={collapseNav} />
 			<main>
 				<div className='SiteWorkermaindiv'>
 					<div className='SiteWorkermaindivsub'>

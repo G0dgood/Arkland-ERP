@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
@@ -16,25 +16,41 @@ import { removeData } from "../AppRoutes";
 import LogoutOption from "./LogoutOption";
 import Notification from "./Notification/Notification";
 import Socket from "./Socket";
+import { useAppDispatch, useAppSelector } from "../hooks/useDispatch";
+import { allNotifications } from "../features/Notification/NotificationSlice";
 
 const Header = ({ toggleSideNav }: any) => {
-  // const token = Cookies.get("token");
-  // const navigate = useNavigate();
-  // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-  // @ts-ignore
-  const newnoti: any = JSON.parse(storage?.get("notifications"));
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { data } = useAppSelector((state: any) => state.notification)
 
 
-
-
-  const [yes, setyes] = useState<any>(false);
-  const [info, setInfo] = useState<any>([]);
+  // const [yes, setyes] = useState<any>(false);
+  // const [info, setInfo] = useState<any>([]);
   const [refresh, setRefresh] = useState<any>(false);
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
   const [isLoading1, setisLoading1] = useState(false);
+
+
+
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allNotifications());
+  }, [dispatch, refresh]);
+
+  // @ts-ignore
+  const userInfo: any = JSON.parse(storage?.get("user"));
+  // @ts-ignore
+  // const newnoti: any = JSON.parse(storage?.get("notifications"));
+
+
+
+
+
+
   const handleLogout = async () => {
     setisLoading1(true);
     await axios
@@ -43,6 +59,11 @@ const Header = ({ toggleSideNav }: any) => {
         delete axios?.defaults?.headers?.common["Authorization"];
       })
       .catch((err) => {
+        // Cookies.remove("token");
+        // storage.remove("user");
+        // storage.remove("notifications");
+        // removeData();
+        // navigate("/");
         console.log(err);
         setisLoading1(false);
       });
@@ -50,7 +71,7 @@ const Header = ({ toggleSideNav }: any) => {
     storage.remove("user");
     storage.remove("notifications");
     removeData();
-    // navigate("/");
+    navigate("/");
     setisLoading1(false)
     window.location.replace("/");
     // window.location.reload();
@@ -86,39 +107,15 @@ const Header = ({ toggleSideNav }: any) => {
 
 
 
-  useEffect(() => {
-    if (newnoti?.length > 1 || yes) {
-      setInfo(newnoti);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [yes])
+  // useEffect(() => {
+  //   if (newnoti?.length > 1 || yes) {
+  //     setInfo(newnoti);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [yes])
 
 
 
-  useEffect(() => {
-    if (newnoti?.length < 1 || newnoti?.length === undefined || newnoti === null) {
-
-      axios
-        .get(`${process.env.REACT_APP_API}/notifications`)
-        .then((data) => {
-          // console.log('real-error', data)
-          if (data?.data.success === false) {
-            console.log('ERROR', data)
-          } else {
-            storage.set("notifications", JSON.stringify(!data?.data?.data?.data ? "" : data?.data?.data?.data));
-            setyes(true);
-            setTimeout(() => {
-              setyes(false);
-            }, 3000);
-          }
-
-        })
-        .catch((err) => {
-          console.log('err', err);
-        });
-    }
-
-  }, [newnoti, newnoti?.length, refresh]);
 
 
 
@@ -170,11 +167,11 @@ const Header = ({ toggleSideNav }: any) => {
               <span className="content">
                 <IoIosNotifications size={30} />
               </span>
-              <span className="badge">{!info?.length ? 0 : info?.length}</span>
+              <span className="badge">{!data?.data?.length ? 0 : data?.data?.length}</span>
             </div>
             {dropDownNoti &&
               (<div className="user-details-noti">
-                <Notification info={info} />
+                <Notification info={data?.data} />
               </div>)}
           </div>
 

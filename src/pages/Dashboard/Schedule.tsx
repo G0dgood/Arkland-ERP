@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import Cookies from "js-cookie";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { Button } from "@mui/material";
@@ -33,8 +33,7 @@ const Schedule = () => {
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
   const [showView, setShowView] = React.useState<DialogState>({});
 
-  const { tasks, isLoading, setLoading } =
-    useFetchTasks(taskAction);
+  const { tasks, isLoading, setLoading } = useFetchTasks(taskAction);
 
   const { schedule, isScheduleLoading } = useScheduleById(viewAction);
 

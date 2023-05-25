@@ -1,120 +1,85 @@
-import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header'
-import WeekReportTitle from './WeekReportTitle'
+import { useEffect, useState } from 'react'
 import WeeklyReportTable5 from '../../components/table_component/WeeklyReportTable5'
-import storage from '../../utils/storage'
-import Cookies from 'js-cookie'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { fireAlert } from '../../utils/Alert'
 import TableLoader from '../../components/TableLoader'
 import { BsChatLeftText } from 'react-icons/bs'
 import { Button } from '@material-ui/core'
 import { MdOutlineClose } from 'react-icons/md'
-import axios, { AxiosResponse } from 'axios'
 import { Spinner } from 'react-bootstrap'
+import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch'
+import { deleteWeeklyReport, reset, updateWeeklyReport, viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
+import moment from 'moment'
 
 const WeeklyReportView = () => {
+	const { viewdata, viewisError, viewisLoading } = useAppSelector((state: any) => state.Weeklyreport)
+	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.Weeklyreport)
+	const { updateisError, updateisLoading, updatemessage, updateisSuccess } = useAppSelector((state: any) => state.Weeklyreport)
+
+
+	const dispatch = useAppDispatch();
 	const { id } = useParams()
 	const navigate = useNavigate();
 
-	const token = Cookies.get("token");
-	const [data, setData] = useState<any>([]);
-	const [sortData, setSortData] = useState([]);
-	const [searchItem, setSearchItem] = useState("");
-	const [isLoading, setisLoading] = useState(false);
-	const [isLoading2, setisLoading2] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
+
+
 	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
-
-	const [isLoading1, setisLoading1] = useState(false);
-
 	const [inputs, setInputs] = useState([]);
 
 
-	// console.log('token', token)
-
-	const title = "Weekly Reports error";
-	const html = message;
-	const icon = "error";
-
-	const title1 = "Weekly Reports Delected";
-	const html1 = "Weekly Reports delected";
-	const icon1 = "success";
-
-	const title2 = "Weekly Update";
-	const html2 = "Weekly Reports Updated";
-	const icon2 = "success";
-
-
-	React.useEffect(() => {
-		setisLoading(true);
-		axios
-			.get(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}/view`)
-			.then((res: AxiosResponse) => {
-				setData(res?.data?.data);
-				setisLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-				setMessage(err?.message)
-				setisLoading(false);
-			});
-	}, [id, navigate]);
+	useEffect(() => {
+		// @ts-ignore
+		dispatch(viewWeeklyReport(id));
+	}, [dispatch, id])
 
 
 	const handleDelete = () => {
-		setisLoading1(true);
-		axios
-			.delete(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`)
-			.then((res: AxiosResponse) => {
-				setisLoading1(false);
-				fireAlert(title1, html1, icon1);
-				setTimeout(() => {
-					navigate("/weeklycontainer");
-				}, 2000);
-			})
-			.catch((data) => {
-				console.log(data);
-				setisLoading1(false);
-			});
+		// @ts-ignore
+		dispatch(deleteWeeklyReport(id));
 	}
 
 	const handleUpate = () => {
-		setisLoading2(true);
-		axios
-			.patch(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`, inputs)
-			.then((res: AxiosResponse) => {
-				setisLoading2(false);
-				fireAlert(title2, html2, icon2);
-				setTimeout(() => {
-					navigate("/weeklycontainer");
-				}, 2000);
-			})
-			.catch((data) => {
-				console.log(data);
-				setisLoading2(false);
-			});
+		// @ts-ignore
+		dispatch(updateWeeklyReport({ id, inputs }));
 	}
-
-
 
 
 
 	useEffect(() => {
-		if (isSuccess) {
-			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-			}, 5000);
-		} else if (isError) {
-			fireAlert(title, html, icon);
+		if (isError) {
+			fireAlert("Weekly Reports error", viewisError, "error");
 			setTimeout(() => {
 				setisError(false);
 			}, 1000);
+		} else if (deleteisSuccess) {
+			fireAlert("Delete Weekly Reports success", deleteisSuccess, 'success');
+			setTimeout(() => {
+				navigate("/weeklycontainer");
+				dispatch(reset());
+			}, 2000);
+		} else if (deleteisError) {
+			fireAlert("Delete Weekly Reports error", deletemessage, "error");
+			setTimeout(() => {
+				dispatch(reset());
+			}, 2000);
+		} else if (updateisError) {
+			fireAlert("Update Weekly Reports error", updatemessage, "error");
+			setTimeout(() => {
+				dispatch(reset());
+			}, 2000);
+		} else if (updateisSuccess) {
+			fireAlert("Weekly Reports Updated", updatemessage, "success");
+			setTimeout(() => {
+				navigate("/weeklycontainer");
+				dispatch(reset());
+			}, 2000);
+		} else if (viewisError) {
+			fireAlert("View Weekly Reports error", viewdata, "error");
+			setTimeout(() => {
+				dispatch(reset());
+			}, 2000);
 		}
-
-	}, [html, isError, isSuccess]);
+	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, isError, navigate, updateisError, updateisSuccess, updatemessage, viewdata, viewisError]);
 
 	return (
 		<div  >
@@ -143,17 +108,17 @@ const WeeklyReportView = () => {
 					<div className='weeklyreporttop-container-card-1'>
 						<div className='weekly-top-card-1-sub'>
 							<p>EMPLOYEE NAME</p>
-							<p className='weekly-top-card-1-sub-second-child'>{data?.employee_name}</p>
+							<p className='weekly-top-card-1-sub-second-child'>{viewdata?.employee_name}</p>
 							<p>EMPLOYEE TITLE</p>
-							<p>{data?.employee_title}</p>
+							<p>{viewdata?.employee_title}</p>
 							<p>DEPARTMENT</p>
 							<p>I.T</p>
 							<p>SUPERVISOR</p>
-							<p>{data?.employee_supervisor}</p>
+							<p>{viewdata?.employee_supervisor}</p>
 							<p>SELF ASSESSMENT</p>
-							<p>{data?.self_assessment}</p>
+							<p>{viewdata?.self_assessment}</p>
 							<p>DATE</p>
-							<p>30/11/2022</p>
+							<p>{moment().format("MM DD YYYY")}</p>
 						</div>
 					</div>
 					<div className='weekly-top-container-card-2'>
@@ -169,22 +134,22 @@ const WeeklyReportView = () => {
 				<div className='weekly-report-title'>
 					<div className='weekly-delete'>
 						<div className='weekly-number'>
-							<h4>Week {data?.week}
+							<h4>Week {viewdata?.week}
 							</h4>
 						</div>
 						<div className='weekly-delete-btn'>
-							{data?.status === "acknowledged" ? "" : <Button className={"table-link"} onClick={handleDelete}>{isLoading1 ? <Spinner animation="border" /> : 'Delete'}</Button>}
+							{viewdata?.status === "acknowledged" ? "" : <Button className={"table-link"} onClick={handleDelete}>{deleteisLoading ? <Spinner animation="border" /> : 'Delete'}</Button>}
 
 						</div>
 						<div>
-							{data?.status === "acknowledged" ? "" : <Button className="table-link-active" onClick={handleUpate}>	{isLoading2 ? <Spinner animation="border" /> : 'Update'}</Button>}
+							{viewdata?.status === "acknowledged" ? "" : <Button className="table-link-active" onClick={handleUpate}>	{updateisLoading ? <Spinner animation="border" /> : 'Update'}</Button>}
 
 						</div>
 					</div>
 				</div>
 				<div>
-					{isLoading1 ? <TableLoader isLoading={isLoading1} /> : ''}
-					<WeeklyReportTable5 data={data?.activities} isLoading={isLoading} setInputs={setInputs} />
+					{viewisLoading ? <TableLoader isLoading={viewisLoading} /> : ''}
+					<WeeklyReportTable5 data={viewdata?.activities} isLoading={viewisLoading} setInputs={setInputs} />
 				</div>
 			</div>
 		</div>

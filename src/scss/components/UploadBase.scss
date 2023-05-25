@@ -1,0 +1,125 @@
+.csv-input {
+  padding: 10px !important;
+  display: block !important;
+  margin: 15px auto !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
+}
+
+.upload-form {
+  padding: 0 1.5rem !important;
+}
+
+.upload-icon,
+.upload-icon-active {
+  text-align: center !important;
+}
+.upload-icon i {
+  color: #f6f6f6 !important;
+}
+.upload-icon-active i {
+  color: #e2522e !important;
+}
+.upload-icon p {
+  color: #5c5c5c !important;
+  margin: 0 !important;
+}
+.upload-icon-active p {
+  color: #5c5c5c !important;
+  margin-top: .4rem !important;
+}
+
+.csv-input {
+  // border: 1px solid #c5c5c5 !important;
+}
+
+.upload-progress-bar {
+  background-color: #f6f6f6 !important;
+  border-radius: .1rem !important;
+}
+.upload-progress-bar .progress-bar {
+  background-color: #e2522e !important;
+  font-weight: bold !important;
+}
+
+// button.upload-base-btn {
+//   background-color: #e2522e !important;
+//   color: #ffff !important;
+//   border-radius: 3px !important;
+//   font-weight: bold !important;
+//   padding: 5px 20px !important;
+//   border: none !important;
+//   box-shadow: 0 0 1px rgba(0, 0, 0, 0.15), 0 0 2px rgba(0, 0, 0, 0.15),
+//     0 0 16px rgba(218, 209, 209, 0.15) !important;
+//   transition: all 0.3s ease-out !important;
+//   -webkit-transition: all 0.3s ease-out !important;
+// }
+// button.upload-base-btn:hover {
+//   background-color: #cf4c2b !important;
+// }
+// button.upload-base-btn i {
+//   padding-left: .5rem !important;
+// }
+
+
+.container {
+  text-align: center !important;
+  padding: 15px !important;
+  margin: 10px auto !important;
+}
+
+.csv-input {
+  padding: 10px !important;
+  display: block !important;
+  margin: 15px auto !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
+}
+
+.container p {
+  padding-top: 10px !important;
+  color: #666 !important;
+}
+
+
+.upload-toast{
+    width: 100% !important;
+}
+
+
+.logic-modal .toast-body.upload-toast {
+  color: #e2522e !important;
+  display: grid !important;
+  grid-template-columns: .03fr 1fr .03fr !important;
+  padding-left: 20px !important; 
+  padding-top: 15px !important;
+  padding-bottom: 15px;
+  border: 2px solid #e2522e !important;
+}
+ 
+.logic-modal .toast-body .upload-toast  p {
+  color: #e2522e !important;
+  font-weight: bold !important;
+  margin: 0 !important;
+  width: 100% !important;
+} 
+
+.createNU-grid {
+  display: grid !important;
+  grid-template-columns: 3fr 1fr 2fr !important;
+}
+
+.uploadbtn {
+  background-color: #fff !important;
+  color: #3f3f3f !important;
+  border-radius: 3px !important;
+  font-weight: bold !important;
+  padding: 8px 10px !important;
+  border: 1px solid #e8e8e8 !important;
+  transition: all 0.3s ease-out !important;
+  -webkit-transition: all 0.3s ease-out !important;
+}
+.uploadbtn i {
+  color: #e2522e !important;
+  margin-left: 7px !important;
+}
