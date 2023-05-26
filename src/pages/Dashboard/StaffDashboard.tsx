@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOpenInFull } from "react-icons/md";
 // @ts-ignore
 import img from "../../assets/images/mann2.svg";

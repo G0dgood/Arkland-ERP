@@ -99,11 +99,18 @@ import * as AiIcons from 'react-icons/ai';
 import { BiSupport } from 'react-icons/bi';
 import { BsBriefcase, BsShield } from 'react-icons/bs';
 import { getUserPrivileges } from '../../functions/auth';
+import LogoutOption from '../LogoutOption';
+
+
 
 const Sidebar = ({
  toggled,
  handleToggleSidebar,
- collapseNav
+ collapseNav,
+ setShowLogout,
+ showLogout,
+ handleLogout,
+ isLoading1
 }: any) => {
 
  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
@@ -157,6 +164,7 @@ const Sidebar = ({
      <MenuItem className='Side__Content' active={pathname === '/policy'} icon={<BsShield size={22} />}>  Policy <Link to="/policy" /> </MenuItem>
     </Menu>
    </SidebarContent>
+
   </ProSidebar>
  );
 };

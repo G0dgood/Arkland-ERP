@@ -27,6 +27,7 @@ ChartJS.register(
   Filler,
   Legend
 );
+
 export const options = {
   responsive: true,
   plugins: {

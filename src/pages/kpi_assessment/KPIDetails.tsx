@@ -123,24 +123,6 @@ const KPIDetails = () => {
 
 	return (
 		<div>
-			<header className="ChatProgressView-header"  >
-				<div className='leave-Update-titile-icon'>
-					<span className="app-chat--icon">
-						<BsChatLeftText />	<span>My Assessment Performance</span> 		<Button className={data?.status === 'active' ? "table-link-active" : "table-link"}>
-							{data?.status === 'active' ? 'Completed' : data?.status}</Button>
-					</span>
-				</div>
-				<div className="ChatProgressView-close">
-					<Link
-						to={"/kpicontainer"}>
-						<MdOutlineClose
-							size={25}
-							style={{ color: "white", backgroundColor: "" }}
-							className="ChatProgressView-close-icon"
-						/>
-					</Link>
-				</div>
-			</header>
 			<div id="performance">
 				<section className="area-grid">
 					<div className="evaluation-area">
@@ -151,6 +133,10 @@ const KPIDetails = () => {
 									<h3>{data?.employee_name}</h3>
 									{/* <p>john.adibe@outcess.com</p> */}
 									<p>ALS/ADM/{data?.employee_id}</p>
+									<span className="app-chat--icon">
+										<span>My Assessment Performance</span> 		<Button className={data?.status === 'active' ? "table-link-active" : "table-link"}>
+											{data?.status === 'active' ? 'Completed' : data?.status}</Button>
+									</span>
 								</div>
 								{/* @ts-ignore */}
 								{data?.status === 'active' ? '' :

@@ -19,7 +19,7 @@ import Socket from "./Socket";
 import { useAppDispatch, useAppSelector } from "../hooks/useDispatch";
 import { allNotifications } from "../features/Notification/NotificationSlice";
 
-const Header = ({ toggleSideNav }: any) => {
+const Header = ({ toggleSideNav, setShowLogout }: any) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state: any) => state.notification)
@@ -51,31 +51,7 @@ const Header = ({ toggleSideNav }: any) => {
 
 
 
-  const handleLogout = async () => {
-    setisLoading1(true);
-    await axios
-      .patch(`${process.env.REACT_APP_API}/me/logout`)
-      .then(() => {
-        delete axios?.defaults?.headers?.common["Authorization"];
-      })
-      .catch((err) => {
-        // Cookies.remove("token");
-        // storage.remove("user");
-        // storage.remove("notifications");
-        // removeData();
-        // navigate("/");
-        console.log(err);
-        setisLoading1(false);
-      });
-    Cookies.remove("token");
-    storage.remove("user");
-    storage.remove("notifications");
-    removeData();
-    navigate("/");
-    setisLoading1(false)
-    window.location.replace("/");
-    // window.location.reload();
-  };
+
 
   window.addEventListener("offline", (e) => setnetwork("offline"));
   window.addEventListener("online", (e) => setnetwork("online"));
@@ -90,7 +66,7 @@ const Header = ({ toggleSideNav }: any) => {
   const [isOpen, setIsopen] = useState(false);
   // const [data, setData] = useState(false);
   // const [hideNav, setHideNav] = useState<any>(false);
-  const [showLogout, setShowLogout] = useState<any>(false);
+
 
   const ToggleSidebar = () => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
@@ -133,12 +109,7 @@ const Header = ({ toggleSideNav }: any) => {
           // }
         }}
       />
-      <LogoutOption
-        setShowLogout={setShowLogout}
-        showLogout={showLogout}
-        handleLogout={handleLogout}
-        isLoading1={isLoading1}
-      />
+
       <div className="header-container">
         <div className="header-left">
           <TfiAlignJustify

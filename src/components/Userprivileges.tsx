@@ -1,6 +1,5 @@
 import { Button } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { MdOutlineClose, MdOutlinePermIdentity } from 'react-icons/md'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from './TableOptions'
 import { BsCheckCircle } from 'react-icons/bs'
 import moment from 'moment'
@@ -12,8 +11,7 @@ import DeleteModals from './DeleteModals'
 import axios, { AxiosResponse } from 'axios'
 import { fireAlert } from '../utils/Alert'
 import AssignPrivilegesModal from './Modals/AssignPrivilegesModal'
-import Header from './Header'
-import Sidebar from './SidebarAndDropdown/Sidebar'
+
 
 const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 
@@ -129,92 +127,76 @@ const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 
 	const [displayData, setDisplayData] = useState([]);
 
-	const [collapseNav, setCollapseNav] = useState(() => {
-		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
-	});
 
-	useEffect(() => {
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-		localStorage.setItem("collapse", JSON.stringify(collapseNav));
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-	}, [collapseNav]);
-	const toggleSideNav = () => {
-		setCollapseNav(!collapseNav);
-	};
 
 
 	return (
-		<div id="screen-wrapper">
-			<Header toggleSideNav={toggleSideNav} />
-			<Sidebar collapseNav={collapseNav} />
-			<main>
-				<div className='SiteWorkermaindiv'>
-					<div className='SiteWorkermaindivsub'>
-						{/* <span className='SupportmainTitleh3'> */}
-						<AssignPrivilegesModal setReload={setReload} />
-						{/* </span> */}
-					</div>
-					<div>
-						<EntriesPerPage
-							data={data}
-							entriesPerPage={entriesPerPage}
-							setEntriesPerPage={setEntriesPerPage}
-						/>
-					</div>
-					<div>
-						<MainSearch placeholder={'Search...      User Privileges'} onChange={onChange} result={result} />
-					</div>
+		<div  >
+			<div className='SiteWorkermaindiv'>
+				<div className='SiteWorkermaindivsub'>
+					{/* <span className='SupportmainTitleh3'> */}
+					<AssignPrivilegesModal setReload={setReload} />
+					{/* </span> */}
 				</div>
-
-				<section className="md-ui component-data-table">
-					{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-					<div className="main-table-wrapper">
-						<table className="main-table-content">
-							<thead className="data-table-header">
-								<tr className="data-table-row" >
-									<td className="table-datacell datatype-numeric">Role</td>
-									<td className="table-datacell datatype-numeric">Created Date</td>
-									<td className="table-datacell datatype-numeric">Status</td>
-									<td className="table-datacell datatype-numeric">ACTION</td>
-
-								</tr>
-							</thead>
-							<tbody className="data-table-content">
-								{isLoading ? (
-									<TableFetch colSpan={8} />
-								) : displayData?.length === 0 || displayData == null ? (
-									<NoRecordFound colSpan={8} />
-								) : (
-									displayData.map((item: any, i: any) => (
-										<tr className="data-table-row" key={i}>
-											<td className="table-datacell datatype-numeric">{item?.role}</td>
-											<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
-
-											<td className="table-datacell datatype-numeric">
-												{item?.status === "active" ? <BsCheckCircle size={25} color={"green"} /> : <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
-
-											</td>
-											<td className="table-datacell datatype-numeric">
-												<Button onClick={() => { setShowDelete(true); setPrivilegesid(item?._id) }}> <ImBin size={25} color='#bf8412' /></Button>
-											</td>
-										</tr>
-									))
-								)}
-							</tbody>
-						</table>
-					</div>
-				</section>
-				<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} handleDelete={handleDelete} isLoading1={isLoading1} />
-				<footer className="main-table-footer">
-					<Pagination
-						setDisplayData={setDisplayData}
-						data={sortData}
+				<div>
+					<EntriesPerPage
+						data={data}
 						entriesPerPage={entriesPerPage}
-						Total={"Privileges"}
+						setEntriesPerPage={setEntriesPerPage}
 					/>
-				</footer>
-			</main>
+				</div>
+				<div>
+					<MainSearch placeholder={'Search...      User Privileges'} onChange={onChange} result={result} />
+				</div>
+			</div>
+
+			<section className="md-ui component-data-table">
+				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+				<div className="main-table-wrapper">
+					<table className="main-table-content">
+						<thead className="data-table-header">
+							<tr className="data-table-row" >
+								<td className="table-datacell datatype-numeric">Role</td>
+								<td className="table-datacell datatype-numeric">Created Date</td>
+								<td className="table-datacell datatype-numeric">Status</td>
+								<td className="table-datacell datatype-numeric">ACTION</td>
+
+							</tr>
+						</thead>
+						<tbody className="data-table-content">
+							{isLoading ? (
+								<TableFetch colSpan={8} />
+							) : displayData?.length === 0 || displayData == null ? (
+								<NoRecordFound colSpan={8} />
+							) : (
+								displayData.map((item: any, i: any) => (
+									<tr className="data-table-row" key={i}>
+										<td className="table-datacell datatype-numeric">{item?.role}</td>
+										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
+
+										<td className="table-datacell datatype-numeric">
+											{item?.status === "active" ? <BsCheckCircle size={25} color={"green"} /> : <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+
+										</td>
+										<td className="table-datacell datatype-numeric">
+											<Button onClick={() => { setShowDelete(true); setPrivilegesid(item?._id) }}> <ImBin size={25} color='#bf8412' /></Button>
+										</td>
+									</tr>
+								))
+							)}
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} handleDelete={handleDelete} isLoading1={isLoading1} />
+			<footer className="main-table-footer">
+				<Pagination
+					setDisplayData={setDisplayData}
+					data={sortData}
+					entriesPerPage={entriesPerPage}
+					Total={"Privileges"}
+				/>
+			</footer>
 		</div>
 	)
 }

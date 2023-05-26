@@ -126,7 +126,6 @@ const TeamWeeklyReportUpdate = () => {
 
 	return (
 		<div  >
-
 			<header className="ChatProgressView-header"  >
 				<div>
 					<span className="app-chat--icon">

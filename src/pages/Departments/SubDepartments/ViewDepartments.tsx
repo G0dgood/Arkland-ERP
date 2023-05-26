@@ -18,9 +18,9 @@ import { useDepartmentById } from "../../../hooks/useDepartments";
 import { getDepartment } from "../../../store/reducers/department";
 import { getRoles } from "../../../store/reducers/roles";
 import TableLoader from "../../../components/TableLoader";
-import { Toast } from "react-bootstrap";
+
 import Pagination from "../../../components/Pagination";
-import Sidebar from "../../../components/SidebarAndDropdown/Sidebar";
+
 
 const ViewDepartments = () => {
   const navigate = useNavigate();
@@ -100,111 +100,109 @@ const ViewDepartments = () => {
           </Toast.Body>
         </Toast>
       )} */}
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
 
-      <main>
-        <div className="SiteWorkermaindiv">
-          <div className="SiteWorkermaindivsub">
-            <Button
-              variant="contained"
-              className="back-btn-icon"
-              id="Add-btn-sub"
-              onClick={() => navigate(-1)}
-            >
-              <FaArrowLeft size={25} />
-            </Button>
-          </div>
-          <div>
-            <EntriesPerPage
-              data={displayData}
-              entriesPerPage={entriesPerPage}
-              setEntriesPerPage={setEntriesPerPage}
-            />
-          </div>
-          <div>
-            <MainSearch placeholder={`Search...          `} />
-          </div>
+
+      <div className="SiteWorkermaindiv">
+        <div className="SiteWorkermaindivsub">
+          <Button
+            variant="contained"
+            className="back-btn-icon"
+            id="Add-btn-sub"
+            onClick={() => navigate(-1)}
+          >
+            <FaArrowLeft size={25} />
+          </Button>
         </div>
-        <section className="md-ui component-data-table">
-          {membersLoading ? <TableLoader isLoading={membersLoading} /> : ""}
-          <div className="main-table-wrapper">
-            <table className="main-table-content">
-              <thead className="data-table-header">
-                <tr className="data-table-row">
-                  {header.map((i, index) => {
-                    return (
-                      <>
-                        <td
-                          className="table-datacell datatype-numeric"
-                          key={index}
-                        >
-                          {i.title}
-                        </td>
-                      </>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody className="data-table-content">
-                {membersLoading ? (
-                  <TableFetch colSpan={8} />
-                ) : departmentMembers?.length === 0 ||
-                  departmentMembers == null ? (
-                  <NoRecordFound colSpan={9} />
-                ) : (
-                  departmentMembers.length > 0 &&
-                  departmentMembers?.map((item: any, i: any) => (
-                    <tr className="data-table-row">
-                      <td className="table-datacell datatype-string">
-                        {item?.employee_id}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.full_name}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.email}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {checkForName(item?.role, roles)}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {checkForName(item?.department, departmentState)}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.category}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        {item?.status}
-                      </td>
-                      <td className="table-datacell datatype-numeric">
-                        <div className="table-active-items">
-                          <span>
-                            <BsCheckCircle
-                              size={25}
-                              color={"green"}
-                              onClick={() => navigate(`/employees/${item.id}`)}
-                              title="View employee"
-                            />
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <footer className="main-table-footer">
-          <Pagination
-            setDisplayData={setDisplayData}
-            data={departmentMembers.length > 0 ? departmentMembers : []}
-            entriesPerPage={EntriesPerPage}
-            Total={"Employee"}
+        <div>
+          <EntriesPerPage
+            data={displayData}
+            entriesPerPage={entriesPerPage}
+            setEntriesPerPage={setEntriesPerPage}
           />
-        </footer>
-      </main>
+        </div>
+        <div>
+          <MainSearch placeholder={`Search...          `} />
+        </div>
+      </div>
+      <section className="md-ui component-data-table">
+        {membersLoading ? <TableLoader isLoading={membersLoading} /> : ""}
+        <div className="main-table-wrapper">
+          <table className="main-table-content">
+            <thead className="data-table-header">
+              <tr className="data-table-row">
+                {header.map((i, index) => {
+                  return (
+                    <>
+                      <td
+                        className="table-datacell datatype-numeric"
+                        key={index}
+                      >
+                        {i.title}
+                      </td>
+                    </>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody className="data-table-content">
+              {membersLoading ? (
+                <TableFetch colSpan={8} />
+              ) : departmentMembers?.length === 0 ||
+                departmentMembers == null ? (
+                <NoRecordFound colSpan={9} />
+              ) : (
+                departmentMembers.length > 0 &&
+                departmentMembers?.map((item: any, i: any) => (
+                  <tr className="data-table-row">
+                    <td className="table-datacell datatype-string">
+                      {item?.employee_id}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.full_name}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.email}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {checkForName(item?.role, roles)}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {checkForName(item?.department, departmentState)}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.category}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.status}
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      <div className="table-active-items">
+                        <span>
+                          <BsCheckCircle
+                            size={25}
+                            color={"green"}
+                            onClick={() => navigate(`/employees/${item.id}`)}
+                            title="View employee"
+                          />
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <footer className="main-table-footer">
+        <Pagination
+          setDisplayData={setDisplayData}
+          data={departmentMembers.length > 0 ? departmentMembers : []}
+          entriesPerPage={EntriesPerPage}
+          Total={"Employee"}
+        />
+      </footer>
+
     </div>
   );
 };

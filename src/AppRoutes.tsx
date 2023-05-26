@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
+import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
 import Cookies from "js-cookie";
@@ -114,6 +115,7 @@ const AppRoutes: React.FC<any> = () => {
         path="/"
         element={parsedUserData ? <Navigate to="/home" /> : <Login />}
       /> */}
+
       <Route path="/home" element={<Dashboard />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

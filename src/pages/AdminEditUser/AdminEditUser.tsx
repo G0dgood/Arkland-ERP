@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { BiUser } from "react-icons/bi";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import EditProfile from "./components/EditProfile";
 import ResetPassword from "./components/ResetPassword";
 import { useAppSelector } from "../../hooks/useDispatch";
-import { checkForName } from "../../utils/checkForName";
-import storage from "../../utils/storage";
 import { useEmployeeById } from "../../hooks/useEmployees";
 
 const AdminEditUser = () => {
@@ -60,39 +56,35 @@ const AdminEditUser = () => {
   ];
 
   return (
-    <div id="screen-wrapper">
-      <Header />
-      <Sidebar />
-      <main id="edit-user">
-        <h6 className="page-title">
-          <Link to="/employeecontainer">Employees</Link> | Employee Profile
-        </h6>
-        <section>
-          <div className="user-info">
-            <BiUser size={80} />
-            <div>
-              <h3> {employee?.full_name} </h3>
-              <p>{employee?.email} </p>
-              <p>{employee?.role?.name} </p>
-            </div>
+    <div id="edit-user">
+      <h6 className="page-title">
+        <Link to="/employeecontainer">Employees</Link> | Employee Profile
+      </h6>
+      <section>
+        <div className="user-info">
+          <BiUser size={80} />
+          <div>
+            <h3> {employee?.full_name} </h3>
+            <p>{employee?.email} </p>
+            <p>{employee?.role?.name} </p>
           </div>
-          <div className="profile-container">
-            <ul className="nav-tabs">
-              {tabs.map((item, i) => (
-                <Button
-                  variant="outlined"
-                  key={i}
-                  className={activeTab === i ? "Add-btn-edit" : "show-btn-edit"}
-                  onClick={() => setActiveTab(i)}
-                >
-                  {item}
-                </Button>
-              ))}
-            </ul>
-            {tabPanels[activeTab].component}
-          </div>
-        </section>
-      </main>
+        </div>
+        <div className="profile-container">
+          <ul className="nav-tabs">
+            {tabs.map((item, i) => (
+              <Button
+                variant="outlined"
+                key={i}
+                className={activeTab === i ? "Add-btn-edit" : "show-btn-edit"}
+                onClick={() => setActiveTab(i)}
+              >
+                {item}
+              </Button>
+            ))}
+          </ul>
+          {tabPanels[activeTab].component}
+        </div>
+      </section>
     </div>
   );
 };
