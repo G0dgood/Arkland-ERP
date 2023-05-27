@@ -4,7 +4,7 @@ import "./scss/main.scss";
 import "./App.scss";
 import Sidebar from "./components/SidebarAndDropdown/Sidebar";
 import Header from "./components/Header";
-import storage from "./utils/storage";
+import storage from "./utils/dataService";
 import LoginRoutes from "./LoginRoutes";
 import LogoutOption from "./components/LogoutOption";
 

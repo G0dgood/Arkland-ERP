@@ -27,7 +27,7 @@ const CreateTaskModal = () => {
           const title = "Warning created successfully.";
           const html = `Warning created`;
           const icon = "success";
-          fireAlert(title, html, icon);
+          // fireAlert(title, html, icon);
           resetForm(values);
           setLgShow(false);
           navigate(`/warninglist`);
@@ -38,7 +38,7 @@ const CreateTaskModal = () => {
         const html = err.response.data.message;
         const icon = "error";
         const title = "Warning creation failed";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
       });
   };
   const employees: any = useAppSelector((state) => state.employees.employees);

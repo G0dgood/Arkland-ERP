@@ -130,20 +130,20 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
   const html1 = message;
   const icon1 = "error";
 
-  useEffect(() => {
-    if (isSuccess) {
-      fireAlert(title, html, icon);
-      setTimeout(() => {
-        setisSuccess(false)
-      }, 5000);
-    } else if (isError) {
-      fireAlert(title1, html1, icon1);
-      setTimeout(() => {
-        setisError(false)
-      }, 10000);
-    }
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     fireAlert(title, html, icon);
+  //     setTimeout(() => {
+  //       setisSuccess(false)
+  //     }, 5000);
+  //   } else if (isError) {
+  //     fireAlert(title1, html1, icon1);
+  //     setTimeout(() => {
+  //       setisError(false)
+  //     }, 10000);
+  //   }
 
-  }, [html, title, icon, isSuccess, isError, html1]);
+  // }, [html, title, icon, isSuccess, isError, html1]);
 
 
   const handelHodkpi = (e: any,) => {

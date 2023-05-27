@@ -37,7 +37,7 @@ const RequestWorkerModal = (props: any) => {
         const title = "Request for worker submitted";
         const html = `Request submitted`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setLoading(false);
         setLgShow(false);
 
@@ -50,7 +50,7 @@ const RequestWorkerModal = (props: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Request submission failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 

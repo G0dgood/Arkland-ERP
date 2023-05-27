@@ -62,7 +62,7 @@ const Schedule = () => {
         const title = "Task deleted.";
         const html = `Task deleted`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setTaskAction(true);
       } else {
         throw new Error(data.message || "Something went wrong!");
@@ -73,7 +73,7 @@ const Schedule = () => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task deletion failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
   const handleSubmit = async (values: any, { resetForm }: any) => {
@@ -95,7 +95,7 @@ const Schedule = () => {
         const title = "Task created successfully.";
         const html = `Task created`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setTaskAction(true);
 
         setTaskCreateShow(false);
@@ -109,7 +109,7 @@ const Schedule = () => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 

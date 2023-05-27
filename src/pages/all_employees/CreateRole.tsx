@@ -83,21 +83,21 @@ const CreateRole = ({ setShowTitle }: any) => {
 	const icon1 = "error";
 
 
-	useEffect(() => {
-		if (isSuccess) {
-			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-				setMessage("")
-			}, 5000);
-		} else if (isError) {
-			fireAlert(title1, html1, icon1);
-			setTimeout(() => {
-				setisError(false)
-				setMessage("")
-			}, 5000);
-		}
-	}, [html, html1, isError, isSuccess])
+	// useEffect(() => {
+	// 	if (isSuccess) {
+	// 		fireAlert(title, html, icon);
+	// 		setTimeout(() => {
+	// 			setisSuccess(false)
+	// 			setMessage("")
+	// 		}, 5000);
+	// 	} else if (isError) {
+	// 		fireAlert(title1, html1, icon1);
+	// 		setTimeout(() => {
+	// 			setisError(false)
+	// 			setMessage("")
+	// 		}, 5000);
+	// 	}
+	// }, [html, html1, isError, isSuccess])
 
 
 	// --- Pagination --- //

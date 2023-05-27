@@ -99,7 +99,7 @@ export const authSlice = createSlice({
       .addCase(allEmployee.fulfilled, (state:any, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.data = action.payload.data.data  
+        state.data = action.payload  
       })
       .addCase(allEmployee.rejected, (state:any, action) => {
         state.isLoading = false
@@ -115,7 +115,7 @@ export const authSlice = createSlice({
         state.uploadisLoading = false
         state.uploadisSuccess = true
         state.uploaddata = action.payload  
-          console.log('uploaddata',action.payload)
+          // console.log('uploaddata',action.payload)
       })
       .addCase(uploadEmployee.rejected, (state:any, action) => {
         state.uploadisLoading = false
@@ -137,7 +137,7 @@ export const authSlice = createSlice({
         state.roleisLoading = false
         state.roleisError = true
         state.rolemessage = action.payload  
-          console.log('actionpayload2',action)
+          // console.log('actionpayload2',action)
         state.roledata = '' 
       })
        

@@ -4,7 +4,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdPostAdd } from 'react-icons/md';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
-import storage from '../../utils/storage';
+import storage from '../../utils/dataService';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch';
@@ -98,40 +98,40 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 
 
 
-	useEffect(() => {
-		if (createisSuccess) {
-			fireAlert(title, html, icon);
-			setInputs({
-				assessment: " ",
-				week: "",
-				activities: []
-			})
-			setTimeout(() => {
-				dispatch(reset());
-				setIsCheck(false)
-			}, 2000);
-		} else if (createisError) {
-			fireAlert(title1, html1, icon1);
-			setTimeout(() => {
-				setInputs({
-					assessment: " ",
-					week: "",
-					activities: [
-						{
-							completed: "",
-							in_progress: "",
-							next: "",
-							due_date_for_next: "",
-							next_week_tasks: [""],
-							issues: [""],
-							blockers: [""]
-						}
-					]
-				})
-			}, 5000);
-			reset()
-		}
-	}, [html, html1, createisError, createisSuccess, setIsCheck, dispatch])
+	// useEffect(() => {
+	// 	if (createisSuccess) {
+	// 		fireAlert(title, html, icon);
+	// 		setInputs({
+	// 			assessment: " ",
+	// 			week: "",
+	// 			activities: []
+	// 		})
+	// 		setTimeout(() => {
+	// 			dispatch(reset());
+	// 			setIsCheck(false)
+	// 		}, 2000);
+	// 	} else if (createisError) {
+	// 		fireAlert(title1, html1, icon1);
+	// 		setTimeout(() => {
+	// 			setInputs({
+	// 				assessment: " ",
+	// 				week: "",
+	// 				activities: [
+	// 					{
+	// 						completed: "",
+	// 						in_progress: "",
+	// 						next: "",
+	// 						due_date_for_next: "",
+	// 						next_week_tasks: [""],
+	// 						issues: [""],
+	// 						blockers: [""]
+	// 					}
+	// 				]
+	// 			})
+	// 		}, 5000);
+	// 		reset()
+	// 	}
+	// }, [html, html1, createisError, createisSuccess, setIsCheck, dispatch])
 
 	return (
 		<div className='weeklycontainer'>

@@ -37,7 +37,7 @@ const CreateDepartmentModal = (props: any) => {
         const title = "Department created successfully";
         const html = `Department created `;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setLgShow(false);
         props.onNewDepartmentCreated();
       } else {
@@ -49,7 +49,7 @@ const CreateDepartmentModal = (props: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Department creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
   return (

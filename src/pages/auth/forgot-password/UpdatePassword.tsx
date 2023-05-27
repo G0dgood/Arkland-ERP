@@ -58,7 +58,7 @@ const UpdatePassword = () => {
         const title = "Password update successful";
         const html = `Password updated`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         // navigate("/home");
         window.location.replace("/home");
       })
@@ -69,7 +69,7 @@ const UpdatePassword = () => {
         const html = error || "Something went wrong!";
         const icon = "error";
         const title = "Password update failed";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setTimeout(() => {
           setError(false);
           setMessage("");

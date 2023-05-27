@@ -11,7 +11,7 @@ import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 import { formatDate } from "../../utils/formatDate";
 import { useAppSelector } from "../../hooks/useDispatch";
 import { fireAlert } from "../../utils/Alert";
-import storage from "../../utils/storage";
+import storage from "../../utils/dataService";
 
 const AddTodo = (props: any) => {
   const token = Cookies.get("token");
@@ -44,7 +44,7 @@ const AddTodo = (props: any) => {
         const title = "Task created successfully.";
         const html = `Task created`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(html, icon);
         resetForm(values);
         setLgShow(false);
         props.onNewTodoCreated();
@@ -57,7 +57,7 @@ const AddTodo = (props: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(html, icon);
     }
   };
   const employees: any = useAppSelector((state) => state?.employees?.employees);

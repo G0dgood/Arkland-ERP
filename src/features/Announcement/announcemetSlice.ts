@@ -156,7 +156,7 @@ export const authSlice = createSlice({
       .addCase(createAnnouncement.fulfilled, (state:any, action) => {
         state.createisLoading = false
         state.createisSuccess = true
-        state.createdata = action.payload?.data 
+        state.createdata = action.payload 
       })
       .addCase(createAnnouncement.rejected, (state:any, action) => {
         state.createisLoading = false

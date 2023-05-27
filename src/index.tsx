@@ -12,20 +12,36 @@ import reportWebVitals from "./reportWebVitals";
 import { handle_logout } from "./utils/auth-util";
 import { UserProviderContainer } from "./context/UserContext";
 
-axios.interceptors.request.use(
-  function (config: any) {
-    const token = Cookies.get("token");
-    config.headers.authorization = `Bearer ${token}`;
-    return config;
-  },
-  function (error) {
-    if (error?.response?.status === 401) {
-      handle_logout();
-    }
+// axios.interceptors.request.use(
+//   function (config: any) {
+//     const token = Cookies.get("token");
+//     config.headers.authorization = `Bearer ${token}`;
+//     return config;
+//   },
+//   function (error) {
+//     if (error?.response?.status === 401) {
+//       handle_logout();
+//     }
 
-    return Promise.reject(error || "Something went wrong try again");
-  }
-);
+//     return Promise.reject(error || "Something went wrong try again");
+//   }
+// );
+
+
+
+// axios.interceptors.response.use(
+//   function (response: any) {
+//     return response;
+//   },
+//   function (error) {
+
+//     if (error?.response?.status === 401) {
+//       handle_logout();
+//     }
+//     return error
+//   }
+// );
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

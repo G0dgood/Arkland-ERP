@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { useState } from 'react';
 
 
 
@@ -69,14 +70,26 @@ export  const handleRequestGet = ( setData:any, setMessage:any, setisError:any, 
         setisLoading(false);
       });
 }
-export  const handleRequestPost = ( setData:any, setMessage:any, setisError:any, setisSuccess:any, setisLoading:any, url:any   ) => { 
+
+export const handleRequestPost = (setData: any, setMessage: any, setisError: any, setisSuccess: any, setisLoading: any, url: any, file: any, setProgress: any) => { 
+	  const formData = new FormData();
+    formData.append('file', file);
+    formData.append('fileName', file?.name);
+	console.log("file",formData)
     setisLoading(true);
     fetch(url, {
-      method: "POST",  
-      headers: {
-							"Content-Type": "application/json", 
-        Authorization: `Bearer ${token}`,
-					},  
+					method: "POST",  
+					body:  formData,
+				 
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "form-data"
+					},
+										// @ts-ignore 
+          onUploadProgress: (file: { loaded: number; total: number; }) => {
+            setProgress(Math.round((100 * file.loaded) / file.total));
+          }, 
+						
     })
       .then((response) => response.json())
       .then((data) => {
@@ -101,4 +114,13 @@ export  const handleRequestPost = ( setData:any, setMessage:any, setisError:any,
       });
 }
 
- 
+
+
+   //  headers: {
+					// 		"Content-Type": "application/json", 
+					// 		  onUploadProgress: (jsonData:any) => {
+     //        setProgress(Math.round((100 * jsonData.loaded) / jsonData.total));
+     //      },
+					// 		Authorization: `Bearer ${token}`,
+								
+					// }, 

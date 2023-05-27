@@ -55,25 +55,25 @@ const KPIDetails = () => {
 	const html3 = message3;
 	const icon3 = "error";
 
-	useEffect(() => {
-		if (isSuccess3) {
-			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess3(false)
-			}, 5000);
-		} else if (isError1) {
-			fireAlert(title1, html1, icon1);
-			setTimeout(() => {
-				setisError1(false);
-			}, 10000);
-		} else if (isError3) {
-			fireAlert(title3, html3, icon3);
-			setTimeout(() => {
-				setisError3(false);
-			}, 10000);
-		}
+	// useEffect(() => {
+	// 	if (isSuccess3) {
+	// 		fireAlert(html, icon);
+	// 		setTimeout(() => {
+	// 			setisSuccess3(false)
+	// 		}, 5000);
+	// 	} else if (isError1) {
+	// 		fireAlert(html1, icon1);
+	// 		setTimeout(() => {
+	// 			setisError1(false);
+	// 		}, 10000);
+	// 	} else if (isError3) {
+	// 		fireAlert(html3, icon3);
+	// 		setTimeout(() => {
+	// 			setisError3(false);
+	// 		}, 10000);
+	// 	}
 
-	}, [html, title, icon, isSuccess3, isError1, html1, isError3, html3]);
+	// }, [html, title, icon, isSuccess3, isError1, html1, isError3, html3]);
 
 
 

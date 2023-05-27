@@ -101,7 +101,7 @@ export const useWarningEmployeeById = (id: string) => {
         const title = "Employee termination requested.";
         const html = `Request successful`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setTerminateLoading(false);
         navigate("/terminations");
       } else {
@@ -113,7 +113,7 @@ export const useWarningEmployeeById = (id: string) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Request failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
   return {

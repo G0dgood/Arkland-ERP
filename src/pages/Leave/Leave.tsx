@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ApplyForLeave from '../../components/Modals/ApplyForLeave';
 import { fireAlert } from '../../utils/Alert';
 import Cookies from 'js-cookie';
-import storage from '../../utils/storage';
+import storage from '../../utils/dataService';
 import Pagination from '../../components/Pagination';
 import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import TableLoader from '../../components/TableLoader';
@@ -106,21 +106,21 @@ const Leave = () => {
   const icon1 = "error";
 
 
-  useEffect(() => {
-    if (isSuccess) {
-      fireAlert(title, html, icon);
-      setTimeout(() => {
-        setisSuccess(false)
-        setMessage("")
-      }, 5000);
-    } else if (allLeaveisError) {
-      fireAlert(title1, html1, icon1);
-      // setTimeout(() => {
-      //   setallLeaveisError(false)
-      //   setMessage("")
-      // }, 5000);
-    }
-  }, [html, html1, allLeaveisError, isSuccess])
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     fireAlert(title, html, icon);
+  //     setTimeout(() => {
+  //       setisSuccess(false)
+  //       setMessage("")
+  //     }, 5000);
+  //   } else if (allLeaveisError) {
+  //     fireAlert(title1, html1, icon1);
+  //     // setTimeout(() => {
+  //     //   setallLeaveisError(false)
+  //     //   setMessage("")
+  //     // }, 5000);
+  //   }
+  // }, [html, html1, allLeaveisError, isSuccess])
 
   const [displayData, setDisplayData] = useState([]);
 

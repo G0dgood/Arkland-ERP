@@ -7,23 +7,27 @@ import { FiUpload } from "react-icons/fi";
 import { useAppDispatch, useAppSelector } from "../hooks/useDispatch";
 import { reset, uploadEmployee } from "../features/Employee/employeeSlice";
 import { fireAlert } from "../utils/Alert";
+import { handleRequestPost } from "./handleRequest/handleRequest";
+
+
+
+import axios from "axios";
 
 
 const UploadEmployee = () => {
   const dispatch = useAppDispatch();
-  const { uploaddata, uploadisError, uploadisLoading, uploadmessage, uploadisSuccess } = useAppSelector((state: any) => state.employee)
-
-  // console.log('uploaddata', uploaddata)
-  // console.log('uploadisError', uploadisError)
-  // console.log('uploadmessage', uploadmessage.message)
-  // console.log('uploadisSuccess', uploadisSuccess)
+  // const { uploaddata, uploadisError, uploadisLoading, uploadmessage, uploadisSuccess } = useAppSelector((state: any) => state.employee)
 
 
 
+  const [data, setData] = useState([]);
+  const [message, setMessage] = useState("");
+  const [isError, setisError] = useState(false);
+  const [isSuccess, setisSuccess] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
 
+  const url = `${process.env.REACT_APP_API}/hr/employees/bulk-upload`
 
-
-  // console.log('message', uploaddata)
 
   const title = "Upload Success";
   const title1 = "Upload Failed";
@@ -34,35 +38,78 @@ const UploadEmployee = () => {
     setShow(false);
   };
   const handleShow = () => setShow(true);
-  const [jsonData, setJSONData] = useState([]);
+  const [file, setFile] = useState<any>()
+
 
 
 
   const submitHandler = () => {
+    console.log('url', url)
+    console.log('file', file)
+    setisLoading(true)
+    const formData = new FormData();
+    formData.append('file', file);
+    // formData.append('fileName', file?.name);
+
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    axios.post(url, formData, config)
+      .then((response) => {
+        console.log('response', response);
+
+        // if (response.data.message === "success") {
+        //   setData(response.data.data);
+        //   fireAlert(title, "Upload Employee base is successfull", "success");
+        //   setisLoading(false)
+        // } else if (response.data.message === "error") {
+        //   fireAlert(title1, message, "error");
+        //   setisLoading(false)
+        // }
+      })
+      .catch((error) => {
+        console.log('error', error);
+        setisLoading(false)
+      });
+
+    // handleRequestPost(setData, setMessage, setisError, setisSuccess, setisLoading, url, file, setProgress)
     // @ts-ignore
-    dispatch(uploadEmployee(jsonData, setProgress));
+    // dispatch(uploadEmployee(jsonData, setProgress));
+
   };
 
-  const onClickReset = () => {
-    dispatch({
-      type: reset(),
-    });
-    setProgress(0);
-  };
+  // const onClickReset = () => { 
+  //   setProgress(0);
+  // };
+
+  function handleChange(event: any) {
+    setFile(event.target.files[0])
+    // handleSubmit(file)
+  }
+
 
   useEffect(() => {
-    if (uploadisSuccess) {
-      fireAlert(title, "Upload Employee  base is successfull", "success");
-      // setTimeout(() => {
-      //   setisSuccess(false)
-      //   setMessage("")
-      //   setReload(false)
-      // }, 5000); 
-    } else if (uploadisError) {
-      fireAlert(title1, "Something went wrong", "error");
-      dispatch({ type: reset() });
+    if (isSuccess) {
+      fireAlert("Upload Employee base is successfull", "success");
+      setTimeout(() => {
+        setisSuccess(false)
+        setMessage("")
+        // setReload(false)
+      }, 5000);
+    } else if (isError) {
+      fireAlert(message, "error");
+      setTimeout(() => {
+        setisError(false)
+        setMessage("")
+        // setReload(false)
+      }, 5000);
     }
-  }, [dispatch, uploadisError, uploadisSuccess])
+  }, [dispatch, isError, isSuccess, message])
+
+
 
   return (
     <>
@@ -131,11 +178,16 @@ const UploadEmployee = () => {
                   : `Uploading...`}
               </p>
             </div>
-            <CSVReader
+            {/* <CSVReader
               onFileLoaded={(data: any) => setJSONData(data)}
               parserOptions={{ header: true }}
-            />
-
+            /> */}
+            <input
+              type="file"
+              id="fileupload"
+              className="file-upload-input"
+              // @ts-ignore 
+              onChange={handleChange} />
             <ProgressBar
               animated
               className="upload-progress-bar"
@@ -169,7 +221,7 @@ const UploadEmployee = () => {
               </span>
               <span >
                 <Button className=" table-link-active" onClick={submitHandler} >
-                  {uploadisLoading ? <Spinner animation="border" size="sm" /> : "Upload"}
+                  {isLoading ? <Spinner animation="border" /> : "Upload"}
                 </Button>
               </span>
             </div>

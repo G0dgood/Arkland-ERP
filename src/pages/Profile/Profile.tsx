@@ -5,13 +5,15 @@ import { BsDot } from 'react-icons/bs';
 import logo from '../../assets/images/asl-profile.jpeg';
 import { Link } from 'react-router-dom'
 import moment from 'moment';
-import storage from '../../utils/storage';
+import storage from '../../utils/dataService';
 import LogoutOption from '../../components/LogoutOption';
 
 const Profile = () => {
 
 	// @ts-ignore
 	const userInfo: any = JSON.parse(storage?.get("user"));
+
+	console.log('userInfo', userInfo)
 
 	return (
 		<div  >

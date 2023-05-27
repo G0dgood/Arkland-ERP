@@ -192,7 +192,7 @@ export const useEmployeeById = (id: string) => {
         const title = "Employed deleted.";
         const html = `Employee deleted`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setDeleteLoading(false);
         navigate(-1);
       } else {
@@ -204,7 +204,7 @@ export const useEmployeeById = (id: string) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Employee deletion failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 
@@ -229,7 +229,7 @@ export const useEmployeeById = (id: string) => {
         const title = "Employee update  successful";
         const html = `Employee updated`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         navigate(`/employeecontainer`);
       } else {
         throw new Error(data.message || "Something went wrong!");
@@ -240,7 +240,7 @@ export const useEmployeeById = (id: string) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Employee update failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
   return {

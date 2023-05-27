@@ -220,7 +220,7 @@ export const useProjectById = (id: string) => {
         const title = "Task created successfully.";
         const html = `Task created`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         handleNewTaskCreated();
         setTaskCreateShow(false);
         resetForm(values);
@@ -234,7 +234,7 @@ export const useProjectById = (id: string) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 
@@ -259,7 +259,7 @@ export const useProjectById = (id: string) => {
         const title = "Task deleted.";
         const html = `Task deleted`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
       } else {
         throw new Error(data.message || "Something went wrong!");
       }
@@ -269,7 +269,7 @@ export const useProjectById = (id: string) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task deletion failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 

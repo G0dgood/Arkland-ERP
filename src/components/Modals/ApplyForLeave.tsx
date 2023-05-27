@@ -59,28 +59,28 @@ const ApplyForLeave = ({ setReload, daysLeft, showLogout, setShowLogout, diffDay
 	const icon1 = "error";
 
 
-	useEffect(() => {
-		if (isSuccess) {
-			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-				setMessage("")
-			}, 5000);
-			setLgShow(false)
-		} else if (isError) {
-			fireAlert(title1, html1, icon1);
-			setTimeout(() => {
-				setisError(false)
-				setMessage("")
-				setInputs({
-					start_date: "",
-					end_date: "",
-					description: "",
-					leave_type: "",
-				})
-			}, 5000);
-		}
-	}, [html, html1, isError, isSuccess])
+	// useEffect(() => {
+	// 	if (isSuccess) {
+	// 		fireAlert(title, html, icon);
+	// 		setTimeout(() => {
+	// 			setisSuccess(false)
+	// 			setMessage("")
+	// 		}, 5000);
+	// 		setLgShow(false)
+	// 	} else if (isError) {
+	// 		fireAlert(title1, html1, icon1);
+	// 		setTimeout(() => {
+	// 			setisError(false)
+	// 			setMessage("")
+	// 			setInputs({
+	// 				start_date: "",
+	// 				end_date: "",
+	// 				description: "",
+	// 				leave_type: "",
+	// 			})
+	// 		}, 5000);
+	// 	}
+	// }, [html, html1, isError, isSuccess])
 
 
 

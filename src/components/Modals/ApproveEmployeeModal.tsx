@@ -31,14 +31,14 @@ const ApproveEmployeeModal = ({ id, data, setReset }: any) => {
 	const icon1 = "error";
 
 
-	useEffect(() => {
-		if (isSuccess) {
-			fireAlert(title, html, icon);
-			setDeleteShow(false)
-		} else if (isError) {
-			fireAlert(title1, html1, icon1);
-		}
-	}, [isError, isSuccess, dispatch, html, html1])
+	// useEffect(() => {
+	// 	if (isSuccess) {
+	// 		fireAlert(html, icon);
+	// 		setDeleteShow(false)
+	// 	} else if (isError) {
+	// 		fireAlert(html1, icon1);
+	// 	}
+	// }, [isError, isSuccess, dispatch, html, html1])
 
 	const handleApproveEmployee = () => {
 		// @ts-ignore

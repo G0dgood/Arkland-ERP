@@ -329,12 +329,12 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
           </section>
         </div>
         <footer className="main-table-footer">
-          <Pagination
+          {/* <Pagination
             setDisplayData={setDisplayData}
             data={data}
             entriesPerPage={entriesPerPage}
             Total={"Employee"}
-          />
+          /> */}
         </footer>
       </div>
     </div>

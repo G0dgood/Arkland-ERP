@@ -10,7 +10,7 @@ import logo from "../assets/images/ASLLOGO.svg";
 import { AiOutlineLogout } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
-import storage from "../utils/storage";
+import storage from "../utils/dataService";
 import MobileSideBar from "./MobileSideBar";
 import { removeData } from "../AppRoutes";
 import LogoutOption from "./LogoutOption";

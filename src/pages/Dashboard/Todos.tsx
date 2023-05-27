@@ -62,7 +62,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
         const title = "Task deleted.";
         const html = `Task deleted`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setTaskAction(true);
       } else {
         throw new Error(data.message || "Something went wrong!");
@@ -73,7 +73,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task deletion failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
   const handleNewTodoCreated = () => {

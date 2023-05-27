@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from '../../components/Header';
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import Cookies from 'js-cookie';
-import storage from '../../utils/storage';
+import storage from '../../utils/dataService';
 import Pagination from '../../components/Pagination';
 import moment from 'moment';
 import { BsCheckCircle, BsClock } from 'react-icons/bs';

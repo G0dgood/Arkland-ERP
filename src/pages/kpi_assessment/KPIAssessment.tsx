@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from "axios";
 import { fireAlert } from "../../utils/Alert";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import storage from "../../utils/storage";
+import storage from "../../utils/dataService";
 import { Spinner } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { createAssessment } from "../../features/KPIAssessment/assessmentSlice";
@@ -166,19 +166,19 @@ const KPIAssessment = ({ setIsCheck }: any) => {
 
 
 
-  useEffect(() => {
-    if (isSuccess) {
-      fireAlert(title, html, icon);
-      setTimeout(() => {
-        navigate("/kpicontainer");
-      }, 2000);
-    } else if (isError) {
-      fireAlert(title1, html1, icon1);
-      setTimeout(() => {
-        setisError(false);
-      }, 1000);
-    }
-  }, [html, title, icon, html1, navigate, isSuccess, isError]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     fireAlert(title, html, icon);
+  //     setTimeout(() => {
+  //       navigate("/kpicontainer");
+  //     }, 2000);
+  //   } else if (isError) {
+  //     fireAlert(title1, html1, icon1);
+  //     setTimeout(() => {
+  //       setisError(false);
+  //     }, 1000);
+  //   }
+  // }, [html, title, icon, html1, navigate, isSuccess, isError]);
 
 
   const handelkpi = (e: any) => {
@@ -229,7 +229,7 @@ const KPIAssessment = ({ setIsCheck }: any) => {
 
   useEffect(() => {
     if (isSuccess) {
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
       setKpInputs({
         month: 0,
         employee: "",
@@ -247,7 +247,7 @@ const KPIAssessment = ({ setIsCheck }: any) => {
         setIsCheck(false)
       }, 2000);
     } else if (isError) {
-      fireAlert(title1, html1, icon1);
+      // fireAlert(title1, html1, icon1);
       // setTimeout(() => {
       //   setisError(false);
       // }, 1000);

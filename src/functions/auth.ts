@@ -1,6 +1,6 @@
 import { sessionExpired, updatePassword } from "../utils/sessionExpires";
 import { removeData } from "../AppRoutes";
-import storage from "../utils/storage";
+import storage from "../utils/dataService";
 import { getRequestOptions } from "../utils/auth/header";
 
 export interface User {

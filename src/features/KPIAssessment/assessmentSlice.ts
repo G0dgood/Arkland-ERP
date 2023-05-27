@@ -43,10 +43,10 @@ export const getAssessment = createAsyncThunk('assessment/getAssessment', async 
       error.response.data && 
       error.response.data.message) ||
       error.message ||error.toString()  
-      console.log('error.response.data ',error.response.message)
-      console.log('error.response.data ',error.response.data.message)
-      console.log('error.response.data ',error.message)
-      console.log('error.response.data ',error)
+      // console.log('error.response.data ',error.response.message)
+      // console.log('error.response.data ',error.response.data.message)
+      // console.log('error.response.data ',error.message)
+      // console.log('error.response.data ',error)
     
     return thunkAPI.rejectWithValue(message)
   }

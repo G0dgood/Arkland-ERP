@@ -32,7 +32,7 @@ const ResetPassword = (email: any) => {
         const title = "Password updated successfully";
         const html = `Password updated`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         resetForm(values);
         setLoading(false);
       } else {
@@ -44,7 +44,7 @@ const ResetPassword = (email: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Password update failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 

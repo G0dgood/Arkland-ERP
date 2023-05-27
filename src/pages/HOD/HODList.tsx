@@ -58,13 +58,13 @@ const HODList = ({ setEmployee, setData }: any) => {
 	const icon1 = "error";
 
 
-	useEffect(() => {
-		if ("") {
-			fireAlert(title, html, icon);
-		} else if (isError) {
-			fireAlert(title1, html1, icon1);
-		}
-	}, [html, html1, isError,])
+	// useEffect(() => {
+	// 	if ("") {
+	// 		fireAlert(title, html, icon);
+	// 	} else if (isError) {
+	// 		fireAlert(title1, html1, icon1);
+	// 	}
+	// }, [html, html1, isError,])
 
 
 	const [displayData, setDisplayData] = useState([]);

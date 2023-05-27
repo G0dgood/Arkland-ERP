@@ -10,7 +10,7 @@ import {
 import moment from "moment";
 import TableLoader from "../../components/TableLoader";
 import { Link } from "react-router-dom";
-import storage from "../../utils/storage";
+import storage from "../../utils/dataService";
 import { fireAlert } from "../../utils/Alert";
 import { useAppDispatch, useAppSelector } from "../../hooks/userDispatch";
 import { getAssessment, reset } from "../../features/KPIAssessment/assessmentSlice";
@@ -37,12 +37,12 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
   const html1 = message;
   const icon1 = "error";
 
-  useEffect(() => {
-    if (isError) {
-      fireAlert(title1, html1, icon1);
-    }
-    dispatch(reset());
-  }, [isError, html1, dispatch]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     fireAlert(title1, html1, icon1);
+  //   }
+  //   dispatch(reset());
+  // }, [isError, html1, dispatch]);
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {

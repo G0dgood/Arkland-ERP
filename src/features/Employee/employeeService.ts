@@ -1,9 +1,13 @@
 import axios from 'axios' 
+import HttpService from '../../components/HttpService'
  
  
 const allEmployee = async ( input:any) => { 
 	 
-  const  response  = await axios.get(`${process.env.REACT_APP_API}/hr/employees`) 
+  // const  response  = await axios.get(`${process.env.REACT_APP_API}/hr/employees`) 
+  const response = HttpService.search("hr/employees",{employment_date_start:"FSDFGSDVG"})
+  
+  // console.log('response ',response)
   return response
 }
 
@@ -18,7 +22,7 @@ const uploadEmployee = async ( jsonData:any ,setProgress:any) => {
           },
         })
    
-   console.log('response ',response)
+    //  console.log('response ',response)
   return response
 }
 

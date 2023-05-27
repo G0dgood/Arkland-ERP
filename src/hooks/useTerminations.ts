@@ -94,7 +94,7 @@ export const useTerminationsById = (id: string) => {
         const title = "Employee terminated.";
         const html = `Termination successful`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setTerminateLoading(false);
         navigate("/terminations");
       } else {
@@ -106,7 +106,7 @@ export const useTerminationsById = (id: string) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Request failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
   return {

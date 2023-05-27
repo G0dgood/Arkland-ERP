@@ -47,7 +47,7 @@ const TerminateEmployeeModal = ({
         const html = `Warning created`;
         const icon = "success";
         resetForm(values);
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setLgShow(false);
         onNewWarningCreated();
         // props.onNewWarningCreated();
@@ -60,7 +60,7 @@ const TerminateEmployeeModal = ({
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Warning creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
   const employees: any = useAppSelector((state) => state?.employees?.employees);

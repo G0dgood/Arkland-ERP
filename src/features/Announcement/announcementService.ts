@@ -1,5 +1,6 @@
 import axios from 'axios' 
 import Cookies from 'js-cookie';
+import HttpService from '../../components/HttpService';
  const token = Cookies.get("token");
  
 const getAnnouncement = async () => {  
@@ -19,16 +20,11 @@ const viewAnnouncement = async ( id:any) => {
 const createAnnouncement = async ( input:any) => {  
   // const   response = await axios.post(`${process.env.REACT_APP_API}/hr/announcements`,input) 
   // return response
-  try {
-    const response = await axios.post(`${process.env.REACT_APP_API}/hr/announcements`,input);
-    return response.data
-} catch (err) {
-    if (axios.isAxiosError(err) && err.response) {
-      console.log(err.response.data);
-       return err.response.data
-  }
+ 
+    const response = await HttpService.post(`hr/announcements`,input);
+    return response
 }
-}
+ 
 const deleteAnnouncement = async ( id:any) => {  
   const   response = await axios.delete(`${process.env.REACT_APP_API}/hr/announcements/${id}`) 
   return response

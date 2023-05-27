@@ -12,6 +12,7 @@ const initialState = {
   isLoading: false, 
   message: '',
   error: '',
+  
   dataall:   [],
   isErrorall: false,
   isSuccessall: false,

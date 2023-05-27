@@ -9,7 +9,7 @@ import moment from "moment";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import TableLoader from "../../components/TableLoader";
-import storage from "../../utils/storage";
+import storage from "../../utils/dataService";
 import { fireAlert } from "../../utils/Alert";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { allweeklyReport, reset } from "../../features/WeeklyReport/WeeklyReportSlice";
@@ -48,12 +48,12 @@ const MyWeekReport = ({ setkpidata }: any) => {
 
 
 
-  useEffect(() => {
-    if (isError) {
-      fireAlert(title, html, icon);
-      reset()
-    }
-  }, [html, isError, isSuccess]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     fireAlert(title, html, icon);
+  //     reset()
+  //   }
+  // }, [html, isError, isSuccess]);
 
   const [displayData, setDisplayData] = useState([]);
 

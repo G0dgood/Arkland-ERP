@@ -34,7 +34,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
         const title = "Employee creation request successful";
         const html = `Request to create an employee sent`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         navigate(`/employeecontainer`);
       } else {
         throw new Error(data.message || "Something went wrong!");
@@ -45,7 +45,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Employee creation request failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 

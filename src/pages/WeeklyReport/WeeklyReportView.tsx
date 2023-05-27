@@ -45,41 +45,41 @@ const WeeklyReportView = () => {
 
 
 
-	useEffect(() => {
-		if (isError) {
-			fireAlert("Weekly Reports error", viewisError, "error");
-			setTimeout(() => {
-				setisError(false);
-			}, 1000);
-		} else if (deleteisSuccess) {
-			fireAlert("Delete Weekly Reports success", deleteisSuccess, 'success');
-			setTimeout(() => {
-				navigate("/weeklycontainer");
-				dispatch(reset());
-			}, 2000);
-		} else if (deleteisError) {
-			fireAlert("Delete Weekly Reports error", deletemessage, "error");
-			setTimeout(() => {
-				dispatch(reset());
-			}, 2000);
-		} else if (updateisError) {
-			fireAlert("Update Weekly Reports error", updatemessage, "error");
-			setTimeout(() => {
-				dispatch(reset());
-			}, 2000);
-		} else if (updateisSuccess) {
-			fireAlert("Weekly Reports Updated", updatemessage, "success");
-			setTimeout(() => {
-				navigate("/weeklycontainer");
-				dispatch(reset());
-			}, 2000);
-		} else if (viewisError) {
-			fireAlert("View Weekly Reports error", viewdata, "error");
-			setTimeout(() => {
-				dispatch(reset());
-			}, 2000);
-		}
-	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, isError, navigate, updateisError, updateisSuccess, updatemessage, viewdata, viewisError]);
+	// useEffect(() => {
+	// 	if (isError) {
+	// 		fireAlert("Weekly Reports error", viewisError, "error");
+	// 		setTimeout(() => {
+	// 			setisError(false);
+	// 		}, 1000);
+	// 	} else if (deleteisSuccess) {
+	// 		fireAlert("Delete Weekly Reports success", deleteisSuccess, 'success');
+	// 		setTimeout(() => {
+	// 			navigate("/weeklycontainer");
+	// 			dispatch(reset());
+	// 		}, 2000);
+	// 	} else if (deleteisError) {
+	// 		fireAlert("Delete Weekly Reports error", deletemessage, "error");
+	// 		setTimeout(() => {
+	// 			dispatch(reset());
+	// 		}, 2000);
+	// 	} else if (updateisError) {
+	// 		fireAlert("Update Weekly Reports error", updatemessage, "error");
+	// 		setTimeout(() => {
+	// 			dispatch(reset());
+	// 		}, 2000);
+	// 	} else if (updateisSuccess) {
+	// 		fireAlert("Weekly Reports Updated", updatemessage, "success");
+	// 		setTimeout(() => {
+	// 			navigate("/weeklycontainer");
+	// 			dispatch(reset());
+	// 		}, 2000);
+	// 	} else if (viewisError) {
+	// 		fireAlert("View Weekly Reports error", viewdata, "error");
+	// 		setTimeout(() => {
+	// 			dispatch(reset());
+	// 		}, 2000);
+	// 	}
+	// }, [deleteisError, deleteisSuccess, deletemessage, dispatch, isError, navigate, updateisError, updateisSuccess, updatemessage, viewdata, viewisError]);
 
 	return (
 		<div  >

@@ -43,7 +43,7 @@ const CreateProjectModal = (props: any) => {
         const html = `Project created`;
 
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         resetForm(values);
         setLoading(false);
         setLgShow(false);
@@ -57,7 +57,7 @@ const CreateProjectModal = (props: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Project creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 

@@ -55,35 +55,35 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 	}
 
 
-	const title = "Successful";
-	const html = "Privileges Assigned!";
-	const icon = "success";
-	const title1 = "Privileges error";
-	const html1 = message;
-	const icon1 = "error";
+	// const title = "Successful";
+	// const html = "Privileges Assigned!";
+	// const icon = "success";
+	// const title1 = "Privileges error";
+	// const html1 = message;
+	// const icon1 = "error";
 
 
-	useEffect(() => {
-		if (isSuccess) {
-			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-				setMessage("")
-				setReload(false)
-			}, 5000);
-			setLgShow(false)
-		} else if (isError) {
-			fireAlert(title1, html1, icon1);
-			setTimeout(() => {
-				setisError(false)
-				setMessage("")
-				setInputs({
-					role: "",
-					user: "",
-				})
-			}, 5000);
-		}
-	}, [html, html1, isError, isSuccess, setReload])
+	// useEffect(() => {
+	// 	if (isSuccess) {
+	// 		fireAlert(  html, icon);
+	// 		setTimeout(() => {
+	// 			setisSuccess(false)
+	// 			setMessage("")
+	// 			setReload(false)
+	// 		}, 5000);
+	// 		setLgShow(false)
+	// 	} else if (isError) {
+	// 		fireAlert(  html1, icon1);
+	// 		setTimeout(() => {
+	// 			setisError(false)
+	// 			setMessage("")
+	// 			setInputs({
+	// 				role: "",
+	// 				user: "",
+	// 			})
+	// 		}, 5000);
+	// 	}
+	// }, [html, html1, isError, isSuccess, setReload])
 
 
 

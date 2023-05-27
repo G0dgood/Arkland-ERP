@@ -23,16 +23,16 @@ const DeleteAnnouncementModal = ({ id }: any) => {
 	const icon1 = "error";
 
 
-	useEffect(() => {
-		if (deleteisSuccess) {
-			fireAlert(title, html, icon);
-			setShow(false)
-			dispatch(reset());
-		} else if (deleteisError) {
-			fireAlert(title1, html1, icon1);
-			dispatch(reset());
-		}
-	}, [deleteisError, deleteisSuccess, dispatch, html, html1])
+	// useEffect(() => {
+	// 	if (deleteisSuccess) {
+	// 		fireAlert(title, html, icon);
+	// 		setShow(false)
+	// 		dispatch(reset());
+	// 	} else if (deleteisError) {
+	// 		fireAlert(title1, html1, icon1);
+	// 		dispatch(reset());
+	// 	}
+	// }, [deleteisError, deleteisSuccess, dispatch, html, html1])
 
 	const handleDelete = () => {
 		// @ts-ignore

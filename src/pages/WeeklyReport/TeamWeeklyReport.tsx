@@ -36,11 +36,11 @@ const TeamWeeklyReport = () => {
 
 
 
-	useEffect(() => {
-		if (HODisError) {
-			fireAlert(title, html, icon);
-		}
-	}, [html, HODisError])
+	// useEffect(() => {
+	// 	if (HODisError) {
+	// 		fireAlert(title, html, icon);
+	// 	}
+	// }, [html, HODisError])
 
 
 	const [displayData, setDisplayData] = useState([]);

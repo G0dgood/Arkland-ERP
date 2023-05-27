@@ -12,7 +12,7 @@ import Pagination from "../../components/Pagination";
 import { Button } from "@material-ui/core";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import storage from "../../utils/storage";
+import storage from "../../utils/dataService";
 import { fireAlert } from "../../utils/Alert";
 import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { teamAssessment } from "../../features/KPIAssessment/assessmentSlice";
@@ -34,14 +34,14 @@ const TeamKPI = () => {
   const icon1 = "error";
 
 
-  useEffect(() => {
-    if (teamisError) {
-      fireAlert(title1, html1, icon1);
-      // setTimeout(() => {
-      //   setteamisError(false)
-      // }, 10000);
-    }
-  }, [teamisError, html1]);
+  // useEffect(() => {
+  //   if (teamisError) {
+  //     fireAlert(title1, html1, icon1);
+  //     // setTimeout(() => {
+  //     //   setteamisError(false)
+  //     // }, 10000);
+  //   }
+  // }, [teamisError, html1]);
 
   const [collapseNav, setCollapseNav] = useState(() => {
     // @ts-ignore

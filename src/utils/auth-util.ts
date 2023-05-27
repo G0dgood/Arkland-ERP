@@ -1,7 +1,7 @@
-import storage from "./storage";
+// import storage from "./dataService";
 
 export const handle_logout = () => {
-  storage.clear();
+  // storage.clear();
   window.location.reload();
   window.location.replace("/");
 };

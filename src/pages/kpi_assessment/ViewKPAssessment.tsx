@@ -40,12 +40,12 @@ const ViewKPAssessment = () => {
 	const html1 = viewmessage;
 	const icon1 = "error";
 
-	useEffect(() => {
-		if (viewisError) {
-			fireAlert(title1, html1, icon1);
-		}
-		dispatch(reset());
-	}, [viewisError, html1, dispatch]);
+	// useEffect(() => {
+	// 	if (viewisError) {
+	// 		fireAlert(title1, html1, icon1);
+	// 	}
+	// 	dispatch(reset());
+	// }, [viewisError, html1, dispatch]);
 
 
 	useEffect(() => {

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Pagination from '../../components/Pagination';
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import moment from 'moment';
-import storage from '../../utils/storage';
+import storage from '../../utils/dataService';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
 import { handleRequestGet } from '../../components/handleRequest/handleRequest';

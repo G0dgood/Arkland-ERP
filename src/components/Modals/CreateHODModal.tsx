@@ -33,21 +33,21 @@ const CreateHODModal = () => {
 	const icon1 = "error";
 
 
-	useEffect(() => {
-		if (createisSuccess) {
-			fireAlert(title, html, icon);
-			setInputs({
-				message: "",
-				audience_scope: ""
-			})
-			setLgShow(false)
+	// useEffect(() => {
+	// 	if (createisSuccess) {
+	// 		// fireAlert(title, html, icon);
+	// 		setInputs({
+	// 			message: "",
+	// 			audience_scope: ""
+	// 		})
+	// 		setLgShow(false)
 
-			dispatch(reset());
-		} else if (createisError) {
-			fireAlert(title1, html1, icon1);
-			dispatch(reset());
-		}
-	}, [createisError, createisSuccess, dispatch, html, html1])
+	// 		dispatch(reset());
+	// 	} else if (createisError) {
+	// 		fireAlert(title1, html1, icon1);
+	// 		dispatch(reset());
+	// 	}
+	// }, [createisError, createisSuccess, dispatch, html, html1])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({

@@ -5,8 +5,6 @@ import { Toast } from "react-bootstrap";
 import { BsExclamationLg, BsEyeFill } from "react-icons/bs";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
-
-
 import {
   MainSearch,
   NoRecordFound,
@@ -39,9 +37,12 @@ const SiteWorkerRequest = () => {
     localStorage.setItem("collapse", JSON.stringify(collapseNav));
     // --- Set state of collapseNav to localStorage on pageLoad --- //
   }, [collapseNav]);
+
   const toggleSideNav = () => {
     setCollapseNav(!collapseNav);
   };
+
+
   useEffect(() => {
     if (!projects || projects.length === 0) {
       dispatch(getProjects());

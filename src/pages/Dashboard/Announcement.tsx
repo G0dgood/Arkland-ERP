@@ -15,9 +15,9 @@ import DeleteAnnouncementModal from "../../components/Modals/DeleteAnnouncementM
 
 const Announcement = () => {
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useAppSelector((state: any) => state.announcement)
-  const { deleteisSuccess } = useAppSelector((state: any) => state.announcement)
-  const { createisSuccess } = useAppSelector((state: any) => state.announcement)
+  const { data, isLoading, createisSuccess, deleteisSuccess } = useAppSelector((state: any) => state.announcement)
+  // const { deleteisSuccess } = useAppSelector((state: any) => state.announcement)
+  // const { createisSuccess } = useAppSelector((state: any) => state.announcement)
 
 
   const {

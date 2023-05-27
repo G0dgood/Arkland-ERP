@@ -26,7 +26,7 @@ import Budget from "./pages/Departments/SubDepartments/Budget";
 import Finance from "./pages/Departments/SubDepartments/Finance";
 import AdminEditUser from "./pages/AdminEditUser/AdminEditUser";
 import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
-import storage from "./utils/storage";
+import storage from "./utils/dataService";
 import { useAppDispatch } from "./hooks/useDispatch";
 import Departments from "./pages/Departments/Departments";
 import Project from "./pages/Projects/Project";
@@ -63,13 +63,13 @@ import CreateRole from "./pages/all_employees/CreateRole";
 import Userprivileges from "./components/Userprivileges";
 
 
-export const removeData = () => {
+// export const removeData = () => {
 
-  Cookies.remove("isAuthenticated");
-  Cookies.remove("token");
-  storage.remove("user");
-  delete axios.defaults.headers.common["Authorization"];
-};
+//   Cookies.remove("isAuthenticated");
+//   Cookies.remove("token");
+//   // storage.remove("user");
+//   delete axios.defaults.headers.common["Authorization"];
+// };
 
 
 const { isHRHead, isHeadOfDepartment, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();

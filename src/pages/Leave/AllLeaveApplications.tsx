@@ -8,7 +8,7 @@ import Pagination from '../../components/Pagination';
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import moment from 'moment';
 import Cookies from 'js-cookie';
-import storage from '../../utils/storage';
+import storage from '../../utils/dataService';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
 
@@ -54,7 +54,7 @@ const AllLeaveApplications = () => {
 	}, [token, userInfo?.data?.department?.id])
 
 
- 
+
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";

@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md';
-import storage from '../utils/storage';
+import storage from '../utils/dataService';
 import axios from 'axios';
 import { removeData } from '../AppRoutes';
 import Cookies from 'js-cookie';
