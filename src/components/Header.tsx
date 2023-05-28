@@ -12,14 +12,13 @@ import { IoIosNotifications } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 import storage from "../utils/dataService";
 import MobileSideBar from "./MobileSideBar";
-import { removeData } from "../AppRoutes";
 import LogoutOption from "./LogoutOption";
 import Notification from "./Notification/Notification";
 import Socket from "./Socket";
 import { useAppDispatch, useAppSelector } from "../hooks/useDispatch";
 import { allNotifications } from "../features/Notification/NotificationSlice";
 
-const Header = ({ toggleSideNav, setShowLogout }: any) => {
+const Header = ({ toggleSideNav }: any) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state: any) => state.notification)
@@ -42,7 +41,7 @@ const Header = ({ toggleSideNav, setShowLogout }: any) => {
   }, [dispatch, refresh]);
 
   // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
+  // const userInfo: any = JSON.parse(storage?.get("user"));
   // @ts-ignore
   // const newnoti: any = JSON.parse(storage?.get("notifications"));
 
@@ -65,7 +64,7 @@ const Header = ({ toggleSideNav, setShowLogout }: any) => {
 
   const [isOpen, setIsopen] = useState(false);
   // const [data, setData] = useState(false);
-  // const [hideNav, setHideNav] = useState<any>(false);
+  const [showLogout, setShowLogout] = useState<any>(false);
 
 
   const ToggleSidebar = () => {
@@ -128,7 +127,7 @@ const Header = ({ toggleSideNav, setShowLogout }: any) => {
           </div>
           <span className="header-logo-text">{/* Line Manager */}</span>
           <span className="header-logo-text1">
-            {userInfo?.data?.employee?.email}
+            {/* {userInfo?.data?.employee?.email} */}
           </span>
         </div>
         <div className="hand-noficational-place">
@@ -152,7 +151,7 @@ const Header = ({ toggleSideNav, setShowLogout }: any) => {
             onClick={() => setDropDown(true)}
           >
             <span className="dropdown-names">
-              {userInfo?.data?.employee?.full_name}
+              {/* {userInfo?.data?.employee?.full_name} */}
             </span>
             <div className="preview-header img-container-header">
               <FaUserCircle size={22} />
@@ -179,6 +178,7 @@ const Header = ({ toggleSideNav, setShowLogout }: any) => {
           </div>
         </div>
       </div>
+      <LogoutOption showLogout={showLogout} setShowLogout={setShowLogout} />
       <MobileSideBar
         ToggleSidebar={ToggleSidebar}
         isOpen={isOpen}

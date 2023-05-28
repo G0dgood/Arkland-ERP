@@ -12,6 +12,7 @@ import { handleRequestPost } from "./handleRequest/handleRequest";
 
 
 import axios from "axios";
+import HttpService from "./HttpService";
 
 
 const UploadEmployee = () => {
@@ -26,7 +27,7 @@ const UploadEmployee = () => {
   const [isSuccess, setisSuccess] = useState(false);
   const [isLoading, setisLoading] = useState(false);
 
-  const url = `${process.env.REACT_APP_API}/hr/employees/bulk-upload`
+  const url = `hr/employees/bulk-upload`
 
 
   const title = "Upload Success";
@@ -43,37 +44,49 @@ const UploadEmployee = () => {
 
 
 
-  const submitHandler = () => {
-    console.log('url', url)
-    console.log('file', file)
-    setisLoading(true)
-    const formData = new FormData();
-    formData.append('file', file);
+  const submitHandler = async () => {
+    // console.log('url', url)
+    // console.log('file', file)
+    // setisLoading(true)
+    // const formData = new FormData();
+    // formData.append('file', file);
     // formData.append('fileName', file?.name);
 
 
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-    axios.post(url, formData, config)
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // };
+    // axios.post(url, formData, config)
+    //   .then((response) => {
+    //     console.log('response', response);
+
+    // if (response.data.message === "success") {
+    //   setData(response.data.data);
+    //   fireAlert(title, "Upload Employee base is successfull", "success");
+    //   setisLoading(false)
+    // } else if (response.data.message === "error") {
+    //   fireAlert(title1, message, "error");
+    //   setisLoading(false)
+    // }
+    // })
+    // .catch((error) => {
+    //   console.log('error', error);
+    //   setisLoading(false)
+    // });
+
+    await HttpService.uploadFile(url, {}, { employees: file })
       .then((response) => {
         console.log('response', response);
-
-        // if (response.data.message === "success") {
-        //   setData(response.data.data);
-        //   fireAlert(title, "Upload Employee base is successfull", "success");
-        //   setisLoading(false)
-        // } else if (response.data.message === "error") {
-        //   fireAlert(title1, message, "error");
-        //   setisLoading(false)
-        // }
+        setisLoading(false)
       })
       .catch((error) => {
         console.log('error', error);
         setisLoading(false)
-      });
+      })
+
+
 
     // handleRequestPost(setData, setMessage, setisError, setisSuccess, setisLoading, url, file, setProgress)
     // @ts-ignore

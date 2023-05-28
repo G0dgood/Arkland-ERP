@@ -5,9 +5,9 @@ import HttpService from '../../components/HttpService'
 const allEmployee = async ( input:any) => { 
 	 
   // const  response  = await axios.get(`${process.env.REACT_APP_API}/hr/employees`) 
-  const response = HttpService.search("hr/employees",{employment_date_start:"FSDFGSDVG"})
+  const response:any = await HttpService.get("hr/employees")
   
-  // console.log('response ',response)
+  // console.log('response ',response.data)
   return response
 }
 

@@ -1,44 +1,33 @@
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md';
-import storage from '../utils/dataService';
-import axios from 'axios';
-import { removeData } from '../AppRoutes';
-import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import HttpService from './HttpService';
+import DataService from '../utils/dataService';
+
+const dataService = new DataService();
 
 const LogoutOption = ({ showLogout, setShowLogout }: any) => {
-
 	const navigate = useNavigate();
 
-
 	const [isLoading, setisLoading] = useState<any>(false);
-
-
 	const handleLogoutClose = () => setShowLogout(false);
 
 	const handleLogout = async () => {
 		setisLoading(true);
-		await axios
-			.patch(`${process.env.REACT_APP_API}/me/logout`)
-			.then(() => {
-				delete axios?.defaults?.headers?.common["Authorization"];
-				Cookies.remove("token");
-				storage.remove("user");
-				storage.remove("notifications");
-				removeData();
-				navigate("/");
-			})
-			.catch((err) => {
-				console.log(err);
-				setisLoading(false);
-			});
-
-		setisLoading(false)
-		// window.location.replace("/");
-		// window.location.reload();
+		try {
+			await HttpService.patch("me/logout", {})
+			dataService.clearData()
+			setisLoading(false);
+			// window.location.replace("/");
+			navigate("/");
+		} catch (error) {
+			setisLoading(false);
+			dataService.clearData()
+		}
 	};
+
 
 	return (
 		<div>

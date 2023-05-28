@@ -29,6 +29,7 @@ const CreateRole = ({ setShowTitle }: any) => {
 	const [rolesid, setRolesid] = useState(0);
 	const [reload, setReload] = useState(false);
 
+
 	useEffect(() => {
 		setisLoading(true);
 		fetch(`${process.env.REACT_APP_API}/hr/employee-roles`, {

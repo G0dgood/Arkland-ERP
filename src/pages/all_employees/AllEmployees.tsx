@@ -56,7 +56,7 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
   const [status, setStatus] = useState("in review");
   const [roles, setRoles] = useState("");
 
-  const rolesData: any = useAppSelector((state) => state?.roles?.roles);
+  // const rolesData: any = useAppSelector((state) => state?.roles?.roles);
   // const departments: any = useAppSelector(
   //   (state) => state?.department?.department
   // );
@@ -84,9 +84,9 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
 
-  useEffect(() => {
-    setData(data?.length);
-  }, [data?.length, setData]);
+  // useEffect(() => {
+  //   setData(data?.length);
+  // }, [data?.length, setData]);
 
   // React.useEffect(() => {
   //   if (!roles || roles?.length === 0) {
@@ -219,7 +219,7 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
                   data={displayData}
                   status={status}
                   setStatus={setStatus}
-                  roles={rolesData}
+                  // roles={rolesData}
                   setRoles={setRoles}
                 />
               </div>

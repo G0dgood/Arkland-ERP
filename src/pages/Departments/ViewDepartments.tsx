@@ -5,21 +5,21 @@ import { FiEdit, FiLock } from "react-icons/fi";
 import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import { BsCheckCircle, BsExclamationLg } from "react-icons/bs";
 import { SyncLoader } from "react-spinners";
-import Header from "../../../components/Header";
+import Header from "../../components/Header";
 import {
   EntriesPerPage,
   MainSearch,
   NoRecordFound,
   TableFetch,
-} from "../../../components/TableOptions";
-import { checkForName } from "../../../utils/checkForName";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useDispatch";
-import { useDepartmentById } from "../../../hooks/useDepartments";
-import { getDepartment } from "../../../store/reducers/department";
-import { getRoles } from "../../../store/reducers/roles";
-import TableLoader from "../../../components/TableLoader";
+} from "../../components/TableOptions";
+import { checkForName } from "../../utils/checkForName";
+import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+import { useDepartmentById } from "../../hooks/useDepartments";
+import { getDepartment } from "../../store/reducers/department";
+import { getRoles } from "../../store/reducers/roles";
+import TableLoader from "../../components/TableLoader";
 
-import Pagination from "../../../components/Pagination";
+import Pagination from "../../components/Pagination";
 
 
 const ViewDepartments = () => {

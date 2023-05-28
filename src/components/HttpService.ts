@@ -1,19 +1,21 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-// import dataService from "./DataService";
-import EventEmitter from "./EventEmitter";
-import {useNavigate} from "react-router-dom"
+import axios from "axios"; 
+import EventEmitter from "./EventEmitter"; 
 import { fireAlert } from "../utils/Alert";
-import { handle_logout } from "../utils/auth-util";
+import DataService from "../utils/dataService";
+import { useNavigation } from "react-router-dom";
+
+ 
+ 
  
  
 
 class HttpService {
-	 private  token:any;
+  dataService = new DataService()  
+  private  token:any;
   private  config;
   private  baseUrl = 	`${process.env.REACT_APP_API}/`
     constructor() {
-         this.token = Cookies.get("token");
+         this.token = this.dataService.getToken()
         this.config = {
             headers: { Authorization: `Bearer ${this.token}` }
         };
@@ -39,8 +41,8 @@ class HttpService {
                 .then((data) => { 
                     resolve(data);
                 })
-													.catch((e) => {  
-																	this.handleError(e);
+			    .catch((e) => {  
+				 this.handleError(e);
 																	
                 });
         });
@@ -67,7 +69,26 @@ class HttpService {
                 .then((data) => { 
                     resolve(data);
                 })
-													.catch((e) => {  
+					.catch((e) => {  
+                    this.handleError(e);
+                });
+        });
+    }
+
+    uploadFile(url: string, data: Record<string, any>, files: Record<string, any>) {
+        //@ts-ignore
+        this.config.headers["content-type"] = "multipart/form-data";  
+        const formData = new FormData();  
+        for (let key in files) {
+            formData.append(key, files[key]);
+         }
+        const endpoint = this.baseUrl + url;
+        return new Promise((resolve, reject) => { 
+            axios.post(endpoint, formData, this.config)
+                .then((data) => { 
+                    resolve(data);
+                })
+					.catch((e) => {  
                     this.handleError(e);
                 });
         });
@@ -75,8 +96,7 @@ class HttpService {
 
     put(url: string, data: any) {
         const endpoint = this.baseUrl + url;
-        return new Promise((resolve, reject) => {
-            
+        return new Promise((resolve, reject) => { 
             axios.put(endpoint, data, this.config)
                 .then((data) => { 
                     resolve(data);
@@ -89,8 +109,7 @@ class HttpService {
 
     patch(url: string, data: any) {
         const endpoint = this.baseUrl + url;
-        return new Promise((resolve, reject) => {
-            
+        return new Promise((resolve, reject) => { 
             axios.patch(endpoint, data, this.config)
                 .then((data) => {
                    
@@ -113,11 +132,16 @@ class HttpService {
     }
 
     handleError(e:any ) { 
-       fireAlert(  e.response.data.message, "error");
-							if (e.response.status === 401) {
-												handle_logout();
-							}
-				}
+       
+        if (e.response.status === 401) { 
+            fireAlert("Authentication error, please login again", "error");   
+            window.location.replace("/login");
+            this.dataService.clearData();
+        } else {
+            fireAlert(e.response.data.message, "error");
+            
+        }
+    }
 
     stopSpinner() {
         EventEmitter.emit('loading', {loading:false});
@@ -129,3 +153,5 @@ class HttpService {
 }
 
 export default new HttpService();
+
+ 

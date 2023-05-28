@@ -127,8 +127,8 @@ const Sidebar = ({
    {/* Content */}
    <SidebarContent>
     <Menu iconShape="circle">
-     <MenuItem className='Side__Content' active={pathname === '/home'} icon={<TfiLayoutGrid2 size={20} />} suffix={<span className="badge red">NEW</span>} >
-      Dashboard  <Link to="/home" /> </MenuItem>
+     <MenuItem className='Side__Content' active={pathname === '/'} icon={<TfiLayoutGrid2 size={20} />} suffix={<span className="badge red">NEW</span>} >
+      Dashboard  <Link to="/" /> </MenuItem>
 
      <SubMenu suffix={<span className="badge yellow">3</span>} title={'KPI Assessment'} icon={<FiPieChart size={20} />} >
       <MenuItem className='Side__Content' active={pathname === '/kpicontainer'} icon={<FiPieChart size={20} />}>  My Assessment <Link to="/kpicontainer" /> </MenuItem>
@@ -145,7 +145,7 @@ const Sidebar = ({
      <MenuItem className='Side__Content' active={pathname === '/attendance'} icon={<HiOutlineUserGroup size={23} />}> Attendance <Link to="/attendance" /> </MenuItem>
      {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
       <SubMenu title={'Employees'} icon={<FiUser size={24} />} >
-       <MenuItem className='Side__Content' active={pathname === '/employeecontainer'}>  <Link to="/employeecontainer" />  All Employees</MenuItem>
+       <MenuItem className='Side__Content' active={pathname === '/employees'}>  <Link to="/employees" />Employees</MenuItem>
        <MenuItem className='Side__Content' active={pathname === '/warninglist'}> <Link to="/warninglist" /> Warning List</MenuItem>
        <MenuItem className='Side__Content' active={pathname === '/terminations'}>  <Link to="/terminations" />Terminations</MenuItem>
        <MenuItem className='Side__Content' active={pathname === '/createnewhod'}>  <Link to="/createnewhod" />HOD</MenuItem>

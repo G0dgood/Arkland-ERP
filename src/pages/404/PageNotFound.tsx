@@ -32,7 +32,7 @@ const PageNotFound = () => {
 				<Button
 					variant="contained"
 					className="Add-btn"
-					onClick={() => window.location.replace("/home")}
+					onClick={() => window.location.replace("/")}
 				>
 
 					Back home

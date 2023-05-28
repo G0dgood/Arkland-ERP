@@ -1,7 +1,8 @@
 import { sessionExpired, updatePassword } from "../utils/sessionExpires";
-import { removeData } from "../AppRoutes";
-import storage from "../utils/dataService";
-import { getRequestOptions } from "../utils/auth/header";
+import DataService from "../utils/dataService";
+ 
+
+const dataService =  new DataService();
 
 export interface User {
   data: {
@@ -22,17 +23,15 @@ export function getUserPrivileges(): {
   isEmployee: boolean;
   isHrAdmin: boolean;
 } {
-  const userString = storage?.get("user");
-  const userInfo = userString ? JSON.parse(userString) : null;
+  const userString = dataService.getData(`${ process.env.REACT_APP_ERP_USER}`) ;
+  const userInfo = userString ? userString : null;
   const privileges = userInfo?.data?.privileges || [];
 
   const isSuperAdmin = privileges.some((p: any) => p.role === "super admin");
   const isAdmin = privileges.some((p: any) => p.role === "admin");
   const isTeamLead = privileges.some((p: any) => p.role === "team lead");
   const isEmployee = privileges.some((p: any) => p.role === "employee");
-  const isHeadOfDepartment = privileges.some(
-    (p: any) => p.role === "head of department"
-  );
+  const isHeadOfDepartment = privileges.some( (p: any) => p.role === "head of department" );
   const isHRHead = privileges.some((p: any) => p.role === "HR head");
   const isHrAdmin = privileges.some((p: any) => p.role === "HR admin");
 

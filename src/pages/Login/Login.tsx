@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel, Spinner } from "react-bootstrap";
 import { Toast } from "react-bootstrap";
 import { Button } from "@material-ui/core";
@@ -18,12 +18,17 @@ import InputField from "../../components/Inputs/InputField";
 import { useNavigate } from "react-router-dom";
 import HttpService from "../../components/HttpService";
 import DataService from "../../utils/dataService";
+import { userInfo } from "os";
 
 
-// const data_Service = new DataService()
+const dataService = new DataService()
 
 const Login = () => {
+
   const navigate = useNavigate();
+  const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+  const token = dataService.getToken()
+
   const [isLoading, setLoading] = React.useState(false);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [error, setError] = useState<any>();
@@ -43,66 +48,26 @@ const Login = () => {
     try {
       const response: any = await HttpService.post("auth/login", values)
       const token = response.data.token
-      console.log("login response", token)
       dataService.setToken(token)
+      const { department, role, employee, privileges } = response.data
+      const userInfo = { department, role, employee, privileges }
+      dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
       resetForm(values);
       setLoading(false);
-      window.location.replace("/home");
+      window.location.replace("/");
     } catch (error) {
       setLoading(false);
     }
   }
 
-  // const requestOptions = {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify({ ...values }),
-  // };
+  useEffect(() => {
+    if (user && token) {
+      navigate("/")
+    }
+  })
 
 
 
-
-
-  // fetch(`${process.env.REACT_APP_API}/auth/login`, requestOptions)
-  //   .then(async (response) => {
-  //     // @ts-ignore
-  //     setLoading(false);
-  //     const isJson = response.headers
-  //       .get("content-type")
-  //       ?.includes("application/json");
-  //     const data = isJson && (await response.json());
-  //     if (!response.ok) {
-  //       // get error message from body or default to response status
-  //       const error = (data && data.message) || response.status;
-  //       return Promise.reject(error);
-  //     }
-  //     resetForm(values);
-  // set token in axios header
-  // axios.defaults.headers.common["authorization"] = data?.token;
-  // encrypt token using AES
-  // const key = CryptoJS.lib.WordArray.random(16);
-  // const encryptedToken = CryptoJS.AES.encrypt(data.token, key).toString();
-  // // // set encrypted token in HttpOnly cookie
-  // document.cookie = `token=${encryptedToken}; HttpOnly; secure; SameSite=Strict`;
-  // // // store encryption key in local storage
-  // localStorage.setItem("encryptionKey", key.toString());
-
-  // navigate("/home");
-  // window.location.replace("/home");
-  // set token in cookie
-  // Cookies.set("token", data.token);
-  // storage.set("user", JSON.stringify({ data }));
-  //     })
-  //     .catch((error) => {
-  //       setLoading(false);
-  //       setError(true);
-  //       setMessage(error);
-  //       setTimeout(() => {
-  //         setError(false);
-  //         setMessage("");
-  //       }, 5000);
-  //     });
-  // };
 
   return (
     <>
