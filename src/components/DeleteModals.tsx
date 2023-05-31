@@ -1,6 +1,4 @@
 import { Button } from '@material-ui/core';
-import axios from 'axios';
-import React, { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md';
 

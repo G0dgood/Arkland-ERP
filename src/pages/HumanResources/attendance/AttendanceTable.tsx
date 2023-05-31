@@ -1,48 +1,49 @@
 import { Button } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableLoader from "../../../components/TableLoader";
 import { NoRecordFound, TableFetch } from "../../../components/TableOptions";
-import { useAttendance } from "../../../hooks/useAttendance";
-import { checkForName } from "../../../utils/checkForName";
-import { useAppSelector } from "../../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../../store/useStore";
+import { hrgetAttendance, reset } from "../../../features/Attendances/attendanceSlice";
+import Pagination from "../../../components/Pagination";
+import { fireAlert } from "../../../utils/Alert";
+import HRClockInModal from "../../../components/Modals/HRClockInModal";
+
 
 const AttendanceTable = () => {
-  // @ts-ignore
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const { attenances, isLoading, error, message } = useAttendance(
-    startDate,
-    endDate
-  );
+  const dispatch = useAppDispatch();
+  const { hrgetattenddata, hrgetattendisError, hrgetattendisLoading, hrgetattendmessage, hrgetattendisSuccess } = useAppSelector((state: any) => state.attendance)
 
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    if (name === "startDate") {
-      setStartDate(value);
-    } else if (name === "endDate") {
-      setEndDate(value);
-    }
-  };
+  useEffect(() => {
+    dispatch(hrgetAttendance())
+  }, [dispatch])
+
+
+
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
+  useEffect(() => {
+    if (hrgetattendisError) {
+      fireAlert(" error", hrgetattendmessage, "error");
+      dispatch(reset());
+    }
 
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
+  }, [hrgetattendisError, hrgetattendmessage, dispatch])
+
   const header = [
     { title: "NAME", prop: "employee_name" },
     { title: "DEPARTMENT", prop: "employee_department" },
     { title: "ARRIVAL", prop: "time_in" },
+    { title: "WEEK DAY", prop: "week_day_created" },
     { title: "CHECKED-IN OFFICE", prop: "ip_checked" },
     { title: "HR ASSISTED CHECK-IN", prop: "is_hr_assisted" },
     // { title: "DATE", prop: "created_at" },
     // { title: "ACTION" },
   ];
-
+  const [displayData, setDisplayData] = useState([]);
   return (
     <div  >
       <div className="SiteWorkermaindiv">
@@ -57,7 +58,7 @@ const AttendanceTable = () => {
               gap: "20px",
             }}
           >
-            <div className="input">
+            {/* <div className="input">
               <label htmlFor="startDate" className="input__label">
                 Start Date
               </label>
@@ -72,12 +73,12 @@ const AttendanceTable = () => {
                 value={startDate}
                 onChange={handleChange}
               />
-            </div>
-            <div className="input">
-              <label htmlFor="endDate" className="input__label">
+            </div> */}
+            {/* <div className="input"> */}
+            {/* <label htmlFor="endDate" className="input__label">
                 End Date
-              </label>
-              <input
+              </label> */}
+            {/* <input
                 className="input__field"
                 style={{
                   lineHeight: "1",
@@ -87,13 +88,16 @@ const AttendanceTable = () => {
                 name="endDate"
                 value={endDate}
                 onChange={handleChange}
-              />
-            </div>
+              /> */}
+            {/* </div> */}
           </form>
+          <div>
+            <HRClockInModal />
+          </div>
         </div>
       </div>
       <section className="md-ui component-data-table">
-        {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+        {hrgetattendisLoading ? <TableLoader isLoading={hrgetattendisLoading} /> : ""}
         <div className="main-table-wrapper">
           <table className="main-table-content">
             <thead className="data-table-header">
@@ -103,8 +107,7 @@ const AttendanceTable = () => {
                     <>
                       <td
                         className="table-datacell datatype-numeric"
-                        key={index}
-                      >
+                        key={index} >
                         {i.title}
                       </td>
                     </>
@@ -113,18 +116,22 @@ const AttendanceTable = () => {
               </tr>
             </thead>
             <tbody className="data-table-content">
-              {isLoading ? (
+              {hrgetattendisLoading ? (
                 <TableFetch colSpan={8} />
-              ) : attenances?.length === 0 || attenances == null ? (
+              ) : displayData?.length === 0 || displayData == null ? (
                 <NoRecordFound colSpan={8} />
               ) : (
-                attenances?.map((item: any, i: any) => (
+                displayData?.map((item: any, i: any) => (
                   <tr className="data-table-row" key={i}>
                     <td className="table-datacell datatype-numeric">
                       {item?.employee_name}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {checkForName(item.department, departments)}
+                      {/* {checkForName(item.department, departments)} */}
+
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      {item?.week_day_created}
                     </td>
                     <td className="table-datacell datatype-numeric">
                       {new Date(item?.time_in).toLocaleString()}
@@ -158,14 +165,14 @@ const AttendanceTable = () => {
           </table>
         </div>
       </section>
-      {/* <footer className="main-table-footer">
-				<Pagination
-					setDisplayData={setDisplayData}
-					data={sortData}
-					entriesPerPage={entriesPerPage}
-					Total={"Assessment"}
-				/>
-			</footer> */}
+      <footer className="main-table-footer">
+        <Pagination
+          setDisplayData={setDisplayData}
+          data={hrgetattenddata}
+          entriesPerPage={entriesPerPage}
+          Total={"Attendance"}
+        />
+      </footer>
     </div>
   );
 };

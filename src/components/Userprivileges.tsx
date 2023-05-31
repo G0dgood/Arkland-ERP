@@ -1,32 +1,33 @@
 import { Button } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from './TableOptions'
 import { BsCheckCircle } from 'react-icons/bs'
 import moment from 'moment'
 import TableLoader from './TableLoader'
-import Cookies from 'js-cookie'
 import Pagination from './Pagination'
 import { ImBin } from 'react-icons/im'
 import DeleteModals from './DeleteModals'
-import axios, { AxiosResponse } from 'axios'
 import { fireAlert } from '../utils/Alert'
 import AssignPrivilegesModal from './Modals/AssignPrivilegesModal'
+import { useAppDispatch, useAppSelector } from '../store/useStore'
+import { deleteprivileges, reset, userprivileges } from '../features/User/userSlice'
 
 
 const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
+	const dispatch = useAppDispatch();
+	const { privilegesdata, privilegesisError, privilegesisLoading, privilegesmessage } = useAppSelector((state: any) => state.userinfo)
+	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.userinfo)
 
-	const token = Cookies.get("token");
-	const [data, setData] = useState([]);
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
 	const [sortData, setSortData] = useState([]);
 	const [showdelete, setShowDelete] = useState(false);
-	const [privilegesid, setPrivilegesid] = useState(0);
-	const [isLoading1, setisLoading1] = useState(false);
-	const [reload, setReload] = useState(false);
+	const [id, setPrivilegesid] = useState(0);
 	const [result, setResult] = useState("");
+
+
+	useEffect(() => {
+		// @ts-ignore
+		dispatch(userprivileges());
+	}, [dispatch]);
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -39,12 +40,12 @@ const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 
 
 	useEffect(() => {
-		if (data) {
+		if (privilegesdata) {
 			// @ts-ignore
-			const results = data?.filter((data) => data?.role.toString()?.includes(result));
+			const results = privilegesdata?.data?.filter((data) => data?.role.toString()?.includes(result));
 			setSortData(results);
 		}
-	}, [data, result]);
+	}, [privilegesdata, result]);
 
 	const onChange = (e: any) => {
 		setResult(e.target.value);
@@ -56,91 +57,43 @@ const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 	const html = "User Privilege Deleted!";
 	const icon = "success";
 	const title1 = "Delete Privilege error";
-	const html1 = message;
+
 	const icon1 = "error";
 
 
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		fireAlert(title, html, icon);
-	// 		setTimeout(() => {
-	// 			setisSuccess(false)
-	// 			setMessage("")
-	// 		}, 5000);
-	// 	} else if (isError) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		setTimeout(() => {
-	// 			setisError(false)
-	// 			setMessage("")
-	// 		}, 5000);
-	// 	}
-	// }, [html, html1, isError, isSuccess])
-
 	useEffect(() => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/admin/privileges`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-
-				if (data?.success === false) {
-					setMessage(data?.message)
-					setisError(true)
-				} else {
-					setData(data?.data)
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-
-	}, [token, showprivileges, reload])
-
-
-
+		if (deleteisSuccess) {
+			fireAlert(title, html, icon);
+			setShowDelete(false)
+			dispatch(userprivileges());
+			dispatch(reset());
+		} else if (deleteisError) {
+			fireAlert(title1, deletemessage, icon1);
+			dispatch(reset());
+		} else if (privilegesisError) {
+			fireAlert(title1, privilegesmessage, icon1);
+			dispatch(reset());
+		}
+	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, html, privilegesisError, privilegesmessage])
 
 	const handleDelete = () => {
-		setisLoading1(true);
-		axios
-			.delete(`${process.env.REACT_APP_API}/admin/privileges/${privilegesid}`)
-			.then((res: AxiosResponse) => {
-				setisLoading1(false);
-				setShowDelete(false);
-				setReload(true);
-				// setTimeout(() => {
-				// 	navigate("/kpicontainer");
-				// }, 5000);
-			})
-			.catch((data) => {
-				console.log(data);
-				setisLoading1(false);
-			});
-
+		// @ts-ignore
+		dispatch(deleteprivileges(id));
 	}
 
 	const [displayData, setDisplayData] = useState([]);
-
-
-
 
 	return (
 		<div  >
 			<div className='SiteWorkermaindiv'>
 				<div className='SiteWorkermaindivsub'>
 					{/* <span className='SupportmainTitleh3'> */}
-					<AssignPrivilegesModal setReload={setReload} />
+					<AssignPrivilegesModal />
 					{/* </span> */}
 				</div>
 				<div>
 					<EntriesPerPage
-						data={data}
+						data={displayData}
 						entriesPerPage={entriesPerPage}
 						setEntriesPerPage={setEntriesPerPage}
 					/>
@@ -151,7 +104,7 @@ const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 			</div>
 
 			<section className="md-ui component-data-table">
-				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+				{privilegesisLoading ? <TableLoader isLoading={privilegesisLoading} /> : ""}
 				<div className="main-table-wrapper">
 					<table className="main-table-content">
 						<thead className="data-table-header">
@@ -164,7 +117,7 @@ const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 							</tr>
 						</thead>
 						<tbody className="data-table-content">
-							{isLoading ? (
+							{privilegesisLoading ? (
 								<TableFetch colSpan={8} />
 							) : displayData?.length === 0 || displayData == null ? (
 								<NoRecordFound colSpan={8} />
@@ -188,7 +141,7 @@ const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 					</table>
 				</div>
 			</section>
-			<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} handleDelete={handleDelete} isLoading1={isLoading1} />
+			<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} handleDelete={handleDelete} isLoading1={deleteisLoading} />
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}

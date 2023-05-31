@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableLoader from "../../../components/TableLoader";
 import {
   EntriesPerPage,
@@ -7,34 +7,38 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../../components/TableOptions";
-import { useEmployeeAttendance } from "../../../hooks/useAttendance";
-import { checkForName } from "../../../utils/checkForName";
-import { useAppSelector } from "../../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../../store/useStore";
+import { myAttendance } from "../../../features/Attendances/attendanceSlice";
+
 
 const EmployeeAttendanceTable = () => {
+  const dispatch = useAppDispatch();
   // @ts-ignore
 
-  const { attenances, isLoading, error, message } = useEmployeeAttendance();
+  const { mydata, myisError, myisLoading, mymessage, myisSuccess } = useAppSelector((state: any) => state.attendance)
+  useEffect(() => {
+    dispatch(myAttendance())
+  }, [dispatch])
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
+
+
   const [data, setData] = useState<any>([]);
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
 
-  const [isError, setisError] = useState(false);
 
-  const title = "Weekly Reports error";
-  const html = message;
+
+  const title = "Attendance error";
+  const html = mymessage;
   const icon = "error";
 
 
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
+
   const header = [
     { title: "NAME", prop: "employee_name" },
     { title: "DEPARTMENT", prop: "employee_department" },
@@ -54,7 +58,7 @@ const EmployeeAttendanceTable = () => {
           </div>
           <div>
             <EntriesPerPage
-              data={data?.data}
+              data={data}
               entriesPerPage={entriesPerPage}
               setEntriesPerPage={setEntriesPerPage}
             />
@@ -64,7 +68,7 @@ const EmployeeAttendanceTable = () => {
           </div>
         </div>
         <section className="md-ui component-data-table">
-          {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+          {myisLoading ? <TableLoader isLoading={myisLoading} /> : ""}
           <div className="main-table-wrapper">
             <table className="main-table-content">
               <thead className="data-table-header">
@@ -84,19 +88,19 @@ const EmployeeAttendanceTable = () => {
                 </tr>
               </thead>
               <tbody className="data-table-content">
-                {isLoading ? (
+                {myisLoading ? (
                   <TableFetch colSpan={8} />
-                ) : attenances?.length === 0 || attenances == null ? (
+                ) : mydata?.length === 0 || mydata == null ? (
                   <NoRecordFound colSpan={8} />
                 ) : (
-                  attenances?.map((item: any, i: any) => (
+                  mydata?.map((item: any, i: any) => (
                     <tr className="data-table-row" key={i}>
 
                       <td className="table-datacell datatype-numeric">
                         {item?.employee_name}
                       </td>
                       <td className="table-datacell datatype-numeric">
-                        {checkForName(item.department, departments)}
+                        {/* {checkForName(item.department, departments)} */}
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {new Date(item?.time_in).toLocaleString()}
@@ -154,3 +158,5 @@ const EmployeeAttendanceTable = () => {
 };
 
 export default EmployeeAttendanceTable;
+
+

@@ -10,22 +10,18 @@ import moment from 'moment';
 import { BsCheckCircle, BsClock } from 'react-icons/bs';
 import { SlClose } from 'react-icons/sl';
 import TableLoader from '../../components/TableLoader';
-import Sidebar from '../../components/SidebarAndDropdown/Sidebar';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import DataService from '../../utils/dataService';
+import { getTeamLeave, reset } from '../../features/Leave/leaveSlice';
+import { fireAlert } from '../../utils/Alert';
 
+const dataService = new DataService()
 const TeamLeaveApplications = () => {
-	// @ts-ignore
-	const userInfo: any = JSON.parse(storage?.get("user"));
-	const token = Cookies.get("token");
-	const [collapseNav, setCollapseNav] = useState(() => {
-		// @ts-ignore
-		return JSON.parse(localStorage.getItem("collapse")) || false;
-	});
+	const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+	const dispatch = useAppDispatch();
+	const { teamdata, teamisError, teamisLoading, teammessage } = useAppSelector((state: any) => state.leave)
 
-	useEffect(() => {
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-		localStorage.setItem("collapse", JSON.stringify(collapseNav));
-		// --- Set state of collapseNav to localStorage on pageLoad --- //
-	}, [collapseNav]);
+
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -33,51 +29,19 @@ const TeamLeaveApplications = () => {
 	});
 
 	useEffect(() => {
-		localStorage.setItem("reportsPerPage", entriesPerPage);
-	}, [entriesPerPage]);
+		if (teamisError) {
+			fireAlert("Leave", teammessage, "error");
+		}
+		dispatch(reset());
+	}, [dispatch, teamisError, teammessage]);
 
-	const toggleSideNav = () => {
-		setCollapseNav(!collapseNav);
-	}
-
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
 	const [sortData, setSortData] = useState([]);
 
-
-
+	const id = userInfo?.department?.id
 
 	useEffect(() => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves?department=${userInfo?.data?.department?.id}`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-					setisError(true)
-				} else {
-					setSortData(data?.data?.data)
-					setisSuccess(true)
-					setTimeout(() => {
-						setMessage('')
-					}, 2000);
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-	}, [token, userInfo?.data?.department?.id])
-
+		dispatch(getTeamLeave(id));
+	}, [dispatch, id])
 
 
 
@@ -91,7 +55,7 @@ const TeamLeaveApplications = () => {
 				</div>
 				<div>
 					<EntriesPerPage
-						data={sortData}
+						data={teamdata}
 						entriesPerPage={entriesPerPage}
 						setEntriesPerPage={setEntriesPerPage}
 					/>
@@ -101,7 +65,7 @@ const TeamLeaveApplications = () => {
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
-				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+				{teamisLoading ? <TableLoader isLoading={teamisLoading} /> : ""}
 				<div className="main-table-wrapper">
 					<table className="main-table-content">
 						<thead className="data-table-header">
@@ -118,7 +82,7 @@ const TeamLeaveApplications = () => {
 							</tr>
 						</thead>
 						<tbody className="data-table-content">
-							{isLoading ? (
+							{teamisLoading ? (
 								<TableFetch colSpan={9} />
 							) : displayData?.length === 0 || displayData == null ? (
 								<NoRecordFound colSpan={9} />
@@ -156,7 +120,7 @@ const TeamLeaveApplications = () => {
 																item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
 									</td>
 									<td className="table-datacell datatype-numeric">
-										<Link to={`/hodleaveview/${item?._id}`}  >
+										<Link to={`/leave/leave/hod/${item?._id}`}  >
 											{item?.status === "rejected" ? "" :
 												<Button id="team-applicatiom-update">{item?.hod_approved === false ? "Update" : "View"}</Button>
 											}
@@ -172,7 +136,7 @@ const TeamLeaveApplications = () => {
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}
-					data={sortData}
+					data={teamdata?.data}
 					entriesPerPage={entriesPerPage}
 					Total={"Team Leave"}
 				/>

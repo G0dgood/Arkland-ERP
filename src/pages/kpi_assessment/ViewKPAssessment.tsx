@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { BiUser } from 'react-icons/bi'
-import { Link, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import HodEvaluation from './HodEvaluate'
-import { BsChatLeftText } from 'react-icons/bs'
-import { MdOutlineClose } from 'react-icons/md'
 import TableLoader from '../../components/TableLoader'
 import { Button } from '@material-ui/core'
 import { fireAlert } from '../../utils/Alert'
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch'
 import { reset, viewAssessment } from '../../features/KPIAssessment/assessmentSlice'
+import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 const ViewKPAssessment = () => {
 	const { id } = useParams()
 	const dispatch = useAppDispatch();
-
+	const location = useLocation();
 	const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.assessment)
-
 	const [hodscore, setHodscore] = useState<number>(0);
 	const [broughtDownAverage, setBroughtDownAverage] = useState<any>(0);
-
-
-
 
 	const gradeSystem = [
 		{ rate: 5, definition: "Outstanding" },
@@ -30,9 +24,6 @@ const ViewKPAssessment = () => {
 		{ rate: 1, definition: "Below Average/Poor" },
 	]
 
-
-
-
 	// const title = "Successful";
 	// const html = "KPI Updated!";
 	// const icon = "success";
@@ -40,19 +31,17 @@ const ViewKPAssessment = () => {
 	const html1 = viewmessage;
 	const icon1 = "error";
 
-	// useEffect(() => {
-	// 	if (viewisError) {
-	// 		fireAlert(title1, html1, icon1);
-	// 	}
-	// 	dispatch(reset());
-	// }, [viewisError, html1, dispatch]);
-
+	useEffect(() => {
+		if (viewisError) {
+			fireAlert(title1, html1, icon1);
+		}
+		dispatch(reset());
+	}, [viewisError, html1, dispatch]);
 
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(viewAssessment(id));
 	}, [dispatch, id]);
-
 
 
 	// Performance  Percentage Calculation
@@ -61,32 +50,9 @@ const ViewKPAssessment = () => {
 		setBroughtDownAverage(finalscore)
 	}, [viewdata?.performance_percentage_employee, hodscore]);
 
-
-
 	return (
 		<div>
-			<header className="ChatProgressView-header"  >
-				<div>
-					<span className="app-chat--icon">
-						<BsChatLeftText />
-					</span>
-					<span> HOD Evaluations | Update Performance </span>
-					<Button className={viewdata?.status === 'active' ? "table-link-active" : "table-link"}>
-						{viewdata?.status === 'active' ? 'Completed' : viewdata?.status}</Button>
-				</div>
-				<div className="ChatProgressView-close">
-					<Link
-						to={"/teamkpi"}>
-						<MdOutlineClose
-							size={25}
-							style={{ color: "white", backgroundColor: "" }}
-							className="ChatProgressView-close-icon"
-						/>
-					</Link>
-				</div>
-			</header>
 			<div id="performance">
-
 				<section className="area-grid">
 					<div className="evaluation-area">
 						<div id="edit-user">
@@ -96,6 +62,8 @@ const ViewKPAssessment = () => {
 									<h3>{viewdata?.employee_name}</h3>
 									{/* <p>john.adibe@outcess.com</p> */}
 									<p>ALS/ADM/{viewdata?.employee_id}</p>
+									<p>{location.state.name === "admin" ? "Employee Performance" : "HOD Update Performance "}   <Button className={viewdata?.status === 'active' ? "table-link-active" : "table-link"}>
+										{viewdata?.status === 'active' ? 'Completed' : viewdata?.status}</Button></p>
 								</div>
 							</div>
 						</div>

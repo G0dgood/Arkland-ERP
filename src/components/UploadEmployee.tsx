@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from "react";
-import CSVReader from "react-csv-reader";
 import { Modal, Toast, ProgressBar, Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import { MdOutlineClose } from "react-icons/md";
 import { FiUpload } from "react-icons/fi";
-import { useAppDispatch, useAppSelector } from "../hooks/useDispatch";
-import { reset, uploadEmployee } from "../features/Employee/employeeSlice";
 import { fireAlert } from "../utils/Alert";
-import { handleRequestPost } from "./handleRequest/handleRequest";
-
-
-
-import axios from "axios";
 import HttpService from "./HttpService";
+import { useAppDispatch } from "../store/useStore";
 
 
 const UploadEmployee = () => {
   const dispatch = useAppDispatch();
-  // const { uploaddata, uploadisError, uploadisLoading, uploadmessage, uploadisSuccess } = useAppSelector((state: any) => state.employee)
-
 
 
   const [data, setData] = useState([]);
@@ -29,9 +20,6 @@ const UploadEmployee = () => {
 
   const url = `hr/employees/bulk-upload`
 
-
-  const title = "Upload Success";
-  const title1 = "Upload Failed";
 
   const [progress, setProgress] = useState(0);
   const [show, setShow] = useState(false);
@@ -45,36 +33,7 @@ const UploadEmployee = () => {
 
 
   const submitHandler = async () => {
-    // console.log('url', url)
-    // console.log('file', file)
-    // setisLoading(true)
-    // const formData = new FormData();
-    // formData.append('file', file);
-    // formData.append('fileName', file?.name);
 
-
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // };
-    // axios.post(url, formData, config)
-    //   .then((response) => {
-    //     console.log('response', response);
-
-    // if (response.data.message === "success") {
-    //   setData(response.data.data);
-    //   fireAlert(title, "Upload Employee base is successfull", "success");
-    //   setisLoading(false)
-    // } else if (response.data.message === "error") {
-    //   fireAlert(title1, message, "error");
-    //   setisLoading(false)
-    // }
-    // })
-    // .catch((error) => {
-    //   console.log('error', error);
-    //   setisLoading(false)
-    // });
 
     await HttpService.uploadFile(url, {}, { employees: file })
       .then((response) => {
@@ -88,7 +47,7 @@ const UploadEmployee = () => {
 
 
 
-    // handleRequestPost(setData, setMessage, setisError, setisSuccess, setisLoading, url, file, setProgress)
+
     // @ts-ignore
     // dispatch(uploadEmployee(jsonData, setProgress));
 
@@ -100,20 +59,19 @@ const UploadEmployee = () => {
 
   function handleChange(event: any) {
     setFile(event.target.files[0])
-    // handleSubmit(file)
   }
 
 
   useEffect(() => {
     if (isSuccess) {
-      fireAlert("Upload Employee base is successfull", "success");
+      fireAlert('Upload Employee', "Upload Employee base is successfull", "success");
       setTimeout(() => {
         setisSuccess(false)
         setMessage("")
         // setReload(false)
       }, 5000);
     } else if (isError) {
-      fireAlert(message, "error");
+      fireAlert('Upload Employee', 'message', "error");
       setTimeout(() => {
         setisError(false)
         setMessage("")

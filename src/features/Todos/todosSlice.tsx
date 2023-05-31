@@ -87,7 +87,7 @@ export const deleteTodos = createAsyncThunk('auth/deleteTodos', async (data, thu
 
 
 
-export const authSlice = createSlice({
+export const todosSlice = createSlice({
 	name: 'todos',
 	initialState,
 	reducers: {
@@ -125,7 +125,7 @@ export const authSlice = createSlice({
 			.addCase(getTodos.fulfilled, (state: any, action) => {
 				state.isLoading = false
 				state.isSuccess = true
-				state.data = action.payload?.data?.data
+				state.data = action.payload?.data
 			})
 			.addCase(getTodos.rejected, (state: any, action) => {
 				state.isLoading = false
@@ -141,7 +141,7 @@ export const authSlice = createSlice({
 			.addCase(viewTodos.fulfilled, (state: any, action) => {
 				state.viewisLoading = false
 				state.viewisSuccess = true
-				state.viewdata = action.payload?.data?.data
+				state.viewdata = action.payload?.data
 			})
 			.addCase(viewTodos.rejected, (state: any, action) => {
 				state.viewisLoading = false
@@ -157,7 +157,7 @@ export const authSlice = createSlice({
 			.addCase(createTodos.fulfilled, (state: any, action) => {
 				state.createisLoading = false
 				state.createisSuccess = true
-				state.createdata = action.payload?.data?.data
+				state.createdata = action.payload?.data
 			})
 			.addCase(createTodos.rejected, (state: any, action) => {
 				state.createisLoading = false
@@ -172,7 +172,7 @@ export const authSlice = createSlice({
 			.addCase(deleteTodos.fulfilled, (state: any, action) => {
 				state.deleteisLoading = false
 				state.deleteisSuccess = true
-				state.deletedata = action.payload?.data?.data
+				state.deletedata = action.payload?.data
 			})
 			.addCase(deleteTodos.rejected, (state: any, action) => {
 				state.deleteisLoading = false
@@ -184,5 +184,5 @@ export const authSlice = createSlice({
 	},
 })
 
-export const { reset } = authSlice.actions
-export default authSlice.reducer
+export const { reset } = todosSlice.actions
+export default todosSlice.reducer

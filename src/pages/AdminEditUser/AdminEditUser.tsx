@@ -4,8 +4,9 @@ import { Button } from "@material-ui/core";
 import { BiUser } from "react-icons/bi";
 import EditProfile from "./components/EditProfile";
 import ResetPassword from "./components/ResetPassword";
-import { useAppSelector } from "../../hooks/useDispatch";
+// import { useAppSelector } from "../../hooks/useDispatch";
 import { useEmployeeById } from "../../hooks/useEmployees";
+import { useAppSelector } from "../../store/useStore";
 
 const AdminEditUser = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,29 +14,29 @@ const AdminEditUser = () => {
     useEmployeeById(id ? id : "");
 
   const [activeTab, setActiveTab] = useState(0);
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
+  // const departments: any = useAppSelector(
+  //   (state) => state?.department?.department
+  // );
   const availablleDepartments = [] as any;
 
-  departments &&
-    departments.forEach((department: any) =>
-      availablleDepartments.push({
-        value: department?.id,
-        label: department?.name,
-      })
-    );
+  // departments &&
+  //   departments.forEach((department: any) =>
+  //     availablleDepartments.push({
+  //       value: department?.id,
+  //       label: department?.name,
+  //     })
+  //   );
 
-  const roles: any = useAppSelector((state) => state?.roles?.roles);
+  // const roles: any = useAppSelector((state) => state?.roles?.roles);
   const availablleRoles = [] as any;
 
-  roles &&
-    roles.forEach((role: any) =>
-      availablleRoles.push({
-        value: role?.id,
-        label: role?.name,
-      })
-    );
+  // roles &&
+  //   roles.forEach((role: any) =>
+  //     availablleRoles.push({
+  //       value: role?.id,
+  //       label: role?.name,
+  //     })
+  //   );
   const tabs = ["Profile", "Reset Password"];
 
   const tabPanels = [

@@ -9,9 +9,13 @@ import Essentials from "./employeeInputs/Essentials";
 import Finance from "./employeeInputs/Finance";
 import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
-import { useAppSelector } from "../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { allDepartments } from "../../features/Department/departmentSlice";
+import { getRole } from "../../features/Employee/employeeSlice";
+
 
 const CreateEmployee = () => {
+  const dispatch = useAppDispatch();
   const [employee, setEmployee] = useState({
     first_name: "",
     middle_name: "",
@@ -88,9 +92,15 @@ const CreateEmployee = () => {
     submitMyFormRef.current = submitForm;
   }, []);
 
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
+  const { data: departments } = useAppSelector((state: any) => state.department)
+  const { getroledata: roles } = useAppSelector((state: any) => state.employee)
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allDepartments());
+    dispatch(getRole());
+
+  }, [dispatch]);
   const availablleDepartments = [] as any;
 
   departments &&
@@ -101,7 +111,7 @@ const CreateEmployee = () => {
       })
     );
 
-  const roles: any = useAppSelector((state) => state?.roles?.roles);
+
   const availablleRoles = [] as any;
 
   roles &&
@@ -173,8 +183,8 @@ const CreateEmployee = () => {
                 employee={employee}
                 departments={departments}
                 roles={roles}
-              // setActive={setActive}
-              // bindSubmitForm={bindSubmitForm}
+                setActive={setActive}
+                bindSubmitForm={bindSubmitForm}
               />
             </div>
           </div>

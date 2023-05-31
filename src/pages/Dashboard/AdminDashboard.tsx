@@ -1,6 +1,6 @@
 import Schedule from "./Schedule";
 import AdminAnnouncement from "./AdminAnnouncement";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+
 import { RiUser6Fill } from "react-icons/ri";
 import { BiBuildingHouse } from "react-icons/bi";
 import { GiStahlhelm } from "react-icons/gi";
@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import { allEmployee } from "../../features/Employee/employeeSlice";
 import { allProject } from "../../features/Project/projectSlice";
 import { allDepartments } from "../../features/Department/departmentSlice";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import Announcement from "./Announcement";
 
 const AdminDashboard = () => {
   const dispatch = useAppDispatch();
@@ -41,17 +43,22 @@ const AdminDashboard = () => {
       // @ts-ignore
       dispatch(allDepartments());
     }
+  }, [departments, dispatch, employees, projects]);
+
+  useEffect(() => {
     if (!employees) {
       // @ts-ignore
       dispatch(allEmployee());
     }
+  }, [departments, dispatch, employees, projects]);
+  useEffect(() => {
     if (!projects) {
       // @ts-ignore
       dispatch(allProject());
     }
-
   }, [departments, dispatch, employees, projects]);
 
+  console.log('employees', employees)
 
   return (
     <div className="main-div">
@@ -132,7 +139,7 @@ const AdminDashboard = () => {
             <DonutChat employees={!employees?.length ? 0 : employees} />
           </div>
         </div>
-        {/* <AdminAnnouncement /> */}
+        <AdminAnnouncement />
         {/* <Announcement /> */}
       </div>
 

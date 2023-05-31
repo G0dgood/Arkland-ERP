@@ -10,13 +10,14 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+
 import { useWorkersRequest } from "../../hooks/useWorkersRequest";
-import { getProjects } from "../../store/reducers/project";
-import { getTeam } from "../../store/reducers/team";
-import { getTeamLeads } from "../../store/reducers/teamLeads";
+// import { getProjects } from "../../store/reducers/project";
+// import { getTeam } from "../../store/reducers/team";
+// import { getTeamLeads } from "../../store/reducers/teamLeads";
 import { checkForName } from "../../utils/checkForName";
 import TableLoader from "../../components/TableLoader";
+import { useAppDispatch } from "../../store/useStore";
 
 const SiteWorkerRequest = () => {
   const navigate = useNavigate();
@@ -28,9 +29,9 @@ const SiteWorkerRequest = () => {
   });
 
   const { requestWorkersList, isLoading, error, message } = useWorkersRequest();
-  const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
-  const team: any = useAppSelector((state) => state.team.team);
-  const projects: any = useAppSelector((state) => state.projects.projects);
+  // const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+  // const team: any = useAppSelector((state) => state.team.team);
+  // const projects: any = useAppSelector((state) => state.projects.projects);
 
   useEffect(() => {
     // --- Set state of collapseNav to localStorage on pageLoad --- //
@@ -43,17 +44,17 @@ const SiteWorkerRequest = () => {
   };
 
 
-  useEffect(() => {
-    if (!projects || projects.length === 0) {
-      dispatch(getProjects());
-    }
-    if (!teamLeads || teamLeads.length === 0) {
-      dispatch(getTeamLeads());
-    }
-    if (!team || team.length === 0) {
-      dispatch(getTeam());
-    }
-  }, [dispatch, projects, teamLeads, team]);
+  // useEffect(() => {
+  //   if (!projects || projects.length === 0) {
+  //     dispatch(getProjects());
+  //   }
+  //   if (!teamLeads || teamLeads.length === 0) {
+  //     dispatch(getTeamLeads());
+  //   }
+  //   if (!team || team.length === 0) {
+  //     dispatch(getTeam());
+  //   }
+  // }, [dispatch, projects, teamLeads, team]);
 
   const header = [
     { title: "PROJECT", prop: "project" },
@@ -135,7 +136,7 @@ const SiteWorkerRequest = () => {
               ) : (
                 requestWorkersList.map((item: any, i: any) => (
                   <tr className="data-table-row">
-                    <td className="table-datacell datatype-numeric">
+                    {/* <td className="table-datacell datatype-numeric">
                       {checkForName(item.project, projects)}
                     </td>
                     <td className="table-datacell datatype-numeric">
@@ -143,7 +144,7 @@ const SiteWorkerRequest = () => {
                     </td>
                     <td className="table-datacell datatype-numeric">
                       {checkForName(item.team_lead, teamLeads)}
-                    </td>
+                    </td> */}
                     <td className="table-datacell datatype-numeric">
                       {item?.requests?.[0].role_name}
                     </td>

@@ -1,41 +1,35 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { BsExclamationLg } from "react-icons/bs";
-import { FiCheckCircle, FiEye } from "react-icons/fi";
+import { FiEye } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-import { Modal, Spinner, Toast } from "react-bootstrap";
-import Cookies from "js-cookie";
-import { FaTimes } from "react-icons/fa";
-import { MdOutlineClose } from "react-icons/md";
+
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
 import {
   EmployeeStatus,
   EntriesPerPage,
+  MainSearch,
   // MainSearch,
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { checkForName } from "../../utils/checkForName";
-import { getRoles } from "../../store/reducers/roles";
-import { getDepartment } from "../../store/reducers/department";
-import { useEmployees } from "../../hooks/useEmployees";
 import { getUserPrivileges } from "../../functions/auth";
-import { DialogState } from "../../interfaces/base";
 import { fireAlert } from "../../utils/Alert";
 import EmployeesDownloader from "../../components/Downloader/EmployeesDownloader";
 import { allEmployee } from "../../features/Employee/employeeSlice";
-import UploadEmployee from "../../components/UploadEmployee";
 import ApproveEmployeeModal from "../../components/Modals/ApproveEmployeeModal";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import DataService from "../../utils/dataService";
 
-const token = Cookies.get("token");
 
-const AllEmployees = ({ setEmployee, setData }: any) => {
+const dataService = new DataService()
+const AllEmployees = () => {
+
   const dispatch = useAppDispatch();
   const { data, isError, isLoading, message } = useAppSelector((state: any) => state.employee)
+  const { approvedata, approveisError, approveisLoading, approvemessage } = useAppSelector((state: any) => state.employee)
   const { approveisSuccess } = useAppSelector((state: any) => state.employee)
   const [reset, setReset] = useState(false);
   const navigate = useNavigate();
@@ -56,24 +50,22 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
   const [status, setStatus] = useState("in review");
   const [roles, setRoles] = useState("");
 
-  // const rolesData: any = useAppSelector((state) => state?.roles?.roles);
-  // const departments: any = useAppSelector(
-  //   (state) => state?.department?.department
-  // );
+
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 
 
   const [displayData, setDisplayData] = useState([]);
-  // const [searchItem, setSearchItem] = useState("");
-  const [approvalLoading, setApprovalLoading] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [showDialog, setShowDialog] = React.useState<DialogState>({});
-  const [deleteShow, setDeleteShow] = React.useState(false);
-  // const { employees, isLoading, error, message } = useEmployees(
-  //   status,
-  //   action,
-  //   roles
-  // );
+  const [searchItem, setSearchItem] = useState("");
+
+
+  useEffect(() => {
+    if (isError) {
+      fireAlert("error", message, "error");
+    } else if (approveisError) {
+      fireAlert(" KPI error", approvemessage, "error");
+    }
+  }, [navigate, isError, approveisError, message, approvemessage]);
+
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -84,19 +76,7 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
 
-  // useEffect(() => {
-  //   setData(data?.length);
-  // }, [data?.length, setData]);
 
-  // React.useEffect(() => {
-  //   if (!roles || roles?.length === 0) {
-  //     dispatch(getRoles());
-  //   }
-  //   if (!departments || departments?.length === 0) {
-  //     dispatch(getDepartment());
-  //   }
-  //   // setEmployee(employees?.length);
-  // }, [dispatch, roles, departments, setEmployee, employees?.length]);
 
   const header = [
     { title: "FULL NAME", prop: "full_name" },
@@ -109,87 +89,29 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
     { title: "ACTION" },
   ];
 
-  // const handleApproval = (id: any) => {
-  //   setShowDialog({ [id]: true });
-  //   setDeleteShow(true);
-  // };
 
-  // const handleSubmit = async (id: any) => {
-  //   setApprovalLoading(true);
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.REACT_APP_API}/hr/employees/${id}/approve`,
-  //       {
-  //         method: "PATCH",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     const data = await response.json();
-  //     setApprovalLoading(false);
-  //     if (response.ok) {
-  //       const title = "Employee approved successful";
-  //       const html = `Employee approved`;
-  //       const icon = "success";
-  //       fireAlert(title, html, icon);
-  //       // navigate(`/employeecontainer`);
-  //       setShowDialog({ [id]: false });
-  //       // setAction(true);
-  //     } else {
-  //       throw new Error(data.message || "Something went wrong!");
-  //     }
-  //   } catch (error: any) {
-  //     // console.log(error);
-  //     setApprovalLoading(false);
-  //     const html = error.message || "Something went wrong!";
-  //     const icon = "error";
-  //     const title = "Employee approval failed";
-  //     fireAlert(title, html, icon);
-  //     setShowDialog({ [id]: false });
-  //   }
-  // };
 
-  // console.log("displayData?.length", employees);
 
   return (
     <div>
-      {isError && (
-        <Toast
-          onClose={() => setShowToast(false)}
-          show={true}
-          delay={4000}
-          autohide
-        >
-          <Toast.Body>
-            <span>
-              <BsExclamationLg />
-            </span>
-            <p>{message}</p>
-            <span onClick={() => setShowToast(false)}>
-              <FaTimes />
-            </span>
-          </Toast.Body>
-        </Toast>
-      )}
+
       <div>
         <div className="allemployees-container">
           <div className="allemployees-container-main">
             <div className="allemployees-container-sup">
-              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
-                <div className="allemployees-sup-item1">
-                  <Button
-                    variant="contained"
-                    className="Add-btn"
-                    onClick={() => navigate("/createemployee")}
-                  // onClick={handleCreateEmployeeClick}
-                  >
-                    <GoPlus className="icon-space" />
-                    Create Employee
-                  </Button>
-                </div>
-              )}
+              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
+              <div className="allemployees-sup-item1">
+                <Button
+                  variant="contained"
+                  className="Add-btn"
+                  onClick={() => navigate("/employeesemployees/create")}
+                // onClick={handleCreateEmployeeClick}
+                >
+                  <GoPlus className="icon-space" />
+                  Create Employee
+                </Button>
+              </div>
+              {/* )} */}
 
               {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                 <div
@@ -201,7 +123,7 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
                   </Button>
                 </div>
               )} */}
-              <UploadEmployee />
+              {/* <UploadEmployee /> */}
               {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                 <div
                   className="allemployees-sup-item2"
@@ -231,15 +153,16 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
                 setEntriesPerPage={setEntriesPerPage}
               />
             </div>
-            {/* <div>
+            <div>
               <MainSearch
                 setSearchItem={setSearchItem}
                 searchItem={searchItem}
                 placeholder={"Search...          All Employee"}
               />
-            </div> */}
+            </div>
             <div>
-              {/* <EmployeesDownloader data={data} /> */}
+              {data && <EmployeesDownloader data={data} />}
+
             </div>
           </div>
           <section className="md-ui component-data-table">
@@ -277,7 +200,7 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
                           {item?.email}
                         </td>
                         <td className="table-datacell datatype-numeric">
-                          {checkForName(item?.role, roles)}
+                          {/* {checkForName(item?.role, roles)} */}
                         </td>
                         <td className="table-datacell datatype-numeric">
                           {item?.department?.name}
@@ -299,17 +222,11 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
                         </td>
                         <td className="table-datacell datatype-numeric">
                           <div className="table-active-items">
-
-
-
                             <span
                               className="lock-icon-color"
                               title="View employee "
-                              style={{
-                                marginLeft: "10px",
-                              }}
-                              onClick={() => navigate(`/employees/${item.id}`)}
-                            >
+                              style={{ marginLeft: "10px" }}
+                              onClick={() => navigate(`/employees/employees/${item.id}`)} >
                               <FiEye
                                 size={25}
                                 title="View Employee"
@@ -329,12 +246,12 @@ const AllEmployees = ({ setEmployee, setData }: any) => {
           </section>
         </div>
         <footer className="main-table-footer">
-          {/* <Pagination
+          <Pagination
             setDisplayData={setDisplayData}
             data={data}
             entriesPerPage={entriesPerPage}
             Total={"Employee"}
-          /> */}
+          />
         </footer>
       </div>
     </div>

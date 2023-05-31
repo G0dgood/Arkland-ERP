@@ -103,26 +103,26 @@ const TeamWeeklyReportUpdate = () => {
 
 
 
-	// useEffect(() => {
-	// 	if (isError) {
-	// 		fireAlert(title, html, icon);
-	// 		setTimeout(() => {
-	// 			setisError(false)
-	// 			setMessage("")
-	// 		}, 5000);
-	// 	} else if (isError1) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		setTimeout(() => {
-	// 			setisError1(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 	} else if (isSuccess) {
-	// 		fireAlert(title2, html2, icon2);
-	// 		setTimeout(() => {
-	// 			setisSuccess(false)
-	// 		}, 5000);
-	// 	}
-	// }, [html, html1, isError, isError1, isSuccess])
+	useEffect(() => {
+		if (isError) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisError(false)
+				setMessage("")
+			}, 5000);
+		} else if (isError1) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		} else if (isSuccess) {
+			fireAlert(title2, html2, icon2);
+			setTimeout(() => {
+				setisSuccess(false)
+			}, 5000);
+		}
+	}, [html, html1, isError, isError1, isSuccess])
 
 	return (
 		<div  >

@@ -1,72 +1,49 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import SyncLoader from "react-spinners/SyncLoader";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
-
 import { getUserPrivileges } from "../../functions/auth";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { allDepartments } from "../../features/Department/departmentSlice";
+import { allDepartments, reset } from "../../features/Department/departmentSlice";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { fireAlert } from "../../utils/Alert";
 
 const DepartmentsView = () => {
   const dispatch = useAppDispatch();
-  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.department)
-
-
-
-
   const navigate = useNavigate();
+  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.department)
+  const { createisSuccess } = useAppSelector((state: any) => state.department)
+
+  useEffect(() => {
+    if (isError) {
+      fireAlert("Department error", message, "error");
+      dispatch(reset());
+    }
+  }, [isError, message, dispatch])
+
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
-  const [newDepartmentCreated, setNewDepartmentCreated] = React.useState({} as any);
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
+
+
 
   useEffect(() => {
     // @ts-ignore
     dispatch(allDepartments());
-  }, [dispatch]);
-  // const { departments, isLoading, error, message } =
-  //   useDepartments(newDepartmentCreated);
+    if (createisSuccess) {
+      dispatch(allDepartments());
+    }
+  }, [createisSuccess, dispatch]);
 
-  const handleNewDepartmentCreated = () => {
-    setNewDepartmentCreated(!newDepartmentCreated);
-  };
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
 
-  // const randColor = () => {
-  //   const realColor =
-  //     "#" +
-  //     Math.floor(Math.random() * 16777215)
-  //       .toString(16)
-  //       .padStart(6, "0")
-  //       .toUpperCase();
-  //   console.log("realColor", realColor);
-  //   return realColor;
-  // };
+
+
 
   const isPrime = (num: number) => {
     for (let i = 2; i < num; i++) if (num % i === 0) return false;
     return num > 1;
   };
 
-  const [subnav, setSubnav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("Provider")) || false;
-  });
 
-  useEffect(() => {
-    localStorage.setItem("Provider", JSON.stringify(subnav));
-  }, [subnav]);
 
 
   return (
@@ -76,15 +53,14 @@ const DepartmentsView = () => {
         <div className="ProjectViewContainer-subone">
           <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
             <h5>Department</h5>
-            {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
-              <div className="Request-btn-modal-container">
-                <div className="Request-btn">
-                  <CreateDepartmentModal
-                    onNewDepartmentCreated={handleNewDepartmentCreated}
-                  />
-                </div>
+            {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
+            <div className="Request-btn-modal-container">
+              <div className="Request-btn">
+                <CreateDepartmentModal
+                />
               </div>
-            )}
+            </div>
+            {/* )} */}
           </div>
           {isLoading ? (
             <div className="isLoading-container">
@@ -104,7 +80,7 @@ const DepartmentsView = () => {
                 <div
                   className="ProjectView-card"
                   key={i}
-                  onClick={() => navigate(`/departments/${item?.id}`)}
+                  onClick={() => navigate(`/departments/departments/${item?.id}`)}
                 >
                   <div className="iDotsHorizontalRounded">
                     <Button
@@ -133,3 +109,4 @@ const DepartmentsView = () => {
 };
 
 export default DepartmentsView;
+

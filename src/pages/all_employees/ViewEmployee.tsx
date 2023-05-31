@@ -5,9 +5,12 @@ import { Button } from "@material-ui/core";
 import { SyncLoader } from "react-spinners";
 import { Modal, Spinner } from "react-bootstrap";
 import projectBack from "../../assets/vectors/project-back.svg";
-import { useEmployeeById } from "../../hooks/useEmployees";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import { getUserPrivileges } from "../../functions/auth";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { hrViewEmployees } from "../../features/Employee/employeeSlice";
+import { fireAlert } from "../../utils/Alert";
+import DeleteEmployeeModal from "../../components/Modals/DeleteEmployeeModal";
 
 const override: CSSProperties = {
   display: "block",
@@ -19,41 +22,41 @@ const override: CSSProperties = {
 
 const ViewEmployee = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.employee)
+  const { employee, salary } = viewdata
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
   const { id } = useParams<{ id: string }>();
-  const {
-    employee,
-    salary,
-    isLoading,
-    isDeleteLoading,
-    handleEmployeeDeletion,
-  } = useEmployeeById(id ? id : "");
-  const [deleteShow, setDeleteShow] = useState(false);
-  const [showDialog, setShowDialog] = useState<any>({});
+
+  useEffect(() => {
+    if (viewisError) {
+      fireAlert("error", viewmessage, "error");
+    }
+  }, [navigate, viewisError, viewmessage]);
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(hrViewEmployees(id));
+  }, [dispatch, id]);
+
+
+
   const [isEssentialDetailsOpen, setIsEssentialDetailsOpen] = useState(false);
-  const [isFinancialDetailsOpen, setIsFinancialDetailsOpen] =
-    useState(false);
+  const [isFinancialDetailsOpen, setIsFinancialDetailsOpen] = useState(false);
   const [isReferencesOpen, setIsReferencesOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
-  const handleDelete = () => {
-    setShowDialog(true);
-    setDeleteShow(true);
-  };
 
   return (
-    <div  >
-      {isLoading ? (
+    <div >
+      {viewisLoading ? (
         <div
-          style={{
-            margin: "auto",
-            width: "20%",
-          }}
-        >
+          style={{ margin: "auto", width: "20%", }}  >
           <SyncLoader
             cssOverride={override}
             color={"#990000"}
-            loading={isLoading}
+            loading={viewisLoading}
           />
         </div>
       ) : (
@@ -81,52 +84,11 @@ const ViewEmployee = () => {
                   Edit Employee
                 </Button>
               )}
-              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
-                <Button
-                  variant="contained"
-                  className="Add-btn"
-                  onClick={() => handleDelete()}
-                >
-                  Delete Employee
-                </Button>
-              )}
+              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
+              <DeleteEmployeeModal id={id} />
+              {/* // )} */}
             </div>
-            {showDialog && (
-              <Modal
-                size="lg"
-                show={deleteShow}
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Delete Employee Data</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <p>Are you sure you want to delete employee data?</p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => {
-                      handleEmployeeDeletion();
-                      setShowDialog(false);
-                    }}
-                  >
-                    {isDeleteLoading ? (
-                      <Spinner animation="border" />
-                    ) : (
-                      "Yes"
-                    )}
-                  </button>
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => setShowDialog(false)}
-                  >
-                    Cancel
-                  </button>
-                </Modal.Footer>
-              </Modal>
-            )}
+
           </div>
 
           <h4 style={{ marginTop: "3rem" }}>Review Employee Details</h4>
@@ -273,10 +235,7 @@ const ViewEmployee = () => {
             {isReferencesOpen ? "▼" : "►"}
           </h6>
           {isReferencesOpen && (
-            <div
-              className="viewprofile-container"
-              style={{ marginTop: "2rem" }}
-            >
+            <div className="viewprofile-container" style={{ marginTop: "2rem" }} >
               <div>
                 <div className="getjob-application-details">
                   <p>Next of Kin</p>
@@ -304,18 +263,12 @@ const ViewEmployee = () => {
             </div>
           )}
 
-          <h6
-            style={{ marginTop: "3rem", cursor: "pointer" }}
-            onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-          >
+          <h6 style={{ marginTop: "3rem", cursor: "pointer" }} onClick={() => setIsDetailsOpen(!isDetailsOpen)}  >
             Details of employment
             {isDetailsOpen ? "▼" : "►"}
           </h6>
           {isDetailsOpen && (
-            <div
-              className="viewprofile-container"
-              style={{ marginTop: "2rem" }}
-            >
+            <div className="viewprofile-container" style={{ marginTop: "2rem" }} >
               <div>
                 <div className="getjob-application-details">
                   <p>Department</p>
@@ -323,11 +276,7 @@ const ViewEmployee = () => {
                   <p>Role</p>
                   <p>{employee?.role?.name}</p>
                   <p>Work Location Objection</p>
-                  <p>
-                    {employee.has_work_location_objection === true
-                      ? "Yes"
-                      : "No"}
-                  </p>
+                  <p> {employee.has_work_location_objection === true ? "Yes" : "No"} </p>
                   <p>Tally Number</p>
                   <p>{employee?.tally_number}</p>
                 </div>
@@ -339,11 +288,7 @@ const ViewEmployee = () => {
                   <p>Employment Type</p>
                   <p>{employee?.employment_type}</p>
                   <p>Employment Date (DD-MM-YYYY)</p>
-                  <p>
-                    {moment(employee?.employment_date).format(
-                      "DD-MM-YYYY"
-                    )}
-                  </p>
+                  <p>{moment(employee?.employment_date).format("DD-MM-YYYY")}</p>
                   <p>Employment Duration (Months)</p>
                   <p>{employee?.employment_duration}</p>
                 </div>

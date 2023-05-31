@@ -1,56 +1,40 @@
 
-import  { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 
-const KPIInfoDetails = ({ data, setHodscore }: any) => {
-	// const year = new Date().getFullYear().toString();
+const KPIInfoDetails = ({ viewdata, setHodscore }: any) => {
 
-	// const [isLoading, setisLoading] = useState(false);
-	// const [isSuccess, setisSuccess] = useState(false);
-	// const [message, setMessage] = useState('')
-	// const [datas, setData] = useState('')
-	// const [isError, setisError] = useState(false)
-
-	const [input, setinput] = useState<any>({
-		"job_knowledge": 0,
-		"efficiency": 0,
-		"attendance": 0,
-		"communication": 0,
-		"reliability": 0,
-		"collaboration": 0,
-		"comment": ""
-	})
 
 	const kpiData = [
 		{
 			'Performance': 'Job Knowledge',
-			'num': data?.job_knowledge_employee,
-			'reviewer': data?.job_knowledge_reviewer
+			'num': viewdata?.job_knowledge_employee,
+			'reviewer': viewdata?.job_knowledge_reviewer
 		},
 		{
 			'Performance': 'Efficiency',
-			'num': data?.efficiency_employee,
-			'reviewer': data?.efficiency_reviewer
+			'num': viewdata?.efficiency_employee,
+			'reviewer': viewdata?.efficiency_reviewer
 		},
 		{
 			'Performance': ' Attendance',
-			'num': data?.attendance_employee,
-			'reviewer': data?.attendance_reviewer
+			'num': viewdata?.attendance_employee,
+			'reviewer': viewdata?.attendance_reviewer
 		},
 		{
 			'Performance': 'Software Development',
-			'num': data?.communication_employee,
-			'reviewer': data?.communication_reviewer
+			'num': viewdata?.communication_employee,
+			'reviewer': viewdata?.communication_reviewer
 		},
 		{
 			'Performance': 'Team work',
-			'num': data?.reliability_employee,
-			'reviewer': data?.reliability_reviewer
+			'num': viewdata?.reliability_employee,
+			'reviewer': viewdata?.reliability_reviewer
 		},
 		{
 			'Performance': 'Debugging',
-			'num': data?.collaboration_employee,
-			'reviewer': data?.collaboration_reviewer
+			'num': viewdata?.collaboration_employee,
+			'reviewer': viewdata?.collaboration_reviewer
 		},
 	];
 
@@ -97,28 +81,13 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 	const Amount: any = Object.values(kpiData).reduce((a, v) => (a = a + v?.num), 0);
 
 
-	useEffect(() => {
-		setinput((prevState: any) => {
-			return ({
-				...prevState,
-				job_knowledge: totalScore1,
-				efficiency: totalScore2,
-				attendance: totalScore3,
-				communication: totalScore4,
-				reliability: totalScore5,
-				collaboration: totalScore6
-			});
-		});
-	}, [setinput, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
-
-
 	const reviews = [
-		{ 'reviewer': data?.job_knowledge_employee },
-		{ 'reviewer': data?.efficiency_reviewer },
-		{ 'reviewer': data?.attendance_reviewer },
-		{ 'reviewer': data?.communication_reviewer },
-		{ 'reviewer': data?.reliability_reviewer },
-		{ 'reviewer': data?.collaboration_reviewer },
+		{ 'reviewer': viewdata?.job_knowledge_employee },
+		{ 'reviewer': viewdata?.efficiency_reviewer },
+		{ 'reviewer': viewdata?.attendance_reviewer },
+		{ 'reviewer': viewdata?.communication_reviewer },
+		{ 'reviewer': viewdata?.reliability_reviewer },
+		{ 'reviewer': viewdata?.collaboration_reviewer },
 	];
 
 	//  @ts-ignore  
@@ -152,10 +121,10 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 								</div>
 							</div>
 							<div className="rate_area">
-								<p>{data?.job_knowledge_employee}</p>
+								<p>{viewdata?.job_knowledge_employee}</p>
 							</div>
 							<div className="btn_area">
-								{data?.job_knowledge_reviewer}
+								{viewdata?.job_knowledge_reviewer}
 							</div>
 						</div>
 						<div className="added-field">
@@ -166,10 +135,10 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 								</div>
 							</div>
 							<div className="rate_area">
-								<p>{data?.efficiency_employee}</p>
+								<p>{viewdata?.efficiency_employee}</p>
 							</div>
 							<div className="btn_area">
-								{data?.efficiency_reviewer}
+								{viewdata?.efficiency_reviewer}
 							</div>
 						</div>
 						<div className="added-field">
@@ -180,10 +149,10 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 								</div>
 							</div>
 							<div className="rate_area">
-								<p>{data?.attendance_employee}</p>
+								<p>{viewdata?.attendance_employee}</p>
 							</div>
 							<div className="btn_area">
-								{data?.attendance_reviewer}
+								{viewdata?.attendance_reviewer}
 							</div>
 						</div>
 						<div className="added-field">
@@ -194,10 +163,10 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 								</div>
 							</div>
 							<div className="rate_area">
-								<p>{data?.communication_employee}</p>
+								<p>{viewdata?.communication_employee}</p>
 							</div>
 							<div className="btn_area">
-								{data?.communication_reviewer}
+								{viewdata?.communication_reviewer}
 							</div>
 						</div>
 						<div className="added-field">
@@ -208,10 +177,10 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 								</div>
 							</div>
 							<div className="rate_area">
-								<p>{data?.reliability_employee}</p>
+								<p>{viewdata?.reliability_employee}</p>
 							</div>
 							<div className="btn_area">
-								{data?.reliability_reviewer}
+								{viewdata?.reliability_reviewer}
 							</div>
 						</div>
 						<div className="added-field">
@@ -222,10 +191,10 @@ const KPIInfoDetails = ({ data, setHodscore }: any) => {
 								</div>
 							</div>
 							<div className="rate_area">
-								<p>{data?.collaboration_employee}</p>
+								<p>{viewdata?.collaboration_employee}</p>
 							</div>
 							<div className="btn_area">
-								<p>{data?.collaboration_reviewer}</p>
+								<p>{viewdata?.collaboration_reviewer}</p>
 							</div>
 						</div>
 						<div className="added-field">

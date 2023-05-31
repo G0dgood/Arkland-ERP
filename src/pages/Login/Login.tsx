@@ -18,7 +18,6 @@ import InputField from "../../components/Inputs/InputField";
 import { useNavigate } from "react-router-dom";
 import HttpService from "../../components/HttpService";
 import DataService from "../../utils/dataService";
-import { userInfo } from "os";
 
 
 const dataService = new DataService()
@@ -29,11 +28,13 @@ const Login = () => {
   const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const token = dataService.getToken()
 
+
+
   const [isLoading, setLoading] = React.useState(false);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<any>(false);
   const [showToast, setShowToast] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<any>("");
 
   const validate = Yup.object().shape({
     email: Yup.string().email().required("Email Address is Required"),
@@ -57,6 +58,13 @@ const Login = () => {
       window.location.replace("/");
     } catch (error) {
       setLoading(false);
+      setError(true);
+      // @ts-ignore
+      setMessage(error.response.data.message);
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+
     }
   }
 
@@ -64,7 +72,7 @@ const Login = () => {
     if (user && token) {
       navigate("/")
     }
-  })
+  }, [])
 
 
 

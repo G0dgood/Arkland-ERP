@@ -2,23 +2,24 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
-import axios from "axios";
-import Cookies from "js-cookie";
 import { CgProfile } from "react-icons/cg";
 import { TfiAlignJustify } from "react-icons/tfi";
 import logo from "../assets/images/ASLLOGO.svg";
 import { AiOutlineLogout } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
-import storage from "../utils/dataService";
 import MobileSideBar from "./MobileSideBar";
 import LogoutOption from "./LogoutOption";
 import Notification from "./Notification/Notification";
 import Socket from "./Socket";
-import { useAppDispatch, useAppSelector } from "../hooks/useDispatch";
-import { allNotifications } from "../features/Notification/NotificationSlice";
 
+import { allNotifications } from "../features/Notification/NotificationSlice";
+import { useAppDispatch, useAppSelector } from "../store/useStore";
+import DataService from "../utils/dataService";
+
+const dataService = new DataService()
 const Header = ({ toggleSideNav }: any) => {
+  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state: any) => state.notification)
@@ -44,10 +45,6 @@ const Header = ({ toggleSideNav }: any) => {
   // const userInfo: any = JSON.parse(storage?.get("user"));
   // @ts-ignore
   // const newnoti: any = JSON.parse(storage?.get("notifications"));
-
-
-
-
 
 
 
@@ -86,7 +83,7 @@ const Header = ({ toggleSideNav }: any) => {
   //   if (newnoti?.length > 1 || yes) {
   //     setInfo(newnoti);
   //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [yes])
 
 
@@ -127,7 +124,7 @@ const Header = ({ toggleSideNav }: any) => {
           </div>
           <span className="header-logo-text">{/* Line Manager */}</span>
           <span className="header-logo-text1">
-            {/* {userInfo?.data?.employee?.email} */}
+            {userInfo?.employee?.email}
           </span>
         </div>
         <div className="hand-noficational-place">
@@ -151,7 +148,7 @@ const Header = ({ toggleSideNav }: any) => {
             onClick={() => setDropDown(true)}
           >
             <span className="dropdown-names">
-              {/* {userInfo?.data?.employee?.full_name} */}
+              {userInfo?.employee?.full_name}
             </span>
             <div className="preview-header img-container-header">
               <FaUserCircle size={22} />

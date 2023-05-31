@@ -1,17 +1,34 @@
-import axios from 'axios' 
+import HttpService from '../../components/HttpService'
  
  
   
  
 const userRole = async (  ) => { 
-	 
-  const { data } = await axios.get(`${process.env.REACT_APP_API}/hr/employee-roles`, )
+	  
+   const  {data}:any  =  await HttpService.get("hr/employee-roles")
    
   return data
 }
 const userDepartment = async ( ) => { 
-	 
-  const { data } = await axios.get(`${process.env.REACT_APP_API}/hr/leaves`)
+	    const  {data}:any  =  await HttpService.get("hr/employee-roles") 
+   
+  return data
+}
+
+const userprivileges = async ( ) => { 
+	    const  {data}:any  =  await HttpService.get("admin/privileges") 
+   
+  return data
+}
+ 
+const deleteprivileges = async (id:any ) => { 
+	    const  {data}:any  =  await HttpService.delete(`admin/privileges/${id}`) 
+   
+  return data
+}
+ 
+const createHOD = async (id:any ) => { 
+	    const  {data}:any  =  await HttpService.delete(`admin/privileges/${id}`) 
    
   return data
 }
@@ -20,9 +37,12 @@ const userDepartment = async ( ) => {
  
  
  
-const leaveService = { 
+const userService = { 
   userRole,  
-  userDepartment
+  userDepartment,
+  userprivileges,
+  deleteprivileges,
+  createHOD
 }
 
-export default leaveService
+export default userService

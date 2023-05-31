@@ -9,22 +9,19 @@ import moment from "moment";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import TableLoader from "../../components/TableLoader";
-import storage from "../../utils/dataService";
 import { fireAlert } from "../../utils/Alert";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+
 import { allweeklyReport, reset } from "../../features/WeeklyReport/WeeklyReportSlice";
 import Pagination from "../../components/Pagination";
+import DataService from "../../utils/dataService";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+
+const dataService = new DataService()
 
 const MyWeekReport = ({ setkpidata }: any) => {
+  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();
   const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.Weeklyreport)
-  // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-
-
-  // const [sortData, setSortData] = useState([]);
-  // const [searchItem, setSearchItem] = useState("");
-
 
   const title = "Week Report error";
   const html = message;
@@ -45,21 +42,16 @@ const MyWeekReport = ({ setkpidata }: any) => {
   }, [dispatch, id]);
 
 
-
-
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     fireAlert(title, html, icon);
-  //     reset()
-  //   }
-  // }, [html, isError, isSuccess]);
+  useEffect(() => {
+    if (isError) {
+      fireAlert(title, html, icon);
+      reset()
+    }
+  }, [html, isError, isSuccess]);
 
   const [displayData, setDisplayData] = useState([]);
 
-  useEffect(() => {
-    setkpidata(displayData?.length)
-  }, [displayData?.length, dispatch, setkpidata]);
+
 
   return (
     <div>
@@ -69,7 +61,7 @@ const MyWeekReport = ({ setkpidata }: any) => {
         </div>
         <div>
           <EntriesPerPage
-            data={data?.data}
+            data={data}
             entriesPerPage={entriesPerPage}
             setEntriesPerPage={setEntriesPerPage}
           />

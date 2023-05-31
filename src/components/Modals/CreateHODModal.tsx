@@ -1,53 +1,82 @@
 import { Button } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form, Modal, Spinner } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
 import { fireAlert } from '../../utils/Alert'
-import { reset } from '../../features/HOD/hodSlice'
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch'
+import { createHOD, reset } from '../../features/HOD/hodSlice'
+import { useAppDispatch, useAppSelector } from '../../store/useStore'
+import { allEmployee } from '../../features/Employee/employeeSlice'
+import { allDepartments } from '../../features/Department/departmentSlice'
+import SelectInput from '../SelectInput'
+
+
 
 const CreateHODModal = () => {
 	const dispatch = useAppDispatch();
-	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.announcement)
+	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.hod)
+	const { data: department, isLoading: departmentisLoading } = useAppSelector((state: any) => state.department)
+	const { data: employee, isLoading } = useAppSelector((state: any) => state.employee)
+
+	useEffect(() => {
+		dispatch(allDepartments());
+	}, [dispatch, employee]);
+
+	useEffect(() => {
+		if (!employee) {
+			dispatch(allEmployee());
+		}
+	}, [dispatch, employee]);
 	const [lgShow, setLgShow] = useState(false);
+
 	const [inputs, setInputs] = useState<any>({
-		message: "",
-		audience_scope: "",
+		name: " ",
+		department: " ",
+		user: " "
+	})
+	const [input, setInput] = useState<any>({
+		name: " ",
+		department: " ",
+		user: " "
 	})
 
-	const announcementOptions = [
-		"general",
-		"employee role",
-		"team",
-		"department",
-		"project",
-	];
+	useEffect(() => {
+		setInput((prevState: any) => {
+			return ({
+				...prevState,
+				name: inputs.name,
+				department: inputs?.department?.value,
+				user: inputs.user?.value
+			});
+		});
+	}, [inputs?.department?.value, inputs.name, inputs.user?.value, setInputs]);
 
+	console.log('inputs', input)
 
 
 	const title = "Successful";
-	const html = "Announcement Created!";
+	const html = "HOD Created!";
 	const icon = "success";
-	const title1 = "Announcement creation failed";
+	const title1 = "HOD creation failed";
 	const html1 = createmessage;
 	const icon1 = "error";
 
 
-	// useEffect(() => {
-	// 	if (createisSuccess) {
-	// 		// fireAlert(title, html, icon);
-	// 		setInputs({
-	// 			message: "",
-	// 			audience_scope: ""
-	// 		})
-	// 		setLgShow(false)
+	useEffect(() => {
+		if (createisSuccess) {
+			fireAlert(title, html, icon);
+			setInputs({
+				name: " ",
+				department: " ",
+				user: " "
+			})
+			setLgShow(false)
 
-	// 		dispatch(reset());
-	// 	} else if (createisError) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		dispatch(reset());
-	// 	}
-	// }, [createisError, createisSuccess, dispatch, html, html1])
+			dispatch(reset());
+		} else if (createisError) {
+			fireAlert(title1, html1, icon1);
+			dispatch(reset());
+		}
+	}, [createisError, createisSuccess, dispatch, html, html1])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
@@ -57,11 +86,28 @@ const CreateHODModal = () => {
 	};
 
 	const handleCreate = (e: any) => {
-
-		// dispatch(createAnnouncement(inputs));
+		e.preventDefault();
+		// @ts-ignore
+		dispatch(createHOD(inputs));
 	}
-	// e.preventDefault();
-	// 	// @ts-ignore
+	const availableDepartment = [] as any;
+	department &&
+		department.forEach((department: any) =>
+			availableDepartment.push({
+				value: department?.id,
+				label: department?.name,
+			})
+		);
+	const availableEmployees = [] as any;
+
+	employee &&
+		employee.forEach((employee: any) =>
+			availableEmployees.push({
+				value: employee?.id,
+				label: employee?.full_name,
+			})
+		);
+
 
 	return (
 		<div>
@@ -80,7 +126,7 @@ const CreateHODModal = () => {
 			>
 				<Modal.Header>
 					<span></span>
-					<span className="span-center-title">Create Announcement</span>
+					<span className="span-center-title">Create HOD</span>
 					<Button style={{ color: "#fff" }} onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
@@ -93,26 +139,35 @@ const CreateHODModal = () => {
 								<div className="col">
 									<div className="form-group">
 										<textarea rows={6} className='Modal-textarea' placeholder='Enter broadcast message'
-											value={inputs.message}
-											onChange={(e) => handleOnChange("message", e.target.value)} />
+											value={inputs.name}
+											onChange={(e) => handleOnChange("name", e.target.value)} />
 									</div>
 
 
 								</div>
 							</div>
 							<div className="modal-input-sub-space">
-								<div className="col">
-									<select id="Modal-textarea-input-sub"
+								<div className="col" mt-2>
 
-										value={inputs.audience_scope}
-										onChange={(e) => handleOnChange("audience_scope", e.target.value)}>
-										<option>Select audience scope</option>
-										{announcementOptions?.map((employ: any) => (
-											<option key={employ} value={employ}>
-												{employ}
-											</option>
-										))}
-									</select >
+									<SelectInput
+										isDisabled={departmentisLoading}
+										isLoading={departmentisLoading}
+										options={availableDepartment}
+										value={inputs.department}
+										// defaultValue={defaultValue}
+										// defaultInputValue={defaultValue}
+										onChange={(e: any) => handleOnChange("department", e)} />
+								</div>
+								<div className="col mt-5">
+
+									<SelectInput
+										isDisabled={isLoading}
+										isLoading={isLoading}
+										options={availableEmployees}
+										value={inputs.user}
+										// defaultValue={defaultValue}
+										// defaultInputValue={defaultValue}
+										onChange={(e: any) => handleOnChange("user", e)} />
 								</div>
 
 								<div className="btn-modal-container" >

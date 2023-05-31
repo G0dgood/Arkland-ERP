@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs'
 import { MdOutlineClose } from 'react-icons/md'
 import TableLoader from '../../components/TableLoader'
-import Cookies from 'js-cookie'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@material-ui/core';
 import moment from 'moment'
 import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
 import axios, { AxiosResponse } from 'axios'
+import DataService from '../../utils/dataService'
+const dataService = new DataService()
 
 const HRUpdateLeave = () => {
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const token = Cookies.get("token");
+	const token = dataService.getToken()
 	const [isLoading, setisLoading] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
@@ -103,28 +104,28 @@ const HRUpdateLeave = () => {
 	const icon2 = "success";
 
 
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		fireAlert(title, html, icon);
-	// 		setTimeout(() => {
-	// 			setisSuccess(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 		// setLgShow(false)
-	// 	} else if (isError1) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		setTimeout(() => {
-	// 			setisError1(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 	} else if (isSuccess2) {
-	// 		fireAlert(title2, html2, icon2);
-	// 		setTimeout(() => {
-	// 			setisError1(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 	}
-	// }, [html, html1, isError1, isSuccess, isSuccess1, isSuccess2, setMessage1])
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+				setMessage1("")
+			}, 5000);
+			// setLgShow(false)
+		} else if (isError1) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		} else if (isSuccess2) {
+			fireAlert(title2, html2, icon2);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		}
+	}, [html, html1, isError1, isSuccess, isSuccess1, isSuccess2, setMessage1])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({

@@ -14,11 +14,11 @@ const initialState = {
   isLoading: false, 
   message: '', 
 
-  // viewdata:  [],
-  // viewisError: false,
-  // viewisSuccess: false,
-  // viewisLoading: false, 
-  // viewmessage: '', 
+  createdata:  [],
+  createisError: false,
+  createisSuccess: false,
+  createisLoading: false, 
+  createmessage: '', 
 
   deletedeta:  [],
   deleteisError: false,
@@ -38,7 +38,7 @@ const initialState = {
  
  
 
-// KPI Assessment 
+// Get HOD 
 export const getHOD= createAsyncThunk('hod/getHOD', async ( data,thunkAPI) => {
   try {
     return await hodService.getHOD(data)
@@ -53,19 +53,19 @@ export const getHOD= createAsyncThunk('hod/getHOD', async ( data,thunkAPI) => {
 })
 
  
-// // View KPI Assessment 
-// export const viewAssessment = createAsyncThunk('assessment/viewAssessment', async ( data,thunkAPI) => {
-//   try {
-//     return await assessmentService.viewAssessment(data)
-//   } catch (error: any) {
-//     const message = (error.response && 
-//       error.response.data && 
-//       error.response.data.message) ||
-//       error.message ||error.toString() 
+ 
+export const createHOD = createAsyncThunk('assessment/createHOD', async ( data,thunkAPI) => {
+  try {
+    return await hodService.createHOD(data)
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString() 
     
-//     return thunkAPI.rejectWithValue(message)
-//   }
-// })
+    return thunkAPI.rejectWithValue(message)
+  }
+})
  
 // Delete  HOD
 export const deleteHOD = createAsyncThunk('assessment/deleteHOD', async ( data,thunkAPI) => {
@@ -111,10 +111,10 @@ export const hodSlice = createSlice({
       state.isError = false
       state.message = '' 
 
-      // state.viewisLoading = false
-      // state.viewisSuccess = false
-      // state.viewisError = false
-      // state.viewmessage = ''  
+      state.createisLoading = false
+      state.createisSuccess = false
+      state.createisError = false
+      state.createmessage = ''  
 
       state.deleteisLoading = false
       state.deleteisSuccess = false
@@ -146,20 +146,20 @@ export const hodSlice = createSlice({
       })
 
 
-      // .addCase(viewAssessment.pending, (state) => {
-      //   state.viewisLoading = true 
-      // })
-      // .addCase(viewAssessment.fulfilled, (state:any, action) => {
-      //   state.viewisLoading = false
-      //   state.viewisSuccess = true
-      //   state.viewdata = action.payload.data 
-      // })
-      // .addCase(viewAssessment.rejected, (state:any, action) => {
-      //   state.viewisLoading = false
-      //   state.viewisError = true
-      //   state.viewmessage = action.payload
-      //   state.viewdata = [] 
-      // })
+      .addCase(createHOD.pending, (state) => {
+        state.createisLoading = true 
+      })
+      .addCase(createHOD.fulfilled, (state:any, action) => {
+        state.createisLoading = false
+        state.createisSuccess = true
+        state.createdata = action.payload.data 
+      })
+      .addCase(createHOD.rejected, (state:any, action) => {
+        state.createisLoading = false
+        state.createisError = true
+        state.createmessage = action.payload
+        state.createdata = [] 
+      })
 
       .addCase(deleteHOD.pending, (state) => {
         state.deleteisLoading = true 

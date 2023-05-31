@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '@material-ui/core';
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs';
-import { MdOutlineClose } from 'react-icons/md';
-import Cookies from 'js-cookie';
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import DataService from '../../utils/dataService';
+const dataService = new DataService()
 
 const ViewLeave = () => {
 
 	const { id } = useParams()
-	const token = Cookies.get("token");
+	const token = dataService.getToken()
 
 	const [isLoading, setisLoading] = useState(false);
 	const [isError, setisError] = useState(false)
@@ -89,7 +89,7 @@ const ViewLeave = () => {
 
 	return (
 		<div  >
-			<header className="ChatProgressView-header"  >
+			{/* <header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
 					<BsFillBriefcaseFill />
 
@@ -108,7 +108,7 @@ const ViewLeave = () => {
 						/>
 					</Link>
 				</div>
-			</header>
+			</header> */}
 
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>

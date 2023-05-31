@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react'
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill, BsBriefcase } from 'react-icons/bs'
 import { MdOutlineClose } from 'react-icons/md'
@@ -11,11 +9,13 @@ import moment from 'moment'
 import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
 import axios, { AxiosResponse } from 'axios'
+import DataService from '../../utils/dataService'
 
+const dataService = new DataService()
 const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const token = Cookies.get("token");
+	const token = dataService.getToken()
 	const [isLoading, setisLoading] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
@@ -105,28 +105,28 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 
 
 
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		fireAlert(title, html, icon);
-	// 		setTimeout(() => {
-	// 			setisSuccess(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 		// setLgShow(false)
-	// 	} else if (isError1) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		setTimeout(() => {
-	// 			setisError1(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 	} else if (isError1) {
-	// 		fireAlert(title2, html2, icon2);
-	// 		setTimeout(() => {
-	// 			setisError1(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 	}
-	// }, [html, html1, isError1, isSuccess, setMessage1])
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+				setMessage1("")
+			}, 5000);
+			// setLgShow(false)
+		} else if (isError1) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		} else if (isError1) {
+			fireAlert(title2, html2, icon2);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		}
+	}, [html, html1, isError1, isSuccess, setMessage1])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({

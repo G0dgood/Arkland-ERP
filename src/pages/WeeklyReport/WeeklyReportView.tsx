@@ -7,9 +7,10 @@ import { BsChatLeftText } from 'react-icons/bs'
 import { Button } from '@material-ui/core'
 import { MdOutlineClose } from 'react-icons/md'
 import { Spinner } from 'react-bootstrap'
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch'
+
 import { deleteWeeklyReport, reset, updateWeeklyReport, viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
 import moment from 'moment'
+import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 const WeeklyReportView = () => {
 	const { viewdata, viewisError, viewisLoading } = useAppSelector((state: any) => state.Weeklyreport)
@@ -45,46 +46,46 @@ const WeeklyReportView = () => {
 
 
 
-	// useEffect(() => {
-	// 	if (isError) {
-	// 		fireAlert("Weekly Reports error", viewisError, "error");
-	// 		setTimeout(() => {
-	// 			setisError(false);
-	// 		}, 1000);
-	// 	} else if (deleteisSuccess) {
-	// 		fireAlert("Delete Weekly Reports success", deleteisSuccess, 'success');
-	// 		setTimeout(() => {
-	// 			navigate("/weeklycontainer");
-	// 			dispatch(reset());
-	// 		}, 2000);
-	// 	} else if (deleteisError) {
-	// 		fireAlert("Delete Weekly Reports error", deletemessage, "error");
-	// 		setTimeout(() => {
-	// 			dispatch(reset());
-	// 		}, 2000);
-	// 	} else if (updateisError) {
-	// 		fireAlert("Update Weekly Reports error", updatemessage, "error");
-	// 		setTimeout(() => {
-	// 			dispatch(reset());
-	// 		}, 2000);
-	// 	} else if (updateisSuccess) {
-	// 		fireAlert("Weekly Reports Updated", updatemessage, "success");
-	// 		setTimeout(() => {
-	// 			navigate("/weeklycontainer");
-	// 			dispatch(reset());
-	// 		}, 2000);
-	// 	} else if (viewisError) {
-	// 		fireAlert("View Weekly Reports error", viewdata, "error");
-	// 		setTimeout(() => {
-	// 			dispatch(reset());
-	// 		}, 2000);
-	// 	}
-	// }, [deleteisError, deleteisSuccess, deletemessage, dispatch, isError, navigate, updateisError, updateisSuccess, updatemessage, viewdata, viewisError]);
+	useEffect(() => {
+		if (isError) {
+			fireAlert("Weekly Reports error", viewisError, "error");
+			setTimeout(() => {
+				setisError(false);
+			}, 1000);
+		} else if (deleteisSuccess) {
+			fireAlert("Delete Weekly Reports success", deleteisSuccess, 'success');
+			setTimeout(() => {
+				navigate("/weeklycontainer");
+				dispatch(reset());
+			}, 2000);
+		} else if (deleteisError) {
+			fireAlert("Delete Weekly Reports error", deletemessage, "error");
+			setTimeout(() => {
+				dispatch(reset());
+			}, 2000);
+		} else if (updateisError) {
+			fireAlert("Update Weekly Reports error", updatemessage, "error");
+			setTimeout(() => {
+				dispatch(reset());
+			}, 2000);
+		} else if (updateisSuccess) {
+			fireAlert("Weekly Reports Updated", updatemessage, "success");
+			setTimeout(() => {
+				navigate("/weeklycontainer");
+				dispatch(reset());
+			}, 2000);
+		} else if (viewisError) {
+			fireAlert("View Weekly Reports error", viewdata, "error");
+			setTimeout(() => {
+				dispatch(reset());
+			}, 2000);
+		}
+	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, isError, navigate, updateisError, updateisSuccess, updatemessage, viewdata, viewisError]);
 
 	return (
 		<div  >
 
-			<header className="ChatProgressView-header"  >
+			{/* <header className="ChatProgressView-header"  >
 				<div>
 					<span className="app-chat--icon">
 						<BsChatLeftText />
@@ -101,7 +102,7 @@ const WeeklyReportView = () => {
 						/>
 					</Link>
 				</div>
-			</header>
+			</header> */}
 			<div>
 
 				<div className='weekly-top-container'>

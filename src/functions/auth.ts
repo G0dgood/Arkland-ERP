@@ -23,9 +23,11 @@ export function getUserPrivileges(): {
   isEmployee: boolean;
   isHrAdmin: boolean;
 } {
-  const userString = dataService.getData(`${ process.env.REACT_APP_ERP_USER}`) ;
+
+   
+  const userString =  dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`) 
   const userInfo = userString ? userString : null;
-  const privileges = userInfo?.data?.privileges || [];
+  const privileges = userInfo?.privileges || [];
 
   const isSuperAdmin = privileges.some((p: any) => p.role === "super admin");
   const isAdmin = privileges.some((p: any) => p.role === "admin");

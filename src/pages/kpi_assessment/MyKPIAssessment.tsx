@@ -10,39 +10,32 @@ import {
 import moment from "moment";
 import TableLoader from "../../components/TableLoader";
 import { Link } from "react-router-dom";
-import storage from "../../utils/dataService";
-import { fireAlert } from "../../utils/Alert";
-import { useAppDispatch, useAppSelector } from "../../hooks/userDispatch";
 import { getAssessment, reset } from "../../features/KPIAssessment/assessmentSlice";
+import DataService from "../../utils/dataService";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { fireAlert } from "../../utils/Alert";
+import CreateKpiModal from "../../components/Modals/CreateKpiModal";
 
 
-
+const dataService = new DataService()
 const MyKPIAssessment = ({ setkpidata }: any) => {
+  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();
-
   const { data, isError, isLoading, message } = useAppSelector((state: any) => state.assessment)
-
-
-
-  // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-
-
+  const { createisSuccess } = useAppSelector((state: any) => state.assessment)
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
-
-
 
   const title1 = "KPI error";
   const html1 = message;
   const icon1 = "error";
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     fireAlert(title1, html1, icon1);
-  //   }
-  //   dispatch(reset());
-  // }, [isError, html1, dispatch]);
+  useEffect(() => {
+    if (isError) {
+      fireAlert(title1, html1, icon1);
+    }
+    dispatch(reset());
+  }, [isError, html1, dispatch]);
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -60,18 +53,21 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
         return JSON?.stringify(object)?.toString()?.includes(searchItem);
       });
       setSortData(result);
-      setkpidata(result?.length)
     }
-  }, [data, searchItem, setkpidata]);
+  }, [data, searchItem]);
 
   const [displayData, setDisplayData] = useState([]);
 
 
-  const id = userInfo?.data?.employee?._id
+  const id = userInfo?.employee?._id
   useEffect(() => {
     // @ts-ignore
     dispatch(getAssessment(id));
-  }, [dispatch, id]);
+    if (createisSuccess) {
+      // @ts-ignore
+      dispatch(getAssessment(id));
+    }
+  }, [createisSuccess, dispatch, id]);
 
   return (
     <div>
@@ -93,8 +89,9 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
             setEntriesPerPage={setEntriesPerPage}
           />
         </div>
-        <div>
-          <MainSearch placeholder={"Search...          KPI Assessment"} />
+        <div style={{ display: "flex", marginRight: "1rem" }}>
+          <MainSearch placeholder={"Search...     KPI Assessment"} />
+          <CreateKpiModal />
         </div>
       </div>
       <section className="md-ui component-data-table">
@@ -168,7 +165,7 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
                       </Button>
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      <Link to={`/kpidetails/${item?._id}`}>
+                      <Link to={`/kpiassessment/kpiassessment/${item?._id}`}>
                         <Button id="team-applicatiom-update">View</Button>
                       </Link>
                     </td>

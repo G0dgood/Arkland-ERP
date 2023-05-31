@@ -187,7 +187,7 @@ export const WeeklyReportSlice = createSlice({
       .addCase(createweeklyReport.fulfilled, (state, action) => {
         state.createisLoading = false
         state.createisSuccess = true
-        state.createdata = action.payload?.data?.data  
+        state.createdata = action.payload?.data  
       })
       .addCase(createweeklyReport.rejected, (state:any, action) => {
         state.createisLoading = false
@@ -203,7 +203,7 @@ export const WeeklyReportSlice = createSlice({
       .addCase(getHODWeeklyReport.fulfilled, (state, action) => {
         state.HODisLoading = false
         state.HODisSuccess = true
-        state.HODdata = action.payload?.data?.data  
+        state.HODdata = action.payload?.data  
       })
       .addCase(getHODWeeklyReport.rejected, (state:any, action) => {
         state.HODisLoading = false

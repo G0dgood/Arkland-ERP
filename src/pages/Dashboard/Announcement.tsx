@@ -5,10 +5,11 @@ import { Spinner } from "react-bootstrap";
 import SyncLoader from "react-spinners/SyncLoader";
 import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 import { getUserPrivileges } from "../../functions/auth";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { getAnnouncement } from "../../features/Announcement/announcemetSlice";
 import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import DeleteAnnouncementModal from "../../components/Modals/DeleteAnnouncementModal";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import ClockIn from "../../components/ClockIn";
 
 
 
@@ -16,9 +17,6 @@ import DeleteAnnouncementModal from "../../components/Modals/DeleteAnnouncementM
 const Announcement = () => {
   const dispatch = useAppDispatch();
   const { data, isLoading, createisSuccess, deleteisSuccess } = useAppSelector((state: any) => state.announcement)
-  // const { deleteisSuccess } = useAppSelector((state: any) => state.announcement)
-  // const { createisSuccess } = useAppSelector((state: any) => state.announcement)
-
 
   const {
     isHRHead,
@@ -33,7 +31,6 @@ const Announcement = () => {
 
 
   useEffect(() => {
-
     if (deleteisSuccess || createisSuccess) {
       // @ts-ignore
       dispatch(getAnnouncement());
@@ -66,13 +63,7 @@ const Announcement = () => {
               />
             </div>
           )}
-        <Button
-          variant="contained"
-          className="Add-btn"
-        // onClick={() => handleSubmit()}
-        >
-          {false ? <Spinner animation="border" /> : " Clock in"}
-        </Button>
+        <ClockIn />
       </div>
       <div>
         {isLoading ? (

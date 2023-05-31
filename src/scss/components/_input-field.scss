@@ -7,19 +7,19 @@
   position: relative;
   // width: 350px;
 
-  @include m.respond("phone-wide") {
-    width: 100%;
-  }
+  // @include m.respond("phone-wide") {
+  //   width: 100%;
+  // }
 
   &__field {
     width: 100%;
     background-color: c.color(white);
     border: 1px solid b.$border-color-200;
     box-sizing: border-box;
-    @include m.radius;
-    @include m.flex-config(center, center, false, false);
+    // @include m.radius;
+    // @include m.flex-config(center, center, false, false);
     outline: 0;
-    @include m.font(16px, 400, 0);
+    // @include m.font(16px, 400, 0);
     color: c.color(grey-300);
     box-shadow: none;
     transition: border-color 0.3s, color 0.3s;
@@ -30,9 +30,9 @@
       line-height: 0px;
       color: c.color(grey-200);
     }
-    @include m.respond(phone-wide) {
-      padding-left: 15px;
-    }
+    // @include m.respond(phone-wide) {
+    //   padding-left: 15px;
+    // }
 
     &:focus {
       outline: 0;

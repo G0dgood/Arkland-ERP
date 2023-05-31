@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { FiTrash2 } from 'react-icons/fi'
 import { MdOutlineClose } from 'react-icons/md'
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch'
+
 import { fireAlert } from '../../utils/Alert'
 import { deleteAnnouncement, reset } from '../../features/Announcement/announcemetSlice'
+import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 const DeleteAnnouncementModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();

@@ -16,12 +16,14 @@ import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
 import { DialogState } from "../../interfaces/base";
 // import announcement from "../../assets/images/announcement.png";
 import { MdOutlineClose } from "react-icons/md";
+import DataService from "../../utils/dataService";
 
 const Todos = ({ showDrawer, setShowDrawer }: any) => {
+  const dataService = new DataService()
+  const token = dataService.getToken()
 
 
 
-  const token = Cookies.get("token");
   const [taskAction, setTaskAction] = React.useState([] as any);
   const [viewAction, setViewAction] = React.useState([] as any);
   // const [taskCreateShow, setTaskCreateShow] = React.useState(false);
@@ -62,7 +64,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
         const title = "Task deleted.";
         const html = `Task deleted`;
         const icon = "success";
-        // fireAlert(title, html, icon);
+        fireAlert(title, html, icon);
         setTaskAction(true);
       } else {
         throw new Error(data.message || "Something went wrong!");
@@ -73,7 +75,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task deletion failed";
-      // fireAlert(title, html, icon);
+      fireAlert(title, html, icon);
     }
   };
   const handleNewTodoCreated = () => {

@@ -16,10 +16,13 @@ import logo from "../../../assets/images/ASLLOGO.svg";
 import InputField from "../../../components/Inputs/InputField";
 import Cookies from "js-cookie";
 import { fireAlert } from "../../../utils/Alert";
+import DataService from "../../../utils/dataService";
+import { useNavigate } from "react-router-dom";
 
-const token = Cookies.get("token");
-
+const dataService = new DataService()
 const UpdatePassword = () => {
+  const navigate = useNavigate();
+  const token = dataService.getToken()
   const [isLoading, setLoading] = React.useState(false);
 
   const [error, setError] = useState<any>();
@@ -58,8 +61,8 @@ const UpdatePassword = () => {
         const title = "Password update successful";
         const html = `Password updated`;
         const icon = "success";
-        // fireAlert(title, html, icon);
-        // navigate("/home");
+        fireAlert(title, html, icon);
+        navigate("/home");
         window.location.replace("/home");
       })
       .catch((error) => {
@@ -69,7 +72,7 @@ const UpdatePassword = () => {
         const html = error || "Something went wrong!";
         const icon = "error";
         const title = "Password update failed";
-        // fireAlert(title, html, icon);
+        fireAlert(title, html, icon);
         setTimeout(() => {
           setError(false);
           setMessage("");

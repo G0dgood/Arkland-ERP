@@ -3,8 +3,9 @@ import { Button } from "@mui/material";
 import { Form, Modal, Spinner } from "react-bootstrap";
 import { MdOutlineClose } from "react-icons/md";
 import { fireAlert } from "../../utils/Alert";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+
 import { createAnnouncement, reset } from "../../features/Announcement/announcemetSlice";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
 
 
 const CreateAnnouncementModal = () => {

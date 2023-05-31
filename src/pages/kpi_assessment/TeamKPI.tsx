@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
-import Sidebar from '../../components/SidebarAndDropdown/Sidebar';
 import TableLoader from "../../components/TableLoader";
 import {
   EntriesPerPage,
@@ -11,56 +9,41 @@ import {
 import Pagination from "../../components/Pagination";
 import { Button } from "@material-ui/core";
 import moment from "moment";
-import { Link } from "react-router-dom";
-import storage from "../../utils/dataService";
+import { Link, useNavigate } from "react-router-dom";
 import { fireAlert } from "../../utils/Alert";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
-import { teamAssessment } from "../../features/KPIAssessment/assessmentSlice";
+import { reset, teamAssessment } from "../../features/KPIAssessment/assessmentSlice";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import DataService from "../../utils/dataService";
 
+const dataService = new DataService()
 const TeamKPI = () => {
   const dispatch = useAppDispatch();
   const { teamdata, teamisError, teamisLoading, teammessage } = useAppSelector((state: any) => state.assessment)
-
+  const navigate = useNavigate();
   // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-
+  const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
-
 
   const title1 = "KPI error";
   const html1 = teammessage;
   const icon1 = "error";
 
 
-  // useEffect(() => {
-  //   if (teamisError) {
-  //     fireAlert(title1, html1, icon1);
-  //     // setTimeout(() => {
-  //     //   setteamisError(false)
-  //     // }, 10000);
-  //   }
-  // }, [teamisError, html1]);
+  useEffect(() => {
+    if (teamisError) {
+      fireAlert(title1, html1, icon1);
+      dispatch(reset());
+    }
+  }, [teamisError, html1, dispatch]);
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON?.parse(localStorage.getItem("collapse")) || false;
-  });
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
-  //
+
 
   useEffect(() => {
     if (teamdata) {
@@ -81,7 +64,9 @@ const TeamKPI = () => {
     dispatch(teamAssessment(id));
   }, [dispatch, id]);
 
-
+  const handleView = (item: any) => {
+    navigate(`/kpiassessment/kpiassessment/teamkpi/view/${item?._id}`, { state: { name: 'hod' } })
+  }
 
 
   return (
@@ -172,11 +157,11 @@ const TeamKPI = () => {
                       </Button>
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      <Link to={`/viewkpiassessment/${item?._id}`}>
-                        <Button id="team-applicatiom-update">
-                          {item?.status === "active" ? "View" : "Update"}
-                        </Button>
-                      </Link>
+                      {/* <Link to={`/kpiassessment/kpiassessment/teamkpi/view/${item?._id}`}> */}
+                      <Button id="team-applicatiom-update" onClick={() => handleView(item)}>
+                        {item?.status === "active" ? "View" : "Update"}
+                      </Button>
+                      {/* </Link> */}
                     </td>
                   </tr>
                 ))

@@ -18,7 +18,7 @@
 @use "./pages/kpiassessment";
 @use "./pages/policy";
 @use "./pages/attendance";
-// @use "./pages/departments";
+@use "./pages/department";
 @use "./pages/dashboard.scss";
 @use "./pages/allemployees";
 @use "./pages/support";
@@ -106,7 +106,7 @@ input {
 
 #screen-wrapper {
   display: grid;
-  height: 100vh;
+  height: 100vh !important;
   grid-template-columns: max-content 3fr;
   grid-template-rows: 0.2fr 3fr;
   grid-template-areas:
@@ -117,6 +117,7 @@ input {
 main {
   grid-area: main;
   padding: 30px;
+  height: 100%;
   overflow-y: scroll
 }
 

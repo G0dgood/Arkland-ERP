@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
-import axios, { AxiosResponse } from "axios";
 import { fireAlert } from "../../utils/Alert";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import storage from "../../utils/dataService";
 import { Spinner } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
 import { createAssessment } from "../../features/KPIAssessment/assessmentSlice";
-import { allEmployee } from "../../features/Employee/employeeSlice";
+import { allEmployee, userEmployees } from "../../features/Employee/employeeSlice";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import DataService from "../../utils/dataService";
 
-const KPIAssessment = ({ setIsCheck }: any) => {
+
+const dataService = new DataService()
+const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   const dispatch = useAppDispatch();
-  // const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.assessment)
+  const { userdata } = useAppSelector((state: any) => state.employee)
+  const { data } = useAppSelector((state: any) => state.employee)
+  const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.assessment)
 
 
 
   const navigate = useNavigate();
-  const token = Cookies.get("token");
-  // @ts-ignore 
-  const userInfo: any = JSON.parse(storage?.get("user"));
+  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+
 
   // const [kpicheck, setkpicheck] = useState<any>();
   const [employees, setEmployees] = useState<any>();
+
+
 
   const [kpinputs, setKpInputs] = useState({
     month: 0,
@@ -143,93 +146,57 @@ const KPIAssessment = ({ setIsCheck }: any) => {
         communication: totalScore4,
         reliability: totalScore5,
         collaboration: totalScore6,
-        employee: userInfo?.data?.employee?._id,
+        employee: userInfo?.employee?._id,
         month: kpinputs.month,
         reviewer: kpinputs.reviewer,
         comment: kpinputs.comment,
       };
     });
-  }, [kpinputs.comment, kpinputs.job_knowledge, kpinputs.month, kpinputs.reviewer, setInputs, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6, userInfo?.data?.employee?._id]);
-
-
-  const [isLoading, setisLoading] = useState(false);
-  const [isSuccess, setisSuccess] = useState(false);
-  const [message, setMessage] = useState("");
-  const [isError, setisError] = useState(false);
-
-  const title = "Successful";
-  const html = "KPI Created!";
-  const icon = "success";
-  const title1 = "KPI error";
-  const html1 = message;
-  const icon1 = "error";
+  }, [kpinputs.comment, kpinputs.job_knowledge, kpinputs.month, kpinputs.reviewer, setInputs, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6, userInfo?.employee?._id]);
 
 
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     fireAlert(title, html, icon);
-  //     setTimeout(() => {
-  //       navigate("/kpicontainer");
-  //     }, 2000);
-  //   } else if (isError) {
-  //     fireAlert(title1, html1, icon1);
-  //     setTimeout(() => {
-  //       setisError(false);
-  //     }, 1000);
-  //   }
-  // }, [html, title, icon, html1, navigate, isSuccess, isError]);
+
+
+
+
+  useEffect(() => {
+    if (createisSuccess) {
+      fireAlert("KPI error", "KPI Created!", "success");
+      setShow(false)
+    } else if (createisError) {
+      fireAlert("KPI error", createmessage, "error");
+
+    }
+  }, [createmessage, navigate, createisSuccess, createisError, setShow]);
 
 
   const handelkpi = (e: any) => {
     // @ts-ignore
-    // dispatch(createAssessment(inputs));
-    e.preventDefault();
-    setisLoading(true);
-    fetch(`${process.env.REACT_APP_API}/hr/appraisals`, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(inputs),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data?.success === false) {
-          setMessage(data?.message);
-          setisError(true);
-        } else {
-          setisSuccess(true);
-          setTimeout(() => {
-            navigate("/kpicontainer");
-          }, 2000);
-        }
-        setisLoading(false);
-      })
-      .catch((error) => {
-        setisLoading(false);
-      });
+    dispatch(createAssessment(inputs));
+
   };
-  const { data } = useAppSelector((state: any) => state.employee)
+
+  // useEffect(() => {
+  //   dispatch(userEmployees());
+  // }, [dispatch]);
   useEffect(() => {
-    // @ts-ignore
     dispatch(allEmployee());
   }, [dispatch]);
 
 
 
+
   React.useEffect(() => {
 
-    setEmployees(data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
+    setEmployees(data?.data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
 
   }, [data]);
 
   const year = new Date().getFullYear().toString();
 
   useEffect(() => {
-    if (isSuccess) {
-      // fireAlert(title, html, icon);
+    if (createisSuccess) {
       setKpInputs({
         month: 0,
         employee: "",
@@ -242,18 +209,9 @@ const KPIAssessment = ({ setIsCheck }: any) => {
         collaboration: 0,
         comment: "",
       });
-      setTimeout(() => {
-        setisSuccess(false);
-        setIsCheck(false)
-      }, 2000);
-    } else if (isError) {
-      // fireAlert(title1, html1, icon1);
-      // setTimeout(() => {
-      //   setisError(false);
-      // }, 1000);
     }
 
-  }, [html, title, icon, html1, title1, setIsCheck, isSuccess, isError]);
+  }, [setIsCheck, createisSuccess]);
 
   return (
     <div>
@@ -268,12 +226,12 @@ const KPIAssessment = ({ setIsCheck }: any) => {
             <div className="kpi-top-card-1-sub">
               <p>Employee Name</p>
               <p className="kpi-top-card-1-sub-second-child">
-                {userInfo?.data?.employee?.full_name}
+                {userInfo?.employee?.full_name}
               </p>
               <p>Employee Role</p>
-              <p>{userInfo?.data?.role?.name}</p>
+              <p>{userInfo?.role?.name}</p>
               <p>Employee ID</p>
-              <p>{userInfo?.data?.employee?.employee_id} </p>
+              <p>{userInfo?.employee?.employee_id} </p>
               <p>Date</p>
               <p> {new Date().toDateString()}</p>
             </div>
@@ -593,14 +551,14 @@ const KPIAssessment = ({ setIsCheck }: any) => {
                       value={kpiData2.IndicatorDescription5}
 
                       rows={5}
-                    />{" "}
+                    />
                   </td>
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight5}
 
-                    />{" "}
+                    />
                   </td>
                   <td className="table-datacell datatype-numeric">
                     <select
@@ -623,14 +581,12 @@ const KPIAssessment = ({ setIsCheck }: any) => {
                     />{" "}
                   </td>
                 </tr>
-
                 {/* six */}
                 <tr className="data-table-row">
                   <td className="table-datacell datatype-string">
                     <input
                       className="Performance-Indicator-input"
                       value={kpiData1.Performance6}
-
                     />
                   </td>
                   <td className="table-datacell datatype-numeric">
@@ -639,14 +595,13 @@ const KPIAssessment = ({ setIsCheck }: any) => {
                       className="Performance-Indicator-input2"
                       value={kpiData2.IndicatorDescription6}
                       rows={5}
-                    />{" "}
+                    />
                   </td>
                   <td className="table-datacell datatype-numeric">
                     <input
                       className="Performance-Indicator-input1"
                       value={kpiData3.Weight6}
-
-                    />{" "}
+                    />
                   </td>
                   <td className="table-datacell datatype-numeric">
                     <select
@@ -670,19 +625,15 @@ const KPIAssessment = ({ setIsCheck }: any) => {
                   </td>
                 </tr>
               </tbody>
-              {/* ))} */}
               <tr className="data-table-row">
                 <td className="table-datacell datatype-string table-datacell-color">
-                  {" "}
                 </td>
                 <td className="table-datacell datatype-numeric table-datacell-color">
-                  {" "}
                 </td>
                 <td className="table-datacell datatype-numeric table-datacell-color2">
                   {Weight}
                 </td>
                 <td className="table-datacell datatype-numeric table-datacell-color">
-                  {" "}
                 </td>
                 <td className="table-datacell datatype-numeric table-datacell-color2">
                   {kpiscore}
@@ -704,8 +655,8 @@ const KPIAssessment = ({ setIsCheck }: any) => {
             onChange={(e) => handleOnChange("comment", e.target.value)}
           ></textarea>
           <div className="con-btn-success">
-            <Button variant="contained" className="Add-btn" onClick={handelkpi}>
-              {isLoading ? <Spinner animation="border" /> : "	Create KPI"}
+            <Button variant="contained" className="Add-btn" onClick={handelkpi} disabled={createisLoading}>
+              {createisLoading ? <Spinner animation="border" /> : "	Create KPI"}
             </Button>
           </div>
         </div>

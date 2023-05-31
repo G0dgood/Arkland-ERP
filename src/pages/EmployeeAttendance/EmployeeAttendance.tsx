@@ -7,7 +7,7 @@ import { getUserPrivileges } from "../../functions/auth";
 
 const EmployeeAttendance = () => {
   const navigate = useNavigate();
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
+
   const [newDepartmentCreated, setNewDepartmentCreated] = React.useState({} as any);
 
   const { departments, isLoading, error, message } = useDepartments(newDepartmentCreated);
@@ -38,7 +38,7 @@ const EmployeeAttendance = () => {
           <div className="subone-col-3">
             <div
               className="ProjectView-card"
-              onClick={() => navigate(`/attendance/list`)}
+              onClick={() => navigate(`/attendance/employee/attendance/list`)}
             >
               <div className="iDotsHorizontalRounded">
                 <Button className="iDotsRounded1">

@@ -3,47 +3,50 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch';
 import moment from 'moment';
 import { fireAlert } from '../../utils/Alert';
-import { handleRequestPatch } from '../handleRequest/handleRequest';
 
-const ApproveEmployeeModal = ({ id, data, setReset }: any) => {
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { hrApproveEmployees, reset } from '../../features/Employee/employeeSlice';
+import HttpService from '../HttpService';
+
+const ApproveEmployeeModal = ({ id, data }: any) => {
 	const dispatch = useAppDispatch();
+	const { approveisError, approveisLoading, approvemessage, approveisSuccess } = useAppSelector((state: any) => state.employee)
 	// const {  data,  isError,  isLoading,  message,  isSuccess } = useAppSelector((state: any) => state.employee)
 	const [deleteShow, setDeleteShow] = useState(false);
-	const [message, setMessage] = useState<any>('');
-	const [isError, setisError] = useState<any>(false);
-	const [isSuccess, setisSuccess] = useState<any>('');
-	const [isLoading, setisLoading] = useState<any>('');
+	const [isLoading, setisLoading] = useState(false);
+
 
 	const url = `${process.env.REACT_APP_API}/hr/employees/${id}/approve`;
 
 
 
 
+	useEffect(() => {
+		if (approveisSuccess) {
+			fireAlert("Successful", "Employee Approved Successfully!", "Success");
+			dispatch(reset())
+		} else if (approveisError) {
+			fireAlert("error", 'approved error', approvemessage);
+			dispatch(reset())
+		}
+	}, [approveisError, approveisLoading, approveisSuccess, approvemessage, dispatch])
 
-	const title = "Successful";
-	const html = "Employee Approved  Successfully!";
-	const icon = "success";
-	const title1 = "Employee Approved Failed";
-	const html1 = message;
-	const icon1 = "error";
 
-
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		fireAlert(html, icon);
-	// 		setDeleteShow(false)
-	// 	} else if (isError) {
-	// 		fireAlert(html1, icon1);
-	// 	}
-	// }, [isError, isSuccess, dispatch, html, html1])
-
-	const handleApproveEmployee = () => {
+	const handleApprove = () => {
+		setisLoading(true)
 		// @ts-ignore
-		dispatch(handleRequestPatch(id, setMessage, setisError, setisSuccess, setisLoading, url, setReset));
-
+		dispatch(hrApproveEmployees(id));
+		// HttpService.patch(`hr/employees/${id}/approve`)
+		// 	.then((response) => {
+		// 		console.log('response', response);
+		// 		setisLoading(false)
+		// 	})
+		// 	.catch((error) => {
+		// 		console.log('patch-error', error);
+		// 		setisLoading(false)
+		// 	})
 	}
 
 	return (
@@ -54,7 +57,6 @@ const ApproveEmployeeModal = ({ id, data, setReset }: any) => {
 			<Modal
 				size="lg"
 				show={deleteShow}
-				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
 				<Modal.Header id="displayTermination">
@@ -204,8 +206,8 @@ const ApproveEmployeeModal = ({ id, data, setReset }: any) => {
 					</div>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button className="table-link" onClick={handleApproveEmployee} >
-						{isLoading ? <Spinner animation="border" /> : "Approve"}
+					<Button className="table-link" onClick={handleApprove}>
+						{approveisLoading ? <Spinner animation="border" /> : "Approve"}
 					</Button>
 				</Modal.Footer>
 			</Modal>

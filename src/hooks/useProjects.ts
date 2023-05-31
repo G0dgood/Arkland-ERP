@@ -107,6 +107,7 @@ export const useProjectById = (id: string) => {
   const handleNewTaskCreated = () => {
     setNewTaskCreated(!newTaskCreated);
   };
+  
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {

@@ -2,13 +2,13 @@ import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import Cookies from "js-cookie";
-import axios, { AxiosResponse } from "axios";
+
 import { Form, Formik } from "formik";
 import { MdOutlineClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { fireAlert } from "../../utils/Alert";
 import ReactSelectField from "../Inputs/ReactSelectField";
-import { useAppSelector } from "../../hooks/useDispatch";
+
 import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
 
@@ -62,16 +62,16 @@ const CreateWarningModal = ({
       // fireAlert(title, html, icon);
     }
   };
-  const employees: any = useAppSelector((state) => state?.employees?.employees);
+  // const employees: any = useAppSelector((state) => state?.employees?.employees);
   const availablleEmployees = [] as any;
 
-  employees &&
-    employees.forEach((employee: any) =>
-      availablleEmployees.push({
-        value: employee?.id,
-        label: employee?.full_name,
-      })
-    );
+  // employees &&
+  //   employees.forEach((employee: any) =>
+  //     availablleEmployees.push({
+  //       value: employee?.id,
+  //       label: employee?.full_name,
+  //     })
+  //   );
   return (
     <div>
       <Button

@@ -1,21 +1,28 @@
-import axios from 'axios' 
+import HttpService from '../../components/HttpService'
  
  
-  
   
  
 const createLeave = async ( input:any) => { 
-	 
-  const  data  = await axios.post(`${process.env.REACT_APP_API}/hr/leaves`,input)
+	  
+  const  {data} : any = await HttpService.post("leaves", input)
    
   return data
 }
 
-const getCreateLeave = async (id: any) => { 
-   
-  const   response  = await axios.get(`${process.env.REACT_APP_API}/hr/leaves?employee=${id}`)   
-   
-  return response
+const getCreateLeave = async (id: any) => {  
+  const { data }: any = await HttpService.search(`leaves`, `employee=${id}`)  
+  return data
+}
+ 
+const getTeamLeave = async (id: any) => {  
+  const { data }: any = await HttpService.search(`hr/leaves`, `department=${id}`)  
+  return data
+}
+ 
+const viewTeamLeave = async (id: any) => {  
+  const { data }: any = await HttpService.search(`hr/leaves`, `${id}`)  
+  return data
 }
  
  
@@ -24,7 +31,9 @@ const getCreateLeave = async (id: any) => {
  
 const leaveService = { 
   createLeave,  
-  getCreateLeave
+  getCreateLeave,
+  getTeamLeave,
+  viewTeamLeave
 }
 
 export default leaveService

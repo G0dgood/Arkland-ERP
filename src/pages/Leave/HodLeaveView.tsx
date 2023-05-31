@@ -1,20 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs';
-import { MdOutlineClose } from 'react-icons/md';
+
 import TableLoader from '../../components/TableLoader';
 import { Button } from '@material-ui/core';
-import Cookies from 'js-cookie';
 import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import axios, { AxiosResponse } from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+
+import { reset } from '../../features/Announcement/announcemetSlice';
+import { viewTeamLeave } from '../../features/Leave/leaveSlice';
+import DataService from '../../utils/dataService';
+
+const dataService = new DataService()
 const HodLeaveView = () => {
+	const dispatch = useAppDispatch();
+	const token = dataService.getToken()
+	const { teamviewdata: data, teamviewisError, teamviewisLoading, teamviewmessage } = useAppSelector((state: any) => state.leave)
 
 	const { id } = useParams()
 	const navigate = useNavigate();
-	const token = Cookies.get("token");
+
+	console.log('teamviewdata', data, teamviewisError, teamviewisLoading, teamviewmessage, id)
+
+	useEffect(() => {
+		dispatch(viewTeamLeave(id));
+	}, [dispatch, id])
+
+
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
 	const [isSuccess2, setisSuccess2] = useState(false);
@@ -24,8 +39,9 @@ const HodLeaveView = () => {
 	const [isLoading2, setisLoading2] = useState(false);
 	const [isError1, setisError1] = useState(false)
 	const [message1, setMessage1] = useState("");
-	const [data, setData] = useState<any>("");
+
 	const [count, setCount] = useState(0);
+
 	const [inputs, setInputs] = useState({
 		start_date: "",
 		end_date: "",
@@ -44,27 +60,25 @@ const HodLeaveView = () => {
 	const icon2 = "success";
 
 
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		fireAlert(title, html, icon);
-	// 		setTimeout(() => {
-	// 			setisSuccess(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 	} else if (isError1) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		setTimeout(() => {
-	// 			setisError1(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 	} else if (isSuccess2) {
-	// 		fireAlert(title2, html2, icon2);
-	// 		setTimeout(() => {
-	// 			setisError1(false)
-	// 			setMessage1("")
-	// 		}, 5000);
-	// 	}
-	// }, [html, html1, isError1, isSuccess, isSuccess2, setMessage1])
+
+	useEffect(() => {
+		if (isSuccess) {
+			fireAlert(title, html, icon);
+			setTimeout(() => {
+				setisSuccess(false)
+				setMessage1("")
+			}, 5000);
+		} else if (teamviewisError) {
+			fireAlert(title1, html1, icon1);
+			dispatch(reset());
+		} else if (isSuccess2) {
+			fireAlert(title2, html2, icon2);
+			setTimeout(() => {
+				setisError1(false)
+				setMessage1("")
+			}, 5000);
+		}
+	}, [dispatch, html, html1, isError1, isSuccess, isSuccess2, setMessage1, teamviewisError])
 
 	useEffect(() => {
 		setisLoading(true);
@@ -79,9 +93,10 @@ const HodLeaveView = () => {
 			.then((data) => {
 				if (data?.success === false) {
 					setMessage(data?.message)
+					console.log('data?.message', data?.message)
 					setisError(true)
 				} else {
-					setData(data)
+					console.log(data)
 
 				}
 				setisLoading(false);
@@ -121,75 +136,55 @@ const HodLeaveView = () => {
 	}, [setInputs, data?.data?.description, data?.data?.type, data?.data?.start_date, data?.data?.end_date]);
 
 
-	const handelupdate = () => {
-		setisLoading1(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}/hod-approval`, {
-			method: "PATCH", // or 'PUT'
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage1(data?.message)
-					setisError1(true)
-				} else {
-					setisSuccess(true)
-					setTimeout(() => {
-						navigate("/teamleaveapplications");
-					}, 2000);
-				}
-				setisLoading1(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading1(false);
-			});
-	}
+	// const handelupdate = () => {
+	// 	setisLoading1(true);
+	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}/hod-approval`, {
+	// 		method: "PATCH", // or 'PUT'
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			Authorization: `Bearer ${token}`
+	// 		},
+	// 	})
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			if (data?.success === false) {
+	// 				setMessage1(data?.message)
 
-	const handleDelete = () => {
-		setisLoading2(true);
-		axios
-			.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`)
-			.then((res: AxiosResponse) => {
-				console.log('AxiosResponse', res)
-				setisLoading2(false);
-				setisSuccess2(true)
-				setTimeout(() => {
-					navigate("/teamleaveapplications");
-				}, 2000);
-			})
-			.catch((data) => {
-				setisLoading2(false);
-			});
-	}
+	// 			} else { 
+	// 				setTimeout(() => {
+	// 					navigate(-1);
+	// 				}, 2000);
+	// 			}
+	// 			setisLoading1(false);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("Error:", error);
+	// 			setisLoading1(false);
+	// 		});
+	// }
+
+	// const handleDelete = () => {
+	// 	setisLoading2(true);
+	// 	axios
+	// 		.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`)
+	// 		.then((res: AxiosResponse) => {
+	// 			console.log('AxiosResponse', res)
+	// 			setisLoading2(false);
+	// 			setisSuccess2(true)
+	// 			setTimeout(() => {
+	// 				navigate("/teamleaveapplications");
+	// 			}, 2000);
+	// 		})
+	// 		.catch((data) => {
+	// 			setisLoading2(false);
+	// 		});
+	// }
 
 
 
 	return (
 		<div  >
-			<header className="ChatProgressView-header"  >
-				<div className='leave-Update-titile-icon'>
-					<BsFillBriefcaseFill />
-					<span className="in-progresss">
-						My Team Leave Applications
-					</span>
-
-				</div>
-				<div className="ChatProgressView-close"  >
-					<Link
-						to={"/teamleaveapplications"}>
-						<MdOutlineClose
-							size={25}
-							style={{ color: "white", backgroundColor: "" }}
-							className="ChatProgressView-close-icon"
-						/>
-					</Link>
-				</div>
-			</header>
-			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+			{teamviewisLoading ? <TableLoader isLoading={teamviewisLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">
 
@@ -232,10 +227,10 @@ const HodLeaveView = () => {
 								{data?.data?.hod_approved === false &&
 									<div className='deleteKPIHandler  mt-5'>
 										<span className='deleteKPIHandler-mr'>
-											<Button className="table-link" onClick={handleDelete}>
+											<Button className="table-link"  >
 												{isLoading2 ? <Spinner animation="border" /> : "Reject"}</Button>
 										</span>
-										<span ><Button className="table-link-active" onClick={handelupdate} >
+										<span ><Button className="table-link-active"   >
 											{isLoading1 ? <Spinner animation="border" /> : "Approve"}
 										</Button>
 										</span>

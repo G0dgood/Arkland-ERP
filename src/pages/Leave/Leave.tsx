@@ -4,26 +4,21 @@ import { BsCheckCircle, BsClock } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import ApplyForLeave from '../../components/Modals/ApplyForLeave';
 import { fireAlert } from '../../utils/Alert';
-import Cookies from 'js-cookie';
-import storage from '../../utils/dataService';
 import Pagination from '../../components/Pagination';
 import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
 import { SlClose } from 'react-icons/sl';
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch';
-import { getCreateLeave } from '../../features/Leave/leaveSlice';
+import { getCreateLeave, reset } from '../../features/Leave/leaveSlice';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import DataService from '../../utils/dataService';
 
+const dataService = new DataService()
 const Leave = () => {
+  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();
-  const { allLeavedata, allLeaveisError, allLeaveisLoading, allLeavemessage, allLeaveisSuccess } = useAppSelector((state: any) => state.leave)
-
-  console.log('allLeavedata', allLeavedata, allLeaveisError, allLeaveisLoading, allLeavemessage, allLeaveisSuccess)
-
-  // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-
-  console.log('allLeavedata', allLeavedata)
+  const { isSuccess } = useAppSelector((state: any) => state.leave)
+  const { allLeavedata, allLeaveisError, allLeaveisLoading, allLeavemessage } = useAppSelector((state: any) => state.leave)
 
 
   // --- Pagination --- //
@@ -37,64 +32,12 @@ const Leave = () => {
 
 
 
-  const id = userInfo?.data?.employee?._id
+  const id = userInfo?.employee?._id
 
   useEffect(() => {
     // @ts-ignore
     dispatch(getCreateLeave(id));
   }, [dispatch, id]);
-
-
-
-  const token = Cookies.get("token");
-  const [data, setData] = useState<any>([]);
-  const [isError, setisError] = useState(false)
-  const [message, setMessage] = useState("");
-  const [isLoading, setisLoading] = useState(false);
-  const [isSuccess, setisSuccess] = useState(false);
-  const [sortData, setSortData] = useState([]);
-  const [reload, setReload] = useState(false);
-  const [showLogout, setShowLogout] = useState<any>(false);
-
-
-  // const url = `${process.env.REACT_APP_API}/hr/leaves?employee=${id}`
-  // console.log(url)
-
-
-  // useEffect(() => {
-  //   // @ts-ignore
-  //   dispatch(handleRequestGet(setMessage, setisError, setisLoading, url, setData));
-  // }, [dispatch, url, id])
-
-
-  // useEffect(() => {
-  //   setisLoading(true);
-  //   fetch(`${process.env.REACT_APP_API}/hr/leaves?employee=${userInfo?.data?.employee?._id}`, {
-  //     method: "GET", // or 'PUT'
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data?.success === false) {
-  //         setMessage(data?.message)
-  //         setisError(true)
-  //       } else {
-  //         setData(data?.data)
-  //         setSortData(data?.data?.data)
-  //         console.log('data', data)
-
-  //       }
-  //       setisLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //       setisLoading(false);
-  //     });
-  // }, [token, userInfo?.data?.employee?._id, reload])
-
 
 
 
@@ -106,21 +49,16 @@ const Leave = () => {
   const icon1 = "error";
 
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     fireAlert(title, html, icon);
-  //     setTimeout(() => {
-  //       setisSuccess(false)
-  //       setMessage("")
-  //     }, 5000);
-  //   } else if (allLeaveisError) {
-  //     fireAlert(title1, html1, icon1);
-  //     // setTimeout(() => {
-  //     //   setallLeaveisError(false)
-  //     //   setMessage("")
-  //     // }, 5000);
-  //   }
-  // }, [html, html1, allLeaveisError, isSuccess])
+  useEffect(() => {
+    if (isSuccess) {
+      fireAlert(title, html, icon);
+      dispatch(getCreateLeave(id));
+      dispatch(reset());
+    } else if (allLeaveisError) {
+      fireAlert(title1, html1, icon1);
+      dispatch(reset());
+    }
+  }, [html, html1, allLeaveisError, isSuccess, dispatch, id])
 
   const [displayData, setDisplayData] = useState([]);
 
@@ -139,7 +77,7 @@ const Leave = () => {
         </div>
         <div>
 
-          <ApplyForLeave setReload={setReload} showLogout={showLogout} setShowLogout={setShowLogout} />
+          <ApplyForLeave />
 
         </div>
       </div>
@@ -201,7 +139,7 @@ const Leave = () => {
                                   item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      <Link to={`/viewleave/${item?._id}`}  >
+                      <Link to={`/leave/leave/${item?._id}`}  >
                         {item?.status === "rejected" ? "" :
                           <Button id="team-applicatiom-update">{item?.hod_approved === false ? "Update" : "View"}</Button>}
                       </Link>
@@ -217,7 +155,7 @@ const Leave = () => {
       <footer className="main-table-footer">
         <Pagination
           setDisplayData={setDisplayData}
-          data={allLeavedata}
+          data={allLeavedata?.data}
           entriesPerPage={entriesPerPage}
           Total={"Leave"}
         />

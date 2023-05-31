@@ -2,24 +2,27 @@ import { Button } from '@material-ui/core';
 import { MdEditNote } from 'react-icons/md';
 import { FiChevronLeft } from 'react-icons/fi';
 import { BsDot } from 'react-icons/bs';
-import logo from '../../assets/images/asl-profile.jpeg';
+// import logo from '../../assets/images/asl-profile.jpeg';
 import { Link } from 'react-router-dom'
 import moment from 'moment';
-import storage from '../../utils/dataService';
 import LogoutOption from '../../components/LogoutOption';
+import DataService from '../../utils/dataService';
 
+const dataService = new DataService()
 const Profile = () => {
 
-	// @ts-ignore
-	const userInfo: any = JSON.parse(storage?.get("user"));
 
-	console.log('userInfo', userInfo)
+
+	// @ts-ignore
+	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+
+
 
 	return (
 		<div  >
 			<div className="profile-body">
 				<Link to='/home'>
-					<img className="demo-bg" src={logo} alt="" />
+					{/* <img className="demo-bg" src={logo} alt="" /> */}
 				</Link>
 				<div className="profile-body-container-sup">
 					<span>
@@ -36,20 +39,20 @@ const Profile = () => {
 				</div>
 				<div className="profile-body-container-sup-title">
 					<span className="profile-image">
-						<img src={logo} alt="Profile" className="profile-image-size" />
+						{/* <img src={logo} alt="Profile" className="profile-image-size" /> */}
 					</span>
 					<span>
 						<span className='profile-image-name'>
-							<p className='profile-image-name-sub1' style={{ marginBottom: "0px" }}>{userInfo?.data?.full_name}</p>
-							<p> <BsDot size={20} color={"green"} /> {userInfo?.data?.status}</p>
+							<p className='profile-image-name-sub1' style={{ marginBottom: "0px" }}>{userInfo?.full_name}</p>
+							<p> <BsDot size={20} color={"green"} /> {userInfo?.status}</p>
 						</span>
 						<p>
 							<span className='profile-image-name-sub2'>IT</span>Developer</p>
 					</span>
 				</div>
 				<div className='profile-image-name-sub3'>
-					<span className='profile-image-name-number'>{userInfo?.data?.employee?.phone}</span>
-					<a href='jamesabiodun@arkland.com'>{userInfo?.data?.employee?.address}</a>
+					<span className='profile-image-name-number'>{userInfo?.employee?.phone}</span>
+					<a href='jamesabiodun@arkland.com'>{userInfo?.employee?.address}</a>
 				</div>
 				<div className='General-Information'>
 					<h5>General Information</h5>
@@ -59,31 +62,31 @@ const Profile = () => {
 					<div>
 						<div className="getjob-application-details">
 							<p>Date of Birth</p>
-							<p>{moment(userInfo?.data?.date_of_birth).format("DD-MM-YYYY")}</p>
+							<p>{moment(userInfo?.date_of_birth).format("DD-MM-YYYY")}</p>
 							<p>Full Name</p>
-							<p>{userInfo?.data?.employee?.full_name}</p>
+							<p>{userInfo?.employee?.full_name}</p>
 							<p>Address</p>
-							<p>{userInfo?.data?.employee?.address}</p>
+							<p>{userInfo?.employee?.address}</p>
 							<p>City</p>
-							<p>{userInfo?.data?.employee?.city}</p>
+							<p>{userInfo?.employee?.city}</p>
 							<p>State</p>
 							<p>Lagos</p>
 							<p>Phone</p>
-							<p>{userInfo?.data?.employee?.phone}</p>
+							<p>{userInfo?.employee?.phone}</p>
 						</div>
 					</div>
 					<div>
 						<div className="getjob-application-details">
 							<p>Date of Joining</p>
-							<p>{moment(userInfo?.data?.employee?.employment_date).format("DD-MM-YYYY")}</p>
+							<p>{moment(userInfo?.employee?.employment_date).format("DD-MM-YYYY")}</p>
 							<p>Role</p>
-							<p>{userInfo?.data?.role?.name}</p>
+							<p>{userInfo?.role?.name}</p>
 							<p>HOD</p>
 							<p>Peter Obi</p>
 							<p>Department</p>
-							<p>{userInfo?.data?.department?.name}</p>
+							<p>{userInfo?.department?.name}</p>
 							<p>Employer ID</p>
-							<p>als-{userInfo?.data?.employee?.employee_id}</p>
+							<p>als-{userInfo?.employee?.employee_id}</p>
 							<p>Station</p>
 							<p>A&A Towers, Floor 3, Room 5 </p>
 						</div>

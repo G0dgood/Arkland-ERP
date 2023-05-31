@@ -5,10 +5,7 @@ import { Button } from "@material-ui/core";
 import { Modal, Spinner } from "react-bootstrap";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { MdOutlineClose } from "react-icons/md";
-import {
-  useAnnouncements,
-  useAnnouncementsById,
-} from "../../hooks/useAnnouncements";
+import { useAnnouncements, useAnnouncementsById } from "../../hooks/useAnnouncements";
 import { getUserPrivileges } from "../../functions/auth";
 import { DialogState } from "../../interfaces/base";
 

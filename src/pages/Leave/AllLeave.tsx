@@ -8,8 +8,8 @@ import moment from 'moment';
 import storage from '../../utils/dataService';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
-import { handleRequestGet } from '../../components/handleRequest/handleRequest';
-import { useAppDispatch } from '../../hooks/useDispatch';
+import { useAppDispatch } from '../../store/useStore';
+
 
 const AllLeave = () => {
 	const dispatch = useAppDispatch();

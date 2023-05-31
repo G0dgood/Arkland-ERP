@@ -1,22 +1,27 @@
 import axios from 'axios' 
+import HttpService from '../../components/HttpService'
  
  
   
  
 const allProject = async (  ) => { 
-	 
-  const response = await axios.get(`${process.env.REACT_APP_API}/hr/projects`, )
+	  
+   const  {data}:any  =  await HttpService.get("hr/projects")
 
-  return response
+  return data
+}
+ 
+ const createProject  = async (   input:any) => {  
+  const  {data}:any  =  await HttpService.post(`hr/projects`, input) 
+  return data
 }
  
  
  
  
- 
- 
 const projectService = { 
-  allProject,   
+  allProject,  
+  createProject
 }
 
 export default projectService

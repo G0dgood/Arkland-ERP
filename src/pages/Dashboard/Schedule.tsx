@@ -1,5 +1,5 @@
-import React from "react";
-import Cookies from "js-cookie";
+import React, { useEffect } from "react";
+
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { Button } from "@mui/material";
 import { SyncLoader } from "react-spinners";
@@ -13,14 +13,17 @@ import { fireAlert } from "../../utils/Alert";
 import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 import CustomInputField from "../../components/Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
-import { useAppSelector } from "../../hooks/useDispatch";
 import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
 import { DialogState } from "../../interfaces/base";
 import { getUserPrivileges } from "../../functions/auth";
 import { checkForOptions } from "../../utils/checkForName";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import DataService from "../../utils/dataService";
 
 const Schedule = () => {
-  const token = Cookies.get("token");
+  const dispatch = useAppDispatch();
+  const dataService = new DataService()
+  const token = dataService.getToken()
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } =
     getUserPrivileges();
 
@@ -62,7 +65,7 @@ const Schedule = () => {
         const title = "Task deleted.";
         const html = `Task deleted`;
         const icon = "success";
-        // fireAlert(title, html, icon);
+        fireAlert(title, html, icon);
         setTaskAction(true);
       } else {
         throw new Error(data.message || "Something went wrong!");
@@ -73,7 +76,7 @@ const Schedule = () => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task deletion failed";
-      // fireAlert(title, html, icon);
+      fireAlert(title, html, icon);
     }
   };
   const handleSubmit = async (values: any, { resetForm }: any) => {
@@ -95,7 +98,7 @@ const Schedule = () => {
         const title = "Task created successfully.";
         const html = `Task created`;
         const icon = "success";
-        // fireAlert(title, html, icon);
+        fireAlert(title, html, icon);
         setTaskAction(true);
 
         setTaskCreateShow(false);
@@ -109,11 +112,18 @@ const Schedule = () => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task creation failed";
-      // fireAlert(title, html, icon);
+      fireAlert(title, html, icon);
     }
   };
+  const { data: employees } = useAppSelector((state: any) => state.employee)
 
-  const employees: any = useAppSelector((state) => state?.employees?.employees);
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allEmployee());
+  }, [dispatch]);
+
+
   const availablleEmployees = [] as any;
 
   employees &&
@@ -396,7 +406,7 @@ const Schedule = () => {
                       <div className="modal-input-sub-space">
                         <div className="col">
                           <div className="form-group">
-                            <ReactSelectField
+                            {/* <ReactSelectField
                               options={availablleEmployees}
                               label="Who is this task assigned to?"
                               name="assigned_to"
@@ -404,7 +414,7 @@ const Schedule = () => {
                               onChange={(event: any) => {
                                 setFieldValue("assigned_to", event?.value);
                               }}
-                            />
+                            /> */}
                           </div>
                         </div>
                       </div>

@@ -4,102 +4,51 @@ import { BsCheckCircle } from 'react-icons/bs'
 import { Button } from '@material-ui/core'
 import Pagination from '../../components/Pagination'
 import { ImBin } from 'react-icons/im'
-import Cookies from 'js-cookie'
 import moment from 'moment'
 import TableLoader from '../../components/TableLoader'
 import DeleteModals from '../../components/DeleteModals'
-import axios, { AxiosResponse } from 'axios'
 import CreateRoleModal from '../../components/Modals/CreateRoleModal'
 import { fireAlert } from '../../utils/Alert'
+import { useAppDispatch, useAppSelector } from '../../store/useStore'
+import { deleteRole, getRole, reset } from '../../features/Employee/employeeSlice'
 
 
 const CreateRole = ({ setShowTitle }: any) => {
-	const token = Cookies.get("token");
+	const dispatch = useAppDispatch();
+	const { getroledata, getroleisError, getroleisLoading, getrolemessage, getroleisSuccess } = useAppSelector((state: any) => state.employee)
+	const { deleteroleisError, deleteroleisLoading, deleterolemessage, deleteroleisSuccess } = useAppSelector((state: any) => state.employee)
 
-	const [data, setData] = useState([]);
-	const [sortData, setSortData] = useState([]);
-	const [searchItem, setSearchItem] = useState("");
-
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
 	const [showdelete, setShowDelete] = useState(false);
-	const [isLoading1, setisLoading1] = useState(false);
 	const [rolesid, setRolesid] = useState(0);
-	const [reload, setReload] = useState(false);
+
+	useEffect(() => {
+		if (deleteroleisSuccess) {
+			dispatch(getRole());
+			dispatch(reset());
+			fireAlert("Successful", "Role Deleted!", "success");
+		} else
+			if (deleteroleisError) {
+				dispatch(reset());
+				fireAlert("error", deleterolemessage, "error");
+			}
+	}, [deleterolemessage, deleteroleisError, deleteroleisSuccess, dispatch])
+
 
 
 	useEffect(() => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/employee-roles`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-
-				if (data?.success === false) {
-					setMessage(data?.message)
-				} else {
-					setData(data?.data)
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-
-	}, [token, reload])
-
-	const handleDelete = () => {
-		setisLoading1(true);
-		axios
-			.delete(`${process.env.REACT_APP_API}/hr/employee-roles/${rolesid}`)
-			.then((res: AxiosResponse) => {
-				setData(res?.data);
-				setisLoading1(false);
-				setShowDelete(false);
-				setReload(true);
-				// setTimeout(() => {
-				// 	navigate("/kpicontainer");
-				// }, 5000);
-			})
-			.catch((data) => {
-				console.log(data);
-				setisLoading1(false);
-			});
-
-	}
-
-	const title = "Successful";
-	const html = "Role Deleted!";
-	const icon = "success";
-	const title1 = "Delete Role error";
-	const html1 = message;
-	const icon1 = "error";
+		dispatch(getRole());
+	}, [dispatch]);
 
 
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		fireAlert(title, html, icon);
-	// 		setTimeout(() => {
-	// 			setisSuccess(false)
-	// 			setMessage("")
-	// 		}, 5000);
-	// 	} else if (isError) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		setTimeout(() => {
-	// 			setisError(false)
-	// 			setMessage("")
-	// 		}, 5000);
-	// 	}
-	// }, [html, html1, isError, isSuccess])
+	const [sortData, setSortData] = useState([]);
+	const [searchItem, setSearchItem] = useState("");
 
+	useEffect(() => {
+		if (getroleisError) {
+			dispatch(reset());
+			fireAlert("Error role", getrolemessage, "error");
+		}
+	}, [dispatch, getroleisError, getroleisSuccess, getrolemessage])
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -111,28 +60,32 @@ const CreateRole = ({ setShowTitle }: any) => {
 	}, [entriesPerPage]);
 
 	useEffect(() => {
-		if (data) {
+		if (getroledata) {
 			// @ts-ignore
-			const result = data?.filter((data) => data?.name.toString()?.includes(searchItem));
+			const result = getroledata?.filter((data) => data?.name.toString()?.includes(searchItem));
 			setSortData(result);
 		}
-	}, [data, searchItem]);
+	}, [getroledata, searchItem]);
 
 
 
 	const [displayData, setDisplayData] = useState([]);
 
+	const handleCreate = () => {
+		// @ts-ignore
+		dispatch(deleteRole(rolesid));
+	}
 
 
 	return (
 		<div  >
 			<div className='SiteWorkermaindiv'>
 				<div className='SiteWorkermaindivsub'>
-					<CreateRoleModal setReload={setReload} />
+					<CreateRoleModal />
 				</div>
 				<div>
 					<EntriesPerPage
-						data={data}
+						data={sortData}
 						entriesPerPage={entriesPerPage}
 						setEntriesPerPage={setEntriesPerPage}
 					/>
@@ -142,7 +95,7 @@ const CreateRole = ({ setShowTitle }: any) => {
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
-				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+				{getroleisLoading ? <TableLoader isLoading={getroleisLoading} /> : ""}
 				<div className="main-table-wrapper">
 					<table className="main-table-content">
 						<thead className="data-table-header">
@@ -156,7 +109,7 @@ const CreateRole = ({ setShowTitle }: any) => {
 							</tr>
 						</thead>
 						<tbody className="data-table-content">
-							{isLoading ? (
+							{getroleisLoading ? (
 								<TableFetch colSpan={8} />
 							) : displayData?.length === 0 || displayData == null ? (
 								<NoRecordFound colSpan={8} />
@@ -180,7 +133,8 @@ const CreateRole = ({ setShowTitle }: any) => {
 						</tbody>
 					</table>
 				</div>
-				<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} handleDelete={handleDelete} isLoading1={isLoading1} />
+
+				<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} isLoading1={deleteroleisLoading} handleDelete={handleCreate} />
 			</section>
 			<footer className="main-table-footer">
 				<Pagination
@@ -195,5 +149,6 @@ const CreateRole = ({ setShowTitle }: any) => {
 }
 
 export default CreateRole
+
 
 

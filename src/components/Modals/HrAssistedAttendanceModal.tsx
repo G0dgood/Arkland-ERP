@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import { BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
 import ReactSelectField from "../Inputs/ReactSelectField";
-import { useAppSelector } from "../../hooks/useDispatch";
+
 
 const HrAssistedAttendanceModal = (props: any) => {
   const [isLoading, setLoading] = React.useState(false);
@@ -50,16 +50,16 @@ const HrAssistedAttendanceModal = (props: any) => {
       // fireAlert(title, html, icon);
     }
   };
-  const employees: any = useAppSelector((state) => state?.employees?.employees);
+  // const employees: any = useAppSelector((state) => state?.employees?.employees);
   const availablleEmployees = [] as any;
 
-  employees &&
-    employees.forEach((employee: any) =>
-      availablleEmployees.push({
-        value: employee?.id,
-        label: employee?.full_name,
-      })
-    );
+  // employees &&
+  //   employees.forEach((employee: any) =>
+  //     availablleEmployees.push({
+  //       value: employee?.id,
+  //       label: employee?.full_name,
+  //     })
+  //   );
   return (
     <div>
       <Button

@@ -1,11 +1,10 @@
-import axios from 'axios' 
+import HttpService from '../../components/HttpService'
  
  
   
  
 const allNotifications = async (  ) => { 
-	 
-  const { data } = await axios.get(`${process.env.REACT_APP_API}/notifications`, )
+  const { data }:any =  await HttpService.get("notifications")
 
   return data
 }

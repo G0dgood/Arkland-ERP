@@ -10,11 +10,13 @@ import {
 	NoRecordFound,
 	TableFetch,
 } from "../../components/TableOptions";
-import { useAppDispatch, useAppSelector } from "../../hooks/useDispatch";
+
 import { getUserPrivileges } from "../../functions/auth";
 import { fireAlert } from "../../utils/Alert";
 import { getHOD } from "../../features/HOD/hodSlice";
 import moment from "moment";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import CreateHODModal from "../../components/Modals/CreateHODModal";
 
 
 const HODList = ({ setEmployee, setData }: any) => {
@@ -58,13 +60,13 @@ const HODList = ({ setEmployee, setData }: any) => {
 	const icon1 = "error";
 
 
-	// useEffect(() => {
-	// 	if ("") {
-	// 		fireAlert(title, html, icon);
-	// 	} else if (isError) {
-	// 		fireAlert(title1, html1, icon1);
-	// 	}
-	// }, [html, html1, isError,])
+	useEffect(() => {
+		if ("") {
+			fireAlert(title, html, icon);
+		} else if (isError) {
+			fireAlert(title1, html1, icon1);
+		}
+	}, [html, html1, isError,])
 
 
 	const [displayData, setDisplayData] = useState([]);
@@ -79,24 +81,29 @@ const HODList = ({ setEmployee, setData }: any) => {
 							<span className="SupportmainTitleh3">HOD List</span>
 						</div>
 						<div >
-							{(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
-								<Button
-									variant="contained"
-									className="Add-btn"
-									onClick={() => navigate("/createemployee")}
-								// onClick={handleCreateEmployeeClick}
-								>
-									<GoPlus className="icon-space" />
-									Create HOD
-								</Button>
-							)}
+							{/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
+							{/* <Button
+								variant="contained"
+								className="Add-btn"
+								onClick={() => navigate("/createemployee")}
+							// onClick={handleCreateEmployeeClick}
+							>
+								<GoPlus className="icon-space" />
+								Create HOD
+							</Button> */}
+							{/* )} */}
+
 						</div>
 
-						<div>
+						<div style={{ display: "flex", justifyContent: "space-between" }}>
 							<MainSearch
 								//  setSearchItem={setSearchItem}
 								// searchItem={searchItem}
 								placeholder={"Search...          HOD"} />
+							<span style={{ marginLeft: "20px" }}>
+								<CreateHODModal />
+							</span>
+
 						</div>
 
 

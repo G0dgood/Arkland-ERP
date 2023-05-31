@@ -7,13 +7,15 @@ import moment from 'moment'
 import Pagination from '../../components/Pagination'
 import { fireAlert } from '../../utils/Alert'
 import WeeklyReportDownloader from '../../components/Downloader/WeeklyReportDownloader'
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch'
+
 import { getHODWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
+import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 
 const TeamWeeklyReport = () => {
 	const dispatch = useAppDispatch();
 	const { HODdata, HODisError, HODisLoading, HODmessage } = useAppSelector((state: any) => state.Weeklyreport)
+
 
 	useEffect(() => {
 		// @ts-ignore
@@ -36,16 +38,14 @@ const TeamWeeklyReport = () => {
 
 
 
-	// useEffect(() => {
-	// 	if (HODisError) {
-	// 		fireAlert(title, html, icon);
-	// 	}
-	// }, [html, HODisError])
+	useEffect(() => {
+		if (HODisError) {
+			fireAlert(title, html, icon);
+		}
+	}, [html, HODisError])
 
 
 	const [displayData, setDisplayData] = useState([]);
-
-
 
 	return (
 		<div  >
@@ -60,10 +60,12 @@ const TeamWeeklyReport = () => {
 						setEntriesPerPage={setEntriesPerPage}
 					/>
 				</div>
-				<WeeklyReportDownloader data={HODdata?.data} />
-				<div>
-					<MainSearch placeholder={'Search...          Team Weekly Report'} />
 
+				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+					<MainSearch placeholder={'Search...          Team Weekly Report'} />
+					<span style={{ marginLeft: '20px' }}>
+						<WeeklyReportDownloader data={HODdata} />
+					</span>
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
@@ -114,7 +116,7 @@ const TeamWeeklyReport = () => {
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}
-					data={HODdata?.data}
+					data={HODdata}
 					entriesPerPage={entriesPerPage}
 					Total={"Assessment"}
 				/>

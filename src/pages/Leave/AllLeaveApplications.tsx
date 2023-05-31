@@ -11,13 +11,16 @@ import Cookies from 'js-cookie';
 import storage from '../../utils/dataService';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
+import DataService from '../../utils/dataService';
 
+
+const dataService = new DataService()
 const AllLeaveApplications = () => {
 
 
 	// @ts-ignore
-	const userInfo: any = JSON.parse(storage?.get("user"));
-	const token = Cookies.get("token");
+	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+	const token = dataService.getToken()
 	const [data, setData] = useState([]);
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");

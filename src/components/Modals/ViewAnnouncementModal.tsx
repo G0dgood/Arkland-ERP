@@ -2,11 +2,11 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch';
 import { SyncLoader } from 'react-spinners';
 import moment from 'moment';
 import { FiEye } from 'react-icons/fi';
 import { viewAnnouncement } from '../../features/Announcement/announcemetSlice';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
 
 const ViewAnnouncementModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();

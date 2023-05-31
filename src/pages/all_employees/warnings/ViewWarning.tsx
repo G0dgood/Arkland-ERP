@@ -16,8 +16,8 @@ import InputField from "../../../components/Inputs/InputField";
 import TextAreaField from "../../../components/Inputs/TextAreaField";
 import SelectField from "../../../components/Inputs/SelectField";
 import { checkForEmployee } from "../../../utils/checkForName";
-import { useAppSelector } from "../../../hooks/useDispatch";
 import Sidebar from "../../../components/SidebarAndDropdown/Sidebar";
+import { useAppSelector } from "../../../store/useStore";
 
 const override: CSSProperties = {
   display: "block",
@@ -32,7 +32,7 @@ const ViewWarning = () => {
   const { id } = useParams<{ id: string }>();
   const { warning, isLoading, isTerminateLoading, handleEmployeeTermination } =
     useWarningEmployeeById(id ? id : "");
-  const employees: any = useAppSelector((state) => state.employees.employees);
+  // const employees: any = useAppSelector((state) => state.employees.employees);
 
   const [deleteShow, setDeleteShow] = React.useState(false);
   const [showDialog, setShowDialog] = React.useState<any>({});
@@ -230,7 +230,7 @@ const ViewWarning = () => {
                           color: "blue",
                         }}
                       >
-                        {checkForEmployee(warning?.employee, employees)}
+                        {/* {checkForEmployee(warning?.employee, employees)} */}
                       </p>
                       <p>Misconduct</p>
                       <p>{warning?.misconduct}</p>

@@ -14,8 +14,11 @@ import Pagination from "../../components/Pagination";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import { getRequestOptions } from "../../utils/auth/header";
 import TableLoader from "../../components/TableLoader";
+import DataService from "../../utils/dataService";
 
 const WarningList = () => {
+  const dataService = new DataService()
+  const token = dataService.getToken()
   // const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

@@ -24,17 +24,18 @@ class HttpService {
     get(url: string) {
      const endpoint = this.baseUrl + url;
 					return new Promise(async (resolve, reject) => { 
-						try { 
-				   const data = await axios.get(endpoint, this.config)  
-								resolve(data);
-						}
-						catch (e) { 
-									this.handleError(e);
-						} 
+                try { 
+				   const data:any = await axios.get(endpoint, this.config)  
+                    resolve(data);
+                }
+                catch (e) { 
+                    this.handleError(e);
+                    reject (e);
+                } 
       });
     }
 
-    search(url: string, params: Record<string, any>) {
+    search(url: string, params:string) {
         const endpoint = this.baseUrl + url + this.objectToQueryString(params);
         return new Promise((resolve, reject) => { 		 
             axios.get(endpoint, this.config)
@@ -43,7 +44,7 @@ class HttpService {
                 })
 			    .catch((e) => {  
 				 this.handleError(e);
-																	
+                 reject (e);												
                 });
         });
     }
@@ -58,6 +59,7 @@ class HttpService {
                 })
                 .catch((e) => { 
                     this.handleError(e); 
+                     reject (e);
                 });
         });
     }
@@ -70,7 +72,8 @@ class HttpService {
                     resolve(data);
                 })
 					.catch((e) => {  
-                    this.handleError(e);
+                        this.handleError(e);
+                         reject (e);
                 });
         });
     }
@@ -89,7 +92,8 @@ class HttpService {
                     resolve(data);
                 })
 					.catch((e) => {  
-                    this.handleError(e);
+                        this.handleError(e);
+                         reject (e);
                 });
         });
     }
@@ -103,20 +107,22 @@ class HttpService {
                 })
                 .catch((e) => { 
                     this.handleError(e); 
+                     reject (e);
                 });
         });
     }
 
-    patch(url: string, data: any) {
+    patch(url: string, data: any = {}) {
         const endpoint = this.baseUrl + url;
         return new Promise((resolve, reject) => { 
             axios.patch(endpoint, data, this.config)
-                .then((data) => {
-                   
+                .then((data) => { 
                     resolve(data);
                 })
                 .catch((e) => { 
+                    console.log('error', e );
                     this.handleError(e);
+                     reject (e);
                 });
         });
     }
@@ -134,11 +140,14 @@ class HttpService {
     handleError(e:any ) { 
        
         if (e.response.status === 401) { 
-            fireAlert("Authentication error, please login again", "error");   
+            fireAlert("Session expired","Authentication error, please login again", "error");   
             window.location.replace("/login");
             this.dataService.clearData();
-        } else {
-            fireAlert(e.response.data.message, "error");
+        }
+        
+        else {
+            // console.log('fireAlert',e.response.data.message);
+            fireAlert("Error",e.response.data.message, "error"); 
             
         }
     }

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
-import Cookies from "js-cookie";
 import { Button } from "@material-ui/core";
 import { MdOutlineClose } from "react-icons/md";
 import { Form, Formik } from "formik";
@@ -8,50 +7,32 @@ import { BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
 import InputField from "../Inputs/InputField";
 import TextAreaField from "../Inputs/TextAreaField";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { createDepartments, reset } from "../../features/Department/departmentSlice";
 
-const CreateDepartmentModal = (props: any) => {
-  const [isLoading, setLoading] = React.useState(false);
-  const token = Cookies.get("token");
-
+const CreateDepartmentModal = () => {
+  const dispatch = useAppDispatch();
+  const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.department)
   const [lgShow, setLgShow] = useState(false);
 
-  const handleSubmit = async (values: any) => {
-    setLoading(true);
-    console.log("values", values);
-    const createDepartmentValues = { ...values };
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/departments`,
-        {
-          method: "POST",
-          body: JSON.stringify(createDepartmentValues),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Department created successfully";
-        const html = `Department created `;
-        const icon = "success";
-        // fireAlert(title, html, icon);
-        setLgShow(false);
-        props.onNewDepartmentCreated();
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Department creation failed";
-      // fireAlert(title, html, icon);
+  useEffect(() => {
+    if (createisError) {
+      fireAlert("error", createmessage, "error");
+      dispatch(reset());
+    } else if (createisSuccess) {
+      setLgShow(false)
+      fireAlert("Success", "Department created successfully", "success");
+      dispatch(reset());
     }
+  }, [createisError, createisSuccess, createmessage, dispatch]);
+
+  const handleSubmit = async (values: any) => {
+    const input = { ...values };
+    // @ts-ignore
+    dispatch(createDepartments(input));
+
   };
+
   return (
     <div>
       <Button
@@ -121,7 +102,7 @@ const CreateDepartmentModal = (props: any) => {
                         className="Add-btn-modal"
                         type="submit"
                       >
-                        {isLoading ? <Spinner animation="border" /> : "Create"}
+                        {createisLoading ? <Spinner animation="border" /> : "Create"}
                       </Button>
                     </div>
                   </div>

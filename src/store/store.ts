@@ -9,10 +9,14 @@ import projectSlice from '../features/Project/projectSlice'
 import NotificationSlice from '../features/Notification/NotificationSlice'
 import WeeklyReportSlice from '../features/WeeklyReport/WeeklyReportSlice'
 import hodSlice from '../features/HOD/hodSlice'
-import announcementSlice from '../features/Announcement/announcemetSlice'
+import announcementSlice  from '../features/Announcement/announcemetSlice'  
+import attendanceSlice from '../features/Attendances/attendanceSlice'
+ 
+ 
+ 
  
 
-export const store1 = configureStore({
+export const store:any = configureStore({
   reducer: { 
      auth: authSlice,
     leave: leaveSlice, 
@@ -24,15 +28,18 @@ export const store1 = configureStore({
     notification: NotificationSlice, 
     Weeklyreport: WeeklyReportSlice, 
     hod: hodSlice, 
+    attendance: attendanceSlice, 
     announcement: announcementSlice, 
   },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootStater = ReturnType<typeof store1.getState>
+export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatcher = typeof store1.dispatch
+export type AppDispatch = typeof store.dispatch
 
+
+ 
 
  
  

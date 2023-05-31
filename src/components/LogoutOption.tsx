@@ -2,14 +2,13 @@ import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import HttpService from './HttpService';
 import DataService from '../utils/dataService';
 
 const dataService = new DataService();
 
 const LogoutOption = ({ showLogout, setShowLogout }: any) => {
-	const navigate = useNavigate();
+
 
 	const [isLoading, setisLoading] = useState<any>(false);
 	const handleLogoutClose = () => setShowLogout(false);
@@ -20,8 +19,7 @@ const LogoutOption = ({ showLogout, setShowLogout }: any) => {
 			await HttpService.patch("me/logout", {})
 			dataService.clearData()
 			setisLoading(false);
-			// window.location.replace("/");
-			navigate("/");
+			window.location.replace("/");
 		} catch (error) {
 			setisLoading(false);
 			dataService.clearData()

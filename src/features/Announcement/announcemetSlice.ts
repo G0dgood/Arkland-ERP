@@ -86,7 +86,7 @@ export const deleteAnnouncement = createAsyncThunk('auth/deleteAnnouncement', as
  
 
 
-export const authSlice = createSlice({
+export const attendanceSlice = createSlice({
   name: 'announcement',
   initialState,
   reducers: {
@@ -124,7 +124,7 @@ export const authSlice = createSlice({
       .addCase(getAnnouncement.fulfilled, (state:any, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.data = action.payload?.data?.data 
+        state.data = action.payload?.data 
       })
       .addCase(getAnnouncement.rejected, (state:any, action) => {
         state.isLoading = false
@@ -140,7 +140,7 @@ export const authSlice = createSlice({
       .addCase(viewAnnouncement.fulfilled, (state:any, action) => {
         state.viewisLoading = false
         state.viewisSuccess = true
-        state.viewdata = action.payload?.data?.data 
+        state.viewdata = action.payload?.data 
       })
       .addCase(viewAnnouncement.rejected, (state:any, action) => {
         state.viewisLoading = false
@@ -183,5 +183,5 @@ export const authSlice = createSlice({
   },
 })
 
-export const { reset  } = authSlice.actions
-export default authSlice.reducer
+export const { reset  } = attendanceSlice.actions
+export default attendanceSlice.reducer

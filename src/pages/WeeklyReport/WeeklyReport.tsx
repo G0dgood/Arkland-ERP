@@ -4,18 +4,20 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdPostAdd } from 'react-icons/md';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
-import storage from '../../utils/dataService';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch';
-import { createweeklyReport, reset } from '../../features/WeeklyReport/WeeklyReportSlice';
 
+import { createweeklyReport, reset } from '../../features/WeeklyReport/WeeklyReportSlice';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import DataService from '../../utils/dataService';
+
+const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {
 	const dispatch = useAppDispatch();
 	const { createisError, createisLoading, createmessage, createisSuccess }: any = useAppSelector((state: any) => state.Weeklyreport)
 
 	// @ts-ignore
-	const userInfo: any = JSON.parse(storage?.get("user"));
+	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 	const [count, setCount] = useState<number>(0)
 	const [inputs, setInputs] = useState<any>({
 		assessment: "",
@@ -98,40 +100,40 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 
 
 
-	// useEffect(() => {
-	// 	if (createisSuccess) {
-	// 		fireAlert(title, html, icon);
-	// 		setInputs({
-	// 			assessment: " ",
-	// 			week: "",
-	// 			activities: []
-	// 		})
-	// 		setTimeout(() => {
-	// 			dispatch(reset());
-	// 			setIsCheck(false)
-	// 		}, 2000);
-	// 	} else if (createisError) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		setTimeout(() => {
-	// 			setInputs({
-	// 				assessment: " ",
-	// 				week: "",
-	// 				activities: [
-	// 					{
-	// 						completed: "",
-	// 						in_progress: "",
-	// 						next: "",
-	// 						due_date_for_next: "",
-	// 						next_week_tasks: [""],
-	// 						issues: [""],
-	// 						blockers: [""]
-	// 					}
-	// 				]
-	// 			})
-	// 		}, 5000);
-	// 		reset()
-	// 	}
-	// }, [html, html1, createisError, createisSuccess, setIsCheck, dispatch])
+	useEffect(() => {
+		if (createisSuccess) {
+			fireAlert(title, html, icon);
+			setInputs({
+				assessment: " ",
+				week: "",
+				activities: []
+			})
+			setTimeout(() => {
+				dispatch(reset());
+				setIsCheck(false)
+			}, 2000);
+		} else if (createisError) {
+			fireAlert(title1, html1, icon1);
+			setTimeout(() => {
+				setInputs({
+					assessment: " ",
+					week: "",
+					activities: [
+						{
+							completed: "",
+							in_progress: "",
+							next: "",
+							due_date_for_next: "",
+							next_week_tasks: [""],
+							issues: [""],
+							blockers: [""]
+						}
+					]
+				})
+			}, 5000);
+			reset()
+		}
+	}, [html, html1, createisError, createisSuccess, setIsCheck, dispatch])
 
 	return (
 		<div className='weeklycontainer'>
@@ -141,7 +143,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 						<div className='weeklyreporttop-container-card-1'>
 							<div className='weekly-top-card-1-sub'>
 								<p>EMPLOYEE NAME</p>
-								<p className='weekly-top-card-1-sub-second-child'>{userInfo?.data?.employee?.full_name.toUpperCase()}</p>
+								<p className='weekly-top-card-1-sub-second-child'>{userInfo?.employee?.full_name.toUpperCase()}</p>
 								<p>SELF ASSESSMENT</p>
 								<p>{inputs.assessment.toUpperCase()}</p>
 								<p>WEEK</p>
