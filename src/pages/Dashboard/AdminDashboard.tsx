@@ -24,11 +24,6 @@ const AdminDashboard = () => {
 
 
 
-
-  // const employees = useAppSelector((state) => state.employees.employees);
-  // const departments = useAppSelector((state) => state.department.department);
-  // const projects = useAppSelector((state) => state.projects.projects);
-
   const [show, setShow] = useState<any>(false);
   const [fullscreen, setFullscreen] = useState<any>(false);
 
@@ -58,7 +53,7 @@ const AdminDashboard = () => {
     }
   }, [departments, dispatch, employees, projects]);
 
-  console.log('employees', employees)
+
 
   return (
     <div className="main-div">

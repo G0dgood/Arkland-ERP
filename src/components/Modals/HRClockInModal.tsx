@@ -130,8 +130,6 @@ const HRClockInModal = () => {
 							isLoading={isLoading}
 							options={availableEmployees}
 							value={inputs.isEmployee}
-							// defaultValue={defaultValue}
-							// defaultInputValue={defaultValue}
 							onChange={(e: any) => handleOnChange("isEmployee", e)} />
 					</div>
 					<div className="clock" style={{ marginBottom: "2rem" }}>

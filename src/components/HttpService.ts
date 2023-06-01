@@ -145,11 +145,11 @@ class HttpService {
             this.dataService.clearData();
         }
         
-        else {
-            // console.log('fireAlert',e.response.data.message);
-            fireAlert("Error",e.response.data.message, "error"); 
+        // else {
+        //     // console.log('fireAlert',e.response.data.message);
+        //     fireAlert("Error",e.response.data.message, "error"); 
             
-        }
+        // }
     }
 
     stopSpinner() {

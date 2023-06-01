@@ -18,39 +18,7 @@ const DepartmentsView = () => {
   const [newDepartmentCreated, setNewDepartmentCreated] = React.useState(false);
 
 
-  // React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       setisLoading(true);
-  //       const response = await fetch(
-  //         `${process.env.REACT_APP_API}/hr/departments`,
-  //         getRequestOptions
-  //       );
-  //       const isJsonResponse = response.headers
-  //         ?.get("content-type")
-  //         ?.includes("application/json");
-  //       const data = isJsonResponse && (await response.json());
-  //       if (!response.ok) {
-  //         throw new Error(data.message || response.status);
-  //       }
-  //       setDepartments([...data?.data]);
-  //       setisLoading(false);
-  //       setError(false);
-  //       setMessage("");
-  //     } catch (error: any) {
-  //       setisLoading(false);
-  //       setError(true);
-  //       setMessage(error.message || "Something went wrong");
-  //       setTimeout(() => {
-  //         fetchData();
-  //       }, 3000);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [newDepartmentCreated]);
-  // const handleNewDepartmentCreated = () => {
-  //   setNewDepartmentCreated(!newDepartmentCreated);
-  // };
+
 
 
 

@@ -65,6 +65,48 @@ const initialState = {
   createroleisSuccess: false,
   createroleisLoading: false, 
   createrolemessage: '', 
+
+  terminationsdata:  [],
+  terminationsisError: false,
+  terminationsisSuccess: false,
+  terminationsisLoading: false, 
+  terminationsmessage: '', 
+
+  viewterminationsdata:  [],
+  viewterminationsisError: false,
+  viewterminationsisSuccess: false,
+  viewterminationsisLoading: false, 
+  viewterminationsmessage: '',
+  
+  approveterminationsdata:  [],
+  approveterminationsisError: false,
+  approveterminationsisSuccess: false,
+  approveterminationsisLoading: false, 
+  approveterminationsmessage: '', 
+
+  rejectterminationsdata:  [],
+  rejectterminationsisError: false,
+  rejectterminationsisSuccess: false,
+  rejectterminationsisLoading: false, 
+  rejectterminationsmessage: '', 
+
+  warningdata:  [],
+  warningisError: false,
+  warningisSuccess: false,
+  warningisLoading: false, 
+  warningmessage: '', 
+
+  viewwarningdata:  [],
+  viewwarningisError: false,
+  viewwarningisSuccess: false,
+  viewwarningisLoading: false, 
+  viewwarningmessage: '', 
+
+  createwarningdata:  [],
+  createwarningisError: false,
+  createwarningisSuccess: false,
+  createwarningisLoading: false, 
+  createwarningmessage: '', 
 }
  
 
@@ -185,6 +227,91 @@ export const deleteRole = createAsyncThunk('employee/deleteRole', async (data, t
     return thunkAPI.rejectWithValue(message)
   }
 })
+export const getTerminations = createAsyncThunk('employee/getTerminations', async (data, thunkAPI) => {
+  try {
+    return await employeeService.getTerminations(data)
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const viewTerminations = createAsyncThunk('employee/viewTerminations', async (data, thunkAPI) => {
+  try {
+    return await employeeService.viewTerminations(data)
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const approveTerminations = createAsyncThunk('employee/approveTerminations', async (data, thunkAPI) => {
+  try {
+    return await employeeService.approveTerminations(data)
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const rejectTerminations = createAsyncThunk('employee/rejectTerminations', async (data, thunkAPI) => {
+  try {
+    return await employeeService.rejectTerminations(data)
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const getWarning = createAsyncThunk('employee/getWarning', async (data, thunkAPI) => {
+  try {
+    return await employeeService.getWarning(data)
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const viewWarning = createAsyncThunk('employee/viewWarning', async (data, thunkAPI) => {
+  try {
+    return await employeeService.viewWarning(data)
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ // @ts-ignore
+export const createWarning = createAsyncThunk('employee/createWarning', async (data,input, thunkAPI) => {
+  try {
+    return await employeeService.createWarning(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 
  
@@ -245,6 +372,43 @@ export const authSlice = createSlice({
       state.createroleisSuccess = false
       state.createroleisError = false
       state.createrolemessage = '' 
+      
+      state.terminationsisLoading = false
+      state.terminationsisSuccess = false
+      state.terminationsisError = false
+      state.terminationsmessage = '' 
+
+      state.viewterminationsisLoading = false
+      state.viewterminationsisSuccess = false
+      state.viewterminationsisError = false
+      state.viewterminationsmessage = '' 
+
+      state.approveterminationsisLoading = false
+      state.approveterminationsisSuccess = false
+      state.approveterminationsisError = false
+      state.approveterminationsmessage = '' 
+
+      state.rejectterminationsisLoading = false
+      state.rejectterminationsisSuccess = false
+      state.rejectterminationsisError = false
+      state.rejectterminationsmessage = '' 
+
+      state.warningisLoading = false
+      state.warningisSuccess = false
+      state.warningisError = false
+      state.warningmessage = '' 
+
+      state.viewwarningisLoading = false
+      state.viewwarningisSuccess = false
+      state.viewwarningisError = false
+      state.viewwarningmessage = '' 
+
+      state.createwarningisLoading = false
+      state.createwarningisSuccess = false
+      state.createwarningisError = false
+      state.createwarningmessage = '' 
+
+      
     },
   },
   
@@ -384,6 +548,111 @@ export const authSlice = createSlice({
         state.createroleisError = true
         state.createrolemessage = action.payload    
         state.createroledata = '' 
+      })
+
+      .addCase(getTerminations.pending, (state) => {
+        state.terminationsisLoading = true 
+      })
+      .addCase(getTerminations.fulfilled, (state:any, action) => {
+        state.terminationsisLoading = false
+        state.terminationsisSuccess = true
+        state.terminationsdata = action.payload    
+      })
+      .addCase(getTerminations.rejected, (state:any, action) => {
+        state.terminationsisLoading = false
+        state.terminationsisError = true
+        state.terminationsmessage = action.payload    
+        state.terminationsdata = '' 
+      })
+
+      .addCase(viewTerminations.pending, (state) => {
+        state.viewterminationsisLoading = true 
+      })
+      .addCase(viewTerminations.fulfilled, (state:any, action) => {
+        state.viewterminationsisLoading = false
+        state.viewterminationsisSuccess = true
+        state.viewterminationsdata = action.payload    
+      })
+      .addCase(viewTerminations.rejected, (state:any, action) => {
+        state.viewterminationsisLoading = false
+        state.viewterminationsisError = true
+        state.viewterminationsmessage = action.payload    
+        state.viewterminationsdata = '' 
+      })
+
+      .addCase(approveTerminations.pending, (state) => {
+        state.approveterminationsisLoading = true 
+      })
+      .addCase(approveTerminations.fulfilled, (state:any, action) => {
+        state.approveterminationsisLoading = false
+        state.approveterminationsisSuccess = true
+        state.approveterminationsdata = action.payload    
+      })
+      .addCase(approveTerminations.rejected, (state:any, action) => {
+        state.approveterminationsisLoading = false
+        state.approveterminationsisError = true
+        state.approveterminationsmessage = action.payload    
+        state.approveterminationsdata = '' 
+      })
+
+      .addCase(rejectTerminations.pending, (state) => {
+        state.rejectterminationsisLoading = true 
+      })
+      .addCase(rejectTerminations.fulfilled, (state:any, action) => {
+        state.rejectterminationsisLoading = false
+        state.rejectterminationsisSuccess = true
+        state.rejectterminationsdata = action.payload    
+      })
+      .addCase(rejectTerminations.rejected, (state:any, action) => {
+        state.rejectterminationsisLoading = false
+        state.rejectterminationsisError = true
+        state.rejectterminationsmessage = action.payload    
+        state.rejectterminationsdata = '' 
+      })
+
+      .addCase(getWarning.pending, (state) => {
+        state.warningisLoading = true 
+      })
+      .addCase(getWarning.fulfilled, (state:any, action) => {
+        state.warningisLoading = false
+        state.warningisSuccess = true
+        state.warningdata = action.payload    
+      })
+      .addCase(getWarning.rejected, (state:any, action) => {
+        state.warningisLoading = false
+        state.warningisError = true
+        state.warningmessage = action.payload    
+        state.warningdata = '' 
+      })
+
+      .addCase(viewWarning.pending, (state) => {
+        state.viewwarningisLoading = true 
+      })
+      .addCase(viewWarning.fulfilled, (state:any, action) => {
+        state.viewwarningisLoading = false
+        state.viewwarningisSuccess = true
+        state.viewwarningdata = action.payload    
+      })
+      .addCase(viewWarning.rejected, (state:any, action) => {
+        state.viewwarningisLoading = false
+        state.viewwarningisError = true
+        state.viewwarningmessage = action.payload    
+        state.viewwarningdata = '' 
+      })
+
+      .addCase(createWarning.pending, (state) => {
+        state.createwarningisLoading = true 
+      })
+      .addCase(createWarning.fulfilled, (state:any, action) => {
+        state.createwarningisLoading = false
+        state.createwarningisSuccess = true
+        state.createwarningdata = action.payload    
+      })
+      .addCase(createWarning.rejected, (state:any, action) => {
+        state.createwarningisLoading = false
+        state.createwarningisError = true
+        state.createwarningmessage = action.payload    
+        state.createwarningdata = '' 
       })
        
   },

@@ -19,6 +19,13 @@ const initialState = {
   allLeavemessage: '',
   allLeaveerror: '',
 
+  viewdata:   [],
+  viewisError: false,
+  viewisSuccess: false,
+  viewisLoading: false, 
+  viewmessage: '',
+  viewerror: '',
+
   teamdata:   [],
   teamisError: false,
   teamisSuccess: false,
@@ -32,6 +39,13 @@ const initialState = {
   teamviewisLoading: false, 
   teamviewmessage: '',
   teamviewerror: '',
+
+  viewdeletedata:   [],
+  viewdeleteisError: false,
+  viewdeleteisSuccess: false,
+  viewdeleteisLoading: false, 
+  viewdeletemessage: '',
+  viewdeleteerror: '',
   
 }
  
@@ -55,6 +69,34 @@ export const createLeave = createAsyncThunk('leave/createLeave', async ( data,th
 export const getCreateLeave:any = createAsyncThunk('leave/getCreateLeave', async(data:any, thunkAPI) => {
   try {
     return await leaveService.getCreateLeave(data)
+  } catch (error: any) { 
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+// View Leave 
+export const viewLeave:any = createAsyncThunk('leave/viewLeave', async(data:any, thunkAPI) => {
+  try {
+    return await leaveService.viewLeave(data)
+  } catch (error: any) { 
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+// View update Leave 
+export const viewdeleteLeave:any = createAsyncThunk('leave/viewdeleteLeave', async(data:any, thunkAPI) => {
+  try {
+    return await leaveService.viewdeleteLeave(data)
   } catch (error: any) { 
     const message = (error.response && 
       error.response.data && 
@@ -120,6 +162,16 @@ export const leaveSlice = createSlice({
       state.teamviewisSuccess = false
       state.teamviewisError = false
       state.teamviewmessage = '' 
+
+      state.viewisLoading = false
+      state.viewisSuccess = false
+      state.viewisError = false
+      state.viewmessage = '' 
+
+      state.viewdeleteisLoading = false
+      state.viewdeleteisSuccess = false
+      state.viewdeleteisError = false
+      state.viewdeletemessage = '' 
     },
     
   },
@@ -156,6 +208,23 @@ export const leaveSlice = createSlice({
         state.allLeavemessage= action.payload
         state.allLeavedata= [] 
       })
+
+      // VIEW LEAVE APPLICATIONS
+      .addCase(viewLeave.pending, (state) => {
+        state.viewisLoading= true
+        
+      })
+      .addCase(viewLeave.fulfilled, (state, action) => {
+        state.viewisLoading= false
+        state.viewisSuccess= true
+        state.viewdata= action.payload?.data
+      })
+      .addCase(viewLeave.rejected, (state:any, action) => {
+        state.viewisLoading= false
+        state.viewisError= true
+        state.viewmessage= action.payload
+        state.viewdata= [] 
+      })
      
       // GET TEAM LEAVE  
       .addCase(getTeamLeave.pending, (state) => {
@@ -189,6 +258,23 @@ export const leaveSlice = createSlice({
         state.teamviewisError= true
         state.teamviewmessage= action.payload
         state.teamviewdata= [] 
+      })
+
+      // VIEW UPDATE LEAVE  
+      .addCase(viewdeleteLeave.pending, (state) => {
+        state.viewdeleteisLoading= true
+        
+      })
+      .addCase(viewdeleteLeave.fulfilled, (state, action) => {
+        state.viewdeleteisLoading= false
+        state.viewdeleteisSuccess= true
+        state.viewdeletedata= action.payload?.data
+      })
+      .addCase(viewdeleteLeave.rejected, (state:any, action) => {
+        state.viewdeleteisLoading= false
+        state.viewdeleteisError= true
+        state.viewdeletemessage= action.payload
+        state.viewdeletedata= [] 
       })
      
       

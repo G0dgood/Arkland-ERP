@@ -1,26 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
 import moment from 'moment';
 import { fireAlert } from '../../utils/Alert';
-
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hrApproveEmployees, reset } from '../../features/Employee/employeeSlice';
-import HttpService from '../HttpService';
+
 
 const ApproveEmployeeModal = ({ id, data }: any) => {
 	const dispatch = useAppDispatch();
 	const { approveisError, approveisLoading, approvemessage, approveisSuccess } = useAppSelector((state: any) => state.employee)
-	// const {  data,  isError,  isLoading,  message,  isSuccess } = useAppSelector((state: any) => state.employee)
 	const [deleteShow, setDeleteShow] = useState(false);
-	const [isLoading, setisLoading] = useState(false);
-
-
-	const url = `${process.env.REACT_APP_API}/hr/employees/${id}/approve`;
-
-
 
 
 	useEffect(() => {
@@ -35,18 +27,10 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 
 
 	const handleApprove = () => {
-		setisLoading(true)
+
 		// @ts-ignore
 		dispatch(hrApproveEmployees(id));
-		// HttpService.patch(`hr/employees/${id}/approve`)
-		// 	.then((response) => {
-		// 		console.log('response', response);
-		// 		setisLoading(false)
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log('patch-error', error);
-		// 		setisLoading(false)
-		// 	})
+
 	}
 
 	return (

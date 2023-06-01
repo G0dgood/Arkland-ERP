@@ -27,7 +27,9 @@ const Sidebar = ({
  collapseNav
 }: any) => {
 
- const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
+ const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } = getUserPrivileges();
+
+
  const { pathname } = useLocation();
  return (
   <ProSidebar
@@ -46,7 +48,9 @@ const Sidebar = ({
 
      <SubMenu suffix={<span className="badge yellow">3</span>} title={'KPI Assessment'} icon={<FiPieChart size={20} />} >
       <MenuItem className='Side__Content' active={pathname === '/kpiassessment'} icon={<FiPieChart size={20} />}>  My Assessment <Link to="/kpiassessment" /> </MenuItem>
-      <MenuItem className='Side__Content' active={pathname === '/kpiassessment/kpiassessment/teamkpi'}>Team KPI <Link to="/kpiassessment/kpiassessment/teamkpi" /> </MenuItem>
+      {(isTeamLead) && (
+       <MenuItem className='Side__Content' active={pathname === '/kpiassessment/kpiassessment/teamkpi'}>Team KPI <Link to="/kpiassessment/kpiassessment/teamkpi" /> </MenuItem>
+      )}
       <MenuItem className='Side__Content' active={pathname === '/kpiassessment/kpiassessment/admin'}>  <Link to="/kpiassessment/kpiassessment/admin" /> All KPI Report</MenuItem>
      </SubMenu>
 
@@ -57,23 +61,31 @@ const Sidebar = ({
      </SubMenu>
      <MenuItem className='Side__Content' active={pathname === '/attendance/attendance/list/hr'} icon={<CgUserList size={23} />}> Human Resources <Link to="/attendance/attendance/list/hr" />  </MenuItem>
      <MenuItem className='Side__Content' active={pathname === '/attendance'} icon={<HiOutlineUserGroup size={23} />}> Attendance <Link to="/attendance" /> </MenuItem>
-     {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
-     <SubMenu title={'Employees'} icon={<FiUser size={24} />} >
-      <MenuItem className='Side__Content' active={pathname === '/employees'}>  <Link to="/employees" />Employees</MenuItem>
-      <MenuItem className='Side__Content' active={pathname === '/warninglist'}> <Link to="/warninglist" /> Warning List</MenuItem>
-      {/* <MenuItem className='Side__Content' active={pathname === '/terminations'}>  <Link to="/terminations" />Terminations</MenuItem> */}
-      <MenuItem className='Side__Content' active={pathname === '/createnewhod'}>  <Link to="/createnewhod" />HOD</MenuItem>
-      <MenuItem className='Side__Content' active={pathname === '/createnewrole'}>  <Link to="/createnewrole" />Create Role</MenuItem>
-      <MenuItem className='Side__Content' active={pathname === '/userprivileges'}>  <Link to="/userprivileges" />User Privileges</MenuItem>
-     </SubMenu>
-     {/* )} */}
+
+     {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+      <SubMenu title={'Employees'} icon={<FiUser size={24} />} >
+       <MenuItem className='Side__Content' active={pathname === '/employees'}>  <Link to="/employees" />Employees</MenuItem>
+       <MenuItem className='Side__Content' active={pathname === '/warning'}> <Link to="/warning" /> Warning List</MenuItem>
+       <MenuItem className='Side__Content' active={pathname === '/terminations'}>  <Link to="/terminations" />Terminations</MenuItem>
+       <MenuItem className='Side__Content' active={pathname === '/createnewhod'}>  <Link to="/createnewhod" />HOD</MenuItem>
+       <MenuItem className='Side__Content' active={pathname === '/createnewrole'}>  <Link to="/createnewrole" />Create Role</MenuItem>
+       <MenuItem className='Side__Content' active={pathname === '/userprivileges'}>  <Link to="/userprivileges" />User Privileges</MenuItem>
+      </SubMenu>
+     )}
+
      <MenuItem className='Side__Content' active={pathname === '/departments'} icon={<FiFolder size={20} />}> Departments <Link to="/departments" /> </MenuItem>
      <MenuItem className='Side__Content' active={pathname === '/projects'} icon={<AiIcons.AiOutlineBank size={25} />}> Projects <Link to="/projects" />  </MenuItem>
      <SubMenu title={'Leave Management'} icon={<BsBriefcase size={22} />}>
       <MenuItem className='Side__Content' active={pathname === '/leave'}>  <Link to="/leave" /> Leave </MenuItem>
+      {/* {(isTeamLead) && ( */}
       <MenuItem className='Side__Content' active={pathname === '/leave/leave/team'}> <Link to="/leave/leave/team" />Team Leave</MenuItem>
-      <MenuItem className='Side__Content' active={pathname === '/allleaveapplications'}>  <Link to="/allleaveapplications" />HR Leave</MenuItem>
-      <MenuItem className='Side__Content' active={pathname === '/allleaveapplications'}>  <Link to="/allleaveapplications" />Admin Leave</MenuItem>
+      {/* )} */}
+      {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+       <MenuItem className='Side__Content' active={pathname === '/allleaveapplications'}>  <Link to="/allleaveapplications" />HR Leave</MenuItem>
+      )}
+      {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+       <MenuItem className='Side__Content' active={pathname === '/allleaveapplications'}>  <Link to="/allleaveapplications" />Admin Leave</MenuItem>
+      )}
      </SubMenu>
      <MenuItem className='Side__Content' active={pathname === '/support'} icon={<BiSupport size={22} />}>  Support <Link to="/support" /> </MenuItem>
      <MenuItem className='Side__Content' active={pathname === '/policy'} icon={<BsShield size={22} />}>  Policy <Link to="/policy" /> </MenuItem>

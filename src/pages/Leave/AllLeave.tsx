@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import Pagination from '../../components/Pagination';
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import moment from 'moment';
-import storage from '../../utils/dataService';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
 import { useAppDispatch } from '../../store/useStore';
@@ -14,7 +13,7 @@ import { useAppDispatch } from '../../store/useStore';
 const AllLeave = () => {
 	const dispatch = useAppDispatch();
 	// @ts-ignore
-	const userInfo: any = JSON.parse(storage?.get("user"));
+
 
 	const [data, setData] = useState([]);
 	const [sortData, setSortData] = useState([]);
@@ -30,33 +29,7 @@ const AllLeave = () => {
 		dispatch(handleRequestGet(setMessage, setisError, setisLoading, url, setData));
 	}, [dispatch, url])
 
-	// useEffect(() => {
-	// 	setisLoading(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
-	// 		method: "GET",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (data?.success === false) {
-	// 				setMessage(data?.message)
-	// 				setisError(true)
-	// 			} else {
-	// 				setSortData(data?.data?.data)
-	// 				setTimeout(() => {
-	// 					setMessage('')
-	// 				}, 2000);
-	// 			}
-	// 			setisLoading(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setisLoading(false);
-	// 		});
-	// }, [token, userInfo?.data?.department?.id])
+
 
 
 

@@ -3,7 +3,6 @@ import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { SyncLoader } from "react-spinners";
-import { Modal, Spinner } from "react-bootstrap";
 import projectBack from "../../assets/vectors/project-back.svg";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import { getUserPrivileges } from "../../functions/auth";
@@ -42,7 +41,7 @@ const ViewEmployee = () => {
 
 
 
-  const [isEssentialDetailsOpen, setIsEssentialDetailsOpen] = useState(false);
+  const [isEssentialDetailsOpen, setIsEssentialDetailsOpen] = useState(true);
   const [isFinancialDetailsOpen, setIsFinancialDetailsOpen] = useState(false);
   const [isReferencesOpen, setIsReferencesOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -79,14 +78,14 @@ const ViewEmployee = () => {
                 <Button
                   variant="contained"
                   className="Add-btn"
-                  onClick={() => navigate(`/employees/edit/${id}`)}
+                  onClick={() => navigate(`/employees/employees/edit/${id}`)}
                 >
                   Edit Employee
                 </Button>
               )}
-              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
-              <DeleteEmployeeModal id={id} />
-              {/* // )} */}
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <DeleteEmployeeModal id={id} />
+              )}
             </div>
 
           </div>
@@ -150,9 +149,9 @@ const ViewEmployee = () => {
                 <div className="getjob-application-details">
                   <p>Expatriate</p>
                   <p>
-                    {employee.is_expatriate === true ? "Yes" : "No"}
+                    {employee?.is_expatriate === true ? "Yes" : "No"}
                   </p>
-                  {employee.is_expatriate === true ? (
+                  {employee?.is_expatriate === true ? (
                     <>
                       <>
                         <p>Passport Number</p>
@@ -177,9 +176,9 @@ const ViewEmployee = () => {
                   <p>Instiution attended</p>
                   <p>{employee?.institution_attended}</p>
                   <p>Course studied</p>
-                  <p>{employee.course_studied}</p>
+                  <p>{employee?.course_studied}</p>
                   <p>Qualification</p>
-                  <p>{employee.qualification}</p>
+                  <p>{employee?.qualification}</p>
                 </div>
               </div>
             </div>

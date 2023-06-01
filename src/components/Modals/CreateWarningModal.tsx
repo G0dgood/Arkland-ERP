@@ -1,77 +1,63 @@
 import { Button } from "@material-ui/core";
-import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
-import Cookies from "js-cookie";
-
+import { useEffect, useState } from "react";
+import { Modal, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { MdOutlineClose } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import { fireAlert } from "../../utils/Alert";
 import ReactSelectField from "../Inputs/ReactSelectField";
 
 import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { allEmployee, createWarning, reset } from "../../features/Employee/employeeSlice";
 
-interface CreateWarningInterface {
-  id?: string;
-  onNewWarningCreated?: any;
-}
 
-const CreateWarningModal = ({
-  id,
-  onNewWarningCreated,
-}: CreateWarningInterface) => {
-  const token = Cookies.get("token");
-  const [isLoading, setLoading] = React.useState(false);
+const CreateWarningModal = ({ id }: any) => {
+  const dispatch = useAppDispatch();
+  const { data: employees } = useAppSelector((state: any) => state.employee)
+  const { createwarningisError, createwarningisLoading, createwarningmessage, createwarningisSuccess } = useAppSelector((state: any) => state.employee)
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allEmployee());
+  }, [dispatch]);
+
   const subordinationOptions = ["Type of misconduct", "insubordination"];
   const [lgShow, setLgShow] = useState(false);
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
-    setLoading(true);
-    const employeeId = id ? id : values.employee;
-    const createWarningValues = { ...values, employee: employeeId };
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API}/hr/warnings`, {
-        method: "POST",
-        body: JSON.stringify(createWarningValues),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Warning created successfully.";
-        const html = `Warning created`;
-        const icon = "success";
-        resetForm(values);
-        // fireAlert(title, html, icon);
-        setLgShow(false);
-        onNewWarningCreated();
-        // props.onNewWarningCreated();
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Warning creation failed";
-      // fireAlert(title, html, icon);
-    }
+
+    const inputs = { ...values }
+    console.log('id', inputs)
+    // @ts-ignore
+    dispatch(createWarning(inputs));
   };
-  // const employees: any = useAppSelector((state) => state?.employees?.employees);
+
+  useEffect(() => {
+
+    if (createwarningisError) {
+      fireAlert("Create warning failed", createwarningmessage, "error");
+      dispatch(reset());
+    } else if (createwarningisSuccess) {
+      fireAlert("Create warning success", "Warning created successfully", "success");
+      setLgShow(false);
+      dispatch(reset());
+    }
+  }, [createwarningisError, createwarningisSuccess, createwarningmessage, dispatch])
+
+
+
   const availablleEmployees = [] as any;
 
-  // employees &&
-  //   employees.forEach((employee: any) =>
-  //     availablleEmployees.push({
-  //       value: employee?.id,
-  //       label: employee?.full_name,
-  //     })
-  //   );
+  employees &&
+    employees?.forEach((employee: any) =>
+      availablleEmployees.push({
+        value: employee?.id,
+        label: employee?.full_name,
+      })
+    );
+
+
   return (
     <div>
       <Button
@@ -97,7 +83,7 @@ const CreateWarningModal = ({
         <Modal.Body>
           <Formik
             initialValues={{
-              employee: "",
+              employee: id ? id : "",
               misconduct: "",
               message: "",
             }}
@@ -166,7 +152,7 @@ const CreateWarningModal = ({
                         className="Add-btn-modal"
                         type="submit"
                       >
-                        {isLoading ? "Please wait..." : "Create"}
+                        {createwarningisLoading ? <Spinner animation="border" /> : "Create"}
                       </Button>
                     </div>
                   </div>

@@ -21,10 +21,7 @@ import EmployeesDownloader from "../../components/Downloader/EmployeesDownloader
 import { allEmployee } from "../../features/Employee/employeeSlice";
 import ApproveEmployeeModal from "../../components/Modals/ApproveEmployeeModal";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import DataService from "../../utils/dataService";
 
-
-const dataService = new DataService()
 const AllEmployees = () => {
 
   const dispatch = useAppDispatch();
@@ -88,8 +85,6 @@ const AllEmployees = () => {
     { title: "APPROVE", prop: "status" },
     { title: "ACTION" },
   ];
-
-
 
 
   return (

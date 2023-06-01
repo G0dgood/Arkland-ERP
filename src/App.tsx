@@ -1,51 +1,3 @@
-// import React, { useEffect, useState } from "react";
-
-// import "./scss/main.scss";
-// import "./App.scss";
-// import Sidebar from "./components/SidebarAndDropdown/Sidebar";
-// import Header from "./components/Header";
-
-// const App: React.FC = (): JSX.Element => {
-
-
-//   const [collapseNav, setCollapseNav] = useState(() => {
-//     // @ts-ignore
-//     return JSON.parse(localStorage.getItem("collapse")) || false;
-//   });
-
-//   useEffect(() => {
-//     // --- Set state of collapseNav to localStorage on pageLoad --- //
-//     localStorage.setItem("collapse", JSON.stringify(collapseNav));
-//     // --- Set state of collapseNav to localStorage on pageLoad --- //
-//   }, [collapseNav]);
-//   const toggleSideNav = () => {
-//     setCollapseNav(!collapseNav);
-//   }
-
-//   return (
-//     <React.Suspense fallback={"App loading"}>
-//       {/* <div id="screen-wrapper">
-//         <Header toggleSideNav={toggleSideNav} />
-//         <Sidebar collapseNav={collapseNav} />
-//         <main>
-//   
-//         </main>
-//       </div> */}
-
-
-//     </React.Suspense>
-//   );
-// };
-
-// export default App;
-
-
-
-
-
-// new app route
-
-
 import React from "react";
 import "./scss/main.scss";
 import "./App.scss";
@@ -135,7 +87,6 @@ const App: React.FC<any> = () => {
 
           <Route path="attendance" >
             <Route index element={<EmployeeAttendance />} />
-            {/* <Route index element={<EmployeeAttendance />} /> */}
             <Route path="employee/attendance/list" element={<EmployeeAttendanceTable />} />
             <Route path="attendance/hr" element={<HumanResources />} />
             <Route path="attendance/list/hr" element={<AttendanceTable />} />
@@ -161,7 +112,6 @@ const App: React.FC<any> = () => {
           </Route>
 
           <Route path="weeklyreport">
-            {/* <Route index element={<MyWeekReport />} /> */}
             <Route index element={<WeeklyReport />} />
             <Route path="weeklyreport/team" element={<TeamWeeklyReport />} />
             <Route path="weeklyreport/:id" element={<WeeklyReportView />} />
@@ -185,10 +135,10 @@ const App: React.FC<any> = () => {
             <Route path="profile/view" element={<EditUser />} />
           </Route>
 
-          <Route path="termination">
-            <Route index element={<TerminationList />} />
-            <Route path="termination/:id" element={<ViewTerminations />} />
-          </Route>
+          {/* <Route path="terminations"> */}
+          <Route path="/terminations" element={<TerminationList />} />
+          <Route path="/terminations/:id" element={<ViewTerminations />} />
+          {/* </Route> */}
 
           <Route path="warning">
             <Route index element={<WarningList />} />

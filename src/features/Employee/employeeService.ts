@@ -1,5 +1,6 @@
 import axios from 'axios' 
 import HttpService from '../../components/HttpService'
+import { AnyArray } from 'immer/dist/internal'
  
  
   
@@ -54,12 +55,41 @@ const deleteEmployees = async (id: any) => {
     const { data }: any = await HttpService.get(`hr/employee-roles`) 
   return data
  }
-
+ 
  const deleteRole = async (id: any) => {   
-    const { data }: any = await HttpService.delete(`hr/employee-roles/${id}`) 
-  return data
- }
-
+   const { data }: any = await HttpService.delete(`hr/employee-roles/${id}`) 
+   return data
+  }
+  
+  const getTerminations = async (id: any) => {   
+     const { data }: any = await HttpService.get(`hr/terminations`) 
+   return data
+  }
+  const viewTerminations = async (id: any) => {   
+     const { data }: any = await HttpService.get(`hr/terminations/${id}`) 
+   return data
+  }
+  const approveTerminations = async (id: any) => {   
+     const { data }: any = await HttpService.patch(`hr/terminations/${id}`) 
+   return data
+  }
+  const rejectTerminations = async (id: any) => {   
+     const { data }: any = await HttpService.patch(`hr/terminations/${id}`) 
+   return data
+  }
+  const getWarning = async (id: any) => {   
+     const { data }: any = await HttpService.get(`hr/warnings`) 
+   return data
+  }
+ 
+  const viewWarning = async (id: any) => {   
+     const { data }: any = await HttpService.get(`hr/warnings/${id}`) 
+   return data
+  }
+  const createWarning = async (inputs:AnyArray) => {   
+     const { data }: any = await HttpService.post(`hr/warnings`, inputs) 
+   return data
+  }
  
 const employeeService = { 
   allEmployee,   
@@ -70,7 +100,14 @@ const employeeService = {
   hrViewEmployees,
   deleteEmployees,
   getRole,
-  deleteRole
+  deleteRole,
+  getTerminations,
+  viewTerminations,
+  rejectTerminations,
+  approveTerminations,
+  getWarning,
+  viewWarning,
+  createWarning
 }
 
 export default employeeService
