@@ -39,7 +39,7 @@ const ViewDepartments = () => {
   <div>
    {
     viewisLoading ? (
-     <div className="isLoading-container" >
+     <div className="isLoading-container-view" >
       <SyncLoader color={"#990000"} loading={viewisLoading} />
      </div>
     ) : !viewdata || viewdata === undefined ? (
@@ -51,45 +51,6 @@ const ViewDepartments = () => {
       </div>
      </div>
     ) : (
-     // <div className="alt-services section-contruct">
-     //  <div className="  aos-init aos-animate" data-aos="fade-up">
-
-     //   <div className="row justify-content-around gy-4">
-     //    <div className="col-lg-6 img-bg aos-init aos-animate construct-img" data-aos="zoom-in" data-aos-delay="100"></div>
-
-     //    <div className="col-lg-5 d-flex flex-column justify-content-center">
-     //     <h3>{viewdata?.department?.name}</h3>
-
-     //     <div className="icon-box d-flex position-relative aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-     //      <i className="bi bi-easel flex-shrink-0">{viewdata?.department?.status === "active" ? <BsFillCheckCircleFill color="green" size={35} /> : <BsFillXCircleFill color="red" size={35} />} </i>
-     //      <div>
-     //       <h4>
-     //        <a href="" className="stretched-link">{viewdata?.department?.name}</a>
-     //       </h4>
-     //       <p className={viewdata?.department?.status === "active" ? "active-view" : "active-not-view"}>{viewdata?.department?.status}</p>
-     //      </div>
-     //     </div>
-
-     //     <div className="back-btn-icon-sub mt-5">
-     //      <Button
-     //       variant="contained"
-     //       className="back-btn-icon"
-     //       id="Add-btn-sub"
-     //       onClick={() => navigate(-1)}
-     //      >
-     //       <FaArrowLeft size={25} />
-     //      </Button>
-
-
-     //      <DeleteDepartment id={viewdata?.department?.id} />
-     //     </div>
-
-
-     //    </div>
-     //   </div>
-
-     //  </div>
-     // </div>
      <div  >
 
       <div className="EssentialsContainer">
@@ -139,8 +100,6 @@ const ViewDepartments = () => {
     )
    }
   </div>
-
-
  );
 };
 

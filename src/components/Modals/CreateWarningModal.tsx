@@ -28,7 +28,7 @@ const CreateWarningModal = ({ id }: any) => {
   const handleSubmit = async (values: any, { resetForm }: any) => {
 
     const inputs = { ...values }
-    console.log('id', inputs)
+
     // @ts-ignore
     dispatch(createWarning(inputs));
   };

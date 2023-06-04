@@ -21,6 +21,7 @@ import EmployeesDownloader from "../../components/Downloader/EmployeesDownloader
 import { allEmployee } from "../../features/Employee/employeeSlice";
 import ApproveEmployeeModal from "../../components/Modals/ApproveEmployeeModal";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import UploadEmployee from "../../components/UploadEmployee";
 
 const AllEmployees = () => {
 
@@ -99,7 +100,7 @@ const AllEmployees = () => {
                 <Button
                   variant="contained"
                   className="Add-btn"
-                  onClick={() => navigate("/employeesemployees/create")}
+                  onClick={() => navigate("/employees/employees/create")}
                 // onClick={handleCreateEmployeeClick}
                 >
                   <GoPlus className="icon-space" />
@@ -118,7 +119,7 @@ const AllEmployees = () => {
                   </Button>
                 </div>
               )} */}
-              {/* <UploadEmployee /> */}
+              <UploadEmployee />
               {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                 <div
                   className="allemployees-sup-item2"

@@ -48,8 +48,7 @@ const RequestEmployeeTerminationModal = () => {
 					</Button>
 				</Modal.Header>
 				<Modal.Body>
-					{/* <p>Are you sure you want to request termination?</p>
-                           */}
+					{/* <p>Are you sure you want to request termination?</p>  */}
 					<Modal.Body>
 						<Formik
 							initialValues={{

@@ -428,10 +428,7 @@
   border-spacing: 0;
   width: 100%;
   overflow: hidden;
-  /* START - data table header */
-  /* END - data table header */
-  /* START - data table content */
-  /* END data table content */
+  
 }
 .md-ui.component-data-table .main-table-wrapper .main-table-content tr {
   border-bottom: 1px solid #e0e0e0;

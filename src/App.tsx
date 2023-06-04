@@ -56,6 +56,10 @@ import AllEmployees from "./pages/all_employees/AllEmployees";
 import MyKPIAssessment from "./pages/kpi_assessment/MyKPIAssessment";
 import MyWeekReport from "./pages/WeeklyReport/MyWeekReport";
 import AllKPIReport from "./pages/kpi_assessment/AllKPIReport";
+import TaskList from "./pages/Tasks/TaskList";
+import Team from "./pages/Team/Team";
+import ViewTeam from "./pages/Projects/ViewTeam";
+import Teamlead from "./pages/TeamLead/Teamlead";
 
 const dataService = new DataService();
 
@@ -82,7 +86,7 @@ const App: React.FC<any> = () => {
             <Route index element={<AllEmployees />} />
             <Route path="employees/:id" element={<ViewEmployee />} />
             <Route path="employees/edit/:id" element={<AdminEditUser />} />
-            <Route path="employees/create" element={<CreateEmployee />} />
+            <Route path="/employees/employees/create" element={<CreateEmployee />} />
           </Route>
 
           <Route path="attendance" >
@@ -133,6 +137,18 @@ const App: React.FC<any> = () => {
           <Route path="profile">
             <Route index element={<Profile />} />
             <Route path="profile/view" element={<EditUser />} />
+          </Route>
+          <Route path="tasks">
+            <Route index element={<TaskList />} />
+            {/* <Route path="profile/view" element={<EditUser />} /> */}
+          </Route>
+          <Route path="team">
+            <Route index element={<Team />} />
+            <Route path="team/view/:id" element={<ViewTeam />} />
+          </Route>
+          <Route path="teamlead">
+            <Route index element={<Teamlead />} />
+            <Route path="teamlead/view/:id" element={<ViewTeam />} />
           </Route>
 
           {/* <Route path="terminations"> */}

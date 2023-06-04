@@ -11,7 +11,7 @@ export const difficultyOptions = [
   { value: "4", label: "Challenging" },
   { value: "3", label: "Moderate" },
   { value: "2", label: "Easy" },
-  { value: "1", label: "Very easy:" },
+  { value: "1", label: "Very easy" },
 ];
 
 export const genderOptions = [

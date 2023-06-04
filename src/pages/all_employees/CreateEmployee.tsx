@@ -128,67 +128,65 @@ const CreateEmployee = () => {
         <title>Create employee | Arkland ERP</title>
       </Helmet>
       <div  >
-        <main>
-          <div className="addemployeecontainer">
-            <AddEmployeeTitle
-              setActive={setActive}
+        <div className="addemployeecontainer">
+          <AddEmployeeTitle
+            setActive={setActive}
+            active={active}
+            click={handleSubmitMyForm}
+          />
+          {active === 6 ? (
+            ""
+          ) : (
+            <AddEmployeeNav active={active} setActive={setActive} />
+          )}
+          <div className="all-inputs-container">
+            <Essentials
               active={active}
-              click={handleSubmitMyForm}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
             />
-            {active === 6 ? (
-              ""
-            ) : (
-              <AddEmployeeNav active={active} setActive={setActive} />
-            )}
-            <div className="all-inputs-container">
-              <Essentials
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-              <Finance
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-              <Reference
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-              <Employment
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-                options={availablleDepartments}
-                roleOptions={availablleRoles}
-              />
-              <Address
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-              <CreateEmployeeView
-                active={active}
-                employee={employee}
-                departments={departments}
-                roles={roles}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-            </div>
+            <Finance
+              active={active}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+            />
+            <Reference
+              active={active}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+            />
+            <Employment
+              active={active}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+              options={availablleDepartments}
+              roleOptions={availablleRoles}
+            />
+            <Address
+              active={active}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+            />
+            <CreateEmployeeView
+              active={active}
+              employee={employee}
+              departments={departments}
+              roles={roles}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+            />
           </div>
-        </main>
+        </div>
       </div>
     </>
   );

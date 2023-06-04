@@ -6,9 +6,7 @@ import {
  SubMenu,
  SidebarContent
 } from 'react-pro-sidebar';
-import {
- FaList,
-} from 'react-icons/fa';
+import { FaTasks } from 'react-icons/fa';
 import { TfiLayoutGrid2 } from 'react-icons/tfi';
 import { FiFolder, FiPieChart, FiUser } from 'react-icons/fi';
 import { GoFile } from 'react-icons/go';
@@ -18,6 +16,8 @@ import * as AiIcons from 'react-icons/ai';
 import { BiSupport } from 'react-icons/bi';
 import { BsBriefcase, BsShield } from 'react-icons/bs';
 import { getUserPrivileges } from '../../functions/auth';
+import { RiTeamLine } from 'react-icons/ri';
+import { GiTeamIdea } from 'react-icons/gi';
 
 
 
@@ -73,6 +73,15 @@ const Sidebar = ({
       </SubMenu>
      )}
 
+     <MenuItem className='Side__Content' active={pathname === '/tasks'} icon={<FaTasks size={20} />}>Tasks
+      <Link to="/tasks" />
+     </MenuItem>
+     <MenuItem className='Side__Content' active={pathname === '/team'} icon={<RiTeamLine size={20} />}>Team
+      <Link to="/team
+" /> </MenuItem>
+     <MenuItem className='Side__Content' active={pathname === '/teamlead'} icon={<GiTeamIdea size={20} />}>Team Lead
+      <Link to="/teamlead
+" /> </MenuItem>
      <MenuItem className='Side__Content' active={pathname === '/departments'} icon={<FiFolder size={20} />}> Departments <Link to="/departments" /> </MenuItem>
      <MenuItem className='Side__Content' active={pathname === '/projects'} icon={<AiIcons.AiOutlineBank size={25} />}> Projects <Link to="/projects" />  </MenuItem>
      <SubMenu title={'Leave Management'} icon={<BsBriefcase size={22} />}>

@@ -1,42 +1,51 @@
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useParams, useRoutes } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { BiUser } from "react-icons/bi";
 import EditProfile from "./components/EditProfile";
 import ResetPassword from "./components/ResetPassword";
-// import { useAppSelector } from "../../hooks/useDispatch";
-import { useEmployeeById } from "../../hooks/useEmployees";
-import { useAppSelector } from "../../store/useStore";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { getRole } from "../../features/Employee/employeeSlice";
+import { allDepartments } from "../../features/Department/departmentSlice";
 
 const AdminEditUser = () => {
+  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-  const { employee, salary, isLoading, updateloading, handleSubmit } =
-    useEmployeeById(id ? id : "");
+  const { data: departments } = useAppSelector((state: any) => state.department)
+  const { getroledata: roles } = useAppSelector((state: any) => state.employee)
+  const { state } = useLocation()
+  const { employee, salary } = state?.data // Read values passed on state
+
+
+
+  useEffect(() => {
+    dispatch(getRole());
+    dispatch(allDepartments());
+  }, [dispatch]);
+
 
   const [activeTab, setActiveTab] = useState(0);
-  // const departments: any = useAppSelector(
-  //   (state) => state?.department?.department
-  // );
+
   const availablleDepartments = [] as any;
 
-  // departments &&
-  //   departments.forEach((department: any) =>
-  //     availablleDepartments.push({
-  //       value: department?.id,
-  //       label: department?.name,
-  //     })
-  //   );
+  departments &&
+    departments.forEach((department: any) =>
+      availablleDepartments.push({
+        value: department?.id,
+        label: department?.name,
+      })
+    );
 
-  // const roles: any = useAppSelector((state) => state?.roles?.roles);
+
   const availablleRoles = [] as any;
 
-  // roles &&
-  //   roles.forEach((role: any) =>
-  //     availablleRoles.push({
-  //       value: role?.id,
-  //       label: role?.name,
-  //     })
-  //   );
+  roles &&
+    roles.forEach((role: any) =>
+      availablleRoles.push({
+        value: role?.id,
+        label: role?.name,
+      })
+    );
   const tabs = ["Profile", "Reset Password"];
 
   const tabPanels = [
@@ -45,11 +54,9 @@ const AdminEditUser = () => {
         <EditProfile
           employee={employee}
           salary={salary}
-          isLoading={isLoading}
-          updateloading={updateloading}
-          handleSubmit={handleSubmit}
           departmentOptions={availablleDepartments}
           roleOptions={availablleRoles}
+          id={id}
         />
       ),
     },
@@ -59,7 +66,7 @@ const AdminEditUser = () => {
   return (
     <div id="edit-user">
       <h6 className="page-title">
-        <Link to="/employeecontainer">Employees</Link> | Employee Profile
+        <Link to="/employees">Employees</Link> | Employee Profile
       </h6>
       <section>
         <div className="user-info">

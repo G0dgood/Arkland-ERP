@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit' 
-import todosService from '../Todos/todosService'
+import todosService from '../Tasks/taskService'
 import hodService from './hodService'
  
  

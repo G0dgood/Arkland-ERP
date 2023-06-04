@@ -1,52 +1,35 @@
-import React from "react";
+import { useEffect } from "react";
 import moment from "moment";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import { fireAlert } from "../../../utils/Alert";
 import { checkForName } from "../../../utils/checkForName";
 import { Spinner } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../../store/useStore";
+import { createEmployee, reset } from "../../../features/Employee/employeeSlice";
 
 const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
-  const [isLoading, setLoading] = React.useState(false);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const token = Cookies.get("token");
+  const { createemployeeisError, createemployeeisLoading, createemployeemessage, createemployeeisSuccess } = useAppSelector((state: any) => state.employee)
+
+
+  useEffect(() => {
+    if (createemployeeisError) {
+      fireAlert("error", createemployeemessage, "error");
+      dispatch(reset());
+    } else if (createemployeeisSuccess) {
+      fireAlert("Success", "Employee creation request successful", "success");
+      navigate(`/employees`);
+      dispatch(reset());
+    }
+  }, [navigate, createemployeeisSuccess, createemployeeisError, createemployeemessage, dispatch]);
 
   const handleSubmit = async () => {
-    setLoading(true);
-    const allEmployeeValues = { ...employee };
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/hr/employees`,
-        {
-          method: "POST",
-          body: JSON.stringify(allEmployeeValues),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Employee creation request successful";
-        const html = `Request to create an employee sent`;
-        const icon = "success";
-        // fireAlert(title, html, icon);
-        navigate(`/employeecontainer`);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      // console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Employee creation request failed";
-      // fireAlert(title, html, icon);
-    }
+    const inputs = { ...employee };
+    // @ts-ignore
+    dispatch(createEmployee(inputs));
   };
 
 
@@ -89,9 +72,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
             <p> {moment(employee?.date_of_birth).format("DD-MM-YYYY")}</p>
             <p>Age</p>
             <p>
-              {" "}
-              {moment(employee?.date_of_birth).fromNow().split(" ")[0]} years
-              old
+              {moment(employee?.date_of_birth).fromNow().split(" ")[0]} years old
             </p>
 
             <p>Gender</p>
@@ -236,10 +217,10 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
           className={"Add-btn-edit"}
           onClick={handleSubmit}
         >
-          {isLoading ? (
+          {createemployeeisLoading ? (
             <Spinner animation="border" />
           ) : (
-            "          Create Employee"
+            "Create Employee"
           )}
         </Button>
       </div>

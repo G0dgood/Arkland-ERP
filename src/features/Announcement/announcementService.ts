@@ -15,8 +15,8 @@ const viewAnnouncement = async ( id:any) => {
 
  
 const createAnnouncement = async ( input:any) => {   
-    const response = await HttpService.post(`hr/announcements`,input);
-    return response
+    const data = await HttpService.post(`hr/announcements`,input);
+    return data
 }
  
 const deleteAnnouncement = async ( id:any) => {   

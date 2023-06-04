@@ -11,6 +11,8 @@ import WeeklyReportSlice from '../features/WeeklyReport/WeeklyReportSlice'
 import hodSlice from '../features/HOD/hodSlice'
 import announcementSlice  from '../features/Announcement/announcemetSlice'  
 import attendanceSlice from '../features/Attendances/attendanceSlice'
+import taskSlice from '../features/Tasks/taskSlice'
+import teamSlice from '../features/Team/teamSlice'
  
  
  
@@ -30,6 +32,8 @@ export const store:any = configureStore({
     hod: hodSlice, 
     attendance: attendanceSlice, 
     announcement: announcementSlice, 
+    task: taskSlice, 
+    team: teamSlice, 
   },
 })
 

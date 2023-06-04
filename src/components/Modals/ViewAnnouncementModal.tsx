@@ -72,9 +72,7 @@ const ViewAnnouncementModal = ({ id }: any) => {
 							<p>{viewdata?.status}</p>
 							<p>DATE OF CREATION</p>
 							<p>
-								{moment(viewdata?.created_at).format(
-									"DD-MMMM-YYYY"
-								)}
+								{moment(viewdata?.created_at).format("DD-MMMM-YYYY")}
 							</p>
 						</div>
 					)}

@@ -107,6 +107,18 @@ const initialState = {
   createwarningisSuccess: false,
   createwarningisLoading: false, 
   createwarningmessage: '', 
+
+  createemployeedata:  [],
+  createemployeeisError: false,
+  createemployeeisSuccess: false,
+  createemployeeisLoading: false, 
+  createemployeemessage: '', 
+
+  updateemployeedata:  [],
+  updateemployeeisError: false,
+  updateemployeeisSuccess: false,
+  updateemployeeisLoading: false, 
+  updateemployeemessage: '', 
 }
  
 
@@ -312,10 +324,36 @@ export const createWarning = createAsyncThunk('employee/createWarning', async (d
     return thunkAPI.rejectWithValue(message)
   }
 })
-
+ // @ts-ignore
+export const createEmployee:any = createAsyncThunk('employee/createEmployee', async (data, thunkAPI) => {
+  try {
+     // @ts-ignore
+    return await employeeService.createEmployee(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ // @ts-ignore
+export const updateEmployee:any = createAsyncThunk('employee/updateEmployee', async (data, thunkAPI) => {
+  try {
+     // @ts-ignore
+    return await employeeService.updateEmployee(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
  
-
 
 export const authSlice = createSlice({
   name: 'employee',
@@ -407,6 +445,16 @@ export const authSlice = createSlice({
       state.createwarningisSuccess = false
       state.createwarningisError = false
       state.createwarningmessage = '' 
+
+      state.createemployeeisLoading = false
+      state.createemployeeisSuccess = false
+      state.createemployeeisError = false
+      state.createemployeemessage = '' 
+
+      state.updateemployeeisLoading = false
+      state.updateemployeeisSuccess = false
+      state.updateemployeeisError = false
+      state.updateemployeemessage = '' 
 
       
     },
@@ -653,6 +701,36 @@ export const authSlice = createSlice({
         state.createwarningisError = true
         state.createwarningmessage = action.payload    
         state.createwarningdata = '' 
+      })
+
+      .addCase(createEmployee.pending, (state) => {
+        state.createemployeeisLoading = true 
+      })
+      .addCase(createEmployee.fulfilled, (state:any, action) => {
+        state.createemployeeisLoading = false
+        state.createemployeeisSuccess = true
+        state.createemployeedata = action.payload    
+      })
+      .addCase(createEmployee.rejected, (state:any, action) => {
+        state.createemployeeisLoading = false
+        state.createemployeeisError = true
+        state.createemployeemessage = action.payload    
+        state.createemployeedata = '' 
+      })
+
+      .addCase(updateEmployee.pending, (state) => {
+        state.updateemployeeisLoading = true 
+      })
+      .addCase(updateEmployee.fulfilled, (state:any, action) => {
+        state.updateemployeeisLoading = false
+        state.updateemployeeisSuccess = true
+        state.updateemployeedata = action.payload    
+      })
+      .addCase(updateEmployee.rejected, (state:any, action) => {
+        state.updateemployeeisLoading = false
+        state.updateemployeeisError = true
+        state.updateemployeemessage = action.payload    
+        state.updateemployeedata = '' 
       })
        
   },

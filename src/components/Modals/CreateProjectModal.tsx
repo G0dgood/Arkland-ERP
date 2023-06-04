@@ -21,7 +21,7 @@ import { allDepartments } from "../../features/Department/departmentSlice";
 
 const CreateProjectModal = (props: any) => {
   const { data: departments } = useAppSelector((state: any) => state.department)
-  const { createdata, createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.project)
+  const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.project)
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -53,43 +53,9 @@ const CreateProjectModal = (props: any) => {
 
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
-
-
     const inputs = { ...values };
     // @ts-ignore
     dispatch(createProject(inputs));
-
-    //   try {
-    //     const response = await fetch(`${process.env.REACT_APP_API}/hr/projects`, {
-    //       method: "POST",
-    //       body: JSON.stringify(createProjectValues),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     });
-    //     const data = await response.json();
-    //     if (response.ok) {
-    //       const title = "Project created successfully";
-    //       const html = `Project created`;
-
-    //       const icon = "success";
-    //       // fireAlert(title, html, icon);
-    //       resetForm(values);
-    //       setLoading(false);
-    //       setLgShow(false);
-    //       props.onNewProjectCreated();
-    //     } else {
-    //       throw new Error(data.message || "Something went wrong!");
-    //     }
-    //   } catch (error: any) {
-    //     console.log(error);
-    //     setLoading(false);
-    //     const html = error.message || "Something went wrong!";
-    //     const icon = "error";
-    //     const title = "Project creation failed";
-    //     // fireAlert(title, html, icon);
-    //   }
   };
 
 

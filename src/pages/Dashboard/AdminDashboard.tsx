@@ -38,20 +38,20 @@ const AdminDashboard = () => {
       // @ts-ignore
       dispatch(allDepartments());
     }
-  }, [departments, dispatch, employees, projects]);
+  }, [departments, dispatch]);
 
   useEffect(() => {
     if (!employees) {
       // @ts-ignore
       dispatch(allEmployee());
     }
-  }, [departments, dispatch, employees, projects]);
+  }, [dispatch, employees]);
   useEffect(() => {
     if (!projects) {
       // @ts-ignore
       dispatch(allProject());
     }
-  }, [departments, dispatch, employees, projects]);
+  }, [dispatch, projects]);
 
 
 
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* Todos start */}
-      {/* <Schedule /> */}
+      <Schedule />
       {/* Todos end */}
 
     </div>

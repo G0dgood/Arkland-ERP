@@ -1,34 +1,36 @@
-import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { MdOutlineClose } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
-import { deleteEmployees, reset } from '../../features/Employee/employeeSlice';
-import { useNavigate } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { MdOutlineClose } from 'react-icons/md';
+import { deleteTeam, reset } from '../../features/Team/teamSlice';
 
-const DeleteEmployeeModal = ({ id }: any) => {
+const DeleteTeam = ({ id }: any) => {
+
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [deleteShow, setDeleteShow] = useState(false);
-	const { deleteEmpisError, deleteEmpisLoading, deleteEmpmessage, deleteEmpisSuccess } = useAppSelector((state: any) => state.employee)
+	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.team)
+
 
 
 	useEffect(() => {
-		if (deleteEmpisSuccess) {
-			fireAlert("Successful", "Employee Deleted Successfully", "success");
+		if (deleteisSuccess) {
+			fireAlert("Successful", "Team Deleted Successfully", "success");
 			setDeleteShow(false)
 			navigate(-1)
 			dispatch(reset());
-		} else if (deleteEmpisError) {
-			fireAlert("Employee Deletion error", deleteEmpmessage, "error");
+		} else if (deleteisError) {
+			fireAlert("Team Deletion error", deletemessage, "error");
 			dispatch(reset());
 		}
-	}, [deleteEmpisError, deleteEmpisSuccess, deleteEmpmessage, dispatch, navigate])
+	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, navigate])
 
 	const handleEmployeeDeletion = () => {
 		// @ts-ignore
-		dispatch(deleteEmployees(id));
+		dispatch(deleteTeam(id));
 	}
 
 	return (
@@ -38,7 +40,7 @@ const DeleteEmployeeModal = ({ id }: any) => {
 				className="Add-btn"
 				onClick={() => setDeleteShow(true)}
 			>
-				Delete Employee
+				Delete Team
 			</Button>
 			<Modal
 				size="lg"
@@ -48,13 +50,13 @@ const DeleteEmployeeModal = ({ id }: any) => {
 			>
 				<Modal.Header  >
 					<span>{/*  */}</span>
-					<span className="span-center-title">Delete Employee Data</span>
+					<span className="span-center-title">Delete Team</span>
 					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
 				<Modal.Body>
-					<h5 className="last-line m-5">Are you sure you want to delete employee data?</h5>
+					<h5 className="last-line m-5">Are you sure you want to delete this Team ?</h5>
 					<div className='deleteKPIHandler'>
 						<span className='deleteKPIHandler-mr'>
 							<Button className="table-link-active" onClick={() => setDeleteShow(false)}>
@@ -63,7 +65,7 @@ const DeleteEmployeeModal = ({ id }: any) => {
 						</span>
 						<span >
 							<Button className="table-link" onClick={handleEmployeeDeletion} >
-								{deleteEmpisLoading ? <Spinner animation="border" /> : "Yes"}
+								{deleteisLoading ? <Spinner animation="border" /> : "Yes"}
 							</Button>
 						</span>
 					</div>
@@ -73,4 +75,5 @@ const DeleteEmployeeModal = ({ id }: any) => {
 	)
 }
 
-export default DeleteEmployeeModal
+export default DeleteTeam
+

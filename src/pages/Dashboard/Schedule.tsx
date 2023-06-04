@@ -19,15 +19,29 @@ import { getUserPrivileges } from "../../functions/auth";
 import { checkForOptions } from "../../utils/checkForName";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
+import { allEmployee } from "../../features/Employee/employeeSlice";
+import { getTask } from "../../features/Tasks/taskSlice";
 
 const Schedule = () => {
+
   const dispatch = useAppDispatch();
   const dataService = new DataService()
   const token = dataService.getToken()
+  const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } =
     getUserPrivileges();
+  const { data: tasks, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.task)
 
-  const [taskAction, setTaskAction] = React.useState({} as any);
+
+
+  const id = (user?.employee?._id)
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(getTask(id));
+  }, [dispatch, id]);
+
+  // const [taskAction, setTaskAction] = React.useState({} as any);
   const [viewAction, setViewAction] = React.useState([] as any);
   const [taskCreateShow, setTaskCreateShow] = React.useState(false);
   const [viewShow, setViewShow] = React.useState(false);
@@ -36,7 +50,7 @@ const Schedule = () => {
   const [showDialog, setShowDialog] = React.useState<DialogState>({});
   const [showView, setShowView] = React.useState<DialogState>({});
 
-  const { tasks, isLoading, setLoading } = useFetchTasks(taskAction);
+  // const { tasks, setLoading } = useFetchTasks(taskAction);
 
   const { schedule, isScheduleLoading } = useScheduleById(viewAction);
 
@@ -49,77 +63,80 @@ const Schedule = () => {
     setShowView({ [id]: true });
     setViewShow(true);
   };
-  const deleteTask = async (id: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API}/tasks/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Task deleted.";
-        const html = `Task deleted`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        setTaskAction(true);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Task deletion failed";
-      fireAlert(title, html, icon);
-    }
-  };
-  const handleSubmit = async (values: any, { resetForm }: any) => {
-    setLoading(true);
+  // const deleteTask = async (id: string) => {
+  //   // setLoading(true);
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API}/tasks/${id}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     setLoading(false);
+  //     if (response.ok) {
+  //       const title = "Task deleted.";
+  //       const html = `Task deleted`;
+  //       const icon = "success";
+  //       fireAlert(title, html, icon);
+  //       setTaskAction(true);
+  //     } else {
+  //       throw new Error(data.message || "Something went wrong!");
+  //     }
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     setLoading(false);
+  //     const html = error.message || "Something went wrong!";
+  //     const icon = "error";
+  //     const title = "Task deletion failed";
+  //     fireAlert(title, html, icon);
+  //   }
+  // };
+  // const handleSubmit = async (values: any, { resetForm }: any) => {
+  //   setLoading(true);
 
-    const createTaskValues = { ...values };
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API}/tasks`, {
-        method: "POST",
-        body: JSON.stringify(createTaskValues),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Task created successfully.";
-        const html = `Task created`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        setTaskAction(true);
+  //   const createTaskValues = { ...values };
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API}/tasks`, {
+  //       method: "POST",
+  //       body: JSON.stringify(createTaskValues),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     setLoading(false);
+  //     if (response.ok) {
+  //       const title = "Task created successfully.";
+  //       const html = `Task created`;
+  //       const icon = "success";
+  //       fireAlert(title, html, icon);
+  //       setTaskAction(true);
 
-        setTaskCreateShow(false);
-        resetForm(values);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Task creation failed";
-      fireAlert(title, html, icon);
-    }
-  };
+  //       setTaskCreateShow(false);
+  //       resetForm(values);
+  //     } else {
+  //       throw new Error(data.message || "Something went wrong!");
+  //     }
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     setLoading(false);
+  //     const html = error.message || "Something went wrong!";
+  //     const icon = "error";
+  //     const title = "Task creation failed";
+  //     fireAlert(title, html, icon);
+  //   }
+  // };
+  const handleSubmit = () => {
+
+  }
   const { data: employees } = useAppSelector((state: any) => state.employee)
 
 
   useEffect(() => {
-    // @ts-ignore
+
     dispatch(allEmployee());
   }, [dispatch]);
 
@@ -278,7 +295,7 @@ const Schedule = () => {
                             <button
                               className="btn btn-danger"
                               onClick={() => {
-                                deleteTask(item?.id);
+                                // deleteTask(item?.id);
                                 setShowDialog({ [item?.id]: false });
                               }}
                             >

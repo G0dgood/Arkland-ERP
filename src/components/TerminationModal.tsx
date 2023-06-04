@@ -31,7 +31,9 @@ const TerminationModal = ({ item, id }: any) => {
 			dispatch(reset());
 			fireAlert("error", "Termination Rejected Successfully!", "error");
 		}
-	}, [approveterminationsmessage, approveterminationsisError, approveterminationsisSuccess, dispatch, id, rejectterminationsisError, rejectterminationsmessage, rejectterminationsisSuccess])
+	}, [approveterminationsmessage, approveterminationsisError,
+		approveterminationsisSuccess, dispatch, id, rejectterminationsisError,
+		rejectterminationsmessage, rejectterminationsisSuccess])
 
 	const handleapproved = () => {
 		// @ts-ignore

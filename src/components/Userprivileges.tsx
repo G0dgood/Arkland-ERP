@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from '../store/useStore'
 import { deleteprivileges, reset, userprivileges } from '../features/User/userSlice'
 
 
-const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
+const Userprivileges = () => {
 	const dispatch = useAppDispatch();
 	const { privilegesdata, privilegesisError, privilegesisLoading, privilegesmessage } = useAppSelector((state: any) => state.userinfo)
 	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.userinfo)
@@ -51,13 +51,10 @@ const Userprivileges = ({ showprivileges, setShowprivileges, }: any) => {
 		setResult(e.target.value);
 	}
 
-
-
 	const title = "Successful";
 	const html = "User Privilege Deleted!";
 	const icon = "success";
 	const title1 = "Delete Privilege error";
-
 	const icon1 = "error";
 
 

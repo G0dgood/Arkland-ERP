@@ -8,9 +8,7 @@ import { Spinner } from "react-bootstrap";
 // import Header from "../../components/Header";
 // import Sidebar from "../../components/Sidebar";
 import projectBack from "../../assets/vectors/project-back.svg";
-// import {
-//  useGetEmployeesWithRole,
-//  useWorkersRequestById,
+// import {   useGetEmployeesWithRole, useWorkersRequestById,
 // } from "../../hooks/useWorkersRequest";
 // import { useAppSelector } from "../../hooks/useDispatch";
 // import { checkForName } from "../../utils/checkForName";
@@ -87,124 +85,121 @@ import projectBack from "../../assets/vectors/project-back.svg";
 // };
 
 const ViewSiteWorkerRequest = () => {
- // const navigate = useNavigate();
- // const { id } = useParams<{ id: string }>();
 
- // const { requestWorkersList, isLoading } = useWorkersRequestById(id ? id : "");
+  // const navigate = useNavigate();
+  // const { id } = useParams<{ id: string }>();
+  // const { requestWorkersList, isLoading } = useWorkersRequestById(id ? id : "");
+  // const { rolesWithEmployee, isEmployeeWithRoleLoading } = useGetEmployeesWithRole(requestWorkersList?.requests);
+  // const [approvedData, setApprovedData] = React.useState<any>({});
+  // const [isApprovedLoading, setLoading] = React.useState(false);
+  // const [isDelinedLoading, setDeclinedLoading] = React.useState(false);
+  // const [selectedOptions, setSelectedOptions] = React.useState<any>({});
 
- // const { rolesWithEmployee, isEmployeeWithRoleLoading } = useGetEmployeesWithRole(requestWorkersList?.requests);
- // const [approvedData, setApprovedData] = React.useState<any>({});
- // const [isApprovedLoading, setLoading] = React.useState(false);
- // const [isDelinedLoading, setDeclinedLoading] = React.useState(false);
+  // // --- Get current state of collapseNav from localStorage --- //
+  // const [collapseNav, setCollapseNav] = React.useState(() => {
+  //  // @ts-ignore
+  //  return JSON.parse(localStorage.getItem("collapse")) || false;
+  // });
+  // const handleSelectedOptionsChange = (selectedOptions: any) => {
+  //  // Do something with the updated selectedOptions
+  //  setApprovedData(selectedOptions);
+  // };
 
- // const [selectedOptions, setSelectedOptions] = React.useState<any>({});
+  // const handleSubmit = async () => {
+  //  setLoading(true);
 
- // // --- Get current state of collapseNav from localStorage --- //
- // const [collapseNav, setCollapseNav] = React.useState(() => {
+  //  try {
+  //   const response = await fetch(
+  //    `${process.env.REACT_APP_API}/hr/workers-requests/${id}/approve`,
+  //    {
+  //     method: "PATCH",
+  //     body: JSON.stringify(approvedData),
+  //     headers: {
+  //      "Content-Type": "application/json",
+  //      Authorization: `Bearer ${token}`,
+  //     },
+  //    }
+  //   );
+  //   const data = await response.json();
+  //   if (response.ok) {
+  //    const title = "Request approved.";
+  //    const html = `Request approved`;
+  //    const icon = "success";
+  //    fireAlert(title, html, icon);
+  //    setLoading(false);
+  //    navigate(-1);
+  //   } else {
+  //    throw new Error(data.message || "Something went wrong!");
+  //   }
+  //  } catch (error: any) {
+  //   console.log(error);
+  //   setLoading(false);
+  //   const html = error.message || "Something went wrong!";
+  //   const icon = "error";
+  //   const title = "Request approval failed";
+  //   fireAlert(title, html, icon);
+  //  }
+  // };
 
- //  // @ts-ignore
- //  return JSON.parse(localStorage.getItem("collapse")) || false;
- // });
- // const handleSelectedOptionsChange = (selectedOptions: any) => {
- //  // Do something with the updated selectedOptions
- //  setApprovedData(selectedOptions);
- // };
+  // const declineSubmit = async () => {
+  //  setDeclinedLoading(true);
 
- // const handleSubmit = async () => {
- //  setLoading(true);
+  //  try {
+  //   const response = await fetch(
+  //    `${process.env.REACT_APP_API}/hr/workers-requests/${id}/reject`,
+  //    {
+  //     method: "PATCH",
+  //     headers: {
+  //      "Content-Type": "application/json",
+  //      Authorization: `Bearer ${token}`,
+  //     },
+  //    }
+  //   );
 
- //  try {
- //   const response = await fetch(
- //    `${process.env.REACT_APP_API}/hr/workers-requests/${id}/approve`,
- //    {
- //     method: "PATCH",
- //     body: JSON.stringify(approvedData),
- //     headers: {
- //      "Content-Type": "application/json",
- //      Authorization: `Bearer ${token}`,
- //     },
- //    }
- //   );
- //   const data = await response.json();
- //   if (response.ok) {
- //    const title = "Request approved.";
- //    const html = `Request approved`;
- //    const icon = "success";
- //    fireAlert(title, html, icon);
- //    setLoading(false);
- //    navigate(-1);
- //   } else {
- //    throw new Error(data.message || "Something went wrong!");
- //   }
- //  } catch (error: any) {
- //   console.log(error);
- //   setLoading(false);
- //   const html = error.message || "Something went wrong!";
- //   const icon = "error";
- //   const title = "Request approval failed";
- //   fireAlert(title, html, icon);
- //  }
- // };
+  //   const data = await response.json();
 
- // const declineSubmit = async () => {
- //  setDeclinedLoading(true);
+  //   if (response.ok) {
+  //    const title = "Request declined.";
+  //    const html = `Request declined`;
+  //    const icon = "success";
+  //    fireAlert(title, html, icon);
+  //    setDeclinedLoading(false);
+  //    navigate(-1);
+  //   } else {
+  //    throw new Error(data.message || "Something went wrong!");
+  //   }
+  //  } catch (error: any) {
+  //   console.log(error);
+  //   setDeclinedLoading(false);
+  //   const html = error.message || "Something went wrong!";
+  //   const icon = "error";
+  //   const title = "Request approval failed";
+  //   fireAlert(title, html, icon);
+  //  }
+  // };
 
- //  try {
- //   const response = await fetch(
- //    `${process.env.REACT_APP_API}/hr/workers-requests/${id}/reject`,
- //    {
- //     method: "PATCH",
- //     headers: {
- //      "Content-Type": "application/json",
- //      Authorization: `Bearer ${token}`,
- //     },
- //    }
- //   );
+  // React.useEffect(() => {
+  //  // --- Set state of collapseNav to localStorage on pageLoad --- //
+  //  localStorage.setItem("collapse", JSON.stringify(collapseNav));
+  //  // --- Set state of collapseNav to localStorage on pageLoad --- //
+  // }, [collapseNav]);
 
- //   const data = await response.json();
-
- //   if (response.ok) {
- //    const title = "Request declined.";
- //    const html = `Request declined`;
- //    const icon = "success";
- //    fireAlert(title, html, icon);
- //    setDeclinedLoading(false);
- //    navigate(-1);
- //   } else {
- //    throw new Error(data.message || "Something went wrong!");
- //   }
- //  } catch (error: any) {
- //   console.log(error);
- //   setDeclinedLoading(false);
- //   const html = error.message || "Something went wrong!";
- //   const icon = "error";
- //   const title = "Request approval failed";
- //   fireAlert(title, html, icon);
- //  }
- // };
-
- // React.useEffect(() => {
- //  // --- Set state of collapseNav to localStorage on pageLoad --- //
- //  localStorage.setItem("collapse", JSON.stringify(collapseNav));
- //  // --- Set state of collapseNav to localStorage on pageLoad --- //
- // }, [collapseNav]);
-
- // const toggleSideNav = () => {
- //  setCollapseNav(!collapseNav);
- // };
+  // const toggleSideNav = () => {
+  //  setCollapseNav(!collapseNav);
+  // };
 
 
- const header = [
-  { title: "ROLE NAME", prop: "role_name" },
-  { title: "REQUESTED QUANTITY", prop: "requested_quantity" },
-  { title: "CHOOSE EMPLOYEE TO ASSIGN" },
- ];
+  const header = [
+    { title: "ROLE NAME", prop: "role_name" },
+    { title: "REQUESTED QUANTITY", prop: "requested_quantity" },
+    { title: "CHOOSE EMPLOYEE TO ASSIGN" },
+  ];
 
 
- return (
-  <div id="screen-wrapper">
-   {/* <Header toggleSideNav={toggleSideNav} /> */}
-   {/* <Sidebar collapseNav={collapseNav} />
+  return (
+    <div id="screen-wrapper">
+      {/* <Header toggleSideNav={toggleSideNav} /> */}
+      {/* <Sidebar collapseNav={collapseNav} />
    {isLoading && isEmployeeWithRoleLoading ? (
     <div
      style={{
@@ -212,91 +207,91 @@ const ViewSiteWorkerRequest = () => {
       width: "20%",
      }}
     > */}
-   {/* <SyncLoader
+      {/* <SyncLoader
     cssOverride={override}
     color={"#990000"} */}
-   {/* // loading={isLoading && isEmployeeWithRoleLoading} */}
-   {/* /> */}
-   {/* </div>
+      {/* // loading={isLoading && isEmployeeWithRoleLoading} */}
+      {/* /> */}
+      {/* </div>
    ) : ( */}
-   <main>
-    <div className="EssentialsContainer">
-     <div className="project-main-div">
-      <div className="project-main-div-col-1">
-       <div className="employee-main-div-col">
-        <div className="employee-main-div-col-header">
-         <div>
-          <img
-           src={projectBack}
-           alt="User"
-           className="project-back-img"
-           // onClick={() => navigate(-1)}
-           title="Return"
-          />
-         </div>
-         <div style={{ display: "flex", gap: "20px" }}  >
+      <main>
+        <div className="EssentialsContainer">
+          <div className="project-main-div">
+            <div className="project-main-div-col-1">
+              <div className="employee-main-div-col">
+                <div className="employee-main-div-col-header">
+                  <div>
+                    <img
+                      src={projectBack}
+                      alt="User"
+                      className="project-back-img"
+                      // onClick={() => navigate(-1)}
+                      title="Return"
+                    />
+                  </div>
+                  <div style={{ display: "flex", gap: "20px" }}  >
 
-          <Button
-           variant="contained"
-           className="Create-event-Calender"
-          // onClick={() => handleSubmit()}
-          >
-           {/* {isApprovedLoading ? (
+                    <Button
+                      variant="contained"
+                      className="Create-event-Calender"
+                    // onClick={() => handleSubmit()}
+                    >
+                      {/* {isApprovedLoading ? (
             <Spinner animation="border" />
            ) : (
             "APPROVE"
            )} */}
-          </Button>
+                    </Button>
 
-          <Button
-           variant="contained"
-           className="Create-event-Calender"
-          // onClick={() => declineSubmit()}
-          >
-           {/* {isDelinedLoading ? (
+                    <Button
+                      variant="contained"
+                      className="Create-event-Calender"
+                    // onClick={() => declineSubmit()}
+                    >
+                      {/* {isDelinedLoading ? (
             <Spinner animation="border" />
            ) : (
             "Decline"
            )} */}
-          </Button>
-         </div>
-        </div>
+                    </Button>
+                  </div>
+                </div>
 
-        <img
-         src={projectBack}
-         alt="User"
-         className="project-back-img"
-         // onClick={() => navigate(-1)}
-         title="Return"
-        />
-        <h4 style={{ marginTop: "3rem" }}>Site Worker Request</h4>
-        <div className="viewprofile-container">
-         <div>
-          <div className="getjob-application-details">
-           <p>Project</p>
+                <img
+                  src={projectBack}
+                  alt="User"
+                  className="project-back-img"
+                  // onClick={() => navigate(-1)}
+                  title="Return"
+                />
+                <h4 style={{ marginTop: "3rem" }}>Site Worker Request</h4>
+                <div className="viewprofile-container">
+                  <div>
+                    <div className="getjob-application-details">
+                      <p>Project</p>
 
-          </div>
-         </div>
-         <p></p>
-         <section className="md-ui component-data-table">
-          {/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
-          <div className="main-table-wrapper">
-           <table className="main-table-content">
-            <thead className="data-table-header">
-             <tr className="data-table-row">
-              {header.map((i, index) => {
-               return (
-                <>
-                 <td className="table-datacell datatype-numeric" key={index}  >
-                  {i.title}
-                 </td>
-                </>
-               );
-              })}
-             </tr>
-            </thead>
-            <tbody className="data-table-content">
-             {/* {requestWorkersList?.requests?.map(
+                    </div>
+                  </div>
+                  <p></p>
+                  <section className="md-ui component-data-table">
+                    {/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
+                    <div className="main-table-wrapper">
+                      <table className="main-table-content">
+                        <thead className="data-table-header">
+                          <tr className="data-table-row">
+                            {header.map((i, index) => {
+                              return (
+                                <>
+                                  <td className="table-datacell datatype-numeric" key={index}  >
+                                    {i?.title}
+                                  </td>
+                                </>
+                              );
+                            })}
+                          </tr>
+                        </thead>
+                        <tbody className="data-table-content">
+                          {/* {requestWorkersList?.requests?.map(
                (item: any, i: any) => {
                 return (
                  <tr className="data-table-row" key={i}>
@@ -322,19 +317,19 @@ const ViewSiteWorkerRequest = () => {
                 );
                }
               )}   */}
-            </tbody>
-           </table>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
           </div>
-         </section>
         </div>
-       </div>
-      </div>
-     </div>
+      </main>
+      {/* )} */}
     </div>
-   </main>
-   {/* )} */}
-  </div>
- );
+  );
 };
 
 export default ViewSiteWorkerRequest;

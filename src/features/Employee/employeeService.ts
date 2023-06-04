@@ -24,8 +24,7 @@ const allEmployee = async (  ) => {
 //   return response
 // }
 
-const createEmployeeRole = async (input: any) => { 
-   console.log('input',input)
+const createEmployeeRole = async (input: any) => {  
 	   const  {data}:any  =  await HttpService.post(`hr/employee-roles`, `${input}`)  
   return data
 }
@@ -91,6 +90,18 @@ const deleteEmployees = async (id: any) => {
    return data
   }
  
+  const createEmployee = async (inputs:AnyArray) => {   
+     const { data }: any = await HttpService.post(`hr/employees`, inputs) 
+   return data
+  }
+
+const updateEmployee = async (input: AnyArray) => {  
+  // @ts-ignore
+  const { inputs, id } = input 
+     const { data }: any = await HttpService.patch(`hr/employees/${id}/update`, inputs) 
+   return data
+  }
+ 
 const employeeService = { 
   allEmployee,   
   // uploadEmployee,
@@ -107,7 +118,9 @@ const employeeService = {
   approveTerminations,
   getWarning,
   viewWarning,
-  createWarning
+  createWarning,
+  createEmployee,
+  updateEmployee
 }
 
 export default employeeService

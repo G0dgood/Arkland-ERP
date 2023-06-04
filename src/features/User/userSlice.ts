@@ -52,7 +52,7 @@ export const userRole = createAsyncThunk('user/userRole', async (  data,thunkAPI
 })
  
 // User privileges
-export const userprivileges = createAsyncThunk('leave/userprivileges', async ( data,thunkAPI) => {
+export const userprivileges = createAsyncThunk('user/userprivileges', async ( data,thunkAPI) => {
   try {
     return await userService.userprivileges( )
   } catch (error: any) {
@@ -66,7 +66,7 @@ export const userprivileges = createAsyncThunk('leave/userprivileges', async ( d
 })
 
 // Delete privileges
-export const deleteprivileges = createAsyncThunk('leave/deleteprivileges', async ( data,thunkAPI) => {
+export const deleteprivileges = createAsyncThunk('user/deleteprivileges', async ( data,thunkAPI) => {
   try {
     return await userService.deleteprivileges(data )
   } catch (error: any) {

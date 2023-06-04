@@ -78,7 +78,7 @@ const ViewEmployee = () => {
                 <Button
                   variant="contained"
                   className="Add-btn"
-                  onClick={() => navigate(`/employees/employees/edit/${id}`)}
+                  onClick={() => navigate(`/employees/employees/edit/${id}`, { state: { data: viewdata } })}
                 >
                   Edit Employee
                 </Button>

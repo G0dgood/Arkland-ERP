@@ -9,9 +9,9 @@ import { fireAlert } from '../utils/Alert';
 
 const ClockIn = () => {
 	const dispatch = useAppDispatch();
-	const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.attendance)
+	const { isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.attendance)
 
-	console.log('dispatch', data, isError, isLoading, message, isSuccess)
+
 
 	const [show, setShow] = useState<any>(false);
 	// const [isLoading, setisLoading] = useState<any>(false);

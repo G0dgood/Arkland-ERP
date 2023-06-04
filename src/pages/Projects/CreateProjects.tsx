@@ -3,9 +3,6 @@ import { Button } from "@mui/material";
 import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-
 import ProjectEssentials from "./projectInputs/ProjectEssentials";
 import CreateProjectView from "./projectInputs/CreateProjectView";
 import AddProjectTitle from "./components/AddProjectTitle";
@@ -31,18 +28,6 @@ const CreateProjects = () => {
   useEffect(() => {
     setActive(active);
   }, [active]);
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
 
   const submitMyFormRef: any = React.useRef(null);
 
@@ -95,43 +80,40 @@ const CreateProjects = () => {
         <title>Create project | Arkland ERP</title>
       </Helmet>
       <div id="screen-wrapper">
-        <Header toggleSideNav={toggleSideNav} />
-        <Sidebar collapseNav={collapseNav} />
-        <main>
-          <div className="back-to-employee-container">
-            <Button
-              onClick={() => navigate("/projects")}
-              variant="outlined"
-              className="back-to-employee-button"
-            >
-              <GoArrowLeft className="back-to-employee-icon" size={20} />
-            </Button>
-          </div>
-          <div className="addemployeecontainer">
-            <AddProjectTitle
-              setActive={setActive}
+        <div className="back-to-employee-container">
+          <Button
+            onClick={() => navigate("/projects")}
+            variant="outlined"
+            className="back-to-employee-button"
+          >
+            <GoArrowLeft className="back-to-employee-icon" size={20} />
+          </Button>
+        </div>
+        <div className="addemployeecontainer">
+          <AddProjectTitle
+            setActive={setActive}
+            active={active}
+            click={handleSubmitMyForm}
+          />
+          {active === 6 ? (
+            ""
+          ) : (
+            <AddProjectNav active={active} setActive={setActive} />
+          )}
+
+          <div className="all-inputs-container">
+            <ProjectEssentials
               active={active}
-              click={handleSubmitMyForm}
+              project={project}
+              setProject={setProject}
+              setActive={setActive}
+              department={availablleDepartments}
+              team={availablleTeams}
+              teamLeads={availablleTeamLeads}
+              bindSubmitForm={bindSubmitForm}
             />
-            {active === 6 ? (
-              ""
-            ) : (
-              <AddProjectNav active={active} setActive={setActive} />
-            )}
 
-            <div className="all-inputs-container">
-              <ProjectEssentials
-                active={active}
-                project={project}
-                setProject={setProject}
-                setActive={setActive}
-                department={availablleDepartments}
-                team={availablleTeams}
-                teamLeads={availablleTeamLeads}
-                bindSubmitForm={bindSubmitForm}
-              />
-
-              {/* <CreateProjectView
+            {/* <CreateProjectView
                 active={active}
                 project={project}
                 department={department}
@@ -141,9 +123,8 @@ const CreateProjects = () => {
                 setActive={setActive}
                 bindSubmitForm={bindSubmitForm}
               /> */}
-            </div>
           </div>
-        </main>
+        </div>
       </div>
     </>
   );
