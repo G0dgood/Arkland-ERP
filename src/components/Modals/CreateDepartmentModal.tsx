@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import { MdOutlineClose } from "react-icons/md";

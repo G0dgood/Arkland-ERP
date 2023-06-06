@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
@@ -20,31 +20,31 @@ import DataService from "../utils/dataService";
 const dataService = new DataService()
 const Header = ({ toggleSideNav }: any) => {
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
   const { data } = useAppSelector((state: any) => state.notification)
 
-
-  // const [yes, setyes] = useState<any>(false);
-  // const [info, setInfo] = useState<any>([]);
   const [refresh, setRefresh] = useState<any>(false);
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
-  const [isLoading1, setisLoading1] = useState(false);
+
 
 
 
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(allNotifications());
-  }, [dispatch, refresh]);
+    if (!data || refresh === true) {
+      dispatch(allNotifications());
+    }
+  }, [data, dispatch, refresh]);
 
   // @ts-ignore
   // const userInfo: any = JSON.parse(storage?.get("user"));
   // @ts-ignore
   // const newnoti: any = JSON.parse(storage?.get("notifications"));
+
 
 
 

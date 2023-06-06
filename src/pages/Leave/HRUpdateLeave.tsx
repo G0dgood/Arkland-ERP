@@ -177,7 +177,7 @@ const HRUpdateLeave = () => {
 
 	return (
 		<div>
-			<header className="ChatProgressView-header"  >
+			{/* <header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
 					<BsFillBriefcaseFill />
 					<span className="in-progresss">
@@ -195,7 +195,7 @@ const HRUpdateLeave = () => {
 						/>
 					</Link>
 				</div>
-			</header>
+			</header> */}
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">

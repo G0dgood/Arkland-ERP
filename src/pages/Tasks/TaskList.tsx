@@ -7,12 +7,16 @@ import { fireAlert } from '../../utils/Alert';
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
 import CreateTaskModal from './CreateTaskModal';
+import { Button } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const TaskList = () => {
 	const dispatch = useAppDispatch();
-	const { data: tasks, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.task)
+	const navigate = useNavigate();
+	const { data: tasks, isError, isLoading, message } = useAppSelector((state: any) => state.task)
+	const { createisSuccess } = useAppSelector((state: any) => state.task)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
@@ -23,7 +27,11 @@ const TaskList = () => {
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(getTask());
-	}, [dispatch]);
+		if (createisSuccess) {
+			// @ts-ignore
+			dispatch(getTask());
+		}
+	}, [createisSuccess, dispatch]);
 
 	useEffect(() => {
 		if (isError) {
@@ -32,7 +40,7 @@ const TaskList = () => {
 		}
 	}, [isError, message, dispatch])
 
-	const header = ["PROJECT", "TASK CREATED BY", "TASK ASSIGNED TO", "TASK STATUS", "TASK TITLE", "TASK CREATED TIME"];
+	const header = ["PROJECT", "TASK CREATED BY", "TASK ASSIGNED TO", "TASK STATUS", "TASK TITLE", "TASK CREATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);
 
 	return (
@@ -88,6 +96,9 @@ const TaskList = () => {
 										<td className="table-datacell datatype-numeric">
 											{/* {new Date(item?.time_in).toLocaleString()} */}
 											{moment(item?.created_at).format("DD-MM-YYYY")}
+										</td>
+										<td className="table-datacell datatype-numeric">
+											<Button id="team-applicatiom-update" onClick={() => navigate(`/tasks/tasks/${item?.id}`)}>View</Button>
 										</td>
 										{/* <td className="table-datacell datatype-numeric">
 											<Button

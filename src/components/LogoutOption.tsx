@@ -23,6 +23,7 @@ const LogoutOption = ({ showLogout, setShowLogout }: any) => {
 		} catch (error) {
 			setisLoading(false);
 			dataService.clearData()
+			window.location.replace("/");
 		}
 	};
 

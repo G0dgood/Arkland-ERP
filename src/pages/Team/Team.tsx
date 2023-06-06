@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const Team = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.team)
+	const { data, isError, isLoading, message } = useAppSelector((state: any) => state.team)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";

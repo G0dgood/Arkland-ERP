@@ -1,6 +1,6 @@
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties } from "react";
 import BarLoader from "react-spinners/BarLoader";
-import EventEmitter from "./EventEmitter";
+// import EventEmitter from "./EventEmitter";
 
 const TableLoader = ({ isLoading }: any) => {
 

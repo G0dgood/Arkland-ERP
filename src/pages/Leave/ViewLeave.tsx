@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { reset, viewLeave, viewdeleteLeave } from '../../features/Leave/leaveSlice';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
+import axios from 'axios';
 
 
 const ViewLeave = () => {
@@ -19,6 +20,24 @@ const ViewLeave = () => {
 	const { viewdeleteisError, viewdeleteisLoading, viewdeletemessage, viewdeleteisSuccess } = useAppSelector((state: any) => state.leave)
 
 	const data = datas[0]
+
+
+	// const handleDelete = () => {
+	// 	setisLoading2(true);
+	// 	axios
+	// 		.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`)
+	// 		.then((res: AxiosResponse) => {
+	// 			console.log('AxiosResponse', res)
+	// 			setisLoading2(false);
+	// 			setisSuccess2(true)
+	// 			setTimeout(() => {
+	// 				navigate(-1);
+	// 			}, 2000);
+	// 		})
+	// 		.catch((data) => {
+	// 			setisLoading2(false);
+	// 		});
+	// }
 
 	useEffect(() => {
 		dispatch((viewLeave(id)));

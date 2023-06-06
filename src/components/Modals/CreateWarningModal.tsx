@@ -16,14 +16,17 @@ const CreateWarningModal = ({ id }: any) => {
   const dispatch = useAppDispatch();
   const { data: employees } = useAppSelector((state: any) => state.employee)
   const { createwarningisError, createwarningisLoading, createwarningmessage, createwarningisSuccess } = useAppSelector((state: any) => state.employee)
-
+  const [lgShow, setLgShow] = useState(false);
   useEffect(() => {
     // @ts-ignore
-    dispatch(allEmployee());
-  }, [dispatch]);
+    if (!employees && lgShow) {
+      dispatch(allEmployee());
+    }
+
+  }, [dispatch, employees, lgShow]);
 
   const subordinationOptions = ["Type of misconduct", "insubordination"];
-  const [lgShow, setLgShow] = useState(false);
+
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
 

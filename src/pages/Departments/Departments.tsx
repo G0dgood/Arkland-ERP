@@ -8,6 +8,7 @@ import { getUserPrivileges } from "../../functions/auth";
 import { allDepartments, reset } from "../../features/Department/departmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { fireAlert } from "../../utils/Alert";
+import { BounceLoader } from "react-spinners";
 
 const DepartmentsView = () => {
   const dispatch = useAppDispatch();
@@ -64,7 +65,8 @@ const DepartmentsView = () => {
           </div>
           {isLoading ? (
             <div className="isLoading-container">
-              <SyncLoader color={"#990000"} loading={isLoading} />
+              <BounceLoader
+                color={"#990000"} loading={isLoading} />
             </div>
           ) : data?.length === 0 || data?.length === undefined ? (
             <div className="table-loader-announcement">

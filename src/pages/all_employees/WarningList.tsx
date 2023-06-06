@@ -110,8 +110,9 @@ const WarningList = () => {
                 displayData.map((item: any, i: any) => (
                   <tr
                     className="data-table-row"
-                    onClick={() => navigate(`/warning/warning/${item.id}`)} >
-                    <td className="table-datacell datatype-numeric">
+
+                    key={i}>
+                    <td className="table-datacell datatype-string">
                       {item?.employee?.full_name}
                     </td>
                     <td className="table-datacell datatype-numeric">
@@ -126,8 +127,8 @@ const WarningList = () => {
                     <td className="table-datacell datatype-numeric">
                       {item?.status}
                     </td>
-                    <td>
-                      <Link to={`/finalleaveupdate/${item?._id}`}  >
+                    <td className="table-datacell datatype-numeric">
+                      <Link to={`/warning/warning/${item?._id}`}  >
                         <Button id="team-applicatiom-update">  View</Button>
                       </Link>
                     </td>

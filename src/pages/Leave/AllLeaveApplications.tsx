@@ -25,11 +25,9 @@ const AllLeaveApplications = () => {
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
 	const [isLoading, setisLoading] = useState(false);
-	// const [leaveid, setLeaveid] = useState(0);
-	// const [showLeave, setShowLeave] = useState(false)
 	const [message, setMessage] = useState("");
 	const [isError, setisError] = useState(false)
-	// const [isSuccess, setisSuccess] = useState(false);
+
 
 	useEffect(() => {
 		setisLoading(true);
@@ -54,9 +52,9 @@ const AllLeaveApplications = () => {
 				console.error("Error:", error);
 				setisLoading(false);
 			});
-	}, [token, userInfo?.data?.department?.id])
+	}, [token, userInfo?.department?.id])
 
-
+	console.log('userInfo', userInfo)
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -159,7 +157,7 @@ const AllLeaveApplications = () => {
 															item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Link to={`/hrupdateleave/${item?._id}`}  >
+											<Link to={`/leave/leave/hr/${item?._id}`}  >
 												{item?.status === "rejected" ? "" :
 													<Button id="team-applicatiom-update">{item?.hr_approved === false ? "Update" : "View"}</Button>}
 											</Link>

@@ -27,7 +27,7 @@ const AllEmployees = () => {
 
   const dispatch = useAppDispatch();
   const { data, isError, isLoading, message } = useAppSelector((state: any) => state.employee)
-  const { approvedata, approveisError, approveisLoading, approvemessage } = useAppSelector((state: any) => state.employee)
+  const { approveisError, approveisLoading, approvemessage } = useAppSelector((state: any) => state.employee)
   const { approveisSuccess } = useAppSelector((state: any) => state.employee)
   const [reset, setReset] = useState(false);
   const navigate = useNavigate();

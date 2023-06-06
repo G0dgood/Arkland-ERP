@@ -12,15 +12,24 @@ const createTask = async (input: any) => {
 }
 
 const viewTask = async (id: any) => {
-	const { data }: any = await HttpService.get(`tasks${id}`)
+	const { data }: any = await HttpService.get(`tasks/${id}`)
 	return data
 }
 
-// const deleteTodos = async (id: any) => {
-// 	// const response = await axios.delete(`${process.env.REACT_APP_API}/hr/announcements/${id}`)
-// 	const { data }: any = await HttpService.delete(`hr/appraisals/${id}`)
-// 	return data
-// }
+const deleteTask = async (id: any) => {
+	const { data }: any = await HttpService.delete(`tasks/${id}`)
+	return data
+}
+const updateTask = async (input: any) => {
+	const { id, inputs } = input
+	const { data }: any = await HttpService.patch(`tasks/${id}`, inputs)
+	return data
+}
+const noteTask = async (input: any) => {
+	const { id, inputs } = input
+	const { data }: any = await HttpService.patch(`tasks/${id}/notes`, inputs)
+	return data
+}
 
 
 
@@ -30,7 +39,9 @@ const taskService = {
 	getTask,
 	createTask,
 	viewTask,
-	// deleteTodos
+	deleteTask,
+	updateTask,
+	noteTask
 }
 
 export default taskService

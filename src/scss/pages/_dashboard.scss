@@ -476,7 +476,7 @@ overflow-y: scroll;
 @media only screen and (max-width: 1200px) {
   .Announcement-sub-2  {
  overflow-y: scroll !important; 
-  height: 80% !important ;
+  // height: 80% !important ;
 }
   .main-min-text {
     overflow-y: scroll !important;
@@ -1308,7 +1308,7 @@ margin: auto;
   height: 80px;
   width: 8px;
   margin: auto;
-  top: -20%;
+  top: -29%;
   left: 0;
   bottom: 0;
   right: 0;
@@ -1323,7 +1323,7 @@ margin: auto;
   height: 120px;
   width: 8px;
   margin: auto;
-  top: -30%;
+  top: -35%;
   left: 0;
   bottom: 0;
   right: 0;
@@ -1338,7 +1338,7 @@ margin: auto;
   height: 120px;
   width: 2px;
   margin: auto;
-  top: -30%;
+  top: -35%;
   left: 0;
   bottom: 0;
   right: 0;
@@ -1348,6 +1348,10 @@ margin: auto;
   transform: rotate(180deg);
 }
 
+#clock-in{
+  height: 20rem !important;
+  // margin-bottom: 1rem;
+}
 
  
 

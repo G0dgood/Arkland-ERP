@@ -10,35 +10,32 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 
-import { reset } from '../../features/Announcement/announcemetSlice';
-import { viewTeamLeave } from '../../features/Leave/leaveSlice';
+
+import { hodApproveLeave, reset, viewTeamLeave } from '../../features/Leave/leaveSlice';
 import DataService from '../../utils/dataService';
+import { BounceLoader } from 'react-spinners';
+import { SlBriefcase } from 'react-icons/sl';
 
 const dataService = new DataService()
 const HodLeaveView = () => {
 	const dispatch = useAppDispatch();
-	const token = dataService.getToken()
-	const { teamviewdata: data, teamviewisError, teamviewisLoading, teamviewmessage } = useAppSelector((state: any) => state.leave)
+	const { teamviewdata: datas, teamviewisError, teamviewisLoading, teamviewmessage } = useAppSelector((state: any) => state.leave)
+	const { hodApproveisError, hodApproveisLoading, hodApprovemessage, hodApproveisSuccess } = useAppSelector((state: any) => state.leave)
+	// const { hodApprovedata, teamviewisError, teamviewisLoading, teamviewmessage } = useAppSelector((state: any) => state.leave)
+
+	console.log('teamviewisLoading', teamviewisLoading)
 
 	const { id } = useParams()
 	const navigate = useNavigate();
 
-	console.log('teamviewdata', data, teamviewisError, teamviewisLoading, teamviewmessage, id)
+	const data = datas
 
 	useEffect(() => {
 		dispatch(viewTeamLeave(id));
+		dispatch(reset());
 	}, [dispatch, id])
 
 
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isSuccess2, setisSuccess2] = useState(false);
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
-	const [isLoading1, setisLoading1] = useState(false);
-	const [isLoading2, setisLoading2] = useState(false);
-	const [isError1, setisError1] = useState(false)
-	const [message1, setMessage1] = useState("");
 
 	const [count, setCount] = useState(0);
 
@@ -49,76 +46,69 @@ const HodLeaveView = () => {
 		leave_type: ""
 	})
 
-	const title = "Successful";
-	const html = "Leave Approve!";
-	const icon = "success";
-	const title1 = "Leave error";
-	const html1 = message1;
-	const icon1 = "error";
-	const title2 = "Successful";
-	const html2 = "Leave have been Deleted!";
-	const icon2 = "success";
+
+	// const html2 = "Leave have been Deleted!";
+
 
 
 
 	useEffect(() => {
-		if (isSuccess) {
-			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-				setMessage1("")
-			}, 5000);
-		} else if (teamviewisError) {
-			fireAlert(title1, html1, icon1);
+		if (hodApproveisSuccess) {
+			fireAlert("Successful", "Leave Approved!", "success");
+			navigate(-1)
+		} else if (hodApproveisError) {
+			fireAlert("Leave error", hodApprovemessage, 'error');
 			dispatch(reset());
-		} else if (isSuccess2) {
-			fireAlert(title2, html2, icon2);
-			setTimeout(() => {
-				setisError1(false)
-				setMessage1("")
-			}, 5000);
 		}
-	}, [dispatch, html, html1, isError1, isSuccess, isSuccess2, setMessage1, teamviewisError])
+		else if (teamviewisError) {
+			fireAlert("Leave error", teamviewmessage, 'error');
+			dispatch(reset());
+		}
+		// else if  Successful) {
+		// 	fireAlert("Successful", teamviewmessage, "Successful");
+		// }
+	}, [dispatch, hodApproveisError, hodApproveisSuccess, hodApprovemessage, id, navigate, teamviewisError, teamviewmessage])
+
+	// useEffect(() => {
+	// 	setisLoading(true);
+	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}`, {
+	// 		method: "GET",
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			Authorization: `Bearer ${token}`
+	// 		},
+	// 	})
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// if (data?.success === false) {
+	// 	
+	// 	console.log('data?.message', data?.message)
+	// 	setisError(true)
+	// } else {
+	// 	console.log(data)
+
+	// }
+	// 			setisLoading(false);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("Error:", error);
+	// 			setMessage(data?.message)
+	// 			setisLoading(false);
+	// 		});
+	// }, [data?.message, id, navigate, token])
 
 	useEffect(() => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-					console.log('data?.message', data?.message)
-					setisError(true)
-				} else {
-					console.log(data)
-
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-	}, [id, navigate, token])
-
-	useEffect(() => {
-		if (data?.data?.hod_approved === true && !data?.data?.hr_approved) {
+		if (data?.hod_approved === true && !data?.hr_approved) {
 			setCount(1)
-		} else if (data?.data?.hr_approved && data?.data?.hod_approved && !data?.data?.finally_approved) {
+		} else if (data?.hr_approved && data?.hod_approved && !data?.finally_approved) {
 			setCount(2)
-		} else if (data?.data?.hr_approved === true && data?.data?.hod_approved === true && data?.data?.finally_approved === true) {
+		} else if (data?.hr_approved === true && data?.hod_approved === true && data?.finally_approved === true) {
 			setCount(3)
 		} else {
 			setCount(0)
 		}
 		// @ts-ignore 
-	}, [data?.data?.finally_approved, data?.data?.hod_approved, data?.data?.hr_approved])
+	}, [data])
 
 
 
@@ -126,14 +116,14 @@ const HodLeaveView = () => {
 		setInputs((prevState: any) => {
 			return ({
 				...prevState,
-				description: data?.data?.description,
-				leave_type: data?.data?.type,
-				start_date: data?.data?.start_date,
-				end_date: data?.data?.end_date,
+				description: data?.description,
+				leave_type: data?.type,
+				start_date: data?.start_date,
+				end_date: data?.end_date,
 
 			});
 		});
-	}, [setInputs, data?.data?.description, data?.data?.type, data?.data?.start_date, data?.data?.end_date]);
+	}, [setInputs, data]);
 
 
 	// const handelupdate = () => {
@@ -179,133 +169,152 @@ const HodLeaveView = () => {
 	// 			setisLoading2(false);
 	// 		});
 	// }
-
+	const handleApproved = () => {
+		dispatch(hodApproveLeave(id));
+	}
 
 
 	return (
-		<div  >
-			{teamviewisLoading ? <TableLoader isLoading={teamviewisLoading} /> : ""}
-			<div className='contact-container-body'>
-				<section className="contact-container">
-
-					<form className="contact-form">
-						<div className="heading">
-							{/* @ts-ignore */}
-							<h2>Leave Type : {data?.data?.type}</h2>
-							<p>Fill in information to update your Leave!</p>
+		<div>
+			{
+				teamviewisLoading ? (
+					<div className="isLoading-container-view" >
+						<BounceLoader
+							color={"#990000"} loading={teamviewisLoading} />
+					</div>
+				) : !datas || datas === undefined ? (
+					<div className="table-loader-announcement">
+						<div>
+							{/* eslint-disable-next-line jsx-a11y/alt-text */}
+							<SlBriefcase size={80} />
+							<p className="mt-3">No Tead Lead details</p>
 						</div>
-						<div  >
-							<h6>Name</h6>
-							<input id='Modal-textarea-input-sub' type={'text'}
-								value={inputs.leave_type} />
-							<div className='Modal-data-time'>
-							</div>
-							<div className='Modal-data-time'>
-								<div className='Modal-two-input'>
-									<h6>Start Date</h6>
-									<input id='Modal-textarea-input-sub' type={'text'}
-										value={moment(inputs?.start_date).format("DD-MM-YYYY")} />
-								</div>
-								<div className='div-space' />
-								<div className='Modal-two-input'>
-									<h6>End Date</h6>
-									<input id='Modal-textarea-input-sub' type={'text'}
-										value={moment(inputs?.end_date).format("DD-MM-YYYY")}
-									/>
-								</div>
-							</div>
-							<div className='Modal-textarea-middle'>
-								<h6>Description</h6>
-								<textarea rows={6} className='Modal-textarea'
-									value={inputs.description}
-								/>
-							</div>
-						</div>
-						<div className='data-hod_approved'>
+					</div>
+				) : (
+					<div  >
+						{teamviewisLoading ? <TableLoader isLoading={teamviewisLoading} /> : ""}
+						<div className='contact-container-body'>
+							<section className="contact-container">
 
-							<span>
-								{data?.data?.hod_approved === false &&
-									<div className='deleteKPIHandler  mt-5'>
-										<span className='deleteKPIHandler-mr'>
-											<Button className="table-link"  >
-												{isLoading2 ? <Spinner animation="border" /> : "Reject"}</Button>
-										</span>
-										<span ><Button className="table-link-active"   >
-											{isLoading1 ? <Spinner animation="border" /> : "Approve"}
-										</Button>
-										</span>
+								<form className="contact-form">
+									<div className="heading">
+										{/* @ts-ignore */}
+										<h2>Leave Type : {data?.type}</h2>
+										<p>Fill in information to update your Leave!</p>
 									</div>
-								}
-							</span>
-						</div>
-
-
-
-
-					</form>
-					<div className="contact-info">
-						<h3 className="heading">Leave Details</h3>
-						<ul className="contacts">
-							<li>
-								<span className='BsFillBriefcaseFill'><BsFillBriefcaseFill /></span>
-								Leave Type : {data?.data?.type}
-							</li>
-							<li>
-								<span className='BsFillBriefcaseFill'><BsCalendarDateFill /></span>
-								State date : {moment(data?.data?.start_date).format("DD-MM-YYYY")}
-							</li>
-							<li>
-								<span className='BsFillBriefcaseFill'><BsCalendarDate /></span>
-								End date :  {moment(data?.data?.end_date).format("DD-MM-YYYY")}
-							</li>
-
-							<span  >
-								Leave Progress
-							</span>
-							<div className='leave-type-progress'>
-								<li className="  rounded mb-3">
-									<div className="progress mb-3"  >
-										{/* @ts-ignore */}
-										{data?.data?.hod_approved === true && <div className="progress-bar bg-success" role="progressbar" style={{ width: "35% " }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"> </div>}
-										{/* @ts-ignore */}
-										{data?.data?.hr_approved === true && <div className="progress-bar bg-warning" role="progressbar" style={{ width: "30% " }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"> </div>}
-										{/* @ts-ignore */}
-										{data?.data?.finally_approved === true && <div className="progress-bar bg-danger" role="progressbar" style={{ width: "35% " }} aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"> </div>}
-
-									</div>
-									<div className="p-3">
-										<div className="media">
-											<div className="media-body align-self-center">
-												<div className="small text-muted">{count + ' Aprovals'}</div>
+									<div  >
+										<h6>Name</h6>
+										<input id='Modal-textarea-input-sub' type={'text'}
+											value={inputs.leave_type} />
+										<div className='Modal-data-time'>
+										</div>
+										<div className='Modal-data-time'>
+											<div className='Modal-two-input'>
+												<h6>Start Date</h6>
+												<input id='Modal-textarea-input-sub' type={'text'}
+													value={moment(inputs?.start_date).format("DD-MM-YYYY")} />
 											</div>
-											<div className="align-self-center ml-3">
-												{data?.data?.hod_approved === true &&
-													<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-												{data?.data?.hr_approved === true &&
-													<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-												{data?.data?.finally_approved === true &&
-													<img className="rounded-circle border" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
+											<div className='div-space' />
+											<div className='Modal-two-input'>
+												<h6>End Date</h6>
+												<input id='Modal-textarea-input-sub' type={'text'}
+													value={moment(inputs?.end_date).format("DD-MM-YYYY")}
+												/>
 											</div>
 										</div>
+										<div className='Modal-textarea-middle'>
+											<h6>Description</h6>
+											<textarea rows={6} className='Modal-textarea'
+												value={inputs.description}
+											/>
+										</div>
+									</div>
+									<div className='data-hod_approved'>
+
+										<span>
+											{data?.hod_approved === false &&
+												<div className='deleteKPIHandler  mt-5'>
+													<span className='deleteKPIHandler-mr'>
+														{/* <Button className="table-link"  >
+												{isLoading ? <Spinner animation="border" /> : "Reject"}</Button> */}
+													</span>
+													<span onClick={handleApproved}><Button className="table-link-active"   >
+														{hodApproveisLoading ? <Spinner animation="border" /> : "Approve"}
+													</Button>
+													</span>
+												</div>
+											}
+										</span>
 									</div>
 
-									<Button className={data?.data?.status === "HOD approved" ? "table-link" :
-										data?.data?.status === "HR approved" ? "table-link-hr" :
-											data?.data?.status === "approved" ? "table-link-active" :
-												data?.data?.status === "rejected" ? "table-link-reject" : "table-link"}>
-										{data?.data?.status === "HOD approved" ? "HOD approved" :
-											data?.data?.status === "HR approved" ? "HR approved" :
-												data?.data?.status === "approved" ? "LEAVE approved" :
-													data?.data?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
 
-								</li>
-							</div>
-						</ul>
-						<div className="social-links"></div>
+
+
+								</form>
+								<div className="contact-info">
+									<h3 className="heading">Leave Details</h3>
+									<ul className="contacts">
+										<li>
+											<span className='BsFillBriefcaseFill'><BsFillBriefcaseFill /></span>
+											Leave Type : {data?.type}
+										</li>
+										<li>
+											<span className='BsFillBriefcaseFill'><BsCalendarDateFill /></span>
+											State date : {moment(data?.start_date).format("DD-MM-YYYY")}
+										</li>
+										<li>
+											<span className='BsFillBriefcaseFill'><BsCalendarDate /></span>
+											End date :  {moment(data?.end_date).format("DD-MM-YYYY")}
+										</li>
+
+										<span  >
+											Leave Progress
+										</span>
+										<div className='leave-type-progress'>
+											<li className="  rounded mb-3">
+												<div className="progress mb-3"  >
+													{/* @ts-ignore */}
+													{data?.hod_approved === true && <div className="progress-bar bg-success" role="progressbar" style={{ width: "35% " }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"> </div>}
+													{/* @ts-ignore */}
+													{data?.hr_approved === true && <div className="progress-bar bg-warning" role="progressbar" style={{ width: "30% " }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"> </div>}
+													{/* @ts-ignore */}
+													{data?.finally_approved === true && <div className="progress-bar bg-danger" role="progressbar" style={{ width: "35% " }} aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"> </div>}
+
+												</div>
+												<div className="p-3">
+													<div className="media">
+														<div className="media-body align-self-center">
+															<div className="small text-muted">{count + ' Aprovals'}</div>
+														</div>
+														<div className="align-self-center ml-3">
+															{data?.hod_approved === true &&
+																<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
+															{data?.hr_approved === true &&
+																<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
+															{data?.finally_approved === true &&
+																<img className="rounded-circle border" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
+														</div>
+													</div>
+												</div>
+
+												<Button className={data?.status === "HOD approved" ? "table-link" :
+													data?.status === "HR approved" ? "table-link-hr" :
+														data?.status === "approved" ? "table-link-active" :
+															data?.status === "rejected" ? "table-link-reject" : "table-link"}>
+													{data?.status === "HOD approved" ? "HOD approved" :
+														data?.status === "HR approved" ? "HR approved" :
+															data?.status === "approved" ? "LEAVE approved" :
+																data?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
+
+											</li>
+										</div>
+									</ul>
+									<div className="social-links"></div>
+								</div>
+							</section>
+						</div>
 					</div>
-				</section>
-			</div>
-
+				)}
 		</div>
 	)
 }

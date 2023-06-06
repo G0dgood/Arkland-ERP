@@ -26,11 +26,23 @@ const initialState = {
 	viewmessage: '',
 
 
-	// deletedata: [],
-	// deleteisError: false,
-	// deleteisSuccess: false,
-	// deleteisLoading: false,
-	// deletemessage: '',
+	deletedata: [],
+	deleteisError: false,
+	deleteisSuccess: false,
+	deleteisLoading: false,
+	deletemessage: '',
+
+	updatedata: [],
+	updateisError: false,
+	updateisSuccess: false,
+	updateisLoading: false,
+	updatemessage: '',
+
+	notedata: [],
+	noteisError: false,
+	noteisSuccess: false,
+	noteisLoading: false,
+	notemessage: '',
 }
 
 
@@ -61,7 +73,7 @@ export const createTask = createAsyncThunk('task/createTask', async (data, thunk
 	}
 })
 
-// View Todos
+// View Task
 export const viewTask = createAsyncThunk('task/viewTask', async (data, thunkAPI) => {
 	try {
 		return await taskService.viewTask(data)
@@ -75,18 +87,43 @@ export const viewTask = createAsyncThunk('task/viewTask', async (data, thunkAPI)
 })
 
 
-// // Delete Todos
-// export const deleteTodos = createAsyncThunk('task/deleteTodos', async (data, thunkAPI) => {
-// 	try {
-// 		return await taskService.deleteTodos(data)
-// 	} catch (error: any) {
-// 		const message = (error.response &&
-// 			error.response.data &&
-// 			error.response.data.message) ||
-// 			error.message || error.toString()
-// 		return thunkAPI.rejectWithValue(message)
-// 	}
-// })
+// Delete Task
+export const deleteTask = createAsyncThunk('task/deleteTask', async (data, thunkAPI) => {
+	try {
+		return await taskService.deleteTask(data)
+	} catch (error: any) {
+		const message = (error.response &&
+			error.response.data &&
+			error.response.data.message) ||
+			error.message || error.toString()
+		return thunkAPI.rejectWithValue(message)
+	}
+})
+
+// Update Task
+export const updateTask = createAsyncThunk('task/updateTask', async (data, thunkAPI) => {
+	try {
+		return await taskService.updateTask(data)
+	} catch (error: any) {
+		const message = (error.response &&
+			error.response.data &&
+			error.response.data.message) ||
+			error.message || error.toString()
+		return thunkAPI.rejectWithValue(message)
+	}
+})
+// Note Task
+export const noteTask = createAsyncThunk('task/noteTask', async (data, thunkAPI) => {
+	try {
+		return await taskService.noteTask(data)
+	} catch (error: any) {
+		const message = (error.response &&
+			error.response.data &&
+			error.response.data.message) ||
+			error.message || error.toString()
+		return thunkAPI.rejectWithValue(message)
+	}
+})
 
 
 
@@ -114,10 +151,20 @@ export const taskSlice = createSlice({
 			state.viewmessage = ''
 
 
-			// state.deleteisLoading = false
-			// state.deleteisSuccess = false
-			// state.deleteisError = false
-			// state.deletemessage = ''
+			state.deleteisLoading = false
+			state.deleteisSuccess = false
+			state.deleteisError = false
+			state.deletemessage = ''
+
+			state.updateisLoading = false
+			state.updateisSuccess = false
+			state.updateisError = false
+			state.updatemessage = ''
+
+			state.noteisLoading = false
+			state.noteisSuccess = false
+			state.noteisError = false
+			state.notemessage = ''
 
 		},
 	},
@@ -158,34 +205,63 @@ export const taskSlice = createSlice({
 
 
 			.addCase(viewTask.pending, (state) => {
-				state.createisLoading = true
+				state.viewisLoading = true
 			})
 			.addCase(viewTask.fulfilled, (state: any, action) => {
-				state.createisLoading = false
-				state.createisSuccess = true
-				state.createdata = action.payload?.data
+				state.viewisLoading = false
+				state.viewisSuccess = true
+				state.viewdata = action.payload?.data
 			})
 			.addCase(viewTask.rejected, (state: any, action) => {
-				state.createisLoading = false
-				state.createisError = true
-				state.createmessage = action.payload
-				state.createdata = null
+				state.viewisLoading = false
+				state.viewisError = true
+				state.viewmessage = action.payload
+				state.viewdata = null
 			})
 
-		// .addCase(deleteTodos.pending, (state) => {
-		// 	state.deleteisLoading = true
-		// })
-		// .addCase(deleteTodos.fulfilled, (state: any, action) => {
-		// 	state.deleteisLoading = false
-		// 	state.deleteisSuccess = true
-		// 	state.deletedata = action.payload?.data
-		// })
-		// .addCase(deleteTodos.rejected, (state: any, action) => {
-		// 	state.deleteisLoading = false
-		// 	state.deleteisError = true
-		// 	state.deletemessage = action.payload
-		// 	state.deletedata = null
-		// })
+			.addCase(deleteTask.pending, (state) => {
+				state.deleteisLoading = true
+			})
+			.addCase(deleteTask.fulfilled, (state: any, action) => {
+				state.deleteisLoading = false
+				state.deleteisSuccess = true
+				state.deletedata = action.payload?.data
+			})
+			.addCase(deleteTask.rejected, (state: any, action) => {
+				state.deleteisLoading = false
+				state.deleteisError = true
+				state.deletemessage = action.payload
+				state.deletedata = null
+			})
+
+			.addCase(updateTask.pending, (state) => {
+				state.updateisLoading = true
+			})
+			.addCase(updateTask.fulfilled, (state: any, action) => {
+				state.updateisLoading = false
+				state.updateisSuccess = true
+				state.updatedata = action.payload?.data
+			})
+			.addCase(updateTask.rejected, (state: any, action) => {
+				state.updateisLoading = false
+				state.updateisError = true
+				state.updatemessage = action.payload
+				state.updatedata = null
+			})
+			.addCase(noteTask.pending, (state) => {
+				state.noteisLoading = true
+			})
+			.addCase(noteTask.fulfilled, (state: any, action) => {
+				state.noteisLoading = false
+				state.noteisSuccess = true
+				state.notedata = action.payload?.data
+			})
+			.addCase(noteTask.rejected, (state: any, action) => {
+				state.noteisLoading = false
+				state.noteisError = true
+				state.notemessage = action.payload
+				state.notedata = null
+			})
 
 	},
 })

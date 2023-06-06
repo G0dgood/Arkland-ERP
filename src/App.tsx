@@ -9,7 +9,7 @@ import Leave from "./pages/Leave/Leave";
 import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
 import Support from "./pages/Support/Support";
 import Policy from "./pages/Policy/Policy";
-import SiteWorkerRequest from "./pages/Projects/SiteWorkerRequest";
+import SiteWorkerRequest from "./pages/WorkersRequest.tsx /SiteWorkerRequest";
 import CreateProjects from "./pages/Projects/CreateProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
@@ -31,7 +31,6 @@ import ViewDepartments from "./pages/Departments/ViewDepartments";
 import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
 import TeamWeeklyReport from "./pages/WeeklyReport/TeamWeeklyReport";
 import TeamWeeklyReportUpdate from "./pages/WeeklyReport/TeamWeeklyReportUpdate";
-import ViewSiteWorkerRequest from "./pages/Projects/ViewSiteWorkerRequest";
 import AllLeave from "./pages/Leave/AllLeave";
 import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
 import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
@@ -59,7 +58,11 @@ import AllKPIReport from "./pages/kpi_assessment/AllKPIReport";
 import TaskList from "./pages/Tasks/TaskList";
 import Team from "./pages/Team/Team";
 import ViewTeam from "./pages/Projects/ViewTeam";
-import Teamlead from "./pages/TeamLead/Teamlead";
+import TeamLead from "./pages/TeamLead/TeamLead";
+import TeamLeadView from "./pages/TeamLead/TeamLeadView";
+import TaskView from "./pages/Tasks/TaskView";
+import Announcements from "./pages/Announcement/Announcements";
+import AnnouncementsView from "./pages/Announcement/AnnouncementsView";
 
 const dataService = new DataService();
 
@@ -123,6 +126,12 @@ const App: React.FC<any> = () => {
             <Route path="weeklyreport/myweeklyreport" element={<MyWeekReport />} />
           </Route>
 
+          <Route path="announcements">
+            <Route index element={<Announcements />} />
+            <Route path="announcements/:id" element={<AnnouncementsView />} />
+            {/* <Route path="projects/:id" element={<ViewProjects />} />
+            <Route path="projects/create" element={<CreateProjects />} /> */}
+          </Route>
           <Route path="projects">
             <Route index element={<Project />} />
             <Route path="projects/:id" element={<ViewProjects />} />
@@ -140,15 +149,15 @@ const App: React.FC<any> = () => {
           </Route>
           <Route path="tasks">
             <Route index element={<TaskList />} />
-            {/* <Route path="profile/view" element={<EditUser />} /> */}
+            <Route path="tasks/:id" element={<TaskView />} />
           </Route>
           <Route path="team">
             <Route index element={<Team />} />
             <Route path="team/view/:id" element={<ViewTeam />} />
           </Route>
           <Route path="teamlead">
-            <Route index element={<Teamlead />} />
-            <Route path="teamlead/view/:id" element={<ViewTeam />} />
+            <Route index element={<TeamLead />} />
+            <Route path="teamlead/view/:id" element={<TeamLeadView />} />
           </Route>
 
           {/* <Route path="terminations"> */}
@@ -163,7 +172,7 @@ const App: React.FC<any> = () => {
 
           <Route path="workers_request">
             <Route index element={<SiteWorkerRequest />} />
-            <Route path="/workers_request/:id" element={<ViewSiteWorkerRequest />} />
+            <Route path="workers_request/view/:id" element={<ViewSiteWorkerRequest />} />
           </Route>
 
           <Route path="/createnewhod" element={<CreateHOD />} />

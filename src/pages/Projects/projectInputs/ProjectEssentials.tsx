@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "../../../components/Inputs/InputField";
@@ -23,7 +22,7 @@ const ProjectEssentials = ({
   });
 
   const handleSubmit = (values?: any) => {
-    console.log("Values", values);
+    // console.log("Values", values);
     setProject({ ...project, ...values });
     setActive(2);
   };

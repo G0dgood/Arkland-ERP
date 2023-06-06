@@ -2,7 +2,7 @@ import React from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { useDepartments } from "../../hooks/useDepartments";
+// import { useDepartments } from "../../hooks/useDepartments";
 import { getUserPrivileges } from "../../functions/auth";
 import HrAssistedAttendanceModal from "../../components/Modals/HrAssistedAttendanceModal";
 
@@ -11,8 +11,7 @@ const HumanResources = () => {
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
   const [newDepartmentCreated, setNewDepartmentCreated] = React.useState({} as any);
 
-  const { departments, isLoading, error, message } =
-    useDepartments(newDepartmentCreated);
+
 
   const handleNewDepartmentCreated = () => {
     setNewDepartmentCreated(!newDepartmentCreated);

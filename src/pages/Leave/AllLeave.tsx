@@ -8,12 +8,15 @@ import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
 import { useAppDispatch } from '../../store/useStore';
+import DataService from '../../utils/dataService';
 
-
+const dataService = new DataService()
 const AllLeave = () => {
 	const dispatch = useAppDispatch();
 	// @ts-ignore
-
+	// @ts-ignore
+	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+	const token = dataService.getToken()
 
 	const [data, setData] = useState([]);
 	const [sortData, setSortData] = useState([]);
@@ -22,14 +25,33 @@ const AllLeave = () => {
 	const [message, setMessage] = useState("");
 	const [isError, setisError] = useState(false)
 
-	const url = `${process.env.REACT_APP_API}/hr/leaves`
+
+
 
 	useEffect(() => {
-		// @ts-ignore
-		dispatch(handleRequestGet(setMessage, setisError, setisLoading, url, setData));
-	}, [dispatch, url])
-
-
+		setisLoading(true);
+		fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data?.success === false) {
+					setMessage(data?.message)
+					setisError(true)
+				} else {
+					setSortData(data?.data?.data)
+				}
+				setisLoading(false);
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				setisLoading(false);
+			});
+	}, [token, userInfo?.department?.id])
 
 
 
@@ -132,7 +154,7 @@ const AllLeave = () => {
 																	item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Link to={`/finalleaveupdate/${item?._id}`}  >
+											<Link to={`/leave/leave/final/${item?._id}`}  >
 												{/* @ts-ignore */}
 												{item?.status === "rejected" ? "" :
 													<Button id="team-applicatiom-update">{item?.finally_approved === false ? "Update" : "View"}</Button>}
@@ -149,7 +171,7 @@ const AllLeave = () => {
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}
-					data={data}
+					data={sortData}
 					entriesPerPage={entriesPerPage}
 					Total={"All Leave"}
 				/>

@@ -2,7 +2,7 @@ import React from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { useDepartments } from "../../hooks/useDepartments";
+// import { useDepartments } from "../../hooks/useDepartments";
 import { getUserPrivileges } from "../../functions/auth";
 
 const EmployeeAttendance = () => {
@@ -10,7 +10,7 @@ const EmployeeAttendance = () => {
 
   const [newDepartmentCreated, setNewDepartmentCreated] = React.useState({} as any);
 
-  const { departments, isLoading, error, message } = useDepartments(newDepartmentCreated);
+
 
   const handleNewDepartmentCreated = () => {
     setNewDepartmentCreated(!newDepartmentCreated);

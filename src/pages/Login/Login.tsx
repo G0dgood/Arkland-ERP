@@ -49,6 +49,7 @@ const Login = () => {
     try {
       const response: any = await HttpService.post("auth/login", values)
       const token = response.data.token
+      console.log('token', token)
       dataService.setToken(token)
       const { department, role, employee, privileges } = response.data
       const userInfo = { department, role, employee, privileges }

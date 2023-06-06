@@ -131,13 +131,15 @@ const HRClockInModal = () => {
 							options={availableEmployees}
 							value={inputs.isEmployee}
 							onChange={(e: any) => handleOnChange("isEmployee", e)} />
+					</div >
+					<div id='clock-in'>
+						<div className="clock"  >
+							<div className="hour-hand"></div>
+							<div className="minute-hand"></div>
+							<div className="second-hand"></div>
+						</div>
 					</div>
-					<div className="clock" style={{ marginBottom: "2rem" }}>
-						<div className="hour-hand"></div>
-						<div className="minute-hand"></div>
-						<div className="second-hand"></div>
-					</div>
-					<div className='deleteKPIHandler'>
+					<div className='deleteKPIHandler' style={{ marginTop: "7rem" }}>
 						<span className='deleteKPIHandler-mr' onClick={() => setShow(false)}>
 							<Button className="table-link-active">
 								Close </Button></span>

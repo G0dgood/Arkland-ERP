@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import CustomInputField from '../../components/Inputs/CustomInputField';
 import { Button } from '@material-ui/core';
 import ReactSelectField from '../../components/Inputs/ReactSelectField';
-
 import { Form, Formik } from "formik";
 import { MdOutlineClose } from 'react-icons/md';
 import { Modal, Spinner } from 'react-bootstrap';
@@ -16,7 +15,13 @@ import { fireAlert } from '../../utils/Alert';
 const CreateTaskModal = ({ view }: any) => {
 	const dispatch = useAppDispatch();
 	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.task)
+	const { data: teamMembers } = useAppSelector((state: any) => state.task)
 	const [Show, setShow] = useState(false);
+
+
+
+
+
 
 	useEffect(() => {
 		if (createisError) {
@@ -35,19 +40,17 @@ const CreateTaskModal = ({ view }: any) => {
 		dispatch(createTask(input));
 	}
 
-	// const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
-	// const availablleTeamMembers = [] as any;
-	// if (teamMembers.length < 0) {
-	// 	return null;
-	// } else {
-	// 	teamMembers.length > 0 &&
-	// 		teamMembers.forEach((teamMember: any) =>
-	// 			availablleTeamMembers.push({
-	// 				value: teamMember.employee?.user,
-	// 				label: teamMember.employee_name,
-	// 			})
-	// 		);
-	// }
+
+	const availablleTeamMembers = [] as any;
+
+	teamMembers &&
+		teamMembers.forEach((teamMember: any) =>
+			availablleTeamMembers.push({
+				value: teamMember.assigned_to?.id,
+				label: teamMember.assigned_to?.full_name,
+			})
+		);
+
 
 	return (
 		<div>
@@ -144,7 +147,7 @@ const CreateTaskModal = ({ view }: any) => {
 											<div className="col">
 												<div className="form-group">
 													<ReactSelectField
-														// options={availablleTeamMembers}
+														options={availablleTeamMembers}
 														label="Who is this task assigned to?"
 														name="assigned_to"
 														className="form-group__gender"

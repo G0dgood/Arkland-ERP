@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { reset, viewDepartments } from "../../features/Department/departmentSlice";
 import { fireAlert } from "../../utils/Alert";
-import { SyncLoader } from "react-spinners";
+import { BounceLoader, SyncLoader } from "react-spinners";
 import DeleteDepartment from "../../components/Modals/DeleteDepartment";
 import projectBack from "../../assets/vectors/project-back.svg";
 
@@ -14,6 +14,7 @@ const ViewDepartments = () => {
  const dispatch = useAppDispatch();
  const { id } = useParams<{ id: string }>();
  const { viewdata, viewisError, viewisLoading, viewmessage, viewisSuccess } = useAppSelector((state: any) => state.department)
+
 
 
  useEffect(() => {
@@ -40,7 +41,8 @@ const ViewDepartments = () => {
    {
     viewisLoading ? (
      <div className="isLoading-container-view" >
-      <SyncLoader color={"#990000"} loading={viewisLoading} />
+      <BounceLoader
+       color={"#990000"} loading={viewisLoading} />
      </div>
     ) : !viewdata || viewdata === undefined ? (
      <div className="table-loader-announcement">
@@ -71,7 +73,7 @@ const ViewDepartments = () => {
         </div>
 
         <h4 style={{ marginTop: "3rem" }}>
-         Review Termination request
+         Department details
         </h4>
 
         <div
@@ -80,10 +82,9 @@ const ViewDepartments = () => {
         >
          <div>
           <div className="getjob-application-details">
-           <p>Employee</p>
-           <p onClick={() => navigate(`/employees/${viewdata?.department?.employee?.id}`)}
-            style={{ cursor: "pointer", color: "blue", }}  >
-            {viewdata?.department?.employee?.full_name}
+           <p>Department Name</p>
+           <p style={{ cursor: "pointer", color: "blue", }}  >
+            {viewdata?.department?.name}
            </p>
            <p>Description</p>
            <p> {viewdata?.department?.description} </p>

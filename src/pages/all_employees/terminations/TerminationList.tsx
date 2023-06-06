@@ -105,7 +105,7 @@ const TerminationList = () => {
          <tr
           className="data-table-row"
           onClick={() => navigate(`/terminations/${item._id}`)}
-         >
+          key={i}>
           <td className="table-datacell datatype-numeric">
            {item?.employee?.full_name}
           </td>

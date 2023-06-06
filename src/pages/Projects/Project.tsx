@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { fireAlert } from "../../utils/Alert";
 import { getUserPrivileges } from "../../functions/auth";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
+import { BounceLoader } from "react-spinners";
 
 const ProjectView = () => {
   const dispatch = useAppDispatch();
@@ -103,7 +104,8 @@ const ProjectView = () => {
           </div>
           {isLoading ? (
             <div className="isLoading-container">
-              <SyncLoader color={"#990000"} loading={isLoading} />
+              <BounceLoader
+                color={"#990000"} loading={isLoading} />
             </div>
           ) : data?.length === 0 ? (
             <div className="table-loader-announcement">

@@ -2,7 +2,7 @@ import { CSSProperties, useEffect, useState } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import { SyncLoader } from "react-spinners";
+import { BounceLoader, SyncLoader } from "react-spinners";
 import projectBack from "../../assets/vectors/project-back.svg";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import { getUserPrivileges } from "../../functions/auth";
@@ -52,7 +52,7 @@ const ViewEmployee = () => {
       {viewisLoading ? (
         <div
           style={{ margin: "auto", width: "20%", }}  >
-          <SyncLoader
+          <BounceLoader
             cssOverride={override}
             color={"#990000"}
             loading={viewisLoading}

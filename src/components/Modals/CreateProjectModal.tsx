@@ -5,7 +5,6 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { MdOutlineClose } from "react-icons/md";
 import { BsPlusLg } from "react-icons/bs";
-import Cookies from "js-cookie";
 import { fireAlert } from "../../utils/Alert";
 import InputField from "../Inputs/InputField";
 import ReactSelectField from "../Inputs/ReactSelectField";

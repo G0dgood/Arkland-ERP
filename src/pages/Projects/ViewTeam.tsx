@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useNavigate, useParams } from 'react-router-dom'
-import { SyncLoader } from 'react-spinners'
+import { BounceLoader, SyncLoader } from 'react-spinners'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { getTeammembers, reset, viewTeam } from '../../features/Team/teamSlice';
 import { fireAlert } from '../../utils/Alert';
@@ -57,7 +57,8 @@ const ViewTeam = () => {
 				{
 					viewisLoading ? (
 						<div className="isLoading-container-view" >
-							<SyncLoader color={"#990000"} loading={viewisLoading} />
+							<BounceLoader
+								color={"#990000"} loading={viewisLoading} />
 						</div>
 					) : !viewdata || viewdata === undefined ? (
 						<div className="table-loader-image">
@@ -126,7 +127,8 @@ const ViewTeam = () => {
 											</div>
 										</div>
 									) : (
-										<TeamMembers />
+										// <TeamMembers />
+										""
 									)}
 
 								</div>

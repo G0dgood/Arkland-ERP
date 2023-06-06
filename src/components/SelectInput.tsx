@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Select from 'react-select';
-const SelectInput = ({ isLoading, isDisabled, options, value, onChange, defaultValue }: any) => {
+const SelectInput = ({ isLoading, isDisabled, options, value, onChange, defaultValue, label }: any) => {
 
-	const [isClearable, setIsClearable] = useState(true);
-	const [isSearchable, setIsSearchable] = useState(true);
 
 
 	const [isRtl, setIsRtl] = useState(false);
 	return (
-		<div>
+		<div className={"input "}>
+			<label className={"input__label"} >
+				{label}
+			</label>
 			<Select
 				className="basic-single"
 				classNamePrefix="select"
@@ -17,7 +18,7 @@ const SelectInput = ({ isLoading, isDisabled, options, value, onChange, defaultV
 				isLoading={isLoading}
 				isClearable={true}
 				isRtl={isRtl}
-				isSearchable={isSearchable}
+				isSearchable={true}
 				name="color"
 				options={options}
 				value={value}

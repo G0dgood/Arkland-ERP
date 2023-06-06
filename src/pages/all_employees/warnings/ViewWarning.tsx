@@ -3,7 +3,7 @@ import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { MdOutlineClose } from "react-icons/md";
-import { SyncLoader } from "react-spinners";
+import { BounceLoader, SyncLoader } from "react-spinners";
 
 
 import projectBack from "../../../assets/vectors/project-back.svg";
@@ -13,13 +13,7 @@ import RequestEmployeeTerminationModal from "../../../components/Modals/RequestE
 import { fireAlert } from "../../../utils/Alert";
 import { reset, viewWarning } from "../../../features/Employee/employeeSlice";
 
-const override: CSSProperties = {
- display: "block",
- margin: "0 auto",
- borderColor: "red",
- width: "99.8%",
- borderRadius: "50px",
-};
+
 
 const ViewWarning = () => {
  const navigate = useNavigate();
@@ -43,14 +37,8 @@ const ViewWarning = () => {
  return (
   <div  >
    {viewwarningisLoading ? (
-    <div
-     style={{
-      margin: "auto",
-      width: "20%",
-     }}
-    >
-     <SyncLoader
-      cssOverride={override}
+    <div style={{ margin: "auto", width: "20%" }}  >
+     <BounceLoader
       color={"#990000"}
       loading={viewwarningisLoading}
      />
@@ -64,7 +52,7 @@ const ViewWarning = () => {
          src={projectBack}
          alt="User"
          className="project-back-img"
-         onClick={() => navigate(-1)}
+         onClick={() => navigate("/warning")}
          title="Return"
         />
        </div>

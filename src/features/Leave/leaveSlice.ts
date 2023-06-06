@@ -46,6 +46,27 @@ const initialState = {
   viewdeleteisLoading: false, 
   viewdeletemessage: '',
   viewdeleteerror: '',
+
+  hodApprovedata:   [],
+  hodApproveisError: false,
+  hodApproveisSuccess: false,
+  hodApproveisLoading: false, 
+  hodApprovemessage: '',
+  hodApproveerror: '',
+
+  hrApprovedata:   [],
+  hrApproveisError: false,
+  hrApproveisSuccess: false,
+  hrApproveisLoading: false, 
+  hrApprovemessage: '',
+  hrApproveerror: '',
+
+  finalApprovedata:   [],
+  finalApproveisError: false,
+  finalApproveisSuccess: false,
+  finalApproveisLoading: false, 
+  finalApprovemessage: '',
+  finalApproveerror: '',
   
 }
  
@@ -134,6 +155,48 @@ export const viewTeamLeave:any = createAsyncThunk('leave/viewTeamLeave', async(d
   }
 })
  
+//  Hod Approved
+export const hodApproveLeave:any = createAsyncThunk('leave/hodApproveLeave', async(data:any, thunkAPI) => {
+  try {
+    return await leaveService.hodApproveLeave(data)
+  } catch (error: any) { 
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
+//  Hr Approved
+export const hrApproveLeave:any = createAsyncThunk('leave/hrApproveLeave', async(data:any, thunkAPI) => {
+  try {
+    return await leaveService.hrApproveLeave(data)
+  } catch (error: any) { 
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
+//  Admin Approved
+export const finalApproveLeave:any = createAsyncThunk('leave/finalApproveLeave', async(data:any, thunkAPI) => {
+  try {
+    return await leaveService.finalApproveLeave(data)
+  } catch (error: any) { 
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
 
  
  
@@ -172,6 +235,21 @@ export const leaveSlice = createSlice({
       state.viewdeleteisSuccess = false
       state.viewdeleteisError = false
       state.viewdeletemessage = '' 
+
+      state.hodApproveisLoading = false
+      state.hodApproveisSuccess = false
+      state.hodApproveisError = false
+      state.hodApprovemessage = '' 
+
+      state.hrApproveisLoading = false
+      state.hrApproveisSuccess = false
+      state.hrApproveisError = false
+      state.hrApprovemessage = '' 
+
+      state.finalApproveisLoading = false
+      state.finalApproveisSuccess = false
+      state.finalApproveisError = false
+      state.finalApprovemessage = '' 
     },
     
   },
@@ -275,6 +353,57 @@ export const leaveSlice = createSlice({
         state.viewdeleteisError= true
         state.viewdeletemessage= action.payload
         state.viewdeletedata= [] 
+      })
+     
+      // HOD APPROVED LEAVE  
+      .addCase(hodApproveLeave.pending, (state) => {
+        state.hodApproveisLoading= true
+        
+      })
+      .addCase(hodApproveLeave.fulfilled, (state, action) => {
+        state.hodApproveisLoading= false
+        state.hodApproveisSuccess= true
+        state.hodApprovedata= action.payload?.data
+      })
+      .addCase(hodApproveLeave.rejected, (state:any, action) => {
+        state.hodApproveisLoading= false
+        state.hodApproveisError= true
+        state.hodApprovemessage= action.payload
+        state.hodApprovedata= [] 
+      })
+     
+      // HR APPROVED LEAVE  
+      .addCase(hrApproveLeave.pending, (state) => {
+        state.hrApproveisLoading= true
+        
+      })
+      .addCase(hrApproveLeave.fulfilled, (state, action) => {
+        state.hrApproveisLoading= false
+        state.hrApproveisSuccess= true
+        state.hrApprovedata= action.payload?.data
+      })
+      .addCase(hrApproveLeave.rejected, (state:any, action) => {
+        state.hrApproveisLoading= false
+        state.hrApproveisError= true
+        state.hrApprovemessage= action.payload
+        state.hrApprovedata= [] 
+      })
+     
+      //  HOD APPROVED LEAVE    
+      .addCase(finalApproveLeave.pending, (state) => {
+        state.finalApproveisLoading= true
+        
+      })
+      .addCase(finalApproveLeave.fulfilled, (state, action) => {
+        state.finalApproveisLoading= false
+        state.finalApproveisSuccess= true
+        state.finalApprovedata= action.payload?.data
+      })
+      .addCase(finalApproveLeave.rejected, (state:any, action) => {
+        state.finalApproveisLoading= false
+        state.finalApproveisError= true
+        state.finalApprovemessage= action.payload
+        state.finalApprovedata= [] 
       })
      
       

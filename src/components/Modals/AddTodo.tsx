@@ -14,13 +14,7 @@ import { fireAlert } from "../../utils/Alert";
 import storage from "../../utils/dataService";
 
 const AddTodo = (props: any) => {
-  // const token = Cookies.get("token");
-  // @ts-ignore
-  // const userInfo: any = JSON.parse(storage?.get("user"));
-  // const privileges = userInfo?.data?.privileges;
-  // const isTeamLead = privileges?.some((p: any) => p?.role === "team lead");
-  // const isSuperAdmin = privileges?.some((p: any) => p?.role === "super admin");
-  // const isEmployee = privileges?.some((p: any) => p?.role === "employee");
+
 
   const [lgShow, setLgShow] = useState(false);
   const [isLoading, setLoading] = React.useState(false);

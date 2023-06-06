@@ -169,7 +169,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 				setisLoading2(false);
 				setisSuccess2(true)
 				setTimeout(() => {
-					navigate("/allieave");
+					navigate(-1);
 				}, 2000);
 			})
 			.catch((data) => {
@@ -179,7 +179,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 
 	return (
 		<div>
-			<header className="ChatProgressView-header"  >
+			{/* <header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
 					<BsBriefcase />
 					<span className="in-progresss">
@@ -196,7 +196,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 						/>
 					</Link>
 				</div>
-			</header>
+			</header> */}
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">

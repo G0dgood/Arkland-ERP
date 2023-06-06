@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Pagination from '../../components/Pagination';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
@@ -7,31 +7,40 @@ import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/Tabl
 import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate } from 'react-router-dom';
+import { getTeamLead, reset } from '../../features/TeamLead/teamleadSlice';
+import CreateTeamLead from './CreateTeamLead';
 
-const Teamlead = () => {
+const TeamLead = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.teamlead)
+	const { data, isError, isLoading, message } = useAppSelector((state: any) => state.teamlead)
+	const { createisSuccess } = useAppSelector((state: any) => state.teamlead)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
 	});
 
 
-
 	useEffect(() => {
 		// @ts-ignore
-		dispatch(getTeam());
+		dispatch(getTeamLead());
+
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (createisSuccess) {
+			dispatch(getTeamLead());
+		}
+	}, [createisSuccess, dispatch]);
 
 	useEffect(() => {
 		if (isError) {
 			fireAlert("error", message, "error");
-			// dispatch(reset());
+			dispatch(reset());
 		}
 	}, [isError, message, dispatch])
 
-	const header = ["NAME", "DESCRIPTION", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
+	const header = ["NAME", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);
 
 	return (
@@ -44,7 +53,7 @@ const Teamlead = () => {
 			</div> */}
 			<div className='allemployees-container-main' >
 				<div className='SiteWorkermaindivsub'>
-					<span className='SupportmainTitleh3'>Team List</span>
+					<span className='SupportmainTitleh3'>Team Lead List</span>
 				</div>
 				<div>
 					<EntriesPerPage
@@ -54,9 +63,7 @@ const Teamlead = () => {
 					/>
 				</div>
 				<div>
-					ccc
-					{/* <ApplyForLeave /> */}
-
+					<CreateTeamLead />
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
@@ -90,9 +97,6 @@ const Teamlead = () => {
 											{item?.name}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{item?.description.slice(0, 10)}
-										</td>
-										<td className="table-datacell datatype-numeric">
 											<Button
 												className={
 													item?.status !== "active"
@@ -112,8 +116,7 @@ const Teamlead = () => {
 											{moment(item?.updated_by).format("DD-MM-YYYY")}
 										</td>
 										<td className="table-datacell datatype-numeric">
-
-											<Button id="team-applicatiom-update" onClick={() => navigate(`/team/team/view/${item?.id}`)}>View</Button>
+											<Button id="team-applicatiom-update" onClick={() => navigate(`/teamlead/teamlead/view/${item?.id}`)}>View</Button>
 										</td>
 										{/* <td className="table-datacell datatype-numeric">
 											<Button
@@ -137,6 +140,7 @@ const Teamlead = () => {
 												{item?.is_hr_assisted === true ? "Yes" : "No"}
 											</Button>
 										</td> */}
+
 									</tr>
 								))
 							)}
@@ -156,4 +160,4 @@ const Teamlead = () => {
 	)
 }
 
-export default Teamlead
+export default TeamLead

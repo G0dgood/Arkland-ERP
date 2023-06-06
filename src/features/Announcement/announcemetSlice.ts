@@ -45,7 +45,7 @@ export const getAnnouncement = createAsyncThunk('auth/getAnnouncement', async (d
 })
 
 // View Announcement
-export const viewAnnouncement = createAsyncThunk('auth/viewAnnouncement', async (data,thunkAPI) => {
+export const viewAnnouncement = createAsyncThunk('announcement/viewAnnouncement', async (data,thunkAPI) => {
   try {
     return await announcementService.viewAnnouncement(data)
   } catch (error: any) {
@@ -57,7 +57,7 @@ export const viewAnnouncement = createAsyncThunk('auth/viewAnnouncement', async 
   }
 })
 // Craete Announcement
-export const createAnnouncement = createAsyncThunk('auth/createAnnouncement', async (data,thunkAPI) => {
+export const createAnnouncement = createAsyncThunk('announcement/createAnnouncement', async (data,thunkAPI) => {
   try {
     return await announcementService.createAnnouncement(data)
   } catch (error: any) {
@@ -70,7 +70,7 @@ export const createAnnouncement = createAsyncThunk('auth/createAnnouncement', as
 })
 
 // Delete Announcement
-export const deleteAnnouncement = createAsyncThunk('auth/deleteAnnouncement', async (data,thunkAPI) => {
+export const deleteAnnouncement = createAsyncThunk('announcement/deleteAnnouncement', async (data,thunkAPI) => {
   try {
     return await announcementService.deleteAnnouncement(data)
   } catch (error: any) {

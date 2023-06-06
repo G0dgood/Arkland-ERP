@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
-import { SyncLoader } from 'react-spinners';
+import { BounceLoader, SyncLoader } from 'react-spinners';
 import moment from 'moment';
 import { FiEye } from 'react-icons/fi';
 import { viewAnnouncement } from '../../features/Announcement/announcemetSlice';
@@ -19,9 +19,6 @@ const ViewAnnouncementModal = ({ id }: any) => {
 
 
 
-	useEffect(() => {
-		// @ts-ignore 
-	}, [dispatch, id]);
 
 
 
@@ -57,7 +54,7 @@ const ViewAnnouncementModal = ({ id }: any) => {
 				<Modal.Body>
 					{viewisLoading ? (
 						<div className="table-loader-announcement1">
-							<SyncLoader
+							<BounceLoader
 								color={"#990000"}
 								loading={viewisLoading}
 							/>

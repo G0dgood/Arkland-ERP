@@ -1,49 +1,38 @@
-import { Button } from "@material-ui/core";
+
 import moment from "moment";
-import { useEffect, useState } from "react";
-import { Toast } from "react-bootstrap";
-import { BsExclamationLg, BsEyeFill } from "react-icons/bs";
-import { FaArrowLeft, FaTimes } from "react-icons/fa";
-import { NavLink, useNavigate } from "react-router-dom";
 import {
   MainSearch,
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-
 import { useWorkersRequest } from "../../hooks/useWorkersRequest";
-// import { getProjects } from "../../store/reducers/project";
-// import { getTeam } from "../../store/reducers/team";
-// import { getTeamLeads } from "../../store/reducers/teamLeads";
-import { checkForName } from "../../utils/checkForName";
 import TableLoader from "../../components/TableLoader";
-import { useAppDispatch } from "../../store/useStore";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { useEffect } from "react";
+import { fireAlert } from "../../utils/Alert";
+import { getRequest, reset } from "../../features/workerRequest/workerRequestSlice";
+import { Button } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 
 const SiteWorkerRequest = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [showToast, setShowToast] = useState(false);
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
 
-  const { requestWorkersList, isLoading, error, message } = useWorkersRequest();
-  // const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
-  // const team: any = useAppSelector((state) => state.team.team);
-  // const projects: any = useAppSelector((state) => state.projects.projects);
+  const { data: requestWorkers, isError, isLoading, message } = useAppSelector((state: any) => state.worker)
+
+
 
   useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
+    // @ts-ignore
+    dispatch(getRequest());
+  }, [dispatch]);
 
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
-
-
+  useEffect(() => {
+    if (isError) {
+      fireAlert("error", message, "error");
+      dispatch(reset());
+    }
+  }, [isError, message, dispatch])
   // useEffect(() => {
   //   if (!projects || projects.length === 0) {
   //     dispatch(getProjects());
@@ -70,29 +59,9 @@ const SiteWorkerRequest = () => {
 
   return (
     <div  >
-      {error && (
-        <Toast
-          onClose={() => setShowToast(false)}
-          show={true}
-          delay={4000}
-          autohide
-        >
-          <Toast.Body>
-            <span>
-              <BsExclamationLg />
-            </span>
-            <p>{message}</p>
-            <span onClick={() => setShowToast(false)}>
-              <FaTimes />
-            </span>
-          </Toast.Body>
-        </Toast>
-      )}
-
-
       <div className="SiteWorkermaindiv">
         <div className="SiteWorkermaindivsub">
-          <Button variant="contained" className="Add-btn" id="Add-btn-sub">
+          {/* <Button variant="contained" className="Add-btn" id="Add-btn-sub">
             <NavLink
               to="/projects"
               className="drop-logout"
@@ -100,7 +69,7 @@ const SiteWorkerRequest = () => {
             >
               <FaArrowLeft size={30} />
             </NavLink>
-          </Button>
+          </Button> */}
           <span className="SupportmainTitleh3">SITE WORKER REQUEST</span>
         </div>
         <div>
@@ -129,22 +98,22 @@ const SiteWorkerRequest = () => {
             </thead>
             <tbody className="data-table-content">
               {isLoading ? (
-                <TableFetch colSpan={8} />
-              ) : requestWorkersList?.length === 0 ||
-                requestWorkersList == null ? (
-                <NoRecordFound colSpan={8} />
+                <TableFetch colSpan={9} />
+              ) : requestWorkers?.length === 0 ||
+                requestWorkers == null ? (
+                <NoRecordFound colSpan={9} />
               ) : (
-                requestWorkersList.map((item: any, i: any) => (
+                requestWorkers.map((item: any, i: any) => (
                   <tr className="data-table-row">
-                    {/* <td className="table-datacell datatype-numeric">
-                      {checkForName(item.project, projects)}
+                    <td className="table-datacell datatype-numeric">
+                      {/* {checkForName(item.project, projects)} */}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {checkForName(item.team, team)}
+                      {/* {checkForName(item.team, team)} */}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {checkForName(item.team_lead, teamLeads)}
-                    </td> */}
+                      {/* {checkForName(item.team_lead, teamLeads)} */}
+                    </td>
                     <td className="table-datacell datatype-numeric">
                       {item?.requests?.[0].role_name}
                     </td>
@@ -161,16 +130,8 @@ const SiteWorkerRequest = () => {
                       {item.status}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      <span>
-                        <BsEyeFill
-                          size={25}
-                          color={"#d32f2f"}
-                          onClick={() =>
-                            navigate(`/site-worker-request/${item._id}`)
-                          }
-                          title="View request"
-                        />
-                      </span>
+                      <Button id="team-applicatiom-update" onClick={() => navigate(`/workers_request/workers_request/view/${item?.id}`)}>View</Button>
+
                     </td>
                   </tr>
                 ))

@@ -2,19 +2,18 @@ import Cookies from 'js-cookie';
 import { io } from "socket.io-client";
 import toast, { Toaster } from 'react-hot-toast';
 import noti from './NotificationSound/IPhoneNotification.mp3'
+import DataService from '../utils/dataService';
 
-
+const dataService = new DataService()
 const Socket = ({ setRefresh }: any) => {
 
 	// Audio File
 	const myAudio = new Audio(noti);
 
-	const token = Cookies.get("token");
+	const token = dataService.getToken();
 	const socket = io("https://arkland-erp.herokuapp.com");
 	socket.emit("notification-connection", { token: token });
-	socket.on("notification-connected", (res) => {
-		// console.log('res', res)
-	});
+
 
 	socket.on("new-notification", (notification) => {
 		if (notification) {

@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'  
-import leaveSlice from '../features/Leave/leaveSlice'
-import authSlice from '../features/Auth/authSlice' 
+import leaveSlice from '../features/Leave/leaveSlice' 
 import userSlice from '../features/User/userSlice' 
 import employeeSlice from '../features/Employee/employeeSlice'
 import assessmentSlice from '../features/KPIAssessment/assessmentSlice'
@@ -13,14 +12,16 @@ import announcementSlice  from '../features/Announcement/announcemetSlice'
 import attendanceSlice from '../features/Attendances/attendanceSlice'
 import taskSlice from '../features/Tasks/taskSlice'
 import teamSlice from '../features/Team/teamSlice'
+import teamleadSlice from '../features/TeamLead/teamleadSlice'
+import workerRequestSlice from '../features/workerRequest/workerRequestSlice'
+ 
  
  
  
  
 
 export const store:any = configureStore({
-  reducer: { 
-     auth: authSlice,
+  reducer: {  
     leave: leaveSlice, 
     userinfo: userSlice, 
     employee: employeeSlice, 
@@ -33,7 +34,9 @@ export const store:any = configureStore({
     attendance: attendanceSlice, 
     announcement: announcementSlice, 
     task: taskSlice, 
+    worker: workerRequestSlice, 
     team: teamSlice, 
+    teamlead: teamleadSlice, 
   },
 })
 
