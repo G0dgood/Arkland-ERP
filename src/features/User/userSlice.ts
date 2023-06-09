@@ -12,12 +12,27 @@ const initialState = {
   isLoading: false, 
   message: '',
   error: '',
+  
   dataall:   [],
   isErrorall: false,
   isSuccessall: false,
   isLoadingall: false, 
   messageall: '',
   errorall: '',
+
+  privilegesdata:   [],
+  privilegesisError: false,
+  privilegesisSuccess: false,
+  privilegesisLoading: false, 
+  privilegesmessage: '',
+  privilegeserror: '',
+
+  deletedata:   [],
+  deleteisError: false,
+  deleteisSuccess: false,
+  deleteisLoading: false, 
+  deletemessage: '',
+  deleteerror: '',
   
 }
  
@@ -36,19 +51,33 @@ export const userRole = createAsyncThunk('user/userRole', async (  data,thunkAPI
   }
 })
  
-// Get All Leave 
-// export const getCreateLeave = createAsyncThunk('leave/getCreateLeave', async ( data,thunkAPI) => {
-//   try {
-//     return await leaveService.getCreateLeave( )
-//   } catch (error: any) {
-//     const message = (error.response && 
-//       error.response.data && 
-//       error.response.data.message) ||
-//       error.message ||error.toString()   
+// User privileges
+export const userprivileges = createAsyncThunk('user/userprivileges', async ( data,thunkAPI) => {
+  try {
+    return await userService.userprivileges( )
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
     
-//     return thunkAPI.rejectWithValue(message)
-//   }
-// })
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+// Delete privileges
+export const deleteprivileges = createAsyncThunk('user/deleteprivileges', async ( data,thunkAPI) => {
+  try {
+    return await userService.deleteprivileges(data )
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
  
 
  
@@ -63,10 +92,16 @@ export const userSlice = createSlice({
       state.isSuccess = false
       state.isError = false
       state.message = '' 
-      state.isLoadingall = false
-      state.isSuccessall = false
-      state.isErrorall = false
-      state.messageall = '' 
+
+      state.privilegesisLoading = false
+      state.privilegesisSuccess = false
+      state.privilegesisError = false
+      state.privilegesmessage = '' 
+
+      state.deleteisLoading = false
+      state.deleteisSuccess = false
+      state.deleteisError = false
+      state.deletemessage = '' 
     },
     
   },
@@ -87,21 +122,36 @@ export const userSlice = createSlice({
         state.message = action.payload
         state.data = [] 
       })
-      // .addCase(getCreateLeave.pending, (state) => {
-      //   state.isLoadingall = true
-        
-      // })
-      // .addCase(getCreateLeave.fulfilled, (state, action) => {
-      //   state.isLoadingall = false
-      //   state.isSuccessall = true
-      //   state.dataall = action.payload 
-      // })
-      // .addCase(getCreateLeave.rejected, (state:any, action) => {
-      //   state.isLoadingall = false
-      //   state.isErrorall = true
-      //   state.messageall = action.payload
-      //   state.dataall = [] 
-      // })
+
+      .addCase(userprivileges.pending, (state) => {
+        state.privilegesisLoading = true 
+      })
+      .addCase(userprivileges.fulfilled, (state, action) => {
+        state.privilegesisLoading = false
+        state.privilegesisSuccess = true
+        state.privilegesdata = action.payload 
+      })
+      .addCase(userprivileges.rejected, (state:any, action) => {
+        state.privilegesisLoading = false
+        state.privilegesisError = true
+        state.privilegesmessage = action.payload
+        state.privilegesdata = [] 
+      })
+
+      .addCase(deleteprivileges.pending, (state) => {
+        state.deleteisLoading = true 
+      })
+      .addCase(deleteprivileges.fulfilled, (state, action) => {
+        state.deleteisLoading = false
+        state.deleteisSuccess = true
+        state.deletedata = action.payload 
+      })
+      .addCase(deleteprivileges.rejected, (state:any, action) => {
+        state.deleteisLoading = false
+        state.deleteisError = true
+        state.deletemessage = action.payload
+        state.deletedata = [] 
+      })
      
       
   },

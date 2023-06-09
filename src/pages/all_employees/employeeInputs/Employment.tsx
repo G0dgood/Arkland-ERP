@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
@@ -7,9 +6,6 @@ import InputField from "../../../components/Inputs/InputField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
 import ReactSelectField from "../../../components/Inputs/ReactSelectField";
-import { getDepartment } from "../../../store/reducers/department";
-import { getRoles } from "../../../store/reducers/roles";
-import { useAppDispatch } from "../../../hooks/useDispatch";
 import {
   categoryOptions,
   typeOfEmploymentOptions,

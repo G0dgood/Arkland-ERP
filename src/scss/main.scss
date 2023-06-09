@@ -12,12 +12,13 @@
 @use "./components/todoshowall";
 @use "./components/mobileSideBar"; 
 @use "./components/Notification"; 
+@use "./components/UploadBase.scss"; 
 
 // pages
 @use "./pages/kpiassessment";
 @use "./pages/policy";
 @use "./pages/attendance";
-// @use "./pages/departments";
+@use "./pages/department";
 @use "./pages/dashboard.scss";
 @use "./pages/allemployees";
 @use "./pages/support";
@@ -29,6 +30,9 @@
 @use "./pages/createemployee";
 @use "./pages/profile";
 @use "./pages/editUser";
+@use "./pages/NotFound";
+@use "./pages/team";
+@use "./pages/viewsiteworkerrequest";
 
 @use "./abstracts/colors" as c;
 
@@ -71,6 +75,7 @@ body {
   margin: 0;
   letter-spacing: normal;
   box-sizing: border-box !important;
+  font-size: small !important;
 }
 
 td {
@@ -103,7 +108,7 @@ input {
 
 #screen-wrapper {
   display: grid;
-  height: 100vh;
+  height: 100vh !important;
   grid-template-columns: max-content 3fr;
   grid-template-rows: 0.2fr 3fr;
   grid-template-areas:
@@ -114,9 +119,25 @@ input {
 main {
   grid-area: main;
   padding: 30px;
-  overflow-y: scroll;
-  overflow-x: scroll;
+  height: 100%;
+  overflow-y: scroll
 }
+
+// .YEPft {
+//     margin-left: 16px;
+// }
+// .YEPft :hover{
+//     color: #fff !important;
+// }
+
+// #SidebarLabel-container{
+//   color: #c74b2c  !important;
+//   font-weight: bold ;
+// }
+// #SidebarLabel-container :hover{
+//   color: #fff !important;
+//   font-weight: bold !important;
+// }
 
 .View-btn {
   background-color: #bf8412 !important;
@@ -369,6 +390,7 @@ form.searchbox button:hover {
 
 .leave-Update-titile-icon {
   color: c.color(primary-color);
+  font-weight: bold;
 }
 
  
@@ -382,6 +404,25 @@ form.searchbox button:hover {
 
   .text-white-socket{
     font-size: small;
+  }
+
+
+  #btn-delete-field{
+  border: 1px solid  c.color(primary-color) !important;
+  border-radius: .5em !important;
+  cursor: pointer !important; 
+  font-size: 12px !important;
+  font-weight: bold !important;
+  padding: 0.2rem .8em !important; 
+  color: c.color(primary-color) !important;
+  }
+ 
+  // #btn-delete-field :hover{  
+  // color: c.color(white-100) !important; 
+  // }
+
+  .btn-delete-field-icon{
+    margin-right: 0.5rem;
   }
  
  

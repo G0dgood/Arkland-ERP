@@ -27,7 +27,7 @@ const CreateProjectView = ({
           const title = "Project creation request successful";
           const html = `Project created successfully.`;
           const icon = "success";
-          fireAlert(title, html, icon);
+          // fireAlert(title, html, icon);
           navigate(`/projects`);
         }
       })
@@ -36,7 +36,7 @@ const CreateProjectView = ({
         const html = "Try again";
         const icon = "error";
         const title = "Project creation failed";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
       });
   };
 

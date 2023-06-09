@@ -1,20 +1,38 @@
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md';
+import { useState } from 'react';
+import HttpService from './HttpService';
+import DataService from '../utils/dataService';
 
-const LogoutOption = ({ isLoading1, handleLogout, showLogout, setShowLogout }: any) => {
+const dataService = new DataService();
+
+const LogoutOption = ({ showLogout, setShowLogout }: any) => {
 
 
-
+	const [isLoading, setisLoading] = useState<any>(false);
 	const handleLogoutClose = () => setShowLogout(false);
 
+	const handleLogout = async () => {
+		setisLoading(true);
+		try {
+			await HttpService.patch("me/logout", {})
+			dataService.clearData()
+			setisLoading(false);
+			window.location.replace("/");
+		} catch (error) {
+			setisLoading(false);
+			dataService.clearData()
+			window.location.replace("/");
+		}
+	};
 
 
 	return (
 		<div>
 			<Modal
 				show={showLogout}
-				onHide={handleLogoutClose}
+				// onHide={handleLogoutClose}
 				backdrop="static"
 				keyboard={false}
 				className="kpi-modal"
@@ -22,7 +40,7 @@ const LogoutOption = ({ isLoading1, handleLogout, showLogout, setShowLogout }: a
 				<Modal.Header>
 					<span>{/*  */}</span>
 					{/* <span className="span-center-title">Logout</span> */}
-					<Button style={{ color: "#fff" }} onClick={() => setShowLogout(false)}>
+					<Button style={{ color: "#fff" }} onClick={handleLogoutClose}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -36,7 +54,7 @@ const LogoutOption = ({ isLoading1, handleLogout, showLogout, setShowLogout }: a
 							<Button className="table-link-active">
 								Close </Button></span>
 						<span ><Button className="table-link" onClick={handleLogout} >
-							{isLoading1 ? <Spinner animation="border" /> : "Yes"}
+							{isLoading ? <Spinner animation="border" /> : "Yes"}
 						</Button></span>
 					</div>
 				</Modal.Body>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   EntriesPerPage,
   MainSearch,
@@ -9,76 +9,49 @@ import moment from "moment";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import TableLoader from "../../components/TableLoader";
-import Cookies from "js-cookie";
-import storage from "../../utils/storage";
 import { fireAlert } from "../../utils/Alert";
 
-const MyWeekReport = ({ setkpidata }: any) => {
-  // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-  const token = Cookies.get("token");
-  const [data, setData] = useState<any>([]);
-  const [sortData, setSortData] = useState([]);
-  const [searchItem, setSearchItem] = useState("");
-  const [isLoading, setisLoading] = useState(false);
-  const [isSuccess, setisSuccess] = useState(false);
-  const [isError, setisError] = useState(false);
-  const [message, setMessage] = useState("");
+import { allweeklyReport, reset } from "../../features/WeeklyReport/WeeklyReportSlice";
+import Pagination from "../../components/Pagination";
+import DataService from "../../utils/dataService";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
 
-  const [displayData, setDisplayData] = useState([]);
+const dataService = new DataService()
+
+const MyWeekReport = ({ setkpidata }: any) => {
+  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+  const dispatch = useAppDispatch();
+  const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.Weeklyreport)
 
   const title = "Week Report error";
   const html = message;
   const icon = "error";
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON?.parse(localStorage.getItem("collapse")) || false;
-  });
+
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
+  const id = userInfo?.data?.employee?._id
+
   useEffect(() => {
-    setisLoading(true);
-    fetch(
-      `${process.env.REACT_APP_API}/hr/weekly-reports/list?employee=${userInfo?.data?.employee?._id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data?.success === false) {
-          setMessage(data?.message);
-          // setisError(true)
-        } else {
-          setisSuccess(true);
-          setData(data);
-          setkpidata(data?.data?.length);
-        }
-        setisLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setisLoading(false);
-      });
-  }, [setkpidata, token, userInfo?.data?.employee?._id]);
+    // @ts-ignore
+    dispatch(allweeklyReport(id));
+  }, [dispatch, id]);
+
 
   useEffect(() => {
     if (isError) {
       fireAlert(title, html, icon);
-      setTimeout(() => {
-        setisError(false);
-      }, 1000);
+      reset()
     }
   }, [html, isError, isSuccess]);
+
+  const [displayData, setDisplayData] = useState([]);
+
+
 
   return (
     <div>
@@ -88,7 +61,7 @@ const MyWeekReport = ({ setkpidata }: any) => {
         </div>
         <div>
           <EntriesPerPage
-            data={data?.data}
+            data={data}
             entriesPerPage={entriesPerPage}
             setEntriesPerPage={setEntriesPerPage}
           />
@@ -116,12 +89,12 @@ const MyWeekReport = ({ setkpidata }: any) => {
             <tbody className="data-table-content">
               {isLoading ? (
                 <TableFetch colSpan={8} />
-              ) : data?.data?.length === 0 ||
+              ) : displayData?.length === 0 ||
                 data === null ||
-                data?.data?.length === undefined ? (
+                displayData?.length === undefined ? (
                 <NoRecordFound colSpan={8} />
               ) : (
-                data?.data?.map((item: any, i: any) => (
+                displayData?.map((item: any, i: any) => (
                   <tr className="data-table-row" key={i}>
                     <td className="table-datacell datatype-numeric">
                       {" "}
@@ -162,6 +135,14 @@ const MyWeekReport = ({ setkpidata }: any) => {
           </table>
         </div>
       </section>
+      <footer className="main-table-footer">
+        <Pagination
+          setDisplayData={setDisplayData}
+          data={data}
+          entriesPerPage={entriesPerPage}
+          Total={"Week Report"}
+        />
+      </footer>
     </div>
   );
 };

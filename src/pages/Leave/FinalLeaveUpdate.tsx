@@ -1,21 +1,21 @@
-
-
 import React, { useEffect, useState } from 'react'
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill, BsBriefcase } from 'react-icons/bs'
 import { MdOutlineClose } from 'react-icons/md'
 import TableLoader from '../../components/TableLoader'
-import Cookies from 'js-cookie'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@material-ui/core';
 import moment from 'moment'
 import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
 import axios, { AxiosResponse } from 'axios'
+import DataService from '../../utils/dataService'
+
+const dataService = new DataService()
 
 const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const token = Cookies.get("token");
+	const token = dataService.getToken()
 	const [isLoading, setisLoading] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
@@ -163,13 +163,18 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 	const handleDelete = () => {
 		setisLoading2(true);
 		axios
-			.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`)
+			.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`
+				},
+			})
 			.then((res: AxiosResponse) => {
-				console.log('AxiosResponse', res)
+				// console.log('AxiosResponse', res)
 				setisLoading2(false);
 				setisSuccess2(true)
 				setTimeout(() => {
-					navigate("/allieave");
+					navigate(-1);
 				}, 2000);
 			})
 			.catch((data) => {
@@ -179,7 +184,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 
 	return (
 		<div>
-			<header className="ChatProgressView-header"  >
+			{/* <header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
 					<BsBriefcase />
 					<span className="in-progresss">
@@ -196,7 +201,7 @@ const FinalLeaveUpdate = ({ setShowLeave }: any) => {
 						/>
 					</Link>
 				</div>
-			</header>
+			</header> */}
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">

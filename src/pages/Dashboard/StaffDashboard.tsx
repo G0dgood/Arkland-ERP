@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOpenInFull } from "react-icons/md";
 // @ts-ignore
 import img from "../../assets/images/mann2.svg";
 import TodoShowAll from "../../components/TodoShowAll";
 import Todos from "./Todos";
 import Announcement from "./Announcement";
+import HttpService from "../../components/HttpService";
+import DataService from "../../utils/dataService";
 
 const StaffDashboard = () => {
   const Quote = require('inspirational-quotes');
 
-
+  const dataService = new DataService()
+  const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+  const id = (user?.employee?._id)
   const [showDrawer, setShowDrawer] = useState<any>(false);
-
+  const [announcement, setAnnouncement] = useState<any>([]);
+  const [tasks, setTask] = useState<any>([]);
+  const [isLoading, setisLoading] = useState<any>([]);
   const locale = "en";
   // Save the current date to be able to trigger an update
   const [today, setDate] = React.useState(new Date());
@@ -38,14 +44,32 @@ const StaffDashboard = () => {
     minute: "numeric",
   });
   React.useEffect(() => {
-    // const timer = setInterval(() => { // Creates an interval which will update the current data every minute
-    // This will trigger a rerender every component that uses the useDate hook.
     setDate(new Date());
-    // }, 60 * 1000);
-    // return () => {
-    // 	clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
-    // }
   }, []);
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+
+  const getData = async () => {
+    setisLoading(true)
+    try {
+      const announcementsUrl = "me/announcements"
+      const announcement: any = await HttpService.get(announcementsUrl)
+      setAnnouncement(announcement?.data?.data)
+
+      const tasksUrl = `tasks/${id}`
+      const tasks: any = await HttpService.get(tasksUrl)
+      setTask(tasks?.data?.data)
+
+      setisLoading(false)
+
+    } catch (error) {
+      setisLoading(false)
+    }
+  }
+
 
   return (
     <div className="main-div">
@@ -77,15 +101,15 @@ const StaffDashboard = () => {
             <p className="event-months">
               {date.toUpperCase()} {month} {year}
             </p>
-            {/* <CreateEvent /> */}
+            {/* <CreateEvent />    */}
           </div>
         </div>
         {/* Announcement */}
-        <Announcement />
+        <Announcement announcement={announcement} isLoading={isLoading} />
       </div>
 
       {/* Todos start */}
-      <Todos showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
+      <Todos showDrawer={showDrawer} setShowDrawer={setShowDrawer} tasks={tasks} isLoading={isLoading} />
       {/* Todos end */}
     </div>
   );

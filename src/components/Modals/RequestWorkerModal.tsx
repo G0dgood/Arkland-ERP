@@ -7,7 +7,7 @@ import { Formik } from "formik";
 import { MdOutlineClose } from "react-icons/md";
 import { BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
-import { useAppSelector } from "../../hooks/useDispatch";
+
 import Cookies from "js-cookie";
 
 const token = Cookies.get("token");
@@ -37,7 +37,7 @@ const RequestWorkerModal = (props: any) => {
         const title = "Request for worker submitted";
         const html = `Request submitted`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setLoading(false);
         setLgShow(false);
 
@@ -50,7 +50,7 @@ const RequestWorkerModal = (props: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Request submission failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
 
@@ -139,16 +139,16 @@ const RequestWorkerModal = (props: any) => {
 
     return <div>{quantity}</div>;
   };
-  const roles: any = useAppSelector((state) => state?.roles?.roles);
+  // const roles: any = useAppSelector((state) => state?.roles?.roles);
   const availablleRoles = [] as any;
 
-  roles &&
-    roles.forEach((role: any) =>
-      availablleRoles.push({
-        value: role.id,
-        label: role.name,
-      })
-    );
+  // roles &&
+  //   roles.forEach((role: any) =>
+  //     availablleRoles.push({
+  //       value: role.id,
+  //       label: role.name,
+  //     })
+  //   );
 
   return (
     <div id="request-modal">
@@ -204,7 +204,7 @@ const RequestWorkerModal = (props: any) => {
                       </div>
                     </div>
                   </div> */}
-                  <div className="Modal-textarea-middle">
+                  {/* <div className="Modal-textarea-middle">
                     {roles?.length > 0 ? (
                       <div className="col">
                         {roles?.map((item: any, i: any) => {
@@ -248,7 +248,7 @@ const RequestWorkerModal = (props: any) => {
                     ) : (
                       ""
                     )}
-                  </div>
+                  </div> */}
                   <div className="btn-modal-container">
                     <Button
                       variant="contained"

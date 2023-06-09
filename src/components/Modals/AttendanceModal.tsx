@@ -44,7 +44,7 @@ const AttendanceModal = (props: any) => {
         const title = "Announcement created successfully.";
         const html = `Announcement created`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         handleNewAnnouncementCreated();
         setLgShow(false);
         props.onNewAnnouncementCreated();
@@ -59,7 +59,7 @@ const AttendanceModal = (props: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Announcement creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
   return (

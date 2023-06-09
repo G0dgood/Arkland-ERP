@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { BiUser } from 'react-icons/bi';
 import EditProfile from './components/EditProfile';
 import EditEducation from './components/EditEducation';
 import EditNextKin from './components/EditNextKin';
 import ResetPassword from './components/ResetPassword';
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
 import { Button } from '@material-ui/core';
 
 const EditUser = () => {
@@ -21,26 +19,11 @@ const EditUser = () => {
     { component: <ResetPassword /> }
   ]
 
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
-
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
 
 
   return (
-    <div id="screen-wrapper">
-      <Header toggleSideNav={toggleSideNav} />
-      <Sidebar collapseNav={collapseNav} />
-      <main id="edit-user">
+    <div  >
+      <div id="edit-user">
         <h6 className="page-title"><Link to="/profile">Profile</Link> | Edit Profile</h6>
         <section>
           <div className="user-info">
@@ -60,7 +43,7 @@ const EditUser = () => {
             {tabPanels[activeTab].component}
           </div>
         </section>
-      </main>
+      </div>
     </div>
   )
 };

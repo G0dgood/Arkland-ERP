@@ -1,69 +1,63 @@
 import { Button } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { MdOutlineClose } from "react-icons/md";
 import { BsPlusLg } from "react-icons/bs";
-import Cookies from "js-cookie";
 import { fireAlert } from "../../utils/Alert";
 import InputField from "../Inputs/InputField";
 import ReactSelectField from "../Inputs/ReactSelectField";
-import { useAppSelector } from "../../hooks/useDispatch";
+
 import TextAreaField from "../Inputs/TextAreaField";
 import CountrySelectField from "../Inputs/CountrySelectField";
 import CustomInputField from "../Inputs/CustomInputField";
 import { formatDate } from "../../utils/formatDate";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { useNavigate } from "react-router-dom";
+import { createProject, reset } from "../../features/Project/projectSlice";
+import { allDepartments } from "../../features/Department/departmentSlice";
 
 const CreateProjectModal = (props: any) => {
-  const token = Cookies.get("token");
+  const { data: departments } = useAppSelector((state: any) => state.department)
+  const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.project)
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const [isLoading, setLoading] = React.useState(false);
   const validate = Yup.object().shape({
     name: Yup.string().required("Name of project is required"),
   });
   const [lgShow, setLgShow] = useState(false);
-  const handleSubmit = async (values: any, { resetForm }: any) => {
-    setLoading(true);
 
-    const createProjectValues = { ...values };
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API}/hr/projects`, {
-        method: "POST",
-        body: JSON.stringify(createProjectValues),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      if (response.ok) {
-        const title = "Project created successfully";
-        const html = `Project created`;
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allDepartments());
+  }, [dispatch]);
 
-        const icon = "success";
-        fireAlert(title, html, icon);
-        resetForm(values);
-        setLoading(false);
-        setLgShow(false);
-        props.onNewProjectCreated();
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Project creation failed";
-      fireAlert(title, html, icon);
+
+  useEffect(() => {
+    if (createisSuccess) {
+      fireAlert("Successful", "Project Created Successfully", "success");
+      setLgShow(false)
+      navigate(-1)
+      dispatch(reset());
+    } else if (createisError) {
+      fireAlert("Project creation error", createmessage, "error");
+      dispatch(reset());
     }
+  }, [createisError, createisSuccess, createmessage, dispatch, navigate])
+
+
+
+
+  const handleSubmit = async (values: any, { resetForm }: any) => {
+    const inputs = { ...values };
+    // @ts-ignore
+    dispatch(createProject(inputs));
   };
 
-  const departments: any = useAppSelector(
-    (state) => state.department.department
-  );
+
   const availablleDepartments = [] as any;
 
   departments &&
@@ -73,27 +67,27 @@ const CreateProjectModal = (props: any) => {
         label: team.name,
       })
     );
-  const teams: any = useAppSelector((state) => state.team.team);
+  // const teams: any = useAppSelector((state) => state.team.team);
   const availablleTeam = [] as any;
 
-  teams &&
-    teams.forEach((team: any) =>
-      availablleTeam.push({
-        value: team.id,
-        label: team.name,
-      })
-    );
+  // teams &&
+  //   teams.forEach((team: any) =>
+  //     availablleTeam.push({
+  //       value: team.id,
+  //       label: team.name,
+  //     })
+  //   );
 
-  const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
-  const availablleTeamLeads = [] as any;
+  // const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
+  // const availablleTeamLeads = [] as any;
 
-  teamLeads &&
-    teamLeads.forEach((team: any) =>
-      availablleTeamLeads.push({
-        value: team.id,
-        label: team.name,
-      })
-    );
+  // teamLeads &&
+  //   teamLeads.forEach((team: any) =>
+  //     availablleTeamLeads.push({
+  //       value: team.id,
+  //       label: team.name,
+  //     })
+  //   );
   return (
     <div>
       <Button
@@ -189,7 +183,7 @@ const CreateProjectModal = (props: any) => {
                       <div className="Modal-two-input">
                         <div className="col">
                           <div className="form-group">
-                            <ReactSelectField
+                            {/* <ReactSelectField
                               label="Team"
                               name="team"
                               options={availablleTeam}
@@ -197,7 +191,7 @@ const CreateProjectModal = (props: any) => {
                               onChange={(event: any) => {
                                 setFieldValue("team", event?.value);
                               }}
-                            />
+                            /> */}
                           </div>
                         </div>
                       </div>
@@ -205,7 +199,7 @@ const CreateProjectModal = (props: any) => {
                       <div className="Modal-two-input">
                         <div className="col">
                           <div className="form-group">
-                            <ReactSelectField
+                            {/* <ReactSelectField
                               label="Project lead"
                               name="lead"
                               options={availablleTeamLeads}
@@ -213,7 +207,7 @@ const CreateProjectModal = (props: any) => {
                               onChange={(event: any) => {
                                 setFieldValue("lead", event?.value);
                               }}
-                            />
+                            /> */}
                           </div>
                         </div>
                       </div>
@@ -299,7 +293,7 @@ const CreateProjectModal = (props: any) => {
                         className="Add-btn-modal"
                         type="submit"
                       >
-                        {isLoading ? (
+                        {createisLoading ? (
                           <Spinner animation="border" />
                         ) : (
                           "Create Project"

@@ -1,6 +1,7 @@
 .allemployees-container-main {
   display: flex !important;
   justify-content: space-between !important;
+  overflow-y: scroll;
 }
 
 .allemployees-container {
@@ -36,7 +37,7 @@
 
   &-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
 
     &-buttons {
       display: flex;
@@ -51,6 +52,32 @@
     justify-content: space-between;
     overflow-x: scroll;
   }
+
+ 
+}
+
+@media only screen and (max-width: 1080px) { 
+  .employee-main-div-col {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 3px rgb(0 0 0 / 24%);
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: scroll;
+
+    &-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+}
 }
 
 .edit-icon-color :hover {

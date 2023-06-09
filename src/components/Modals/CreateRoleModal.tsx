@@ -1,15 +1,40 @@
-
-
 import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core';
 import { MdOutlineClose } from 'react-icons/md';
 import { fireAlert } from "../../utils/Alert";
-import Cookies from 'js-cookie';
-import axios, { AxiosResponse } from 'axios';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { allDepartments } from '../../features/Department/departmentSlice';
+import { createEmployeeRole } from '../../features/Employee/employeeSlice';
 
 
-const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
+
+
+const CreateRoleModal = () => {
+	const dispatch = useAppDispatch();
+
+	const { data } = useAppSelector((state: any) => state.department)
+	const { createroleisError, createroleisLoading, createrolemessage, createroleisSuccess } = useAppSelector((state: any) => state.employee)
+
+
+
+
+	useEffect(() => {
+		// @ts-ignore
+		dispatch(allDepartments());
+
+	}, [dispatch]);
+
+	const [departmentss, setDepartmentss] = useState([]);
+
+
+	useEffect(() => {
+		if (data) {
+			setDepartmentss(data)
+		}
+	}, [data])
+
+
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
 		name: "",
@@ -17,69 +42,30 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 		description: "",
 	})
 
-	const token = Cookies.get("token");
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isLoading1, setisLoading1] = useState(false);
-	const [departments, setDepartments] = useState([]);
 
 
 
-	const handleLeave = () => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/employee-roles`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-			body: JSON.stringify(inputs),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-					setisError(true)
-					console.log('data', data)
-				} else {
-					console.log('data', data)
-					setisSuccess(true)
-					setReload(true)
-					setLgShow(false)
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
+
+	const handlecreate = () => {
+
+		// @ts-ignore
+		dispatch(createEmployeeRole(inputs));
 	}
 
-
-	const title = "Successful";
 	const html = "Role Created!";
 	const icon = "success";
 	const title1 = "Role error";
-	const html1 = message;
 	const icon1 = "error";
 
 
 	useEffect(() => {
-		if (isSuccess) {
-			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-				setMessage("")
-				setReload(false)
-			}, 5000);
+		if (createroleisSuccess) {
+			fireAlert("success", html, icon);
+			dispatch(allDepartments());
 			setLgShow(false)
-		} else if (isError) {
-			fireAlert(title1, html1, icon1);
+		} else if (createroleisError) {
+			fireAlert(title1, createrolemessage, icon1);
 			setTimeout(() => {
-				setisError(false)
-				setMessage("")
 				setInputs({
 					name: "",
 					department: "",
@@ -87,7 +73,7 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 				})
 			}, 5000);
 		}
-	}, [html, html1, isError, isSuccess, setReload])
+	}, [createroleisError, createroleisSuccess, createrolemessage, dispatch, html])
 
 
 
@@ -99,18 +85,8 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 	};
 
 
-	useEffect(() => {
-		setisLoading1(true);
-		axios
-			.get(`${process.env.REACT_APP_API}/hr/departments`)
-			.then((res: AxiosResponse) => {
-				setDepartments(res?.data?.data);
-			})
-			.catch((data) => {
-				console.log(data);
-				setisLoading1(false);
-			});
-	}, [])
+
+
 	const Role: any = [
 		"employee",
 		"team lead",
@@ -168,8 +144,7 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 							value={inputs.department}
 							onChange={(e) => handleOnChange("department", e.target.value)}>
 							<option value=" ">Select Departments...</option>
-
-							{departments?.map((employ: any) => (
+							{departmentss?.map((employ: any) => (
 								<option key={employ?._id} value={employ?.id}>
 									{employ?.name}
 								</option>
@@ -180,12 +155,13 @@ const CreateRoleModal = ({ setReload, setShowTitle }: any) => {
 						<div className='Modal-textarea-middle'>
 							<h6>Description</h6>
 							<textarea rows={6} className='Modal-textarea' placeholder='Enter role description'
-								value={inputs.description}
+								value={inputs?.description}
 								onChange={(e) => handleOnChange("description", e.target.value)} />
 						</div>
 						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal" onClick={handleLeave}>
-								{isLoading ? <Spinner animation="border" /> : "Create"}
+
+							<Button variant="contained" className="Add-btn-modal" onClick={handlecreate}  >
+								{createroleisLoading ? <Spinner animation="border" /> : "Create"}
 							</Button>
 						</div>
 					</div>

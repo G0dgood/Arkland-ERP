@@ -1,84 +1,14 @@
-import React from "react";
-import Cookies from "js-cookie";
-import { Modal } from "react-bootstrap";
-import { SyncLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import moment from "moment";
 import Checkbox from "@material-ui/core/Checkbox";
 import { FiEye, FiTrash2 } from "react-icons/fi";
-// import { RiTodoLine } from "react-icons/ri";
 import { Button } from "@mui/material";
-// import { getRequestOptions } from "../../utils/auth/header";
-import AddTodo from "../../components/Modals/AddTodo";
-import { fireAlert } from "../../utils/Alert";
-// import { useAppSelector } from "../../hooks/useDispatch";
-// import { NoRecordFound } from "../../components/TableOptions";
-import { useFetchTasks, useScheduleById } from "../../hooks/useSchedule";
-import { DialogState } from "../../interfaces/base";
-// import announcement from "../../assets/images/announcement.png";
-import { MdOutlineClose } from "react-icons/md";
 
-const Todos = ({ showDrawer, setShowDrawer }: any) => {
+
+const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
 
 
 
-  const token = Cookies.get("token");
-  const [taskAction, setTaskAction] = React.useState([] as any);
-  const [viewAction, setViewAction] = React.useState([] as any);
-  // const [taskCreateShow, setTaskCreateShow] = React.useState(false);
-  const [newTodoCreated, setNewTodoCreated] = React.useState(false);
-  const [deleteShow, setDeleteShow] = React.useState(false);
-  const [viewShow, setViewShow] = React.useState(false);
-  const [showDialog, setShowDialog] = React.useState<DialogState>({});
-  const [showView, setShowView] = React.useState<DialogState>({});
-  // error, message,
-  const { tasks, isLoading, setLoading } =
-    useFetchTasks(taskAction);
-
-  const { schedule, isScheduleLoading } = useScheduleById(viewAction);
-
-  const handleDelete = (id: any) => {
-    setShowDialog({ [id]: true });
-    setDeleteShow(true);
-  };
-
-  const handleView = (id: any) => {
-    setViewAction([id]);
-    setShowView({ [id]: true });
-    setViewShow(true);
-  };
-  const deleteTask = async (id: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API}/tasks/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setLoading(false);
-      if (response.ok) {
-        const title = "Task deleted.";
-        const html = `Task deleted`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        setTaskAction(true);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Task deletion failed";
-      fireAlert(title, html, icon);
-    }
-  };
-  const handleNewTodoCreated = () => {
-    setNewTodoCreated(!newTodoCreated);
-  };
   const handleShow = () => {
     if (!showDrawer) {
       setShowDrawer(true);
@@ -95,7 +25,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
 
         {isLoading ? (
           <div className="table-loader-announcement1">
-            <SyncLoader color={"#990000"} loading={isLoading} />
+            <BounceLoader color={"#990000"} loading={isLoading} />
           </div>
         ) : tasks?.length === 0 || tasks === undefined ? (
           <div className="table-loader-announcement1">
@@ -107,10 +37,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
           </div>
         ) : (
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-            }}
+            style={{ display: "grid", gridTemplateColumns: "1fr" }}
           >
             {tasks?.length > 0 ? (
               <div>
@@ -142,19 +69,19 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                     >
                       <FiEye
                         size={25}
-                        onClick={() => handleView(item?.id)}
+                        // onClick={() => handleView(item?.id)}
                         cursor="pointer"
                         title="VIEW TODO"
                       />
                       <FiTrash2
                         size={25}
-                        onClick={() => handleDelete(item?.id)}
+                        // onClick={() => handleDelete(item?.id)}
                         cursor="pointer"
                         title="DELETE TODO"
                       />
                     </div>
 
-                    {showView[item?.id] && (
+                    {/* {showView[item?.id] && (
                       <Modal
                         size="lg"
                         show={viewShow}
@@ -162,7 +89,8 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                         centered
                       >
                         <Modal.Header>
-                          <span>{/*  */}</span>
+                          <span>{/*  */}
+                    {/* </span>
                           <span className="span-center-title">View Todo</span>
                           <Button style={{ color: "#fff" }} onClick={() => setViewShow(false)}>
                             <MdOutlineClose size={28} />
@@ -207,15 +135,16 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                           </button>
                         </Modal.Footer>
                       </Modal>
-                    )}
-                    {showDialog[item?.id] && (
+                    )} */}
+                    {/* {showDialog[item?.id] && (
                       <Modal
                         size="lg"
                         show={deleteShow}
                         aria-labelledby="contained-modal-title-vcenter"
                         centered >
                         <Modal.Header>
-                          <span>{/*  */}</span>
+                          <span>{/*  */}
+                    {/* </span>
                           <span className="span-center-title">Delete Task</span>
                           <Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
                             <MdOutlineClose size={28} />
@@ -229,7 +158,6 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                           <button
                             className="btn btn-danger"
                             onClick={() => {
-                              deleteTask(item?.id);
                               setShowDialog({ [item?.id]: false });
                             }}
                           >
@@ -243,7 +171,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
                           </button>
                         </Modal.Footer>
                       </Modal>
-                    )}
+                    )} */}
                   </div>
                 ))}
               </div>
@@ -258,7 +186,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
         <Button variant="outlined" className="show-btn" onClick={handleShow}>
           Show All
         </Button>
-        <AddTodo onNewTodoCreated={handleNewTodoCreated} />
+        {/* <AddTodo onNewTodoCreated={handleNewTodoCreated} /> */}
       </div>
     </div>
   );

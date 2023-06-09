@@ -1,6 +1,4 @@
 import { Button } from '@material-ui/core';
-import axios from 'axios';
-import React, { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md';
 
@@ -35,10 +33,14 @@ const DeleteModals = ({ isLoading1, handleDelete, showdelete, setShowDelete, Hea
 					<div className='deleteKPIHandler'>
 						<span className='deleteKPIHandler-mr'>
 							<Button className="table-link-active">
-								Close </Button></span>
-						<span ><Button className="table-link" onClick={handleDelete} >
-							{isLoading1 ? <Spinner animation="border" /> : "Yes"}
-						</Button></span>
+								Close
+							</Button>
+						</span>
+						<span >
+							<Button className="table-link" onClick={handleDelete} >
+								{isLoading1 ? <Spinner animation="border" /> : "Yes"}
+							</Button>
+						</span>
 					</div>
 				</Modal.Body>
 			</Modal>

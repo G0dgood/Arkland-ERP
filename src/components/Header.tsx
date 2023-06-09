@@ -2,52 +2,48 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
-import axios from "axios";
-import Cookies from "js-cookie";
 import { CgProfile } from "react-icons/cg";
 import { TfiAlignJustify } from "react-icons/tfi";
 import logo from "../assets/images/ASLLOGO.svg";
 import { AiOutlineLogout } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
-import storage from "../utils/storage";
 import MobileSideBar from "./MobileSideBar";
-import { removeData } from "../AppRoutes";
 import LogoutOption from "./LogoutOption";
 import Notification from "./Notification/Notification";
 import Socket from "./Socket";
+import { allNotifications } from "../features/Notification/NotificationSlice";
+import { useAppDispatch, useAppSelector } from "../store/useStore";
+import DataService from "../utils/dataService";
+import HttpService from "./HttpService";
+import socketService from "./SocketService";
+import { callback } from "chart.js/dist/helpers/helpers.core";
 
+const dataService = new DataService()
 const Header = ({ toggleSideNav }: any) => {
-  // const token = Cookies.get("token");
-  // const navigate = useNavigate();
-  // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-
-
+  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+  const dispatch = useAppDispatch();
   const [refresh, setRefresh] = useState<any>(false);
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
-  const [isLoading1, setisLoading1] = useState(false);
-  const handleLogout = async () => {
-    setisLoading1(true);
-    await axios
-      .patch(`${process.env.REACT_APP_API}/me/logout`)
-      .then(() => {
-        delete axios?.defaults?.headers?.common["Authorization"];
-      })
-      .catch((err) => {
-        console.log(err);
-        setisLoading1(false);
-      });
-    Cookies.remove("token");
-    storage.remove("user");
-    removeData();
-    // navigate("/");
-    setisLoading1(false)
-    window.location.replace("/");
-    // window.location.reload();
-  };
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState<any>(userInfo.notifications);
+  const url = "notifications"
+
+  const socket = socketService.getSocket()
+
+  // console.log('socket', socket)
+
+  socket.on("new-notification", (notification) => {
+    console.log('notification', notification)
+  })
+
+
+
+
+
+
 
   window.addEventListener("offline", (e) => setnetwork("offline"));
   window.addEventListener("online", (e) => setnetwork("online"));
@@ -61,8 +57,8 @@ const Header = ({ toggleSideNav }: any) => {
 
   const [isOpen, setIsopen] = useState(false);
   // const [data, setData] = useState(false);
-  // const [hideNav, setHideNav] = useState<any>(false);
   const [showLogout, setShowLogout] = useState<any>(false);
+
 
   const ToggleSidebar = () => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
@@ -76,37 +72,49 @@ const Header = ({ toggleSideNav }: any) => {
     }
   }
 
-  const [loading, setLoading] = useState<any>(false);
-  const [info, setInfo] = useState<any>("");
-  const [dataLength, setDataLength] = useState<number>(0);
 
-
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`https://arkland-erp.herokuapp.com/api/v1/notifications`)
-      .then((data) => {
-        // console.log('real-error', data)
-        if (data?.data.success === false) {
-          console.log('ERROR', data)
-        } else {
-          setInfo(data?.data?.data?.data);
-          setDataLength(data?.data?.data?.data?.length)
-        }
-        setLoading(false);
-
+  const handleNext = async () => {
+    setLoading(true)
+    const page = notification.paginator.nextPage
+    const size = 10
+    await HttpService.search(url, { page, size })
+      .then((response: any) => {
+        setLoading(false)
+        const newNotification = response?.data?.data
+        userInfo.notifications = newNotification
+        dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+        setNotification(newNotification)
       })
-      .catch((err) => {
-        console.log('err', err);
-        setLoading(false);
-      });
-  }, [refresh]);
+      .catch((error) => {
+        setLoading(false)
+      })
+  }
+
+
+  const handlePrev = async () => {
+    setLoading(true)
+    const page = notification.paginator.prevPage
+    const size = 10
+    await HttpService.search(url, { page, size })
+      .then((response: any) => {
+        setLoading(false)
+        const newNotification = response?.data?.data
+        userInfo.notifications = newNotification
+        dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+        setNotification(newNotification)
+      })
+      .catch((error) => {
+        setLoading(false)
+      })
+
+
+  }
 
 
 
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)} >
-      <Socket setRefresh={setRefresh} />
+      {/* <Socket setRefresh={setRefresh} /> */}
       <Toaster
         position="top-center"
         toastOptions={{
@@ -116,12 +124,7 @@ const Header = ({ toggleSideNav }: any) => {
           // }
         }}
       />
-      <LogoutOption
-        setShowLogout={setShowLogout}
-        showLogout={showLogout}
-        handleLogout={handleLogout}
-        isLoading1={isLoading1}
-      />
+
       <div className="header-container">
         <div className="header-left">
           <TfiAlignJustify
@@ -140,7 +143,7 @@ const Header = ({ toggleSideNav }: any) => {
           </div>
           <span className="header-logo-text">{/* Line Manager */}</span>
           <span className="header-logo-text1">
-            {userInfo?.data?.employee?.email}
+            {userInfo?.employee?.email}
           </span>
         </div>
         <div className="hand-noficational-place">
@@ -150,11 +153,11 @@ const Header = ({ toggleSideNav }: any) => {
               <span className="content">
                 <IoIosNotifications size={30} />
               </span>
-              <span className="badge">{dataLength}</span>
+              <span className="badge">{notification?.new_notification_count}</span>
             </div>
             {dropDownNoti &&
               (<div className="user-details-noti">
-                <Notification info={info} />
+                <Notification handleNext={handleNext} handlePrev={handlePrev} notification={notification} loading={loading} />
               </div>)}
           </div>
 
@@ -164,7 +167,7 @@ const Header = ({ toggleSideNav }: any) => {
             onClick={() => setDropDown(true)}
           >
             <span className="dropdown-names">
-              {userInfo?.data?.employee?.full_name}
+              {userInfo?.employee?.full_name}
             </span>
             <div className="preview-header img-container-header">
               <FaUserCircle size={22} />
@@ -191,6 +194,7 @@ const Header = ({ toggleSideNav }: any) => {
           </div>
         </div>
       </div>
+      <LogoutOption showLogout={showLogout} setShowLogout={setShowLogout} />
       <MobileSideBar
         ToggleSidebar={ToggleSidebar}
         isOpen={isOpen}

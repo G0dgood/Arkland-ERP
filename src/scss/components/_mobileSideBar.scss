@@ -35,9 +35,9 @@ border-radius: 2px;
   color:  c.color(primary-color);
 }
 .btn-primary {
-    border-color: c.color(primary-color);
-    /* background-color: #005b90 !important; */
+    border-color: c.color(primary-color); 
     color: #fff;
+    border: none !important;
 }
 .shadow-md {
     box-shadow: 0px 5px 10px rgba(90, 116, 148, 0.3);

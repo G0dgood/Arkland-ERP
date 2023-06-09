@@ -197,8 +197,7 @@
 
     &-subTitle {
       font-weight: 400;
-      font-size: 8px;
-      // line-height: 0px;
+      font-size: 8px; 
       color: c.color(project-view-btn);
     }
 
@@ -212,11 +211,11 @@
 
 .project-back-img {
   object-fit: fill;
-  width: 26px;
-  height: 26px;
-  margin-right: 143px;
-  margin-bottom: 129px;
-  position: absolute;
+  // width: 26px;
+  // height: 26px;
+  // margin-right: 143px;
+  // margin-bottom: 129px;
+  // position: absolute;
 }
 
 .project-sub-img {

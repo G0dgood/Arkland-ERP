@@ -2,7 +2,6 @@ import { NoRecordFound } from "../TableOptions";
 
 const WeeklyReportTable = ({ newWeeklyField, setNewWeeklyField }: any) => {
 
-
 	const handleChange = (input: any, value: any, index: any,) => {
 		let items = [...newWeeklyField];
 		let oldItem = items.findIndex((x) => x.id === index);
@@ -12,8 +11,9 @@ const WeeklyReportTable = ({ newWeeklyField, setNewWeeklyField }: any) => {
 	};
 
 
+
 	return (
-		<div>
+		<div >
 			<div id="table-wrapper">
 				<table>
 					<tr>
@@ -33,10 +33,10 @@ const WeeklyReportTable = ({ newWeeklyField, setNewWeeklyField }: any) => {
 						<th><span className="weekly-report-padding">Challenges and Limitations</span></th>
 					</tr>
 
-					{newWeeklyField?.length === 0 || newWeeklyField === null ? (
+					{newWeeklyField?.length === 0 || newWeeklyField === undefined ? (
 						<NoRecordFound colSpan={9} />
 					) : newWeeklyField?.map((item: any, index: any) => (
-						<tr key={index}>
+						<tr key={index} >
 							<td >
 								<div id="td-span-row">
 									<textarea
