@@ -25,10 +25,14 @@ const HODList = ({ setEmployee, setData }: any) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
+	console.log('data', data)
+
 	useEffect(() => {
-		// @ts-ignore
-		dispatch(getHOD());
-	}, [dispatch]);
+		if (!data) {
+			// @ts-ignore
+			dispatch(getHOD());
+		}
+	}, [data, dispatch]);
 
 	const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 	// --- Pagination --- //
@@ -52,21 +56,17 @@ const HODList = ({ setEmployee, setData }: any) => {
 	];
 
 
-	const title = "Successful";
-	const html = "HOD Deleted!";
-	const icon = "success";
-	const title1 = "Delete HOD error";
+
+	const title1 = "HOD error";
 	const html1 = message;
 	const icon1 = "error";
 
 
 	useEffect(() => {
-		if ("") {
-			fireAlert(title, html, icon);
-		} else if (isError) {
+		if (message === "Request failed with status code 500" ? false : message) {
 			fireAlert(title1, html1, icon1);
 		}
-	}, [html, html1, isError,])
+	}, [html1, isError, message])
 
 
 	const [displayData, setDisplayData] = useState([]);

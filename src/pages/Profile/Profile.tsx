@@ -1,8 +1,6 @@
-import { Button } from '@material-ui/core';
-import { MdEditNote } from 'react-icons/md';
+
 import { FiChevronLeft } from 'react-icons/fi';
 import { BsDot } from 'react-icons/bs';
-// import logo from '../../assets/images/asl-profile.jpeg';
 import { Link } from 'react-router-dom'
 import moment from 'moment';
 import LogoutOption from '../../components/LogoutOption';
@@ -29,12 +27,7 @@ const Profile = () => {
 						<FiChevronLeft size={30} />
 					</span>
 					<span>
-						{/* <Link to='/profile/edit'> */}
-						<Button variant="outlined" className="show-btn-profile" >
-							<MdEditNote size={20} />
-							Edit
-						</Button>
-						{/* </Link> */}
+
 					</span>
 				</div>
 				<div className="profile-body-container-sup-title">
@@ -69,8 +62,6 @@ const Profile = () => {
 							<p>{userInfo?.employee?.address}</p>
 							<p>City</p>
 							<p>{userInfo?.employee?.city}</p>
-							<p>State</p>
-							<p>Lagos</p>
 							<p>Phone</p>
 							<p>{userInfo?.employee?.phone}</p>
 						</div>
@@ -81,14 +72,10 @@ const Profile = () => {
 							<p>{moment(userInfo?.employee?.employment_date).format("DD-MM-YYYY")}</p>
 							<p>Role</p>
 							<p>{userInfo?.role?.name}</p>
-							<p>HOD</p>
-							<p>Peter Obi</p>
 							<p>Department</p>
 							<p>{userInfo?.department?.name}</p>
 							<p>Employer ID</p>
 							<p>als-{userInfo?.employee?.employee_id}</p>
-							<p>Station</p>
-							<p>A&A Towers, Floor 3, Room 5 </p>
 						</div>
 					</div>
 				</div>

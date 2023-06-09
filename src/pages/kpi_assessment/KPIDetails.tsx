@@ -36,16 +36,16 @@ const KPIDetails = () => {
 
 	const [hodscore, setHodscore] = useState('')
 
-	useEffect(() => {
-		if (viewisError) {
-			fireAlert("Leave error", viewmessage, "error");
-		} else if (deleteisError) {
-			fireAlert("Delete Leave error", deletemessage, "error");
-		} else if (deleteisSuccess) {
-			fireAlert("KPI Deleted", "KPI Deleted Successfully", "success");
-			navigate(-1)
-		}
-	}, [viewisError, viewmessage, deleteisError, deletemessage, deleteisSuccess, navigate]);
+	// useEffect(() => {
+	// 	if (viewisError) {
+	// 		fireAlert("Leave error", viewmessage, "error");
+	// 	} else if (deleteisError) {
+	// 		fireAlert("Delete Leave error", deletemessage, "error");
+	// 	} else if (deleteisSuccess) {
+	// 		fireAlert("KPI Deleted", "KPI Deleted Successfully", "success");
+	// 		navigate(-1)
+	// 	}
+	// }, [viewisError, viewmessage, deleteisError, deletemessage, deleteisSuccess, navigate]);
 
 
 

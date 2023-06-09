@@ -1,22 +1,14 @@
 import moment from "moment";
-import { useEffect } from "react";
-import { Button } from "@mui/material";
-import { Spinner } from "react-bootstrap";
-import SyncLoader from "react-spinners/SyncLoader";
-import CreateAnnouncementModal from "../../components/Modals/CreateAnnouncementModal";
 import { getUserPrivileges } from "../../functions/auth";
-import { getAnnouncement } from "../../features/Announcement/announcemetSlice";
 import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import DeleteAnnouncementModal from "../../components/Modals/DeleteAnnouncementModal";
-import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import ClockIn from "../../components/ClockIn";
+import { BounceLoader } from "react-spinners";
 
 
+const Announcement = ({ announcement: data, isLoading }: any) => {
 
 
-const Announcement = () => {
-  const dispatch = useAppDispatch();
-  const { data, isLoading, createisSuccess, deleteisSuccess } = useAppSelector((state: any) => state.announcement)
 
   const {
     isHRHead,
@@ -27,22 +19,6 @@ const Announcement = () => {
     isEmployee,
     isHrAdmin,
   } = getUserPrivileges();
-
-
-
-  useEffect(() => {
-    if (deleteisSuccess || createisSuccess) {
-      // @ts-ignore
-      dispatch(getAnnouncement());
-    }
-  }, [createisSuccess, deleteisSuccess, dispatch]);
-
-  useEffect(() => {
-    // @ts-ignore
-    dispatch(getAnnouncement());
-  }, [dispatch]);
-
-
 
   return (
     <div className="main-div-col-2-sub">
@@ -58,9 +34,9 @@ const Announcement = () => {
           isHRHead ||
           isHrAdmin) && (
             <div>
-              <CreateAnnouncementModal
+              {/* <CreateAnnouncementModal
 
-              />
+              /> */}
             </div>
           )}
         <ClockIn />
@@ -68,7 +44,7 @@ const Announcement = () => {
       <div>
         {isLoading ? (
           <div className="table-loader-announcement">
-            <SyncLoader color={"#990000"} loading={isLoading} />
+            <BounceLoader color={"#990000"} loading={isLoading} />
           </div>
         ) : data?.length === 0 || data === undefined ? (
           <div className="table-loader-announcement">

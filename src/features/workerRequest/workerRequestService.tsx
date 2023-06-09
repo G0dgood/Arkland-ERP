@@ -7,27 +7,22 @@ const getRequest = async () => {
 }
 
 const createRequest = async (input: any) => {
-	const { data }: any = await HttpService.post(`workers-requests`, input)
+	const { data }: any = await HttpService.post(`hr/workers-requests`, input)
 	return data
 }
 
 const viewRequest = async (id: any) => {
-	const { data }: any = await HttpService.get(`tasks/${id}`)
+	const { data }: any = await HttpService.get(`hr/workers-requests/${id}`)
 	return data
 }
 
-const deleteRequest = async (id: any) => {
-	const { data }: any = await HttpService.delete(`tasks/${id}`)
+const rejectRequest = async (id: any) => {
+	const { data }: any = await HttpService.patch(`hr/workers-requests/${id}/reject`)
 	return data
 }
-const updateRequest = async (input: any) => {
-	const { id, inputs } = input
-	const { data }: any = await HttpService.patch(`tasks/${id}`, inputs)
-	return data
-}
-const noteRequest = async (input: any) => {
-	const { id, inputs } = input
-	const { data }: any = await HttpService.patch(`tasks/${id}/notes`, inputs)
+const approveRequest = async (id: any) => {
+
+	const { data }: any = await HttpService.patch(`hr/workers-requests/${id}/approve`)
 	return data
 }
 
@@ -39,9 +34,8 @@ const workerRequestSlice = {
 	getRequest,
 	createRequest,
 	viewRequest,
-	deleteRequest,
-	updateRequest,
-	noteRequest
+	rejectRequest,
+	approveRequest,
 }
 
 export default workerRequestSlice

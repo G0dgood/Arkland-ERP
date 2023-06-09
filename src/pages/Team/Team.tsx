@@ -8,6 +8,7 @@ import TableLoader from '../../components/TableLoader';
 import { getTeam, reset } from '../../features/Team/teamSlice';
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
+import CreateTeamModal from './CreateTeamModal';
 
 const Team = () => {
 	const dispatch = useAppDispatch();
@@ -55,8 +56,7 @@ const Team = () => {
 					/>
 				</div>
 				<div>
-					ccc
-					{/* <ApplyForLeave /> */}
+					<CreateTeamModal />
 
 				</div>
 			</div>

@@ -3,10 +3,6 @@ import workerRequestService from './workerRequestService'
 
 
 
-
-
-
-
 const initialState = {
 	data: [],
 	isError: false,
@@ -27,23 +23,19 @@ const initialState = {
 	viewmessage: '',
 
 
-	deletedata: [],
-	deleteisError: false,
-	deleteisSuccess: false,
-	deleteisLoading: false,
-	deletemessage: '',
+	rejectdata: [],
+	rejectisError: false,
+	rejectisSuccess: false,
+	rejectisLoading: false,
+	rejectmessage: '',
 
-	updatedata: [],
-	updateisError: false,
-	updateisSuccess: false,
-	updateisLoading: false,
-	updatemessage: '',
+	approvedata: [],
+	approveisError: false,
+	approveisSuccess: false,
+	approveisLoading: false,
+	approvemessage: '',
 
-	notedata: [],
-	noteisError: false,
-	noteisSuccess: false,
-	noteisLoading: false,
-	notemessage: '',
+
 }
 
 
@@ -89,9 +81,9 @@ export const viewRequest = createAsyncThunk('worker/viewRequest', async (data, t
 
 
 // Delete Request
-export const deleteRequest = createAsyncThunk('worker/deleteRequest', async (data, thunkAPI) => {
+export const rejectRequest = createAsyncThunk('worker/rejectRequest', async (data, thunkAPI) => {
 	try {
-		return await workerRequestService.deleteRequest(data)
+		return await workerRequestService.rejectRequest(data)
 	} catch (error: any) {
 		const message = (error.response &&
 			error.response.data &&
@@ -102,9 +94,9 @@ export const deleteRequest = createAsyncThunk('worker/deleteRequest', async (dat
 })
 
 // Update Request
-export const updateRequest = createAsyncThunk('worker/updateRequest', async (data, thunkAPI) => {
+export const approveRequest = createAsyncThunk('worker/approveRequest', async (data, thunkAPI) => {
 	try {
-		return await workerRequestService.updateRequest(data)
+		return await workerRequestService.approveRequest(data)
 	} catch (error: any) {
 		const message = (error.response &&
 			error.response.data &&
@@ -113,19 +105,6 @@ export const updateRequest = createAsyncThunk('worker/updateRequest', async (dat
 		return thunkAPI.rejectWithValue(message)
 	}
 })
-// Note Request
-export const noteRequest = createAsyncThunk('worker/noteRequest', async (data, thunkAPI) => {
-	try {
-		return await workerRequestService.noteRequest(data)
-	} catch (error: any) {
-		const message = (error.response &&
-			error.response.data &&
-			error.response.data.message) ||
-			error.message || error.toString()
-		return thunkAPI.rejectWithValue(message)
-	}
-})
-
 
 
 
@@ -152,20 +131,16 @@ export const workerRequestSlice = createSlice({
 			state.viewmessage = ''
 
 
-			state.deleteisLoading = false
-			state.deleteisSuccess = false
-			state.deleteisError = false
-			state.deletemessage = ''
+			state.rejectisLoading = false
+			state.rejectisSuccess = false
+			state.rejectisError = false
+			state.rejectmessage = ''
 
-			state.updateisLoading = false
-			state.updateisSuccess = false
-			state.updateisError = false
-			state.updatemessage = ''
+			state.approveisLoading = false
+			state.approveisSuccess = false
+			state.approveisError = false
+			state.approvemessage = ''
 
-			state.noteisLoading = false
-			state.noteisSuccess = false
-			state.noteisError = false
-			state.notemessage = ''
 
 		},
 	},
@@ -220,49 +195,36 @@ export const workerRequestSlice = createSlice({
 				state.viewdata = null
 			})
 
-			.addCase(deleteRequest.pending, (state) => {
-				state.deleteisLoading = true
+			.addCase(rejectRequest.pending, (state) => {
+				state.rejectisLoading = true
 			})
-			.addCase(deleteRequest.fulfilled, (state: any, action) => {
-				state.deleteisLoading = false
-				state.deleteisSuccess = true
-				state.deletedata = action.payload?.data
+			.addCase(rejectRequest.fulfilled, (state: any, action) => {
+				state.rejectisLoading = false
+				state.rejectisSuccess = true
+				state.rejectdata = action.payload?.data
 			})
-			.addCase(deleteRequest.rejected, (state: any, action) => {
-				state.deleteisLoading = false
-				state.deleteisError = true
-				state.deletemessage = action.payload
-				state.deletedata = null
+			.addCase(rejectRequest.rejected, (state: any, action) => {
+				state.rejectisLoading = false
+				state.rejectisError = true
+				state.rejectmessage = action.payload
+				state.rejectdata = null
 			})
 
-			.addCase(updateRequest.pending, (state) => {
-				state.updateisLoading = true
+			.addCase(approveRequest.pending, (state) => {
+				state.approveisLoading = true
 			})
-			.addCase(updateRequest.fulfilled, (state: any, action) => {
-				state.updateisLoading = false
-				state.updateisSuccess = true
-				state.updatedata = action.payload?.data
+			.addCase(approveRequest.fulfilled, (state: any, action) => {
+				state.approveisLoading = false
+				state.approveisSuccess = true
+				state.approvedata = action.payload?.data
 			})
-			.addCase(updateRequest.rejected, (state: any, action) => {
-				state.updateisLoading = false
-				state.updateisError = true
-				state.updatemessage = action.payload
-				state.updatedata = null
+			.addCase(approveRequest.rejected, (state: any, action) => {
+				state.approveisLoading = false
+				state.approveisError = true
+				state.approvemessage = action.payload
+				state.approvedata = null
 			})
-			.addCase(noteRequest.pending, (state) => {
-				state.noteisLoading = true
-			})
-			.addCase(noteRequest.fulfilled, (state: any, action) => {
-				state.noteisLoading = false
-				state.noteisSuccess = true
-				state.notedata = action.payload?.data
-			})
-			.addCase(noteRequest.rejected, (state: any, action) => {
-				state.noteisLoading = false
-				state.noteisError = true
-				state.notemessage = action.payload
-				state.notedata = null
-			})
+
 
 	},
 })

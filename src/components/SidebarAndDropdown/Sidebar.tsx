@@ -49,13 +49,11 @@ const Sidebar = ({
 
      <SubMenu suffix={<span className="badge yellow">3</span>} title={'KPI Assessment'} icon={<FiPieChart size={20} />} >
 
-      <MenuItem className='Side__Content' active={pathname === '/kpiassessment'} icon={<FiPieChart size={20} />}>  My Assessment <Link to="/kpiassessment" /> </MenuItem>
+      <MenuItem className='Side__Content' active={pathname === '/kpiassessment'} icon={<FiPieChart size={20} />}>My Assessment <Link to="/kpiassessment" /> </MenuItem>
       {(isTeamLead) && (
-       <MenuItem className='Side__Content' active={pathname === '/kpiassessment/kpiassessment/teamkpi'}>Team KPI <Link to="/kpiassessment/kpiassessment/teamkpi" /> </MenuItem>
-      )}
+       <MenuItem className='Side__Content' active={pathname === '/kpiassessment/kpiassessment/teamkpi'}>Team KPI <Link to="/kpiassessment/kpiassessment/teamkpi" /> </MenuItem>)}
       {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isHeadOfDepartment) && (
-       <MenuItem className='Side__Content' active={pathname === '/kpiassessment/kpiassessment/admin'}>  <Link to="/kpiassessment/kpiassessment/admin" /> All KPI Report</MenuItem>
-      )}
+       <MenuItem className='Side__Content' active={pathname === '/kpiassessment/kpiassessment/admin'}>  <Link to="/kpiassessment/kpiassessment/admin" /> All KPI Report</MenuItem>)}
      </SubMenu>
 
      <SubMenu suffix={<span className="badge yellow">3</span>} title={'Weekly Report'} icon={<GoFile size={23} />}>
@@ -64,9 +62,12 @@ const Sidebar = ({
       {(isTeamLead) && (
        <MenuItem className='Side__Content' active={pathname === '/weeklyreport/weeklyreport/team'}> <Link to="/weeklyreport/weeklyreport/team" />Team Weekly Report</MenuItem>)}
      </SubMenu>
+
      <MenuItem className='Side__Content' active={pathname === '/announcements'} icon={<TfiAnnouncement size={23} />}> Announcement<Link to="/announcements" />  </MenuItem>
      {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isHeadOfDepartment) && (
-      <MenuItem className='Side__Content' active={pathname === '/attendance/attendance/list/hr'} icon={<CgUserList size={23} />}> HR Attendance <Link to="/attendance/attendance/list/hr" />  </MenuItem>
+      <MenuItem className='Side__Content' active={pathname === '/attendance/attendance/list/hr'} icon={<CgUserList size={23} />}>
+       HR Attendance <Link to="/attendance/attendance/list/hr" />
+      </MenuItem>
      )}
      <MenuItem className='Side__Content' active={pathname === '/attendance'} icon={<HiOutlineUserGroup size={23} />}> Attendance <Link to="/attendance" /> </MenuItem>
 

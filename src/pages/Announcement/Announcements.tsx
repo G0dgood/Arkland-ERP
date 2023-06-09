@@ -15,10 +15,10 @@ const Announcements = () => {
 	const dispatch = useAppDispatch();
 	const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.announcement)
 	const navigate = useNavigate();
-	const [showdelete, setShowDelete] = useState(false);
-	const [rolesid, setRolesid] = useState(0);
+	// const [showdelete, setShowDelete] = useState(false);
+	// const [rolesid, setRolesid] = useState(0);
 
-
+	console.log("data", data)
 
 	// useEffect(() => {
 	// 	if (isSuccess) {

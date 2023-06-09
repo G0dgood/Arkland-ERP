@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import { io } from "socket.io-client";
 import toast, { Toaster } from 'react-hot-toast';
 import noti from './NotificationSound/IPhoneNotification.mp3'
@@ -26,14 +25,14 @@ const Socket = ({ setRefresh }: any) => {
 		// console.log('new-notification', notification)
 	});
 
-	socket.on("new-message", (message) => {
-		if (message) {
-			toast.success(message?.details);
-		} else if (message.success === false) {
-			toast.error(message.error);
-		}
-		// console.log('new-message', message)
-	});
+	// socket.on("new-message", (message) => {
+	// 	if (message) {
+	// 		toast.success(message?.details);
+	// 	} else if (message.success === false) {
+	// 		toast.error(message.error);
+	// 	}
+	// 	// console.log('new-message', message)
+	// });
 
 
 

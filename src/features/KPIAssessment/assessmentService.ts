@@ -4,7 +4,7 @@ import HttpService from '../../components/HttpService'
  
 const getAssessment= async (id: any) => { 
   
-  const { data }: any = await HttpService.search(`hr/appraisals`, `employee=${id}`)   
+  const { data }: any = await HttpService.search(`hr/appraisals`, { employee: id })   
   return data
 }
 const allAssessment= async ( ) => { 
@@ -24,7 +24,7 @@ const createAssessment = async (inputs: any) => {
   return data
 }
 const teamAssessment = async (id:any) => {  
-    const { data }: any = await HttpService.search(`hr/appraisals`, `reviewer=${id}`)   
+    const { data }: any = await HttpService.search(`hr/appraisals`, {reviewer:id})   
   return data
 }
 

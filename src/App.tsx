@@ -4,18 +4,16 @@ import "./App.scss";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import KPIAssessment from "./pages/kpi_assessment/KPIAssessment";
 import Leave from "./pages/Leave/Leave";
 import AllLeaveApplications from "./pages/Leave/AllLeaveApplications";
 import Support from "./pages/Support/Support";
 import Policy from "./pages/Policy/Policy";
-import SiteWorkerRequest from "./pages/WorkersRequest.tsx /SiteWorkerRequest";
+import SiteWorkerRequest from "./pages/WorkersRequest/SiteWorkerRequest";
 import CreateProjects from "./pages/Projects/CreateProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
 import WarningList from "./pages/all_employees/WarningList";
 import WeeklyReport from "./pages/WeeklyReport/WeeklyReport";
-import WeeklyReportTable from "./components/table_component/WeeklyReportTable";
 import Profile from "./pages/Profile/Profile";
 import EditUser from "./pages/EditUser/EditUser";
 import AdminEditUser from "./pages/AdminEditUser/AdminEditUser";
@@ -63,7 +61,8 @@ import TeamLeadView from "./pages/TeamLead/TeamLeadView";
 import TaskView from "./pages/Tasks/TaskView";
 import Announcements from "./pages/Announcement/Announcements";
 import AnnouncementsView from "./pages/Announcement/AnnouncementsView";
-
+import ViewSiteWorkerRequest from "./pages/WorkersRequest/ViewSiteWorkerRequest";
+// import ViewSiteWorkerRequest from "./pages/"
 const dataService = new DataService();
 
 

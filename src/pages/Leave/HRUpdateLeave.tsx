@@ -82,7 +82,7 @@ const HRUpdateLeave = () => {
 				} else {
 					setisSuccess(true)
 					setTimeout(() => {
-						navigate("/allleaveapplications");
+						navigate(-1);
 					}, 2000);
 				}
 				setisLoading1(false);

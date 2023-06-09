@@ -5,14 +5,14 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-import { useWorkersRequest } from "../../hooks/useWorkersRequest";
 import TableLoader from "../../components/TableLoader";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fireAlert } from "../../utils/Alert";
 import { getRequest, reset } from "../../features/workerRequest/workerRequestSlice";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
+import RequestForWorkersModal from "./RequestForWorkersModal";
 
 const SiteWorkerRequest = () => {
   const navigate = useNavigate();
@@ -33,17 +33,7 @@ const SiteWorkerRequest = () => {
       dispatch(reset());
     }
   }, [isError, message, dispatch])
-  // useEffect(() => {
-  //   if (!projects || projects.length === 0) {
-  //     dispatch(getProjects());
-  //   }
-  //   if (!teamLeads || teamLeads.length === 0) {
-  //     dispatch(getTeamLeads());
-  //   }
-  //   if (!team || team.length === 0) {
-  //     dispatch(getTeam());
-  //   }
-  // }, [dispatch, projects, teamLeads, team]);
+
 
   const header = [
     { title: "PROJECT", prop: "project" },
@@ -61,19 +51,11 @@ const SiteWorkerRequest = () => {
     <div  >
       <div className="SiteWorkermaindiv">
         <div className="SiteWorkermaindivsub">
-          {/* <Button variant="contained" className="Add-btn" id="Add-btn-sub">
-            <NavLink
-              to="/projects"
-              className="drop-logout"
-              id="white-btn-color"
-            >
-              <FaArrowLeft size={30} />
-            </NavLink>
-          </Button> */}
           <span className="SupportmainTitleh3">SITE WORKER REQUEST</span>
         </div>
-        <div>
-          <MainSearch placeholder={"Search...          Site Workers"} />
+        <div style={{ display: "flex" }}>
+          <MainSearch placeholder={"Search...          Site Workers"} /> <span style={{ marginLeft: "1rem" }}> <RequestForWorkersModal id={requestWorkers} /></span>
+
         </div>
       </div>
       <section className="md-ui component-data-table">

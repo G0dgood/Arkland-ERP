@@ -18,12 +18,15 @@ import InputField from "../../components/Inputs/InputField";
 import { useNavigate } from "react-router-dom";
 import HttpService from "../../components/HttpService";
 import DataService from "../../utils/dataService";
+import { allNotifications } from "../../features/Notification/NotificationSlice";
+import { useAppDispatch } from "../../store/useStore";
+import socketService from "../../components/SocketService";
 
 
 const dataService = new DataService()
 
 const Login = () => {
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const token = dataService.getToken()
@@ -49,13 +52,15 @@ const Login = () => {
     try {
       const response: any = await HttpService.post("auth/login", values)
       const token = response.data.token
-      console.log('token', token)
       dataService.setToken(token)
-      const { department, role, employee, privileges } = response.data
-      const userInfo = { department, role, employee, privileges }
+      const { department, role, employee, privileges, notifications } = response.data
+      const userInfo = { department, role, employee, privileges, notifications }
       dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
       resetForm(values);
       setLoading(false);
+
+      socketService.emmitEvent('notification-connection')
+
       window.location.replace("/");
     } catch (error) {
       setLoading(false);

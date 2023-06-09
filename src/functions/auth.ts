@@ -29,7 +29,7 @@ export function getUserPrivileges(): {
   const userInfo = userString ? userString : null;
   const privileges = userInfo?.privileges || [];
 
-  console.log('userInfo',userInfo?.privileges)
+  
 
   const isSuperAdmin = privileges.some((p: any) => p.role === "super admin");
   const isAdmin = privileges.some((p: any) => p.role === "admin");

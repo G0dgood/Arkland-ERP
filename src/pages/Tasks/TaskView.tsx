@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { GiTeamIdea } from 'react-icons/gi';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BounceLoader, SyncLoader } from 'react-spinners';
+import { BounceLoader } from 'react-spinners';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { reset, viewTask } from '../../features/Tasks/taskSlice';

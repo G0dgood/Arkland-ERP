@@ -3,10 +3,11 @@ import HttpService from '../../components/HttpService'
  
   
  
-const allNotifications = async (  ) => { 
-  const { data }:any =  await HttpService.get("notifications")
+const allNotifications = async (response:any  ) => {  
+  
+  
 
-  return data
+  return response
 }
  
  
@@ -14,8 +15,9 @@ const allNotifications = async (  ) => {
  
  
  
+ 
 const NotificationService = { 
-  allNotifications,   
+  allNotifications   
 }
 
 export default NotificationService

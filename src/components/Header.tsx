@@ -12,38 +12,34 @@ import MobileSideBar from "./MobileSideBar";
 import LogoutOption from "./LogoutOption";
 import Notification from "./Notification/Notification";
 import Socket from "./Socket";
-
 import { allNotifications } from "../features/Notification/NotificationSlice";
 import { useAppDispatch, useAppSelector } from "../store/useStore";
 import DataService from "../utils/dataService";
+import HttpService from "./HttpService";
+import socketService from "./SocketService";
+import { callback } from "chart.js/dist/helpers/helpers.core";
 
 const dataService = new DataService()
 const Header = ({ toggleSideNav }: any) => {
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state: any) => state.notification)
-
   const [refresh, setRefresh] = useState<any>(false);
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState<any>(userInfo.notifications);
+  const url = "notifications"
+
+  const socket = socketService.getSocket()
+
+  // console.log('socket', socket)
+
+  socket.on("new-notification", (notification) => {
+    console.log('notification', notification)
+  })
 
 
-
-
-
-  useEffect(() => {
-    // @ts-ignore
-    if (!data || refresh === true) {
-      dispatch(allNotifications());
-    }
-  }, [data, dispatch, refresh]);
-
-  // @ts-ignore
-  // const userInfo: any = JSON.parse(storage?.get("user"));
-  // @ts-ignore
-  // const newnoti: any = JSON.parse(storage?.get("notifications"));
 
 
 
@@ -77,25 +73,48 @@ const Header = ({ toggleSideNav }: any) => {
   }
 
 
+  const handleNext = async () => {
+    setLoading(true)
+    const page = notification.paginator.nextPage
+    const size = 10
+    await HttpService.search(url, { page, size })
+      .then((response: any) => {
+        setLoading(false)
+        const newNotification = response?.data?.data
+        userInfo.notifications = newNotification
+        dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+        setNotification(newNotification)
+      })
+      .catch((error) => {
+        setLoading(false)
+      })
+  }
 
 
-  // useEffect(() => {
-  //   if (newnoti?.length > 1 || yes) {
-  //     setInfo(newnoti);
-  //   }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [yes])
+  const handlePrev = async () => {
+    setLoading(true)
+    const page = notification.paginator.prevPage
+    const size = 10
+    await HttpService.search(url, { page, size })
+      .then((response: any) => {
+        setLoading(false)
+        const newNotification = response?.data?.data
+        userInfo.notifications = newNotification
+        dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+        setNotification(newNotification)
+      })
+      .catch((error) => {
+        setLoading(false)
+      })
 
 
-
-
-
+  }
 
 
 
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)} >
-      <Socket setRefresh={setRefresh} />
+      {/* <Socket setRefresh={setRefresh} /> */}
       <Toaster
         position="top-center"
         toastOptions={{
@@ -134,11 +153,11 @@ const Header = ({ toggleSideNav }: any) => {
               <span className="content">
                 <IoIosNotifications size={30} />
               </span>
-              <span className="badge">{!data?.data?.length ? 0 : data?.data?.length}</span>
+              <span className="badge">{notification?.new_notification_count}</span>
             </div>
             {dropDownNoti &&
               (<div className="user-details-noti">
-                <Notification info={data?.data} />
+                <Notification handleNext={handleNext} handlePrev={handlePrev} notification={notification} loading={loading} />
               </div>)}
           </div>
 

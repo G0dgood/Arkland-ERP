@@ -35,7 +35,7 @@ const TeamLeaveApplications = () => {
 		dispatch(reset());
 	}, [dispatch, teamisError, teammessage]);
 
-	const [sortData, setSortData] = useState([]);
+
 
 	const id = userInfo?.department?.id
 

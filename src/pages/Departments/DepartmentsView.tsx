@@ -3,8 +3,7 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
-import { getRequestOptions } from "../../utils/auth/header";
+
 
 import { NoRecordFound, TableFetch } from "../../components/TableOptions";
 
@@ -14,8 +13,7 @@ const DepartmentsView = () => {
   const [isLoading, setisLoading] = useState(false);
   const [error, setError] = useState<any>();
   const [departments, setDepartments] = useState([] as any);
-  const [message, setMessage] = useState("");
-  const [newDepartmentCreated, setNewDepartmentCreated] = React.useState(false);
+
 
 
 

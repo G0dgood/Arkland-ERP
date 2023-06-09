@@ -313,7 +313,7 @@ overflow-y: scroll;
   // max-height: 35rem !important;
 }
 .Admin-Announcement-container {
-  height: 18rem;
+  height: 24rem;
   overflow-y: auto !important;
 }
 
@@ -335,7 +335,7 @@ overflow-y: scroll;
 .Announcement-sub-2 {
   width: 100%;
   overflow-y: scroll !important; 
-  max-height: 34rem ;
+  max-height: 36rem ;
 }
 
 .main-min-text2-span{
@@ -440,10 +440,10 @@ overflow-y: scroll;
   .Announcement-sub-1 { 
     overflow-x: scroll;
   }
-   .Announcement-sub-2 {
-  overflow-y: scroll !important; 
-   max-height: 300px   !important;
- }
+//    .Announcement-sub-2 {
+//   overflow-y: scroll !important; 
+//     height: 400px   !important;
+//  }
   .main-div{
     padding: 0px !important;
   }
@@ -483,22 +483,22 @@ overflow-y: scroll;
   }
 }
 @media only screen and (max-width: 1400px) {
-  .Announcement-sub-2  {
- overflow-y: scroll !important; 
-   height: 80% !important ;
-}
+//   .Announcement-sub-2  {
+//  overflow-y: scroll !important; 
+//    height: 80% !important ;
+// }
   .main-min-text {
     overflow-y: scroll !important;
   }
 }
 
-@media only screen and (max-width: 1600px) {
-  .Announcement-sub-2  {
- overflow-y: scroll ; 
-   height: 80% !important ;
-}
+// @media only screen and (max-width: 1600px) {
+//   .Announcement-sub-2  {
+//  overflow-y: scroll ; 
+//    height: 80% !important ;
+// }
    
-}
+// }
 
 // DashboardCalender
 

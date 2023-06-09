@@ -1,68 +1,16 @@
-import React, { useEffect } from "react";
-
-import { FiEye, FiTrash2 } from "react-icons/fi";
-import { Button } from "@mui/material";
-import { BounceLoader, SyncLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import moment from "moment";
-import { Modal, Spinner } from "react-bootstrap";
-import { MdOutlineClose } from "react-icons/md";
-import { Form, Formik } from "formik";
-import InputField from "../../components/Inputs/InputField";
-import ReactSelectField from "../../components/Inputs/ReactSelectField";
-import { fireAlert } from "../../utils/Alert";
-import { difficultyOptions, priorityOptions } from "../../functions/helpers";
-import CustomInputField from "../../components/Inputs/CustomInputField";
-import { formatDate } from "../../utils/formatDate";
-import { DialogState } from "../../interfaces/base";
 import { getUserPrivileges } from "../../functions/auth";
-import { checkForOptions } from "../../utils/checkForName";
-import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import DataService from "../../utils/dataService";
-import { allEmployee } from "../../features/Employee/employeeSlice";
-import { getTask } from "../../features/Tasks/taskSlice";
-import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import ViewScheduleModal from "../../components/Modals/ViewScheduleModal";
 
-const Schedule = () => {
+const Schedule = ({ tasks, isLoading }: any) => {
 
-  const dispatch = useAppDispatch();
-  const dataService = new DataService()
-  const token = dataService.getToken()
-  const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } =
-    getUserPrivileges();
-  const { data: tasks, isLoading } = useAppSelector((state: any) => state.task)
+
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } = getUserPrivileges();
 
 
 
-  const id = (user?.employee?._id)
 
-  useEffect(() => {
-    if (!tasks) {
-      // @ts-ignore
-      dispatch(getTask(id));
-    }
-  }, [dispatch, id, tasks]);
-
-
-  const { data: employees } = useAppSelector((state: any) => state.employee)
-
-
-  useEffect(() => {
-
-    dispatch(allEmployee());
-  }, [dispatch]);
-
-
-  const availablleEmployees = [] as any;
-
-  employees &&
-    employees.forEach((employee: any) =>
-      availablleEmployees.push({
-        value: employee?.user,
-        label: employee?.full_name,
-      })
-    );
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">

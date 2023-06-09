@@ -23,7 +23,7 @@ const HodLeaveView = () => {
 	const { hodApproveisError, hodApproveisLoading, hodApprovemessage, hodApproveisSuccess } = useAppSelector((state: any) => state.leave)
 	// const { hodApprovedata, teamviewisError, teamviewisLoading, teamviewmessage } = useAppSelector((state: any) => state.leave)
 
-	console.log('teamviewisLoading', teamviewisLoading)
+
 
 	const { id } = useParams()
 	const navigate = useNavigate();

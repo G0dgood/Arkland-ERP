@@ -34,7 +34,7 @@ const TeamLead = () => {
 	}, [createisSuccess, dispatch]);
 
 	useEffect(() => {
-		if (isError) {
+		if (message === "Request failed with status code 500" ? false : message) {
 			fireAlert("error", message, "error");
 			dispatch(reset());
 		}

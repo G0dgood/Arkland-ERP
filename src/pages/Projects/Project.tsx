@@ -24,7 +24,7 @@ const ProjectView = () => {
 
 
   useEffect(() => {
-    if (isError) {
+    if (message === "Request failed with status code 500" ? false : message) {
       fireAlert("Project error", message, "error");
       dispatch(reset());
     }
@@ -32,7 +32,10 @@ const ProjectView = () => {
   useEffect(() => {
     // @ts-ignore
     dispatch(allProject());
-  }, [dispatch]);
+    if (message === "Request failed with status code 500") {
+      dispatch(allProject());
+    }
+  }, [dispatch, message]);
 
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } = getUserPrivileges();
 
@@ -66,7 +69,7 @@ const ProjectView = () => {
               </div>
               {/* )} */}
               {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
-              <div>
+              {/* <div>
                 <Button
                   className="subone-header-flex-btn"
                   onClick={() => navigate("/site-worker-request")}
@@ -78,7 +81,7 @@ const ProjectView = () => {
                   />{" "}
                   Request Worker List
                 </Button>
-              </div>
+              </div> */}
               {/* )} */}
             </div>
           </div>

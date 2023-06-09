@@ -32,7 +32,7 @@ const initialState = {
  
 
 // Get Announcement
-export const getAnnouncement = createAsyncThunk('auth/getAnnouncement', async (data,thunkAPI) => {
+export const getAnnouncement = createAsyncThunk('announcement/getAnnouncement', async (data,thunkAPI) => {
   try {
     return await announcementService.getAnnouncement( )
   } catch (error: any) {

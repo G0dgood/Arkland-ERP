@@ -1,24 +1,11 @@
-import React, { useEffect } from "react";
 import moment from "moment";
-import { SyncLoader } from "react-spinners";
-import { getUserPrivileges } from "../../functions/auth";
-import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { BounceLoader } from "react-spinners";
 import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import ClockIn from "../../components/ClockIn";
-import { getAnnouncement } from "../../features/Announcement/announcemetSlice";
+import { Button } from "@material-ui/core";
 
 
-
-const AdminAnnouncement = () => {
-  const dispatch = useAppDispatch();
-  const { data: announcements, isLoading } = useAppSelector((state: any) => state.announcement)
-
-  useEffect(() => {
-    if (!announcements) {
-      dispatch(getAnnouncement());
-    }
-  }, [announcements, dispatch]);
-
+const AdminAnnouncement = ({ announcements, isLoading }: any) => {
 
   // const {
   //   isHRHead,
@@ -29,8 +16,6 @@ const AdminAnnouncement = () => {
   //   // isEmployee,
   //   isHrAdmin,
   // } = getUserPrivileges();
-
-
 
 
   return (
@@ -46,15 +31,13 @@ const AdminAnnouncement = () => {
           className="Add-btn" */}
         {/* // onClick={() => handleSubmit()}
         // > */}
-        {/* {clockInLoading ? <Spinner animation="border" /> : " Clock in"} */}
-        {/* </Button> */}
         <ClockIn />
       </div>
 
       <div>
         {isLoading ? (
           <div className="table-loader-announcement">
-            <SyncLoader color={"#990000"} loading={isLoading} />
+            <BounceLoader color={"#990000"} loading={isLoading} />
           </div>
         ) : announcements?.length === 0 || announcements == null ? (
           <div className="table-loader-announcement">
@@ -68,7 +51,7 @@ const AdminAnnouncement = () => {
           <>
             <div className="Admin-Announcement-container">
               {announcements?.map((item: any, i: any) => (
-                <div className="Announcement-sub-2">
+                <div className="Announcement-sub-2" key={i}>
                   <div className="main-todo-Event" style={{ borderRadius: "4px" }} >
                     <div className="main-todo-container">
                       <div className="main-todo-note">
@@ -86,12 +69,7 @@ const AdminAnnouncement = () => {
                       <span>
                         <ViewAnnouncementModal id={item?._id} />
                       </span>
-
                     </div>
-
-
-
-
                   </div>
                 </div>
               ))}
@@ -99,10 +77,9 @@ const AdminAnnouncement = () => {
           </>
         )}
       </div>
-
-      {/* <Button variant="outlined" className="show-btn-schedule">
+      <Button variant="outlined" className="show-btn-schedule">
         See All Announcement
-      </Button> */}
+      </Button>
     </div>
   );
 };

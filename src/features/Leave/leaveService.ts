@@ -11,7 +11,7 @@ const createLeave = async ( input:any) => {
 }
 
 const getCreateLeave = async (id: any) => {  
-  const { data }: any = await HttpService.search(`leaves`, `employee=${id}`)  
+  const { data }: any = await HttpService.search(`leaves`, { employee: id })  
   return data
 }
 const viewLeave = async (id: any) => {  
@@ -24,7 +24,7 @@ const viewdeleteLeave = async (id: any) => {
 }
  
 const getTeamLeave = async (id: any) => {  
-  const { data }: any = await HttpService.search(`hr/leaves`, `department=${id}`)  
+  const { data }: any = await HttpService.search(`hr/leaves`, {department:id})  
   return data
 }
  

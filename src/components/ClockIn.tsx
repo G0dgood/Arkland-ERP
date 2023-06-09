@@ -14,7 +14,6 @@ const ClockIn = () => {
 
 
 	const [show, setShow] = useState<any>(false);
-	// const [isLoading, setisLoading] = useState<any>(false);
 
 	useEffect(() => {
 		if (isError) {

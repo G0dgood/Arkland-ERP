@@ -2,13 +2,10 @@ import { Button } from '@mui/material';
 import { useEffect, useState } from 'react'
 import { BsCheckCircle, BsClock } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-
-import Pagination from '../../components/Pagination';
-
+import Pagination from '../../components/Pagination'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import moment from 'moment';
-import Cookies from 'js-cookie';
-import storage from '../../utils/dataService';
+
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
 import DataService from '../../utils/dataService';
@@ -54,7 +51,7 @@ const AllLeaveApplications = () => {
 			});
 	}, [token, userInfo?.department?.id])
 
-	console.log('userInfo', userInfo)
+
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {

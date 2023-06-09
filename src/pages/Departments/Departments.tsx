@@ -17,7 +17,7 @@ const DepartmentsView = () => {
   const { createisSuccess } = useAppSelector((state: any) => state.department)
 
   useEffect(() => {
-    if (isError) {
+    if (message === "Request failed with status code 500" ? false : message) {
       fireAlert("Department error", message, "error");
       dispatch(reset());
     }
@@ -32,8 +32,10 @@ const DepartmentsView = () => {
     dispatch(allDepartments());
     if (createisSuccess) {
       dispatch(allDepartments());
+    } else if (message === "Request failed with status code 500") {
+      dispatch(allDepartments());
     }
-  }, [createisSuccess, dispatch]);
+  }, [createisSuccess, dispatch, message]);
 
 
 

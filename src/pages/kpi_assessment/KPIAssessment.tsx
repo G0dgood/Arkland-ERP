@@ -7,16 +7,15 @@ import { createAssessment } from "../../features/KPIAssessment/assessmentSlice";
 import { allEmployee, userEmployees } from "../../features/Employee/employeeSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
+import HttpService from "../../components/HttpService";
 
 
 const dataService = new DataService()
 const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   const dispatch = useAppDispatch();
-  const { userdata } = useAppSelector((state: any) => state.employee)
   const { data } = useAppSelector((state: any) => state.employee)
-  const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.assessment)
-
+  const { createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.assessment)
 
 
   const navigate = useNavigate();
@@ -25,6 +24,26 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   // const [kpicheck, setkpicheck] = useState<any>();
   const [employees, setEmployees] = useState<any>();
+
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+
+  const getData = async () => {
+    // setisLoading(true)
+    try {
+      const employeesUrl = "hr/employees"
+      const employees: any = await HttpService.get(employeesUrl)
+      setEmployees(employees?.data?.data)
+
+      // setisLoading(false)
+
+    } catch (error) {
+      // setisLoading(false)
+    }
+  }
 
 
 
@@ -164,11 +183,12 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     if (createisSuccess) {
       fireAlert("KPI error", "KPI Created!", "success");
       setShow(false)
-    } else if (createisError) {
-      fireAlert("KPI error", createmessage, "error");
-
     }
-  }, [createmessage, navigate, createisSuccess, createisError, setShow]);
+    // else if (createisError) {
+    //   fireAlert("KPI error", createmessage, "error");
+
+    // }
+  }, [createmessage, navigate, createisSuccess, setShow]);
 
 
   const handelkpi = (e: any) => {
@@ -189,7 +209,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   React.useEffect(() => {
 
-    setEmployees(data?.data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
+    setEmployees(data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
 
   }, [data]);
 

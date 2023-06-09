@@ -18,14 +18,20 @@ const CreateHODModal = () => {
 	const { data: employee, isLoading } = useAppSelector((state: any) => state.employee)
 
 	useEffect(() => {
-		dispatch(allDepartments());
-	}, [dispatch, employee]);
+		setTimeout(() => {
+			dispatch(allDepartments());
+		}, 2000);
+
+	}, [dispatch]);
 
 	useEffect(() => {
-		if (!employee) {
+		setTimeout(() => {
 			dispatch(allEmployee());
-		}
-	}, [dispatch, employee]);
+		}, 4000);
+	}, [dispatch]);
+
+
+
 	const [lgShow, setLgShow] = useState(false);
 
 	const [inputs, setInputs] = useState<any>({
@@ -50,7 +56,7 @@ const CreateHODModal = () => {
 		});
 	}, [inputs?.department?.value, inputs.name, inputs.user?.value, setInputs]);
 
-	console.log('inputs', input)
+	console.log('inputs', inputs)
 
 
 	const title = "Successful";
@@ -148,8 +154,8 @@ const CreateHODModal = () => {
 							</div>
 							<div className="modal-input-sub-space">
 								<div className="col" mt-2>
-
 									<SelectInput
+										label={"Select Department"}
 										isDisabled={departmentisLoading}
 										isLoading={departmentisLoading}
 										options={availableDepartment}
@@ -167,7 +173,8 @@ const CreateHODModal = () => {
 										value={inputs.user}
 										// defaultValue={defaultValue}
 										// defaultInputValue={defaultValue}
-										onChange={(e: any) => handleOnChange("user", e)} />
+										onChange={(e: any) => handleOnChange("user", e)}
+										label={"Select HOD Name"} />
 								</div>
 
 								<div className="btn-modal-container" >

@@ -2,12 +2,7 @@ import axios from "axios";
 import EventEmitter from "./EventEmitter"; 
 import { fireAlert } from "../utils/Alert";
 import DataService from "../utils/dataService";
-import { useNavigation } from "react-router-dom";
 
- 
- 
- 
- 
 
 class HttpService {
   dataService = new DataService()  
@@ -35,7 +30,7 @@ class HttpService {
       });
     }
 
-    search(url: string, params:string) {
+    search(url: string, params:Record<string,any>) {
         const endpoint = this.baseUrl + url + this.objectToQueryString(params);
         return new Promise((resolve, reject) => { 		 
             axios.get(endpoint, this.config)
@@ -127,7 +122,7 @@ class HttpService {
         });
     }
 
-    objectToQueryString(obj:any) {
+    objectToQueryString(obj:Record <string, any>) {
         let str = [];
         for (let key in obj)
           if (obj.hasOwnProperty(key)) {
@@ -145,11 +140,11 @@ class HttpService {
             this.dataService.clearData();
         }
         
-        // else {
-        //     // console.log('fireAlert',e.response.data.message);
-        //     fireAlert("Error",e.response.data.message, "error"); 
-            
-        // }
+        else {
+            if (e.response.data.message === "Request failed with status code 500" ? false : e.response.data.message) { 
+                fireAlert("Error", e.response.data.message, "error");
+            }
+        }
     }
 
     stopSpinner() {

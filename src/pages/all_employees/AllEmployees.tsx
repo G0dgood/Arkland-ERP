@@ -56,13 +56,13 @@ const AllEmployees = () => {
   const [searchItem, setSearchItem] = useState("");
 
 
-  useEffect(() => {
-    if (isError) {
-      fireAlert("error", message, "error");
-    } else if (approveisError) {
-      fireAlert(" KPI error", approvemessage, "error");
-    }
-  }, [navigate, isError, approveisError, message, approvemessage]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     fireAlert("error", message, "error");
+  //   } else if (approveisError) {
+  //     fireAlert(" KPI error", approvemessage, "error");
+  //   }
+  // }, [navigate, isError, approveisError, message, approvemessage]);
 
 
   // --- Pagination --- //
@@ -95,20 +95,30 @@ const AllEmployees = () => {
         <div className="allemployees-container">
           <div className="allemployees-container-main">
             <div className="allemployees-container-sup">
-              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
-              <div className="allemployees-sup-item1">
-                <Button
-                  variant="contained"
-                  className="Add-btn"
-                  onClick={() => navigate("/employees/employees/create")}
-                // onClick={handleCreateEmployeeClick}
-                >
-                  <GoPlus className="icon-space" />
-                  Create Employee
-                </Button>
-              </div>
-              {/* )} */}
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div className="allemployees-sup-item1">
+                  <Button
+                    variant="contained"
+                    className="Add-btn"
+                    onClick={() => navigate("/employees/employees/create")}
+                  // onClick={handleCreateEmployeeClick}
+                  >
+                    <GoPlus className="icon-space" />
+                    Create Employee
+                  </Button>
+                </div>
+              )}
 
+              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+                <div
+                  className="allemployees-sup-item2"
+                  onClick={() => navigate("/warninglist")}
+                >
+                  <Button variant="contained" className="Add-btn">
+                    Warnings
+                  </Button>
+                </div>
+              )}  
               {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
                 <div
                   className="allemployees-sup-item2"

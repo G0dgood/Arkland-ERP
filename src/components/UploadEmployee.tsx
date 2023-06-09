@@ -34,7 +34,7 @@ const UploadEmployee = () => {
 
   const submitHandler = async () => {
 
-
+    setisLoading(true)
     await HttpService.uploadFile(url, {}, { employees: file })
       .then((response) => {
         console.log('response', response);
@@ -46,16 +46,11 @@ const UploadEmployee = () => {
       })
 
 
-
-
     // @ts-ignore
     // dispatch(uploadEmployee(jsonData, setProgress));
 
   };
 
-  // const onClickReset = () => { 
-  //   setProgress(0);
-  // };
 
   function handleChange(event: any) {
     setFile(event.target.files[0])
@@ -166,23 +161,8 @@ const UploadEmployee = () => {
               now={progress}
             // onClick={onClickReset}
             />
-            {/* <div className="disposition-btn">
-              <span>
-                <input
-                  type="reset"
-                  style={{ padding: "7px 25px", marginRight: "10px" }}
-                  // onClick={onClickReset}
-                  value={"Reset"}
-                />
-                <input
-                  type="submit"
-                  style={{ padding: "8px 25px" }}
-                // disabled={loading && true}
-                // value={loading ? "Sending..." : "Upload"}
-                // onClick={submitHandler}
-                />
-              </span>
-            </div> */}
+
+
             <div className='deleteKPIHandler' style={{ marginTop: "40px" }}>
               <span className='deleteKPIHandler-mr'
               // onClick={onClickReset}

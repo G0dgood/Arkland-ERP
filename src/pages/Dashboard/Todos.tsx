@@ -1,35 +1,13 @@
-import React, { useEffect } from "react";
-import Cookies from "js-cookie";
-import { Modal } from "react-bootstrap";
-import { SyncLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import moment from "moment";
 import Checkbox from "@material-ui/core/Checkbox";
 import { FiEye, FiTrash2 } from "react-icons/fi";
 import { Button } from "@mui/material";
-import AddTodo from "../../components/Modals/AddTodo";
-import { fireAlert } from "../../utils/Alert";
-import { DialogState } from "../../interfaces/base";
-// import announcement from "../../assets/images/announcement.png";
-import { MdOutlineClose } from "react-icons/md";
-import DataService from "../../utils/dataService";
-import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { getTask } from "../../features/Tasks/taskSlice";
-
-const Todos = ({ showDrawer, setShowDrawer }: any) => {
-  const dispatch = useAppDispatch();
-  const dataService = new DataService()
-  const token = dataService.getToken()
-  const { data: tasks, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.task)
 
 
-  console.log('isSuccess', isSuccess)
+const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
 
-  useEffect(() => {
-    if (!isSuccess && !tasks) {
-      // @ts-ignore
-      dispatch(getTask());
-    }
-  }, [tasks, dispatch, isSuccess]);
+
 
   const handleShow = () => {
     if (!showDrawer) {
@@ -47,7 +25,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
 
         {isLoading ? (
           <div className="table-loader-announcement1">
-            <SyncLoader color={"#990000"} loading={isLoading} />
+            <BounceLoader color={"#990000"} loading={isLoading} />
           </div>
         ) : tasks?.length === 0 || tasks === undefined ? (
           <div className="table-loader-announcement1">
@@ -59,10 +37,7 @@ const Todos = ({ showDrawer, setShowDrawer }: any) => {
           </div>
         ) : (
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-            }}
+            style={{ display: "grid", gridTemplateColumns: "1fr" }}
           >
             {tasks?.length > 0 ? (
               <div>

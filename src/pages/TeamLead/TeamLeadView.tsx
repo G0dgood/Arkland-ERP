@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BounceLoader, SyncLoader } from 'react-spinners';
+import { BounceLoader } from 'react-spinners';
 import { fireAlert } from '../../utils/Alert';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';

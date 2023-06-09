@@ -10,6 +10,7 @@ import moment from 'moment';
 import { createweeklyReport, reset } from '../../features/WeeklyReport/WeeklyReportSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import DataService from '../../utils/dataService';
+import HttpService from '../../components/HttpService';
 
 const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {
@@ -93,15 +94,51 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const html1 = createmessage;
 	const icon1 = "error";
 
-	const handleLeave = () => {
-		// @ts-ignore
-		dispatch(createweeklyReport(allinput));
-	}
+	const [isLoading, setisLoading] = useState(false);
+
+	const url = `hr/weekly-reports`
+
+	// const handleLeave = () => {
+	// 	// @ts-ignore
+	// 	dispatch(createweeklyReport(allinput));
+	// }
+	const [message, setMessage] = useState("");
+	const [isError, setisError] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
+
+
+
+	const submitHandler = async () => {
+		await HttpService.uploadFile(url, {}, { employees: allinput })
+			.then((response) => {
+				console.log('response', response);
+				setisLoading(false)
+				setisSuccess(true)
+				setTimeout(() => {
+					setMessage("")
+					setisError(false)
+					setisSuccess(false)
+				}, 2000);
+			})
+			.catch((error) => {
+				console.log('error', error);
+				setisError(true)
+				setisLoading(false)
+				setMessage(error.response.data.message)
+				setTimeout(() => {
+					setMessage("")
+					setisError(false)
+				}, 2000);
+			})
+
+
+
+	};
 
 
 
 	useEffect(() => {
-		if (createisSuccess) {
+		if (isSuccess) {
 			fireAlert(title, html, icon);
 			setInputs({
 				assessment: " ",
@@ -112,8 +149,8 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 				dispatch(reset());
 				setIsCheck(false)
 			}, 2000);
-		} else if (createisError) {
-			fireAlert(title1, html1, icon1);
+		} else if (isError) {
+			fireAlert(title1, message, icon1);
 			setTimeout(() => {
 				setInputs({
 					assessment: " ",
@@ -133,7 +170,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			}, 5000);
 			reset()
 		}
-	}, [html, html1, createisError, createisSuccess, setIsCheck, dispatch])
+	}, [html, html1, setIsCheck, dispatch, isSuccess, isError, message])
 
 	return (
 		<div className='weeklycontainer'>
@@ -218,8 +255,8 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 				<WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} setInputs={setInputs} inputs={inputs} />
 				<div className='WeeKlyReport-submit-container'>
 					<button className="ccsnl-btn WeeKlyReport-tab"
-						onClick={handleLeave}>
-						{createisLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
+						onClick={submitHandler}>
+						{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
 				</div>
 			</div>
 		</div >

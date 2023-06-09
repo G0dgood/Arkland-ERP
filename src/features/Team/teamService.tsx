@@ -21,6 +21,7 @@ const deleteTeam = async (id: any) => {
 	return data
 }
 const getTeammembers = async (id: any) => {
+	console.log('id', id)
 	const { data }: any = await HttpService.get(`hr/teams/${id}/employees`)
 	return data
 }

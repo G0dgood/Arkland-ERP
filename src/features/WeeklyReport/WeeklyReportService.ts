@@ -6,21 +6,19 @@ import HttpService from '../../components/HttpService'
  //Get all weekly Report
 const allweeklyReport = async (id:any ) => { 
 	 
-  // const response = await axios.get(`${process.env.REACT_APP_API}/hr/weekly-reports/list?employee=${id}`, )
-    const  {data}:any  =  await HttpService.search("hr/weekly-reports/list" , `employee=${id}`)
+  
+  const { data }: any = await HttpService.search("hr/weekly-reports/list", { employee: id })
   return data
 }
   //create weekly Report
 const createweeklyReport = async (allinput:any) => { 
-	 
-  // const response = await axios.post(`${process.env.REACT_APP_API}/hr/weekly-reports`,allinput )
+	  
    const  {data}:any  =  await HttpService.post(`hr/weekly-reports`, allinput) 
   return data
 }
 //get HOD Weekly Report
 const getHODWeeklyReport = async ( ) => { 
-	 
-  // const response = await axios.get(`${process.env.REACT_APP_API}/hr/weekly-reports/list-for-department`,)
+	  
    const  {data}:any  =  await HttpService.get("hr/weekly-reports/list-for-department")
    
   return data
