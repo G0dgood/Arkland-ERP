@@ -2,27 +2,24 @@ import { useEffect, useState } from 'react'
 import WeeklyReportTable from '../../components/table_component/WeeklyReportTable';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdPostAdd } from 'react-icons/md';
-import Cookies from 'js-cookie';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
-import storage from '../../utils/storage';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
 
+import { createweeklyReport, reset } from '../../features/WeeklyReport/WeeklyReportSlice';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import DataService from '../../utils/dataService';
+import HttpService from '../../components/HttpService';
+
+const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {
+	const dispatch = useAppDispatch();
+	const { createisError, createisLoading, createmessage, createisSuccess }: any = useAppSelector((state: any) => state.Weeklyreport)
 
 	// @ts-ignore
-	const userInfo: any = JSON.parse(storage?.get("user"));
-
-
-	const token = Cookies.get("token");
-	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
+	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 	const [count, setCount] = useState<number>(0)
-
-
 	const [inputs, setInputs] = useState<any>({
 		assessment: "",
 		week: "0",
@@ -94,67 +91,67 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const html = "Week Report Created!";
 	const icon = "success";
 	const title1 = "Week Report error";
-	const html1 = message;
+	const html1 = createmessage;
 	const icon1 = "error";
 
-	const handleLeave = () => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/weekly-reports`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-			body: JSON.stringify(allinput),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-					setisError(true)
-				} else {
-					setisSuccess(true)
-					setTimeout(() => {
-						setIsCheck(false)
-					}, 2000);
-				}
-				setisLoading(false);
+	const [isLoading, setisLoading] = useState(false);
+
+	const url = `hr/weekly-reports`
+
+	// const handleLeave = () => {
+	// 	// @ts-ignore
+	// 	dispatch(createweeklyReport(allinput));
+	// }
+	const [message, setMessage] = useState("");
+	const [isError, setisError] = useState(false);
+	const [isSuccess, setisSuccess] = useState(false);
+
+
+
+	const submitHandler = async () => {
+		await HttpService.uploadFile(url, {}, { employees: allinput })
+			.then((response) => {
+				console.log('response', response);
+				setisLoading(false)
+				setisSuccess(true)
+				setTimeout(() => {
+					setMessage("")
+					setisError(false)
+					setisSuccess(false)
+				}, 2000);
 			})
 			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-	}
+				console.log('error', error);
+				setisError(true)
+				setisLoading(false)
+				setMessage(error.response.data.message)
+				setTimeout(() => {
+					setMessage("")
+					setisError(false)
+				}, 2000);
+			})
+
+
+
+	};
+
 
 
 	useEffect(() => {
 		if (isSuccess) {
 			fireAlert(title, html, icon);
+			setInputs({
+				assessment: " ",
+				week: "",
+				activities: []
+			})
 			setTimeout(() => {
-				setisSuccess(false)
-				setMessage("")
-				setInputs({
-					assessment: " ",
-					week: "",
-					activities: []
-				})
-				// setNewWeeklyField(
-				// 	{
-				// 		completed: "",
-				// 		in_progress: "",
-				// 		next: "",
-				// 		due_date_for_next: "",
-				// 		next_week_tasks: [""],
-				// 		issues: [""],
-				// 		blockers: [""]
-				// 	}
-				// )
-			}, 5000);
+				dispatch(reset());
+				setIsCheck(false)
+			}, 2000);
 		} else if (isError) {
-			fireAlert(title1, html1, icon1);
+			fireAlert(title1, message, icon1);
 			setTimeout(() => {
-				setisError(false)
-				setMessage("")
 				setInputs({
 					assessment: " ",
 					week: "",
@@ -171,8 +168,9 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 					]
 				})
 			}, 5000);
+			reset()
 		}
-	}, [html, html1, isError, isSuccess])
+	}, [html, html1, setIsCheck, dispatch, isSuccess, isError, message])
 
 	return (
 		<div className='weeklycontainer'>
@@ -182,7 +180,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 						<div className='weeklyreporttop-container-card-1'>
 							<div className='weekly-top-card-1-sub'>
 								<p>EMPLOYEE NAME</p>
-								<p className='weekly-top-card-1-sub-second-child'>{userInfo?.data?.employee?.full_name.toUpperCase()}</p>
+								<p className='weekly-top-card-1-sub-second-child'>{userInfo?.employee?.full_name.toUpperCase()}</p>
 								<p>SELF ASSESSMENT</p>
 								<p>{inputs.assessment.toUpperCase()}</p>
 								<p>WEEK</p>
@@ -257,7 +255,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 				<WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} setInputs={setInputs} inputs={inputs} />
 				<div className='WeeKlyReport-submit-container'>
 					<button className="ccsnl-btn WeeKlyReport-tab"
-						onClick={handleLeave}>
+						onClick={submitHandler}>
 						{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
 				</div>
 			</div>

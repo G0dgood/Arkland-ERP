@@ -28,8 +28,6 @@ const WeeKlyReportButtomTabs = ({ setData }: any) => {
 			category: "Week 5",
 		},
 
-
-
 	];
 
 

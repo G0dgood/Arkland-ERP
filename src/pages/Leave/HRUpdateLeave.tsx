@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs'
 import { MdOutlineClose } from 'react-icons/md'
 import TableLoader from '../../components/TableLoader'
-import Cookies from 'js-cookie'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@material-ui/core';
 import moment from 'moment'
 import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
 import axios, { AxiosResponse } from 'axios'
+import DataService from '../../utils/dataService'
+const dataService = new DataService()
 
 const HRUpdateLeave = () => {
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const token = Cookies.get("token");
+	const token = dataService.getToken()
 	const [isLoading, setisLoading] = useState(false);
 	const [isLoading1, setisLoading1] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
@@ -81,7 +82,7 @@ const HRUpdateLeave = () => {
 				} else {
 					setisSuccess(true)
 					setTimeout(() => {
-						navigate("/allleaveapplications");
+						navigate(-1);
 					}, 2000);
 				}
 				setisLoading1(false);
@@ -176,7 +177,7 @@ const HRUpdateLeave = () => {
 
 	return (
 		<div>
-			<header className="ChatProgressView-header"  >
+			{/* <header className="ChatProgressView-header"  >
 				<div className='leave-Update-titile-icon'>
 					<BsFillBriefcaseFill />
 					<span className="in-progresss">
@@ -194,7 +195,7 @@ const HRUpdateLeave = () => {
 						/>
 					</Link>
 				</div>
-			</header>
+			</header> */}
 			{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 			<div className='contact-container-body'>
 				<section className="contact-container">

@@ -9,18 +9,12 @@ import ReactSelectField from "../../components/Inputs/ReactSelectField";
 import CustomInputField from "../../components/Inputs/CustomInputField";
 import { difficultyOptions, priorityOptions } from "../../functions/helpers";
 import { formatDate } from "../../utils/formatDate";
-import { useAppSelector } from "../../hooks/useDispatch";
+
 import { fireAlert } from "../../utils/Alert";
-import storage from "../../utils/storage";
+import storage from "../../utils/dataService";
 
 const AddTodo = (props: any) => {
-  const token = Cookies.get("token");
-  // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-  const privileges = userInfo?.data?.privileges;
-  const isTeamLead = privileges?.some((p: any) => p?.role === "team lead");
-  const isSuperAdmin = privileges?.some((p: any) => p?.role === "super admin");
-  const isEmployee = privileges?.some((p: any) => p?.role === "employee");
+
 
   const [lgShow, setLgShow] = useState(false);
   const [isLoading, setLoading] = React.useState(false);
@@ -35,7 +29,7 @@ const AddTodo = (props: any) => {
         body: JSON.stringify(createTaskValues),
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       });
       const data = await response.json();
@@ -44,12 +38,12 @@ const AddTodo = (props: any) => {
         const title = "Task created successfully.";
         const html = `Task created`;
         const icon = "success";
-        fireAlert(title, html, icon);
+        // fireAlert(html, icon);
         resetForm(values);
         setLgShow(false);
         props.onNewTodoCreated();
       } else {
-        throw new Error(data.message || "Something went wrong!");
+        throw new Error(data?.message || "Something went wrong!");
       }
     } catch (error: any) {
       console.log(error);
@@ -57,22 +51,22 @@ const AddTodo = (props: any) => {
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Task creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(html, icon);
     }
   };
-  const employees: any = useAppSelector((state) => state?.employees?.employees);
+  // const employees: any = useAppSelector((state) => state?.employees?.employees);
   const availablleEmployees = [] as any;
 
-  employees &&
-    employees.forEach((employee: any) =>
-      availablleEmployees.push({
-        value: employee?.id,
-        label: employee?.full_name,
-      })
-    );
+  // employees &&
+  //   employees.forEach((employee: any) =>
+  //     availablleEmployees.push({
+  //       value: employee?.id,
+  //       label: employee?.full_name,
+  //     })
+  //   );
   return (
     <div>
-      {(userInfo?.data?.department?.name === "HR" ||
+      {/* {(userInfo?.data?.department?.name === "HR" ||
         isSuperAdmin ||
         isTeamLead) && (
           <Button
@@ -82,7 +76,7 @@ const AddTodo = (props: any) => {
           >
             Add New
           </Button>
-        )}
+        )} */}
 
       <Modal
         size="lg"

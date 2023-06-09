@@ -3,15 +3,26 @@ import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { hodReviewAssessment } from '../../features/KPIAssessment/assessmentSlice';
+
+
+const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
+  const { id } = useParams()
+  const dispatch = useAppDispatch();
+  const { hodreviewdata, hodreviewisError, hodreviewisLoading, hodreviewmessage, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
 
 
 
-const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
+
 
   const year = new Date().getFullYear().toString();
-  const token = Cookies.get("token");
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+
 
 
   const kpiData3 = ({
@@ -43,30 +54,30 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
   const kpiData: any = [
     {
       'Performance': 'Job Knowledge',
-      'num': data?.job_knowledge_employee,
+      'num': hodreviewdata?.data?.job_knowledge_employee,
       'employeegrade': 0
     },
     {
       'Performance': 'Efficiency',
-      'num': data?.efficiency_employee,
+      'num': hodreviewdata?.data?.efficiency_employee,
       'employeegrade': 0
     },
     {
       'Performance': ' Attendance',
-      'num': data?.attendance_employee,
+      'num': hodreviewdata?.data?.attendance_employee,
       'employeegrade': 0
     },
     {
       'Performance': 'Software Development',
-      'num': data?.communication_employee
+      'num': hodreviewdata?.data?.communication_employee
     },
     {
       'Performance': 'Team work',
-      'num': data?.reliability_employee
+      'num': hodreviewdata?.data?.reliability_employee
     },
     {
       'Performance': 'Debugging',
-      'num': data?.collaboration_employee
+      'num': hodreviewdata?.data?.collaboration_employee
     },
   ];
 
@@ -116,10 +127,6 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
       [input]: value,
     }));
   };
-  const [isLoading, setisLoading] = useState(false);
-  const [isSuccess, setisSuccess] = useState(false);
-  const [message, setMessage] = useState('')
-  const [isError, setisError] = useState(false)
 
 
 
@@ -127,55 +134,25 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
   const html = "KPI Updated!";
   const icon = "success";
   const title1 = "KPI error";
-  const html1 = message;
   const icon1 = "error";
 
   useEffect(() => {
-    if (isSuccess) {
+    if (hodreviewisSuccess) {
       fireAlert(title, html, icon);
-      setTimeout(() => {
-        setisSuccess(false)
-      }, 5000);
-    } else if (isError) {
-      fireAlert(title1, html1, icon1);
-      setTimeout(() => {
-        setisError(false)
-      }, 10000);
+
+    } else if (hodreviewisError) {
+      fireAlert(title1, hodreviewmessage, icon1);
+
     }
 
-  }, [html, title, icon, isSuccess, isError, html1]);
+  }, [html, title, icon, hodreviewisSuccess, hodreviewisError, hodreviewmessage]);
 
 
-  const handelHodkpi = (e: any,) => {
+  const handelHodkpi = (e: any) => {
     e.preventDefault();
-    setisLoading(true);
-    fetch(`${process.env.REACT_APP_API}/hr/appraisals/${id}/review`, {
-      method: "PATCH", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(input),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data?.success === false) {
-          setMessage(data?.message)
-          setisError(true)
-        } else {
-          // setData(data)
-          setisSuccess(true)
-          setTimeout(() => {
-            navigate("/teamkpi");
-          }, 2000);
+    //  @ts-ignore  
+    dispatch(hodReviewAssessment(id, input));
 
-        }
-        setisLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setisLoading(false);
-      });
   }
 
 
@@ -382,21 +359,30 @@ const HodEvaluation = ({ data, hodscore, setHodscore, id }: any) => {
               <div className="rate_area Grade-title">
                 <p>{!Amount ? "0" : Amount}</p>
               </div>
-              <div className="btn_area Grade-title">
+              {location.state.name === "admin" ? "" : <div className="btn_area Grade-title">
                 {data?.status === 'active' ? hod : <p> {hodscore}</p>}
-              </div>
+              </div>}
+              {location.state.name === "admin" && <div className="btn_area Grade-title">
+                <p> {hodscore}</p>
+              </div>}
+
             </div>
           </div>
-          {data?.status === 'active' ? "" :
+          {location.state.name === "admin" ? "" :
             <div>
-              {/* @ts-ignore   */}
-              <textarea rows="4" placeholder="Add an extended comment" required
-                value={input.comment}
-                onChange={(e) => handleOnChange('comment', e.target.value)} />
-              <Button variant="contained"
-                className="Add-btn-modal" type="submit">{isLoading ? <Spinner animation="border" /> : 'Submit'}</Button>
-            </div>
-          }
+              {data?.status === 'active' ? "" :
+                <div>
+                  {/* @ts-ignore   */}
+                  <textarea rows="4" placeholder="Add an extended comment" required
+                    value={input.comment}
+                    onChange={(e) => handleOnChange('comment', e.target.value)} />
+                  <Button variant="contained"
+                    disabled={hodreviewisLoading}
+                    className="Add-btn-modal" type="submit">{hodreviewisLoading ? <Spinner animation="border" /> : 'Submit'}</Button>
+                </div>
+              }
+            </div>}
+
         </div>
       </div>
     </form>

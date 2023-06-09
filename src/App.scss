@@ -1,23 +1,40 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import "~react-calendar/dist/Calendar.css";
 @import "react-datepicker/dist/react-datepicker.css";
 
-*,
-*::before,
-*::after {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box !important;
-  list-style: none !important;
-  list-style-type: none !important;
-  text-decoration: none !important;
-  outline: none !important;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
+ 
 html {
   scroll-behavior: smooth;
 }
+
+
+$sidebar-bg-color: #fff;
+$submenu-bg-color: rgba(255, 255, 255, 0.05);
+$submenu-bg-color-collapsed: rgba(240, 238, 238, 0.95);
+$sidebar-color: rgb(26, 26, 26);
+$highlight-color: #d8d8d8;
+$icon-bg-color: rgba(255, 255, 255, 0.05);
+$icon-size: 35px;
+
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+
+.pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-content {
+    flex-grow: 1;
+    padding-top: 2rem !important;
+    border-right: 1px solid #e8e8e8 !important;
+}
+
+.Side__Content:hover {
+    
+   background-color: #c99b9b;
+    color: #fff !important;
+    
+  }
+.pro-sidebar > .pro-sidebar-inner > .pro-sidebar-layout .pro-sidebar-content .active{
+  //  border-left: 7px solid #005b90  !important; 
+   color: #fff !important;
+   background-color: #990000 !important;
+  }
+ 

@@ -7,9 +7,10 @@ import { MdOutlineClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { fireAlert } from "../../utils/Alert";
 import ReactSelectField from "../Inputs/ReactSelectField";
-import { useAppSelector } from "../../hooks/useDispatch";
+
 import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
+import { useAppSelector } from "../../store/useStore";
 
 const CreateTaskModal = () => {
   const [isLoading, setLoading] = React.useState(false);
@@ -27,7 +28,7 @@ const CreateTaskModal = () => {
           const title = "Warning created successfully.";
           const html = `Warning created`;
           const icon = "success";
-          fireAlert(title, html, icon);
+          // fireAlert(title, html, icon);
           resetForm(values);
           setLgShow(false);
           navigate(`/warninglist`);
@@ -38,19 +39,19 @@ const CreateTaskModal = () => {
         const html = err.response.data.message;
         const icon = "error";
         const title = "Warning creation failed";
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
       });
   };
-  const employees: any = useAppSelector((state) => state.employees.employees);
+  // const employees: any = useAppSelector((state) => state.employees.employees);
   const availablleEmployees = [] as any;
 
-  employees &&
-    employees.forEach((employee: any) =>
-      availablleEmployees.push({
-        value: employee.id,
-        label: employee.full_name,
-      })
-    );
+  // employees &&
+  //   employees.forEach((employee: any) =>
+  //     availablleEmployees.push({
+  //       value: employee.id,
+  //       label: employee.full_name,
+  //     })
+  //   );
   return (
     <div>
       <Button

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CSVLink } from "react-csv";
 import moment from "moment";
 import { Button } from "@material-ui/core";
@@ -7,6 +7,9 @@ import { AiOutlineDownload } from "react-icons/ai";
 
 
 const EmployeesDownloader = ({ data }: any) => {
+
+
+
   const headers = [
     { label: "FULL NAME", key: "fullname" },
     { label: "EMAIL", key: "email" },
@@ -25,22 +28,22 @@ const EmployeesDownloader = ({ data }: any) => {
   const loopData = (data: any) => {
     const newData: any = [];
     data?.forEach((item: any) => {
-      newData.push({
-        fullname: item.full_name,
-        email: item.email,
+      newData?.push({
+        fullname: item?.full_name,
+        email: item?.email,
         employment_date:
           moment(item?.employment_date).format("DD-MM-YYYY") === "Invalid date"
             ? "No Date Given"
             : moment(item?.employment_date).format("DD-MM-YYYY"),
         role: item?.role,
-        department: item.department?.name,
-        category: item.category,
-        status: item.status,
-        gender: item.gender,
-        state_of_origin: item.state_of_origin,
-        qualification: item.qualification,
-        country: item.country,
-        city: item.city,
+        department: item?.department?.name,
+        category: item?.category,
+        status: item?.status,
+        gender: item?.gender,
+        state_of_origin: item?.state_of_origin,
+        qualification: item?.qualification,
+        country: item?.country,
+        city: item?.city,
       });
     });
     return newData;

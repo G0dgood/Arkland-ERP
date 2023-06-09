@@ -1,4 +1,4 @@
-import React from 'react'
+
 import TableLoader from '../../components/TableLoader';
 import { NoRecordFound, TableFetch } from '../../components/TableOptions';
 

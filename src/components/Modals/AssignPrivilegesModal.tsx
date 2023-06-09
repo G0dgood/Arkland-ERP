@@ -1,27 +1,44 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fireAlert } from '../../utils/Alert';
-import Cookies from 'js-cookie';
-import axios, { AxiosResponse } from 'axios';
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
-import TableLoader from '../TableLoader';
 
+import DataService from '../../utils/dataService';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { allEmployee } from '../../features/Employee/employeeSlice';
+
+const dataService = new DataService()
 const AssignPrivilegesModal = ({ setReload }: any) => {
+	const dispatch = useAppDispatch();
+	const { data } = useAppSelector((state: any) => state.employee)
+
+
+
+	useEffect(() => {
+		// @ts-ignore
+		dispatch(allEmployee());
+	}, [dispatch]);
+
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
 		role: "",
 		user: "",
 	})
 
-	const token = Cookies.get("token");
+	const token = dataService.getToken()
 	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
-	const [isLoading1, setisLoading1] = useState(false);
 	const [employees, setEmployees] = useState([]);
 
+
+	useEffect(() => {
+		if (data) {
+			setEmployees(data)
+		}
+	}, [data])
 
 
 	const handleLeave = () => {
@@ -39,9 +56,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 				if (data?.success === false) {
 					setMessage(data?.message)
 					setisError(true)
-					console.log('data', data)
 				} else {
-					console.log('data', data)
 					setisSuccess(true)
 					setReload(true)
 					setLgShow(false)
@@ -55,17 +70,16 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 	}
 
 
-	const title = "Successful";
+
 	const html = "Privileges Assigned!";
 	const icon = "success";
-	const title1 = "Privileges error";
 	const html1 = message;
 	const icon1 = "error";
 
 
 	useEffect(() => {
 		if (isSuccess) {
-			fireAlert(title, html, icon);
+			fireAlert("Successful", html, icon);
 			setTimeout(() => {
 				setisSuccess(false)
 				setMessage("")
@@ -73,7 +87,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 			}, 5000);
 			setLgShow(false)
 		} else if (isError) {
-			fireAlert(title1, html1, icon1);
+			fireAlert("Privileges error", html1, icon1);
 			setTimeout(() => {
 				setisError(false)
 				setMessage("")
@@ -95,21 +109,8 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 	};
 
 
-	useEffect(() => {
-		setisLoading1(true);
-		axios
-			.get(`${process.env.REACT_APP_API}/hr/employees`)
-			.then((res: AxiosResponse) => {
-				setEmployees(res?.data?.data);
-				setisLoading1(false);
-			})
-			.catch((data) => {
-				console.log(data);
-				setisLoading1(false);
-			});
-	}, [])
 
-	console.log('', inputs)
+
 
 	const Role: any = [
 		"employee",
@@ -175,10 +176,6 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 								</option>
 							))}
 						</select >
-						{isLoading1 ? <TableLoader isLoading={isLoading1} /> : ""}
-						<div className='Modal-data-time'>
-						</div>
-
 						<div className='btn-modal-container'>
 							<Button variant="contained" className="Add-btn-modal" onClick={handleLeave}>
 								{isLoading ? <Spinner animation="border" /> : "Create"}

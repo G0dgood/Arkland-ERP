@@ -90,7 +90,7 @@ const NoRecordFound = ({ colSpan }: any) => (
 // Search
 const MainSearch = ({ placeholder, result, onChange }: any) => {
   return (
-    // <div className='GoSearch-container'>
+
     <div className="search-entries">
       <Search placeHolder={placeholder} value={result} onChange={onChange} />
     </div>
@@ -105,10 +105,36 @@ const MainSearch = ({ placeholder, result, onChange }: any) => {
   );
 };
 
+const InputField = ({ placeholder, style, label, value, type, onChange, max }: any) => {
+  return (
+    <div className={"input "}>
+      <label className={"input__label"} >
+        {label}
+      </label>
+      <input
+        className={"input__field "}
+        type={type}
+        // onFocus={handleFocus}
+        // onBlur={handleBlur}
+        autoComplete="off"
+        placeholder={placeholder}
+        // inputMode={inputMode}
+        // onChange={onChange}
+        // defaultValue={defaultValue}
+        style={style}
+        // maxLength={maxLength}
+        value={value}
+        max={max}
+        onChange={onChange}
+      />
+    </div>
+  );
+};
 export {
   TableFetch,
   EntriesPerPage,
   EmployeeStatus,
   NoRecordFound,
   MainSearch,
+  InputField
 };

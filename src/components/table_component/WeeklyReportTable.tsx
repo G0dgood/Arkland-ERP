@@ -13,7 +13,7 @@ const WeeklyReportTable = ({ newWeeklyField, setNewWeeklyField }: any) => {
 
 
 	return (
-		<div>
+		<div >
 			<div id="table-wrapper">
 				<table>
 					<tr>

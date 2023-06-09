@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { number } from "yup";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import AddEmployeeNav from "./AddEmployeeNav";
 import AddEmployeeTitle from "./AddEmployeeTitle";
 import Address from "./employeeInputs/Address";
@@ -12,9 +9,13 @@ import Essentials from "./employeeInputs/Essentials";
 import Finance from "./employeeInputs/Finance";
 import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
-import { useAppSelector } from "../../hooks/useDispatch";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { allDepartments } from "../../features/Department/departmentSlice";
+import { getRole } from "../../features/Employee/employeeSlice";
+
 
 const CreateEmployee = () => {
+  const dispatch = useAppDispatch();
   const [employee, setEmployee] = useState({
     first_name: "",
     middle_name: "",
@@ -77,18 +78,7 @@ const CreateEmployee = () => {
   useEffect(() => {
     setActive(active);
   }, [active]);
-  const [collapseNav, setCollapseNav] = useState(() => {
-    // @ts-ignore
-    return JSON.parse(localStorage.getItem("collapse")) || false;
-  });
-  useEffect(() => {
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-    localStorage.setItem("collapse", JSON.stringify(collapseNav));
-    // --- Set state of collapseNav to localStorage on pageLoad --- //
-  }, [collapseNav]);
-  const toggleSideNav = () => {
-    setCollapseNav(!collapseNav);
-  };
+
 
   const submitMyFormRef: any = React.useRef(null);
 
@@ -102,9 +92,15 @@ const CreateEmployee = () => {
     submitMyFormRef.current = submitForm;
   }, []);
 
-  const departments: any = useAppSelector(
-    (state) => state?.department?.department
-  );
+  const { data: departments } = useAppSelector((state: any) => state.department)
+  const { getroledata: roles } = useAppSelector((state: any) => state.employee)
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(allDepartments());
+    dispatch(getRole());
+
+  }, [dispatch]);
   const availablleDepartments = [] as any;
 
   departments &&
@@ -115,7 +111,7 @@ const CreateEmployee = () => {
       })
     );
 
-  const roles: any = useAppSelector((state) => state?.roles?.roles);
+
   const availablleRoles = [] as any;
 
   roles &&
@@ -131,70 +127,66 @@ const CreateEmployee = () => {
       <Helmet>
         <title>Create employee | Arkland ERP</title>
       </Helmet>
-      <div id="screen-wrapper">
-        <Header toggleSideNav={toggleSideNav} />
-        <Sidebar collapseNav={collapseNav} />
-        <main>
-          <div className="addemployeecontainer">
-            <AddEmployeeTitle
-              setActive={setActive}
+      <div  >
+        <div className="addemployeecontainer">
+          <AddEmployeeTitle
+            setActive={setActive}
+            active={active}
+            click={handleSubmitMyForm}
+          />
+          {active === 6 ? (
+            ""
+          ) : (
+            <AddEmployeeNav active={active} setActive={setActive} />
+          )}
+          <div className="all-inputs-container">
+            <Essentials
               active={active}
-              click={handleSubmitMyForm}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
             />
-            {active === 6 ? (
-              ""
-            ) : (
-              <AddEmployeeNav active={active} setActive={setActive} />
-            )}
-            <div className="all-inputs-container">
-              <Essentials
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-              <Finance
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-              <Reference
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-              <Employment
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-                options={availablleDepartments}
-                roleOptions={availablleRoles}
-              />
-              <Address
-                active={active}
-                employee={employee}
-                setEmployee={setEmployee}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              />
-              <CreateEmployeeView
-                active={active}
-                employee={employee}
-                departments={departments}
-                roles={roles}
-                // setActive={setActive}
-                // bindSubmitForm={bindSubmitForm}
-              />
-            </div>
+            <Finance
+              active={active}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+            />
+            <Reference
+              active={active}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+            />
+            <Employment
+              active={active}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+              options={availablleDepartments}
+              roleOptions={availablleRoles}
+            />
+            <Address
+              active={active}
+              employee={employee}
+              setEmployee={setEmployee}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+            />
+            <CreateEmployeeView
+              active={active}
+              employee={employee}
+              departments={departments}
+              roles={roles}
+              setActive={setActive}
+              bindSubmitForm={bindSubmitForm}
+            />
           </div>
-        </main>
+        </div>
       </div>
     </>
   );

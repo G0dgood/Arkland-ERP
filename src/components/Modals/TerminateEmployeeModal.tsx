@@ -8,9 +8,10 @@ import { MdOutlineClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { fireAlert } from "../../utils/Alert";
 import ReactSelectField from "../Inputs/ReactSelectField";
-import { useAppSelector } from "../../hooks/useDispatch";
+
 import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
+import { useAppSelector } from "../../store/useStore";
 
 interface CreateWarningInterface {
   id?: string;
@@ -47,7 +48,7 @@ const TerminateEmployeeModal = ({
         const html = `Warning created`;
         const icon = "success";
         resetForm(values);
-        fireAlert(title, html, icon);
+        // fireAlert(title, html, icon);
         setLgShow(false);
         onNewWarningCreated();
         // props.onNewWarningCreated();
@@ -60,19 +61,19 @@ const TerminateEmployeeModal = ({
       const html = error.message || "Something went wrong!";
       const icon = "error";
       const title = "Warning creation failed";
-      fireAlert(title, html, icon);
+      // fireAlert(title, html, icon);
     }
   };
-  const employees: any = useAppSelector((state) => state?.employees?.employees);
-  const availablleEmployees = [] as any;
+  // const employees: any = useAppSelector((state) => state?.employees?.employees);
+  // const availablleEmployees = [] as any;
 
-  employees &&
-    employees.forEach((employee: any) =>
-      availablleEmployees.push({
-        value: employee?.id,
-        label: employee?.full_name,
-      })
-    );
+  // employees &&
+  //   employees.forEach((employee: any) =>
+  //     availablleEmployees.push({
+  //       value: employee?.id,
+  //       label: employee?.full_name,
+  //     })
+  //   );
   return (
     <div>
       <Button
@@ -111,7 +112,7 @@ const TerminateEmployeeModal = ({
                     {!id ? (
                       <div className="col">
                         <div className="form-group">
-                          <ReactSelectField
+                          {/* <ReactSelectField
                             options={availablleEmployees}
                             label="Employee ID"
                             name="employee"
@@ -119,7 +120,7 @@ const TerminateEmployeeModal = ({
                             onChange={(event: any) => {
                               setFieldValue("employee", event?.value);
                             }}
-                          />
+                          /> */}
                         </div>
                       </div>
                     ) : (

@@ -1,0 +1,88 @@
+@use "../abstracts/colors" as c;
+
+.section-contruct {
+   
+    overflow: hidden;
+}
+
+.alt-services h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: c.color(primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+ 
+.alt-services h3:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: c.color(primary-color);
+    left: 0;
+    bottom: 0;
+}
+
+ .back-btn-icon-sub{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+ }
+
+.stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    content: "";
+}
+
+
+
+.alt-services .icon-box i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    margin-right: 25px;
+    font-size: 28px;
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+    line-height: 0;
+    box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+    transition: 0.3s;
+}
+
+
+.construct-img{
+	background-image:  url("../../assets/images/contsruction.jpeg");
+ background-repeat: no-repeat, repeat;
+	background-size: cover;
+		height: 85vh;	
+}
+
+
+.active-view{
+     color: '#fff' !important;
+     background-color: 'green' !important;
+     padding: '5px' !important;
+  border-radius: '5px' !important; 
+   text-align: 'center' !important; 
+  font-weight: 'bold ' !important;
+}
+.active-not-view{
+     color: '#fff';
+     background-color: 'red';
+     padding: '5px';
+  border-radius: '5px'; 
+   text-align: 'center'; 
+  font-weight: 'bold' 
+}

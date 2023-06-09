@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Carousel } from "react-bootstrap";
 import { Toast } from "react-bootstrap";
 import { Button } from "@material-ui/core";
-// import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
@@ -17,10 +16,13 @@ import logo from "../../../assets/images/ASLLOGO.svg";
 import InputField from "../../../components/Inputs/InputField";
 import Cookies from "js-cookie";
 import { fireAlert } from "../../../utils/Alert";
+import DataService from "../../../utils/dataService";
+import { useNavigate } from "react-router-dom";
 
-const token = Cookies.get("token");
-
+const dataService = new DataService()
 const UpdatePassword = () => {
+  const navigate = useNavigate();
+  const token = dataService.getToken()
   const [isLoading, setLoading] = React.useState(false);
 
   const [error, setError] = useState<any>();
@@ -60,7 +62,7 @@ const UpdatePassword = () => {
         const html = `Password updated`;
         const icon = "success";
         fireAlert(title, html, icon);
-        // navigate("/home");
+        navigate("/home");
         window.location.replace("/home");
       })
       .catch((error) => {

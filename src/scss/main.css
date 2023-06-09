@@ -428,10 +428,7 @@
   border-spacing: 0;
   width: 100%;
   overflow: hidden;
-  /* START - data table header */
-  /* END - data table header */
-  /* START - data table content */
-  /* END data table content */
+  
 }
 .md-ui.component-data-table .main-table-wrapper .main-table-content tr {
   border-bottom: 1px solid #e0e0e0;
@@ -14154,36 +14151,7 @@ form {
   display: none;
 }
 
-body {
-  font-family: "Inter", sans-serif !important;
-  background: #f6f6f6;
-  margin: 0;
-  letter-spacing: normal;
-  box-sizing: border-box !important;
-  --box-shadow: 0 0 4px rgba(0, 0, 0, 0.025), 0 0 16px rgba(0, 0, 0, 0.025),
-    0 0 32px rgba(0, 0, 0, 0.025), 0 0 64px rgba(0, 0, 0, 0.025);
-}
-
-td {
-  white-space: nowrap !important;
-}
-
-Button {
-  white-space: nowrap !important;
-}
-
-textarea {
-  width: 100%;
-  border: 2px solid #b2b2b2 !important;
-  border-radius: 5px;
-}
-
-input {
-  width: 100%;
-  padding: 0.9rem;
-  border: 2px solid #b2b2b2 !important;
-  border-radius: 5px;
-}
+ 
 
 .nav-tabs .nav-link {
   background-color: transparent !important;
@@ -14195,7 +14163,7 @@ input {
 
 #screen-wrapper {
   display: grid;
-  height: 100vh;
+  /* height: 100vh; */
   grid-template-columns: -webkit-max-content 3fr;
   grid-template-columns: max-content 3fr;
   grid-template-rows: 0.2fr 3fr;

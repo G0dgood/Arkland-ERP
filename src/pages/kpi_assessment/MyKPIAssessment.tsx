@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
 import {
   EntriesPerPage,
@@ -7,24 +7,24 @@ import {
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
-import axios, { AxiosResponse } from "axios";
 import moment from "moment";
 import TableLoader from "../../components/TableLoader";
 import { Link } from "react-router-dom";
-import storage from "../../utils/storage";
+import { getAssessment, reset } from "../../features/KPIAssessment/assessmentSlice";
+import DataService from "../../utils/dataService";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { fireAlert } from "../../utils/Alert";
+import CreateKpiModal from "../../components/Modals/CreateKpiModal";
 
+
+const dataService = new DataService()
 const MyKPIAssessment = ({ setkpidata }: any) => {
-  // @ts-ignore
-  const userInfo: any = JSON.parse(storage?.get("user"));
-
-  const [data, setData] = useState<any>([]);
+  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+  const dispatch = useAppDispatch();
+  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.assessment)
+  const { createisSuccess } = useAppSelector((state: any) => state.assessment)
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
-  const [isLoading, setisLoading] = useState(false);
-  const [isError, setisError] = useState(false)
-  const [message, setMessage] = useState("");
-
 
   const title1 = "KPI error";
   const html1 = message;
@@ -33,11 +33,9 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
   useEffect(() => {
     if (isError) {
       fireAlert(title1, html1, icon1);
-      setTimeout(() => {
-        setisError(false)
-      }, 10000);
     }
-  }, [isError, html1]);
+    dispatch(reset());
+  }, [isError, html1, dispatch]);
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -60,28 +58,16 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
 
   const [displayData, setDisplayData] = useState([]);
 
-  useEffect(() => {
-    setisLoading(true);
-    axios
-      .get(
-        `${process.env.REACT_APP_API}/hr/appraisals?employee=${userInfo?.data?.employee?._id}`
-      )
-      .then((res: AxiosResponse) => {
-        if (res?.data?.success === false) {
-          setMessage(res?.data?.message)
-          setisError(true)
-        } else {
-          setData(res?.data?.data);
-          setkpidata(res?.data?.data?.length);
-        }
 
-        setisLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setisLoading(false);
-      });
-  }, [setkpidata, userInfo?.data?.employee?._id]);
+  const id = userInfo?.employee?._id
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(getAssessment(id));
+    if (createisSuccess) {
+      // @ts-ignore
+      dispatch(getAssessment(id));
+    }
+  }, [createisSuccess, dispatch, id]);
 
   return (
     <div>
@@ -103,8 +89,9 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
             setEntriesPerPage={setEntriesPerPage}
           />
         </div>
-        <div>
-          <MainSearch placeholder={"Search...          KPI Assessment"} />
+        <div style={{ display: "flex", marginRight: "1rem" }}>
+          <MainSearch placeholder={"Search...     KPI Assessment"} />
+          <CreateKpiModal />
         </div>
       </div>
       <section className="md-ui component-data-table">
@@ -178,7 +165,7 @@ const MyKPIAssessment = ({ setkpidata }: any) => {
                       </Button>
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      <Link to={`/kpidetails/${item?._id}`}>
+                      <Link to={`/kpiassessment/kpiassessment/${item?._id}`}>
                         <Button id="team-applicatiom-update">View</Button>
                       </Link>
                     </td>

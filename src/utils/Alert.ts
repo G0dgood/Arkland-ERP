@@ -8,11 +8,11 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false,
 });
 
-export const fireAlert = (title: any, html: any, icon: any) => {
+export const fireAlert = ( title: string, message: string, icon: any) => { 
   swalWithBootstrapButtons.fire({
-    title,
-    html,
-    icon,
+    title: title  ,
+    html: message,
+    icon:icon,
     showCancelButton: false,
     confirmButtonText: "OK",
     cancelButtonText: "OK",
