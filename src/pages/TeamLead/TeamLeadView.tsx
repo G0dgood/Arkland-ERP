@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { BounceLoader } from 'react-spinners';
-import { fireAlert } from '../../utils/Alert';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { reset, viewTeamLead } from '../../features/TeamLead/teamleadSlice';
+import { viewTeamLead } from '../../features/TeamLead/teamleadSlice';
 import projectBack from "../../assets/vectors/project-back.svg";
 import moment from 'moment';
 import DeleteTeamLeadModal from './DeleteTeamLeadModal';
@@ -13,15 +13,10 @@ const TeamLeadView = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { id } = useParams<{ id: string }>();
-	const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.teamlead)
+	const { viewdata, viewisLoading, } = useAppSelector((state: any) => state.teamlead)
 
 
-	useEffect(() => {
-		if (viewisError) {
-			fireAlert("TeamLead error", viewmessage, "error");
-			dispatch(reset());
-		}
-	}, [viewisError, viewmessage, dispatch])
+
 
 
 	useEffect(() => {

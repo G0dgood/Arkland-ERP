@@ -53,8 +53,7 @@ const Userprivileges = () => {
 	const title = "Successful";
 	const html = "User Privilege Deleted!";
 	const icon = "success";
-	const title1 = "Delete Privilege error";
-	const icon1 = "error";
+
 
 
 	useEffect(() => {
@@ -63,14 +62,8 @@ const Userprivileges = () => {
 			setShowDelete(false)
 			dispatch(userprivileges());
 			dispatch(reset());
-		} else if (deleteisError) {
-			fireAlert(title1, deletemessage, icon1);
-			dispatch(reset());
-		} else if (privilegesisError) {
-			fireAlert(title1, privilegesmessage, icon1);
-			dispatch(reset());
 		}
-	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, html, privilegesisError, privilegesmessage])
+	}, [deleteisSuccess, deletemessage, dispatch, html, privilegesmessage])
 
 	const handleDelete = () => {
 		// @ts-ignore

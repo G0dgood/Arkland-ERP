@@ -9,9 +9,9 @@ import moment from "moment";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import TableLoader from "../../components/TableLoader";
-import { fireAlert } from "../../utils/Alert";
 
-import { allweeklyReport, reset } from "../../features/WeeklyReport/WeeklyReportSlice";
+
+import { allweeklyReport } from "../../features/WeeklyReport/WeeklyReportSlice";
 import Pagination from "../../components/Pagination";
 import DataService from "../../utils/dataService";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
@@ -21,11 +21,8 @@ const dataService = new DataService()
 const MyWeekReport = ({ setkpidata }: any) => {
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();
-  const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.Weeklyreport)
+  const { data, isLoading } = useAppSelector((state: any) => state.Weeklyreport)
 
-  const title = "Week Report error";
-  const html = message;
-  const icon = "error";
 
 
 
@@ -34,20 +31,15 @@ const MyWeekReport = ({ setkpidata }: any) => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
-  const id = userInfo?.data?.employee?._id
+
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(allweeklyReport(id));
-  }, [dispatch, id]);
+    dispatch(allweeklyReport());
+  }, [dispatch]);
 
 
-  useEffect(() => {
-    if (isError) {
-      fireAlert(title, html, icon);
-      reset()
-    }
-  }, [html, isError, isSuccess]);
+
 
   const [displayData, setDisplayData] = useState([]);
 
@@ -121,7 +113,7 @@ const MyWeekReport = ({ setkpidata }: any) => {
                       </Button>
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      <Link to={`/weeklyreportview/${item?._id}`}>
+                      <Link to={`/weeklyreport/weeklyreport/${item?._id}`}>
                         <Button id="team-applicatiom-update">
                           {" "}
                           {item?.status === "acknowledged" ? "View" : "Update"}

@@ -1,5 +1,4 @@
 import { Button } from '@material-ui/core'
-import React from 'react'
 import { GoArrowLeft } from 'react-icons/go'
 import { useNavigate } from 'react-router-dom';
 

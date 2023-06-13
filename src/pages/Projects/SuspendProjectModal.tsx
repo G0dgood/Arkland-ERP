@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { InputField } from '../../components/TableOptions'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core'
@@ -12,22 +12,19 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 const SuspendProjectModal = ({ id, title }: any) => {
 	const dispatch = useAppDispatch();
-	const { suspendisError, suspendisLoading, suspendmessage, suspendisSuccess } = useAppSelector((state: any) => state.project)
+	const { suspendisLoading, suspendmessage, suspendisSuccess } = useAppSelector((state: any) => state.project)
 	const [Show, setShow] = useState(false);
 	const [inputs, setInputs] = useState<any>({
 		status: "",
 	})
 
 	useEffect(() => {
-		if (suspendisError) {
-			fireAlert("Project suspend  failed", suspendmessage, "error");
-			dispatch(reset());
-		} else if (suspendisSuccess) {
+		if (suspendisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Project suspended successfully", "success");
 			dispatch(reset());
 		}
-	}, [suspendisSuccess, suspendmessage, suspendisError, dispatch]);
+	}, [suspendisSuccess, suspendmessage, dispatch]);
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({

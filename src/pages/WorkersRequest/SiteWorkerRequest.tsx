@@ -7,9 +7,8 @@ import {
 } from "../../components/TableOptions";
 import TableLoader from "../../components/TableLoader";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { useEffect, useState } from "react";
-import { fireAlert } from "../../utils/Alert";
-import { getRequest, reset } from "../../features/workerRequest/workerRequestSlice";
+import { useEffect } from "react";
+import { getRequest } from "../../features/workerRequest/workerRequestSlice";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import RequestForWorkersModal from "./RequestForWorkersModal";
@@ -18,7 +17,8 @@ const SiteWorkerRequest = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { data: requestWorkers, isError, isLoading, message } = useAppSelector((state: any) => state.worker)
+  const { data: requestWorkers, isLoading } = useAppSelector((state: any) => state.worker)
+
 
 
 
@@ -27,12 +27,7 @@ const SiteWorkerRequest = () => {
     dispatch(getRequest());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (isError) {
-      fireAlert("error", message, "error");
-      dispatch(reset());
-    }
-  }, [isError, message, dispatch])
+
 
 
   const header = [

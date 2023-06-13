@@ -12,7 +12,6 @@ const UploadEmployee = () => {
   const dispatch = useAppDispatch();
 
 
-  const [data, setData] = useState([]);
   const [message, setMessage] = useState("");
   const [isError, setisError] = useState(false);
   const [isSuccess, setisSuccess] = useState(false);
@@ -65,13 +64,6 @@ const UploadEmployee = () => {
         setMessage("")
         // setReload(false)
       }, 5000);
-    } else if (isError) {
-      fireAlert('Upload Employee', 'message', "error");
-      setTimeout(() => {
-        setisError(false)
-        setMessage("")
-        // setReload(false)
-      }, 5000);
     }
   }, [dispatch, isError, isSuccess, message])
 
@@ -105,37 +97,9 @@ const UploadEmployee = () => {
         </Modal.Header>
         <Modal.Body>
           <form className="upload-form">
-            {/* {uploadisError && (
-              <Toast show={uploadisError}>
-                <Toast.Body>
-                  <span>
-                    <i className="fas fa-exclamation-circle" />
-                  </span>
-                  <p>{uploadisError}!</p>
-                  <span>
-                    <i className="fas fa-times" onClick={onClickReset} />
-                  </span>
-                </Toast.Body>
-              </Toast>
-            )} */}
 
-            {/* {uploadisSuccess && (
-              <Toast
-                show={uploadisSuccess}
-                className="success-toast"
-                delay={5000}
-                autohide>
-                <Toast.Body>
-                  <span>
-                    <i className="fas fa-exclamation-circle" />
-                  </span>
-                  <p>Upload customer base is successfull!</p>
-                  <span>
-                    <i className="fas fa-times" />
-                  </span>
-                </Toast.Body>
-              </Toast>
-            )} */}
+
+
             <div
               className={progress === 0 ? "upload-icon" : "upload-icon-active"}>
               <i className="fas fa-cloud-upload-alt fa-4x" />
@@ -145,10 +109,7 @@ const UploadEmployee = () => {
                   : `Uploading...`}
               </p>
             </div>
-            {/* <CSVReader
-              onFileLoaded={(data: any) => setJSONData(data)}
-              parserOptions={{ header: true }}
-            /> */}
+
             <input
               type="file"
               id="fileupload"

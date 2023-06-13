@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { BsExclamationLg, BsPlusLg } from "react-icons/bs";
-import SyncLoader from "react-spinners/SyncLoader";
 import { ProgressBar, Toast } from "react-bootstrap";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
@@ -10,7 +9,6 @@ import { FaTimes } from "react-icons/fa";
 
 import { allProject, reset } from "../../features/Project/projectSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { fireAlert } from "../../utils/Alert";
 import { getUserPrivileges } from "../../functions/auth";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
 import { BounceLoader } from "react-spinners";
@@ -19,31 +17,22 @@ const ProjectView = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.project)
+  const { data, isLoading, message } = useAppSelector((state: any) => state.project)
 
 
 
-  useEffect(() => {
-    if (message === "Request failed with status code 500" ? false : message) {
-      fireAlert("Project error", message, "error");
-      dispatch(reset());
-    }
-  }, [isError, message, dispatch])
+
   useEffect(() => {
     // @ts-ignore
     dispatch(allProject());
-    if (message === "Request failed with status code 500") {
-      dispatch(allProject());
-    }
+
   }, [dispatch, message]);
 
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } = getUserPrivileges();
 
-  // const [data, setShowToast1] = useState<any>([]);
-  // const [isError, setShowToast2] = useState<any>(false);
-  // const [isLoading, setShowToast3] = useState<any>(false);
 
-  const [showToast, setShowToast] = useState<any>(false);
+
+
 
 
 

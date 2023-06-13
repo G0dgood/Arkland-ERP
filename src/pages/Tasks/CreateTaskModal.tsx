@@ -16,7 +16,7 @@ import { getTeammembers } from '../../features/Team/teamSlice';
 const CreateTaskModal = ({ view, id }: any) => {
 	const dispatch = useAppDispatch();
 	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.task)
-	const { membersdata: teamMembers, membersisLoading } = useAppSelector((state: any) => state.team)
+	const { membersdata: teamMembers } = useAppSelector((state: any) => state.team)
 	const [Show, setShow] = useState(false);
 
 

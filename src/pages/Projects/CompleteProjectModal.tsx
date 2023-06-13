@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import { InputField } from '../../components/TableOptions'
-import SelectInput from '../../components/SelectInput'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core'
 import { MdOutlineClose } from 'react-icons/md'
@@ -10,19 +8,16 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 const CompleteProjectModal = ({ id, title }: any) => {
 	const dispatch = useAppDispatch();
-	const { completeisError, completeisLoading, completemessage, completeisSuccess } = useAppSelector((state: any) => state.project)
+	const { completeisLoading, completemessage, completeisSuccess } = useAppSelector((state: any) => state.project)
 	const [Show, setShow] = useState(false);
 
 	useEffect(() => {
-		if (completeisError) {
-			fireAlert("Project complete  failed", completemessage, "error");
-			dispatch(reset());
-		} else if (completeisSuccess) {
+		if (completeisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Project completed successfully", "success");
 			dispatch(reset());
 		}
-	}, [completeisSuccess, completemessage, completeisError, dispatch]);
+	}, [completeisSuccess, completemessage, dispatch]);
 
 	const handleComplete = () => {
 		// @ts-ignore

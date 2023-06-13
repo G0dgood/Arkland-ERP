@@ -34,7 +34,7 @@ const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
 
 					{isLoading ? (
 						<TableFetch colSpan={8} />
-					) : data?.length === 0 ? (
+					) : data?.length === 0 || data?.length === undefined ? (
 						<NoRecordFound colSpan={8} />
 					) : (
 						data?.map((item: any, i: any) => (

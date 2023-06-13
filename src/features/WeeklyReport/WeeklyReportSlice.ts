@@ -171,7 +171,7 @@ export const WeeklyReportSlice = createSlice({
       .addCase(allweeklyReport.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.data = action.payload?.data?.data 
+        state.data = action.payload?.data 
       })
       .addCase(allweeklyReport.rejected, (state:any, action) => {
         state.isLoading = false

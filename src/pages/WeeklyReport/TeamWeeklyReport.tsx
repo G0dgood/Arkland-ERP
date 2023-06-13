@@ -5,7 +5,6 @@ import TableLoader from '../../components/TableLoader'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions'
 import moment from 'moment'
 import Pagination from '../../components/Pagination'
-import { fireAlert } from '../../utils/Alert'
 import WeeklyReportDownloader from '../../components/Downloader/WeeklyReportDownloader'
 
 import { getHODWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
@@ -14,7 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 const TeamWeeklyReport = () => {
 	const dispatch = useAppDispatch();
-	const { HODdata, HODisError, HODisLoading, HODmessage } = useAppSelector((state: any) => state.Weeklyreport)
+	const { HODdata, HODisLoading } = useAppSelector((state: any) => state.Weeklyreport)
 
 
 	useEffect(() => {
@@ -31,18 +30,6 @@ const TeamWeeklyReport = () => {
 
 
 
-
-	const title = "Weekly Reports error";
-	const html = HODmessage;
-	const icon = "error";
-
-
-
-	useEffect(() => {
-		if (HODisError) {
-			fireAlert(title, html, icon);
-		}
-	}, [html, HODisError])
 
 
 	const [displayData, setDisplayData] = useState([]);

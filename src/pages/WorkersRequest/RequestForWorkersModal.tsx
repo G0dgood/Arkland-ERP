@@ -12,16 +12,14 @@ import { BsDashCircleFill, BsPlusCircleFill } from 'react-icons/bs'
 const RequestForWorkersModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 
-	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.worker)
+	const { createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.worker)
 	const { getroledata, getroleisLoading } = useAppSelector((state: any) => state.employee)
 	const [Show, setShow] = useState(false);
 	const [count, setCount] = React.useState(0);
 	const [counts, setCounts] = React.useState(0);
 
 
-	useEffect(() => {
-		dispatch(getRole());
-	}, [dispatch]);
+
 
 
 
@@ -70,15 +68,12 @@ const RequestForWorkersModal = ({ id }: any) => {
 
 
 	useEffect(() => {
-		if (createisError) {
-			fireAlert("Worker Request Creation  failed", createmessage, "error");
-			dispatch(reset());
-		} else if (createisSuccess) {
+		if (createisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Worker Request Creation   successfully", "success");
 			dispatch(reset());
 		}
-	}, [createisSuccess, createmessage, createisError, dispatch,]);
+	}, [createisSuccess, createmessage, dispatch,]);
 
 
 	const handleReject = () => {
