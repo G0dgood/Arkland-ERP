@@ -9,19 +9,16 @@ import { approveRequest, reset } from '../../features/workerRequest/workerReques
 const ApproveWorkerRequestModal = ({ id }: any) => {
 
 	const dispatch = useAppDispatch();
-	const { approveisError, approveisLoading, approvemessage, approveisSuccess } = useAppSelector((state: any) => state.worker)
+	const { approveisLoading, approvemessage, approveisSuccess } = useAppSelector((state: any) => state.worker)
 	const [Show, setShow] = useState(false);
 
 	useEffect(() => {
-		if (approveisError) {
-			fireAlert("Worker Request approval  failed", approvemessage, "error");
-			dispatch(reset());
-		} else if (approveisSuccess) {
+		if (approveisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Worker Request  successfully", "success");
 			dispatch(reset());
 		}
-	}, [approveisSuccess, approvemessage, approveisError, dispatch]);
+	}, [approveisSuccess, approvemessage, dispatch]);
 
 	const handleComplete = () => {
 		// @ts-ignore

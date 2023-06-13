@@ -7,8 +7,8 @@ import { Spinner } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
 
-import { createweeklyReport, reset } from '../../features/WeeklyReport/WeeklyReportSlice';
-import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { reset } from '../../features/WeeklyReport/WeeklyReportSlice';
+import { useAppDispatch } from '../../store/useStore';
 import DataService from '../../utils/dataService';
 import HttpService from '../../components/HttpService';
 
@@ -108,6 +108,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 
 
 	const submitHandler = async () => {
+		setisLoading(true)
 		await HttpService.uploadFile(url, {}, { employees: allinput })
 			.then((response) => {
 				console.log('response', response);
@@ -150,23 +151,23 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			}, 2000);
 		} else if (isError) {
 			fireAlert(title1, message, icon1);
-			setTimeout(() => {
-				setInputs({
-					assessment: " ",
-					week: "",
-					activities: [
-						{
-							completed: "",
-							in_progress: "",
-							next: "",
-							due_date_for_next: "",
-							next_week_tasks: [""],
-							issues: [""],
-							blockers: [""]
-						}
-					]
-				})
-			}, 5000);
+			// setTimeout(() => {
+			// 	setInputs({
+			// 		assessment: " ",
+			// 		week: "",
+			// 		activities: [
+			// 			{
+			// 				completed: "",
+			// 				in_progress: "",
+			// 				next: "",
+			// 				due_date_for_next: "",
+			// 				next_week_tasks: [""],
+			// 				issues: [""],
+			// 				blockers: [""]
+			// 			}
+			// 		]
+			// 	})
+			// }, 5000);
 			reset()
 		}
 	}, [html, setIsCheck, dispatch, isSuccess, isError, message])
@@ -253,9 +254,8 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			<div>
 				<WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} setInputs={setInputs} inputs={inputs} />
 				<div className='WeeKlyReport-submit-container'>
-					<button className="ccsnl-btn WeeKlyReport-tab"
-						onClick={submitHandler}>
-						{isLoading ? <Spinner animation="border" /> : "Upload"} </button>
+					<button className="ccsnl-btn WeeKlyReport-tab" >
+						{false ? <Spinner animation="border" /> : "Upload"} </button>
 					<button className="ccsnl-btn WeeKlyReport-tab"
 						onClick={submitHandler}>
 						{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>

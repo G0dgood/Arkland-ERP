@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
@@ -24,9 +24,6 @@ const DeleteTaskModal = ({ name, id }: any) => {
 			fireAlert("Successful", "Task Deleted Successfully", "success");
 			setDeleteShow(false)
 			navigate(-1)
-			dispatch(reset());
-		} else if (deleteisError) {
-			fireAlert("Task Deletion error", deletemessage, "error");
 			dispatch(reset());
 		}
 	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, navigate])

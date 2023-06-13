@@ -3,8 +3,7 @@ import { GiTeamIdea } from 'react-icons/gi';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BounceLoader } from 'react-spinners';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { fireAlert } from '../../utils/Alert';
-import { reset, viewTask } from '../../features/Tasks/taskSlice';
+import { viewTask } from '../../features/Tasks/taskSlice';
 import projectBack from "../../assets/vectors/project-back.svg";
 import moment from 'moment';
 import DeleteTaskModal from './DeleteTaskModal';
@@ -15,7 +14,7 @@ const TaskView = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { id } = useParams<{ id: string }>();
-	const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.task)
+	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.task)
 	const { deleteisSuccess } = useAppSelector((state: any) => state.task)
 	const { updateisSuccess } = useAppSelector((state: any) => state.task)
 	const { noteisSuccess } = useAppSelector((state: any) => state.task)
@@ -29,12 +28,7 @@ const TaskView = () => {
 	}, [dispatch, id, updateisSuccess])
 
 
-	useEffect(() => {
-		if (viewisError) {
-			fireAlert("View Task error", viewmessage, "error");
-			dispatch(reset());
-		}
-	}, [viewisError, viewmessage, dispatch])
+
 
 
 	useEffect(() => {

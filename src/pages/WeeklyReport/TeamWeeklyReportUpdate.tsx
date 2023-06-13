@@ -1,35 +1,35 @@
 
 import { useEffect, useState } from 'react'
 import { fireAlert } from '../../utils/Alert';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import TableLoader from '../../components/TableLoader';
-import { MdOutlineClose } from 'react-icons/md';
-import { BsChatLeftText } from 'react-icons/bs';
+
 import WeeklyReportTable from './WeeklyReportTable';
 import Cookies from 'js-cookie';
 import moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice';
-
+import DataService from '../../utils/dataService';
+const dataService = new DataService()
 const TeamWeeklyReportUpdate = () => {
 	const dispatch = useAppDispatch();
-	const { viewdata, viewisError, viewisLoading, viewmessage, viewisSuccess }: any = useAppSelector((state: any) => state.Weeklyreport)
+	const { viewdata, viewisLoading }: any = useAppSelector((state: any) => state.Weeklyreport)
 	const { id } = useParams()
 	const navigate = useNavigate();
 
 
 	const [data, setData] = useState<any>([]);
-	const [isLoading, setisLoading] = useState(false);
+
 	const [isLoading1, setisLoading1] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
 	const [isError, setisError] = useState(false)
-	const [message, setMessage] = useState("");
-	const [isError1, setisError1] = useState(false)
-	const [message1, setMessage1] = useState("");
 
-	const token = Cookies.get("token");
+	const [isError1, setisError1] = useState(false)
+
+
+	const token = dataService.getToken()
 
 
 	const title2 = "Weekly Report Acknowledged";

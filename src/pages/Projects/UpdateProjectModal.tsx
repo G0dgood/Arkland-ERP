@@ -9,7 +9,7 @@ import { fireAlert } from '../../utils/Alert'
 
 const UpdateProjectModal = ({ id, title }: any) => {
 	const dispatch = useAppDispatch();
-	const { updateisError, updateisLoading, updatemessage, updateisSuccess } = useAppSelector((state: any) => state.project)
+	const { updateisLoading, updatemessage, updateisSuccess } = useAppSelector((state: any) => state.project)
 	const [Show, setShow] = useState(false);
 	const [inputs, setInputs] = useState<any>({
 		name: "",
@@ -18,15 +18,12 @@ const UpdateProjectModal = ({ id, title }: any) => {
 	})
 
 	useEffect(() => {
-		if (updateisError) {
-			fireAlert("Project update  failed", updatemessage, "error");
-			dispatch(reset());
-		} else if (updateisSuccess) {
+		if (updateisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Project updated successfully", "success");
 			dispatch(reset());
 		}
-	}, [updateisSuccess, updatemessage, dispatch, updateisError, id]);
+	}, [updateisSuccess, updatemessage, dispatch, id]);
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({

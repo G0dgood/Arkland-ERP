@@ -16,12 +16,11 @@ import { formatDate } from "../../utils/formatDate";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { useNavigate } from "react-router-dom";
 import { createProject, reset } from "../../features/Project/projectSlice";
-import { allDepartments } from "../../features/Department/departmentSlice";
+
 import HttpService from "../HttpService";
 
 const CreateProjectModal = (props: any) => {
-  // const { data: departments } = useAppSelector((state: any) => state.department)
-  const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.project)
+  const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.project)
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -35,10 +34,7 @@ const CreateProjectModal = (props: any) => {
   const [isLoading, setisLoading] = useState(false);
 
 
-  useEffect(() => {
-    // @ts-ignore
-    dispatch(allDepartments());
-  }, [dispatch]);
+
 
 
   useEffect(() => {
@@ -47,11 +43,8 @@ const CreateProjectModal = (props: any) => {
       setLgShow(false)
       navigate(-1)
       dispatch(reset());
-    } else if (createisError) {
-      fireAlert("Project creation error", createmessage, "error");
-      dispatch(reset());
     }
-  }, [createisError, createisSuccess, createmessage, dispatch, navigate])
+  }, [createisSuccess, dispatch, navigate])
 
 
 

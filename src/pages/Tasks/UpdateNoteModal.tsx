@@ -8,7 +8,7 @@ import { noteTask, reset } from '../../features/Tasks/taskSlice'
 
 const UpdateNoteModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
-	const { noteisError, noteisLoading, notemessage, noteisSuccess } = useAppSelector((state: any) => state.task)
+	const { noteisLoading, notemessage, noteisSuccess } = useAppSelector((state: any) => state.task)
 
 	const [Show, setShow] = useState(false);
 	const [inputs, setInputs] = useState({
@@ -18,15 +18,12 @@ const UpdateNoteModal = ({ id }: any) => {
 
 
 	useEffect(() => {
-		if (noteisError) {
-			fireAlert("Task Note updated failed", notemessage, "error");
-			dispatch(reset());
-		} else if (noteisSuccess) {
+		if (noteisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Task Note updated successfully", "success");
 			dispatch(reset());
 		}
-	}, [noteisSuccess, notemessage, dispatch, noteisError, id]);
+	}, [noteisSuccess, notemessage, dispatch, id]);
 
 
 

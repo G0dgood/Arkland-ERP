@@ -11,22 +11,19 @@ import { useNavigate } from 'react-router-dom'
 const RejectWorkerRequestModal = ({ id }: any) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { rejectisError, rejectisLoading, rejectmessage, rejectisSuccess } = useAppSelector((state: any) => state.worker)
+	const { rejectisLoading, rejectmessage, rejectisSuccess } = useAppSelector((state: any) => state.worker)
 
 	const [Show, setShow] = useState(false);
 
 
 	useEffect(() => {
-		if (rejectisError) {
-			fireAlert("Worker Request rejection  failed", rejectmessage, "error");
-			dispatch(reset());
-		} else if (rejectisSuccess) {
+		if (rejectisSuccess) {
 			navigate(-1)
 			setShow(false)
 			fireAlert("Success", "Worker reject  successfully", "success");
 			dispatch(reset());
 		}
-	}, [rejectisSuccess, rejectmessage, rejectisError, dispatch, navigate]);
+	}, [rejectisSuccess, rejectmessage, dispatch, navigate]);
 
 
 	const handleReject = () => {

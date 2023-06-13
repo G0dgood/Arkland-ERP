@@ -5,28 +5,22 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { BounceLoader } from 'react-spinners';
 import { GiTeamIdea } from 'react-icons/gi';
 import { useNavigate, useParams } from 'react-router-dom';
-import { reset, viewRequest } from '../../features/workerRequest/workerRequestSlice';
+import { viewRequest } from '../../features/workerRequest/workerRequestSlice';
 import moment from 'moment';
 import { FiUserPlus } from 'react-icons/fi';
 import { NoRecordFound } from '../../components/TableOptions';
 import ApproveWorkerRequestModal from './ApproveWorkerRequestModal';
 import RejectWorkerRequestModal from './RejectWorkerRequestModal';
-import { fireAlert } from '../../utils/Alert';
 
 const ViewSiteWorkerRequest = () => {
  const navigate = useNavigate();
  const dispatch = useAppDispatch();
  const { id } = useParams<{ id: string }>();
- const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.worker)
+ const { viewdata, viewisLoading } = useAppSelector((state: any) => state.worker)
 
  const { requests } = viewdata
 
- useEffect(() => {
-  if (viewisError) {
-   fireAlert(" View Worker Request failed", viewmessage, "error");
-   dispatch(reset());
-  }
- }, [dispatch, navigate, viewisError, viewmessage]);
+
 
  useEffect(() => {
   // @ts-ignore

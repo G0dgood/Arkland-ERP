@@ -4,14 +4,14 @@ import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
-import { createTeamMembers, reset, viewTeam } from '../../features/Team/teamSlice';
+import { createTeamMembers, viewTeam } from '../../features/Team/teamSlice';
 import SelectInput from '../../components/SelectInput';
 import { allEmployee } from '../../features/Employee/employeeSlice';
 import { InputField } from '../../components/TableOptions';
 
 const CreateTeamMembers = ({ id }: any) => {
 	const dispatch = useAppDispatch();
-	const { createTeamMembersisError, createTeamMembersisLoading, createTeamMembersmessage, createTeamMembersisSuccess } = useAppSelector((state: any) => state.team)
+	const { createTeamMembersisLoading, createTeamMembersisSuccess } = useAppSelector((state: any) => state.team)
 	const { data: employee, isLoading } = useAppSelector((state: any) => state.employee)
 
 
@@ -42,16 +42,12 @@ const CreateTeamMembers = ({ id }: any) => {
 	}, [setInputs, newid.id]);
 
 	useEffect(() => {
-		if (createTeamMembersisError) {
-			fireAlert("Member created team failed", createTeamMembersmessage, "error");
-			dispatch(reset());
-		} else if (createTeamMembersisSuccess) {
+		if (createTeamMembersisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Team member created  successfully", "success");
 			dispatch(viewTeam());
-			dispatch(reset());
 		}
-	}, [createTeamMembersisError, createTeamMembersisSuccess, createTeamMembersmessage, dispatch]);
+	}, [createTeamMembersisSuccess, dispatch]);
 
 
 	const handleSubmit = () => {

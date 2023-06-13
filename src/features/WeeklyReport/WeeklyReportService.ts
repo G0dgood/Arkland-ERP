@@ -7,7 +7,11 @@ import HttpService from '../../components/HttpService'
 const allweeklyReport = async (id:any ) => { 
 	 
   
-  const { data }: any = await HttpService.search("hr/weekly-reports/list", { employee: id })
+//   const { data }: any = await HttpService.search("hr/weekly-reports/list", { employee: id })
+//   return data
+// }
+  
+  const { data }: any = await HttpService.get("hr/weekly-reports" )
   return data
 }
   //create weekly Report
@@ -26,21 +30,23 @@ const getHODWeeklyReport = async ( ) => {
  //view Weekly Report
 const viewWeeklyReport = async (id:any ) => { 
 	 
-  const {data} = await axios.get(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}/view`)
+  const { data }: any = await HttpService.get(`hr/weekly-reports/${id}/view`)  
+  console.log('data',data)
    
   return data
 }
 //delete Weekly Report 
 const deleteWeeklyReport = async (id:any ) => { 
 	 
-  const {data} = await axios.delete(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`)
+  const { data }: any = await HttpService.delete(`hr/weekly-reports/${id}`)  
    
   return data
 }
 //update Weekly Report
 const updateWeeklyReport = async ({id,inputs}:any ) => { 
 	 
-  const {data} = await axios.patch(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`,inputs)
+  const { data }: any = await HttpService.patch(`hr/weekly-reports/${id}` ,inputs)  
+    
    
   return data
 }

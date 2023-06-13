@@ -1,53 +1,29 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useNavigate, useParams } from 'react-router-dom'
 import { BounceLoader, SyncLoader } from 'react-spinners'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
-import { getTeammembers, reset, viewTeam } from '../../features/Team/teamSlice';
-import { fireAlert } from '../../utils/Alert';
+import { viewTeam } from '../../features/Team/teamSlice';
 import { RiTeamLine } from 'react-icons/ri';
 import moment from 'moment';
 import DeleteTeam from '../Team/DeleteTeam';
-import TeamMembers from '../Team/TeamMembers';
 import CreateTeamMembers from '../Team/CreateTeamMembersModal';
 
 const ViewTeam = () => {
 	const { id } = useParams()
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { viewdata, viewisError, viewisLoading, viewmessage, viewisSuccess } = useAppSelector((state: any) => state.team)
-	const { membersdata, membersisError, membersisLoading, membersmessage } = useAppSelector((state: any) => state.team)
+	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.team)
+	const { membersdata, membersisLoading } = useAppSelector((state: any) => state.team)
 
 
-	console.log('membersdata', membersdata)
+
 
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(viewTeam(id));
 	}, [dispatch, id]);
 
-	// useEffect(() => {
-	// 	if (viewdata) {
-	// 		// @ts-ignore
-	// 		dispatch(getTeammembers(id));
-
-	// 	}
-
-	// }, [dispatch, id, viewdata]);
-
-	// useEffect(() => {
-	// 	if (viewisError) {
-	// 		fireAlert("View team failed", viewmessage, "error");
-	// 		dispatch(reset());
-	// 	}
-	// }, [viewisError, viewmessage, dispatch]);
-
-	// useEffect(() => {
-
-	// 	if (membersisError) {
-	// 	} fireAlert("View team membersis  failed", membersmessage, "error");
-	// 	dispatch(reset());
-	// }, [dispatch, membersisError, membersmessage]);
 
 
 

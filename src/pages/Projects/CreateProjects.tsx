@@ -4,7 +4,6 @@ import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import ProjectEssentials from "./projectInputs/ProjectEssentials";
-import CreateProjectView from "./projectInputs/CreateProjectView";
 import AddProjectTitle from "./components/AddProjectTitle";
 import AddProjectNav from "./components/AddProjectNav";
 
@@ -40,39 +39,7 @@ const CreateProjects = () => {
   const bindSubmitForm = React.useCallback((submitForm: any) => {
     submitMyFormRef.current = submitForm;
   }, []);
-  // const department: any = useAppSelector(
-  //   (state) => state.department.department
-  // );
-  const availablleDepartments = [] as any;
 
-  // department &&
-  //   department.forEach((department: any) =>
-  //     availablleDepartments.push({
-  //       value: department.id,
-  //       label: department.name,
-  //     })
-  //   );
-
-  // const teams: any = useAppSelector((state) => state?.team?.team);
-  const availablleTeams = [] as any;
-  // teams &&
-  //   teams.forEach((team: any) =>
-  //     availablleTeams.push({
-  //       value: team?.id,
-  //       label: team?.name,
-  //     })
-  //   );
-
-  // const teamLeads: any = useAppSelector((state) => state?.teamLeads?.teamLeads);
-  const availablleTeamLeads = [] as any;
-
-  // teamLeads &&
-  //   teamLeads.forEach((teamLead: any) =>
-  //     availablleTeamLeads.push({
-  //       value: teamLead.id,
-  //       label: teamLead.name,
-  //     })
-  //   );
 
   return (
     <>
@@ -107,22 +74,13 @@ const CreateProjects = () => {
               project={project}
               setProject={setProject}
               setActive={setActive}
-              department={availablleDepartments}
-              team={availablleTeams}
-              teamLeads={availablleTeamLeads}
+              // department={availablleDepartments}
+              // team={availablleTeams}
+              // teamLeads={availablleTeamLeads}
               bindSubmitForm={bindSubmitForm}
             />
 
-            {/* <CreateProjectView
-                active={active}
-                project={project}
-                department={department}
-                teams={teams}
-                teamLeads={teamLeads}
-                setProject={setProject}
-                setActive={setActive}
-                bindSubmitForm={bindSubmitForm}
-              /> */}
+
           </div>
         </div>
       </div>

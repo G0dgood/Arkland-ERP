@@ -8,22 +8,17 @@ import { allDepartments } from '../../features/Department/departmentSlice';
 import { createEmployeeRole } from '../../features/Employee/employeeSlice';
 
 
-
-
 const CreateRoleModal = () => {
 	const dispatch = useAppDispatch();
 
 	const { data } = useAppSelector((state: any) => state.department)
-	const { createroleisError, createroleisLoading, createrolemessage, createroleisSuccess } = useAppSelector((state: any) => state.employee)
+	const { createroleisLoading, createrolemessage, createroleisSuccess } = useAppSelector((state: any) => state.employee)
 
+	const handleclick = () => {
 
-
-
-	useEffect(() => {
 		// @ts-ignore
 		dispatch(allDepartments());
-
-	}, [dispatch]);
+	}
 
 	const [departmentss, setDepartmentss] = useState([]);
 
@@ -54,26 +49,21 @@ const CreateRoleModal = () => {
 
 	const html = "Role Created!";
 	const icon = "success";
-	const title1 = "Role error";
-	const icon1 = "error";
+
 
 
 	useEffect(() => {
 		if (createroleisSuccess) {
 			fireAlert("success", html, icon);
+			setInputs({
+				name: "",
+				department: "",
+				description: "",
+			})
 			dispatch(allDepartments());
 			setLgShow(false)
-		} else if (createroleisError) {
-			fireAlert(title1, createrolemessage, icon1);
-			setTimeout(() => {
-				setInputs({
-					name: "",
-					department: "",
-					description: "",
-				})
-			}, 5000);
 		}
-	}, [createroleisError, createroleisSuccess, createrolemessage, dispatch, html])
+	}, [createroleisSuccess, createrolemessage, dispatch, html])
 
 
 
@@ -116,7 +106,7 @@ const CreateRoleModal = () => {
 
 					</span>
 					<span className='span-center-title'>Create Role</span>
-					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
+					<Button style={{ color: '#fff' }} onClick={() => { setLgShow(false); handleclick() }}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
