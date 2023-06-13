@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { FiCheckCircle, FiEye } from "react-icons/fi";
-import { GoPlus } from "react-icons/go";
+
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
@@ -12,7 +12,6 @@ import {
 } from "../../components/TableOptions";
 
 import { getUserPrivileges } from "../../functions/auth";
-import { fireAlert } from "../../utils/Alert";
 import { getHOD } from "../../features/HOD/hodSlice";
 import moment from "moment";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
@@ -20,7 +19,7 @@ import CreateHODModal from "../../components/Modals/CreateHODModal";
 
 
 const HODList = ({ setEmployee, setData }: any) => {
-	const { data, isError, isLoading, message } = useAppSelector((state: any) => state.hod)
+	const { data, isLoading } = useAppSelector((state: any) => state.hod)
 
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -28,11 +27,10 @@ const HODList = ({ setEmployee, setData }: any) => {
 	console.log('data', data)
 
 	useEffect(() => {
-		if (!data) {
-			// @ts-ignore
-			dispatch(getHOD());
-		}
-	}, [data, dispatch]);
+		// @ts-ignore
+		dispatch(getHOD());
+
+	}, [dispatch]);
 
 	const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 	// --- Pagination --- //
@@ -52,21 +50,8 @@ const HODList = ({ setEmployee, setData }: any) => {
 		{ title: "CREATED AT", prop: "created_at" },
 		{ title: "STATUS", prop: "status" },
 		{ title: "VIEW", prop: "view" },
-		{ title: "ACTION", prop: "action" },
 	];
 
-
-
-	const title1 = "HOD error";
-	const html1 = message;
-	const icon1 = "error";
-
-
-	useEffect(() => {
-		if (message === "Request failed with status code 500" ? false : message) {
-			fireAlert(title1, html1, icon1);
-		}
-	}, [html1, isError, message])
 
 
 	const [displayData, setDisplayData] = useState([]);
@@ -81,18 +66,6 @@ const HODList = ({ setEmployee, setData }: any) => {
 							<span className="SupportmainTitleh3">HOD List</span>
 						</div>
 						<div >
-							{/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
-							{/* <Button
-								variant="contained"
-								className="Add-btn"
-								onClick={() => navigate("/createemployee")}
-							// onClick={handleCreateEmployeeClick}
-							>
-								<GoPlus className="icon-space" />
-								Create HOD
-							</Button> */}
-							{/* )} */}
-
 						</div>
 
 						<div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -103,7 +76,6 @@ const HODList = ({ setEmployee, setData }: any) => {
 							<span style={{ marginLeft: "20px" }}>
 								<CreateHODModal />
 							</span>
-
 						</div>
 
 
@@ -117,14 +89,10 @@ const HODList = ({ setEmployee, setData }: any) => {
 										{header.map((i, index) => {
 											return (
 												<>
-													<td
-														className="table-datacell datatype-numeric"
-														key={index}
-													>
+													<td className="table-datacell datatype-numeric" key={index} >
 														{i.title}
 													</td>
-												</>
-											);
+												</>);
 										})}
 									</tr>
 								</thead>
@@ -151,7 +119,6 @@ const HODList = ({ setEmployee, setData }: any) => {
 																className="edit-icon-color"
 																title="Approve employee"
 																color="#d32f2f"
-															// onClick={() => handleApproval(item?.id)}
 															>
 																<FiCheckCircle
 																	size={25}
@@ -169,7 +136,7 @@ const HODList = ({ setEmployee, setData }: any) => {
 															style={{
 																marginLeft: "10px",
 															}}
-															onClick={() => navigate(`/employees/${item.id}`)}
+															onClick={() => navigate(`/hod/hod/viewhod/${item.id}`)}
 														>
 															<FiEye
 																size={25}
@@ -177,10 +144,8 @@ const HODList = ({ setEmployee, setData }: any) => {
 																color="green"
 															/>
 														</span>
-														{/* </span> */}
 													</div>
 												</td>
-												<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
 											</tr>
 										))
 									)}

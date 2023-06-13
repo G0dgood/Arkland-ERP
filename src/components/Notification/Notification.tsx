@@ -44,6 +44,8 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
       })
   }
 
+  //     ; handleView(item?._id)
+  // }
 
   return (
     <div className="drop-down-notify">
@@ -58,7 +60,7 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
           <h6> <RiMessage3Line size={40} color="#999999" style={{ marginRight: "5px" }} />  </h6>
           <span>No Notifications</span></div> :
           notification?.data?.map((item: any, i: number) => (
-            <div key={i} className={opens?.includes(i) ? "faq active" : "faq"} onClick={() => { handleOpens(i); handleView(item?._id) }}>
+            <div key={i} className={opens?.includes(i) ? "faq active" : "faq"} onClick={() => { handleOpens(i) }}>
               <div className="faq-title-contain">
                 <span className="icon-Plus">
                   {item?.type === "new employee" ? <FaUserPlus size={20} /> :

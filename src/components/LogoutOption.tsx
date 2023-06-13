@@ -7,7 +7,7 @@ import DataService from '../utils/dataService';
 
 const dataService = new DataService();
 
-const LogoutOption = ({ showLogout, setShowLogout }: any) => {
+const LogoutOption = ({ showLogout, setShowLogout, socket }: any) => {
 
 
 	const [isLoading, setisLoading] = useState<any>(false);
@@ -15,6 +15,7 @@ const LogoutOption = ({ showLogout, setShowLogout }: any) => {
 
 	const handleLogout = async () => {
 		setisLoading(true);
+		socket.disconnect()
 		try {
 			await HttpService.patch("me/logout", {})
 			dataService.clearData()

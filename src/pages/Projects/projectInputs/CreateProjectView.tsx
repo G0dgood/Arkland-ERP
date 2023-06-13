@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import logo from "../../../assets/images/ASLLOGO.svg";
-import { fireAlert } from "../../../utils/Alert";
+
 import { checkForTeams } from "../../../utils/checkForName";
 
 const CreateProjectView = ({

@@ -11,7 +11,7 @@ import HRClockInModal from "../../../components/Modals/HRClockInModal";
 
 const AttendanceTable = () => {
   const dispatch = useAppDispatch();
-  const { hrgetattenddata, hrgetattendisError, hrgetattendisLoading, hrgetattendmessage, hrgetattendisSuccess } = useAppSelector((state: any) => state.attendance)
+  const { hrgetattenddata, hrgetattendisError, hrgetattendisLoading, hrgetattendmessage } = useAppSelector((state: any) => state.attendance)
 
   useEffect(() => {
     dispatch(hrgetAttendance())
@@ -48,7 +48,7 @@ const AttendanceTable = () => {
     <div  >
       <div className="SiteWorkermaindiv">
         <div className="SiteWorkermaindivsub">
-          <span className="SupportmainTitleh3">EMPLOYEE ATTENDANCE</span>
+          <span className="SupportmainTitleh3">HR EMPLOYEE ATTENDANCE</span>
         </div>
         <div className="entries-perpage">
           {/* Date range picker */}

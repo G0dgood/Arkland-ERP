@@ -17,9 +17,10 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { useNavigate } from "react-router-dom";
 import { createProject, reset } from "../../features/Project/projectSlice";
 import { allDepartments } from "../../features/Department/departmentSlice";
+import HttpService from "../HttpService";
 
 const CreateProjectModal = (props: any) => {
-  const { data: departments } = useAppSelector((state: any) => state.department)
+  // const { data: departments } = useAppSelector((state: any) => state.department)
   const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.project)
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -28,6 +29,10 @@ const CreateProjectModal = (props: any) => {
     name: Yup.string().required("Name of project is required"),
   });
   const [lgShow, setLgShow] = useState(false);
+  const [departments, setDepartments] = useState([]);
+  const [teamLeads, setTeamslead] = useState([]);
+  const [teams, setTeams] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
 
 
   useEffect(() => {
@@ -58,6 +63,29 @@ const CreateProjectModal = (props: any) => {
   };
 
 
+  const getData = async () => {
+    setisLoading(true)
+    try {
+
+      const departmentsUrl = "hr/departments"
+      const departments: any = await HttpService.get(departmentsUrl)
+      setDepartments(departments?.data?.data)
+
+      const teamleadsUrl = "hr/team-leads"
+      const teamlead: any = await HttpService.get(teamleadsUrl)
+      setTeamslead(teamlead?.data?.data)
+
+      const teamsUrl = `hr/teams`
+      const teams: any = await HttpService.get(teamsUrl)
+      setTeams(teams?.data?.data)
+
+      setisLoading(false)
+
+    } catch (error) {
+      setisLoading(false)
+    }
+  }
+
   const availablleDepartments = [] as any;
 
   departments &&
@@ -67,32 +95,32 @@ const CreateProjectModal = (props: any) => {
         label: team.name,
       })
     );
-  // const teams: any = useAppSelector((state) => state.team.team);
+
   const availablleTeam = [] as any;
 
-  // teams &&
-  //   teams.forEach((team: any) =>
-  //     availablleTeam.push({
-  //       value: team.id,
-  //       label: team.name,
-  //     })
-  //   );
+  teams &&
+    teams.forEach((team: any) =>
+      availablleTeam.push({
+        value: team.id,
+        label: team.name,
+      })
+    );
 
-  // const teamLeads: any = useAppSelector((state) => state.teamLeads.teamLeads);
-  // const availablleTeamLeads = [] as any;
 
-  // teamLeads &&
-  //   teamLeads.forEach((team: any) =>
-  //     availablleTeamLeads.push({
-  //       value: team.id,
-  //       label: team.name,
-  //     })
-  //   );
+  const availablleTeamLeads = [] as any;
+
+  teamLeads &&
+    teamLeads.forEach((team: any) =>
+      availablleTeamLeads.push({
+        value: team.id,
+        label: team.name,
+      })
+    );
   return (
     <div>
       <Button
         className="subone-header-flex-btn"
-        onClick={() => setLgShow(true)}
+        onClick={() => { setLgShow(true); getData() }}
       >
         <BsPlusLg size={10} color="#fff" className="Create-plue-account" />{" "}
         Create Project
@@ -183,7 +211,7 @@ const CreateProjectModal = (props: any) => {
                       <div className="Modal-two-input">
                         <div className="col">
                           <div className="form-group">
-                            {/* <ReactSelectField
+                            <ReactSelectField
                               label="Team"
                               name="team"
                               options={availablleTeam}
@@ -191,7 +219,7 @@ const CreateProjectModal = (props: any) => {
                               onChange={(event: any) => {
                                 setFieldValue("team", event?.value);
                               }}
-                            /> */}
+                            />
                           </div>
                         </div>
                       </div>
@@ -199,7 +227,7 @@ const CreateProjectModal = (props: any) => {
                       <div className="Modal-two-input">
                         <div className="col">
                           <div className="form-group">
-                            {/* <ReactSelectField
+                            <ReactSelectField
                               label="Project lead"
                               name="lead"
                               options={availablleTeamLeads}
@@ -207,7 +235,7 @@ const CreateProjectModal = (props: any) => {
                               onChange={(event: any) => {
                                 setFieldValue("lead", event?.value);
                               }}
-                            /> */}
+                            />
                           </div>
                         </div>
                       </div>

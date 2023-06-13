@@ -3,10 +3,11 @@ import { BounceLoader } from "react-spinners";
 import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import ClockIn from "../../components/ClockIn";
 import { Button } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 
 
 const AdminAnnouncement = ({ announcements, isLoading }: any) => {
-
+  const navigate = useNavigate();
   // const {
   //   isHRHead,
   //   isHeadOfDepartment,
@@ -26,11 +27,6 @@ const AdminAnnouncement = ({ announcements, isLoading }: any) => {
             <h4>Announcement</h4>
           </span>
         </div>
-        {/* <Button
-          variant="contained"
-          className="Add-btn" */}
-        {/* // onClick={() => handleSubmit()}
-        // > */}
         <ClockIn />
       </div>
 
@@ -77,7 +73,7 @@ const AdminAnnouncement = ({ announcements, isLoading }: any) => {
           </>
         )}
       </div>
-      <Button variant="outlined" className="show-btn-schedule">
+      <Button variant="outlined" className="show-btn-schedule" onClick={() => navigate("/announcements")}>
         See All Announcement
       </Button>
     </div>

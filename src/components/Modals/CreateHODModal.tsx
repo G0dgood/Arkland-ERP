@@ -8,14 +8,14 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { allEmployee } from '../../features/Employee/employeeSlice'
 import { allDepartments } from '../../features/Department/departmentSlice'
 import SelectInput from '../SelectInput'
+import HttpService from '../HttpService'
 
 
 
 const CreateHODModal = () => {
 	const dispatch = useAppDispatch();
-	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.hod)
-	const { data: department, isLoading: departmentisLoading } = useAppSelector((state: any) => state.department)
-	const { data: employee, isLoading } = useAppSelector((state: any) => state.employee)
+	const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.hod)
+
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -33,6 +33,9 @@ const CreateHODModal = () => {
 
 
 	const [lgShow, setLgShow] = useState(false);
+	const [isLoading, setisLoading] = useState(false);
+	const [employees, setEmployees] = useState([]);
+	const [departments, setDepartments] = useState([]);
 
 	const [inputs, setInputs] = useState<any>({
 		name: " ",
@@ -56,16 +59,12 @@ const CreateHODModal = () => {
 		});
 	}, [inputs?.department?.value, inputs.name, inputs.user?.value, setInputs]);
 
-	console.log('inputs', inputs)
+
 
 
 	const title = "Successful";
 	const html = "HOD Created!";
 	const icon = "success";
-	const title1 = "HOD creation failed";
-	const html1 = createmessage;
-	const icon1 = "error";
-
 
 	useEffect(() => {
 		if (createisSuccess) {
@@ -78,11 +77,8 @@ const CreateHODModal = () => {
 			setLgShow(false)
 
 			dispatch(reset());
-		} else if (createisError) {
-			fireAlert(title1, html1, icon1);
-			dispatch(reset());
 		}
-	}, [createisError, createisSuccess, dispatch, html, html1])
+	}, [createisSuccess, dispatch, html])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
@@ -96,18 +92,38 @@ const CreateHODModal = () => {
 		// @ts-ignore
 		dispatch(createHOD(inputs));
 	}
+
+	const getData = async () => {
+		setisLoading(true)
+		try {
+			const employees = "hr/employees"
+			const employee: any = await HttpService.get(employees)
+			setEmployees(employee?.data?.data)
+
+			const departmentsUrl = "hr/departments"
+			const departments: any = await HttpService.get(departmentsUrl)
+			setDepartments(departments?.data?.data)
+
+			setisLoading(false)
+
+		} catch (error) {
+			setisLoading(false)
+		}
+	}
+
 	const availableDepartment = [] as any;
-	department &&
-		department.forEach((department: any) =>
+	departments &&
+		departments.forEach((department: any) =>
 			availableDepartment.push({
 				value: department?.id,
 				label: department?.name,
 			})
 		);
+
 	const availableEmployees = [] as any;
 
-	employee &&
-		employee.forEach((employee: any) =>
+	employees &&
+		employees.forEach((employee: any) =>
 			availableEmployees.push({
 				value: employee?.id,
 				label: employee?.full_name,
@@ -120,7 +136,7 @@ const CreateHODModal = () => {
 			<Button
 				variant="contained"
 				className="Add-btn"
-				onClick={() => setLgShow(true)} >
+				onClick={() => { setLgShow(true); getData() }} >
 				Create HOD
 			</Button>
 
@@ -156,8 +172,8 @@ const CreateHODModal = () => {
 								<div className="col" mt-2>
 									<SelectInput
 										label={"Select Department"}
-										isDisabled={departmentisLoading}
-										isLoading={departmentisLoading}
+										isDisabled={isLoading}
+										isLoading={isLoading}
 										options={availableDepartment}
 										value={inputs.department}
 										// defaultValue={defaultValue}

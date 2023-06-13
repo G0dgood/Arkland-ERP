@@ -1,39 +1,34 @@
-import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
-import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
+import { useEffect, useState } from 'react'
+import { Modal, Spinner } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
-import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { reset } from '../../features/TeamLead/teamleadSlice';
-import { deleteTask } from '../../features/Tasks/taskSlice';
+import { fireAlert } from '../../utils/Alert';
+import { Button } from '@material-ui/core';
+import { MdOutlineClose } from 'react-icons/md';
+import { deleteHOD, reset } from '../../features/HOD/hodSlice';
 import { ImBin } from 'react-icons/im';
 
-
-const DeleteTaskModal = ({ name, id }: any) => {
+const DeleteHOD = ({ id }: any) => {
 
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [deleteShow, setDeleteShow] = useState(false);
-	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.task)
+	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.hod)
 
 
 
 	useEffect(() => {
 		if (deleteisSuccess) {
-			fireAlert("Successful", "Task Deleted Successfully", "success");
+			fireAlert("Successful", "HOD Deleted Successfully", "success");
 			setDeleteShow(false)
 			navigate(-1)
-			dispatch(reset());
-		} else if (deleteisError) {
-			fireAlert("Task Deletion error", deletemessage, "error");
 			dispatch(reset());
 		}
 	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, navigate])
 
-	const handleDeletion = () => {
+	const handleHODDeletion = () => {
 		// @ts-ignore
-		dispatch(deleteTask(id));
+		dispatch(deleteHOD(id));
 	}
 
 	return (
@@ -47,13 +42,13 @@ const DeleteTaskModal = ({ name, id }: any) => {
 			>
 				<Modal.Header  >
 					<span>{/*  */}</span>
-					<span className="span-center-title">Delete Tead Lead</span>
+					<span className="span-center-title">Delete HOD</span>
 					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
 				<Modal.Body>
-					<h5 className="last-line m-5">Are you sure you want to delete Task ?</h5>
+					<h5 className="last-line m-5">Are you sure you want to delete this HOD ?</h5>
 					<div className='deleteKPIHandler'>
 						<span className='deleteKPIHandler-mr'>
 							<Button className="table-link-active" onClick={() => setDeleteShow(false)}>
@@ -61,7 +56,7 @@ const DeleteTaskModal = ({ name, id }: any) => {
 							</Button>
 						</span>
 						<span >
-							<Button className="table-link" onClick={handleDeletion} >
+							<Button className="table-link" onClick={handleHODDeletion} >
 								{deleteisLoading ? <Spinner animation="border" /> : "Yes"}
 							</Button>
 						</span>
@@ -72,6 +67,4 @@ const DeleteTaskModal = ({ name, id }: any) => {
 	)
 }
 
-export default DeleteTaskModal
-
-
+export default DeleteHOD

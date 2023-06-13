@@ -9,12 +9,10 @@ import { MdOpenInFull } from "react-icons/md";
 import FullBarChart from "../../components/AdminDashboardChat/FullBarChart";
 import { useEffect, useState } from "react";
 import HttpService from "../../components/HttpService";
-import DataService from "../../utils/dataService";
+
 
 const AdminDashboard = () => {
- const dataService = new DataService()
- const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
- const id = (user?.employee?._id)
+
  const [show, setShow] = useState<any>(false);
  const [project, setProject] = useState<any>([]);
  const [departments, setDepartments] = useState<any>([]);
@@ -53,7 +51,7 @@ const AdminDashboard = () => {
    const announcement: any = await HttpService.get(announcementsUrl)
    setAnnouncement(announcement?.data?.data)
 
-   const tasksUrl = `tasks/${id}`
+   const tasksUrl = `tasks`
    const tasks: any = await HttpService.get(tasksUrl)
    setTask(tasks?.data?.data)
 

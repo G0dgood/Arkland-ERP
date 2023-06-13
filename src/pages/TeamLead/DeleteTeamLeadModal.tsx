@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { reset } from '../../features/TeamLead/teamleadSlice';
+import { ImBin } from 'react-icons/im';
 
 
 const DeleteTeamLeadModal = ({ name, id }: any) => {
@@ -36,13 +37,7 @@ const DeleteTeamLeadModal = ({ name, id }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="Add-btn"
-				onClick={() => setDeleteShow(true)}
-			>
-				Delete Tead Lead
-			</Button>
+			<Button onClick={() => setDeleteShow(true)}> <ImBin size={25} color='#bf8412' /></Button>
 			<Modal
 				size="lg"
 				show={deleteShow}
