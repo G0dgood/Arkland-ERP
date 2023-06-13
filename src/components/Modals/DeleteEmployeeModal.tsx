@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { deleteEmployees, reset } from '../../features/Employee/employeeSlice';
 import { useNavigate } from 'react-router-dom';
+import { ImBin } from 'react-icons/im';
 
 const DeleteEmployeeModal = ({ id }: any) => {
 	const navigate = useNavigate();
@@ -33,13 +34,7 @@ const DeleteEmployeeModal = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="Add-btn"
-				onClick={() => setDeleteShow(true)}
-			>
-				Delete Employee
-			</Button>
+			<Button onClick={() => setDeleteShow(true)}> <ImBin size={25} color='#bf8412' /></Button>
 			<Modal
 				size="lg"
 				show={deleteShow}

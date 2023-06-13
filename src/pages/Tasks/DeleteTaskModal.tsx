@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { reset } from '../../features/TeamLead/teamleadSlice';
 import { deleteTask } from '../../features/Tasks/taskSlice';
+import { ImBin } from 'react-icons/im';
 
 
 const DeleteTaskModal = ({ name, id }: any) => {
@@ -24,9 +25,6 @@ const DeleteTaskModal = ({ name, id }: any) => {
 			setDeleteShow(false)
 			navigate(-1)
 			dispatch(reset());
-		} else if (deleteisError) {
-			fireAlert("Task Deletion error", deletemessage, "error");
-			dispatch(reset());
 		}
 	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, navigate])
 
@@ -37,13 +35,7 @@ const DeleteTaskModal = ({ name, id }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="Add-btn"
-				onClick={() => setDeleteShow(true)}
-			>
-				Delete Task
-			</Button>
+			<Button onClick={() => setDeleteShow(true)}> <ImBin size={25} color='#bf8412' /></Button>
 			<Modal
 				size="lg"
 				show={deleteShow}

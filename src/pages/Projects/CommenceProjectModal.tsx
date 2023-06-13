@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { InputField } from '../../components/TableOptions'
-import SelectInput from '../../components/SelectInput'
+import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core'
 import { MdOutlineClose } from 'react-icons/md'
@@ -10,20 +8,17 @@ import { commenceProject, reset } from '../../features/Project/projectSlice'
 
 const CommenceProjectModal = ({ id, title }: any) => {
 	const dispatch = useAppDispatch();
-	const { commenceisError, commenceisLoading, commencemessage, commenceisSuccess } = useAppSelector((state: any) => state.project)
+	const { commenceisLoading, commencemessage, commenceisSuccess } = useAppSelector((state: any) => state.project)
 	const [Show, setShow] = useState(false);
 
 
 	useEffect(() => {
-		if (commenceisError) {
-			fireAlert("Project commence  failed", commencemessage, "error");
-			dispatch(reset());
-		} else if (commenceisSuccess) {
+		if (commenceisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Project commenced successfully", "success");
 			dispatch(reset());
 		}
-	}, [commenceisSuccess, commencemessage, dispatch, commenceisError]);
+	}, [commenceisSuccess, commencemessage, dispatch]);
 
 
 	const handleCommence = () => {

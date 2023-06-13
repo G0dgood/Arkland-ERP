@@ -7,51 +7,24 @@ import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../com
 import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
-import { useAppDispatch } from '../../store/useStore';
-import DataService from '../../utils/dataService';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { getCreateLeave } from '../../features/Leave/leaveSlice';
 
-const dataService = new DataService()
+
 const AllLeave = () => {
 	const dispatch = useAppDispatch();
-	// @ts-ignore
-	// @ts-ignore
-	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-	const token = dataService.getToken()
+	const { allLeavedata: data, allLeaveisLoading } = useAppSelector((state: any) => state.leave)
 
-	const [data, setData] = useState([]);
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
-	const [isLoading, setisLoading] = useState(false);
-	const [message, setMessage] = useState("");
-	const [isError, setisError] = useState(false)
-
 
 
 
 	useEffect(() => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-					setisError(true)
-				} else {
-					setSortData(data?.data?.data)
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-	}, [token, userInfo?.department?.id])
+		// @ts-ignore
+		dispatch(getCreateLeave());
+
+	}, [dispatch]);
 
 
 
@@ -67,7 +40,7 @@ const AllLeave = () => {
 
 	useEffect(() => {
 		if (data) {
-			const result = data?.filter((object) => {
+			const result = data?.data?.filter((object: any) => {
 				// @ts-ignore
 				return JSON?.stringify(object)?.toString()?.includes(searchItem);
 			});
@@ -97,7 +70,7 @@ const AllLeave = () => {
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
-				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+				{allLeaveisLoading ? <TableLoader isLoading={allLeaveisLoading} /> : ""}
 				<div className="main-table-wrapper">
 					<table className="main-table-content">
 						<thead className="data-table-header">
@@ -115,7 +88,7 @@ const AllLeave = () => {
 							</tr>
 						</thead>
 						<tbody className="data-table-content">
-							{isLoading ? (
+							{allLeaveisLoading ? (
 								<TableFetch colSpan={9} />
 							) : displayData?.length === 0 || displayData == null ? (
 								<NoRecordFound colSpan={9} />

@@ -10,20 +10,17 @@ import { createTeam, getTeam, reset } from '../../features/Team/teamSlice';
 
 const CreateTeamModal = () => {
 	const dispatch = useAppDispatch();
-	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.team)
+	const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.team)
 	const [Show, setShow] = useState(false);
 
 	useEffect(() => {
-		if (createisError) {
-			fireAlert("Create team failed", createmessage, "error");
-			dispatch(reset());
-		} else if (createisSuccess) {
+		if (createisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Team created successfully", "success");
 			dispatch(getTeam());
 			dispatch(reset());
 		}
-	}, [createisError, createisSuccess, createmessage, dispatch]);
+	}, [createisSuccess, dispatch]);
 
 	const handleSubmit = async (values: any) => {
 		const input = { ...values };

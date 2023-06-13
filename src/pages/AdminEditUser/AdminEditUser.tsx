@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams, useRoutes } from "react-router-dom";
+import { Link, useLocation, useParams, } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { BiUser } from "react-icons/bi";
 import EditProfile from "./components/EditProfile";

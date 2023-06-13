@@ -1,8 +1,8 @@
-import { CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import { BounceLoader, SyncLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import projectBack from "../../assets/vectors/project-back.svg";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import { getUserPrivileges } from "../../functions/auth";
@@ -11,13 +11,7 @@ import { hrViewEmployees } from "../../features/Employee/employeeSlice";
 import { fireAlert } from "../../utils/Alert";
 import DeleteEmployeeModal from "../../components/Modals/DeleteEmployeeModal";
 
-const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-  width: "99.8%",
-  borderRadius: "50px",
-};
+
 
 const ViewEmployee = () => {
   const navigate = useNavigate();
@@ -48,12 +42,10 @@ const ViewEmployee = () => {
 
 
   return (
-    <div >
+    <div>
       {viewisLoading ? (
-        <div
-          style={{ margin: "auto", width: "20%", }}  >
+        <div className="isLoading-container-view">
           <BounceLoader
-            cssOverride={override}
             color={"#990000"}
             loading={viewisLoading}
           />

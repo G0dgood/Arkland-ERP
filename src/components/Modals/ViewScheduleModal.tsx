@@ -1,8 +1,7 @@
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
-import { checkForOptions } from '../../utils/checkForName'
 import { BounceLoader } from 'react-spinners'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { FiEye } from 'react-icons/fi'
@@ -10,14 +9,16 @@ import { viewTask } from '../../features/Tasks/taskSlice'
 
 const ViewScheduleModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
-	// const { data: schedule, isLoading } = useAppSelector((state: any) => state.task)
-	const { viewdata: schedule, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.task)
+	const { viewdata: schedule, viewisLoading } = useAppSelector((state: any) => state.task)
 	const [viewShow, setViewShow] = useState(false)
 
-	// useEffect(() => {
-	// 	// @ts-ignore
-	// 	dispatch(viewTask(id));
-	// }, [dispatch, id]);
+
+
+
+
+	const priorityOptions = ["Lowest priority", "Low priority", "Medium priority", "High priority", "Top priority"]
+	const difficultyOptions = ["Very easy", "Easy", "Moderate", "Challenging", "Very challenging"]
+
 
 
 
@@ -44,7 +45,7 @@ const ViewScheduleModal = ({ id }: any) => {
 
 				<Modal.Header>
 					<span></span>
-					<span className="span-center-title">View Schedule</span>
+					<span className="span-center-title">Task Details</span>
 					<Button style={{ color: "#fff" }} onClick={() => setViewShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
@@ -68,9 +69,11 @@ const ViewScheduleModal = ({ id }: any) => {
 							<p>{schedule?.status}</p>
 							<p>PRIORITY</p>
 							<p>
-								{/* {checkForOptions(
-									schedule?.priority, priorityOptions
-								)} */}
+								{schedule?.priority ? priorityOptions[schedule.priority - 1] : "no priority assigned"}
+							</p>
+							<p>Difficulty Level</p>
+							<p>
+								{schedule?.points ? difficultyOptions[schedule?.points - 1] : "no points assigned"}
 							</p>
 							<p>NOTES</p>
 							<p>{schedule?.notes?.[0].text}</p>
@@ -83,14 +86,6 @@ const ViewScheduleModal = ({ id }: any) => {
 						</div>
 					)}
 				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className="btn btn-secondary"
-						onClick={() => setViewShow(false)}
-					>
-						Cancel
-					</button>
-				</Modal.Footer>
 			</Modal>
 		</div>
 	)

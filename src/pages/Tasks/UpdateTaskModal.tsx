@@ -15,7 +15,7 @@ import { reset, updateTask } from '../../features/Tasks/taskSlice'
 
 const UpdateTaskModal = ({ id, title }: any) => {
 	const dispatch = useAppDispatch();
-	const { updateisError, updateisLoading, updatemessage, updateisSuccess } = useAppSelector((state: any) => state.task)
+	const { updateisLoading, updatemessage, updateisSuccess } = useAppSelector((state: any) => state.task)
 	const { data: teamMembers } = useAppSelector((state: any) => state.task)
 	const [Show, setShow] = useState(false);
 	const [inputs, setInputs] = useState<any>({
@@ -35,15 +35,12 @@ const UpdateTaskModal = ({ id, title }: any) => {
 	}, [dispatch, teamMembers])
 
 	useEffect(() => {
-		if (updateisError) {
-			fireAlert("Task update failed", updatemessage, "error");
-			dispatch(reset());
-		} else if (updateisSuccess) {
+		if (updateisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Task updated successfully", "success");
 			dispatch(reset());
 		}
-	}, [updateisSuccess, updatemessage, dispatch, updateisError, id]);
+	}, [updateisSuccess, updatemessage, dispatch, id]);
 
 
 

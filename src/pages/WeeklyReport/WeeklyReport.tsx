@@ -7,15 +7,14 @@ import { Spinner } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
 
-import { createweeklyReport, reset } from '../../features/WeeklyReport/WeeklyReportSlice';
-import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { reset } from '../../features/WeeklyReport/WeeklyReportSlice';
+import { useAppDispatch } from '../../store/useStore';
 import DataService from '../../utils/dataService';
 import HttpService from '../../components/HttpService';
 
 const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {
 	const dispatch = useAppDispatch();
-	const { createisError, createisLoading, createmessage, createisSuccess }: any = useAppSelector((state: any) => state.Weeklyreport)
 
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
@@ -91,7 +90,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const html = "Week Report Created!";
 	const icon = "success";
 	const title1 = "Week Report error";
-	const html1 = createmessage;
+	// const html1 = createmessage;
 	const icon1 = "error";
 
 	const [isLoading, setisLoading] = useState(false);
@@ -109,6 +108,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 
 
 	const submitHandler = async () => {
+		setisLoading(true)
 		await HttpService.uploadFile(url, {}, { employees: allinput })
 			.then((response) => {
 				console.log('response', response);
@@ -151,26 +151,26 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			}, 2000);
 		} else if (isError) {
 			fireAlert(title1, message, icon1);
-			setTimeout(() => {
-				setInputs({
-					assessment: " ",
-					week: "",
-					activities: [
-						{
-							completed: "",
-							in_progress: "",
-							next: "",
-							due_date_for_next: "",
-							next_week_tasks: [""],
-							issues: [""],
-							blockers: [""]
-						}
-					]
-				})
-			}, 5000);
+			// setTimeout(() => {
+			// 	setInputs({
+			// 		assessment: " ",
+			// 		week: "",
+			// 		activities: [
+			// 			{
+			// 				completed: "",
+			// 				in_progress: "",
+			// 				next: "",
+			// 				due_date_for_next: "",
+			// 				next_week_tasks: [""],
+			// 				issues: [""],
+			// 				blockers: [""]
+			// 			}
+			// 		]
+			// 	})
+			// }, 5000);
 			reset()
 		}
-	}, [html, html1, setIsCheck, dispatch, isSuccess, isError, message])
+	}, [html, setIsCheck, dispatch, isSuccess, isError, message])
 
 	return (
 		<div className='weeklycontainer'>
@@ -254,6 +254,8 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			<div>
 				<WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} setInputs={setInputs} inputs={inputs} />
 				<div className='WeeKlyReport-submit-container'>
+					<button className="ccsnl-btn WeeKlyReport-tab" >
+						{false ? <Spinner animation="border" /> : "Upload"} </button>
 					<button className="ccsnl-btn WeeKlyReport-tab"
 						onClick={submitHandler}>
 						{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>

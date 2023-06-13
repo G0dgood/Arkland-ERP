@@ -59,7 +59,7 @@ const StaffDashboard = () => {
       const announcement: any = await HttpService.get(announcementsUrl)
       setAnnouncement(announcement?.data?.data)
 
-      const tasksUrl = `tasks/${id}`
+      const tasksUrl = `tasks`
       const tasks: any = await HttpService.get(tasksUrl)
       setTask(tasks?.data?.data)
 

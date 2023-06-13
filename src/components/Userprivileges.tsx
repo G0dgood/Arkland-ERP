@@ -6,7 +6,6 @@ import moment from 'moment'
 import TableLoader from './TableLoader'
 import Pagination from './Pagination'
 import { ImBin } from 'react-icons/im'
-import DeleteModals from './DeleteModals'
 import { fireAlert } from '../utils/Alert'
 import AssignPrivilegesModal from './Modals/AssignPrivilegesModal'
 import { useAppDispatch, useAppSelector } from '../store/useStore'
@@ -54,8 +53,7 @@ const Userprivileges = () => {
 	const title = "Successful";
 	const html = "User Privilege Deleted!";
 	const icon = "success";
-	const title1 = "Delete Privilege error";
-	const icon1 = "error";
+
 
 
 	useEffect(() => {
@@ -64,14 +62,8 @@ const Userprivileges = () => {
 			setShowDelete(false)
 			dispatch(userprivileges());
 			dispatch(reset());
-		} else if (deleteisError) {
-			fireAlert(title1, deletemessage, icon1);
-			dispatch(reset());
-		} else if (privilegesisError) {
-			fireAlert(title1, privilegesmessage, icon1);
-			dispatch(reset());
 		}
-	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, html, privilegesisError, privilegesmessage])
+	}, [deleteisSuccess, deletemessage, dispatch, html, privilegesmessage])
 
 	const handleDelete = () => {
 		// @ts-ignore
@@ -138,7 +130,7 @@ const Userprivileges = () => {
 					</table>
 				</div>
 			</section>
-			<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} handleDelete={handleDelete} isLoading1={deleteisLoading} />
+
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}

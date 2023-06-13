@@ -4,7 +4,7 @@ import { AnyArray } from 'immer/dist/internal'
  
  
   
-const allEmployee = async (  ) => {  
+const allEmployee = async ( id: any ) => {  
   const {data}:any = await HttpService.get("hr/employees") 
   return data
 }
@@ -29,9 +29,9 @@ const createEmployeeRole = async (input: any) => {
   return data
 }
  
- const userEmployees = async ( id:any) => { 
+ const userEmployees = async (id: any ) => { 
 	 
- const {data}:any = await HttpService.get("employees")
+ const {data}:any = await HttpService.get(`employees`)
   return data
 }
  
@@ -55,12 +55,16 @@ const deleteEmployees = async (id: any) => {
   return data
  }
  
+ const viewRole = async (id: any) => {   
+   const { data }: any = await HttpService.get(`hr/employee-roles/${id}`) 
+   return data
+  }
  const deleteRole = async (id: any) => {   
    const { data }: any = await HttpService.delete(`hr/employee-roles/${id}`) 
    return data
   }
   
-  const getTerminations = async (id: any) => {   
+  const getTerminations = async (id:any) => {   
      const { data }: any = await HttpService.get(`hr/terminations`) 
    return data
   }
@@ -106,6 +110,7 @@ const employeeService = {
   allEmployee,   
   // uploadEmployee,
   createEmployeeRole,
+  viewRole,
   userEmployees,
   hrApproveEmployees,
   hrViewEmployees,

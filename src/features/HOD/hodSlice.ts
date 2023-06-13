@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit' 
-import todosService from '../Tasks/taskService'
 import hodService from './hodService'
  
  
@@ -20,18 +19,17 @@ const initialState = {
   createisLoading: false, 
   createmessage: '', 
 
+  viewdata:  [],
+  viewisError: false,
+  viewisSuccess: false,
+  viewisLoading: false, 
+  viewmessage: '', 
+
   deletedeta:  [],
   deleteisError: false,
   deleteisSuccess: false,
   deleteisLoading: false, 
   deletemessage: '', 
-
-  // teamdata:  [],
-  // teamisError: false,
-  // teamisSuccess: false,
-  // teamisLoading: false, 
-  // teammessage: '', 
-
  
   
 }
@@ -54,7 +52,7 @@ export const getHOD= createAsyncThunk('hod/getHOD', async ( data,thunkAPI) => {
 
  
  
-export const createHOD = createAsyncThunk('assessment/createHOD', async ( data,thunkAPI) => {
+export const createHOD = createAsyncThunk('hod/createHOD', async ( data,thunkAPI) => {
   try {
     return await hodService.createHOD(data)
   } catch (error: any) {
@@ -68,7 +66,7 @@ export const createHOD = createAsyncThunk('assessment/createHOD', async ( data,t
 })
  
 // Delete  HOD
-export const deleteHOD = createAsyncThunk('assessment/deleteHOD', async ( data,thunkAPI) => {
+export const deleteHOD = createAsyncThunk('hod/deleteHOD', async ( data,thunkAPI) => {
   try {
     return await hodService.deleteHOD(data)
   } catch (error: any) {
@@ -80,19 +78,20 @@ export const deleteHOD = createAsyncThunk('assessment/deleteHOD', async ( data,t
     return thunkAPI.rejectWithValue(message)
   }
 })
-// // Team Assessment   
-// export const teamAssessment = createAsyncThunk('assessment/teamAssessment', async ( data,thunkAPI) => {
-//   try {
-//     return await assessmentService.teamAssessment(data)
-//   } catch (error: any) {
-//     const message = (error.response && 
-//       error.response.data && 
-//       error.response.data.message) ||
-//       error.message ||error.toString() 
+
+// View HOD  
+export const viewHOD = createAsyncThunk('hod/viewHOD', async ( data,thunkAPI) => {
+  try {
+    return await hodService.viewHOD(data)
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString() 
     
-//     return thunkAPI.rejectWithValue(message)
-//   }
-// })
+    return thunkAPI.rejectWithValue(message)
+  }
+})
  
  
  
@@ -121,10 +120,10 @@ export const hodSlice = createSlice({
       state.deleteisError = false
       state.deletemessage = ''  
 
-      // state.teamisLoading = false
-      // state.teamisSuccess = false
-      // state.teamisError = false
-      // state.teammessage = ''  
+      state.viewisLoading = false
+      state.viewisSuccess = false
+      state.viewisError = false
+      state.viewmessage = ''  
     },
     
   },
@@ -176,23 +175,22 @@ export const hodSlice = createSlice({
         state.deletedata = [] 
       })
 
-      // .addCase(teamAssessment.pending, (state) => {
-      //   state.teamisLoading = true 
-      // })
-      // .addCase(teamAssessment.fulfilled, (state:any, action) => {
-      //   state.teamisLoading = false
-      //   state.teamisSuccess = true
-      //   state.teamdata = action.payload.data 
-      // })
-      // .addCase(teamAssessment.rejected, (state:any, action) => {
-      //   state.teamisLoading = false
-      //   state.teamisError = true
-      //   state.teammessage = action.payload
-      //   state.teamdata = [] 
-      // })
+      .addCase(viewHOD.pending, (state) => {
+        state.viewisLoading = true 
+      })
+      .addCase(viewHOD.fulfilled, (state:any, action) => {
+        state.viewisLoading = false
+        state.viewisSuccess = true
+        state.viewdata = action.payload.data 
+      })
+      .addCase(viewHOD.rejected, (state:any, action) => {
+        state.viewisLoading = false
+        state.viewisError = true
+        state.viewmessage = action.payload
+        state.viewdata = [] 
+      })
 
-     
-     
+      
       
   },
 })

@@ -5,7 +5,6 @@ import { Button } from "@material-ui/core";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { BsExclamationLg } from "react-icons/bs";
-import Checkbox from "@mui/material/Checkbox";
 import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import first from "../../assets/images/Bijou.jpg";
@@ -18,23 +17,18 @@ import InputField from "../../components/Inputs/InputField";
 import { useNavigate } from "react-router-dom";
 import HttpService from "../../components/HttpService";
 import DataService from "../../utils/dataService";
-import { allNotifications } from "../../features/Notification/NotificationSlice";
-import { useAppDispatch } from "../../store/useStore";
-import socketService from "../../components/SocketService";
+// import { useAppDispatch } from "../../store/useStore";
 
 
 const dataService = new DataService()
 
 const Login = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const token = dataService.getToken()
 
-
-
   const [isLoading, setLoading] = React.useState(false);
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [error, setError] = useState<any>(false);
   const [showToast, setShowToast] = useState(false);
   const [message, setMessage] = useState<any>("");
@@ -58,8 +52,6 @@ const Login = () => {
       dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
       resetForm(values);
       setLoading(false);
-
-      socketService.emmitEvent('notification-connection')
 
       window.location.replace("/");
     } catch (error) {
@@ -156,11 +148,9 @@ const Login = () => {
                           className="register-form-width"
                         />
                       </div>
-                      <div className="Forgot-password">
+                      <div className="Forgot-password p-3">
                         <span>
-                          {" "}
-                          <Checkbox {...label} />
-                          Remember me
+
                         </span>
                         <div>
                           Forgot password?

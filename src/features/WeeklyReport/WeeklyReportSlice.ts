@@ -171,7 +171,7 @@ export const WeeklyReportSlice = createSlice({
       .addCase(allweeklyReport.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.data = action.payload?.data?.data 
+        state.data = action.payload?.data 
       })
       .addCase(allweeklyReport.rejected, (state:any, action) => {
         state.isLoading = false
@@ -219,7 +219,7 @@ export const WeeklyReportSlice = createSlice({
       .addCase(viewWeeklyReport.fulfilled, (state, action) => {
         state.viewisLoading = false
         state.viewisSuccess = true
-        state.viewdata = action.payload?.data?.data  
+        state.viewdata = action.payload?.data   
       })
       .addCase(viewWeeklyReport.rejected, (state:any, action) => {
         state.viewisLoading = false
@@ -235,7 +235,7 @@ export const WeeklyReportSlice = createSlice({
       .addCase(deleteWeeklyReport.fulfilled, (state, action) => {
         state.deleteisLoading = false
         state.deleteisSuccess = true
-        state.deletedata = action.payload?.data?.data  
+        state.deletedata = action.payload?.data  
       })
       .addCase(deleteWeeklyReport.rejected, (state:any, action) => {
         state.deleteisLoading = false
@@ -251,7 +251,7 @@ export const WeeklyReportSlice = createSlice({
       .addCase(updateWeeklyReport.fulfilled, (state, action) => {
         state.updateisLoading = false
         state.updateisSuccess = true
-        state.updatedata = action.payload?.data?.data  
+        state.updatedata = action.payload?.data 
       })
       .addCase(updateWeeklyReport.rejected, (state:any, action) => {
         state.updateisLoading = false

@@ -142,7 +142,7 @@ const AllEmployees = () => {
               )} */}
             </div>
             <div className="allemployees-sup-item2">
-              <div>
+              {/* <div>
                 <EmployeeStatus
                   data={displayData}
                   status={status}
@@ -150,7 +150,7 @@ const AllEmployees = () => {
                   // roles={rolesData}
                   setRoles={setRoles}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="allemployees-sup-item2">
               <EntriesPerPage

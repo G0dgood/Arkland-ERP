@@ -3,36 +3,18 @@ import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../com
 import { BsCheckCircle } from 'react-icons/bs'
 import { Button } from '@material-ui/core'
 import Pagination from '../../components/Pagination'
-import { ImBin } from 'react-icons/im'
 import moment from 'moment'
 import TableLoader from '../../components/TableLoader'
-import DeleteModals from '../../components/DeleteModals'
 import CreateRoleModal from '../../components/Modals/CreateRoleModal'
-import { fireAlert } from '../../utils/Alert'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
-import { deleteRole, getRole, reset } from '../../features/Employee/employeeSlice'
+import { getRole } from '../../features/Employee/employeeSlice'
+import { useNavigate } from 'react-router-dom'
 
 
-const CreateRole = ({ setShowTitle }: any) => {
+const CreateRole = () => {
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { getroledata, getroleisError, getroleisLoading, getrolemessage, getroleisSuccess } = useAppSelector((state: any) => state.employee)
-	const { deleteroleisError, deleteroleisLoading, deleterolemessage, deleteroleisSuccess } = useAppSelector((state: any) => state.employee)
-
-	const [showdelete, setShowDelete] = useState(false);
-	const [rolesid, setRolesid] = useState(0);
-
-	useEffect(() => {
-		if (deleteroleisSuccess) {
-			dispatch(getRole());
-			dispatch(reset());
-			fireAlert("Successful", "Role Deleted!", "success");
-		} else
-			if (deleteroleisError) {
-				dispatch(reset());
-				fireAlert("error", deleterolemessage, "error");
-			}
-	}, [deleterolemessage, deleteroleisError, deleteroleisSuccess, dispatch])
-
+	const { getroledata, getroleisLoading } = useAppSelector((state: any) => state.employee)
 
 
 	useEffect(() => {
@@ -43,12 +25,7 @@ const CreateRole = ({ setShowTitle }: any) => {
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
 
-	useEffect(() => {
-		if (getroleisError) {
-			dispatch(reset());
-			fireAlert("Error role", getrolemessage, "error");
-		}
-	}, [dispatch, getroleisError, getroleisSuccess, getrolemessage])
+
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -70,13 +47,6 @@ const CreateRole = ({ setShowTitle }: any) => {
 
 
 	const [displayData, setDisplayData] = useState([]);
-
-	const handleCreate = () => {
-		// @ts-ignore
-		dispatch(deleteRole(rolesid));
-	}
-
-
 	return (
 		<div  >
 			<div className='SiteWorkermaindiv'>
@@ -125,7 +95,7 @@ const CreateRole = ({ setShowTitle }: any) => {
 
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Button onClick={() => { setShowDelete(true); setRolesid(item?._id) }}> <ImBin size={25} color='#bf8412' /></Button>
+											<Button id="team-applicatiom-update" onClick={() => navigate(`/userrole/userrole/viewrole/${item?.id}`)}>View</Button>
 										</td>
 									</tr>
 								))
@@ -134,7 +104,7 @@ const CreateRole = ({ setShowTitle }: any) => {
 					</table>
 				</div>
 
-				<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} isLoading1={deleteroleisLoading} handleDelete={handleCreate} />
+
 			</section>
 			<footer className="main-table-footer">
 				<Pagination

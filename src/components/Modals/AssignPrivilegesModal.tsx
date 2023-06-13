@@ -15,10 +15,12 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 
 
-	useEffect(() => {
+	const handelclick = () => {
 		// @ts-ignore
 		dispatch(allEmployee());
-	}, [dispatch]);
+	}
+
+
 
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
@@ -27,7 +29,6 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 	})
 
 	const token = dataService.getToken()
-	const [isError, setisError] = useState(false)
 	const [message, setMessage] = useState("");
 	const [isLoading, setisLoading] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
@@ -55,7 +56,6 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 			.then((data) => {
 				if (data?.success === false) {
 					setMessage(data?.message)
-					setisError(true)
 				} else {
 					setisSuccess(true)
 					setReload(true)
@@ -74,7 +74,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 	const html = "Privileges Assigned!";
 	const icon = "success";
 	const html1 = message;
-	const icon1 = "error";
+
 
 
 	useEffect(() => {
@@ -86,18 +86,8 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 				setReload(false)
 			}, 5000);
 			setLgShow(false)
-		} else if (isError) {
-			fireAlert("Privileges error", html1, icon1);
-			setTimeout(() => {
-				setisError(false)
-				setMessage("")
-				setInputs({
-					role: "",
-					user: "",
-				})
-			}, 5000);
 		}
-	}, [html, html1, isError, isSuccess, setReload])
+	}, [html, html1, isSuccess, setReload])
 
 
 
@@ -141,7 +131,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 					</span>
 					<span className='span-center-title'>Assign Privilege</span>
-					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
+					<Button style={{ color: '#fff' }} onClick={() => { setLgShow(false); handelclick() }}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

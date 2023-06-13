@@ -6,33 +6,41 @@ import SelectInput from '../../components/SelectInput';
 import { fireAlert } from '../../utils/Alert';
 import { createTeamLead, reset } from '../../features/TeamLead/teamleadSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { allEmployee } from '../../features/Employee/employeeSlice';
-import { getTeam } from '../../features/Team/teamSlice';
-import { allDepartments } from '../../features/Department/departmentSlice';
+import HttpService from '../../components/HttpService';
 
 const CreateTeamLead = () => {
 	const dispatch = useAppDispatch();
 	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.teamlead)
-	const { data: employee, isLoading: eisLoading } = useAppSelector((state: any) => state.employee)
-	const { data: department, isLoading: disLoading } = useAppSelector((state: any) => state.department)
-	const { data: team, isLoading: tisLoading } = useAppSelector((state: any) => state.team)
 
 
 
-	useEffect(() => {
-		if (!employee) {
-			dispatch(allEmployee());
+	const [isLoading, setisLoading] = useState<any>([]);
+	const [team, setTeam] = useState<any>([]);
+	const [departments, setDepartments] = useState<any>([]);
+	const [employees, setEmployees] = useState<any>([]);
+
+	const getData = async () => {
+		setisLoading(true)
+		try {
+			const employeesUrl = "hr/employees"
+			const employees: any = await HttpService.get(employeesUrl)
+			setEmployees(employees?.data?.data)
+
+			const departmentsUrl = "hr/departments"
+			const departments: any = await HttpService.get(departmentsUrl)
+			setDepartments(departments?.data?.data)
+
+			const teamUrl = "hr/teams"
+			const team: any = await HttpService.get(teamUrl)
+			setTeam(team?.data?.data)
+			setisLoading(false)
+
+		} catch (error) {
+			setisLoading(false)
 		}
+	}
 
-		if (!team) {
-			dispatch(getTeam());
-		}
 
-		if (!department) {
-			dispatch(allDepartments());
-		}
-
-	}, [department, dispatch, employee, team]);
 
 	const [Show, setShow] = useState(false);
 
@@ -66,13 +74,9 @@ const CreateTeamLead = () => {
 	}, [newid, setInputs]);
 
 	useEffect(() => {
-		if (createisError) {
-			fireAlert("Create Team Lead", createmessage, "error");
-			dispatch(reset());
-		} else if (createisSuccess) {
+		if (createisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Team member created  successfully", "success");
-			// dispatch(viewTeamLead());
 			dispatch(reset());
 		}
 	}, [createisError, createisSuccess, createmessage, dispatch]);
@@ -85,8 +89,8 @@ const CreateTeamLead = () => {
 
 	const availableEmployees = [] as any;
 
-	employee &&
-		employee.forEach((employee: any) =>
+	employees &&
+		employees.forEach((employee: any) =>
 			availableEmployees.push({
 				value: employee?.id,
 				label: employee?.full_name,
@@ -106,8 +110,8 @@ const CreateTeamLead = () => {
 
 	const availabledepartment = [] as any;
 
-	department &&
-		department.forEach((department: any) =>
+	departments &&
+		departments.forEach((department: any) =>
 			availabledepartment.push({
 				value: department?.id,
 				label: department?.name,
@@ -127,7 +131,7 @@ const CreateTeamLead = () => {
 			<Button
 				variant="contained"
 				className="Add-btn"
-				onClick={() => setShow(true)} >
+				onClick={() => { setShow(true); getData() }} >
 				Create Team Members
 			</Button>
 			<Modal
@@ -155,8 +159,8 @@ const CreateTeamLead = () => {
 								<div className="form-group">
 									<SelectInput
 										label="Employees"
-										isDisabled={eisLoading}
-										isLoading={eisLoading}
+										isDisabled={isLoading}
+										isLoading={isLoading}
 										options={availableEmployees}
 										value={newid.name}
 										onChange={(e: any) => handleOnChange1("name", e)}
@@ -168,8 +172,8 @@ const CreateTeamLead = () => {
 								<div className="form-group">
 									<SelectInput
 										label="Team"
-										isDisabled={tisLoading}
-										isLoading={tisLoading}
+										isDisabled={isLoading}
+										isLoading={isLoading}
 										options={availableTeam}
 										value={newid.team}
 										onChange={(e: any) => handleOnChange1("team", e)}
@@ -183,8 +187,8 @@ const CreateTeamLead = () => {
 
 										<SelectInput
 											label="User"
-											isDisabled={eisLoading}
-											isLoading={eisLoading}
+											isDisabled={isLoading}
+											isLoading={isLoading}
 											options={availableEmployees}
 											value={newid.user}
 											onChange={(e: any) => handleOnChange1("user", e)}
@@ -199,8 +203,8 @@ const CreateTeamLead = () => {
 
 										<SelectInput
 											label="Department"
-											isDisabled={disLoading}
-											isLoading={disLoading}
+											isDisabled={isLoading}
+											isLoading={isLoading}
 											options={availabledepartment}
 											value={newid.department}
 											onChange={(e: any) => handleOnChange1("department", e)}
@@ -211,6 +215,7 @@ const CreateTeamLead = () => {
 
 							<div className="btn-modal-container">
 								<Button
+									disabled={createisLoading || isLoading}
 									variant="contained"
 									className="Add-btn-modal"
 									type="submit"

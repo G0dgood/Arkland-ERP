@@ -5,30 +5,30 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { Button } from '@material-ui/core';
 import { MdOutlineClose } from 'react-icons/md';
-import { deleteTeam, reset } from '../../features/Team/teamSlice';
+import { deleteHOD, reset } from '../../features/HOD/hodSlice';
 import { ImBin } from 'react-icons/im';
 
-const DeleteTeam = ({ id }: any) => {
+const DeleteHOD = ({ id }: any) => {
 
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [deleteShow, setDeleteShow] = useState(false);
-	const { deleteisLoading, deleteisSuccess } = useAppSelector((state: any) => state.team)
+	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.hod)
 
 
 
 	useEffect(() => {
 		if (deleteisSuccess) {
-			fireAlert("Successful", "Team Deleted Successfully", "success");
+			fireAlert("Successful", "HOD Deleted Successfully", "success");
 			setDeleteShow(false)
 			navigate(-1)
 			dispatch(reset());
 		}
-	}, [deleteisSuccess, dispatch, navigate])
+	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, navigate])
 
-	const handleEmployeeDeletion = () => {
+	const handleHODDeletion = () => {
 		// @ts-ignore
-		dispatch(deleteTeam(id));
+		dispatch(deleteHOD(id));
 	}
 
 	return (
@@ -42,13 +42,13 @@ const DeleteTeam = ({ id }: any) => {
 			>
 				<Modal.Header  >
 					<span>{/*  */}</span>
-					<span className="span-center-title">Delete Team</span>
+					<span className="span-center-title">Delete HOD</span>
 					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
 				<Modal.Body>
-					<h5 className="last-line m-5">Are you sure you want to delete this Team ?</h5>
+					<h5 className="last-line m-5">Are you sure you want to delete this HOD ?</h5>
 					<div className='deleteKPIHandler'>
 						<span className='deleteKPIHandler-mr'>
 							<Button className="table-link-active" onClick={() => setDeleteShow(false)}>
@@ -56,7 +56,7 @@ const DeleteTeam = ({ id }: any) => {
 							</Button>
 						</span>
 						<span >
-							<Button className="table-link" onClick={handleEmployeeDeletion} >
+							<Button className="table-link" onClick={handleHODDeletion} >
 								{deleteisLoading ? <Spinner animation="border" /> : "Yes"}
 							</Button>
 						</span>
@@ -67,5 +67,4 @@ const DeleteTeam = ({ id }: any) => {
 	)
 }
 
-export default DeleteTeam
-
+export default DeleteHOD

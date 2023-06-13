@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react'
 import WeeklyReportTable5 from '../../components/table_component/WeeklyReportTable5'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { fireAlert } from '../../utils/Alert'
 import TableLoader from '../../components/TableLoader'
-import { BsChatLeftText } from 'react-icons/bs'
 import { Button } from '@material-ui/core'
-import { MdOutlineClose } from 'react-icons/md'
 import { Spinner } from 'react-bootstrap'
-
 import { deleteWeeklyReport, reset, updateWeeklyReport, viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
 import moment from 'moment'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 const WeeklyReportView = () => {
-	const { viewdata, viewisError, viewisLoading } = useAppSelector((state: any) => state.Weeklyreport)
-	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.Weeklyreport)
-	const { updateisError, updateisLoading, updatemessage, updateisSuccess } = useAppSelector((state: any) => state.Weeklyreport)
+	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.Weeklyreport)
+	const { deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.Weeklyreport)
+	const { updateisLoading, updatemessage, updateisSuccess } = useAppSelector((state: any) => state.Weeklyreport)
 
 
 	const dispatch = useAppDispatch();
@@ -24,7 +21,7 @@ const WeeklyReportView = () => {
 
 
 
-	const [isError, setisError] = useState(false)
+
 	const [inputs, setInputs] = useState([]);
 
 
@@ -47,62 +44,24 @@ const WeeklyReportView = () => {
 
 
 	useEffect(() => {
-		if (isError) {
-			fireAlert("Weekly Reports error", viewisError, "error");
+		if (deleteisSuccess) {
+			fireAlert("Delete successful", "Delete Weekly Reports success", 'success');
 			setTimeout(() => {
-				setisError(false);
-			}, 1000);
-		} else if (deleteisSuccess) {
-			fireAlert("Delete Weekly Reports success", deleteisSuccess, 'success');
-			setTimeout(() => {
-				navigate("/weeklycontainer");
-				dispatch(reset());
-			}, 2000);
-		} else if (deleteisError) {
-			fireAlert("Delete Weekly Reports error", deletemessage, "error");
-			setTimeout(() => {
-				dispatch(reset());
-			}, 2000);
-		} else if (updateisError) {
-			fireAlert("Update Weekly Reports error", updatemessage, "error");
-			setTimeout(() => {
+				navigate(-1);
 				dispatch(reset());
 			}, 2000);
 		} else if (updateisSuccess) {
-			fireAlert("Weekly Reports Updated", updatemessage, "success");
+			fireAlert("  Updated successful", "Weekly Reports Updated ", "success");
 			setTimeout(() => {
-				navigate("/weeklycontainer");
-				dispatch(reset());
-			}, 2000);
-		} else if (viewisError) {
-			fireAlert("View Weekly Reports error", viewdata, "error");
-			setTimeout(() => {
+				navigate(-1);
 				dispatch(reset());
 			}, 2000);
 		}
-	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, isError, navigate, updateisError, updateisSuccess, updatemessage, viewdata, viewisError]);
+
+	}, [deleteisSuccess, deletemessage, dispatch, navigate, updateisSuccess, updatemessage, viewdata]);
 
 	return (
 		<div  >
-
-			{/* <header className="ChatProgressView-header"  >
-				<div>
-					<span className="app-chat--icon">
-						<BsChatLeftText />
-					</span>
-					<span> Weekly Report</span>
-				</div>
-				<div className="ChatProgressView-close">
-					<Link
-						to={"/weeklycontainer"}>
-						<MdOutlineClose
-							size={25}
-							style={{ color: "white", backgroundColor: "" }}
-							className="ChatProgressView-close-icon"
-						/>
-					</Link>
-				</div>
-			</header> */}
 			<div>
 
 				<div className='weekly-top-container'>

@@ -11,16 +11,20 @@ import toast, { Toaster } from "react-hot-toast";
 import MobileSideBar from "./MobileSideBar";
 import LogoutOption from "./LogoutOption";
 import Notification from "./Notification/Notification";
-import Socket from "./Socket";
-import { allNotifications } from "../features/Notification/NotificationSlice";
 import { useAppDispatch, useAppSelector } from "../store/useStore";
 import DataService from "../utils/dataService";
 import HttpService from "./HttpService";
-import socketService from "./SocketService";
-import { callback } from "chart.js/dist/helpers/helpers.core";
+import Socket from "./NotificationPopUp";
+import { io } from "socket.io-client";
+
+
+
 
 const dataService = new DataService()
 const Header = ({ toggleSideNav }: any) => {
+
+  const socket = io("https://arkland-erp.herokuapp.com");
+
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();
   const [refresh, setRefresh] = useState<any>(false);
@@ -30,18 +34,6 @@ const Header = ({ toggleSideNav }: any) => {
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<any>(userInfo.notifications);
   const url = "notifications"
-
-  const socket = socketService.getSocket()
-
-  // console.log('socket', socket)
-
-  socket.on("new-notification", (notification) => {
-    console.log('notification', notification)
-  })
-
-
-
-
 
 
 
@@ -111,7 +103,6 @@ const Header = ({ toggleSideNav }: any) => {
   }
 
 
-
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)} >
       {/* <Socket setRefresh={setRefresh} /> */}
@@ -147,7 +138,7 @@ const Header = ({ toggleSideNav }: any) => {
           </span>
         </div>
         <div className="hand-noficational-place">
-
+          <Socket setNotification={setNotification} socket={socket} />
           <div className="hand-noficational-place-sup" >
             <div className="Messages-button" onClick={handleNoti}>
               <span className="content">
@@ -194,7 +185,7 @@ const Header = ({ toggleSideNav }: any) => {
           </div>
         </div>
       </div>
-      <LogoutOption showLogout={showLogout} setShowLogout={setShowLogout} />
+      <LogoutOption showLogout={showLogout} setShowLogout={setShowLogout} socket={socket} />
       <MobileSideBar
         ToggleSidebar={ToggleSidebar}
         isOpen={isOpen}
