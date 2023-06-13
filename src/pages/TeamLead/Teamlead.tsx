@@ -4,16 +4,15 @@ import { Button } from '@material-ui/core';
 import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
 import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
-import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate } from 'react-router-dom';
-import { getTeamLead, reset } from '../../features/TeamLead/teamleadSlice';
+import { getTeamLead } from '../../features/TeamLead/teamleadSlice';
 import CreateTeamLead from './CreateTeamLead';
 
 const TeamLead = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { data, isError, isLoading, message } = useAppSelector((state: any) => state.teamlead)
+	const { data, isLoading } = useAppSelector((state: any) => state.teamlead)
 	const { createisSuccess } = useAppSelector((state: any) => state.teamlead)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -33,24 +32,14 @@ const TeamLead = () => {
 		}
 	}, [createisSuccess, dispatch]);
 
-	useEffect(() => {
-		if (message === "Request failed with status code 500" ? false : message) {
-			fireAlert("error", message, "error");
-			dispatch(reset());
-		}
-	}, [isError, message, dispatch])
+
 
 	const header = ["NAME", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);
 
 	return (
 		<div >
-			{/* <div className="SiteWorkermaindiv">
-				<div className="SiteWorkermaindivsub">
-					<span className="SupportmainTitleh3">TASK </span>
-				</div>
-				<CreateTeamModal />
-			</div> */}
+
 			<div className='allemployees-container-main' >
 				<div className='SiteWorkermaindivsub'>
 					<span className='SupportmainTitleh3'>Team Lead List</span>

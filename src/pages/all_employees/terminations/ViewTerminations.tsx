@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { SyncLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import projectBack from "../../../assets/vectors/project-back.svg";
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import TerminationModal from "../../../components/TerminationModal";
-import { reset, viewTerminations } from "../../../features/Employee/employeeSlice";
-import { fireAlert } from "../../../utils/Alert";
+import { viewTerminations } from "../../../features/Employee/employeeSlice";
+
 
 
 
 const ViewTerminations = () => {
   const dispatch = useAppDispatch();
-  const { viewterminationsdata, viewterminationsisError, viewterminationsisLoading, viewterminationsmessage }: any = useAppSelector((state: any) => state.employee)
+  const { viewterminationsdata, viewterminationsisLoading }: any = useAppSelector((state: any) => state.employee)
 
 
   const navigate = useNavigate();
@@ -23,24 +23,14 @@ const ViewTerminations = () => {
   }, [dispatch, id]);
 
 
-  useEffect(() => {
-    if (viewterminationsisError) {
-      fireAlert('Terminations ', viewterminationsmessage, "error");
-      dispatch(reset());
-    }
-  }, [dispatch, id, viewterminationsisError, viewterminationsmessage])
+
 
 
   return (
     <div  >
       {viewterminationsisLoading ? (
-        <div
-          style={{
-            margin: "auto",
-            width: "20%",
-          }}
-        >
-          <SyncLoader
+        <div className="isLoading-container-view" >
+          <BounceLoader
             color={"#990000"}
             loading={viewterminationsisLoading}
           />

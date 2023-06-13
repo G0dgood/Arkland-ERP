@@ -6,6 +6,7 @@ import { fireAlert } from '../../utils/Alert';
 import { Button } from '@material-ui/core';
 import { MdOutlineClose } from 'react-icons/md';
 import { deleteTeam, reset } from '../../features/Team/teamSlice';
+import { ImBin } from 'react-icons/im';
 
 const DeleteTeam = ({ id }: any) => {
 
@@ -35,13 +36,7 @@ const DeleteTeam = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="Add-btn"
-				onClick={() => setDeleteShow(true)}
-			>
-				Delete Team
-			</Button>
+			<Button onClick={() => setDeleteShow(true)}> <ImBin size={25} color='#bf8412' /></Button>
 			<Modal
 				size="lg"
 				show={deleteShow}

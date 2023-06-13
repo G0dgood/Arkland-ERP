@@ -1,32 +1,21 @@
-import React, { CSSProperties, useEffect } from "react";
+import { useEffect } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@material-ui/core";
-import { MdOutlineClose } from "react-icons/md";
-import { BounceLoader, SyncLoader } from "react-spinners";
-
-
+import { BounceLoader } from "react-spinners";
 import projectBack from "../../../assets/vectors/project-back.svg";
-
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import RequestEmployeeTerminationModal from "../../../components/Modals/RequestEmployeeTerminationModal";
-import { fireAlert } from "../../../utils/Alert";
-import { reset, viewWarning } from "../../../features/Employee/employeeSlice";
-
+import { viewWarning } from "../../../features/Employee/employeeSlice";
 
 
 const ViewWarning = () => {
+
  const navigate = useNavigate();
  const dispatch = useAppDispatch();
  const { id } = useParams<{ id: string }>();
- const { viewwarningdata, viewwarningisError, viewwarningisLoading, viewwarningmessage } = useAppSelector((state: any) => state.employee)
+ const { viewwarningdata, viewwarningisLoading } = useAppSelector((state: any) => state.employee)
 
- useEffect(() => {
-  if (viewwarningisError) {
-   dispatch(reset());
-   fireAlert("error", viewwarningmessage, "error");
-  }
- }, [dispatch, viewwarningisError, viewwarningmessage])
+
 
 
  useEffect(() => {
@@ -37,7 +26,7 @@ const ViewWarning = () => {
  return (
   <div  >
    {viewwarningisLoading ? (
-    <div style={{ margin: "auto", width: "20%" }}  >
+    <div className="isLoading-container-view" >
      <BounceLoader
       color={"#990000"}
       loading={viewwarningisLoading}

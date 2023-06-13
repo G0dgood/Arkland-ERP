@@ -8,7 +8,7 @@ class HttpService {
   dataService = new DataService()  
   private  token:any;
   private  config;
-  private  baseUrl = 	`${process.env.REACT_APP_API}/`
+  private  baseUrl = `${process.env.REACT_APP_API}/`
     constructor() {
          this.token = this.dataService.getToken()
         this.config = {
@@ -18,15 +18,15 @@ class HttpService {
     
     get(url: string) {
      const endpoint = this.baseUrl + url;
-					return new Promise(async (resolve, reject) => { 
-                try { 
-				   const data:any = await axios.get(endpoint, this.config)  
-                    resolve(data);
-                }
-                catch (e) { 
-                    this.handleError(e);
-                    reject (e);
-                } 
+            return new Promise(async (resolve, reject) => { 
+            try { 
+            const data:any = await axios.get(endpoint, this.config)  
+            resolve(data);
+            }
+            catch (e) { 
+            this.handleError(e);
+            reject (e);
+            } 
       });
     }
 
@@ -135,16 +135,18 @@ class HttpService {
     handleError(e:any ) { 
        
         if (e.response.status === 401) { 
-            fireAlert("Session expired","Authentication error, please login again", "error");   
+            fireAlert("Authentication error",e.response.data.message, "error");   
             window.location.replace("/login");
             this.dataService.clearData();
         }
+
         
-        else {
-            if (e.response.data.message === "Request failed with status code 500" ? false : e.response.data.message) { 
-                fireAlert("Error", e.response.data.message, "error");
-            }
-        }
+         fireAlert("Error", e.response.data.message, "error");
+        // else {
+        //     if (e.response.data.message === "Request failed with status code 500" ? false : e.response.data.message) { 
+        //         fireAlert("Error", e.response.data.message, "error");
+        //     }
+        // }
     }
 
     stopSpinner() {

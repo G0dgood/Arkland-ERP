@@ -6,6 +6,7 @@ import { fireAlert } from '../../utils/Alert';
 import { deleteAnnouncement, reset } from '../../features/Announcement/announcemetSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate } from 'react-router-dom';
+import { ImBin } from 'react-icons/im';
 
 const DeleteAnnouncementsModal = ({ id }: any) => {
 	const navigate = useNavigate();
@@ -34,13 +35,7 @@ const DeleteAnnouncementsModal = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="Add-btn"
-				onClick={() => setDeleteShow(true)}
-			>
-				Delete Announcement
-			</Button>
+			<Button onClick={() => setDeleteShow(true)}> <ImBin size={25} color='#bf8412' /></Button>
 			<Modal
 				size="lg"
 				show={deleteShow}
@@ -49,7 +44,7 @@ const DeleteAnnouncementsModal = ({ id }: any) => {
 			>
 				<Modal.Header  >
 					<span>{/*  */}</span>
-					<span className="span-center-title">Delete Tead Lead</span>
+					<span className="span-center-title">Delete Announcement</span>
 					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>

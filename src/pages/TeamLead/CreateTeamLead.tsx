@@ -66,13 +66,9 @@ const CreateTeamLead = () => {
 	}, [newid, setInputs]);
 
 	useEffect(() => {
-		if (createisError) {
-			fireAlert("Create Team Lead", createmessage, "error");
-			dispatch(reset());
-		} else if (createisSuccess) {
+		if (createisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Team member created  successfully", "success");
-			// dispatch(viewTeamLead());
 			dispatch(reset());
 		}
 	}, [createisError, createisSuccess, createmessage, dispatch]);

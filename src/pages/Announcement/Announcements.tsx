@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import TableLoader from '../../components/TableLoader';
 import { fireAlert } from '../../utils/Alert';
@@ -15,18 +15,6 @@ const Announcements = () => {
 	const dispatch = useAppDispatch();
 	const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.announcement)
 	const navigate = useNavigate();
-	// const [showdelete, setShowDelete] = useState(false);
-	// const [rolesid, setRolesid] = useState(0);
-
-	console.log("data", data)
-
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		dispatch(getAnnouncement());
-	// 		dispatch(reset());
-	// 		fireAlert("Successful", "Role Deleted!", "success");
-	// 	}
-	// }, [deleterolemessage, deleteroleisError, deleteroleisSuccess, dispatch])
 
 
 
@@ -38,12 +26,12 @@ const Announcements = () => {
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
 
-	useEffect(() => {
-		if (isError) {
-			dispatch(reset());
-			fireAlert("Error Announcement", message, "error");
-		}
-	}, [dispatch, isError, isSuccess, message])
+	// useEffect(() => {
+	// 	if (isError) {
+	// 		dispatch(reset());
+	// 		fireAlert("Error Announcement", message, "error");
+	// 	}
+	// }, [dispatch, isError, isSuccess, message])
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -112,7 +100,6 @@ const Announcements = () => {
 										<td className="table-datacell datatype-numeric">{item?.description}</td>
 										<td className="table-datacell datatype-numeric">{item?.message}</td>
 										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
-
 										<td className="table-datacell datatype-numeric">
 											{item?.status === "active" ? <BsCheckCircle size={25} color={"green"} /> : <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
 										</td>

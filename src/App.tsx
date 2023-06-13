@@ -62,6 +62,8 @@ import TaskView from "./pages/Tasks/TaskView";
 import Announcements from "./pages/Announcement/Announcements";
 import AnnouncementsView from "./pages/Announcement/AnnouncementsView";
 import ViewSiteWorkerRequest from "./pages/WorkersRequest/ViewSiteWorkerRequest";
+import ViewHOD from "./pages/HOD/ViewHOD";
+import ViewRole from "./pages/EmployeeRole/ViewRole";
 // import ViewSiteWorkerRequest from "./pages/"
 const dataService = new DataService();
 
@@ -128,9 +130,8 @@ const App: React.FC<any> = () => {
           <Route path="announcements">
             <Route index element={<Announcements />} />
             <Route path="announcements/:id" element={<AnnouncementsView />} />
-            {/* <Route path="projects/:id" element={<ViewProjects />} />
-            <Route path="projects/create" element={<CreateProjects />} /> */}
           </Route>
+
           <Route path="projects">
             <Route index element={<Project />} />
             <Route path="projects/:id" element={<ViewProjects />} />
@@ -173,8 +174,15 @@ const App: React.FC<any> = () => {
             <Route index element={<SiteWorkerRequest />} />
             <Route path="workers_request/view/:id" element={<ViewSiteWorkerRequest />} />
           </Route>
+          <Route path="hod">
+            <Route index element={<CreateHOD />} />
+            <Route path="hod/viewhod/:id" element={<ViewHOD />} />
+          </Route>
+          <Route path="userrole">
+            <Route path="userrole/viewrole/:id" element={<ViewRole />} />
+          </Route>
 
-          <Route path="/createnewhod" element={<CreateHOD />} />
+
           <Route path="/createnewrole" element={<CreateRole />} />
           <Route path="/userprivileges" element={<Userprivileges />} />
           <Route path="/support" element={<Support />} />

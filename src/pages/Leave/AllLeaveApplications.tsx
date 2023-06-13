@@ -11,45 +11,45 @@ import { SlClose } from 'react-icons/sl';
 import DataService from '../../utils/dataService';
 
 
-const dataService = new DataService()
+// const dataService = new DataService()
 const AllLeaveApplications = () => {
 
 
 	// @ts-ignore
-	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-	const token = dataService.getToken()
+	// const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+	// const token = dataService.getToken()
 	const [data, setData] = useState([]);
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
 	const [isLoading, setisLoading] = useState(false);
-	const [message, setMessage] = useState("");
-	const [isError, setisError] = useState(false)
+	// const [message, setMessage] = useState("");
+	// const [isError, setisError] = useState(false)
 
 
-	useEffect(() => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-					setisError(true)
-				} else {
-					setSortData(data?.data?.data)
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-	}, [token, userInfo?.department?.id])
+	// useEffect(() => {
+	// 	setisLoading(true);
+	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
+	// 		method: "GET",
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			Authorization: `Bearer ${token}`
+	// 		},
+	// 	})
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			if (data?.success === false) {
+	// 				setMessage(data?.message)
+	// 				setisError(true)
+	// 			} else {
+	// 				setSortData(data?.data?.data)
+	// 			}
+	// 			setisLoading(false);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("Error:", error);
+	// 			setisLoading(false);
+	// 		});
+	// }, [token, userInfo?.department?.id])
 
 
 

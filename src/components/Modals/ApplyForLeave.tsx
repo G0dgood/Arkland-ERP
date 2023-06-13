@@ -33,16 +33,13 @@ const ApplyForLeave = () => {
 	useEffect(() => {
 		if (isSuccess) {
 			fireAlert("Successful", "Leave Created!", "success");
-			setLgShow(false);
-			dispatch(reset());
-		} else if (isError) {
-			fireAlert("Leave error", message, "error");
 			setInputs({
 				start_date: "",
 				end_date: "",
 				description: "",
 				leave_type: "",
 			})
+			setLgShow(false);
 			dispatch(reset());
 		}
 	}, [dispatch, message, isError, isSuccess])

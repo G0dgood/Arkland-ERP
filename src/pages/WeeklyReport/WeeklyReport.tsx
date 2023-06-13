@@ -15,7 +15,6 @@ import HttpService from '../../components/HttpService';
 const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {
 	const dispatch = useAppDispatch();
-	const { createisError, createisLoading, createmessage, createisSuccess }: any = useAppSelector((state: any) => state.Weeklyreport)
 
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
@@ -91,7 +90,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const html = "Week Report Created!";
 	const icon = "success";
 	const title1 = "Week Report error";
-	const html1 = createmessage;
+	// const html1 = createmessage;
 	const icon1 = "error";
 
 	const [isLoading, setisLoading] = useState(false);
@@ -170,7 +169,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			}, 5000);
 			reset()
 		}
-	}, [html, html1, setIsCheck, dispatch, isSuccess, isError, message])
+	}, [html, setIsCheck, dispatch, isSuccess, isError, message])
 
 	return (
 		<div className='weeklycontainer'>
@@ -254,6 +253,9 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			<div>
 				<WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} setInputs={setInputs} inputs={inputs} />
 				<div className='WeeKlyReport-submit-container'>
+					<button className="ccsnl-btn WeeKlyReport-tab"
+						onClick={submitHandler}>
+						{isLoading ? <Spinner animation="border" /> : "Upload"} </button>
 					<button className="ccsnl-btn WeeKlyReport-tab"
 						onClick={submitHandler}>
 						{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>

@@ -6,7 +6,6 @@ import moment from 'moment'
 import TableLoader from './TableLoader'
 import Pagination from './Pagination'
 import { ImBin } from 'react-icons/im'
-import DeleteModals from './DeleteModals'
 import { fireAlert } from '../utils/Alert'
 import AssignPrivilegesModal from './Modals/AssignPrivilegesModal'
 import { useAppDispatch, useAppSelector } from '../store/useStore'
@@ -138,7 +137,7 @@ const Userprivileges = () => {
 					</table>
 				</div>
 			</section>
-			<DeleteModals showdelete={showdelete} setShowDelete={setShowDelete} handleDelete={handleDelete} isLoading1={deleteisLoading} />
+
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}

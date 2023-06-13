@@ -66,6 +66,12 @@ const initialState = {
   createroleisLoading: false, 
   createrolemessage: '', 
 
+  viewroledata:  [],
+  viewroleisError: false,
+  viewroleisSuccess: false,
+  viewroleisLoading: false, 
+  viewrolemessage: '', 
+
   terminationsdata:  [],
   terminationsisError: false,
   terminationsisSuccess: false,
@@ -124,7 +130,7 @@ const initialState = {
 
 export const allEmployee = createAsyncThunk('employee/allEmployee', async (data,thunkAPI) => {
   try {
-    return await employeeService.allEmployee(  )
+    return await employeeService.allEmployee(data  )
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 
@@ -217,6 +223,19 @@ export const deleteEmployees = createAsyncThunk('employee/deleteEmployees', asyn
 export const getRole = createAsyncThunk('employee/getRole', async (data, thunkAPI) => {
   try {
     return await employeeService.getRole(data)
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const viewRole = createAsyncThunk('employee/viewRole', async (data, thunkAPI) => {
+  try {
+    return await employeeService.viewRole(data)
     
   } catch (error: any) {   
     const message = (error.response && 
@@ -410,6 +429,11 @@ export const authSlice = createSlice({
       state.createroleisSuccess = false
       state.createroleisError = false
       state.createrolemessage = '' 
+
+      state.viewroleisLoading = false
+      state.viewroleisSuccess = false
+      state.viewroleisError = false
+      state.viewrolemessage = '' 
       
       state.terminationsisLoading = false
       state.terminationsisSuccess = false
@@ -566,6 +590,21 @@ export const authSlice = createSlice({
         state.getroleisError = true
         state.getrolemessage = action.payload    
         state.getroledata = '' 
+      })
+
+      .addCase(viewRole.pending, (state) => {
+        state.viewroleisLoading = true 
+      })
+      .addCase(viewRole.fulfilled, (state:any, action) => {
+        state.viewroleisLoading = false
+        state.viewroleisSuccess = true
+        state.viewroledata = action.payload?.data    
+      })
+      .addCase(viewRole.rejected, (state:any, action) => {
+        state.viewroleisLoading = false
+        state.viewroleisError = true
+        state.viewrolemessage = action.payload    
+        state.viewroledata = '' 
       })
        
       .addCase(deleteRole.pending, (state) => {

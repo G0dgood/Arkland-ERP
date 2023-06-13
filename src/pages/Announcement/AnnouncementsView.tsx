@@ -1,30 +1,20 @@
 import moment from 'moment';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import {
 	BounceLoader
 } from 'react-spinners';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fireAlert } from '../../utils/Alert';
-import { reset, viewAnnouncement } from '../../features/Announcement/announcemetSlice';
 import { TfiAnnouncement } from 'react-icons/tfi';
 import projectBack from "../../assets/vectors/project-back.svg";
 import DeleteAnnouncementsModal from './DeleteAnnouncementsModal';
+import { viewAnnouncement } from '../../features/Announcement/announcemetSlice';
 
 const AnnouncementsView = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { id } = useParams<{ id: string }>();
-	const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.announcement)
-
-
-	useEffect(() => {
-		if (viewisError) {
-			fireAlert("Annoucement View error", viewmessage, "error");
-			dispatch(reset());
-		}
-	}, [viewisError, viewmessage, dispatch])
-
+	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.announcement)
 
 	useEffect(() => {
 		// @ts-ignore

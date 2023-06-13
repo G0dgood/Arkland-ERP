@@ -6,20 +6,19 @@ import { fireAlert } from '../../utils/Alert';
 import { hrcreateAttendance, reset } from '../../features/Attendances/attendanceSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import $ from "jquery";
-import { allEmployee } from '../../features/Employee/employeeSlice';
 
 import SelectInput from '../SelectInput';
+import HttpService from '../HttpService';
 
 const HRClockInModal = () => {
 	const dispatch = useAppDispatch();
 	const { hrisError, hrisLoading, hrmessage, hrisSuccess } = useAppSelector((state: any) => state.attendance)
-	const { data: employee, isLoading } = useAppSelector((state: any) => state.employee)
 
-	useEffect(() => {
-		// @ts-ignore
-		dispatch(allEmployee());
-	}, [dispatch]);
+
+
 	const [show, setShow] = useState<any>(false);
+	const [employees, setEmployees] = useState<any>("");
+	const [isLoading, setisLoading] = useState<any>(false);
 
 
 	useEffect(() => {
@@ -67,12 +66,23 @@ const HRClockInModal = () => {
 
 	setInterval(setClockWithCurrentTime, 1000);
 
+	const getData = async () => {
+		setisLoading(true)
+		try {
+			const employees = "hr/employees"
+			const employee: any = await HttpService.get(employees)
+			setEmployees(employee?.data?.data)
+			setisLoading(false)
 
+		} catch (error) {
+			setisLoading(false)
+		}
+	}
 
 	const availableEmployees = [] as any;
 
-	employee &&
-		employee.forEach((employee: any) =>
+	employees &&
+		employees.forEach((employee: any) =>
 			availableEmployees.push({
 				value: employee?.id,
 				label: employee?.full_name,
@@ -104,7 +114,7 @@ const HRClockInModal = () => {
 			<Button
 				variant="contained"
 				className="Add-btn"
-				onClick={() => setShow(true)}
+				onClick={() => { setShow(true); getData() }}
 			>
 				{false ? <Spinner animation="border" /> : " Clock in"}
 			</Button>

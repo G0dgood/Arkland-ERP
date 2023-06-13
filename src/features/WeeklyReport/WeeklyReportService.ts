@@ -26,23 +26,23 @@ const getHODWeeklyReport = async ( ) => {
  //view Weekly Report
 const viewWeeklyReport = async (id:any ) => { 
 	 
-  const response = await axios.get(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}/view`)
+  const {data} = await axios.get(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}/view`)
    
-  return response
+  return data
 }
 //delete Weekly Report 
 const deleteWeeklyReport = async (id:any ) => { 
 	 
-  const response = await axios.delete(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`)
+  const {data} = await axios.delete(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`)
    
-  return response
+  return data
 }
 //update Weekly Report
 const updateWeeklyReport = async ({id,inputs}:any ) => { 
 	 
-  const response = await axios.patch(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`,inputs)
+  const {data} = await axios.patch(`${process.env.REACT_APP_API}/hr/weekly-reports/${id}`,inputs)
    
-  return response
+  return data
 }
  
  

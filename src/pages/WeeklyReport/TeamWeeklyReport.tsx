@@ -99,7 +99,7 @@ const TeamWeeklyReport = () => {
 											<Button className={item?.status === "submitted" ? "table-link " : "table-link-active"}>{item?.status}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Link to={`/teamWeeklyreportupdate/${item?._id}`}>
+											<Link to={`/weeklyreport/weeklyreport/update/${item?._id}`}>
 
 												<Button id="team-applicatiom-update">	{item?.status === "acknowledged" ? 'View' : 'Update'}</Button>
 											</Link>
