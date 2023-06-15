@@ -8,11 +8,13 @@ import { ImBriefcase } from "react-icons/im";
 import { HiSpeakerphone } from "react-icons/hi";
 import { BsFillBriefcaseFill } from "react-icons/bs";
 import HttpService from "../HttpService";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Notification = ({ handleNext, handlePrev, notification, loading }: any) => {
-
+  const navigate = useNavigate();
   const { paginator } = notification
 
   const [opens, setOpens] = useState<number[]>([]);
@@ -28,7 +30,7 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
     }
   }
 
-  // console.log("notification", notification)
+
 
   const handleView = async (id: string) => {
     console.log("handleView", id)
@@ -44,8 +46,7 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
       })
   }
 
-  //     ; handleView(item?._id)
-  // }
+
 
   return (
     <div className="drop-down-notify">
@@ -60,7 +61,7 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
           <h6> <RiMessage3Line size={40} color="#999999" style={{ marginRight: "5px" }} />  </h6>
           <span>No Notifications</span></div> :
           notification?.data?.map((item: any, i: number) => (
-            <div key={i} className={opens?.includes(i) ? "faq active" : "faq"} onClick={() => { handleOpens(i) }}>
+            <div key={i} className={opens?.includes(i) ? "faq active" : "faq"} >
               <div className="faq-title-contain">
                 <span className="icon-Plus">
                   {item?.type === "new employee" ? <FaUserPlus size={20} /> :
@@ -70,10 +71,17 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
                 <h6 className="faq-title">{item?.type.charAt(0).toUpperCase() + item?.type.slice(1)}</h6>
               </div>
               <p className="faq-text">{item?.details}</p>
-              <span className=" faq-text view-noti-drop">view</span>
-              <button className="faq-toggle">
+
+              <span className=" faq-text view-noti-drop"
+                // @ts-ignore
+                onClick={item?.type === "leave application" ? () => navigate("/leave") : ""}>view</span>
+              <button className="faq-toggle" onClick={() => { handleOpens(i) }}>
                 <i className="fas fa-angle-down"></i>
               </button>
+              <p style={{ marginLeft: "12px", marginTop: "5px" }}>  {moment
+                .duration(moment().diff(item.created_at))
+                .humanize()}{" "}
+                ago</p>
             </div>
           ))
         }

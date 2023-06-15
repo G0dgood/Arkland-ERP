@@ -23,7 +23,8 @@ import { io } from "socket.io-client";
 const dataService = new DataService()
 const Header = ({ toggleSideNav }: any) => {
 
-  const socket = io("https://arkland-erp.herokuapp.com");
+  const socket = io("http://arkland-erp-prod-uat.us-east-1.elasticbeanstalk.com");
+  // const socket = io("https://arkland-erp.herokuapp.com");
 
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();

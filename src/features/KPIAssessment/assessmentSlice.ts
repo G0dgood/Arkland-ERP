@@ -113,8 +113,7 @@ export const teamAssessment = createAsyncThunk('assessment/teamAssessment', asyn
 export const hodReviewAssessment = createAsyncThunk('assessment/hodReviewAssessment', async ( data:any,input:any,thunkAPI) => {
   try {
     return await assessmentService.hodReviewAssessment(data ,input)
-  } catch (error: any) {
-    console.log('error',error)
+  } catch (error: any) { 
     const message = (error.response && 
       error.response.data && 
       error.response.data.message) ||

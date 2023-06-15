@@ -2,7 +2,6 @@ import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
-import Cookies from 'js-cookie';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hodReviewAssessment } from '../../features/KPIAssessment/assessmentSlice';

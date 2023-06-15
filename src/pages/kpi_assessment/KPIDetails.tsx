@@ -14,8 +14,8 @@ const KPIDetails = () => {
 	const { id } = useParams()
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.assessment)
-	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.assessment)
+	const { viewdata, viewisLoading, viewmessage } = useAppSelector((state: any) => state.assessment)
+	const { deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.assessment)
 
 
 
@@ -36,16 +36,12 @@ const KPIDetails = () => {
 
 	const [hodscore, setHodscore] = useState('')
 
-	// useEffect(() => {
-	// 	if (viewisError) {
-	// 		fireAlert("Leave error", viewmessage, "error");
-	// 	} else if (deleteisError) {
-	// 		fireAlert("Delete Leave error", deletemessage, "error");
-	// 	} else if (deleteisSuccess) {
-	// 		fireAlert("KPI Deleted", "KPI Deleted Successfully", "success");
-	// 		navigate(-1)
-	// 	}
-	// }, [viewisError, viewmessage, deleteisError, deletemessage, deleteisSuccess, navigate]);
+	useEffect(() => {
+		if (deleteisSuccess) {
+			fireAlert("KPI Deleted", "KPI Deleted Successfully", "success");
+			navigate(-1)
+		}
+	}, [viewmessage, deletemessage, deleteisSuccess, navigate]);
 
 
 

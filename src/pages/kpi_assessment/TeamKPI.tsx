@@ -9,7 +9,7 @@ import {
 import Pagination from "../../components/Pagination";
 import { Button } from "@material-ui/core";
 import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fireAlert } from "../../utils/Alert";
 import { reset, teamAssessment } from "../../features/KPIAssessment/assessmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
@@ -20,7 +20,7 @@ const TeamKPI = () => {
   const dispatch = useAppDispatch();
   const { teamdata, teamisError, teamisLoading, teammessage } = useAppSelector((state: any) => state.assessment)
   const navigate = useNavigate();
-  // @ts-ignore
+
   const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
   const [sortData, setSortData] = useState([]);
@@ -29,6 +29,9 @@ const TeamKPI = () => {
   const title1 = "KPI error";
   const html1 = teammessage;
   const icon1 = "error";
+
+
+
 
 
   useEffect(() => {
@@ -57,7 +60,9 @@ const TeamKPI = () => {
 
   const [displayData, setDisplayData] = useState([]);
 
-  const id = userInfo?.data?.employee?._id
+  const id = userInfo?.employee?._id
+
+
 
   useEffect(() => {
     // @ts-ignore
