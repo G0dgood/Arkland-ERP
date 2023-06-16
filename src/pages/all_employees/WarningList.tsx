@@ -12,7 +12,7 @@ import TableLoader from "../../components/TableLoader";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { getWarning, reset } from "../../features/Employee/employeeSlice";
 import { Button } from "@material-ui/core";
-import { fireAlert } from "../../utils/Alert";
+
 
 const WarningList = () => {
   const dispatch = useAppDispatch();
@@ -54,12 +54,9 @@ const WarningList = () => {
 
   useEffect(() => {
 
-    if (warningisError) {
+    if (createwarningisSuccess) {
       dispatch(reset());
-      fireAlert("error", warningmessage, "error");
-    } else if (createwarningisSuccess) {
       dispatch(getWarning());
-      dispatch(reset());
     }
   }, [warningmessage, warningisError, dispatch, createwarningisSuccess])
 

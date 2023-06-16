@@ -6,6 +6,7 @@ import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
+import $ from "jquery";
 
 import { reset } from '../../features/WeeklyReport/WeeklyReportSlice';
 import { useAppDispatch } from '../../store/useStore';
@@ -172,6 +173,20 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 		}
 	}, [html, setIsCheck, dispatch, isSuccess, isError, message])
 
+
+
+	$('#chooseFile').bind('change', function () {
+		let filename: any = $("#chooseFile").val();
+		if (/^\s*$/.test(filename)) {
+			$(".file-upload").removeClass('active');
+			$("#noFile").text("No file chosen...");
+		}
+		else {
+			$(".file-upload").addClass('active');
+			$("#noFile").text(filename.replace("C:\\fakepath\\", ""));
+		}
+	});
+
 	return (
 		<div className='weeklycontainer'>
 			<div>
@@ -254,11 +269,25 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			<div>
 				<WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} setInputs={setInputs} inputs={inputs} />
 				<div className='WeeKlyReport-submit-container'>
-					<button className="ccsnl-btn WeeKlyReport-tab" >
-						{false ? <Spinner animation="border" /> : "Upload"} </button>
-					<button className="ccsnl-btn WeeKlyReport-tab"
-						onClick={submitHandler}>
-						{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
+					{/* <div className='file-containal'> */}
+					<div>
+						<div className="file-upload">
+							<div className="file-select">
+								<div className="file-select-button" id="fileName">Choose File</div>
+								<div className="file-select-name" id="noFile">No file chosen...</div>
+								<input type="file" name="chooseFile" id="chooseFile" />
+							</div>
+						</div>
+					</div>
+					<div>
+						{/* <button className="ccsnl-btn WeeKlyReport-tab" >
+							{false ? <Spinner animation="border" /> : "Upload"} </button> */}
+						<button className="ccsnl-btn WeeKlyReport-tab"
+							onClick={submitHandler}>
+							{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
+
+					</div>
+					{/* </div> */}
 				</div>
 			</div>
 		</div >

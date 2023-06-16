@@ -26,8 +26,6 @@ const Header = ({ toggleSideNav }: any) => {
   // const socket = io("https://arkland-erp.herokuapp.com");
 
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-
-
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
@@ -56,13 +54,13 @@ const Header = ({ toggleSideNav }: any) => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
   };
 
-  const handleNoti = () => {
-    if (!dropDownNoti) {
-      setDropDownNoti(true)
-    } else {
-      setDropDownNoti(false)
-    }
-  }
+  // const handleNoti = () => {
+  //   if (!dropDownNoti) {
+  //     setDropDownNoti(true)
+  //   } else {
+  //     setDropDownNoti(false)
+  //   }
+  // }
 
 
   const handleNext = async () => {
@@ -104,7 +102,7 @@ const Header = ({ toggleSideNav }: any) => {
 
 
   return (
-    <div id="header" onMouseLeave={() => setDropDown(false)} >
+    <div id="header" onMouseLeave={() => setDropDownNoti(false)} >
       <Toaster
         position="top-center"
         toastOptions={{
@@ -116,7 +114,7 @@ const Header = ({ toggleSideNav }: any) => {
       />
 
       <div className="header-container">
-        <div className="header-left">
+        <div className="header-left" >
           <TfiAlignJustify
             className="mobileSidebarbtn"
             size={25}
@@ -136,10 +134,11 @@ const Header = ({ toggleSideNav }: any) => {
             {userInfo?.employee?.email}
           </span>
         </div>
-        <div className="hand-noficational-place">
+        <div className="hand-noficational-place" >
           <Socket setNotification={setNotification} socket={socket} />
+          {/* @ts-ignore */}
           <div className="hand-noficational-place-sup" >
-            <div className="Messages-button" onClick={handleNoti}>
+            <div className="Messages-button" onMouseEnter={() => { setDropDownNoti(true) }} >
               <span className="content">
                 <IoIosNotifications size={30} />
               </span>
