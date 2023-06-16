@@ -37,7 +37,6 @@ import ViewWarning from "./pages/all_employees/warnings/ViewWarning";
 import ViewLeave from "./pages/Leave/ViewLeave";
 import HodLeaveView from "./pages/Leave/HodLeaveView";
 import ViewTerminations from "./pages/all_employees/terminations/ViewTerminations";
-import HumanResources from "./pages/HumanResources/HumanResources";
 import AttendanceTable from "./pages/HumanResources/attendance/AttendanceTable";
 import EmployeeAttendance from "./pages/EmployeeAttendance/EmployeeAttendance";
 import EmployeeAttendanceTable from "./pages/EmployeeAttendance/table/EmployeeAttendanceTable";
@@ -96,7 +95,6 @@ const App: React.FC<any> = () => {
           <Route path="attendance" >
             <Route index element={<EmployeeAttendance />} />
             <Route path="employee/attendance/list" element={<EmployeeAttendanceTable />} />
-            <Route path="attendance/hr" element={<HumanResources />} />
             <Route path="attendance/list/hr" element={<AttendanceTable />} />
           </Route>
 

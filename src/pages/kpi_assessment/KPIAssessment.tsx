@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import { fireAlert } from "../../utils/Alert";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { createAssessment } from "../../features/KPIAssessment/assessmentSlice";
-import { allEmployee, userEmployees } from "../../features/Employee/employeeSlice";
+import { allEmployee } from "../../features/Employee/employeeSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
-import HttpService from "../../components/HttpService";
+
 
 
 const dataService = new DataService()
-const KPIAssessment = ({ setIsCheck, setShow }: any) => {
+const KPIAssessment = ({ setIsCheck, setShow, hods }: any) => {
 
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state: any) => state.employee)
+  // const { data } = useAppSelector((state: any) => state.employee)
   const { createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.assessment)
 
 
@@ -23,27 +23,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
 
   // const [kpicheck, setkpicheck] = useState<any>();
-  const [employees, setEmployees] = useState<any>();
 
-
-  useEffect(() => {
-    getData()
-  }, [])
-
-
-  const getData = async () => {
-    // setisLoading(true)
-    try {
-      const employeesUrl = "hr/employees"
-      const employees: any = await HttpService.get(employeesUrl)
-      setEmployees(employees?.data?.data)
-
-      // setisLoading(false)
-
-    } catch (error) {
-      // setisLoading(false)
-    }
-  }
 
 
 
@@ -204,14 +184,22 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     dispatch(allEmployee());
   }, [dispatch]);
 
+  const availablleHods = [] as any;
+
+  hods &&
+    hods.forEach((team: any) =>
+      availablleHods.push({
+        value: team.id,
+        label: team.name,
+      })
+    );
 
 
+  // React.useEffect(() => {
 
-  React.useEffect(() => {
+  //   setEmployees(data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
 
-    setEmployees(data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
-
-  }, [data]);
+  // }, [data]);
 
   const year = new Date().getFullYear().toString();
 
@@ -314,17 +302,24 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
                     <div>HOD :</div>
                     <select
                       name="line-manager"
-                      value={kpinputs.reviewer}
+                      value={kpinputs?.reviewer}
                       onChange={(e) => handleOnChange("reviewer", e.target.value)}
-                      required
-                    >
+                      required >
                       <option> </option>
-                      {employees?.map((employ: any) => (
+                      {hods?.map((employ: any) => (
                         <option key={employ?._id} value={employ?.id}>
                           {employ?.full_name}
                         </option>
                       ))}
                     </select>
+                    {/* <SelectInput
+                      label="User"
+                      isDisabled={isLoading}
+                      isLoading={isLoading}
+                      options={availableEmployees}
+                      value={newid.user}
+                      onChange={(e: any) => handleOnChange("user", e)}
+                    /> */}
                   </div>
                 </div>
               </div>

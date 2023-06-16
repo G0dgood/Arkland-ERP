@@ -11,7 +11,7 @@ import { hrApproveEmployees, reset } from '../../features/Employee/employeeSlice
 
 const ApproveEmployeeModal = ({ id, data }: any) => {
 	const dispatch = useAppDispatch();
-	const { approveisError, approveisLoading, approvemessage, approveisSuccess } = useAppSelector((state: any) => state.employee)
+	const { approveisLoading, approveisSuccess } = useAppSelector((state: any) => state.employee)
 	const [deleteShow, setDeleteShow] = useState(false);
 
 
@@ -19,11 +19,8 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 		if (approveisSuccess) {
 			fireAlert("Successful", "Employee Approved Successfully!", "Success");
 			dispatch(reset())
-		} else if (approveisError) {
-			fireAlert("error", 'approved error', approvemessage);
-			dispatch(reset())
 		}
-	}, [approveisError, approveisLoading, approveisSuccess, approvemessage, dispatch])
+	}, [approveisLoading, approveisSuccess, dispatch])
 
 
 	const handleApprove = () => {

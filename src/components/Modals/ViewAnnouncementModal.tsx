@@ -1,8 +1,8 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
-import { BounceLoader, SyncLoader } from 'react-spinners';
+import { BounceLoader, } from 'react-spinners';
 import moment from 'moment';
 import { FiEye } from 'react-icons/fi';
 import { viewAnnouncement } from '../../features/Announcement/announcemetSlice';

@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore'
 const DeleteAnnouncementModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 	const [Show, setShow] = useState(false);
-	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.announcement)
+	const { deleteisLoading, deleteisSuccess } = useAppSelector((state: any) => state.announcement)
 
 
 
@@ -19,21 +19,15 @@ const DeleteAnnouncementModal = ({ id }: any) => {
 	const title = "Successful";
 	const html = "Announcement Deleted Successfully!";
 	const icon = "success";
-	const title1 = "Announcement Deletion Failed";
-	const html1 = deletemessage;
-	const icon1 = "error";
 
 
-	// useEffect(() => {
-	// 	if (deleteisSuccess) {
-	// 		fireAlert(title, html, icon);
-	// 		setShow(false)
-	// 		dispatch(reset());
-	// 	} else if (deleteisError) {
-	// 		fireAlert(title1, html1, icon1);
-	// 		dispatch(reset());
-	// 	}
-	// }, [deleteisError, deleteisSuccess, dispatch, html, html1])
+	useEffect(() => {
+		if (deleteisSuccess) {
+			fireAlert(title, html, icon);
+			setShow(false)
+			dispatch(reset());
+		}
+	}, [deleteisSuccess, dispatch, html])
 
 	const handleDelete = () => {
 		// @ts-ignore

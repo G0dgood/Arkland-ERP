@@ -13,7 +13,7 @@ import CreateAnnouncementModal from '../../components/Modals/CreateAnnouncementM
 
 const Announcements = () => {
 	const dispatch = useAppDispatch();
-	const { data, isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.announcement)
+	const { data, isLoading } = useAppSelector((state: any) => state.announcement)
 	const navigate = useNavigate();
 
 
@@ -24,14 +24,9 @@ const Announcements = () => {
 
 
 	const [sortData, setSortData] = useState([]);
-	const [searchItem, setSearchItem] = useState("");
+	const [searchItem,] = useState("");
 
-	// useEffect(() => {
-	// 	if (isError) {
-	// 		dispatch(reset());
-	// 		fireAlert("Error Announcement", message, "error");
-	// 	}
-	// }, [dispatch, isError, isSuccess, message])
+
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
