@@ -259,8 +259,7 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
                       item?.type === "leave application" ||
                       item?.type === "leave approval" ||
                       item?.type === "leave rejection" ||
-                      item?.type === "leave HOD approval" ||
-                      item?.type === " leave HR approval" ? <BsFillBriefcaseFill size={20} /> :
+                      item?.type === "leave HOD approval" ? <BsFillBriefcaseFill size={20} /> :
                       item?.type === "announcement" ? <HiSpeakerphone size={20} /> :
                         item?.type === "workers request application" ||
                           item?.type === "workers request approval" ||
@@ -290,12 +289,17 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
 
               <span className=" faq-text view-noti-drop"
                 // @ts-ignore
-                onClick={item?.type === "leave application" ? () => navigate("/leave") :
-                  item?.type === "new employee" ||
-                    item?.type === "employee approval" ||
-                    item?.type === "employment termination" ? () => navigate("/employees") :
-                    item?.type === "leave application" ? () => navigate("/leave") :
-                      ""}>view</span>
+                onClick={item?.type === "new employee" ||
+                  item?.type === "employee approval" ||
+                  item?.type === "employment termination" ? () => navigate("/employees") :
+                  item?.type === "leave HR approval" ? () => navigate("/leave/leave/hr") :
+                    item?.type === "leave application" ||
+                      item?.type === "leave rejection" ||
+                      item?.type === "leave approval" ? () => navigate("/leave") :
+                      item?.type === "leave HOD approval" ? () => navigate("/leave/leave/team") :
+                        item?.type === "announcement" ? () => navigate("/announcements") :
+
+                          ""}>view</span>
               <button className="faq-toggle" onClick={() => { handleOpens(i) }}>
                 <i className="fas fa-angle-down"></i>
               </button>
