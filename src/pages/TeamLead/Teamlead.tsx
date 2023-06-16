@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import Pagination from '../../components/Pagination';
-import { Button } from '@material-ui/core';
-import moment from 'moment';
-import TableLoader from '../../components/TableLoader';
-import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate } from 'react-router-dom';
 import { getTeamLead } from '../../features/TeamLead/teamleadSlice';
+import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import CreateTeamLead from './CreateTeamLead';
+import TableLoader from '../../components/TableLoader';
+import { Button } from '@material-ui/core';
+import moment from 'moment';
+import Pagination from '../../components/Pagination';
 
 const TeamLead = () => {
 	const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ const TeamLead = () => {
 
 
 	const header = ["NAME", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
-	const [displayData, setDisplayData] = useState([]);
+	const [displayData, setDisplayData] = useState<any>([]);
 
 	return (
 		<div >
