@@ -55,7 +55,6 @@ import AllKPIReport from "./pages/kpi_assessment/AllKPIReport";
 import TaskList from "./pages/Tasks/TaskList";
 import Team from "./pages/Team/Team";
 import ViewTeam from "./pages/Projects/ViewTeam";
-import TeamLead from "./pages/TeamLead/TeamLead";
 import TeamLeadView from "./pages/TeamLead/TeamLeadView";
 import TaskView from "./pages/Tasks/TaskView";
 import Announcements from "./pages/Announcement/Announcements";
@@ -63,7 +62,10 @@ import AnnouncementsView from "./pages/Announcement/AnnouncementsView";
 import ViewSiteWorkerRequest from "./pages/WorkersRequest/ViewSiteWorkerRequest";
 import ViewHOD from "./pages/HOD/ViewHOD";
 import ViewRole from "./pages/EmployeeRole/ViewRole";
-// import ViewSiteWorkerRequest from "./pages/"
+import TeamLead from "./pages/TeamLead/TeamLead";
+
+
+
 const dataService = new DataService();
 
 
@@ -153,6 +155,7 @@ const App: React.FC<any> = () => {
             <Route index element={<Team />} />
             <Route path="team/view/:id" element={<ViewTeam />} />
           </Route>
+
           <Route path="teamlead">
             <Route index element={<TeamLead />} />
             <Route path="teamlead/view/:id" element={<TeamLeadView />} />
