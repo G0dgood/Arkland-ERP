@@ -12,7 +12,7 @@ const DeleteEmployeeModal = ({ id }: any) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [deleteShow, setDeleteShow] = useState(false);
-	const { deleteEmpisError, deleteEmpisLoading, deleteEmpmessage, deleteEmpisSuccess } = useAppSelector((state: any) => state.employee)
+	const { deleteEmpisLoading, deleteEmpmessage, deleteEmpisSuccess } = useAppSelector((state: any) => state.employee)
 
 
 	useEffect(() => {
@@ -21,11 +21,8 @@ const DeleteEmployeeModal = ({ id }: any) => {
 			setDeleteShow(false)
 			navigate(-1)
 			dispatch(reset());
-		} else if (deleteEmpisError) {
-			fireAlert("Employee Deletion error", deleteEmpmessage, "error");
-			dispatch(reset());
 		}
-	}, [deleteEmpisError, deleteEmpisSuccess, deleteEmpmessage, dispatch, navigate])
+	}, [deleteEmpisSuccess, deleteEmpmessage, dispatch, navigate])
 
 	const handleEmployeeDeletion = () => {
 		// @ts-ignore

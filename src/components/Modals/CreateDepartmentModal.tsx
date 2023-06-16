@@ -12,19 +12,16 @@ import { createDepartments, reset } from "../../features/Department/departmentSl
 
 const CreateDepartmentModal = () => {
  const dispatch = useAppDispatch();
- const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.department)
+ const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.department)
  const [lgShow, setLgShow] = useState(false);
 
  useEffect(() => {
-  if (createisError) {
-   fireAlert("error", createmessage, "error");
-   dispatch(reset());
-  } else if (createisSuccess) {
+  if (createisSuccess) {
    setLgShow(false)
    fireAlert("Success", "Department created successfully", "success");
    dispatch(reset());
   }
- }, [createisError, createisSuccess, createmessage, dispatch]);
+ }, [createisSuccess, dispatch]);
 
  const handleSubmit = async (values: any) => {
   const input = { ...values };

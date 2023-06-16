@@ -11,19 +11,20 @@ import { difficultyOptions, priorityOptions } from '../../functions/helpers';
 import { createTask, reset } from '../../features/Tasks/taskSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
-import { getTeammembers } from '../../features/Team/teamSlice';
 
-const CreateTaskModal = ({ view, id }: any) => {
+import HttpService from '../../components/HttpService';
+import DataService from '../../utils/dataService';
+
+const dataService = new DataService()
+const CreateTaskModal = ({ view }: any) => {
 	const dispatch = useAppDispatch();
 	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.task)
-	const { membersdata: teamMembers } = useAppSelector((state: any) => state.team)
+
 	const [Show, setShow] = useState(false);
 
 
-
-
-
-
+	const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+	const id = userInfo?.employee?._id
 
 	useEffect(() => {
 		if (createisSuccess) {
@@ -38,7 +39,23 @@ const CreateTaskModal = ({ view, id }: any) => {
 		// @ts-ignore
 		dispatch(createTask(input));
 	}
+	const [teamMembers, setTeamsLead] = useState([]);
 
+
+
+	const getData = async () => {
+		// setisLoading(true)
+		try {
+			const teamsUrl = `hr/teams/${id}/employees`
+			const teams: any = await HttpService.get(teamsUrl)
+			setTeamsLead(teams?.data?.data)
+
+			// setisLoading(false)
+
+		} catch (error) {
+			// setisLoading(false)
+		}
+	}
 
 	const availablleTeamMembers = [] as any;
 
@@ -50,19 +67,14 @@ const CreateTaskModal = ({ view, id }: any) => {
 			})
 		);
 
-	const handleShow = () => {
-		setShow(true)
-		// @ts-ignore
-		dispatch(getTeammembers(id));
-	}
+
 
 	return (
 		<div>
-			{view === "team" ? <Button className="add-button" onClick={handleShow}>Add task</Button> : <Button
+			{view === "team" ? <Button className="add-button" onClick={getData}>Add task</Button> : <Button
 				variant="contained"
 				className="Add-btn"
-				onClick={() => setShow(true)}
-			>
+				onClick={() => { setShow(true); getData() }} >
 				Create Task
 			</Button>}
 

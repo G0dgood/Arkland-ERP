@@ -9,8 +9,8 @@ import { fireAlert } from '../utils/Alert';
 
 const TerminationModal = ({ item, id }: any) => {
 	const dispatch = useAppDispatch();
-	const { approveterminationsisError, approveterminationsisLoading, approveterminationsmessage, approveterminationsisSuccess }: any = useAppSelector((state: any) => state.employee)
-	const { rejectterminationsisError, rejectterminationsisLoading, rejectterminationsmessage, rejectterminationsisSuccess }: any = useAppSelector((state: any) => state.employee)
+	const { approveterminationsisLoading, approveterminationsisSuccess }: any = useAppSelector((state: any) => state.employee)
+	const { rejectterminationsisLoading, rejectterminationsisSuccess }: any = useAppSelector((state: any) => state.employee)
 	const [deleteShow, setDeleteShow] = React.useState(false);
 
 
@@ -21,19 +21,9 @@ const TerminationModal = ({ item, id }: any) => {
 			setDeleteShow(false);
 			dispatch(reset());
 			fireAlert("Successful", "Termination Approved Successfully!", "success");
-		} else if (approveterminationsisError) {
-			dispatch(reset());
-			fireAlert("error", approveterminationsmessage, "error");
-		} else if (rejectterminationsisError) {
-			dispatch(reset());
-			fireAlert("error", rejectterminationsmessage, "error");
-		} else if (rejectterminationsisSuccess) {
-			dispatch(reset());
-			fireAlert("error", "Termination Rejected Successfully!", "error");
 		}
-	}, [approveterminationsmessage, approveterminationsisError,
-		approveterminationsisSuccess, dispatch, id, rejectterminationsisError,
-		rejectterminationsmessage, rejectterminationsisSuccess])
+	}, [
+		approveterminationsisSuccess, dispatch, id, rejectterminationsisSuccess])
 
 	const handleapproved = () => {
 		// @ts-ignore

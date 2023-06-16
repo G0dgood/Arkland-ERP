@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Pagination from '../../components/Pagination';
 import { NoRecordFound, TableFetch } from '../../components/TableOptions';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { getTask, reset } from '../../features/Tasks/taskSlice';
-import { fireAlert } from '../../utils/Alert';
+import { getTask } from '../../features/Tasks/taskSlice';
+
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
 import CreateTaskModal from './CreateTaskModal';
@@ -11,11 +11,10 @@ import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 
 
-
 const TaskList = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { data: tasks, isError, isLoading, message } = useAppSelector((state: any) => state.task)
+	const { data: tasks, isLoading } = useAppSelector((state: any) => state.task)
 	const { createisSuccess } = useAppSelector((state: any) => state.task)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -33,12 +32,7 @@ const TaskList = () => {
 		}
 	}, [createisSuccess, dispatch]);
 
-	useEffect(() => {
-		if (isError) {
-			fireAlert("error", message, "error");
-			dispatch(reset());
-		}
-	}, [isError, message, dispatch])
+
 
 	const header = ["PROJECT", "TASK CREATED BY", "TASK ASSIGNED TO", "TASK STATUS", "TASK TITLE", "TASK CREATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);

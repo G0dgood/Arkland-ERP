@@ -5,9 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import TableLoader from '../../components/TableLoader';
-
 import WeeklyReportTable from './WeeklyReportTable';
-import Cookies from 'js-cookie';
 import moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice';

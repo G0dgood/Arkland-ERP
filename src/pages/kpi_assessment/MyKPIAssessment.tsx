@@ -10,10 +10,10 @@ import {
 import moment from "moment";
 import TableLoader from "../../components/TableLoader";
 import { Link } from "react-router-dom";
-import { getAssessment, reset } from "../../features/KPIAssessment/assessmentSlice";
+import { getAssessment } from "../../features/KPIAssessment/assessmentSlice";
 import DataService from "../../utils/dataService";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { fireAlert } from "../../utils/Alert";
+
 import CreateKpiModal from "../../components/Modals/CreateKpiModal";
 
 
@@ -21,21 +21,12 @@ const dataService = new DataService()
 const MyKPIAssessment = ({ setkpidata }: any) => {
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();
-  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.assessment)
+  const { data, isLoading } = useAppSelector((state: any) => state.assessment)
   const { createisSuccess } = useAppSelector((state: any) => state.assessment)
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
 
-  const title1 = "KPI error";
-  const html1 = message;
-  const icon1 = "error";
 
-  useEffect(() => {
-    if (isError) {
-      fireAlert(title1, html1, icon1);
-    }
-    dispatch(reset());
-  }, [isError, html1, dispatch]);
 
   // --- Pagination --- //
   const [entriesPerPage, setEntriesPerPage] = useState(() => {

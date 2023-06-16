@@ -12,7 +12,7 @@ import HttpService from '../HttpService';
 
 const HRClockInModal = () => {
 	const dispatch = useAppDispatch();
-	const { hrisError, hrisLoading, hrmessage, hrisSuccess } = useAppSelector((state: any) => state.attendance)
+	const { hrisLoading, hrisSuccess } = useAppSelector((state: any) => state.attendance)
 
 
 
@@ -22,15 +22,11 @@ const HRClockInModal = () => {
 
 
 	useEffect(() => {
-		if (hrisError) {
-			fireAlert("Clock in error", hrmessage, "error");
+		if (hrisSuccess) {
+			fireAlert("Clock in success", "successful", "success");
 			dispatch(reset());
 		}
-		else if (hrisSuccess) {
-			fireAlert("Clock in success", hrmessage, "success");
-			dispatch(reset());
-		}
-	}, [hrisError, hrmessage, dispatch, hrisSuccess])
+	}, [dispatch, hrisSuccess])
 
 	function updateClock(hours: any, minutes: any, seconds: any) {
 

@@ -25,42 +25,21 @@ const ViewProjects = () => {
   const { completeisSuccess } = useAppSelector((state: any) => state.project)
   const { suspendisSuccess } = useAppSelector((state: any) => state.project)
   const { id } = useParams<{ id: string }>();
-  // const { membersdata: teamMembers, membersisLoading } = useAppSelector((state: any) => state.team)
+
 
 
 
   // useEffect(() => {
-  //   if (!viewdata) {
+  //   if (viewmessage === "Request failed with status code 500" ? false : viewmessage) {
+  //     fireAlert("View Project  failed", viewmessage, "error");
+  //     dispatch(reset());
+  //   } else if (viewmessage === "Request failed with status code 500") {
+  //     // @ts-ignore
+  //     // dispatch(getTeammembers(id));
   //     // @ts-ignore
   //     dispatch(viewProject(id));
   //   }
-
-  // }, [dispatch, id, viewdata, viewisSuccess])
-  // // useEffect(() => {
-  //   if (viewisSuccess) {
-  //     // @ts-ignore
-  //     teamMem(id)
-  //   }
-
-  // }, [dispatch, id, viewisSuccess])
-
-  // const teamMem = (id: any) => {
-  //   // @ts-ignore
-  //   dispatch(getTeammembers(id));
-  // }
-
-
-  useEffect(() => {
-    if (viewmessage === "Request failed with status code 500" ? false : viewmessage) {
-      fireAlert("View Project  failed", viewmessage, "error");
-      dispatch(reset());
-    } else if (viewmessage === "Request failed with status code 500") {
-      // @ts-ignore
-      // dispatch(getTeammembers(id));
-      // @ts-ignore
-      dispatch(viewProject(id));
-    }
-  }, [updateisSuccess, viewmessage, dispatch, viewisError, id]);
+  // }, [updateisSuccess, viewmessage, dispatch, viewisError, id]);
 
   useEffect(() => {
     // @ts-ignore

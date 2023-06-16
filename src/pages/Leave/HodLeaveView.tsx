@@ -42,46 +42,10 @@ const HodLeaveView = () => {
 			fireAlert("Successful", "Leave Approved!", "success");
 			navigate(-1)
 		}
-		// else if (hodApproveisError) {
-		// 	fireAlert("Leave error", hodApprovemessage, 'error');
-		// 	dispatch(reset());
-		// }
-		// else if (teamviewisError) {
-		// 	fireAlert("Leave error", teamviewmessage, 'error');
-		// 	dispatch(reset());
-		// }
-		// else if  Successful) {
-		// 	fireAlert("Successful", teamviewmessage, "Successful");
-		// }
+
 	}, [dispatch, hodApproveisSuccess, hodApprovemessage, id, navigate, teamviewmessage])
 
-	// useEffect(() => {
-	// 	setisLoading(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}`, {
-	// 		method: "GET",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// if (data?.success === false) {
-	// 	
-	// 	console.log('data?.message', data?.message)
-	// 	setisError(true)
-	// } else {
-	// 	console.log(data)
 
-	// }
-	// 			setisLoading(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setMessage(data?.message)
-	// 			setisLoading(false);
-	// 		});
-	// }, [data?.message, id, navigate, token])
 
 	useEffect(() => {
 		if (data?.hod_approved === true && !data?.hr_approved) {
@@ -113,49 +77,7 @@ const HodLeaveView = () => {
 	}, [setInputs, data]);
 
 
-	// const handelupdate = () => {
-	// 	setisLoading1(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}/hod-approval`, {
-	// 		method: "PATCH", // or 'PUT'
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (data?.success === false) {
-	// 				setMessage1(data?.message)
 
-	// 			} else { 
-	// 				setTimeout(() => {
-	// 					navigate(-1);
-	// 				}, 2000);
-	// 			}
-	// 			setisLoading1(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setisLoading1(false);
-	// 		});
-	// }
-
-	// const handleDelete = () => {
-	// 	setisLoading2(true);
-	// 	axios
-	// 		.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`)
-	// 		.then((res: AxiosResponse) => {
-	// 			console.log('AxiosResponse', res)
-	// 			setisLoading2(false);
-	// 			setisSuccess2(true)
-	// 			setTimeout(() => {
-	// 				navigate("/teamleaveapplications");
-	// 			}, 2000);
-	// 		})
-	// 		.catch((data) => {
-	// 			setisLoading2(false);
-	// 		});
-	// }
 	const handleApproved = () => {
 		dispatch(hodApproveLeave(id));
 	}
@@ -221,8 +143,6 @@ const HodLeaveView = () => {
 										{data?.hod_approved === false &&
 											<div className='deleteKPIHandler  mt-5'>
 												<span className='deleteKPIHandler-mr'>
-													{/* <Button className="table-link"  >
-												{isLoading ? <Spinner animation="border" /> : "Reject"}</Button> */}
 												</span>
 												<span onClick={handleApproved}><Button className="table-link-active"   >
 													{hodApproveisLoading ? <Spinner animation="border" /> : "Approve"}

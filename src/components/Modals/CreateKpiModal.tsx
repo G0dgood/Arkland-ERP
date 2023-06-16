@@ -13,7 +13,7 @@ const CreateKpiModal = () => {
 
 
 
-	console.log('hods', hods)
+
 
 
 

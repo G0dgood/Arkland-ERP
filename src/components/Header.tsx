@@ -11,7 +11,6 @@ import toast, { Toaster } from "react-hot-toast";
 import MobileSideBar from "./MobileSideBar";
 import LogoutOption from "./LogoutOption";
 import Notification from "./Notification/Notification";
-import { useAppDispatch, useAppSelector } from "../store/useStore";
 import DataService from "../utils/dataService";
 import HttpService from "./HttpService";
 import Socket from "./NotificationPopUp";
@@ -27,8 +26,8 @@ const Header = ({ toggleSideNav }: any) => {
   // const socket = io("https://arkland-erp.herokuapp.com");
 
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-  const dispatch = useAppDispatch();
-  const [refresh, setRefresh] = useState<any>(false);
+
+
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
@@ -99,14 +98,13 @@ const Header = ({ toggleSideNav }: any) => {
       .catch((error) => {
         setLoading(false)
       })
-
-
   }
+
+
 
 
   return (
     <div id="header" onMouseLeave={() => setDropDown(false)} >
-      {/* <Socket setRefresh={setRefresh} /> */}
       <Toaster
         position="top-center"
         toastOptions={{
@@ -175,8 +173,7 @@ const Header = ({ toggleSideNav }: any) => {
                   <NavLink
                     to=""
                     className="drop-logout"
-                    onClick={() => setShowLogout(true)}
-                  >
+                    onClick={() => setShowLogout(true)}>
                     <AiOutlineLogout size={20} className="dropdown-icons-tools" />
                     Logout
                   </NavLink>

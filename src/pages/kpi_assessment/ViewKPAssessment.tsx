@@ -4,15 +4,14 @@ import { useLocation, useParams } from 'react-router-dom'
 import HodEvaluation from './HodEvaluate'
 import TableLoader from '../../components/TableLoader'
 import { Button } from '@material-ui/core'
-import { fireAlert } from '../../utils/Alert'
-import { reset, viewAssessment } from '../../features/KPIAssessment/assessmentSlice'
+import { viewAssessment } from '../../features/KPIAssessment/assessmentSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 const ViewKPAssessment = () => {
 	const { id } = useParams()
 	const dispatch = useAppDispatch();
 	const location = useLocation();
-	const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.assessment)
+	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.assessment)
 	const [hodscore, setHodscore] = useState<number>(0);
 	const [broughtDownAverage, setBroughtDownAverage] = useState<any>(0);
 
@@ -24,19 +23,10 @@ const ViewKPAssessment = () => {
 		{ rate: 1, definition: "Below Average/Poor" },
 	]
 
-	// const title = "Successful";
-	// const html = "KPI Updated!";
-	// const icon = "success";
-	const title1 = "KPI error";
-	const html1 = viewmessage;
-	const icon1 = "error";
 
-	useEffect(() => {
-		if (viewisError) {
-			fireAlert(title1, html1, icon1);
-		}
-		dispatch(reset());
-	}, [viewisError, html1, dispatch]);
+
+
+
 
 	useEffect(() => {
 		// @ts-ignore

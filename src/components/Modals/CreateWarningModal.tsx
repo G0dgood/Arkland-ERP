@@ -15,7 +15,7 @@ import { allEmployee, createWarning, reset } from "../../features/Employee/emplo
 const CreateWarningModal = ({ id }: any) => {
   const dispatch = useAppDispatch();
   const { data: employees } = useAppSelector((state: any) => state.employee)
-  const { createwarningisError, createwarningisLoading, createwarningmessage, createwarningisSuccess } = useAppSelector((state: any) => state.employee)
+  const { createwarningisLoading, createwarningisSuccess } = useAppSelector((state: any) => state.employee)
   const [lgShow, setLgShow] = useState(false);
   useEffect(() => {
     // @ts-ignore
@@ -38,15 +38,12 @@ const CreateWarningModal = ({ id }: any) => {
 
   useEffect(() => {
 
-    if (createwarningisError) {
-      fireAlert("Create warning failed", createwarningmessage, "error");
-      dispatch(reset());
-    } else if (createwarningisSuccess) {
+    if (createwarningisSuccess) {
       fireAlert("Create warning success", "Warning created successfully", "success");
       setLgShow(false);
       dispatch(reset());
     }
-  }, [createwarningisError, createwarningisSuccess, createwarningmessage, dispatch])
+  }, [createwarningisSuccess, dispatch])
 
 
 

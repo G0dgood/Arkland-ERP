@@ -204,7 +204,7 @@ const ProjectView = () => {
                     </span>
                   </div>
                 </div>
-                <div className="projects-total2">
+                {/* <div className="projects-total2">
                   <h6>COMPLETED</h6>
                   <div className="projects-total-container">
                     <span className="projects-total2-span"></span>
@@ -217,14 +217,14 @@ const ProjectView = () => {
                     <span className="projects-total3-span"></span>
                     <span className="projects-total1-span1">0</span>
                   </div>
-                </div>
-                <div className="projects-total4">
+                </div> */}
+                {/* <div className="projects-total4">
                   <h6>WAITING</h6>
                   <div className="projects-total-container">
                     <span className="projects-total4-span"></span>
                     <span className="projects-total1-span1">0</span>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
