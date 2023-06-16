@@ -150,4 +150,3 @@ const TeamLead = () => {
 }
 
 export default TeamLead
-
