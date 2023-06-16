@@ -5,51 +5,36 @@ import { Link } from 'react-router-dom';
 import Pagination from '../../components/Pagination'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import moment from 'moment';
-
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
-import DataService from '../../utils/dataService';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { getCreateLeave } from '../../features/Leave/leaveSlice';
 
-
-// const dataService = new DataService()
 const AllLeaveApplications = () => {
 
+	const dispatch = useAppDispatch();
+	const { allLeavedata: data, allLeaveisLoading: isLoading } = useAppSelector((state: any) => state.leave)
 
-	// @ts-ignore
-	// const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-	// const token = dataService.getToken()
-	const [data, setData] = useState([]);
+
+
+
+
+	useEffect(() => {
+		// @ts-ignore
+		dispatch(getCreateLeave());
+
+	}, [dispatch]);
+
+
+
+
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
-	const [isLoading, setisLoading] = useState(false);
-	// const [message, setMessage] = useState("");
-	// const [isError, setisError] = useState(false)
 
 
-	// useEffect(() => {
-	// 	setisLoading(true);
-	// 	fetch(`${process.env.REACT_APP_API}/hr/leaves`, {
-	// 		method: "GET",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization: `Bearer ${token}`
-	// 		},
-	// 	})
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			if (data?.success === false) {
-	// 				setMessage(data?.message)
-	// 				setisError(true)
-	// 			} else {
-	// 				setSortData(data?.data?.data)
-	// 			}
-	// 			setisLoading(false);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error("Error:", error);
-	// 			setisLoading(false);
-	// 		});
-	// }, [token, userInfo?.department?.id])
+
+
+
 
 
 
@@ -64,7 +49,7 @@ const AllLeaveApplications = () => {
 
 	useEffect(() => {
 		if (data) {
-			const result = data?.filter((object) => {
+			const result = data?.data?.filter((object: any) => {
 				// @ts-ignore
 				return JSON?.stringify(object)?.toString()?.includes(searchItem);
 			});
@@ -115,9 +100,9 @@ const AllLeaveApplications = () => {
 						</thead>
 						<tbody className="data-table-content">
 							{isLoading ? (
-								<TableFetch colSpan={8} />
+								<TableFetch colSpan={9} />
 							) : displayData?.length === 0 || displayData == null ? (
-								<NoRecordFound colSpan={8} />
+								<NoRecordFound colSpan={9} />
 							) : (
 								displayData?.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>

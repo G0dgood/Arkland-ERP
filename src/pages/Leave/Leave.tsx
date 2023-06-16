@@ -30,8 +30,6 @@ const Leave = () => {
       localStorage.setItem("reportsPerPage", entriesPerPage);
    }, [entriesPerPage]);
 
-
-
    const id = userInfo?.employee?._id
 
    useEffect(() => {

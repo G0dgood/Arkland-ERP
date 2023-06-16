@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '@material-ui/core';
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs';
-import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { reset, viewLeave, viewdeleteLeave } from '../../features/Leave/leaveSlice';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
-import axios from 'axios';
+
 import { BounceLoader } from 'react-spinners';
 import { SlBriefcase } from 'react-icons/sl';
 
@@ -30,13 +29,7 @@ const ViewLeave = () => {
 	}, [dispatch, id]);
 
 	useEffect(() => {
-		if (viewisError) {
-			fireAlert('leave', viewmessage, "error");
-			dispatch(reset());
-		} else if (viewdeleteisError) {
-			fireAlert('leave', viewdeletemessage, "error");
-			dispatch(reset());
-		} else if (viewdeleteisSuccess) {
+		if (viewdeleteisSuccess) {
 			fireAlert('leave', 'Leave Deleted Successfully', "success");
 			navigate(-1)
 			dispatch(reset());

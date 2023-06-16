@@ -67,9 +67,7 @@ const ViewSiteWorkerRequest = () => {
         <h4 style={{ marginTop: "3rem" }}>
          Task  Details
         </h4>
-
-        <div 	>
-
+        <div>
          {/* <!-- Team --> */}
          <section id="team" className="pb-5">
           <div className="container">
