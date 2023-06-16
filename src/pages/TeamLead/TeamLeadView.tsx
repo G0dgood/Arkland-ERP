@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { BounceLoader } from 'react-spinners';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { viewTeamLead } from '../../features/TeamLead/teamleadSlice';
