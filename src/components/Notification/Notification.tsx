@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { RiMessage3Line, RiTeamLine } from "react-icons/ri";
 import TableLoader from "../TableLoader";
@@ -8,7 +8,6 @@ import { ImBriefcase } from "react-icons/im";
 import { HiSpeakerphone } from "react-icons/hi";
 import { BsCalendar2Month, BsChatText, BsFillBriefcaseFill } from "react-icons/bs";
 import { GrStatusWarning, GrUserWorker } from "react-icons/gr";
-import HttpService from "../HttpService";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { GiAlarmClock, GiStahlhelm } from "react-icons/gi";
@@ -21,11 +20,7 @@ import { AiOutlineException } from "react-icons/ai";
 const Notification = ({ handleNext, handlePrev, notification, loading }: any) => {
   const navigate = useNavigate();
   const { paginator } = notification
-
   const [opens, setOpens] = useState<number[]>([]);
-  const [loadingd, setLoadingd] = useState<boolean>(false);
-  const [view, setView] = useState<number[]>([]);
-
   const handleOpens = (index: number) => {
     if (opens.includes(index)) {
       setOpens(opens.filter(x => x !== index));
@@ -36,20 +31,6 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
   }
 
 
-
-  // const handleView = async (id: string) => {
-  //   console.log("handleView", id)
-  //   const url = ""
-  //   setLoadingd(true)
-  //   await HttpService.get(url)
-  //     .then((response: any) => {
-  //       setLoadingd(false)
-  //       setView(response?.data?.data)
-  //     })
-  //     .catch((error) => {
-  //       setLoadingd(false)
-  //     })
-  // }
 
 
   const Array = [
@@ -298,8 +279,22 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
                       item?.type === "leave approval" ? () => navigate("/leave") :
                       item?.type === "leave HOD approval" ? () => navigate("/leave/leave/team") :
                         item?.type === "announcement" ? () => navigate("/announcements") :
-
-                          ""}>view</span>
+                          item?.type === "workers request application" ||
+                            item?.type === "workers request approval" ||
+                            item?.type === "workers request rejection" ? () => navigate("/workers_request") :
+                            item?.type === "assisted clock in" ? () => navigate("/attendance/attendance/list/hr") :
+                              item?.type === "new warning" ||
+                                item?.type === "warning response" ||
+                                item?.type === "warning decision" ? () => navigate("/warning") :
+                                item?.type === "new chat" ? () => navigate("/support") :
+                                  item?.type === "team assignment" ||
+                                    item?.type === "team removal" ? () => navigate("/team") :
+                                    item?.type === "task assignment" ? () => navigate("/tasks") :
+                                      item?.type === "role assignment" ? () => navigate("/createnewrole") :
+                                        item?.type === "appraisal request" ||
+                                          item?.type === "appraisal response" ? () => navigate("/kpiassessment") :
+                                          item?.type === "salary increment" ? () => navigate("/salary") :
+                                            ""}>view</span>
               <button className="faq-toggle" onClick={() => { handleOpens(i) }}>
                 <i className="fas fa-angle-down"></i>
               </button>
