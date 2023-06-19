@@ -152,8 +152,8 @@ const Header = ({ toggleSideNav }: any) => {
 
           <div
             className="d-flex header-user-details"
-            // onClick={() => setDropDown(!dropDown)}
-            onClick={() => setDropDown(true)}
+            onClick={() => setDropDown(!dropDown)}
+          // onClick={() => setDropDown(true)}
           >
             <span className="dropdown-names">
               {userInfo?.employee?.full_name}

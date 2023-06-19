@@ -65,8 +65,6 @@ const ViewAnnouncementModal = ({ id }: any) => {
 						</div>
 					)}
 				</Modal.Body>
-				<Modal.Footer>
-				</Modal.Footer>
 			</Modal>
 
 
