@@ -12,6 +12,11 @@ const viewAnnouncement = async ( id:any) => {
   
   return data
 }
+const viewMeAnnouncement = async ( id:any) => {   
+   const {data}:any = await HttpService.get(`me/announcements/${id}`) 
+  
+  return data
+}
 
  
 const createAnnouncement = async ( input:any) => {   
@@ -29,7 +34,8 @@ const announcementService = {
   getAnnouncement,   
   viewAnnouncement,
   createAnnouncement,
-  deleteAnnouncement
+  deleteAnnouncement,
+  viewMeAnnouncement
 }
 
 export default announcementService

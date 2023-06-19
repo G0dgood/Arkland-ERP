@@ -14,6 +14,7 @@ import { GiAlarmClock, GiStahlhelm } from "react-icons/gi";
 import { BiTask } from "react-icons/bi";
 import { MdOutlineAssignmentInd } from "react-icons/md";
 import { AiOutlineException } from "react-icons/ai";
+import { getUserPrivileges } from "../../functions/auth";
 
 
 
@@ -29,7 +30,7 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
       setOpens((prevState) => [...prevState, index]);
     }
   }
-
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead, isHeadOfDepartment } = getUserPrivileges();
 
 
 
@@ -267,34 +268,34 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
                 <h6 className="faq-title">{item?.type.charAt(0).toUpperCase() + item?.type.slice(1)}</h6>
               </div>
               <p className="faq-text">{item?.details}</p>
-
-              <span className=" faq-text view-noti-drop"
-                // @ts-ignore
-                onClick={item?.type === "new employee" ||
-                  item?.type === "employee approval" ||
-                  item?.type === "employment termination" ? () => navigate("/employees") :
-                  item?.type === "leave HR approval" ? () => navigate("/leave/leave/hr") :
-                    item?.type === "leave application" ||
-                      item?.type === "leave rejection" ||
-                      item?.type === "leave approval" ? () => navigate("/leave") :
-                      item?.type === "leave HOD approval" ? () => navigate("/leave/leave/team") :
-                        item?.type === "announcement" ? () => navigate("/announcements") :
-                          item?.type === "workers request application" ||
-                            item?.type === "workers request approval" ||
-                            item?.type === "workers request rejection" ? () => navigate("/workers_request") :
-                            item?.type === "assisted clock in" ? () => navigate("/attendance/attendance/list/hr") :
-                              item?.type === "new warning" ||
-                                item?.type === "warning response" ||
-                                item?.type === "warning decision" ? () => navigate("/warning") :
-                                item?.type === "new chat" ? () => navigate("/support") :
-                                  item?.type === "team assignment" ||
-                                    item?.type === "team removal" ? () => navigate("/team") :
-                                    item?.type === "task assignment" ? () => navigate("/tasks") :
-                                      item?.type === "role assignment" ? () => navigate("/createnewrole") :
-                                        item?.type === "appraisal request" ||
-                                          item?.type === "appraisal response" ? () => navigate("/kpiassessment") :
-                                          item?.type === "salary increment" ? () => navigate("/salary") :
-                                            ""}>view</span>
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isHeadOfDepartment) && (
+                <span className=" faq-text view-noti-drop"
+                  // @ts-ignore
+                  onClick={item?.type === "new employee" ||
+                    item?.type === "employee approval" ||
+                    item?.type === "employment termination" ? () => navigate("/employees") :
+                    item?.type === "leave HR approval" ? () => navigate("/leave/leave/hr") :
+                      item?.type === "leave application" ||
+                        item?.type === "leave rejection" ||
+                        item?.type === "leave approval" ? () => navigate("/leave") :
+                        item?.type === "leave HOD approval" ? () => navigate("/leave/leave/team") :
+                          item?.type === "announcement" ? () => navigate("/announcements") :
+                            item?.type === "workers request application" ||
+                              item?.type === "workers request approval" ||
+                              item?.type === "workers request rejection" ? () => navigate("/workers_request") :
+                              item?.type === "assisted clock in" ? () => navigate("/attendance/attendance/list/hr") :
+                                item?.type === "new warning" ||
+                                  item?.type === "warning response" ||
+                                  item?.type === "warning decision" ? () => navigate("/warning") :
+                                  item?.type === "new chat" ? () => navigate("/support") :
+                                    item?.type === "team assignment" ||
+                                      item?.type === "team removal" ? () => navigate("/team") :
+                                      item?.type === "task assignment" ? () => navigate("/tasks") :
+                                        item?.type === "role assignment" ? () => navigate("/createnewrole") :
+                                          item?.type === "appraisal request" ||
+                                            item?.type === "appraisal response" ? () => navigate("/kpiassessment") :
+                                            item?.type === "salary increment" ? () => navigate("/salary") :
+                                              ""}>view</span>)}
               <button className="faq-toggle" onClick={() => { handleOpens(i) }}>
                 <i className="fas fa-angle-down"></i>
               </button>

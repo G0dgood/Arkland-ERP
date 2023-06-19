@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Nav, Spinner } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { TfiAlignJustify } from "react-icons/tfi";
@@ -54,23 +54,13 @@ const Header = ({ toggleSideNav }: any) => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
   };
 
-  const [isLoading, setisLoading] = useState<any>(false);
-  // const handleLogoutClose = () => setShowLogout(false);
-
-  const handleLogout = async () => {
-    setisLoading(true);
-    socket.disconnect()
-    try {
-      await HttpService.patch("me/logout", {})
-      dataService.clearData()
-      setisLoading(false);
-      window.location.replace("/");
-    } catch (error) {
-      setisLoading(false);
-      dataService.clearData()
-      window.location.replace("/");
-    }
-  };
+  // const handleNoti = () => {
+  //   if (!dropDownNoti) {
+  //     setDropDownNoti(true)
+  //   } else {
+  //     setDropDownNoti(false)
+  //   }
+  // }
 
 
   const handleNext = async () => {
@@ -182,13 +172,9 @@ const Header = ({ toggleSideNav }: any) => {
                   <NavLink
                     to=""
                     className="drop-logout"
-                    onClick={handleLogout}>
-                    {isLoading ? <span id="Spinner-logout">
-                      <Spinner animation="border" /> </span> : <span>
-                      <AiOutlineLogout size={20} className="dropdown-icons-tools" />
-                      Logout
-                    </span>}
-
+                    onClick={() => setShowLogout(true)}>
+                    <AiOutlineLogout size={20} className="dropdown-icons-tools" />
+                    Logout
                   </NavLink>
                 </Nav>
               </div>

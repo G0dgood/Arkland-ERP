@@ -28,6 +28,12 @@ const initialState = {
   deleteisSuccess: false,
   deleteisLoading: false, 
   deletemessage: '', 
+
+  medata:   [],
+  meisError: false,
+  meisSuccess: false,
+  meisLoading: false, 
+  memessage: '', 
 }
  
 
@@ -81,6 +87,18 @@ export const deleteAnnouncement = createAsyncThunk('announcement/deleteAnnouncem
     return thunkAPI.rejectWithValue(message)
   }
 })
+// Delete Announcement
+export const viewMeAnnouncement = createAsyncThunk('announcement/viewMeAnnouncement', async (data,thunkAPI) => {
+  try {
+    return await announcementService.viewMeAnnouncement(data)
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()  
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 
  
@@ -111,6 +129,11 @@ export const attendanceSlice = createSlice({
       state.deleteisSuccess = false
       state.deleteisError = false
       state.deletemessage = '' 
+
+      state.meisLoading = false
+      state.meisSuccess = false
+      state.meisError = false
+      state.memessage = '' 
 
     }, 
   },
@@ -178,6 +201,21 @@ export const attendanceSlice = createSlice({
         state.deleteisError = true
         state.deletemessage = action.payload 
         state.deletedata = null 
+      })
+
+      .addCase(viewMeAnnouncement.pending, (state) => {
+        state.meisLoading = true 
+      })
+      .addCase(viewMeAnnouncement.fulfilled, (state:any, action) => {
+        state.meisLoading = false
+        state.meisSuccess = true
+        state.medata = action.payload?.data 
+      })
+      .addCase(viewMeAnnouncement.rejected, (state:any, action) => {
+        state.meisLoading = false
+        state.meisError = true
+        state.memessage = action.payload 
+        state.medata = null 
       })
       
   },
