@@ -8,7 +8,7 @@ import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import first from "../../assets/images/Bijou.jpg";
-import second from "../../assets/images/1.jpeg";
+import second from "../../assets/images/1.png";
 import third from "../../assets/images/1.jpg";
 import fourth from "../../assets/images/A&A.jpg";
 import fifth from "../../assets/images/PHOENIX.jpg";
@@ -17,7 +17,7 @@ import InputField from "../../components/Inputs/InputField";
 import { useNavigate } from "react-router-dom";
 import HttpService from "../../components/HttpService";
 import DataService from "../../utils/dataService";
-// import { useAppDispatch } from "../../store/useStore";
+
 
 
 const dataService = new DataService()
@@ -166,7 +166,7 @@ const Login = () => {
                         </div>
                       </div>
 
-                      <Button type="submit">
+                      <Button type="submit" disabled={isLoading}>
                         {isLoading ? <Spinner animation="border" /> : "Login"}
                       </Button>
                     </Form>

@@ -1,34 +1,33 @@
 import { Button } from '@material-ui/core'
 import { useEffect, useState } from 'react'
-import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from './TableOptions'
+import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions'
 import { BsCheckCircle } from 'react-icons/bs'
 import moment from 'moment'
-import TableLoader from './TableLoader'
-import Pagination from './Pagination'
-import { ImBin } from 'react-icons/im'
-import { fireAlert } from '../utils/Alert'
-import AssignPrivilegesModal from './Modals/AssignPrivilegesModal'
-import { useAppDispatch, useAppSelector } from '../store/useStore'
-import { deleteprivileges, reset, userprivileges } from '../features/User/userSlice'
+import TableLoader from '../../components/TableLoader'
+import Pagination from '../../components/Pagination'
+import { fireAlert } from '../../utils/Alert'
+import AssignPrivilegesModal from '../../components/Modals/AssignPrivilegesModal'
+import { useAppDispatch, useAppSelector } from '../../store/useStore'
+import { userprivileges } from '../../features/User/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 
 const Userprivileges = () => {
 	const dispatch = useAppDispatch();
-	const { privilegesdata, privilegesisError, privilegesisLoading, privilegesmessage } = useAppSelector((state: any) => state.userinfo)
-	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.userinfo)
+	const navigate = useNavigate();
+	const { privilegesdata, privilegesisLoading } = useAppSelector((state: any) => state.userinfo)
+	const { createisSuccess } = useAppSelector((state: any) => state.userinfo)
 
 	const [sortData, setSortData] = useState([]);
-	const [showdelete, setShowDelete] = useState(false);
-	const [id, setPrivilegesid] = useState(0);
 	const [result, setResult] = useState("");
-
-
-
 
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(userprivileges());
-	}, [dispatch]);
+		if (createisSuccess) {
+			dispatch(userprivileges());
+		}
+	}, [createisSuccess, dispatch]);
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -52,25 +51,9 @@ const Userprivileges = () => {
 		setResult(e.target.value);
 	}
 
-	const title = "Successful";
-	const html = "User Privilege Deleted!";
-	const icon = "success";
 
 
 
-	useEffect(() => {
-		if (deleteisSuccess) {
-			fireAlert(title, html, icon);
-			setShowDelete(false)
-			dispatch(userprivileges());
-			dispatch(reset());
-		}
-	}, [deleteisSuccess, deletemessage, dispatch, html, privilegesmessage])
-
-	const handleDelete = () => {
-		// @ts-ignore
-		dispatch(deleteprivileges(id));
-	}
 
 	const [displayData, setDisplayData] = useState([]);
 
@@ -78,9 +61,8 @@ const Userprivileges = () => {
 		<div  >
 			<div className='SiteWorkermaindiv'>
 				<div className='SiteWorkermaindivsub'>
-					{/* <span className='SupportmainTitleh3'> */}
+
 					<AssignPrivilegesModal />
-					{/* </span> */}
 				</div>
 				<div>
 					<EntriesPerPage
@@ -104,7 +86,7 @@ const Userprivileges = () => {
 								<td className="table-datacell datatype-numeric">Role</td>
 								<td className="table-datacell datatype-numeric">Created Date</td>
 								<td className="table-datacell datatype-numeric">Status</td>
-								<td className="table-datacell datatype-numeric">ACTION</td>
+								<td className="table-datacell datatype-numeric">View</td>
 
 							</tr>
 						</thead>
@@ -124,8 +106,11 @@ const Userprivileges = () => {
 											{item?.status === "active" ? <BsCheckCircle size={25} color={"green"} /> : <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
 
 										</td>
-										<td className="table-datacell datatype-numeric">
+										{/* <td className="table-datacell datatype-numeric">
 											<Button onClick={() => { setShowDelete(true); setPrivilegesid(item?._id) }}> <ImBin size={25} color='#bf8412' /></Button>
+										</td> */}
+										<td className="table-datacell datatype-numeric">
+											<Button id="team-applicatiom-update" onClick={() => navigate(`/userprivileges/userprivileges/viewprivilage/${item?.id}`)}>View</Button>
 										</td>
 									</tr>
 								))

@@ -19,6 +19,9 @@ const HRClockInModal = () => {
 	const [show, setShow] = useState<any>(false);
 	const [employees, setEmployees] = useState<any>("");
 	const [isLoading, setisLoading] = useState<any>(false);
+	const [inputs, setInputs] = useState<any>({
+		isEmployee: "",
+	})
 
 
 	useEffect(() => {
@@ -87,9 +90,6 @@ const HRClockInModal = () => {
 
 
 
-	const [inputs, setInputs] = useState<any>({
-		isEmployee: "",
-	})
 
 
 

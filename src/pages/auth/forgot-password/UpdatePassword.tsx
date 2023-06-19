@@ -8,13 +8,12 @@ import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import first from "../../../assets/images/Bijou.jpg";
-import second from "../../../assets/images/1.jpeg";
+import second from "../../../assets/images/1.png";
 import third from "../../../assets/images/1.jpg";
 import fourth from "../../../assets/images/A&A.jpg";
 import fifth from "../../../assets/images/PHOENIX.jpg";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import InputField from "../../../components/Inputs/InputField";
-import Cookies from "js-cookie";
 import { fireAlert } from "../../../utils/Alert";
 import DataService from "../../../utils/dataService";
 import { useNavigate } from "react-router-dom";
@@ -57,7 +56,7 @@ const UpdatePassword = () => {
         // set token in axios header
         axios.defaults.headers.common["authorization"] = data?.data.token;
         // set token in cookie
-        Cookies.set("token", data.data.token);
+
         const title = "Password update successful";
         const html = `Password updated`;
         const icon = "success";

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import SyncLoader from "react-spinners/SyncLoader";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";

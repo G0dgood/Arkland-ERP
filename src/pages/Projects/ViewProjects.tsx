@@ -2,44 +2,30 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { reset, viewProject } from "../../features/Project/projectSlice";
+import { viewProject } from "../../features/Project/projectSlice";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import UpdateProjectModal from "./UpdateProjectModal";
 import SuspendProjectModal from "./SuspendProjectModal";
 import CompleteProjectModal from "./CompleteProjectModal";
 import CommenceProjectModal from "./CommenceProjectModal";
-import { fireAlert } from "../../utils/Alert";
 import CreateTaskModal from "../Tasks/CreateTaskModal";
 import { BounceLoader } from "react-spinners";
-import { getTeammembers } from "../../features/Team/teamSlice";
+// import { getTeammembers } from "../../features/Team/teamSlice";
 
 
 
 const ViewProjects = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { viewdata, viewisError, viewisLoading, viewmessage, viewisSuccess } = useAppSelector((state: any) => state.project)
+  const { viewdata, viewisLoading } = useAppSelector((state: any) => state.project)
   const { commenceisSuccess } = useAppSelector((state: any) => state.project)
   const { updateisSuccess } = useAppSelector((state: any) => state.project)
   const { completeisSuccess } = useAppSelector((state: any) => state.project)
   const { suspendisSuccess } = useAppSelector((state: any) => state.project)
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
 
 
-
-
-  // useEffect(() => {
-  //   if (viewmessage === "Request failed with status code 500" ? false : viewmessage) {
-  //     fireAlert("View Project  failed", viewmessage, "error");
-  //     dispatch(reset());
-  //   } else if (viewmessage === "Request failed with status code 500") {
-  //     // @ts-ignore
-  //     // dispatch(getTeammembers(id));
-  //     // @ts-ignore
-  //     dispatch(viewProject(id));
-  //   }
-  // }, [updateisSuccess, viewmessage, dispatch, viewisError, id]);
 
   useEffect(() => {
     // @ts-ignore
@@ -136,16 +122,7 @@ const ViewProjects = () => {
           <div className="main-area">
             <div className="header">
               <div className="search-bar">
-                {/* <input type="text" placeholder="Search..." /> */}
               </div>
-              {/* <div className="inbox-calendar">
-      <input type="checkbox" className="inbox-calendar-checkbox" />
-      <div className="toggle-page">
-       <span>Inbox</span>
-      </div>
-      <div className="layer"></div>
-     </div> */}
-
               <img
                 src={projectBack}
                 alt="User"

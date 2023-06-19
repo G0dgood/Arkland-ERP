@@ -24,7 +24,7 @@ const HODList = ({ setEmployee, setData }: any) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	console.log('data', data)
+
 
 	useEffect(() => {
 		// @ts-ignore

@@ -14,7 +14,7 @@ const ViewRole = () => {
 
 
 	const navigate = useNavigate();
-	const { id } = useParams<{ id: any }>();
+	const { id } = useParams();
 
 	useEffect(() => {
 		// @ts-ignore

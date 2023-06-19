@@ -3,8 +3,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { reset, viewDepartments } from "../../features/Department/departmentSlice";
-import { fireAlert } from "../../utils/Alert";
-import { BounceLoader, SyncLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import DeleteDepartment from "../../components/Modals/DeleteDepartment";
 import projectBack from "../../assets/vectors/project-back.svg";
 
@@ -18,11 +17,7 @@ const ViewDepartments = () => {
 
 
   useEffect(() => {
-    if (viewmessage === "Request failed with status code 500" ? false : viewmessage) {
-      fireAlert("Department error", viewmessage, "error");
-      dispatch(reset());
-    }
-    else if (viewisSuccess) {
+    if (viewisSuccess) {
       dispatch(reset());
     }
   }, [viewisError, viewmessage, dispatch, viewisSuccess])

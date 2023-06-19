@@ -11,7 +11,7 @@ import HRClockInModal from "../../../components/Modals/HRClockInModal";
 
 const AttendanceTable = () => {
   const dispatch = useAppDispatch();
-  const { hrgetattenddata, hrgetattendisError, hrgetattendisLoading, hrgetattendmessage } = useAppSelector((state: any) => state.attendance)
+  const { hrgetattenddata, hrgetattendisLoading } = useAppSelector((state: any) => state.attendance)
 
   useEffect(() => {
     dispatch(hrgetAttendance())
@@ -25,13 +25,7 @@ const AttendanceTable = () => {
     return localStorage.getItem("reportsPerPage") || "10";
   });
 
-  useEffect(() => {
-    if (hrgetattendisError) {
-      fireAlert(" error", hrgetattendmessage, "error");
-      dispatch(reset());
-    }
 
-  }, [hrgetattendisError, hrgetattendmessage, dispatch])
 
   const header = [
     { title: "NAME", prop: "employee_name" },

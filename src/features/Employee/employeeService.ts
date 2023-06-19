@@ -1,4 +1,3 @@
-import axios from 'axios' 
 import HttpService from '../../components/HttpService'
 import { AnyArray } from 'immer/dist/internal'
  
@@ -9,20 +8,7 @@ const allEmployee = async ( id: any ) => {
   return data
 }
 
-// const uploadEmployee = async ( jsonData:any ,setProgress:any) => { 
-	 
-//   const  response  = await axios.post(`${process.env.REACT_APP_API}/hr/employees/bulk-upload`,{ employees: jsonData }, {
-//           headers: { 
-//             "Content-Type": "application/json",
-//           },
-//           onUploadProgress: (data:any) => {
-//             setProgress(Math.round((100 * data.loaded) / data.total));
-//           },
-//         })
-   
-//     //  console.log('response ',response)
-//   return response
-// }
+ 
 
 const createEmployeeRole = async (input: any) => {  
 	   const  {data}:any  =  await HttpService.post(`hr/employee-roles`, `${input}`)  
@@ -58,7 +44,13 @@ const deleteEmployees = async (id: any) => {
  const viewRole = async (id: any) => {   
    const { data }: any = await HttpService.get(`hr/employee-roles/${id}`) 
    return data
-  }
+ }
+  
+ const viewPrevilage = async (id: any) => {   
+   const { data }: any = await HttpService.get(`admin/privileges/${id}`) 
+   return data
+ }
+  
  const deleteRole = async (id: any) => {   
    const { data }: any = await HttpService.delete(`hr/employee-roles/${id}`) 
    return data
@@ -107,8 +99,7 @@ const updateEmployee = async (input: AnyArray) => {
   }
  
 const employeeService = { 
-  allEmployee,   
-  // uploadEmployee,
+  allEmployee,    
   createEmployeeRole,
   viewRole,
   userEmployees,
@@ -125,7 +116,8 @@ const employeeService = {
   viewWarning,
   createWarning,
   createEmployee,
-  updateEmployee
+  updateEmployee,
+  viewPrevilage
 }
 
 export default employeeService

@@ -5,20 +5,14 @@ import { MdOutlineClose } from "react-icons/md";
 import { fireAlert } from "../../utils/Alert";
 import { createAnnouncement, reset } from "../../features/Announcement/announcemetSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import ReactSelectField from "../Inputs/ReactSelectField";
-import CustomSelectField from "../Inputs/CustomSelectField";
-import { getRole } from "../../features/Employee/employeeSlice";
-import { getTeam } from "../../features/Team/teamSlice";
-import { allDepartments } from "../../features/Department/departmentSlice";
-import { allProject } from "../../features/Project/projectSlice";
-import SelectField from "../Inputs/SelectField";
+// import SelectField from "../Inputs/SelectField";
 import SelectInput from "../SelectInput";
 import HttpService from "../HttpService";
 
 
 const CreateAnnouncementModal = () => {
   const dispatch = useAppDispatch();
-  const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.announcement)
+  const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.announcement)
   const [lgShow, setLgShow] = useState(false);
   const [isLoading, setisLoading] = useState(false);
   const [inputs, setInputs] = useState<any>({

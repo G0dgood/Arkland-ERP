@@ -44,7 +44,7 @@ import UpdatePassword from "./pages/auth/forgot-password/UpdatePassword";
 import PageNotFound from "./pages/404/PageNotFound";
 import CreateHOD from "./pages/HOD/HODList";
 import CreateRole from "./pages/all_employees/CreateRole";
-import Userprivileges from "./components/Userprivileges";
+import Userprivileges from "./pages/UserPrivilage/Userprivileges";
 import Protected from "./functions/Protected";
 import DataService from "./utils/dataService";
 import Layout from "./components/Layout";
@@ -63,6 +63,7 @@ import ViewSiteWorkerRequest from "./pages/WorkersRequest/ViewSiteWorkerRequest"
 import ViewHOD from "./pages/HOD/ViewHOD";
 import ViewRole from "./pages/EmployeeRole/ViewRole";
 import TeamLead from "./components/TeamLead";
+import ViewPrivilage from "./pages/UserPrivilage/ViewPrivilage";
 
 
 
@@ -201,9 +202,12 @@ const App: React.FC<any> = () => {
           <Route path="userrole">
             <Route path="userrole/viewrole/:id" element={<ViewRole />} />
           </Route>
+          <Route path="userprivileges">
+            <Route index element={<Userprivileges />} />
+            <Route path="userprivileges/viewprivilage/:id" element={<ViewPrivilage />} />
+          </Route>
 
           <Route path="/createnewrole" element={<CreateRole />} />
-          <Route path="/userprivileges" element={<Userprivileges />} />
           <Route path="/support" element={<Support />} />
           <Route path="/policy" element={<Policy />} />
         </Route>

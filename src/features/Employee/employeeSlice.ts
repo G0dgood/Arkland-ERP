@@ -125,6 +125,12 @@ const initialState = {
   updateemployeeisSuccess: false,
   updateemployeeisLoading: false, 
   updateemployeemessage: '', 
+  
+  viewPrevilagedata:  [],
+  viewPrevilageisError: false,
+  viewPrevilageisSuccess: false,
+  viewPrevilageisLoading: false, 
+  viewPrevilagemessage: '', 
 }
  
 
@@ -140,19 +146,7 @@ export const allEmployee = createAsyncThunk('employee/allEmployee', async (data,
   }
 })
 
-//   // @ts-ignore
-// export const uploadEmployee = createAsyncThunk('employee/uploadEmployee', async (data,setProgress, thunkAPI) => {
-//   try {
-//     return await employeeService.uploadEmployee(data, setProgress)
-    
-//   } catch (error: any) { 
-//     const message = (error.response && 
-//       error.response.data && 
-//       error.response.data.message) ||
-//       error.message ||error.toString()  
-//     return thunkAPI.rejectWithValue(message)
-//   }
-// })
+ 
 
 export const createEmployeeRole = createAsyncThunk('employee/createEmployeeRole', async (data, thunkAPI) => {
   try {
@@ -373,6 +367,22 @@ export const updateEmployee:any = createAsyncThunk('employee/updateEmployee', as
 })
 
  
+ // @ts-ignore
+export const viewPrevilage:any = createAsyncThunk('employee/viewPrevilage', async (data, thunkAPI) => {
+  try {
+     // @ts-ignore
+    return await employeeService.viewPrevilage(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+ 
 
 export const authSlice = createSlice({
   name: 'employee',
@@ -480,6 +490,11 @@ export const authSlice = createSlice({
       state.updateemployeeisError = false
       state.updateemployeemessage = '' 
 
+      state.viewPrevilageisLoading = false
+      state.viewPrevilageisSuccess = false
+      state.viewPrevilageisError = false
+      state.viewPrevilagemessage = '' 
+
       
     },
   },
@@ -501,20 +516,21 @@ export const authSlice = createSlice({
         state.data = '' 
       })
 
-      // .addCase(uploadEmployee.pending, (state) => {
-      //   state.uploadisLoading = true 
+      //   .addCase(viewPrevilage.pending, (state) => {
+      //   state.viewPrevilageisLoading = true 
       // })
-      // .addCase(uploadEmployee.fulfilled, (state:any, action) => {
-      //   state.uploadisLoading = false
-      //   state.uploadisSuccess = true
-      //   state.uploaddata = action.payload   
+      // .addCase(viewPrevilage.fulfilled, (state:any, action) => {
+      //   state.viewPrevilageisLoading = false
+      //   state.viewPrevilageisSuccess = true
+      //   state.viewPrevilagedata = action.payload?.data  
       // })
-      // .addCase(uploadEmployee.rejected, (state:any, action) => {
-      //   state.uploadisLoading = false
-      //   state.uploadisError = true
-      //   state.uploadmessage = action.payload  
-      //   state.uploaddata = '' 
+      // .addCase(viewPrevilage.rejected, (state:any, action) => {
+      //   state.viewPrevilageisLoading = false
+      //   state.viewPrevilageisError = true
+      //   state.viewPrevilagemessage = action.payload  
+      //   state.viewPrevilagedata = '' 
       // })
+       
        
 
       .addCase(userEmployees.pending, (state) => {
@@ -770,6 +786,21 @@ export const authSlice = createSlice({
         state.updateemployeeisError = true
         state.updateemployeemessage = action.payload    
         state.updateemployeedata = '' 
+      })
+
+      .addCase(viewPrevilage.pending, (state) => {
+        state.viewPrevilageisLoading = true 
+      })
+      .addCase(viewPrevilage.fulfilled, (state:any, action) => {
+        state.viewPrevilageisLoading = false
+        state.viewPrevilageisSuccess = true
+        state.viewPrevilagedata = action.payload?.data     
+      })
+      .addCase(viewPrevilage.rejected, (state:any, action) => {
+        state.viewPrevilageisLoading = false
+        state.viewPrevilageisError = true
+        state.viewPrevilagemessage = action.payload   
+        state.viewPrevilagedata = '' 
       })
        
   },

@@ -10,29 +10,31 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false, 
-  message: '',
-  error: '',
+  message: '', 
   
   dataall:   [],
   isErrorall: false,
   isSuccessall: false,
   isLoadingall: false, 
-  messageall: '',
-  errorall: '',
+  messageall: '', 
 
   privilegesdata:   [],
   privilegesisError: false,
   privilegesisSuccess: false,
   privilegesisLoading: false, 
-  privilegesmessage: '',
-  privilegeserror: '',
+  privilegesmessage: '', 
 
   deletedata:   [],
   deleteisError: false,
   deleteisSuccess: false,
   deleteisLoading: false, 
-  deletemessage: '',
-  deleteerror: '',
+  deletemessage: '', 
+  
+  createdata:   [],
+  createisError: false,
+  createisSuccess: false,
+  createisLoading: false, 
+  createmessage: '', 
   
 }
  
@@ -41,7 +43,7 @@ const initialState = {
 // User Role 
 export const userRole = createAsyncThunk('user/userRole', async (  data,thunkAPI) => {
   try {
-    return await userService.userRole( )
+    return await userService.userRole()
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 
@@ -54,7 +56,7 @@ export const userRole = createAsyncThunk('user/userRole', async (  data,thunkAPI
 // User privileges
 export const userprivileges = createAsyncThunk('user/userprivileges', async ( data,thunkAPI) => {
   try {
-    return await userService.userprivileges( )
+    return await userService.userprivileges()
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 
@@ -69,6 +71,20 @@ export const userprivileges = createAsyncThunk('user/userprivileges', async ( da
 export const deleteprivileges = createAsyncThunk('user/deleteprivileges', async ( data,thunkAPI) => {
   try {
     return await userService.deleteprivileges(data )
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
+// create privileges
+export const createprivileges = createAsyncThunk('user/createprivileges', async ( data,thunkAPI) => {
+  try {
+    return await userService.createprivileges(data )
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 
@@ -102,6 +118,11 @@ export const userSlice = createSlice({
       state.deleteisSuccess = false
       state.deleteisError = false
       state.deletemessage = '' 
+
+      state.createisLoading = false
+      state.createisSuccess = false
+      state.createisError = false
+      state.createmessage = '' 
     },
     
   },
@@ -151,6 +172,20 @@ export const userSlice = createSlice({
         state.deleteisError = true
         state.deletemessage = action.payload
         state.deletedata = [] 
+      })
+      .addCase(createprivileges.pending, (state) => {
+        state.createisLoading = true 
+      })
+      .addCase(createprivileges.fulfilled, (state, action) => {
+        state.createisLoading = false
+        state.createisSuccess = true
+        state.createdata = action.payload 
+      })
+      .addCase(createprivileges.rejected, (state:any, action) => {
+        state.createisLoading = false
+        state.createisError = true
+        state.createmessage = action.payload
+        state.createdata = [] 
       })
      
       

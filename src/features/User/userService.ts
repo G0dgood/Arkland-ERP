@@ -21,6 +21,12 @@ const userprivileges = async ( ) => {
   return data
 }
  
+const createprivileges = async (inputs:any ) => { 
+	     const { data }: any = await HttpService.post(`admin/privileges`, inputs) 
+   
+  return data
+}
+ 
 const deleteprivileges = async (id:any ) => { 
 	    const  {data}:any  =  await HttpService.delete(`admin/privileges/${id}`) 
    
@@ -42,7 +48,8 @@ const userService = {
   userDepartment,
   userprivileges,
   deleteprivileges,
-  createHOD
+  createHOD,
+  createprivileges
 }
 
 export default userService

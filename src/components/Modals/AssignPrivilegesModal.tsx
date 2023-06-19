@@ -3,96 +3,103 @@ import { fireAlert } from '../../utils/Alert';
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
-
-import DataService from '../../utils/dataService';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { allEmployee } from '../../features/Employee/employeeSlice';
+import { createprivileges, reset } from '../../features/User/userSlice';
+import HttpService from '../HttpService';
+import SelectInput from '../SelectInput';
 
-const dataService = new DataService()
+
 const AssignPrivilegesModal = ({ setReload }: any) => {
 	const dispatch = useAppDispatch();
-	const { data } = useAppSelector((state: any) => state.employee)
+	const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.userinfo)
+
+
+	const [isLoadings, setisLoadings] = useState(false);
+
+	const [employees, setEmployees] = useState([]);
+	const [input, setInput] = useState<any>({
+		isEmployee: "",
+	})
 
 
 
-	const handelclick = () => {
-		// @ts-ignore
-		dispatch(allEmployee());
+	const handelclick = async () => {
+		setisLoadings(true)
+		try {
+			const employees = "hr/employees"
+			const employee: any = await HttpService.get(employees)
+			setEmployees(employee?.data?.data)
+			setisLoadings(false)
+
+		} catch (error) {
+			setisLoadings(false)
+		}
 	}
 
 
 
+	const availableEmployees = [] as any;
+
+	employees &&
+		employees.forEach((employee: any) =>
+			availableEmployees.push({
+				value: employee?.user,
+				label: employee?.full_name,
+			})
+		);
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
 		role: "",
 		user: "",
 	})
 
-	const token = dataService.getToken()
-	const [message, setMessage] = useState("");
-	const [isLoading, setisLoading] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [employees, setEmployees] = useState([]);
 
 
 	useEffect(() => {
-		if (data) {
-			setEmployees(data)
-		}
-	}, [data])
+		setInputs((prevState: any) => {
+			return ({
+				...prevState,
+				user: input?.isEmployee?.value,
+
+			});
+		});
+	}, [input?.isEmployee, setInput]);
 
 
 	const handleLeave = () => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/admin/privileges`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-			body: JSON.stringify(inputs),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-				} else {
-					setisSuccess(true)
-					setReload(true)
-					setLgShow(false)
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
+		// @ts-ignore
+		dispatch(createprivileges(inputs));
+
 	}
-
-
-
 	const html = "Privileges Assigned!";
 	const icon = "success";
-	const html1 = message;
-
 
 
 	useEffect(() => {
-		if (isSuccess) {
-			fireAlert("Successful", html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-				setMessage("")
-				setReload(false)
-			}, 5000);
+		if (createisSuccess) {
+			fireAlert("Successful", "Role Created Sucessfully", icon);
 			setLgShow(false)
+			setInputs({
+				role: "",
+				user: "",
+			})
+			setInput({
+				isEmployee: "",
+			})
+			dispatch(reset());
 		}
-	}, [html, html1, isSuccess, setReload])
+	}, [html, createisSuccess, setReload, dispatch])
 
 
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
+			...prevState,
+			[input]: value,
+		}));
+	};
+	const handleOnChange1 = (input: any, value: any) => {
+		setInput((prevState: any) => ({
 			...prevState,
 			[input]: value,
 		}));
@@ -137,25 +144,21 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 				</Modal.Header>
 				<Modal.Body>
 					<div className='Modal-Body'>
-						<div className='Modal-data-time'>
-							<div className='Modal-two-input'>
-								<h6>Name</h6>
-								<select id="Modal-textarea-input-sub"
-									value={inputs.role}
-									onChange={(e) => handleOnChange("role", e.target.value)}>
-									<option value=" ">Select Name...</option>
-									{Role?.map((Role: any) => (
-										<option key={Role} value={Role}>
-											{Role}
-										</option>
-									))}
-								</select >
-							</div>
-						</div>
-						<div className='Modal-data-time'>
-						</div>
-						<h6>Department</h6>
+						<h6>Name</h6>
 						<select id="Modal-textarea-input-sub"
+							value={inputs.role}
+							onChange={(e) => handleOnChange("role", e.target.value)}>
+							<option value=" ">Select Name...</option>
+							{Role?.map((Role: any) => (
+								<option key={Role} value={Role}>
+									{Role}
+								</option>
+							))}
+						</select >
+						<div className='Modal-data-time'>
+						</div>
+						<h6>Employee</h6>
+						{/* <select id="Modal-textarea-input-sub"
 							value={inputs.user}
 							onChange={(e) => handleOnChange("user", e.target.value)}>
 							<option value=" ">Select Employees...</option>
@@ -165,10 +168,17 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 									{employ?.full_name}
 								</option>
 							))}
-						</select >
+						</select > */}
+						<SelectInput
+							isDisabled={isLoadings}
+							isLoading={isLoadings}
+							options={availableEmployees}
+							value={input.isEmployee}
+							onChange={(e: any) => handleOnChange1("isEmployee", e)}
+						/>
 						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal" onClick={handleLeave}>
-								{isLoading ? <Spinner animation="border" /> : "Create"}
+							<Button variant="contained" className="Add-btn-modal" onClick={handleLeave} disabled={createisLoading}>
+								{createisLoading ? <Spinner animation="border" /> : "Create"}
 							</Button>
 						</div>
 					</div>

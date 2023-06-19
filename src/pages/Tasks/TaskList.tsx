@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Pagination from '../../components/Pagination';
 import { NoRecordFound, TableFetch } from '../../components/TableOptions';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { getTask } from '../../features/Tasks/taskSlice';
-
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
 import CreateTaskModal from './CreateTaskModal';

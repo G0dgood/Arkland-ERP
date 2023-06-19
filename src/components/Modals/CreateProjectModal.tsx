@@ -8,7 +8,6 @@ import { BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
 import InputField from "../Inputs/InputField";
 import ReactSelectField from "../Inputs/ReactSelectField";
-
 import TextAreaField from "../Inputs/TextAreaField";
 import CountrySelectField from "../Inputs/CountrySelectField";
 import CustomInputField from "../Inputs/CustomInputField";
@@ -31,7 +30,7 @@ const CreateProjectModal = (props: any) => {
   const [departments, setDepartments] = useState([]);
   const [teamLeads, setTeamslead] = useState([]);
   const [teams, setTeams] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
+  // const [isLoading, setisLoading] = useState(false);
 
 
 
@@ -57,7 +56,7 @@ const CreateProjectModal = (props: any) => {
 
 
   const getData = async () => {
-    setisLoading(true)
+    // setisLoading(true)
     try {
 
       const departmentsUrl = "hr/departments"
@@ -72,10 +71,10 @@ const CreateProjectModal = (props: any) => {
       const teams: any = await HttpService.get(teamsUrl)
       setTeams(teams?.data?.data)
 
-      setisLoading(false)
+      // setisLoading(false)
 
     } catch (error) {
-      setisLoading(false)
+      // setisLoading(false)
     }
   }
 
