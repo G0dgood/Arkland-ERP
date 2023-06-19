@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate } from 'react-router-dom';
-import { getTeamLead } from '../../features/TeamLead/teamleadSlice';
-import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
-import CreateTeamLead from './CreateTeamLead';
-import TableLoader from '../../components/TableLoader';
+
+
+
 import { Button } from '@material-ui/core';
 import moment from 'moment';
-import Pagination from '../../components/Pagination';
+
+import { getTeamLead } from '../features/TeamLead/teamleadSlice';
+import { useAppDispatch, useAppSelector } from '../store/useStore';
+import { EntriesPerPage, NoRecordFound, TableFetch } from './TableOptions';
+import TableLoader from './TableLoader';
+import CreateTeamLead from '../pages/TeamLead/CreateTeamLead';
+import Pagination from './Pagination';
 
 const TeamLead = () => {
+
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { data, isLoading } = useAppSelector((state: any) => state.teamlead)
