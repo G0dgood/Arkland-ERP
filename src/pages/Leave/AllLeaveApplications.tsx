@@ -8,35 +8,23 @@ import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { getCreateLeave } from '../../features/Leave/leaveSlice';
+import { getAllLeave } from '../../features/Leave/leaveSlice';
 
 const AllLeaveApplications = () => {
 
 	const dispatch = useAppDispatch();
-	const { allLeavedata: data, allLeaveisLoading: isLoading } = useAppSelector((state: any) => state.leave)
-
+	const { getAllLeavedata: data, getAllLeaveisLoading: isLoading } = useAppSelector((state: any) => state.leave)
 
 
 
 
 	useEffect(() => {
-		// @ts-ignore
-		dispatch(getCreateLeave());
-
+		dispatch(getAllLeave());
 	}, [dispatch]);
-
-
 
 
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
-
-
-
-
-
-
-
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {

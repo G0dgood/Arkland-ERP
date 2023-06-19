@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hodReviewAssessment } from '../../features/KPIAssessment/assessmentSlice';
 
@@ -10,20 +10,9 @@ import { hodReviewAssessment } from '../../features/KPIAssessment/assessmentSlic
 const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
   const { id } = useParams()
   const dispatch = useAppDispatch();
-  const { hodreviewdata, hodreviewisError, hodreviewisLoading, hodreviewmessage, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
-
-
-
-
-
+  const { hodreviewdata, hodreviewisLoading, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
   const year = new Date().getFullYear().toString();
-
-  const navigate = useNavigate();
   const location = useLocation();
-
-
-
-
   const kpiData3 = ({
     Weight1: 20,
     Weight2: 15,
@@ -94,8 +83,6 @@ const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
   }, [setHodscore, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6])
 
 
-
-
   const handleOnChange4 = (input: string, value: any) => {
     setemployeegrade((prevState: any) => ({
       ...prevState,
@@ -132,19 +119,15 @@ const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
   const title = "Successful";
   const html = "KPI Updated!";
   const icon = "success";
-  const title1 = "KPI error";
-  const icon1 = "error";
+
 
   useEffect(() => {
     if (hodreviewisSuccess) {
       fireAlert(title, html, icon);
 
-    } else if (hodreviewisError) {
-      fireAlert(title1, hodreviewmessage, icon1);
-
     }
 
-  }, [html, title, icon, hodreviewisSuccess, hodreviewisError, hodreviewmessage]);
+  }, [html, title, icon, hodreviewisSuccess]);
 
 
   const handelHodkpi = (e: any) => {

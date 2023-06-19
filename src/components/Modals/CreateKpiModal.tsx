@@ -1,6 +1,6 @@
 
 import { Button } from '@material-ui/core';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Modal } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
 import KPIAssessment from '../../pages/kpi_assessment/KPIAssessment';
@@ -8,13 +8,7 @@ import HttpService from '../HttpService';
 
 const CreateKpiModal = () => {
 	const [show, setShow] = useState(false);
-
 	const [hods, setHods] = useState<any>([]);
-
-
-
-
-
 
 
 	const getData = async () => {
@@ -43,7 +37,7 @@ const CreateKpiModal = () => {
 			>
 				<Modal.Header  >
 					<span></span>
-					<span className="span-center-title">Create Asseccment</span>
+					<span className="span-center-title">Create Assessment</span>
 					<Button style={{ color: "#fff" }} onClick={() => setShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>

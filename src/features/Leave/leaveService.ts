@@ -14,8 +14,13 @@ const getCreateLeave = async (id: any) => {
   const { data }: any = await HttpService.search(`leaves`, { employee: id })  
   return data
 }
+const getAllLeave = async (id: any) => {  
+  const { data }: any = await HttpService.get(`hr/leaves`)  
+  return data
+}
 const viewLeave = async (id: any) => {  
   const { data }: any = await HttpService.get(`leaves/${id}`)  
+   
   return data
 }
 const viewdeleteLeave = async (id: any) => {  
@@ -45,6 +50,11 @@ const finalApproveLeave = async (id: any) => {
   return data
 }
  
+const rejectLeave = async (id: any) => {  
+  const { data }: any = await HttpService.patch(`hr/leaves/${id}/reject`)  
+  return data
+}
+ 
  
  
  
@@ -58,8 +68,9 @@ const leaveService = {
   viewdeleteLeave,
   hodApproveLeave,
   hrApproveLeave,
-  finalApproveLeave
-
+  finalApproveLeave,
+  rejectLeave,
+  getAllLeave
 }
 
 export default leaveService

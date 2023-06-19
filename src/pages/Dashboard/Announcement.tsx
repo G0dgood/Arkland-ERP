@@ -9,14 +9,11 @@ import { BounceLoader } from "react-spinners";
 const Announcement = ({ announcement: data, isLoading }: any) => {
 
 
-
   const {
     isHRHead,
     isHeadOfDepartment,
     isTeamLead,
     isSuperAdmin,
-    isAdmin,
-    isEmployee,
     isHrAdmin,
   } = getUserPrivileges();
 
@@ -25,20 +22,20 @@ const Announcement = ({ announcement: data, isLoading }: any) => {
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
           <span className="sub-text-contained">
-            <h4>Announcement</h4>
+            <h6>Announcement</h6>
           </span>
         </div>
-        {(isSuperAdmin ||
+        {/* {(isSuperAdmin ||
           isTeamLead ||
           isHeadOfDepartment ||
           isHRHead ||
           isHrAdmin) && (
             <div>
-              {/* <CreateAnnouncementModal
+              <CreateAnnouncementModal
 
-              /> */}
+              />
             </div>
-          )}
+          )} */}
         <ClockIn />
       </div>
       <div>
@@ -75,11 +72,11 @@ const Announcement = ({ announcement: data, isLoading }: any) => {
                       isTeamLead ||
                       isHeadOfDepartment ||
                       isHRHead ||
-                      isHrAdmin) && (
-                        <span className="BsFillPinAngleFill">
-                          <DeleteAnnouncementModal id={item?.id} />
-                        </span>
-                      )}
+                      isHrAdmin) &&
+                      <span className="BsFillPinAngleFill">
+                        <DeleteAnnouncementModal id={item?.id} />
+                      </span>
+                    }
                   </div>
 
                 </div>

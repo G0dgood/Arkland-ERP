@@ -1,9 +1,9 @@
 import { Button } from '@material-ui/core';
 import React from 'react'
-import { Form, Modal, Spinner } from 'react-bootstrap';
+import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
 import SelectField from '../Inputs/SelectField';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import TextAreaField from '../Inputs/TextAreaField';
 
 const RequestEmployeeTerminationModal = () => {
@@ -16,7 +16,8 @@ const RequestEmployeeTerminationModal = () => {
 		"redundancy",
 	];
 
-	const handleEmployeeTermination = () => {
+	const handleEmployeeTermination = (e: any, value: any) => {
+		console.log('value', value)
 
 	}
 

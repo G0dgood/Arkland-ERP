@@ -67,6 +67,21 @@ const initialState = {
   finalApproveisLoading: false, 
   finalApprovemessage: '',
   finalApproveerror: '',
+
+
+  rejectdata:   [],
+  rejectisError: false,
+  rejectisSuccess: false,
+  rejectisLoading: false, 
+  rejectmessage: '',
+  rejecterror: '',
+
+  getAllLeavedata:   [],
+  getAllLeaveisError: false,
+  getAllLeaveisSuccess: false,
+  getAllLeaveisLoading: false, 
+  getAllLeavemessage: '',
+  getAllLeaveerror: '',
   
 }
  
@@ -90,6 +105,19 @@ export const createLeave = createAsyncThunk('leave/createLeave', async ( data,th
 export const getCreateLeave:any = createAsyncThunk('leave/getCreateLeave', async(data:any, thunkAPI) => {
   try {
     return await leaveService.getCreateLeave(data)
+  } catch (error: any) { 
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+// Get All Leave 
+export const getAllLeave:any = createAsyncThunk('leave/getAllLeave', async(data:any, thunkAPI) => {
+  try {
+    return await leaveService.getAllLeave(data)
   } catch (error: any) { 
     const message = (error.response && 
       error.response.data && 
@@ -196,6 +224,19 @@ export const finalApproveLeave:any = createAsyncThunk('leave/finalApproveLeave',
     return thunkAPI.rejectWithValue(message)
   }
 })
+//  Reject Leave
+export const rejectLeave:any = createAsyncThunk('leave/rejectLeave', async(data:any, thunkAPI) => {
+  try {
+    return await leaveService.rejectLeave(data)
+  } catch (error: any) { 
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
  
 
  
@@ -215,6 +256,11 @@ export const leaveSlice = createSlice({
       state.allLeaveisSuccess = false
       state.allLeaveisError = false
       state.allLeavemessage = '' 
+
+      state.getAllLeaveisLoading = false
+      state.getAllLeaveisSuccess = false
+      state.getAllLeaveisError = false
+      state.getAllLeavemessage = '' 
 
       state.teamisLoading = false
       state.teamisSuccess = false
@@ -250,6 +296,11 @@ export const leaveSlice = createSlice({
       state.finalApproveisSuccess = false
       state.finalApproveisError = false
       state.finalApprovemessage = '' 
+
+      state.rejectisLoading = false
+      state.rejectisSuccess = false
+      state.rejectisError = false
+      state.rejectmessage = '' 
     },
     
   },
@@ -287,6 +338,23 @@ export const leaveSlice = createSlice({
         state.allLeavedata= [] 
       })
 
+      // GET ALL APPLICATIONS
+      .addCase(getAllLeave.pending, (state) => {
+        state.getAllLeaveisLoading= true
+        
+      })
+      .addCase(getAllLeave.fulfilled, (state, action) => {
+        state.getAllLeaveisLoading= false
+        state.getAllLeaveisSuccess= true
+        state.getAllLeavedata= action.payload?.data
+      })
+      .addCase(getAllLeave.rejected, (state:any, action) => {
+        state.getAllLeaveisLoading= false
+        state.getAllLeaveisError= true
+        state.getAllLeavemessage= action.payload
+        state.getAllLeavedata= [] 
+      })
+
       // VIEW LEAVE APPLICATIONS
       .addCase(viewLeave.pending, (state) => {
         state.viewisLoading= true
@@ -295,7 +363,7 @@ export const leaveSlice = createSlice({
       .addCase(viewLeave.fulfilled, (state, action) => {
         state.viewisLoading= false
         state.viewisSuccess= true
-        state.viewdata= action.payload?.data
+        state.viewdata= action.payload?.data 
       })
       .addCase(viewLeave.rejected, (state:any, action) => {
         state.viewisLoading= false
@@ -404,6 +472,22 @@ export const leaveSlice = createSlice({
         state.finalApproveisError= true
         state.finalApprovemessage= action.payload
         state.finalApprovedata= [] 
+      })
+      //  Reject Leave 
+      .addCase(rejectLeave.pending, (state) => {
+        state.rejectisLoading= true
+        
+      })
+      .addCase(rejectLeave.fulfilled, (state, action) => {
+        state.rejectisLoading= false
+        state.rejectisSuccess= true
+        state.rejectdata= action.payload?.data
+      })
+      .addCase(rejectLeave.rejected, (state:any, action) => {
+        state.rejectisLoading= false
+        state.rejectisError= true
+        state.rejectmessage= action.payload
+        state.rejectdata= [] 
       })
      
       

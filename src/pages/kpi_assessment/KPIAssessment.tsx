@@ -4,28 +4,23 @@ import { fireAlert } from "../../utils/Alert";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { createAssessment } from "../../features/KPIAssessment/assessmentSlice";
-import { allEmployee } from "../../features/Employee/employeeSlice";
+// import { allEmployee } from "../../features/Employee/employeeSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
+import HttpService from "../../components/HttpService";
+// import SelectInput from "../../components/SelectInput";
 
 
 
 const dataService = new DataService()
-const KPIAssessment = ({ setIsCheck, setShow, hods }: any) => {
+const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   const dispatch = useAppDispatch();
-  // const { data } = useAppSelector((state: any) => state.employee)
-  const { createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.assessment)
+  const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.assessment)
 
 
   const navigate = useNavigate();
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-
-
-  // const [kpicheck, setkpicheck] = useState<any>();
-
-
-
 
   const [kpinputs, setKpInputs] = useState({
     month: 0,
@@ -161,33 +156,46 @@ const KPIAssessment = ({ setIsCheck, setShow, hods }: any) => {
 
   useEffect(() => {
     if (createisSuccess) {
-      fireAlert("KPI error", "KPI Created!", "success");
+      fireAlert("KPI success", "KPI Created!", "success");
       setShow(false)
     }
-    // else if (createisError) {
-    //   fireAlert("KPI error", createmessage, "error");
-
-    // }
-  }, [createmessage, navigate, createisSuccess, setShow]);
+  }, [navigate, createisSuccess, setShow]);
 
 
   const handelkpi = (e: any) => {
     // @ts-ignore
     dispatch(createAssessment(inputs));
-
   };
 
-  // useEffect(() => {
-  //   dispatch(userEmployees());
-  // }, [dispatch]);
+  const [hods, setHOD] = useState([])
+
+  // console.log('hod', hods)
+
   useEffect(() => {
-    dispatch(allEmployee());
-  }, [dispatch]);
+    getData()
+  }, [])
+
+
+  const getData = async () => {
+    // setisLoading(true)
+    try {
+      const hodsUrl = `employees/hods`
+      const hods: any = await HttpService.get(hodsUrl)
+      setHOD(hods?.data?.data)
+
+      // setisLoading(false)
+
+    } catch (error) {
+      // setisLoading(false)
+    }
+  }
+
+
 
   const availablleHods = [] as any;
 
   hods &&
-    hods.forEach((team: any) =>
+    hods?.forEach((team: any) =>
       availablleHods.push({
         value: team.id,
         label: team.name,
@@ -308,7 +316,7 @@ const KPIAssessment = ({ setIsCheck, setShow, hods }: any) => {
                       <option> </option>
                       {hods?.map((employ: any) => (
                         <option key={employ?._id} value={employ?.id}>
-                          {employ?.full_name}
+                          {employ?.name}
                         </option>
                       ))}
                     </select>

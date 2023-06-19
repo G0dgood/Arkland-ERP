@@ -8,6 +8,7 @@ import { RiTeamLine } from 'react-icons/ri';
 import moment from 'moment';
 import DeleteTeam from '../Team/DeleteTeam';
 import CreateTeamMembers from '../Team/CreateTeamMembersModal';
+import TeamMembers from '../Team/TeamMembers';
 
 const ViewTeam = () => {
 	const { id } = useParams()
@@ -59,7 +60,7 @@ const ViewTeam = () => {
 											/>
 										</div>
 										<div className="employee-main-div-col-header-buttons">
-											<DeleteTeam id={id} /> <span><CreateTeamMembers id={id} /></span>
+											<span><CreateTeamMembers id={id} /></span> <DeleteTeam id={id} />
 										</div>
 
 
@@ -103,8 +104,8 @@ const ViewTeam = () => {
 											</div>
 										</div>
 									) : (
-										// <TeamMembers />
-										""
+										<TeamMembers />
+										// ""
 									)}
 
 								</div>

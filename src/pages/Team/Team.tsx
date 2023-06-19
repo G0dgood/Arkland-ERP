@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { fireAlert } from '../../utils/Alert';
 import Pagination from '../../components/Pagination';
 import moment from 'moment';
 import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import TableLoader from '../../components/TableLoader';
-import { getTeam, reset } from '../../features/Team/teamSlice';
+import { getTeam } from '../../features/Team/teamSlice';
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import CreateTeamModal from './CreateTeamModal';
@@ -13,7 +12,7 @@ import CreateTeamModal from './CreateTeamModal';
 const Team = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { data, isError, isLoading, message } = useAppSelector((state: any) => state.team)
+	const { data, isLoading } = useAppSelector((state: any) => state.team)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
@@ -26,12 +25,7 @@ const Team = () => {
 		dispatch(getTeam());
 	}, [dispatch]);
 
-	useEffect(() => {
-		if (isError) {
-			fireAlert("error", message, "error");
-			dispatch(reset());
-		}
-	}, [isError, message, dispatch])
+
 
 	const header = ["NAME", "DESCRIPTION", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);

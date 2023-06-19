@@ -8,8 +8,6 @@ import { reset, suspendProject } from '../../features/Project/projectSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 
 
-
-
 const SuspendProjectModal = ({ id, title }: any) => {
 	const dispatch = useAppDispatch();
 	const { suspendisLoading, suspendmessage, suspendisSuccess } = useAppSelector((state: any) => state.project)
@@ -79,8 +77,7 @@ const SuspendProjectModal = ({ id, title }: any) => {
 									variant="contained"
 									className="Add-btn-modal"
 									type="submit"
-									onClick={handleSubmit}
-								>
+									onClick={handleSubmit}>
 									{suspendisLoading ? <Spinner animation="border" /> : "Suspend"}
 								</Button>
 							</div>

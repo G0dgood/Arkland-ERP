@@ -23,6 +23,8 @@ const Userprivileges = () => {
 	const [result, setResult] = useState("");
 
 
+
+
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(userprivileges());
@@ -98,6 +100,7 @@ const Userprivileges = () => {
 					<table className="main-table-content">
 						<thead className="data-table-header">
 							<tr className="data-table-row" >
+								<td className="table-datacell datatype-numeric">Name</td>
 								<td className="table-datacell datatype-numeric">Role</td>
 								<td className="table-datacell datatype-numeric">Created Date</td>
 								<td className="table-datacell datatype-numeric">Status</td>
@@ -113,6 +116,7 @@ const Userprivileges = () => {
 							) : (
 								displayData.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
+										<td className="table-datacell datatype-numeric">{!item?.user?.full_name ? "---" : item?.user?.full_name}</td>
 										<td className="table-datacell datatype-numeric">{item?.role}</td>
 										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
 

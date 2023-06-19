@@ -83,13 +83,13 @@ const SiteWorkerRequest = () => {
                 requestWorkers.map((item: any, i: any) => (
                   <tr className="data-table-row">
                     <td className="table-datacell datatype-numeric">
-                      {/* {checkForName(item.project, projects)} */}
+                      {item?.project?.country}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {/* {checkForName(item.team, team)} */}
+                      {item.team?.name}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {/* {checkForName(item.team_lead, teamLeads)} */}
+                      {item.team_lead?.name}
                     </td>
                     <td className="table-datacell datatype-numeric">
                       {item?.requests?.[0].role_name}

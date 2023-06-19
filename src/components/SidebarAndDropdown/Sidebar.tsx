@@ -13,13 +13,10 @@ import { GoFile } from 'react-icons/go';
 import { CgUserList } from 'react-icons/cg';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import * as AiIcons from 'react-icons/ai';
-import { BiSupport } from 'react-icons/bi';
-import { BsBriefcase, BsShield } from 'react-icons/bs';
+import { BsBriefcase } from 'react-icons/bs';
 import { getUserPrivileges } from '../../functions/auth';
 import { RiTeamLine } from 'react-icons/ri';
 import { GiTeamIdea } from 'react-icons/gi';
-
-
 
 
 const Sidebar = ({
@@ -109,8 +106,8 @@ const Sidebar = ({
               <MenuItem className='Side__Content' active={pathname === '/leave/leave/admin'}>  <Link to="/leave/leave/admin" />Admin Leave</MenuItem>
             )}
           </SubMenu>
-          <MenuItem className='Side__Content' active={pathname === '/support'} icon={<BiSupport size={22} />}>  Support <Link to="/support" /> </MenuItem>
-          <MenuItem className='Side__Content' active={pathname === '/policy'} icon={<BsShield size={22} />}>  Policy <Link to="/policy" /> </MenuItem>
+          {/* <MenuItem className='Side__Content' active={pathname === '/support'} icon={<BiSupport size={22} />}>  Support <Link to="/support" /> </MenuItem>
+          <MenuItem className='Side__Content' active={pathname === '/policy'} icon={<BsShield size={22} />}>  Policy <Link to="/policy" /> </MenuItem> */}
         </Menu>
       </SidebarContent>
 

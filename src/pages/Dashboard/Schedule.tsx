@@ -1,12 +1,8 @@
 import { BounceLoader } from "react-spinners";
 import moment from "moment";
-import { getUserPrivileges } from "../../functions/auth";
 import ViewScheduleModal from "../../components/Modals/ViewScheduleModal";
 
 const Schedule = ({ tasks, isLoading }: any) => {
-
-
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } = getUserPrivileges();
 
 
 
@@ -33,39 +29,35 @@ const Schedule = ({ tasks, isLoading }: any) => {
           </div>
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "1fr" }}>
-            {tasks?.length > 0 ? (
-              <div className="Announcement-container">
-                {tasks?.map((item: any, i: any) => (
-                  <div key={i}>
-                    <div className="main-todo-Event" style={{ borderRadius: "4px" }} >
-                      <div className="main-todo-container">
-                        <div style={{ paddingLeft: "10px" }} >
-                          <div className="main-todo-input-title"> {item?.title} due by{" "}
-                            {moment(item?.expected_completion_date).format("DD-MMMM-YYYY")}{" "}
-                          </div>
 
-                          <div className="main-todo-input-time">
-                            {tasks && tasks?.length > 0
-                              ? item?.notes[0]?.text
-                              : ""}
-                          </div>
+            <div className="Announcement-container">
+              {tasks?.map((item: any, i: any) => (
+                <div key={i}>
+                  <div className="main-todo-Event" style={{ borderRadius: "4px" }} >
+                    <div className="main-todo-container">
+                      <div style={{ paddingLeft: "10px" }} >
+                        <div className="main-todo-input-title"> {item?.title} due by{" "}
+                          {moment(item?.expected_completion_date).format("DD-MMMM-YYYY")}{" "}
+                        </div>
+
+                        <div className="main-todo-input-time">
+                          {item?.notes[0]?.text}
                         </div>
                       </div>
+                    </div>
 
-                      <div className="FiTrash2" style={{ display: "flex", paddingRight: "10px" }} >
-                        < ViewScheduleModal id={item?.id} />
-
-
-                      </div>
+                    <div className="FiTrash2" style={{ display: "flex", paddingRight: "10px" }} >
+                      < ViewScheduleModal id={item?.id} />
 
 
                     </div>
+
+
                   </div>
-                ))}
-              </div>
-            ) : (
-              ""
-            )}
+                </div>
+              ))}
+            </div>
+
           </div>
         )}
       </div>
