@@ -8,24 +8,28 @@ import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
 import { SlClose } from 'react-icons/sl';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { getCreateLeave } from '../../features/Leave/leaveSlice';
+import { getAllLeave } from '../../features/Leave/leaveSlice';
 
 
 const AllLeave = () => {
 	const dispatch = useAppDispatch();
-	const { allLeavedata: data, allLeaveisLoading } = useAppSelector((state: any) => state.leave)
+	const { getAllLeavedata: data, getAllLeaveisLoading: isLoading } = useAppSelector((state: any) => state.leave)
 
 	const [sortData, setSortData] = useState([]);
 	const [searchItem, setSearchItem] = useState("");
 
 
 
+
+
+
+
+
 	useEffect(() => {
-		// @ts-ignore
-		dispatch(getCreateLeave());
+
+		dispatch(getAllLeave());
 
 	}, [dispatch]);
-
 
 
 
@@ -70,7 +74,7 @@ const AllLeave = () => {
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
-				{allLeaveisLoading ? <TableLoader isLoading={allLeaveisLoading} /> : ""}
+				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
 				<div className="main-table-wrapper">
 					<table className="main-table-content">
 						<thead className="data-table-header">
@@ -88,7 +92,7 @@ const AllLeave = () => {
 							</tr>
 						</thead>
 						<tbody className="data-table-content">
-							{allLeaveisLoading ? (
+							{isLoading ? (
 								<TableFetch colSpan={9} />
 							) : displayData?.length === 0 || displayData == null ? (
 								<NoRecordFound colSpan={9} />

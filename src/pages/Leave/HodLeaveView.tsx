@@ -6,7 +6,7 @@ import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { hodApproveLeave, viewTeamLeave } from '../../features/Leave/leaveSlice';
+import { hodApproveLeave, rejectLeave, reset, viewTeamLeave } from '../../features/Leave/leaveSlice';
 import { BounceLoader } from 'react-spinners';
 import { SlBriefcase } from 'react-icons/sl';
 
@@ -15,7 +15,7 @@ const HodLeaveView = () => {
 	const dispatch = useAppDispatch();
 	const { teamviewdata: data, teamviewisLoading, teamviewmessage } = useAppSelector((state: any) => state.leave)
 	const { hodApproveisLoading, hodApprovemessage, hodApproveisSuccess } = useAppSelector((state: any) => state.leave)
-
+	const { rejectisLoading, rejectisSuccess } = useAppSelector((state: any) => state.leave)
 
 	const { id } = useParams()
 	const navigate = useNavigate();
@@ -24,7 +24,9 @@ const HodLeaveView = () => {
 		dispatch(viewTeamLeave(id));
 	}, [dispatch, id])
 
-
+	const handleReject = () => {
+		dispatch(rejectLeave(id));
+	}
 
 	const [count, setCount] = useState(0);
 
@@ -35,15 +37,20 @@ const HodLeaveView = () => {
 		leave_type: ""
 	})
 
-	// const html2 = "Leave have been Deleted!";
+
 
 	useEffect(() => {
 		if (hodApproveisSuccess) {
 			fireAlert("Successful", "Leave Approved!", "success");
 			navigate(-1)
+			dispatch(reset());
+		} else if (rejectisSuccess) {
+			fireAlert("Successful", "Leave Rejected!", "success");
+			navigate(-1)
+			dispatch(reset());
 		}
 
-	}, [dispatch, hodApproveisSuccess, hodApprovemessage, id, navigate, teamviewmessage])
+	}, [dispatch, hodApproveisSuccess, hodApprovemessage, id, navigate, rejectisSuccess, teamviewmessage])
 
 
 
@@ -143,6 +150,8 @@ const HodLeaveView = () => {
 										{data?.hod_approved === false &&
 											<div className='deleteKPIHandler  mt-5'>
 												<span className='deleteKPIHandler-mr'>
+													<Button className="table-link" onClick={handleReject}>
+														{rejectisLoading ? <Spinner animation="border" /> : "Reject"}</Button>
 												</span>
 												<span onClick={handleApproved}><Button className="table-link-active"   >
 													{hodApproveisLoading ? <Spinner animation="border" /> : "Approve"}

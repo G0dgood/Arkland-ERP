@@ -73,12 +73,20 @@ class HttpService {
         });
     }
 
-    uploadFile(url: string, data: Record<string, any>, files: Record<string, any>) {
+    uploadFile(url: string, data: Record<string, any>, files: Record<string, any> , fileName:string = '') {
         //@ts-ignore
         this.config.headers["content-type"] = "multipart/form-data";  
         const formData = new FormData();  
         for (let key in files) {
-            formData.append(key, files[key]);
+            if (fileName) {
+                formData.append(fileName, files[key]);
+            } else {
+                formData.append(key, files[key]);
+           }
+        
+         }
+        for (let key in data) {
+            formData.append(key, data[key]);
          }
         const endpoint = this.baseUrl + url;
         return new Promise((resolve, reject) => { 

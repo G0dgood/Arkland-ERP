@@ -4,18 +4,17 @@ import { Button } from '@material-ui/core'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import DataService from '../../utils/dataService'
-import { fireAlert } from '../../utils/Alert'
 import TableLoader from '../../components/TableLoader'
 import moment from 'moment'
 import Pagination from '../../components/Pagination'
-import { allAssessment, reset } from '../../features/KPIAssessment/assessmentSlice'
+import { allAssessment } from '../../features/KPIAssessment/assessmentSlice'
 
 
 const dataService = new DataService()
 const AllKPIReport = () => {
 
 	const dispatch = useAppDispatch();
-	const { allkpidata, allkpiisError, allkpiisLoading, allkpimessage } = useAppSelector((state: any) => state.assessment)
+	const { allkpidata, allkpiisLoading } = useAppSelector((state: any) => state.assessment)
 
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
@@ -25,12 +24,6 @@ const AllKPIReport = () => {
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (allkpiisError) {
-			fireAlert("KPI error", allkpimessage, "error");
-			dispatch(reset());
-		}
-	}, [allkpiisError, allkpimessage, dispatch]);
 
 
 	// --- Pagination --- //
@@ -61,6 +54,8 @@ const AllKPIReport = () => {
 		navigate(`/kpiassessment/kpiassessment/teamkpi/view/${item?._id}`, { state: { name: 'admin' } })
 	}
 
+	const month = ["January", "February", "March", "April", "May", "June", "July", "	August", "September", "October", "November", "December"]
+
 	return (
 		<div  >
 			<div className="SiteWorkermaindiv">
@@ -75,7 +70,7 @@ const AllKPIReport = () => {
 					/>
 				</div>
 				<div>
-					<MainSearch placeholder={"Search...          Assessment"} />
+					<MainSearch placeholder={"Search...          Assessment"} setSearchItem={setSearchItem} />
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
@@ -148,12 +143,12 @@ const AllKPIReport = () => {
 											</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{/* <Link to={''} > */}
+
 											{/* @ts-ignore */}
 											<Button id="team-applicatiom-update" onClick={() => handleView(item)}>
 												{item?.status === "active" ? "View" : "Update"}
 											</Button>
-											{/* </Link> */}
+
 										</td>
 									</tr>
 								))

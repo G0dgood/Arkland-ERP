@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { MdOpenInFull } from "react-icons/md";
-// @ts-ignore
 import img from "../../assets/images/mann2.svg";
 import TodoShowAll from "../../components/TodoShowAll";
 import Todos from "./Todos";
 import Announcement from "./Announcement";
 import HttpService from "../../components/HttpService";
 import DataService from "../../utils/dataService";
+import CreateEvent from "../../components/Modals/CreateEvent";
 
 const StaffDashboard = () => {
   const Quote = require('inspirational-quotes');
@@ -55,14 +55,13 @@ const StaffDashboard = () => {
   const getData = async () => {
     setisLoading(true)
     try {
-      const announcementsUrl = "me/announcements"
-      const announcement: any = await HttpService.get(announcementsUrl)
-      setAnnouncement(announcement?.data?.data)
-
       const tasksUrl = `tasks`
       const tasks: any = await HttpService.get(tasksUrl)
       setTask(tasks?.data?.data)
 
+      const announcementsUrl = "me/announcements"
+      const announcement: any = await HttpService.get(announcementsUrl)
+      setAnnouncement(announcement?.data?.data)
       setisLoading(false)
 
     } catch (error) {
@@ -86,7 +85,7 @@ const StaffDashboard = () => {
                   Welcome to Your Dashboard!
                 </h4>
                 <p className="main-min-text2">
-                  {Quote.getQuote().text}<span className="main-min-text2-span"> - {Quote.getQuote().author}</span>
+                  {Quote?.getQuote()?.text}<span className="main-min-text2-span"> - {Quote?.getQuote()?.author}</span>
                 </p>
 
               </div>
@@ -101,7 +100,7 @@ const StaffDashboard = () => {
             <p className="event-months">
               {date.toUpperCase()} {month} {year}
             </p>
-            {/* <CreateEvent />    */}
+            {/* <CreateEvent /> */}
           </div>
         </div>
         {/* Announcement */}

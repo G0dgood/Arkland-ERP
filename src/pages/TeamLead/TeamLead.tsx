@@ -1,46 +1,48 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import Pagination from '../../components/Pagination';
-import moment from 'moment';
-import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
-import TableLoader from '../../components/TableLoader';
-import { getTeam } from '../../features/Team/teamSlice';
-import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import CreateTeamModal from './CreateTeamModal';
+import { getTeamLead } from '../../features/TeamLead/teamleadSlice';
+import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
+import CreateTeamLead from './CreateTeamLead';
+import TableLoader from '../../components/TableLoader';
+import { Button } from '@material-ui/core';
+import moment from 'moment';
+import Pagination from '../../components/Pagination';
 
-const Team = () => {
+const TeamLead = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { data, isLoading } = useAppSelector((state: any) => state.team)
+	const { data, isLoading } = useAppSelector((state: any) => state.teamlead)
+	const { createisSuccess } = useAppSelector((state: any) => state.teamlead)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
 	});
 
 
-
 	useEffect(() => {
 		// @ts-ignore
-		dispatch(getTeam());
+		dispatch(getTeamLead());
+
 	}, [dispatch]);
 
+	useEffect(() => {
+		if (createisSuccess) {
+			dispatch(getTeamLead());
+		}
+	}, [createisSuccess, dispatch]);
 
 
-	const header = ["NAME", "DESCRIPTION", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
-	const [displayData, setDisplayData] = useState([]);
+
+	const header = ["NAME", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
+	const [displayData, setDisplayData] = useState<any>([]);
 
 	return (
 		<div >
-			{/* <div className="SiteWorkermaindiv">
-				<div className="SiteWorkermaindivsub">
-					<span className="SupportmainTitleh3">TASK </span>
-				</div>
-				<CreateTeamModal />
-			</div> */}
+
 			<div className='allemployees-container-main' >
 				<div className='SiteWorkermaindivsub'>
-					<span className='SupportmainTitleh3'>Team List</span>
+					<span className='SupportmainTitleh3'>Team Lead List</span>
 				</div>
 				<div>
 					<EntriesPerPage
@@ -50,8 +52,7 @@ const Team = () => {
 					/>
 				</div>
 				<div>
-					<CreateTeamModal />
-
+					<CreateTeamLead />
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
@@ -85,9 +86,6 @@ const Team = () => {
 											{item?.name}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{item?.description.slice(0, 10)}
-										</td>
-										<td className="table-datacell datatype-numeric">
 											<Button
 												className={
 													item?.status !== "active"
@@ -107,8 +105,7 @@ const Team = () => {
 											{moment(item?.updated_by).format("DD-MM-YYYY")}
 										</td>
 										<td className="table-datacell datatype-numeric">
-
-											<Button id="team-applicatiom-update" onClick={() => navigate(`/team/team/view/${item?.id}`)}>View</Button>
+											<Button id="team-applicatiom-update" onClick={() => navigate(`/teamlead/teamlead/view/${item?.id}`)}>View</Button>
 										</td>
 										{/* <td className="table-datacell datatype-numeric">
 											<Button
@@ -132,6 +129,7 @@ const Team = () => {
 												{item?.is_hr_assisted === true ? "Yes" : "No"}
 											</Button>
 										</td> */}
+
 									</tr>
 								))
 							)}
@@ -144,11 +142,11 @@ const Team = () => {
 					setDisplayData={setDisplayData}
 					data={data}
 					entriesPerPage={entriesPerPage}
-					Total={"Team"}
+					Total={"Team Lead"}
 				/>
 			</footer>
 		</div>
 	)
 }
 
-export default Team
+export default TeamLead

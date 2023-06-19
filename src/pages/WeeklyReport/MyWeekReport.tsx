@@ -9,17 +9,13 @@ import moment from "moment";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import TableLoader from "../../components/TableLoader";
-
-
 import { allweeklyReport } from "../../features/WeeklyReport/WeeklyReportSlice";
 import Pagination from "../../components/Pagination";
-import DataService from "../../utils/dataService";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 
-const dataService = new DataService()
+
 
 const MyWeekReport = ({ setkpidata }: any) => {
-  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();
   const { data, isLoading } = useAppSelector((state: any) => state.Weeklyreport)
 
@@ -32,18 +28,13 @@ const MyWeekReport = ({ setkpidata }: any) => {
   });
 
 
-
   useEffect(() => {
     // @ts-ignore
     dispatch(allweeklyReport());
   }, [dispatch]);
 
 
-
-
   const [displayData, setDisplayData] = useState([]);
-
-
 
   return (
     <div>

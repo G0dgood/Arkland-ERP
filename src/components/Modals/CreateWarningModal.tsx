@@ -17,13 +17,12 @@ const CreateWarningModal = ({ id }: any) => {
   const { data: employees } = useAppSelector((state: any) => state.employee)
   const { createwarningisLoading, createwarningisSuccess } = useAppSelector((state: any) => state.employee)
   const [lgShow, setLgShow] = useState(false);
-  useEffect(() => {
-    // @ts-ignore
-    if (!employees && lgShow) {
-      dispatch(allEmployee());
-    }
 
-  }, [dispatch, employees, lgShow]);
+
+
+  const handlewarning = () => {
+    dispatch(allEmployee());
+  }
 
   const subordinationOptions = ["Type of misconduct", "insubordination"];
 
@@ -63,7 +62,7 @@ const CreateWarningModal = ({ id }: any) => {
       <Button
         variant="contained"
         className="Add-btn"
-        onClick={() => setLgShow(true)}
+        onClick={() => { setLgShow(true); handlewarning() }}
       >
         Create Warning
       </Button>

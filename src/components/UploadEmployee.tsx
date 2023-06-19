@@ -13,7 +13,6 @@ const UploadEmployee = () => {
 
 
   const [message, setMessage] = useState("");
-  const [isError, setisError] = useState(false);
   const [isSuccess, setisSuccess] = useState(false);
   const [isLoading, setisLoading] = useState(false);
 
@@ -36,7 +35,6 @@ const UploadEmployee = () => {
     setisLoading(true)
     await HttpService.uploadFile(url, {}, { employees: file })
       .then((response) => {
-        console.log('response', response);
         setisLoading(false)
       })
       .catch((error) => {
@@ -65,7 +63,7 @@ const UploadEmployee = () => {
         // setReload(false)
       }, 5000);
     }
-  }, [dispatch, isError, isSuccess, message])
+  }, [dispatch, isSuccess, message])
 
 
 
@@ -97,9 +95,6 @@ const UploadEmployee = () => {
         </Modal.Header>
         <Modal.Body>
           <form className="upload-form">
-
-
-
             <div
               className={progress === 0 ? "upload-icon" : "upload-icon-active"}>
               <i className="fas fa-cloud-upload-alt fa-4x" />

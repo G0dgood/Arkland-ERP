@@ -70,7 +70,7 @@ const TeamWeeklyReportUpdate = () => {
 				setisLoading1(false);
 			})
 			.catch((error) => {
-				console.error("Error:", error);
+				// console.error("Error:", error);
 				setisLoading1(false);
 			});
 	}

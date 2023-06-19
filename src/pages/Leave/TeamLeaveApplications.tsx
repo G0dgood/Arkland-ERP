@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import Header from '../../components/Header';
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
-import Cookies from 'js-cookie';
-import storage from '../../utils/dataService';
 import Pagination from '../../components/Pagination';
 import moment from 'moment';
 import { BsCheckCircle, BsClock } from 'react-icons/bs';
@@ -12,29 +9,19 @@ import { SlClose } from 'react-icons/sl';
 import TableLoader from '../../components/TableLoader';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import DataService from '../../utils/dataService';
-import { getTeamLeave, reset } from '../../features/Leave/leaveSlice';
-import { fireAlert } from '../../utils/Alert';
+import { getTeamLeave } from '../../features/Leave/leaveSlice';
+
 
 const dataService = new DataService()
 const TeamLeaveApplications = () => {
 	const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 	const dispatch = useAppDispatch();
-	const { teamdata, teamisError, teamisLoading, teammessage } = useAppSelector((state: any) => state.leave)
-
-
+	const { teamdata, teamisLoading } = useAppSelector((state: any) => state.leave)
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
 	});
-
-	useEffect(() => {
-		if (teamisError) {
-			fireAlert("Leave", teammessage, "error");
-		}
-		dispatch(reset());
-	}, [dispatch, teamisError, teammessage]);
-
 
 
 	const id = userInfo?.department?.id

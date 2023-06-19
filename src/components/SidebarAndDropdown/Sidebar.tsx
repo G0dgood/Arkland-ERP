@@ -13,13 +13,10 @@ import { GoFile } from 'react-icons/go';
 import { CgUserList } from 'react-icons/cg';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import * as AiIcons from 'react-icons/ai';
-import { BiSupport } from 'react-icons/bi';
-import { BsBriefcase, BsShield } from 'react-icons/bs';
+import { BsBriefcase } from 'react-icons/bs';
 import { getUserPrivileges } from '../../functions/auth';
 import { RiTeamLine } from 'react-icons/ri';
 import { GiTeamIdea } from 'react-icons/gi';
-
-
 
 
 const Sidebar = ({
@@ -85,21 +82,23 @@ const Sidebar = ({
           <MenuItem className='Side__Content' active={pathname === '/tasks'} icon={<FaTasks size={20} />}>Tasks
             <Link to="/tasks" />
           </MenuItem>
-          <MenuItem className='Side__Content' active={pathname === '/team'} icon={<RiTeamLine size={20} />}>Team
-            <Link to="/team
-" /> </MenuItem>
-          <MenuItem className='Side__Content' active={pathname === '/teamlead'} icon={<GiTeamIdea size={20} />}>Team Lead
-            <Link to="/teamlead
-" /> </MenuItem>
+          {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+            <MenuItem className='Side__Content' active={pathname === '/team'} icon={<RiTeamLine size={20} />}>Team
+              <Link to="/team
+" /> </MenuItem>)}
+          {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+            <MenuItem className='Side__Content' active={pathname === '/teamlead'} icon={<GiTeamIdea size={20} />}>Team Lead
+              <Link to="/teamlead
+" /> </MenuItem>)}
           {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isTeamLead) && (
             <MenuItem className='Side__Content' active={pathname === '/departments'} icon={<FiFolder size={20} />}> Departments <Link to="/departments" /> </MenuItem>)}
           <MenuItem className='Side__Content' active={pathname === '/projects'} icon={<AiIcons.AiOutlineBank size={25} />}> Projects <Link to="/projects" />  </MenuItem>
           <MenuItem className='Side__Content' active={pathname === '/workers_request'} icon={<FiUserPlus size={25} />}> Workers Request <Link to="/workers_request" />  </MenuItem>
           <SubMenu title={'Leave Management'} icon={<BsBriefcase size={22} />}>
             <MenuItem className='Side__Content' active={pathname === '/leave'}>  <Link to="/leave" /> Leave </MenuItem>
-            {/* {(isTeamLead) && ( */}
-            <MenuItem className='Side__Content' active={pathname === '/leave/leave/team'}> <Link to="/leave/leave/team" />Team Leave</MenuItem>
-            {/* )} */}
+            {(isTeamLead) && (
+              <MenuItem className='Side__Content' active={pathname === '/leave/leave/team'}> <Link to="/leave/leave/team" />Team Leave</MenuItem>
+            )}
             {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
               <MenuItem className='Side__Content' active={pathname === '/leave/leave/hr'}>  <Link to="/leave/leave/hr" />HR Leave</MenuItem>
             )}
@@ -107,8 +106,8 @@ const Sidebar = ({
               <MenuItem className='Side__Content' active={pathname === '/leave/leave/admin'}>  <Link to="/leave/leave/admin" />Admin Leave</MenuItem>
             )}
           </SubMenu>
-          <MenuItem className='Side__Content' active={pathname === '/support'} icon={<BiSupport size={22} />}>  Support <Link to="/support" /> </MenuItem>
-          <MenuItem className='Side__Content' active={pathname === '/policy'} icon={<BsShield size={22} />}>  Policy <Link to="/policy" /> </MenuItem>
+          {/* <MenuItem className='Side__Content' active={pathname === '/support'} icon={<BiSupport size={22} />}>  Support <Link to="/support" /> </MenuItem>
+          <MenuItem className='Side__Content' active={pathname === '/policy'} icon={<BsShield size={22} />}>  Policy <Link to="/policy" /> </MenuItem> */}
         </Menu>
       </SidebarContent>
 

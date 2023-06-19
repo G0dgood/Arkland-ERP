@@ -1,35 +1,41 @@
 import { useEffect, useState } from 'react'
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs'
-import { MdOutlineClose } from 'react-icons/md'
-import TableLoader from '../../components/TableLoader'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@material-ui/core';
 import moment from 'moment'
 import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
-import axios, { AxiosResponse } from 'axios'
-import DataService from '../../utils/dataService'
 import { BounceLoader } from 'react-spinners'
 import { SlBriefcase } from 'react-icons/sl'
-const dataService = new DataService()
+import { useAppDispatch, useAppSelector } from '../../store/useStore'
+import { hrApproveLeave, rejectLeave, reset, viewTeamLeave, } from '../../features/Leave/leaveSlice';
+
 
 const HRUpdateLeave = () => {
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const token = dataService.getToken()
-	const [isLoading, setisLoading] = useState(false);
-	const [isLoading1, setisLoading1] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isSuccess1, setisSuccess1] = useState(false);
-	const [isError, setisError] = useState(false)
-	const [isError1, setisError1] = useState(false)
-	const [message, setMessage] = useState("");
-	const [message1, setMessage1] = useState("");
-	const [isSuccess2, setisSuccess2] = useState(false);
-	const [isLoading2, setisLoading2] = useState(false);
+	const { teamviewdata: data, teamviewisLoading: isLoading } = useAppSelector((state: any) => state.leave)
+
+	const { hrApproveisLoading, hrApproveisSuccess } = useAppSelector((state: any) => state.leave)
+	const { rejectisLoading, rejectisSuccess } = useAppSelector((state: any) => state.leave)
 
 
-	const [data, setData] = useState<any>("");
+	useEffect(() => {
+		dispatch(viewTeamLeave(id));
+	}, [dispatch, id])
+
+
+	const handelupdate = () => {
+		dispatch((hrApproveLeave(id)));
+	}
+
+	const handleReject = () => {
+		dispatch((rejectLeave(id)));
+	}
+
+
+
 	const [count, setCount] = useState(0);
 	const [inputs, setInputs] = useState({
 		start_date: "",
@@ -39,95 +45,27 @@ const HRUpdateLeave = () => {
 	})
 
 
-	useEffect(() => {
-		setisLoading(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage(data?.message)
-					setisError(true)
-				} else {
-					setData(data)
-
-				}
-				setisLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading(false);
-			});
-	}, [id, token])
 
 
-
-	const handelupdate = () => {
-		setisLoading1(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}/hr-approval`, {
-			method: "PATCH", // or 'PUT'
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage1(data?.message)
-					setisError1(true)
-				} else {
-					setisSuccess(true)
-					setTimeout(() => {
-						navigate(-1);
-					}, 2000);
-				}
-				setisLoading1(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading1(false);
-			});
-	}
 
 	const title = "Successful";
 	const html = "Leave Approve!";
-	const icon = "success";
-	const title1 = "Leave error";
-	const html1 = message1;
-	const icon1 = "error";
-	const title2 = "Successful";
 	const html2 = "Leave have been Deleted!";
-	const icon2 = "success";
+	const icon = "success";
 
 
 	useEffect(() => {
-		if (isSuccess) {
+		if (hrApproveisSuccess) {
 			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-				setMessage1("")
-			}, 5000);
-			// setLgShow(false)
-		} else if (isError1) {
-			fireAlert(title1, html1, icon1);
-			setTimeout(() => {
-				setisError1(false)
-				setMessage1("")
-			}, 5000);
-		} else if (isSuccess2) {
-			fireAlert(title2, html2, icon2);
-			setTimeout(() => {
-				setisError1(false)
-				setMessage1("")
-			}, 5000);
+			navigate(-1)
+			dispatch(reset());
+		} else if (rejectisSuccess) {
+			fireAlert(title, html2, icon);
+			navigate(-1)
+			dispatch(reset());
 		}
-	}, [html, html1, isError1, isSuccess, isSuccess1, isSuccess2, setMessage1])
+	}, [dispatch, rejectisSuccess, html, navigate, hrApproveisSuccess])
+
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
@@ -140,42 +78,28 @@ const HRUpdateLeave = () => {
 		setInputs((prevState: any) => {
 			return ({
 				...prevState,
-				description: data?.data?.description,
-				leave_type: data?.data?.type,
+				description: data?.description,
+				leave_type: data?.type,
 
 			});
 		});
-	}, [setInputs, data?.data?.description, data?.data?.type]);
+	}, [setInputs, data?.description, data?.type]);
 
 	useEffect(() => {
-		if (data?.data?.hod_approved === true && !data?.data?.hr_approved) {
+		if (data?.hod_approved === true && !data?.hr_approved) {
 			setCount(1)
-		} else if (data?.data?.hr_approved && data?.data?.hod_approved && !data?.data?.finally_approved) {
+		} else if (data?.hr_approved && data?.hod_approved && !data?.finally_approved) {
 			setCount(2)
-		} else if (data?.data?.hr_approved === true && data?.data?.hod_approved === true && data?.data?.finally_approved === true) {
+		} else if (data?.hr_approved === true && data?.hod_approved === true && data?.finally_approved === true) {
 			setCount(3)
 		} else {
 			setCount(0)
 		}
-	}, [data?.data?.finally_approved, data?.data?.hod_approved, data?.data?.hr_approved])
+	}, [data?.finally_approved, data?.hod_approved, data?.hr_approved])
 
 
-	const handleDelete = () => {
-		setisLoading2(true);
-		axios
-			.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`)
-			.then((res: AxiosResponse) => {
-				console.log('AxiosResponse', res)
-				setisLoading2(false);
-				setisSuccess2(true)
-				setTimeout(() => {
-					navigate("/allleaveapplications");
-				}, 2000);
-			})
-			.catch((data) => {
-				setisLoading2(false);
-			});
-	}
+
+
 
 	return (
 		<div>
@@ -189,7 +113,7 @@ const HRUpdateLeave = () => {
 					<div>
 						{/* eslint-disable-next-line jsx-a11y/alt-text */}
 						<SlBriefcase size={80} />
-						<p className="mt-3">No Tead Lead details</p>
+						<p className="mt-3">No Leave details</p>
 					</div>
 				</div>
 			) : (
@@ -200,7 +124,7 @@ const HRUpdateLeave = () => {
 
 							<div className="contact-form">
 								<div className="heading">
-									<h2>Leave Type : {data?.data?.type}</h2>
+									<h2>Leave Type : {data?.type}</h2>
 									<p>Fill in information to update your Leave!</p>
 								</div>
 								<div  >
@@ -237,15 +161,15 @@ const HRUpdateLeave = () => {
 											onChange={(e) => handleOnChange("description", e.target.value)} />
 									</div>
 								</div>
-								{data?.data?.hr_approved === false &&
+								{data?.hr_approved === false &&
 									<div className='deleteKPIHandler  mt-5'>
 										<span className='deleteKPIHandler-mr'>
-											<Button className="table-link" onClick={handleDelete}>
-												{isLoading2 ? <Spinner animation="border" /> : "Reject"}</Button>
+											<Button className="table-link" onClick={handleReject}>
+												{rejectisLoading ? <Spinner animation="border" /> : "Reject"}</Button>
 										</span>
 										<span >
 											<Button className="table-link-active" onClick={handelupdate} >
-												{isLoading1 ? <Spinner animation="border" /> : "Approve"}
+												{hrApproveisLoading ? <Spinner animation="border" /> : "Approve"}
 											</Button>
 										</span>
 									</div>
@@ -258,19 +182,19 @@ const HRUpdateLeave = () => {
 										<span className='BsFillBriefcaseFill'>
 											<BsFillBriefcaseFill />
 										</span>
-										Leave Type : {data?.data?.type}
+										Leave Type : {data?.type}
 									</li>
 									<li>
 										<span className='BsFillBriefcaseFill'>
 											<BsCalendarDateFill />
 										</span>
-										State date : {moment(data?.data?.start_date).format("DD-MM-YYYY")}
+										State date : {moment(data?.start_date).format("DD-MM-YYYY")}
 									</li>
 									<li>
 										<span className='BsFillBriefcaseFill'>
 											<BsCalendarDate />
 										</span>
-										End date :  {moment(data?.data?.end_date).format("DD-MM-YYYY")}
+										End date :  {moment(data?.end_date).format("DD-MM-YYYY")}
 									</li>
 
 									<span  >
@@ -280,11 +204,11 @@ const HRUpdateLeave = () => {
 										<li className="  rounded mb-3">
 											<div className="progress mb-3"  >
 												{/* @ts-ignore */}
-												{data?.data?.hod_approved === true && <div className="progress-bar bg-success" role="progressbar" style={{ width: "35% " }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"> </div>}
+												{data?.hod_approved === true && <div className="progress-bar bg-success" role="progressbar" style={{ width: "35% " }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"> </div>}
 												{/* @ts-ignore */}
-												{data?.data?.hr_approved === true && <div className="progress-bar bg-warning" role="progressbar" style={{ width: "30% " }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"> </div>}
+												{data?.hr_approved === true && <div className="progress-bar bg-warning" role="progressbar" style={{ width: "30% " }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"> </div>}
 												{/* @ts-ignore */}
-												{data?.data?.finally_approved === true && <div className="progress-bar bg-danger" role="progressbar" style={{ width: "35% " }} aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"> </div>}
+												{data?.finally_approved === true && <div className="progress-bar bg-danger" role="progressbar" style={{ width: "35% " }} aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"> </div>}
 
 											</div>
 											<div className="p-3">
@@ -293,23 +217,23 @@ const HRUpdateLeave = () => {
 														<div className="small text-muted">{count + ' Aprovals'}</div>
 													</div>
 													<div className="align-self-center ml-3">
-														{data?.data?.hod_approved === true &&
+														{data?.hod_approved === true &&
 															<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-														{data?.data?.hr_approved === true &&
+														{data?.hr_approved === true &&
 															<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-														{data?.data?.finally_approved === true &&
+														{data?.finally_approved === true &&
 															<img className="rounded-circle border" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
 													</div>
 												</div>
 											</div>
-											<Button className={data?.data?.status === "HOD approved" ? "table-link" :
-												data?.data?.status === "HR approved" ? "table-link-hr" :
-													data?.data?.status === "approved" ? "table-link-active" :
-														data?.data?.status === "rejected" ? "table-link-reject" : "table-link"}>
-												{data?.data?.status === "HOD approved" ? "HOD approved" :
-													data?.data?.status === "HR approved" ? "HR approved" :
-														data?.data?.status === "approved" ? "LEAVE approved" :
-															data?.data?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
+											<Button className={data?.status === "HOD approved" ? "table-link" :
+												data?.status === "HR approved" ? "table-link-hr" :
+													data?.status === "approved" ? "table-link-active" :
+														data?.status === "rejected" ? "table-link-reject" : "table-link"}>
+												{data?.status === "HOD approved" ? "HOD approved" :
+													data?.status === "HR approved" ? "HR approved" :
+														data?.status === "approved" ? "LEAVE approved" :
+															data?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
 										</li>
 									</div>
 								</ul>

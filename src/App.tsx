@@ -63,18 +63,19 @@ import ViewSiteWorkerRequest from "./pages/WorkersRequest/ViewSiteWorkerRequest"
 import ViewHOD from "./pages/HOD/ViewHOD";
 import ViewRole from "./pages/EmployeeRole/ViewRole";
 import TeamLead from "./pages/TeamLead/TeamLead";
+ 
 
-
-
+ 
 const dataService = new DataService();
 
-
 const App: React.FC<any> = () => {
-
-
-  const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-  const token = dataService.getToken()
-  const auth = <Protected loggedIn={user && token}><Layout /></Protected>
+  const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`);
+  const token = dataService.getToken();
+  const auth = (
+    <Protected loggedIn={user && token}>
+      <Layout />
+    </Protected>
+  );
 
   return (
     <BrowserRouter>
@@ -84,19 +85,25 @@ const App: React.FC<any> = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* protected routes for auth */}
-        <Route path="/" element={auth} >
+        <Route path="/" element={auth}>
           <Route index element={<Dashboard />} />
 
           <Route path="employees">
             <Route index element={<AllEmployees />} />
             <Route path="employees/:id" element={<ViewEmployee />} />
             <Route path="employees/edit/:id" element={<AdminEditUser />} />
-            <Route path="/employees/employees/create" element={<CreateEmployee />} />
+            <Route
+              path="/employees/employees/create"
+              element={<CreateEmployee />}
+            />
           </Route>
 
-          <Route path="attendance" >
+          <Route path="attendance">
             <Route index element={<EmployeeAttendance />} />
-            <Route path="employee/attendance/list" element={<EmployeeAttendanceTable />} />
+            <Route
+              path="employee/attendance/list"
+              element={<EmployeeAttendanceTable />}
+            />
             <Route path="attendance/list/hr" element={<AttendanceTable />} />
           </Route>
 
@@ -104,7 +111,10 @@ const App: React.FC<any> = () => {
             <Route index element={<MyKPIAssessment />} />
             <Route path="kpiassessment/:id" element={<KPIDetails />} />
             <Route path="kpiassessment/teamkpi" element={<TeamKPI />} />
-            <Route path="kpiassessment/teamkpi/view/:id" element={<ViewKPAssessment />} />
+            <Route
+              path="kpiassessment/teamkpi/view/:id"
+              element={<ViewKPAssessment />}
+            />
             <Route path="kpiassessment/admin" element={<AllKPIReport />} />
           </Route>
 
@@ -123,8 +133,14 @@ const App: React.FC<any> = () => {
             <Route index element={<WeeklyReport />} />
             <Route path="weeklyreport/team" element={<TeamWeeklyReport />} />
             <Route path="weeklyreport/:id" element={<WeeklyReportView />} />
-            <Route path="weeklyreport/update/:id" element={<TeamWeeklyReportUpdate />} />
-            <Route path="weeklyreport/myweeklyreport" element={<MyWeekReport />} />
+            <Route
+              path="weeklyreport/update/:id"
+              element={<TeamWeeklyReportUpdate />}
+            />
+            <Route
+              path="weeklyreport/myweeklyreport"
+              element={<MyWeekReport />}
+            />
           </Route>
 
           <Route path="announcements">
@@ -173,7 +189,10 @@ const App: React.FC<any> = () => {
 
           <Route path="workers_request">
             <Route index element={<SiteWorkerRequest />} />
-            <Route path="workers_request/view/:id" element={<ViewSiteWorkerRequest />} />
+            <Route
+              path="workers_request/view/:id"
+              element={<ViewSiteWorkerRequest />}
+            />
           </Route>
           <Route path="hod">
             <Route index element={<CreateHOD />} />
@@ -183,18 +202,15 @@ const App: React.FC<any> = () => {
             <Route path="userrole/viewrole/:id" element={<ViewRole />} />
           </Route>
 
-
           <Route path="/createnewrole" element={<CreateRole />} />
           <Route path="/userprivileges" element={<Userprivileges />} />
           <Route path="/support" element={<Support />} />
           <Route path="/policy" element={<Policy />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
-
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
-
