@@ -1,4 +1,3 @@
-import { io } from "socket.io-client";
 import toast, { Toaster } from 'react-hot-toast';
 import noti from './NotificationSound/IPhoneNotification.mp3'
 import DataService from '../utils/dataService';
@@ -20,16 +19,6 @@ const NotificationPopUp = ({ setRefresh, setNotification, socket }: any) => {
 			dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
 			setNotification(notification)
 
-			// <div>
-			// 	<div className="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-			// 		<div className="d-flex">
-			// 			<div className="toast-body">
-			// 				{notification?.data[0].details}
-			// 			</div>
-			// 			<button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-			// 		</div>
-			// 	</div>
-			// </div>
 			toast.success(<p className='text-white-socket'>{notification?.data[0].details}</p>);
 			myAudio.play()
 			setRefresh(true)

@@ -2,10 +2,12 @@ import axios from "axios";
 import EventEmitter from "./EventEmitter"; 
 import { fireAlert } from "../utils/Alert";
 import DataService from "../utils/dataService";
+import { useLocation } from "react-router-dom";
+
 
 
 class HttpService {
-  dataService = new DataService()  
+    dataService = new DataService()   
   private  token:any;
   private  config;
   private  baseUrl = `${process.env.REACT_APP_API}/`
@@ -141,7 +143,7 @@ class HttpService {
     }
 
     handleError(e:any ) { 
-       
+      
         if (e.response.status === 401) { 
             fireAlert("Authentication error",e.response.data.message, "error");   
             window.location.replace("/login");
