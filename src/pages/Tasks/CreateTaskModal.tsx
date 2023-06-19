@@ -71,7 +71,7 @@ const CreateTaskModal = ({ view }: any) => {
 
 	return (
 		<div>
-			{view === "team" ? <Button className="add-button" onClick={getData}>Add task</Button> : <Button
+			{view === "team" ? <Button className="add-button" onClick={() => { setShow(true); getData() }}>Add task</Button> : <Button
 				variant="contained"
 				className="Add-btn"
 				onClick={() => { setShow(true); getData() }} >

@@ -6,12 +6,13 @@ import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
-import $ from "jquery";
-
-import { reset } from '../../features/WeeklyReport/WeeklyReportSlice';
 import { useAppDispatch } from '../../store/useStore';
 import DataService from '../../utils/dataService';
 import HttpService from '../../components/HttpService';
+import Uploadfile from './Uploadfile';
+
+
+
 
 const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {
@@ -19,12 +20,18 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+
+
+
 	const [count, setCount] = useState<number>(0)
+	const [files, setFile] = useState([]);
 	const [inputs, setInputs] = useState<any>({
 		assessment: "",
 		week: "0",
 		activities: [],
 	})
+
+
 
 	const [newWeeklyField, setNewWeeklyField] = useState<any>([
 		{
@@ -83,57 +90,38 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 		blockers: item.blockers
 	}));
 
-	const allinput = { ...inputs, activities }
-
-
+	const allInput = { ...inputs, activities }
 
 	const title = "Successful";
 	const html = "Week Report Created!";
 	const icon = "success";
-	const title1 = "Week Report error";
-	// const html1 = createmessage;
-	const icon1 = "error";
-
 	const [isLoading, setisLoading] = useState(false);
-
 	const url = `hr/weekly-reports`
 
-	// const handleLeave = () => {
-	// 	// @ts-ignore
-	// 	dispatch(createweeklyReport(allinput));
-	// }
+
+
 	const [message, setMessage] = useState("");
-	const [isError, setisError] = useState(false);
 	const [isSuccess, setisSuccess] = useState(false);
-
-
 
 	const submitHandler = async () => {
 		setisLoading(true)
-		await HttpService.uploadFile(url, {}, { employees: allinput })
+		const fileObject: any = {}
+		for (let i = 0; i < files.length; i++) {
+			fileObject[i] = files[i]
+		}
+		allInput.activities = JSON.stringify(allInput.activities)
+		// console.log('fileObject', fileObject)
+		// console.log('allinput', allInput)
+		await HttpService.uploadFile(url, allInput, fileObject, "file")
 			.then((response) => {
-				console.log('response', response);
+				// console.log('response', response);
 				setisLoading(false)
 				setisSuccess(true)
-				setTimeout(() => {
-					setMessage("")
-					setisError(false)
-					setisSuccess(false)
-				}, 2000);
 			})
 			.catch((error) => {
-				console.log('error', error);
-				setisError(true)
 				setisLoading(false)
 				setMessage(error.response.data.message)
-				setTimeout(() => {
-					setMessage("")
-					setisError(false)
-				}, 2000);
 			})
-
-
-
 	};
 
 
@@ -146,46 +134,13 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 				week: "",
 				activities: []
 			})
-			setTimeout(() => {
-				dispatch(reset());
-				setIsCheck(false)
-			}, 2000);
-		} else if (isError) {
-			fireAlert(title1, message, icon1);
-			// setTimeout(() => {
-			// 	setInputs({
-			// 		assessment: " ",
-			// 		week: "",
-			// 		activities: [
-			// 			{
-			// 				completed: "",
-			// 				in_progress: "",
-			// 				next: "",
-			// 				due_date_for_next: "",
-			// 				next_week_tasks: [""],
-			// 				issues: [""],
-			// 				blockers: [""]
-			// 			}
-			// 		]
-			// 	})
-			// }, 5000);
-			reset()
 		}
-	}, [html, setIsCheck, dispatch, isSuccess, isError, message])
+	}, [html, setIsCheck, dispatch, isSuccess, message])
 
 
 
-	$('#chooseFile').bind('change', function () {
-		let filename: any = $("#chooseFile").val();
-		if (/^\s*$/.test(filename)) {
-			$(".file-upload").removeClass('active');
-			$("#noFile").text("No file chosen...");
-		}
-		else {
-			$(".file-upload").addClass('active');
-			$("#noFile").text(filename.replace("C:\\fakepath\\", ""));
-		}
-	});
+
+
 
 	return (
 		<div className='weeklycontainer'>
@@ -251,18 +206,18 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 						</div>
 
 
-						<div >
-							<Button onClick={handleAddField} id='btn-delete-field'>
-								<MdPostAdd size={15} className='btn-delete-field-icon' />
-								Add Field
-							</Button>
-						</div>
 						{count > 0 && <div onClick={handleRemoveField} >
 							<Button id='btn-delete-field'>
 								<RiDeleteBin5Line size={14} className='btn-delete-field-icon' />
 								Delete
 							</Button>
 						</div>}
+						<div >
+							<Button onClick={handleAddField} id='btn-delete-field'>
+								<MdPostAdd size={15} className='btn-delete-field-icon' />
+								Add Field
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -271,13 +226,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 				<div className='WeeKlyReport-submit-container'>
 					{/* <div className='file-containal'> */}
 					<div>
-						<div className="file-upload">
-							<div className="file-select">
-								<div className="file-select-button" id="fileName">Choose File</div>
-								<div className="file-select-name" id="noFile">No file chosen...</div>
-								<input type="file" name="chooseFile" id="chooseFile" />
-							</div>
-						</div>
+						<Uploadfile setFile={setFile} files={files} />
 					</div>
 					<div>
 						{/* <button className="ccsnl-btn WeeKlyReport-tab" >

@@ -8,10 +8,10 @@ const CreateEvent = () => {
 	return (
 
 		<div>
-			{/* <Button variant="contained" className="Create-event"
+			<Button variant="contained" className="Create-event"
 				onClick={() => setLgShow(true)}>
 				Create Event
-			</Button> */}
+			</Button>
 
 			<Modal
 				size="lg"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@material-ui/core';
 import { BsCalendarDate, BsCalendarDateFill, BsFillBriefcaseFill } from 'react-icons/bs';
 import moment from 'moment';
@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { reset, viewLeave, viewdeleteLeave } from '../../features/Leave/leaveSlice';
 import { fireAlert } from '../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
-
 import { BounceLoader } from 'react-spinners';
 import { SlBriefcase } from 'react-icons/sl';
 
@@ -17,15 +16,15 @@ const ViewLeave = () => {
 	const { id } = useParams()
 	const navigate = useNavigate()
 
-	const { viewdata: datas, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.leave)
-	const { viewdeleteisError, viewdeleteisLoading, viewdeletemessage, viewdeleteisSuccess } = useAppSelector((state: any) => state.leave)
+	const { viewdata: datas, viewisLoading, viewmessage } = useAppSelector((state: any) => state.leave)
+	const { viewdeleteisLoading, viewdeleteisSuccess } = useAppSelector((state: any) => state.leave)
 
 	const data = datas[0]
 
 
 
 	useEffect(() => {
-		dispatch((viewLeave(id)));
+		dispatch(viewLeave(id));
 	}, [dispatch, id]);
 
 	useEffect(() => {
@@ -34,7 +33,7 @@ const ViewLeave = () => {
 			navigate(-1)
 			dispatch(reset());
 		}
-	}, [dispatch, id, viewdeleteisError, viewmessage, viewisError, viewdeletemessage, viewdeleteisSuccess, navigate])
+	}, [dispatch, id, viewmessage, viewdeleteisSuccess, navigate])
 
 
 	const [count, setCount] = useState(0);
@@ -94,7 +93,6 @@ const ViewLeave = () => {
 			) : !data || data === undefined ? (
 				<div className="table-loader-announcement">
 					<div>
-						{/* eslint-disable-next-line jsx-a11y/alt-text */}
 						<SlBriefcase size={80} />
 						<p className="mt-3">No Tead Lead details</p>
 					</div>

@@ -13,12 +13,11 @@ import { Link } from "react-router-dom";
 import { getAssessment } from "../../features/KPIAssessment/assessmentSlice";
 import DataService from "../../utils/dataService";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-
 import CreateKpiModal from "../../components/Modals/CreateKpiModal";
 
 
 const dataService = new DataService()
-const MyKPIAssessment = ({ setkpidata }: any) => {
+const MyKPIAssessment = () => {
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const dispatch = useAppDispatch();
   const { data, isLoading } = useAppSelector((state: any) => state.assessment)

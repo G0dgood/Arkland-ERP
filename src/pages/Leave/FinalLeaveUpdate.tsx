@@ -5,33 +5,28 @@ import { Button } from '@material-ui/core';
 import moment from 'moment'
 import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
-import axios, { AxiosResponse } from 'axios'
-import DataService from '../../utils/dataService'
-import { viewLeave } from '../../features/Leave/leaveSlice'
+import { finalApproveLeave, rejectLeave, reset, viewTeamLeave } from '../../features/Leave/leaveSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { BounceLoader } from 'react-spinners';
 import { SlBriefcase } from 'react-icons/sl';
 
-const dataService = new DataService()
+
 
 const FinalLeaveUpdate = () => {
-	const { viewdata: datas, viewisLoading } = useAppSelector((state: any) => state.leave)
+	const { teamviewdata: data, teamviewisLoading: viewisLoading } = useAppSelector((state: any) => state.leave)
+	const { finalApproveisSuccess, finalApproveisLoading } = useAppSelector((state: any) => state.leave)
+	const { rejectisLoading, rejectisSuccess } = useAppSelector((state: any) => state.leave)
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const token = dataService.getToken()
 
-	const [isLoading1, setisLoading1] = useState(false);
-	const [isSuccess, setisSuccess] = useState(false);
-	const [isError1, setisError1] = useState(false)
-	const [message1, setMessage1] = useState("");
-	const [isLoading2, setisLoading2] = useState(false);
+	useEffect(() => {
+		dispatch(viewTeamLeave(id));
+	}, [dispatch, id])
 
 
-	const data = datas[0]
 
 
-	// const [data, setData] = useState<any>("");
 	const [count, setCount] = useState(0);
 	const [inputs, setInputs] = useState({
 		start_date: "",
@@ -40,58 +35,33 @@ const FinalLeaveUpdate = () => {
 		leave_type: ""
 	})
 
-	useEffect(() => {
-		dispatch((viewLeave(id)));
-	}, [dispatch, id]);
+
 
 
 
 
 	const handelupdate = () => {
-		setisLoading1(true);
-		fetch(`${process.env.REACT_APP_API}/hr/leaves/${id}/final-approval`, {
-			method: "PATCH", // or 'PUT'
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data?.success === false) {
-					setMessage1(data?.message)
-					setisError1(true)
-				} else {
-					setisSuccess(true)
-					setTimeout(() => {
-						navigate("/allieave");
-					}, 2000);
-				}
-				setisLoading1(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				setisLoading1(false);
-			});
+		dispatch((finalApproveLeave(id)));
 	}
 
 	const title = "Successful";
 	const html = "Leave Approved!";
 	const icon = "success";
-	const html1 = message1;
+
 
 
 
 	useEffect(() => {
-		if (isSuccess) {
+		if (finalApproveisSuccess) {
 			fireAlert(title, html, icon);
-			setTimeout(() => {
-				setisSuccess(false)
-				setMessage1("")
-			}, 5000);
-			// setLgShow(false)
+			navigate(-1)
+			dispatch(reset());
+		} else if (rejectisSuccess) {
+			fireAlert(title, "Leave Rejected!", icon);
+			navigate(-1)
+			dispatch(reset());
 		}
-	}, [html, html1, isError1, isSuccess, setMessage1])
+	}, [dispatch, finalApproveisSuccess, html, navigate, rejectisSuccess])
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
@@ -125,25 +95,8 @@ const FinalLeaveUpdate = () => {
 	}, [data?.finally_approved, data?.hod_approved, data?.hr_approved])
 
 
-	const handleDelete = () => {
-		setisLoading2(true);
-		axios
-			.patch(`${process.env.REACT_APP_API}/hr/leaves/${id}/reject`, {
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`
-				},
-			})
-			.then((res: AxiosResponse) => {
-				// console.log('AxiosResponse', res)
-				setisLoading2(false);
-				setTimeout(() => {
-					navigate(-1);
-				}, 2000);
-			})
-			.catch((data) => {
-				setisLoading2(false);
-			});
+	const handleReject = () => {
+		dispatch(rejectLeave(id));
 	}
 
 	return (
@@ -207,12 +160,12 @@ const FinalLeaveUpdate = () => {
 								{data?.finally_approved === false &&
 									<div className='deleteKPIHandler  mt-5'>
 										<span className='deleteKPIHandler-mr'>
-											<Button className="table-link" onClick={handleDelete}>
-												{isLoading2 ? <Spinner animation="border" /> : "Reject"}</Button>
+											<Button className="table-link" onClick={handleReject}>
+												{rejectisLoading ? <Spinner animation="border" /> : "Reject"}</Button>
 										</span>
 										<span >
 											<Button className="table-link-active" onClick={handelupdate} >
-												{isLoading1 ? <Spinner animation="border" /> : "Approve"}
+												{finalApproveisLoading ? <Spinner animation="border" /> : "Approve"}
 											</Button></span>
 									</div>
 								}

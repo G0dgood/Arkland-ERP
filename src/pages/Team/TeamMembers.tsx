@@ -5,7 +5,7 @@ const TeamMembers = () => {
 	return (
 		<div>
 
-			<div className="row">
+			{/* <div className="row">
 				<div className="column1">
 					<div className="card1">
 						<img src={userIcon} alt="Jane" style={{ width: "100%" }} />
@@ -116,7 +116,7 @@ const TeamMembers = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	)
 }
