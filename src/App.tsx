@@ -15,7 +15,6 @@ import CreateEmployee from "./pages/all_employees/CreateEmployee";
 import WarningList from "./pages/all_employees/WarningList";
 import WeeklyReport from "./pages/WeeklyReport/WeeklyReport";
 import Profile from "./pages/Profile/Profile";
-import EditUser from "./pages/EditUser/EditUser";
 import AdminEditUser from "./pages/AdminEditUser/AdminEditUser";
 import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
 import Departments from "./pages/Departments/Departments";
@@ -162,7 +161,6 @@ const App: React.FC<any> = () => {
 
           <Route path="profile">
             <Route index element={<Profile />} />
-            <Route path="profile/view" element={<EditUser />} />
           </Route>
           <Route path="tasks">
             <Route index element={<TaskList />} />

@@ -15,7 +15,7 @@ const EmployeeAttendanceTable = () => {
   const dispatch = useAppDispatch();
   // @ts-ignore
 
-  const { mydata, myisError, myisLoading, mymessage, myisSuccess } = useAppSelector((state: any) => state.attendance)
+  const { mydata, myisLoading } = useAppSelector((state: any) => state.attendance)
   useEffect(() => {
     dispatch(myAttendance())
   }, [dispatch])
@@ -27,24 +27,13 @@ const EmployeeAttendanceTable = () => {
 
 
 
-  const [data, setData] = useState<any>([]);
-  const [sortData, setSortData] = useState([]);
-  const [searchItem, setSearchItem] = useState("");
-
-
-
-  const title = "Attendance error";
-  const html = mymessage;
-  const icon = "error";
-
-
-
   const header = [
     { title: "NAME", prop: "employee_name" },
     { title: "DEPARTMENT", prop: "employee_department" },
     { title: "ARRIVAL", prop: "time_in" },
-    { title: "CONFIRMED", prop: "ip_checked" },
-    { title: "HR CHECKING", prop: "is_hr_assisted" },
+    { title: "WEEK DAY", prop: "week_day_created" },
+    { title: "CHECKED-IN OFFICE", prop: "ip_checked" },
+    { title: "HR ASSISTED CHECK-IN", prop: "is_hr_assisted" },
     // { title: "DATE", prop: "created_at" },
     // { title: "ACTION" },
   ];
@@ -58,7 +47,7 @@ const EmployeeAttendanceTable = () => {
           </div>
           <div>
             <EntriesPerPage
-              data={data}
+              data={mydata}
               entriesPerPage={entriesPerPage}
               setEntriesPerPage={setEntriesPerPage}
             />
@@ -95,12 +84,15 @@ const EmployeeAttendanceTable = () => {
                 ) : (
                   mydata?.map((item: any, i: any) => (
                     <tr className="data-table-row" key={i}>
-
                       <td className="table-datacell datatype-numeric">
                         {item?.employee_name}
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {/* {checkForName(item.department, departments)} */}
+
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {item?.week_day_created}
                       </td>
                       <td className="table-datacell datatype-numeric">
                         {new Date(item?.time_in).toLocaleString()}
@@ -113,7 +105,7 @@ const EmployeeAttendanceTable = () => {
                               : "table-link-active"
                           }
                         >
-                          {item?.ip_checked}
+                          {item?.ip_checked === true ? "Yes" : "No"}
                         </Button>
                       </td>
                       <td className="table-datacell datatype-numeric">
@@ -124,19 +116,9 @@ const EmployeeAttendanceTable = () => {
                               : "table-link-active"
                           }
                         >
-                          {item?.is_hr_assisted}
+                          {item?.is_hr_assisted === true ? "Yes" : "No"}
                         </Button>
                       </td>
-                      {/* <td className="table-datacell datatype-numeric">
-                        <Link to={`/teamWeeklyreportupdate/${item?._id}`}>
-                          <Button id="team-applicatiom-update">
-                            {" "}
-                            {item?.status === "acknowledged"
-                              ? "View"
-                              : "Update"}
-                          </Button>
-                        </Link>
-                      </td> */}
                     </tr>
                   ))
                 )}

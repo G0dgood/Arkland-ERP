@@ -27,7 +27,7 @@ const UploadEmployee = () => {
   const handleShow = () => setShow(true);
   const [file, setFile] = useState<any>()
 
-
+  // console.log('file', file)
 
 
   const submitHandler = async () => {
@@ -38,13 +38,9 @@ const UploadEmployee = () => {
         setisLoading(false)
       })
       .catch((error) => {
-        console.log('error', error);
+        // console.log('error', error);
         setisLoading(false)
       })
-
-
-    // @ts-ignore
-    // dispatch(uploadEmployee(jsonData, setProgress));
 
   };
 
@@ -111,12 +107,12 @@ const UploadEmployee = () => {
               className="file-upload-input"
               // @ts-ignore 
               onChange={handleChange} />
-            <ProgressBar
+            {/* <ProgressBar
               animated
               className="upload-progress-bar"
               now={progress}
             // onClick={onClickReset}
-            />
+            /> */}
 
 
             <div className='deleteKPIHandler' style={{ marginTop: "40px" }}>

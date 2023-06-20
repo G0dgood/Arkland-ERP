@@ -10,14 +10,12 @@ import { useAppDispatch } from '../../store/useStore';
 import DataService from '../../utils/dataService';
 import HttpService from '../../components/HttpService';
 import Uploadfile from './Uploadfile';
-
-
-
+import { useNavigate } from 'react-router-dom';
 
 const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {
 	const dispatch = useAppDispatch();
-
+	const navigate = useNavigate();
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
@@ -30,6 +28,9 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 		week: "0",
 		activities: [],
 	})
+
+
+
 
 
 
@@ -99,22 +100,24 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const url = `hr/weekly-reports`
 
 
-
 	const [message, setMessage] = useState("");
 	const [isSuccess, setisSuccess] = useState(false);
 
+	const blob = files?.map((item: any) => item.file)
+
 	const submitHandler = async () => {
+
 		setisLoading(true)
 		const fileObject: any = {}
-		for (let i = 0; i < files.length; i++) {
-			fileObject[i] = files[i]
+		// @ts-ignore
+		for (let i = 0; i < blob?.length; i++) {
+			fileObject[i] = blob[i]
 		}
+
 		allInput.activities = JSON.stringify(allInput.activities)
-		// console.log('fileObject', fileObject)
-		// console.log('allinput', allInput)
 		await HttpService.uploadFile(url, allInput, fileObject, "file")
 			.then((response) => {
-				// console.log('response', response);
+
 				setisLoading(false)
 				setisSuccess(true)
 			})
@@ -134,11 +137,15 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 				week: "",
 				activities: []
 			})
+			setShow(false)
+			navigate('/weeklyreport/weeklyreport/myweeklyreport')
 		}
-	}, [html, setIsCheck, dispatch, isSuccess, message])
+	}, [html, setIsCheck, dispatch, isSuccess, message, navigate])
 
 
 
+
+	const [show, setShow] = useState(false);
 
 
 
@@ -205,7 +212,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 							</span>
 						</div>
 
-
+						<Uploadfile setFile={setFile} files={files} setShow={setShow} show={show} isLoading={isLoading} submitHandler={submitHandler} />
 						{count > 0 && <div onClick={handleRemoveField} >
 							<Button id='btn-delete-field'>
 								<RiDeleteBin5Line size={14} className='btn-delete-field-icon' />
@@ -224,19 +231,12 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			<div>
 				<WeeklyReportTable newWeeklyField={newWeeklyField} setNewWeeklyField={setNewWeeklyField} setInputs={setInputs} inputs={inputs} />
 				<div className='WeeKlyReport-submit-container'>
-					{/* <div className='file-containal'> */}
-					<div>
-						<Uploadfile setFile={setFile} files={files} />
-					</div>
-					<div>
-						{/* <button className="ccsnl-btn WeeKlyReport-tab" >
-							{false ? <Spinner animation="border" /> : "Upload"} </button> */}
-						<button className="ccsnl-btn WeeKlyReport-tab"
+					<div className='file-containal'>
+						{!show && <Button className="ccsnl-btn WeeKlyReport-tab"
 							onClick={submitHandler}>
-							{isLoading ? <Spinner animation="border" /> : "Sumbit"} </button>
+							{isLoading ? <Spinner animation="border" /> : "Sumbit"} </Button>}
 
 					</div>
-					{/* </div> */}
 				</div>
 			</div>
 		</div >

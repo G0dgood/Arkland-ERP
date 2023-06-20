@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import { Toast } from "react-bootstrap";
 import { Button } from "@material-ui/core";
@@ -6,7 +6,7 @@ import { Form, Formik } from "formik";
 import { BsExclamationLg } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import axios from "axios";
+
 import first from "../../../assets/images/Bijou.jpg";
 import second from "../../../assets/images/1.png";
 import third from "../../../assets/images/1.jpg";
@@ -15,68 +15,34 @@ import fifth from "../../../assets/images/PHOENIX.jpg";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import InputField from "../../../components/Inputs/InputField";
 import { fireAlert } from "../../../utils/Alert";
-import DataService from "../../../utils/dataService";
-import { useNavigate } from "react-router-dom";
 
-const dataService = new DataService()
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../store/useStore";
+import { reset, updatePassword } from "../../../features/User/userSlice";
+
+
 const UpdatePassword = () => {
   const navigate = useNavigate();
-  const token = dataService.getToken()
-  const [isLoading, setLoading] = React.useState(false);
+  const dispatch = useAppDispatch();
+  const { updateisLoading, updateisSuccess } = useAppSelector((state: any) => state.userinfo)
 
-  const [error, setError] = useState<any>();
-  const [success, setSuccess] = useState<any>();
-  const [showToast, setShowToast] = useState(false);
-  const [message, setMessage] = useState("");
 
-  const handleSubmit = (values: any, { resetForm }: any) => {
-    setLoading(true);
-    const requestOptions = {
-      method: "PATCH",
-      body: JSON.stringify({ ...values }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    fetch(`${process.env.REACT_APP_API}/me/password`, requestOptions)
-      .then(async (response) => {
-        // @ts-ignore
-        setLoading(false);
-        const isJson = response.headers
-          .get("content-type")
-          ?.includes("application/json");
-        const data = isJson && (await response.json());
-        if (!response.ok) {
-          // get error message from body or default to response status
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
-        }
-        resetForm(values);
-        // set token in axios header
-        axios.defaults.headers.common["authorization"] = data?.data.token;
-        // set token in cookie
+  useEffect(() => {
+    if (updateisSuccess) {
+      fireAlert("Successful", "Password update successful", "success");
 
-        const title = "Password update successful";
-        const html = `Password updated`;
-        const icon = "success";
-        fireAlert(title, html, icon);
-        navigate("/home");
-        window.location.replace("/home");
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError(true);
-        setMessage(error);
-        const html = error || "Something went wrong!";
-        const icon = "error";
-        const title = "Password update failed";
-        fireAlert(title, html, icon);
-        setTimeout(() => {
-          setError(false);
-          setMessage("");
-        }, 5000);
-      });
+      setTimeout(() => {
+        navigate("/");
+      }, 5000);
+
+      dispatch(reset());
+    }
+  }, [updateisSuccess, dispatch, navigate])
+
+  const handleSubmit = async (values: any, { resetForm }: any) => {
+    const inputs = { ...values };
+    // @ts-ignore
+    dispatch(updatePassword(inputs));
   };
 
   return (
@@ -104,43 +70,8 @@ const UpdatePassword = () => {
         </Carousel>
 
         <div className="login-container success-toast">
-          {error && (
-            <Toast
-              onClose={() => setShowToast(false)}
-              show={true}
-              delay={4000}
-              autohide
-            >
-              <Toast.Body>
-                <span>
-                  <BsExclamationLg />
-                </span>
-                <p>{message}</p>
-                <span onClick={() => setShowToast(false)}>
-                  <FaTimes />
-                </span>
-              </Toast.Body>
-            </Toast>
-          )}
-          {success && (
-            <Toast
-              onClose={() => setShowToast(false)}
-              show={true}
-              delay={4000}
-              autohide
-              bg="success"
-            >
-              <Toast.Body>
-                <span>
-                  <BsExclamationLg />
-                </span>
-                <p>{message}</p>
-                <span onClick={() => setShowToast(false)}>
-                  <FaTimes />
-                </span>
-              </Toast.Body>
-            </Toast>
-          )}
+
+
           <div className="login-content-layout">
             <div className="login-content-grid">
               <div className="login-form-container">
@@ -184,7 +115,7 @@ const UpdatePassword = () => {
                       </div>
 
                       <Button type="submit" className="forgot-password-button">
-                        {isLoading ? "Please wait..." : "Update Password"}
+                        {updateisLoading ? "Please wait..." : "Update Password"}
                       </Button>
                     </Form>
                   )}

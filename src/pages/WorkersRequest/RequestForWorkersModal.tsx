@@ -111,9 +111,6 @@ const RequestForWorkersModal = ({ id }: any) => {
 
 
 
-
-
-
 	const availableRole = [] as any;
 
 	getroledata &&
@@ -132,8 +129,6 @@ const RequestForWorkersModal = ({ id }: any) => {
 		requested_quantity: item.requested_quantity,
 
 	}));
-
-
 
 
 

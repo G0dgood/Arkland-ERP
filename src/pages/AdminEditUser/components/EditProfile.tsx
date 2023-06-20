@@ -32,7 +32,7 @@ const EditProfile = ({
   roleOptions,
   id
 }: any) => {
-  const { updateemployeeisError, updateemployeeisLoading, updateemployeemessage, updateemployeeisSuccess } = useAppSelector((state: any) => state.employee)
+  const { updateemployeeisLoading, updateemployeeisSuccess } = useAppSelector((state: any) => state.employee)
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -42,11 +42,8 @@ const EditProfile = ({
       dispatch(reset());
       fireAlert("Employee Update", "Employee Update Successful", "success");
       navigate("/employees");
-    } else if (updateemployeeisError) {
-      fireAlert("Employee Update Failed", updateemployeemessage, "error");
-      dispatch(reset());
     }
-  }, [dispatch, navigate, updateemployeeisError, updateemployeeisSuccess, updateemployeemessage]);
+  }, [dispatch, navigate, updateemployeeisSuccess,]);
 
 
   const [disability, setDisability] = useState(false);

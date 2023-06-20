@@ -36,6 +36,24 @@ const initialState = {
   createisLoading: false, 
   createmessage: '', 
   
+  forgetdata:   [],
+  forgetisError: false,
+  forgetisSuccess: false,
+  forgetisLoading: false, 
+  forgetmessage: '', 
+
+  updatedata:   [],
+  updateisError: false,
+  updateisSuccess: false,
+  updateisLoading: false, 
+  updatemessage: '', 
+
+  resetdata:   [],
+  resetisError: false,
+  resetisSuccess: false,
+  resetisLoading: false, 
+  resetmessage: '', 
+  
 }
  
  
@@ -95,6 +113,48 @@ export const createprivileges = createAsyncThunk('user/createprivileges', async 
   }
 })
  
+// Forget Password
+export const forgetPassword = createAsyncThunk('user/forgetPassword', async ( data,thunkAPI) => {
+  try {
+    return await userService.forgetPassword(data )
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
+// Update Password
+export const updatePassword = createAsyncThunk('user/updatePassword', async ( data,thunkAPI) => {
+  try {
+    return await userService.updatePassword(data )
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
+// Reset Password
+export const resetPassword = createAsyncThunk('user/resetPassword', async ( data,thunkAPI) => {
+  try {
+    return await userService.resetPassword(data )
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()   
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
 
  
  
@@ -123,6 +183,21 @@ export const userSlice = createSlice({
       state.createisSuccess = false
       state.createisError = false
       state.createmessage = '' 
+
+      state.forgetisLoading = false
+      state.forgetisSuccess = false
+      state.forgetisError = false
+      state.forgetmessage = '' 
+
+      state.updateisLoading = false
+      state.updateisSuccess = false
+      state.updateisError = false
+      state.updatemessage = '' 
+
+      state.resetisLoading = false
+      state.resetisSuccess = false
+      state.resetisError = false
+      state.resetmessage = '' 
     },
     
   },
@@ -186,6 +261,50 @@ export const userSlice = createSlice({
         state.createisError = true
         state.createmessage = action.payload
         state.createdata = [] 
+      })
+     
+      .addCase(forgetPassword.pending, (state) => {
+        state.forgetisLoading = true 
+      })
+      .addCase(forgetPassword.fulfilled, (state, action) => {
+        state.forgetisLoading = false
+        state.forgetisSuccess = true
+        state.forgetdata = action.payload 
+      })
+      .addCase(forgetPassword.rejected, (state:any, action) => {
+        state.forgetisLoading = false
+        state.forgetisError = true
+        state.forgetmessage = action.payload
+        state.forgetdata = [] 
+      })
+
+      .addCase(updatePassword.pending, (state) => {
+        state.updateisLoading = true 
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.updateisLoading = false
+        state.updateisSuccess = true
+        state.updatedata = action.payload 
+      })
+      .addCase(updatePassword.rejected, (state:any, action) => {
+        state.updateisLoading = false
+        state.updateisError = true
+        state.updatemessage = action.payload
+        state.updatedata = [] 
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.resetisLoading = true 
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.resetisLoading = false
+        state.resetisSuccess = true
+        state.resetdata = action.payload 
+      })
+      .addCase(resetPassword.rejected, (state:any, action) => {
+        state.resetisLoading = false
+        state.resetisError = true
+        state.resetmessage = action.payload
+        state.resetdata = [] 
       })
      
       

@@ -1,51 +1,39 @@
 import { Button } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Form, Formik } from "formik";
 import InputField from "../../../components/Inputs/InputField";
 import { Spinner } from "react-bootstrap";
 import { fireAlert } from "../../../utils/Alert";
-import Cookies from "js-cookie";
-const token = Cookies.get("token");
+import { useAppDispatch, useAppSelector } from "../../../store/useStore";
+import { useNavigate } from "react-router-dom";
+import { reset, resetPassword } from "../../../features/User/userSlice";
 
-const ResetPassword = (email: any) => {
-  const [isLoading, setLoading] = React.useState(false);
+
+
+const ResetPassword = ({ email }: any) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { resetisLoading, resetisSuccess } = useAppSelector((state: any) => state.userinfo)
+
+
+  useEffect(() => {
+    if (resetisSuccess) {
+      fireAlert("Successful", "Password reset was successful", "success");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 5000);
+
+      dispatch(reset());
+    }
+  }, [resetisSuccess, dispatch, navigate])
+
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
-    setLoading(true);
+    const inputs = { ...values, ...email };
 
-    const createValues = { ...values, ...email };
-
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API}/auth/password`,
-        {
-          method: "PATCH",
-          body: JSON.stringify(createValues),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      if (response.ok) {
-        const title = "Password updated successfully";
-        const html = `Password updated`;
-        const icon = "success";
-        // fireAlert(title, html, icon);
-        resetForm(values);
-        setLoading(false);
-      } else {
-        throw new Error(data.message || "Something went wrong!");
-      }
-    } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      const html = error.message || "Something went wrong!";
-      const icon = "error";
-      const title = "Password update failed";
-      // fireAlert(title, html, icon);
-    }
+    // @ts-ignore
+    dispatch(resetPassword(inputs));
   };
 
   return (
@@ -75,7 +63,7 @@ const ResetPassword = (email: any) => {
                 type="submit"
                 className={"Add-btn-edit"}
               >
-                {isLoading ? <Spinner animation="border" /> : "Update Password"}
+                {resetisLoading ? <Spinner animation="border" /> : "Update Password"}
               </Button>
             </div>
           </Form>

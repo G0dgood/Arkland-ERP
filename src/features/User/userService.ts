@@ -39,7 +39,23 @@ const createHOD = async (id:any ) => {
   return data
 }
  
+ const forgetPassword = async (inputs:any ) => { 
+	     const { data }: any = await HttpService.patch(`auth/password`, inputs) 
+   
+  return data
+}
  
+ const updatePassword = async (inputs:any ) => { 
+	     const { data }: any = await HttpService.patch(`me/password`, inputs) 
+   
+  return data
+}
+ 
+ const resetPassword = async (inputs:any ) => { 
+	     const { data }: any = await HttpService.patch(`auth/password`, inputs) 
+   
+  return data
+}
  
  
  
@@ -49,7 +65,10 @@ const userService = {
   userprivileges,
   deleteprivileges,
   createHOD,
-  createprivileges
+  createprivileges,
+  forgetPassword,
+  updatePassword,
+  resetPassword
 }
 
 export default userService

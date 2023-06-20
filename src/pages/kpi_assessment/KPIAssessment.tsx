@@ -4,11 +4,10 @@ import { fireAlert } from "../../utils/Alert";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { createAssessment } from "../../features/KPIAssessment/assessmentSlice";
-// import { allEmployee } from "../../features/Employee/employeeSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
 import HttpService from "../../components/HttpService";
-// import SelectInput from "../../components/SelectInput";
+import SelectInput from "../../components/SelectInput";
 
 
 
@@ -34,6 +33,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     collaboration: 0,
     comment: "",
   });
+
   const [inputs, setInputs] = useState({
     month: 0,
     employee: "",
@@ -142,16 +142,12 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
         collaboration: totalScore6,
         employee: userInfo?.employee?._id,
         month: kpinputs.month,
-        reviewer: kpinputs.reviewer,
+        // @ts-ignore
+        reviewer: kpinputs.reviewer?.value,
         comment: kpinputs.comment,
       };
     });
   }, [kpinputs.comment, kpinputs.job_knowledge, kpinputs.month, kpinputs.reviewer, setInputs, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6, userInfo?.employee?._id]);
-
-
-
-
-
 
 
   useEffect(() => {
@@ -169,24 +165,25 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   const [hods, setHOD] = useState([])
 
-  // console.log('hod', hods)
+
 
   useEffect(() => {
     getData()
   }, [])
-
+  const [isLoading, setisLoading] = useState(false)
 
   const getData = async () => {
-    // setisLoading(true)
+    setisLoading(true)
     try {
-      const hodsUrl = `employees/hods`
+      const hodsUrl = `employees`
       const hods: any = await HttpService.get(hodsUrl)
-      setHOD(hods?.data?.data)
 
-      // setisLoading(false)
+      setHOD(hods?.data?.data?.data)
+
+      setisLoading(false)
 
     } catch (error) {
-      // setisLoading(false)
+      setisLoading(false)
     }
   }
 
@@ -198,7 +195,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     hods?.forEach((team: any) =>
       availablleHods.push({
         value: team.id,
-        label: team.name,
+        label: team.full_name,
       })
     );
 
@@ -306,9 +303,9 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
                     </div>
                   </div>
 
-                  <div className="line-manager entries-perpage ">
-                    <div>HOD :</div>
-                    <select
+                  <div className=" entries-perpage ">
+                    {/* <div>HOD :</div> */}
+                    {/* <select
                       name="line-manager"
                       value={kpinputs?.reviewer}
                       onChange={(e) => handleOnChange("reviewer", e.target.value)}
@@ -319,15 +316,15 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
                           {employ?.name}
                         </option>
                       ))}
-                    </select>
-                    {/* <SelectInput
-                      label="User"
+                    </select> */}
+                    <SelectInput
+                      label="HOD :"
                       isDisabled={isLoading}
                       isLoading={isLoading}
-                      options={availableEmployees}
-                      value={newid.user}
-                      onChange={(e: any) => handleOnChange("user", e)}
-                    /> */}
+                      options={availablleHods}
+                      value={kpinputs?.reviewer}
+                      onChange={(e: any) => handleOnChange("reviewer", e)}
+                    />
                   </div>
                 </div>
               </div>

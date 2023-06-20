@@ -19,6 +19,7 @@ import workerRequestSlice from '../features/workerRequest/workerRequestSlice'
  
  
  
+ 
 
 export const store:any = configureStore({
   reducer: {  
@@ -37,6 +38,7 @@ export const store:any = configureStore({
     worker: workerRequestSlice, 
     team: teamSlice, 
     teamlead: teamleadSlice, 
+    
   },
 })
 

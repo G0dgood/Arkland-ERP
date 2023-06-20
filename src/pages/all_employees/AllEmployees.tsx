@@ -16,7 +16,6 @@ import {
   TableFetch,
 } from "../../components/TableOptions";
 import { getUserPrivileges } from "../../functions/auth";
-import { fireAlert } from "../../utils/Alert";
 import EmployeesDownloader from "../../components/Downloader/EmployeesDownloader";
 import { allEmployee } from "../../features/Employee/employeeSlice";
 import ApproveEmployeeModal from "../../components/Modals/ApproveEmployeeModal";
@@ -26,8 +25,7 @@ import UploadEmployee from "../../components/UploadEmployee";
 const AllEmployees = () => {
 
   const dispatch = useAppDispatch();
-  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.employee)
-  const { approveisError, approveisLoading, approvemessage } = useAppSelector((state: any) => state.employee)
+  const { data, isLoading } = useAppSelector((state: any) => state.employee)
   const { approveisSuccess } = useAppSelector((state: any) => state.employee)
   const [reset, setReset] = useState(false);
   const navigate = useNavigate();
@@ -45,8 +43,7 @@ const AllEmployees = () => {
     }
   }, [approveisSuccess, dispatch, reset]);
 
-  const [status, setStatus] = useState("in review");
-  const [roles, setRoles] = useState("");
+
 
 
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
@@ -54,15 +51,6 @@ const AllEmployees = () => {
 
   const [displayData, setDisplayData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
-
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     fireAlert("error", message, "error");
-  //   } else if (approveisError) {
-  //     fireAlert(" KPI error", approvemessage, "error");
-  //   }
-  // }, [navigate, isError, approveisError, message, approvemessage]);
 
 
   // --- Pagination --- //
