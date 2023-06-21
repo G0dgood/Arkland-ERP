@@ -11,16 +11,11 @@ import { BsDashCircleFill, BsPlusCircleFill } from 'react-icons/bs'
 
 const RequestForWorkersModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
-
 	const { createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.worker)
 	const { getroledata, getroleisLoading } = useAppSelector((state: any) => state.employee)
 	const [Show, setShow] = useState(false);
 	const [count, setCount] = React.useState(0);
 	const [counts, setCounts] = React.useState(0);
-
-
-
-
 
 
 	const [input, setInput] = useState<any>({
@@ -91,7 +86,6 @@ const RequestForWorkersModal = ({ id }: any) => {
 		// working decrease
 		const decrease = () => setCount((prevCount: number) => {
 			if (prevCount <= 0) return 0;
-
 			return prevCount - 1;
 		})
 
@@ -112,7 +106,6 @@ const RequestForWorkersModal = ({ id }: any) => {
 
 
 	const availableRole = [] as any;
-
 	getroledata &&
 		getroledata.forEach((employee: any) =>
 			availableRole.push({
@@ -121,13 +114,10 @@ const RequestForWorkersModal = ({ id }: any) => {
 			})
 		);
 
-
-
 	const activities = newInputField?.map((item: any) => ({
 		role: item.role.value,
 		role_name: item.role.label,
 		requested_quantity: item.requested_quantity,
-
 	}));
 
 

@@ -143,8 +143,6 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	}, [html, setIsCheck, dispatch, isSuccess, message, navigate])
 
 
-
-
 	const [show, setShow] = useState(false);
 
 

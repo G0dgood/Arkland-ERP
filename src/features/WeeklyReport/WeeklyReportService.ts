@@ -1,17 +1,17 @@
-import axios from 'axios' 
 import HttpService from '../../components/HttpService'
  
  
   
  //Get all weekly Report
 const allweeklyReport = async (id:any ) => { 
-	 
-  
-//   const { data }: any = await HttpService.search("hr/weekly-reports/list", { employee: id })
-//   return data
-// }
-  
+ 
   const { data }: any = await HttpService.get("hr/weekly-reports" )
+  return data
+}
+ //Manager Report
+const managerReport = async (id:any ) => { 
+ 
+  const { data }: any = await HttpService.get("hr/weekly-reports/list" )
   return data
 }
   //create weekly Report
@@ -31,7 +31,7 @@ const getHODWeeklyReport = async ( ) => {
 const viewWeeklyReport = async (id:any ) => { 
 	 
   const { data }: any = await HttpService.get(`hr/weekly-reports/${id}/view`)  
-  console.log('data',data)
+  
    
   return data
 }
@@ -45,9 +45,13 @@ const deleteWeeklyReport = async (id:any ) => {
 //update Weekly Report
 const updateWeeklyReport = async ({id,inputs}:any ) => { 
 	 
-  const { data }: any = await HttpService.patch(`hr/weekly-reports/${id}` ,inputs)  
-    
-   
+  const { data }: any = await HttpService.patch(`hr/weekly-reports/${id}` ,inputs)   
+  return data
+}
+//Acknowledge Report
+const acknowledgeReport = async ({id}:any ) => { 
+	 
+  const { data }: any = await HttpService.patch(`hr/weekly-reports/${id}/acknowledge` )   
   return data
 }
  
@@ -62,7 +66,9 @@ const WeeklyReportService = {
   getHODWeeklyReport,
   viewWeeklyReport,
   deleteWeeklyReport,
-  updateWeeklyReport
+  updateWeeklyReport,
+  acknowledgeReport,
+  managerReport
 }
 
 export default WeeklyReportService

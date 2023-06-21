@@ -324,13 +324,42 @@ display: block;
 
 #weekly-report-select  {
 	border-radius: 5px;
-	border-radius: 1px solid c.color(primary-color);
+	border: 1px solid c.color(primary-color);
 }
 
 .file-containal{
 	display: flex;
 	justify-content:flex-end;
- 
 }
+
+.file-preview{
+	width:40px !important;
+	height:40px !important;
+	// background-color: red;
+	border-radius: 0.6rem;
+	// padding: 15px 20px;
+	// border: 1px solid c.color(primary-color);
+}
+
+.file-image-size{
+	width: 40px;
+	height: 35px; 
+			border-radius: 0.2rem;
+}
+
+// .modal-mediem-with{
+// 	width: 90% !important;
+// }
+.file-main-div{
+	margin: 2rem;
+}
+.file-main-size{
+   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%; 
+}
+
+
 
  

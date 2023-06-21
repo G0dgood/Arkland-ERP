@@ -69,10 +69,8 @@ const WeeklyReportView = () => {
 						<div className='weekly-top-card-1-sub'>
 							<p>EMPLOYEE NAME</p>
 							<p className='weekly-top-card-1-sub-second-child'>{viewdata?.employee_name}</p>
-							<p>EMPLOYEE TITLE</p>
-							<p>{viewdata?.employee_title}</p>
 							<p>DEPARTMENT</p>
-							<p>I.T</p>
+							<p>--</p>
 							<p>SUPERVISOR</p>
 							<p>{viewdata?.employee_supervisor}</p>
 							<p>SELF ASSESSMENT</p>

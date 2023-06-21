@@ -1,27 +1,14 @@
-
 import { useEffect } from 'react'
-import { fireAlert } from '../../utils/Alert';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Spinner } from 'react-bootstrap';
-import { Button } from '@material-ui/core';
-import TableLoader from '../../components/TableLoader';
 import WeeklyReportTable from './WeeklyReportTable';
 import moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { acknowledgeReport, reset, viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice';
-const TeamWeeklyReportUpdate = () => {
+import { viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice';
+import { useParams } from 'react-router-dom';
+
+const ManagerWeeklyReportView = () => {
 	const dispatch = useAppDispatch();
 	const { viewdata, viewisLoading }: any = useAppSelector((state: any) => state.Weeklyreport)
-	const { acknowledgeisLoading, acknowledgeisSuccess }: any = useAppSelector((state: any) => state.Weeklyreport)
 	const { id } = useParams()
-	const navigate = useNavigate();
-
-
-	const title2 = "Weekly Report Acknowledged";
-	const html2 = "Acknowledged";
-	const icon2 = "success";
-
-
 
 
 	useEffect(() => {
@@ -29,19 +16,6 @@ const TeamWeeklyReportUpdate = () => {
 		dispatch(viewWeeklyReport(id));
 	}, [dispatch, id]);
 
-	const handleacknowlage = () => {
-		// @ts-ignore
-		dispatch(acknowledgeReport(id));
-	}
-
-
-	useEffect(() => {
-		if (acknowledgeisSuccess) {
-			fireAlert(title2, html2, icon2);
-			navigate(-1)
-			dispatch(reset());
-		}
-	}, [acknowledgeisSuccess, dispatch, id, navigate])
 
 
 
@@ -79,17 +53,14 @@ const TeamWeeklyReportUpdate = () => {
 						</h4>
 					</div>
 					<div>
-						{viewdata?.status === "acknowledged" ? "" : <Button className="table-link-active" onClick={handleacknowlage}>	{acknowledgeisLoading ? <Spinner animation="border" /> : 'acknowledge'}</Button>}
-
 					</div>
 				</div>
 			</div>
 			<div>
-				{acknowledgeisLoading ? <TableLoader isLoading={acknowledgeisLoading} /> : ''}
 				<WeeklyReportTable data={viewdata?.activities} isLoading={viewisLoading} />
 			</div>
 		</div>
 	)
 }
 
-export default TeamWeeklyReportUpdate
+export default ManagerWeeklyReportView

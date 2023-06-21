@@ -14,6 +14,7 @@ import { fireAlert } from "../../utils/Alert";
 import { reset, teamAssessment } from "../../features/KPIAssessment/assessmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
+import Lightboxs from "../../components/Lightboxs";
 
 const dataService = new DataService()
 const TeamKPI = () => {
@@ -102,6 +103,7 @@ const TeamKPI = () => {
                 <td className="table-datacell datatype-numeric">YEAR</td>
                 <td className="table-datacell datatype-numeric">MONTH</td>
                 <td className="table-datacell datatype-numeric">AVERAGE</td>
+                <td className="table-datacell datatype-numeric">FILE</td>
                 <td className="table-datacell datatype-numeric">STATUS</td>
                 <td className="table-datacell datatype-numeric">ACTION</td>
               </tr>
@@ -149,6 +151,9 @@ const TeamKPI = () => {
                     </td>
                     <td className="table-datacell datatype-numeric">
                       {item?.performance_percentage_employee}%
+                    </td>
+                    <td className="table-datacell datatype-numeric">
+                      <Lightboxs />
                     </td>
                     <td className="table-datacell datatype-numeric">
                       <Button

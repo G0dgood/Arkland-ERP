@@ -147,10 +147,12 @@ class HttpService {
         if (e.response.status === 401) { 
             fireAlert("Authentication error",e.response.data.message, "error");   
             window.location.replace("/login");
-            this.dataService.clearData();
-            console.log('error',e.response.data.message)
+            this.dataService.clearData(); 
              fireAlert("Error", e.response.data.message, "error");
-        } 
+        }
+        else if (e.response.status === 403) { 
+                window.location.replace("/update-password"); 
+        }
         else if (e.response.data.message === "Request failed with status code 500" ? false : e.response.data.message) { 
                 fireAlert("Error", e.response.data.message, "error");
             

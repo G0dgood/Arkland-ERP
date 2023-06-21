@@ -70,9 +70,9 @@ const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
       </div>
 
       <div className="main-todo-2-btn">
-        <Button variant="outlined" className="show-btn" onClick={handleShow}>
+        {/* <Button variant="outlined" className="show-btn" onClick={handleShow}>
           Show All
-        </Button>
+        </Button> */}
         {/* <AddTodo onNewTodoCreated={handleNewTodoCreated} /> */}
       </div>
     </div>

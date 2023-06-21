@@ -30,7 +30,7 @@ const CreateProjectModal = (props: any) => {
   const [departments, setDepartments] = useState([]);
   const [teamLeads, setTeamslead] = useState([]);
   const [teams, setTeams] = useState([]);
-  // const [isLoading, setisLoading] = useState(false);
+
 
 
 
@@ -112,8 +112,7 @@ const CreateProjectModal = (props: any) => {
     <div>
       <Button
         className="subone-header-flex-btn"
-        onClick={() => { setLgShow(true); getData() }}
-      >
+        onClick={() => { setLgShow(true); getData() }} >
         <BsPlusLg size={10} color="#fff" className="Create-plue-account" />{" "}
         Create Project
       </Button>

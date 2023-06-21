@@ -6,19 +6,18 @@ import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../com
 import moment from 'moment'
 import Pagination from '../../components/Pagination'
 import WeeklyReportDownloader from '../../components/Downloader/WeeklyReportDownloader'
-import { getHODWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
+import { managerReport } from '../../features/WeeklyReport/WeeklyReportSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import Lightboxs from '../../components/Lightboxs'
 
-
-const TeamWeeklyReport = () => {
+const ManagerWeeklyReport = () => {
 	const dispatch = useAppDispatch();
-	const { HODdata, HODisLoading } = useAppSelector((state: any) => state.Weeklyreport)
+	const { managerdata, managerisLoading } = useAppSelector((state: any) => state.Weeklyreport)
 
 
 	useEffect(() => {
-		// @ts-ignore
-		dispatch(getHODWeeklyReport());
+
+		dispatch(managerReport());
 	}, [dispatch]);
 
 
@@ -38,11 +37,11 @@ const TeamWeeklyReport = () => {
 		<div  >
 			<div className='SiteWorkermaindiv'>
 				<div className='SiteWorkermaindivsub'>
-					<span className='SupportmainTitleh3'>Team Weekly Report</span>
+					<span className='SupportmainTitleh3'>Employee Weekly Report</span>
 				</div>
 				<div>
 					<EntriesPerPage
-						data={HODdata?.data}
+						data={managerdata?.data}
 						entriesPerPage={entriesPerPage}
 						setEntriesPerPage={setEntriesPerPage}
 					/>
@@ -51,12 +50,12 @@ const TeamWeeklyReport = () => {
 				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 					<MainSearch placeholder={'Search...          Team Weekly Report'} />
 					<span style={{ marginLeft: '20px' }}>
-						<WeeklyReportDownloader data={HODdata} />
+						<WeeklyReportDownloader data={managerdata} />
 					</span>
 				</div>
 			</div>
 			<section className="md-ui component-data-table">
-				{HODisLoading ? <TableLoader isLoading={HODisLoading} /> : ""}
+				{managerisLoading ? <TableLoader isLoading={managerisLoading} /> : ""}
 				<div className="main-table-wrapper">
 					<table className="main-table-content">
 						<thead className="data-table-header">
@@ -72,7 +71,7 @@ const TeamWeeklyReport = () => {
 							</tr>
 						</thead>
 						<tbody className="data-table-content">
-							{HODisLoading ? (
+							{managerisLoading ? (
 								<TableFetch colSpan={8} />
 							) : displayData?.length === 0 || displayData == null ? (
 								<NoRecordFound colSpan={8} />
@@ -88,7 +87,7 @@ const TeamWeeklyReport = () => {
 											<Button className={item?.status === "submitted" ? "table-link " : "table-link-active"}>{item?.status}</Button>
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Link to={`/weeklyreport/weeklyreport/update/${item?._id}`}>
+											<Link to={`/weeklyreport/weeklyreport/manager/view/${item?._id}`}>
 
 												<Button id="team-applicatiom-update">	{item?.status === "acknowledged" ? 'View' : 'Update'}</Button>
 											</Link>
@@ -105,7 +104,7 @@ const TeamWeeklyReport = () => {
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}
-					data={HODdata}
+					data={managerdata}
 					entriesPerPage={entriesPerPage}
 					Total={"Assessment"}
 				/>
@@ -115,4 +114,4 @@ const TeamWeeklyReport = () => {
 	)
 }
 
-export default TeamWeeklyReport
+export default ManagerWeeklyReport

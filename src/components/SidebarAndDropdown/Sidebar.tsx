@@ -17,7 +17,7 @@ import { BsBriefcase } from 'react-icons/bs';
 import { getUserPrivileges } from '../../functions/auth';
 import { RiTeamLine } from 'react-icons/ri';
 import { GiTeamIdea } from 'react-icons/gi';
-import { BiSupport } from 'react-icons/bi';
+
 
 
 const Sidebar = ({
@@ -65,6 +65,8 @@ const Sidebar = ({
             <MenuItem className='Side__Content' active={pathname === 'weeklyreport/weeklyreport/myweeklyreport'}>  <Link to="weeklyreport/weeklyreport/myweeklyreport" />My Weekly report</MenuItem>
             {(isTeamLead) && (
               <MenuItem className='Side__Content' active={pathname === '/weeklyreport/weeklyreport/team'}> <Link to="/weeklyreport/weeklyreport/team" />Team Weekly Report</MenuItem>)}
+            {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+              <MenuItem className='Side__Content' active={pathname === '/weeklyreport/weeklyreport/manager'} icon={<TfiAnnouncement size={23} />}> Employee Report<Link to="/weeklyreport/weeklyreport/manager" />  </MenuItem>)}
           </SubMenu>
 
           {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
@@ -125,7 +127,6 @@ const Sidebar = ({
             </SubMenu>)}
           {/* <MenuItem className='Side__Content' active={pathname === '/support'} icon={<BiSupport size={22} />}>  Support <Link to="/support" /> </MenuItem>
           // <MenuItem className='Side__Content' active={pathname === '/policy'} icon={<BsShield size={22} />}>  Policy <Link to="/policy" /> </MenuItem> */}
-          <MenuItem className='Side__Content' active={pathname === '/support'} icon={<BiSupport size={22} />}>  Support <Link to="/support" /> </MenuItem>
         </Menu>
       </SidebarContent>
 

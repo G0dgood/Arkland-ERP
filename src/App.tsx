@@ -63,6 +63,8 @@ import ViewHOD from "./pages/HOD/ViewHOD";
 import ViewRole from "./pages/EmployeeRole/ViewRole";
 import TeamLead from "./components/TeamLead";
 import ViewPrivilage from "./pages/UserPrivilage/ViewPrivilage";
+import ManagerWeeklyReport from "./pages/WeeklyReport/ManagerWeeklyReport";
+import ManagerWeeklyReportView from "./pages/WeeklyReport/ManagerWeeklyReportView";
 
 
 
@@ -133,14 +135,10 @@ const App: React.FC<any> = () => {
             <Route index element={<WeeklyReport />} />
             <Route path="weeklyreport/team" element={<TeamWeeklyReport />} />
             <Route path="weeklyreport/:id" element={<WeeklyReportView />} />
-            <Route
-              path="weeklyreport/update/:id"
-              element={<TeamWeeklyReportUpdate />}
-            />
-            <Route
-              path="weeklyreport/myweeklyreport"
-              element={<MyWeekReport />}
-            />
+            <Route path="weeklyreport/update/:id" element={<TeamWeeklyReportUpdate />} />
+            <Route path="weeklyreport/manager/view/:id" element={<ManagerWeeklyReportView />} />
+            <Route path="weeklyreport/myweeklyreport" element={<MyWeekReport />} />
+            <Route path="weeklyreport/manager" element={<ManagerWeeklyReport />} />
           </Route>
 
           <Route path="announcements">

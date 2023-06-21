@@ -68,11 +68,11 @@ const Login = () => {
     }
   }
 
-  useEffect(() => {
-    if (user && token) {
-      navigate("/")
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (user && token) {
+  //     navigate("/")
+  //   }
+  // }, [])
 
 
 

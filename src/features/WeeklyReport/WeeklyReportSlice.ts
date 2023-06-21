@@ -40,6 +40,18 @@ const initialState: any = {
   updateisLoading: false, 
   updatemessage: '', 
   
+  acknowledgedata: [],
+  acknowledgeisError: false,
+  acknowledgeisSuccess: false,
+  acknowledgeisLoading: false, 
+  acknowledgemessage: '', 
+
+  managerdata: [],
+  managerisError: false,
+  managerisSuccess: false,
+  managerisLoading: false, 
+  managermessage: '', 
+  
 }
  
 
@@ -122,6 +134,32 @@ export const updateWeeklyReport = createAsyncThunk('weeklyreport/updateWeeklyRep
   }
 })
  
+// Acknowledge Report
+export const acknowledgeReport = createAsyncThunk('weeklyreport/acknowledgeReport', async (data,thunkAPI) => {
+  try {
+    return await WeeklyReportService.acknowledgeReport(data)
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()  
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
+// Manager Report
+export const managerReport = createAsyncThunk('weeklyreport/managerReport', async (data,thunkAPI) => {
+  try {
+    return await WeeklyReportService.managerReport(data)
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()  
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
  
   
 
@@ -159,6 +197,16 @@ export const WeeklyReportSlice = createSlice({
       state.updateisSuccess = false
       state.updateisError = false
       state.updatemessage = '' 
+
+      state.acknowledgeisLoading = false
+      state.acknowledgeisSuccess = false
+      state.acknowledgeisError = false
+      state.acknowledgemessage = '' 
+
+      state.managerisLoading = false
+      state.managerisSuccess = false
+      state.managerisError = false
+      state.managermessage = '' 
                 
     },
   },
@@ -258,6 +306,36 @@ export const WeeklyReportSlice = createSlice({
         state.updateisError = true
         state.updatemessage = action.payload
         state.updatedata = [] 
+      }) 
+      .addCase(acknowledgeReport.pending, (state) => {
+        state.acknowledgeisLoading = true
+        
+      })
+      .addCase(acknowledgeReport.fulfilled, (state, action) => {
+        state.acknowledgeisLoading = false
+        state.acknowledgeisSuccess = true
+        state.acknowledgedata = action.payload?.data 
+      })
+      .addCase(acknowledgeReport.rejected, (state:any, action) => {
+        state.acknowledgeisLoading = false
+        state.acknowledgeisError = true
+        state.acknowledgemessage = action.payload
+        state.acknowledgedata = [] 
+      }) 
+      .addCase(managerReport.pending, (state) => {
+        state.managerisLoading = true
+        
+      })
+      .addCase(managerReport.fulfilled, (state, action) => {
+        state.managerisLoading = false
+        state.managerisSuccess = true
+        state.managerdata = action.payload?.data 
+      })
+      .addCase(managerReport.rejected, (state:any, action) => {
+        state.managerisLoading = false
+        state.managerisError = true
+        state.managermessage = action.payload
+        state.managerdata = [] 
       }) 
       
   },

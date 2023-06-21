@@ -103,7 +103,6 @@ const CreateRoleModal = () => {
 				<Modal.Header  >
 
 					<span>
-
 					</span>
 					<span className='span-center-title'>Create Role</span>
 					<Button style={{ color: '#fff' }} onClick={() => { setLgShow(false); handleclick() }}>

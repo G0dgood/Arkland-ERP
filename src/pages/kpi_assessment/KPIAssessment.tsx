@@ -3,7 +3,7 @@ import { Button } from "@material-ui/core";
 import { fireAlert } from "../../utils/Alert";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-import { createAssessment } from "../../features/KPIAssessment/assessmentSlice";
+import { createAssessment, reset } from "../../features/KPIAssessment/assessmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
 import HttpService from "../../components/HttpService";
@@ -154,8 +154,9 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     if (createisSuccess) {
       fireAlert("KPI success", "KPI Created!", "success");
       setShow(false)
+      dispatch(reset());
     }
-  }, [navigate, createisSuccess, setShow]);
+  }, [navigate, createisSuccess, setShow, dispatch]);
 
 
   const handelkpi = (e: any) => {
@@ -200,11 +201,6 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     );
 
 
-  // React.useEffect(() => {
-
-  //   setEmployees(data?.filter((obj: any) => obj?.role === "63d13339fb66838b39c75f02"));
-
-  // }, [data]);
 
   const year = new Date().getFullYear().toString();
 
