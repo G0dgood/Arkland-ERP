@@ -18,14 +18,18 @@ export const fireAlert = ( title: string, message: string, icon: any) => {
     cancelButtonText: "OK",
   });
 };
-export const fireAlert2 = ( title: string, message: string, icon: any ,click:any) => { 
+
+export const fireAlert2 = ( title: string, message: string, icon: any ,url:any) => { 
   swalWithBootstrapButtons.fire({
     title: title  ,
     html: message,
     icon:icon,
-    showCancelButton: false,
-    confirmButtonText: click,
+    showCancelButton: false, 
     cancelButtonText: "OK",
-    
-  });
+     confirmButtonText: "Okay"
+    }).then(function () {
+      // Redirect the user
+       window.location.replace(url); 
+    });
+   
 };
