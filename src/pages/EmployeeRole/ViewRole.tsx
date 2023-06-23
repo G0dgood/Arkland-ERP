@@ -51,7 +51,7 @@ const ViewRole = () => {
 						</div>
 
 						<h4 style={{ marginTop: "3rem" }}>
-							Employee Row Preview
+							Employee Role
 						</h4>
 
 						<div

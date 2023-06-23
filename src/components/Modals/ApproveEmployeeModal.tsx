@@ -17,7 +17,7 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 
 	useEffect(() => {
 		if (approveisSuccess) {
-			fireAlert("Successful", "Employee Approved Successfully!", "Success");
+			fireAlert("Successful", "Employee Approved Successfully!", "success");
 			dispatch(reset())
 		}
 	}, [approveisLoading, approveisSuccess, dispatch])

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TableLoader from "../../components/TableLoader";
 import {
   EntriesPerPage,
@@ -10,16 +10,14 @@ import Pagination from "../../components/Pagination";
 import { Button } from "@material-ui/core";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { fireAlert } from "../../utils/Alert";
-import { reset, teamAssessment } from "../../features/KPIAssessment/assessmentSlice";
+import { teamAssessment } from "../../features/KPIAssessment/assessmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
-import Lightboxs from "../../components/Lightboxs";
 
 const dataService = new DataService()
 const TeamKPI = () => {
   const dispatch = useAppDispatch();
-  const { teamdata, teamisError, teamisLoading, teammessage } = useAppSelector((state: any) => state.assessment)
+  const { teamdata, teamisLoading } = useAppSelector((state: any) => state.assessment)
   const navigate = useNavigate();
 
   const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
@@ -27,20 +25,12 @@ const TeamKPI = () => {
   const [sortData, setSortData] = useState([]);
   const [searchItem, setSearchItem] = useState("");
 
-  const title1 = "KPI error";
-  const html1 = teammessage;
-  const icon1 = "error";
 
 
 
 
 
-  useEffect(() => {
-    if (teamisError) {
-      fireAlert(title1, html1, icon1);
-      dispatch(reset());
-    }
-  }, [teamisError, html1, dispatch]);
+
 
 
   // --- Pagination --- //
@@ -153,7 +143,6 @@ const TeamKPI = () => {
                       {item?.performance_percentage_employee}%
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      <Lightboxs />
                     </td>
                     <td className="table-datacell datatype-numeric">
                       <Button

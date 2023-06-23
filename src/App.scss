@@ -42,4 +42,15 @@ $icon-size: 35px;
     margin-bottom: 17rem;
     // height: 20rem !important;
   }
- 
+   
+ .pro-sidebar .pro-menu .pro-menu-item  .pro-sidebar-content .active{
+    color: #990000 !important;
+       background-color: #990000 !important;
+}
+//  .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item {
+//     position: relative;
+//     display: flex;
+//     align-items: center;
+//     padding: 8px 35px 8px 20px;
+//     cursor: pointer; 
+// }

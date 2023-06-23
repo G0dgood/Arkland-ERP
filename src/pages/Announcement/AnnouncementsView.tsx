@@ -13,7 +13,7 @@ import { viewAnnouncement } from '../../features/Announcement/announcemetSlice';
 const AnnouncementsView = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { id } = useParams<{ id: string }>();
+	const { id } = useParams();
 	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.announcement)
 
 	useEffect(() => {

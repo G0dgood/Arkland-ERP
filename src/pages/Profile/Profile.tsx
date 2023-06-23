@@ -6,6 +6,8 @@ import moment from 'moment';
 import LogoutOption from '../../components/LogoutOption';
 import DataService from '../../utils/dataService';
 
+
+
 const dataService = new DataService()
 const Profile = () => {
 
@@ -14,7 +16,9 @@ const Profile = () => {
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
+	// console.log('userInfo', userInfo)
 
+	const { privileges } = userInfo
 
 	return (
 		<div  >
@@ -28,6 +32,7 @@ const Profile = () => {
 					</span>
 					<span>
 
+						<LogoutOption />
 					</span>
 				</div>
 				<div className="profile-body-container-sup-title">
@@ -78,9 +83,22 @@ const Profile = () => {
 							<p>als-{userInfo?.employee?.employee_id}</p>
 						</div>
 					</div>
+					<div>
+						<div className='General-Information'>
+							<h5>Privileges</h5>
+						</div>
+						<div>
+							{privileges?.map((item: any, i: any) => (
+								<div className="getjob-application-details" key={i}>
+									<p>Role</p>
+									<p>{item?.role}</p>
+								</div>
+							))}
+						</div>
+					</div>
 				</div>
 			</div>
-			<LogoutOption />
+
 		</div>
 	)
 }

@@ -15,11 +15,15 @@ const CreateRole = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { getroledata, getroleisLoading } = useAppSelector((state: any) => state.employee)
-
+	const { createroleisSuccess } = useAppSelector((state: any) => state.employee)
 
 	useEffect(() => {
 		dispatch(getRole());
-	}, [dispatch]);
+		if (createroleisSuccess) {
+			dispatch(getRole());
+
+		}
+	}, [createroleisSuccess, dispatch]);
 
 
 	const [sortData, setSortData] = useState([]);

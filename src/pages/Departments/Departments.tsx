@@ -4,23 +4,18 @@ import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
 import { getUserPrivileges } from "../../functions/auth";
-import { allDepartments, reset } from "../../features/Department/departmentSlice";
+import { allDepartments } from "../../features/Department/departmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { fireAlert } from "../../utils/Alert";
+
 import { BounceLoader } from "react-spinners";
 
 const DepartmentsView = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { data, isError, isLoading, message } = useAppSelector((state: any) => state.department)
+  const { data, isLoading, } = useAppSelector((state: any) => state.department)
   const { createisSuccess } = useAppSelector((state: any) => state.department)
 
-  useEffect(() => {
-    if (message === "Request failed with status code 500" ? false : message) {
-      fireAlert("Department error", message, "error");
-      dispatch(reset());
-    }
-  }, [isError, message, dispatch])
+
 
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 
@@ -31,10 +26,8 @@ const DepartmentsView = () => {
     dispatch(allDepartments());
     if (createisSuccess) {
       dispatch(allDepartments());
-    } else if (message === "Request failed with status code 500") {
-      dispatch(allDepartments());
     }
-  }, [createisSuccess, dispatch, message]);
+  }, [createisSuccess, dispatch]);
 
 
 

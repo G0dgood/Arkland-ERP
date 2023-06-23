@@ -15,7 +15,6 @@ import {
   martialStatusOptions,
   visaOptions,
 } from "../../../functions/helpers";
-// import { formatToTrue } from "../../../utils/format";
 
 const Essentials = ({
   active,
@@ -93,7 +92,7 @@ const Essentials = ({
           }
           return (
             <Form>
-              <div className="testbox">
+              <div className="testbox pb-5">
                 <form>
                   <div className="row-item">
                     <div className="col">

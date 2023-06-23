@@ -5,7 +5,7 @@ import { MdOutlineClose } from 'react-icons/md';
 import { fireAlert } from "../../utils/Alert";
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { allDepartments } from '../../features/Department/departmentSlice';
-import { createEmployeeRole } from '../../features/Employee/employeeSlice';
+import { createEmployeeRole, reset } from '../../features/Employee/employeeSlice';
 
 
 const CreateRoleModal = () => {
@@ -61,6 +61,7 @@ const CreateRoleModal = () => {
 				description: "",
 			})
 			dispatch(allDepartments());
+			dispatch(reset());
 			setLgShow(false)
 		}
 	}, [createroleisSuccess, createrolemessage, dispatch, html])
@@ -77,17 +78,17 @@ const CreateRoleModal = () => {
 
 
 
-	const Role: any = [
-		"employee",
-		"team lead",
-		"head of department",
-		"HR editor",
-		"HR admin",
-		"HR head",
-		"admin",
-		"super admin",
-		"master"
-	]
+	// const Role: any = [
+	// 	"employee",
+	// 	"team lead",
+	// 	"head of department",
+	// 	"HR editor",
+	// 	"HR admin",
+	// 	"HR head",
+	// 	"admin",
+	// 	"super admin",
+	// 	"master"
+	// ]
 
 	return (
 		<div>
@@ -111,20 +112,15 @@ const CreateRoleModal = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<div className='Modal-Body'>
+						<h6>Name</h6>
 						<div className='Modal-data-time'>
-							<div className='Modal-two-input'>
-								<h6>Name</h6>
-								<select id="Modal-textarea-input-sub"
-									value={inputs.name}
-									onChange={(e) => handleOnChange("name", e.target.value)}>
-									<option value=" ">Select Name...</option>
-									{Role?.map((Role: any) => (
-										<option key={Role} value={Role}>
-											{Role}
-										</option>
-									))}
-								</select >
-							</div>
+
+							<input
+								type='text'
+								id="Modal-textarea-input-sub"
+								value={inputs.name}
+								onChange={(e) => handleOnChange("name", e.target.value)} />
+
 						</div>
 						<div className='Modal-data-time'>
 						</div>

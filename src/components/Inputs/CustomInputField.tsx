@@ -36,9 +36,8 @@ const CustomInputField = ({
     <div className={`input ${className ? className : ""}`}>
       <label
         htmlFor={field.name}
-        className={`input__label ${meta.touched && meta.error && "error"} ${
-          labelColor ? "focused" : ""
-        }`}
+        className={`input__label ${meta.touched && meta.error && "error"} ${labelColor ? "focused" : ""
+          }`}
       >
         {label}
       </label>
@@ -59,6 +58,7 @@ const CustomInputField = ({
         maxLength={maxLength}
         minLength={minLength}
         value={value}
+        disabled={disabled}
       />
       <ErrorMessage
         component="p"

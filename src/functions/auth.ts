@@ -22,6 +22,7 @@ export function getUserPrivileges(): {
   isAdmin: boolean;
   isEmployee: boolean;
   isHrAdmin: boolean;
+  isMaster: boolean;
 } {
 
    
@@ -29,6 +30,7 @@ export function getUserPrivileges(): {
   const userInfo = userString ? userString : null;
   const privileges = userInfo?.privileges || [];
 
+   
   
 
   const isSuperAdmin = privileges.some((p: any) => p.role === "super admin");
@@ -38,6 +40,8 @@ export function getUserPrivileges(): {
   const isHeadOfDepartment = privileges.some( (p: any) => p.role === "head of department" );
   const isHRHead = privileges.some((p: any) => p.role === "HR head");
   const isHrAdmin = privileges.some((p: any) => p.role === "HR admin");
+  const isMaster = privileges.some((p: any) => p.role === "master");
+   
 
   return {
     isHRHead,
@@ -47,6 +51,7 @@ export function getUserPrivileges(): {
     isAdmin,
     isEmployee,
     isHrAdmin,
+    isMaster
   };
 }
 

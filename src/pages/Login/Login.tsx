@@ -68,11 +68,12 @@ const Login = () => {
     }
   }
 
-  // useEffect(() => {
-  //   if (user && token) {
-  //     navigate("/")
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (user && token) {
+      navigate("/")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
 
 

@@ -12,17 +12,21 @@ import TableLoader from "../../components/TableLoader";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { getWarning, reset } from "../../features/Employee/employeeSlice";
 import { Button } from "@material-ui/core";
+import DeactivateExpiredWarnings from "./warnings/DeactivateExpiredWarnings";
 
 
 const WarningList = () => {
   const dispatch = useAppDispatch();
   const { warningdata, warningisError, warningisLoading, warningmessage } = useAppSelector((state: any) => state.employee)
   const { createwarningisSuccess } = useAppSelector((state: any) => state.employee)
+  const { deactivateWarningisSuccess } = useAppSelector((state: any) => state.employee)
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(getWarning());
-  }, [dispatch]);
+    if (deactivateWarningisSuccess) {
+      dispatch(getWarning());
+    }
+  }, [deactivateWarningisSuccess, dispatch]);
 
 
 
@@ -66,6 +70,9 @@ const WarningList = () => {
       <div className="SiteWorkermaindiv">
         <div className="SiteWorkermaindivsub">
           <CreateWarningModal />
+          <span style={{ marginLeft: "1rem" }}>
+            <DeactivateExpiredWarnings /></span>
+
         </div>
         <div>
           <EntriesPerPage

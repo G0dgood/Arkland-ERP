@@ -8,7 +8,6 @@ import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import { getUserPrivileges } from "../../functions/auth";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { hrViewEmployees } from "../../features/Employee/employeeSlice";
-import { fireAlert } from "../../utils/Alert";
 import DeleteEmployeeModal from "../../components/Modals/DeleteEmployeeModal";
 
 
@@ -17,16 +16,12 @@ const ViewEmployee = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { viewdata, viewisError, viewisLoading, viewmessage } = useAppSelector((state: any) => state.employee)
+  const { viewdata, viewisLoading } = useAppSelector((state: any) => state.employee)
   const { employee, salary } = viewdata
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
   const { id } = useParams<{ id: string }>();
 
-  useEffect(() => {
-    if (viewisError) {
-      fireAlert("error", viewmessage, "error");
-    }
-  }, [navigate, viewisError, viewmessage]);
+
 
   useEffect(() => {
     // @ts-ignore
@@ -108,21 +103,16 @@ const ViewEmployee = () => {
                   <p>Date of Birth (DD-MM-YYYY)</p>
                   <p>
                     {" "}
-                    {moment(employee?.date_of_birth).format(
-                      "DD-MM-YYYY"
-                    )}
+                    {moment(employee?.date_of_birth).format("DD-MM-YYYY")}
                   </p>
                   <p>Age</p>
                   <p>
                     {" "}
                     {
-                      moment(employee?.date_of_birth)
-                        .fromNow()
-                        .split(" ")[0]
+                      moment(employee?.date_of_birth).fromNow().split(" ")[0]
                     }{" "}
                     years old
                   </p>
-
                   <p>Gender</p>
                   <p> {employee?.gender}</p>
                   <p>Marital Status</p>
@@ -191,20 +181,22 @@ const ViewEmployee = () => {
             >
               <div>
                 <div className="getjob-application-details">
-                  <p>Bank Name</p>
+                  <p>Bank Nameeeeeee</p>
                   <p>{employee?.bank_name}</p>
                   <p>Bank Account Number</p>
                   <p>{employee?.bank_account_number}</p>
                   <p>Bank Account Name</p>
                   <p>{employee?.bank_account_name} </p>
-                  <p> Basic Salary</p>
-                  <p> ₦ {salary?.basic_salary}</p>
-                  <p> Meal Allowance</p>
-                  <p> ₦ {salary?.meal_allowance}</p>
+                  <p>Gross Salary</p>
+                  <p>₦ {salary?.basic_salary}</p>
+                  <p>Meal Allowance</p>
+                  <p>₦ {salary?.meal_allowance}</p>
                 </div>
               </div>
               <div>
                 <div className="getjob-application-details">
+                  <p>Basic Salary</p>
+                  <p>₦ {salary?.basic_salary}</p>
                   <p> Medical Allowance</p>
                   <p> ₦ {salary?.medical_allowance}</p>
                   <p> Housing Allowance</p>

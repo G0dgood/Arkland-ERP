@@ -11,7 +11,6 @@ import {
   EmployeeStatus,
   EntriesPerPage,
   MainSearch,
-  // MainSearch,
   NoRecordFound,
   TableFetch,
 } from "../../components/TableOptions";
@@ -30,6 +29,8 @@ const AllEmployees = () => {
   const [reset, setReset] = useState(false);
   const navigate = useNavigate();
 
+
+
   useEffect(() => {
     // @ts-ignore
     dispatch(allEmployee());
@@ -46,7 +47,7 @@ const AllEmployees = () => {
 
 
 
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isMaster } = getUserPrivileges();
 
 
   const [displayData, setDisplayData] = useState([]);
@@ -83,7 +84,7 @@ const AllEmployees = () => {
         <div className="allemployees-container">
           <div className="allemployees-container-main">
             <div className="allemployees-container-sup">
-              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+              {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
                 <div className="allemployees-sup-item1">
                   <Button
                     variant="contained"
@@ -194,7 +195,7 @@ const AllEmployees = () => {
                           {item?.email}
                         </td>
                         <td className="table-datacell datatype-numeric">
-                          {/* {checkForName(item?.role, roles)} */}
+                          {item?.role?.description}
                         </td>
                         <td className="table-datacell datatype-numeric">
                           {item?.department?.name}
@@ -220,7 +221,7 @@ const AllEmployees = () => {
                               className="lock-icon-color"
                               title="View employee "
                               style={{ marginLeft: "10px" }}
-                              onClick={() => navigate(`/employees/employees/${item.id}`)} >
+                              onClick={() => navigate(`/employees/employees/${item?.id}`)} >
                               <FiEye
                                 size={25}
                                 title="View Employee"

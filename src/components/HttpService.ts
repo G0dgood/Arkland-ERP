@@ -2,7 +2,7 @@ import axios from "axios";
 import EventEmitter from "./EventEmitter"; 
 import { fireAlert } from "../utils/Alert";
 import DataService from "../utils/dataService";
-import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 
@@ -15,6 +15,7 @@ class HttpService {
          this.token = this.dataService.getToken()
         this.config = {
             headers: { Authorization: `Bearer ${this.token}` }
+             
         };
       }
     
@@ -143,15 +144,31 @@ class HttpService {
     }
 
     handleError(e:any ) { 
-      
+   
         if (e.response.status === 401) { 
             fireAlert("Authentication error",e.response.data.message, "error");   
             window.location.replace("/login");
             this.dataService.clearData(); 
              fireAlert("Error", e.response.data.message, "error");
         }
-        else if (e.response.status === 403) { 
-                window.location.replace("/update-password"); 
+      
+        else if (e.response.status === 403 && e.response.data.response_code === 24) { 
+        //       setTimeout(() => {
+        //      window.location.replace("/update-password"); 
+        // }, 4000);
+                
+    Swal.fire({
+      title: e.response.data.message,
+      text: "You will be redirected",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Okay"
+    }).then(function () {
+      // Redirect the user
+       window.location.replace("/update-password"); 
+    });
+  
         }
         else if (e.response.data.message === "Request failed with status code 500" ? false : e.response.data.message) { 
                 fireAlert("Error", e.response.data.message, "error");
@@ -170,4 +187,16 @@ class HttpService {
 
 export default new HttpService();
 
- 
+//    const Alert = () => {
+//     Swal.fire({
+//       title: "Are you sure?",
+//       text: "You will be redirected",
+//       icon: "warning",
+//       showCancelButton: true,
+//       cancelButtonColor: "#d33",
+//       confirmButtonText: "Okay"
+//     }).then(function () {
+//       // Redirect the user
+//       window.location.href = "/";
+//     });
+//   };

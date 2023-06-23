@@ -12,22 +12,20 @@ import { createEmployee, reset } from "../../../features/Employee/employeeSlice"
 const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { createemployeeisError, createemployeeisLoading, createemployeemessage, createemployeeisSuccess } = useAppSelector((state: any) => state.employee)
+  const { createemployeeisLoading, createemployeeisSuccess } = useAppSelector((state: any) => state.employee)
 
 
   useEffect(() => {
-    if (createemployeeisError) {
-      fireAlert("error", createemployeemessage, "error");
-      dispatch(reset());
-    } else if (createemployeeisSuccess) {
+    if (createemployeeisSuccess) {
       fireAlert("Success", "Employee creation request successful", "success");
       navigate(`/employees`);
       dispatch(reset());
     }
-  }, [navigate, createemployeeisSuccess, createemployeeisError, createemployeemessage, dispatch]);
+  }, [navigate, createemployeeisSuccess, dispatch]);
 
   const handleSubmit = async () => {
     const inputs = { ...employee };
+    // console.log('inputs', inputs)
     // @ts-ignore
     dispatch(createEmployee(inputs));
   };
@@ -71,10 +69,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
             <p>Date of Birth (DD-MM-YYYY)</p>
             <p> {moment(employee?.date_of_birth).format("DD-MM-YYYY")}</p>
             <p>Age</p>
-            <p>
-              {moment(employee?.date_of_birth).fromNow().split(" ")[0]} years old
-            </p>
-
+            <p>  {moment(employee?.date_of_birth).fromNow().split(" ")[0]} years old  </p>
             <p>Gender</p>
             <p> {employee?.gender}</p>
             <p>Marital Status</p>
@@ -134,14 +129,16 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
             <p>{employee?.bank_account_number}</p>
             <p>Bank Account Name</p>
             <p>{employee?.bank_account_name} </p>
-            <p> Basic Salary</p>
-            <p> ₦ {employee?.basic_salary}</p>
+            <p> Gross Salary</p>
+            <p> ₦ {employee?.salary}</p>
             <p> Meal Allowance</p>
             <p> ₦ {employee?.meal_allowance}</p>
           </div>
         </div>
         <div>
           <div className="getjob-application-details">
+            <p> Basic Salary</p>
+            <p> ₦ {employee?.basic_salary}</p>
             <p> Medical Allowance</p>
             <p> ₦ {employee?.medical_allowance}</p>
             <p> Housing Allowance</p>

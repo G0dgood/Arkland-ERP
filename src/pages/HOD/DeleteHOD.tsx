@@ -41,7 +41,7 @@ const DeleteHOD = ({ id }: any) => {
 				centered
 			>
 				<Modal.Header  >
-					<span>{/*  */}</span>
+					<span>{/**/}</span>
 					<span className="span-center-title">Delete HOD</span>
 					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />

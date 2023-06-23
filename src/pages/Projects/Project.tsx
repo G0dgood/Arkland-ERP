@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { BsExclamationLg, BsPlusLg } from "react-icons/bs";
-import { ProgressBar, Toast } from "react-bootstrap";
+import { BsPlusLg } from "react-icons/bs";
+import { ProgressBar } from "react-bootstrap";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { FaTimes } from "react-icons/fa";
-
-
-import { allProject, reset } from "../../features/Project/projectSlice";
+import { allProject } from "../../features/Project/projectSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { getUserPrivileges } from "../../functions/auth";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";

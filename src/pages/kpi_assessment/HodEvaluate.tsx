@@ -2,12 +2,13 @@ import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hodReviewAssessment } from '../../features/KPIAssessment/assessmentSlice';
 
 
 const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
+  const navigate = useNavigate();
   const { id } = useParams()
   const dispatch = useAppDispatch();
   const { hodreviewdata, hodreviewisLoading, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
@@ -107,6 +108,9 @@ const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
     "comment": ""
   })
 
+
+
+
   const handleOnChange = (input: string, value: any) => {
     setinput((prevState: any) => ({
       ...prevState,
@@ -124,16 +128,18 @@ const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
   useEffect(() => {
     if (hodreviewisSuccess) {
       fireAlert(title, html, icon);
-
+      navigate("/kpiassessment/kpiassessment/teamkpi")
     }
 
-  }, [html, title, icon, hodreviewisSuccess]);
+  }, [html, title, icon, hodreviewisSuccess, navigate]);
+
 
 
   const handelHodkpi = (e: any) => {
     e.preventDefault();
+    const inputs = { id, input }
     //  @ts-ignore  
-    dispatch(hodReviewAssessment(id, input));
+    dispatch(hodReviewAssessment(inputs));
 
   }
 

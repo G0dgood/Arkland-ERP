@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Carousel } from "react-bootstrap";
-import { Toast } from "react-bootstrap";
+import { Carousel, Spinner } from "react-bootstrap";
+
 import { Button } from "@material-ui/core";
 import { Form, Formik } from "formik";
-import { BsExclamationLg } from "react-icons/bs";
-import { FaTimes } from "react-icons/fa";
-import { Helmet } from "react-helmet-async";
 
+import { Helmet } from "react-helmet-async";
+import * as Yup from "yup";
 import first from "../../../assets/images/Bijou.jpg";
 import second from "../../../assets/images/1.png";
 import third from "../../../assets/images/1.jpg";
@@ -15,35 +14,67 @@ import fifth from "../../../assets/images/PHOENIX.jpg";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import InputField from "../../../components/Inputs/InputField";
 import { fireAlert } from "../../../utils/Alert";
-
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../store/useStore";
+import HttpService from "../../../components/HttpService";
+import DataService from "../../../utils/dataService";
+// import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import { reset, updatePassword } from "../../../features/User/userSlice";
 
-
+const dataService = new DataService()
 const UpdatePassword = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { updateisLoading, updateisSuccess } = useAppSelector((state: any) => state.userinfo)
+  // const dispatch = useAppDispatch();
+  // const { updateisLoading, updateisSuccess } = useAppSelector((state: any) => state.userinfo)
 
 
-  useEffect(() => {
-    if (updateisSuccess) {
-      fireAlert("Successful", "Password update successful", "success");
+  // useEffect(() => {
+  //   if (updateisSuccess) {
+  //     fireAlert("Successful", "Password update successful", "success");
 
-      setTimeout(() => {
-        navigate("/");
-      }, 5000);
+  //     setTimeout(() => {
+  //       navigate("/login");
+  //     }, 5000);
 
-      dispatch(reset());
-    }
-  }, [updateisSuccess, dispatch, navigate])
+  //     dispatch(reset());
+  //   }
+  // }, [updateisSuccess, dispatch, navigate])
+
+  // const handleSubmit = async (values: any, { resetForm }: any) => {
+  //   const inputs = { ...values };
+  //   // @ts-ignore
+  //   dispatch(updatePassword(inputs));
+  // };
+
+
+
+  const [isLoading, setLoading] = React.useState(false);
+
+  const validate = Yup.object().shape({
+    password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+    new_password: Yup.string().min(8, "New Password must be at least 8 characters").required("Password is required"),
+    confirm_password: Yup.string().min(8, "Confirm Password must be at least 8 characters").required("Password is required"),
+  });
+
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
-    const inputs = { ...values };
-    // @ts-ignore
-    dispatch(updatePassword(inputs));
-  };
+    setLoading(true);
+    try {
+      const response: any = await HttpService.patch("me/password", values)
+      const token = response.data.token
+      dataService.setToken(token)
+      const { department, role, employee, privileges, notifications } = response.data
+      const userInfo = { department, role, employee, privileges, notifications }
+      dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+      resetForm(values);
+      setLoading(false);
+      fireAlert("Successful", "Password update successful", "success");
+      setTimeout(() => {
+        window.location.replace("/");
+      }, 5000);
+    } catch (error) {
+      setLoading(false);
+      // @ts-ignore
+    }
+  }
 
   return (
     <>
@@ -115,7 +146,7 @@ const UpdatePassword = () => {
                       </div>
 
                       <Button type="submit" className="forgot-password-button">
-                        {updateisLoading ? "Please wait..." : "Update Password"}
+                        {isLoading ? <Spinner animation="border" /> : "Update Password"}
                       </Button>
                     </Form>
                   )}

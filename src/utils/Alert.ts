@@ -18,3 +18,14 @@ export const fireAlert = ( title: string, message: string, icon: any) => {
     cancelButtonText: "OK",
   });
 };
+export const fireAlert2 = ( title: string, message: string, icon: any ,click:any) => { 
+  swalWithBootstrapButtons.fire({
+    title: title  ,
+    html: message,
+    icon:icon,
+    showCancelButton: false,
+    confirmButtonText: click,
+    cancelButtonText: "OK",
+    
+  });
+};

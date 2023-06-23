@@ -36,7 +36,7 @@ const HodLeaveView = () => {
 		description: "",
 		leave_type: ""
 	})
-
+	console.log('data', data)
 
 
 	useEffect(() => {
@@ -83,7 +83,7 @@ const HodLeaveView = () => {
 		});
 	}, [setInputs, data]);
 
-
+	console.log('id', id)
 
 	const handleApproved = () => {
 		dispatch(hodApproveLeave(id));

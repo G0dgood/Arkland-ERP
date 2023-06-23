@@ -40,7 +40,7 @@ const AddEmployeeTitle = ({ setActive, active, click }: any) => {
     <div className="addemployeecontainer-sup">
       <div className="back-to-employee-container">
         <Button
-          onClick={() => navigate("/employeecontainer")}
+          onClick={() => navigate("/employees")}
           variant="outlined"
           className="back-to-employee-button"
         >

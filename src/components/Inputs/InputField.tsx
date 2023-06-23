@@ -60,9 +60,8 @@ const InputField = ({
     <div className={`input ${className ? className : ""}`}>
       <label
         htmlFor={field.name}
-        className={`input__label ${meta.touched && meta.error && "error"} ${
-          labelColor ? "focused" : ""
-        }`}
+        className={`input__label ${meta.touched && meta.error && "error"} ${labelColor ? "focused" : ""
+          }`}
       >
         {label}
       </label>
@@ -81,13 +80,13 @@ const InputField = ({
         style={style}
         maxLength={maxLength}
         value={value}
+        disabled={disabled}
       />
 
       {password && (
         <span
-          className={`input__eye heading-2-bold ${
-            inputType === "password" ? "close" : ""
-          }`}
+          className={`input__eye heading-2-bold ${inputType === "password" ? "close" : ""
+            }`}
           onClick={toggleInputType}
         >
           Show

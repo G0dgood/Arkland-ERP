@@ -13,7 +13,7 @@ const Address = ({
   bindSubmitForm,
 }: EmployeeFormProps) => {
   const handleSubmit = (values?: any) => {
-    // console.log("Values", values);
+
     setEmployee({ ...employee, ...values });
     setActive(6);
   };
@@ -39,7 +39,7 @@ const Address = ({
 
           return (
             <Form id="my-form">
-              <div className="testbox">
+              <div className="testbox pb-5">
                 <form>
                   <div className="imput-space" />
                   <div className="row-item">

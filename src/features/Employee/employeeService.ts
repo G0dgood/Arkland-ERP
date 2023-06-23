@@ -3,7 +3,7 @@ import { AnyArray } from 'immer/dist/internal'
  
  
   
-const allEmployee = async ( id: any ) => {  
+const allEmployee = async (  ) => {  
   const {data}:any = await HttpService.get("hr/employees") 
   return data
 }
@@ -11,7 +11,7 @@ const allEmployee = async ( id: any ) => {
  
 
 const createEmployeeRole = async (input: any) => {  
-	   const  {data}:any  =  await HttpService.post(`hr/employee-roles`, `${input}`)  
+	   const  {data}:any  =  await HttpService.post(`hr/employee-roles`, input)  
   return data
 }
  
@@ -81,6 +81,11 @@ const deleteEmployees = async (id: any) => {
      const { data }: any = await HttpService.get(`hr/warnings/${id}`) 
    return data
   }
+const updateWarning = async (input: any) => {   
+    const {id , inputs} = input
+     const { data }: any = await HttpService.patch(`hr/warnings/${id}` ,inputs) 
+   return data
+  }
   const createWarning = async (inputs:AnyArray) => {   
      const { data }: any = await HttpService.post(`hr/warnings`, inputs) 
    return data
@@ -97,6 +102,22 @@ const updateEmployee = async (input: AnyArray) => {
      const { data }: any = await HttpService.patch(`hr/employees/${id}/update`, inputs) 
    return data
   }
+ 
+const deactivateWarning = async () => {  
+  
+     const { data }: any = await HttpService.patch(`hr/warnings`,  ) 
+   return data
+}
+  
+const responseWarning = async ({ input }: any) => { 
+  const { id, inputs } = input
+  
+  console.log('id , inputs',id , inputs)
+  
+     const { data }: any = await HttpService.patch(`hr/warnings/${id}/respond`,  inputs) 
+   return data
+  }
+ 
  
 const employeeService = { 
   allEmployee,    
@@ -117,7 +138,10 @@ const employeeService = {
   createWarning,
   createEmployee,
   updateEmployee,
-  viewPrevilage
+  viewPrevilage,
+  updateWarning,
+  deactivateWarning,
+  responseWarning
 }
 
 export default employeeService

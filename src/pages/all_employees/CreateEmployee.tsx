@@ -9,9 +9,9 @@ import Essentials from "./employeeInputs/Essentials";
 import Finance from "./employeeInputs/Finance";
 import Reference from "./employeeInputs/Reference";
 import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
-import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { allDepartments } from "../../features/Department/departmentSlice";
-import { getRole } from "../../features/Employee/employeeSlice";
+import { useAppDispatch } from "../../store/useStore";
+
+import HttpService from "../../components/HttpService";
 
 
 const CreateEmployee = () => {
@@ -37,12 +37,8 @@ const CreateEmployee = () => {
     bank_name: "",
     bank_account_number: "",
     bank_account_name: "",
+    salary: number,
     basic_salary: number,
-    meal_allowance: number,
-    utility_allowance: number,
-    medical_allowance: number,
-    housing_allowance: number,
-    transportation_allowance: number,
 
     date_of_birth: "",
     next_of_kin: "",
@@ -72,8 +68,16 @@ const CreateEmployee = () => {
     nin: "",
     marital_status: "",
   });
+  // basic_salary: number,
+  // meal_allowance: number,
+  // utility_allowance: number,
+  // medical_allowance: number,
+  // housing_allowance: number,
+  // transportation_allowance: number,
   // State to store count value
   const [active, setActive] = useState<number>(1);
+  const [departments, setDepartments] = useState([]);
+  const [roles, setRoles] = useState([]);
 
   useEffect(() => {
     setActive(active);
@@ -92,15 +96,27 @@ const CreateEmployee = () => {
     submitMyFormRef.current = submitForm;
   }, []);
 
-  const { data: departments } = useAppSelector((state: any) => state.department)
-  const { getroledata: roles } = useAppSelector((state: any) => state.employee)
+
 
   useEffect(() => {
-    // @ts-ignore
-    dispatch(allDepartments());
-    dispatch(getRole());
-
+    getData()
   }, [dispatch]);
+
+  const getData = async () => {
+
+    try {
+      const rolesUrl = "hr/employee-roles"
+      const role: any = await HttpService.get(rolesUrl)
+      setRoles(role?.data?.data)
+
+      const departmentsUrl = "hr/departments"
+      const departments: any = await HttpService.get(departmentsUrl)
+      setDepartments(departments?.data?.data)
+
+    } catch (error) {
+
+    }
+  }
   const availablleDepartments = [] as any;
 
   departments &&

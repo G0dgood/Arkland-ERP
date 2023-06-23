@@ -1,7 +1,5 @@
-import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { FiCheckCircle, FiEye } from "react-icons/fi";
-
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
@@ -18,21 +16,22 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import CreateHODModal from "../../components/Modals/CreateHODModal";
 
 
-const HODList = ({ setEmployee, setData }: any) => {
+const HODList = () => {
 	const { data, isLoading } = useAppSelector((state: any) => state.hod)
-
+	const { createisSuccess } = useAppSelector((state: any) => state.hod)
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 
 
 	useEffect(() => {
-		// @ts-ignore
 		dispatch(getHOD());
+		if (createisSuccess) {
+			getHOD()
+		}
+	}, [createisSuccess, dispatch]);
 
-	}, [dispatch]);
 
-	const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";

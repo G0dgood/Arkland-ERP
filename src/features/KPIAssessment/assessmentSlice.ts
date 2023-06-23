@@ -110,9 +110,9 @@ export const teamAssessment = createAsyncThunk('assessment/teamAssessment', asyn
  
 // Hod Review Assessment      
 //  @ts-ignore  
-export const hodReviewAssessment = createAsyncThunk('assessment/hodReviewAssessment', async ( data:any,input:any,thunkAPI) => {
+export const hodReviewAssessment = createAsyncThunk('assessment/hodReviewAssessment', async ( data:any ,thunkAPI) => {
   try {
-    return await assessmentService.hodReviewAssessment(data ,input)
+    return await assessmentService.hodReviewAssessment(data )
   } catch (error: any) { 
     const message = (error.response && 
       error.response.data && 
@@ -152,7 +152,7 @@ export const allAssessment = createAsyncThunk('assessment/allAssessment', async 
  
  
 
-export const assessmentSlice = createSlice({
+export const assessmentSlice:any = createSlice({
   name: 'assessment',
   initialState,
   reducers: {

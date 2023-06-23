@@ -131,12 +131,31 @@ const initialState = {
   viewPrevilageisSuccess: false,
   viewPrevilageisLoading: false, 
   viewPrevilagemessage: '', 
+
+  updateWarningdata:  [],
+  updateWarningisError: false,
+  updateWarningisSuccess: false,
+  updateWarningisLoading: false, 
+  updateWarningmessage: '', 
+
+
+  deactivateWarningdata:  [],
+  deactivateWarningisError: false,
+  deactivateWarningisSuccess: false,
+  deactivateWarningisLoading: false, 
+  deactivateWarningmessage: '', 
+
+  responsedata:  [],
+  responseisError: false,
+  responseisSuccess: false,
+  responseisLoading: false, 
+  responsemessage: '', 
 }
  
 
 export const allEmployee = createAsyncThunk('employee/allEmployee', async (data,thunkAPI) => {
   try {
-    return await employeeService.allEmployee(data  )
+    return await employeeService.allEmployee()
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 
@@ -381,6 +400,48 @@ export const viewPrevilage:any = createAsyncThunk('employee/viewPrevilage', asyn
     return thunkAPI.rejectWithValue(message)
   }
 })
+ // @ts-ignore
+export const updateWarning:any = createAsyncThunk('employee/updateWarning', async (data, thunkAPI) => {
+  try {
+     // @ts-ignore
+    return await employeeService.updateWarning(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ // @ts-ignore
+export const deactivateWarning:any = createAsyncThunk('employee/deactivateWarning', async (data, thunkAPI) => {
+  try {
+     // @ts-ignore
+    return await employeeService.deactivateWarning(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+ 
+export const responseWarning:any = createAsyncThunk('employee/responseWarning', async (data, thunkAPI) => {
+  try {
+     // @ts-ignore
+    return await employeeService.responseWarning(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
  
 
@@ -494,6 +555,21 @@ export const authSlice = createSlice({
       state.viewPrevilageisSuccess = false
       state.viewPrevilageisError = false
       state.viewPrevilagemessage = '' 
+
+      state.updateWarningisLoading = false
+      state.updateWarningisSuccess = false
+      state.updateWarningisError = false
+      state.updateWarningmessage = '' 
+
+      state.deactivateWarningisLoading = false
+      state.deactivateWarningisSuccess = false
+      state.deactivateWarningisError = false
+      state.deactivateWarningmessage = '' 
+
+      state.responseisLoading = false
+      state.responseisSuccess = false
+      state.responseisError = false
+      state.responsemessage = '' 
 
       
     },
@@ -801,6 +877,49 @@ export const authSlice = createSlice({
         state.viewPrevilageisError = true
         state.viewPrevilagemessage = action.payload   
         state.viewPrevilagedata = '' 
+      })
+
+      .addCase(updateWarning.pending, (state) => {
+        state.updateWarningisLoading = true 
+      })
+      .addCase(updateWarning.fulfilled, (state:any, action) => {
+        state.updateWarningisLoading = false
+        state.updateWarningisSuccess = true
+        state.updateWarningdata = action.payload?.data     
+      })
+      .addCase(updateWarning.rejected, (state:any, action) => {
+        state.updateWarningisLoading = false
+        state.updateWarningisError = true
+        state.updateWarningmessage = action.payload   
+        state.updateWarningdata = '' 
+      })
+      .addCase(deactivateWarning.pending, (state) => {
+        state.deactivateWarningisLoading = true 
+      })
+      .addCase(deactivateWarning.fulfilled, (state:any, action) => {
+        state.deactivateWarningisLoading = false
+        state.deactivateWarningisSuccess = true
+        state.deactivateWarningdata = action.payload?.data     
+      })
+      .addCase(deactivateWarning.rejected, (state:any, action) => {
+        state.deactivateWarningisLoading = false
+        state.deactivateWarningisError = true
+        state.deactivateWarningmessage = action.payload   
+        state.deactivateWarningdata = '' 
+      })
+      .addCase(responseWarning.pending, (state) => {
+        state.responseisLoading = true 
+      })
+      .addCase(responseWarning.fulfilled, (state:any, action) => {
+        state.responseisLoading = false
+        state.responseisSuccess = true
+        state.responsedata = action.payload?.data     
+      })
+      .addCase(responseWarning.rejected, (state:any, action) => {
+        state.responseisLoading = false
+        state.responseisError = true
+        state.responsemessage = action.payload   
+        state.responsedata = '' 
       })
        
   },

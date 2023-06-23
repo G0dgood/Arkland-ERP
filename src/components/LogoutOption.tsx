@@ -4,12 +4,15 @@ import { MdOutlineClose } from 'react-icons/md';
 import { useState } from 'react';
 import HttpService from './HttpService';
 import DataService from '../utils/dataService';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { io } from 'socket.io-client';
 
 const dataService = new DataService();
 
-const LogoutOption = ({ showLogout, setShowLogout, socket }: any) => {
+const LogoutOption = () => {
 
-
+	const socket = io("https://arkland-erp-b4872258abbf.herokuapp.com/api/v1");
+	const [showLogout, setShowLogout] = useState<any>(false);
 	const [isLoading, setisLoading] = useState<any>(false);
 	const handleLogoutClose = () => setShowLogout(false);
 
@@ -31,12 +34,16 @@ const LogoutOption = ({ showLogout, setShowLogout, socket }: any) => {
 
 	return (
 		<div>
+			<Button onClick={() => setShowLogout(true)}>
+				<AiOutlineLogout size={30} color='red' />
+			</Button>
 			<Modal
 				show={showLogout}
 				// onHide={handleLogoutClose}
 				backdrop="static"
-				keyboard={false}
+				// keyboard={false}
 				className="kpi-modal"
+				centered
 			>
 				<Modal.Header>
 					<span>{/*  */}</span>

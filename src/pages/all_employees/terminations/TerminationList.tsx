@@ -1,9 +1,9 @@
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { FaArrowLeft, FaTimes } from "react-icons/fa";
+
 import { Link, useNavigate } from "react-router-dom";
-import { Toast } from "react-bootstrap";
-import { BsCheckCircle, BsClock, BsExclamationLg } from "react-icons/bs";
+
+import { BsCheckCircle, BsClock } from "react-icons/bs";
 import { SlClose } from "react-icons/sl";
 import {
  EntriesPerPage,
@@ -22,7 +22,7 @@ const TerminationList = () => {
  const dispatch = useAppDispatch();
  const navigate = useNavigate();
 
- const { terminationsdata, terminationsisError, terminationsisLoading, terminationsmessage } = useAppSelector((state: any) => state.employee)
+ const { terminationsdata, terminationsisLoading } = useAppSelector((state: any) => state.employee)
  useEffect(() => {
   // @ts-ignore
   dispatch(getTerminations());

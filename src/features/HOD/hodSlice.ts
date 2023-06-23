@@ -39,7 +39,7 @@ const initialState = {
 // Get HOD 
 export const getHOD= createAsyncThunk('hod/getHOD', async ( data,thunkAPI) => {
   try {
-    return await hodService.getHOD(data)
+    return await hodService.getHOD( )
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 

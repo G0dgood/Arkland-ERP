@@ -9,7 +9,6 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 import MobileSideBar from "./MobileSideBar";
-import LogoutOption from "./LogoutOption";
 import Notification from "./Notification/Notification";
 import DataService from "../utils/dataService";
 import HttpService from "./HttpService";
@@ -22,7 +21,7 @@ import { io } from "socket.io-client";
 const dataService = new DataService()
 const Header = ({ toggleSideNav }: any) => {
 
-  const socket = io("http://arkland-erp-prod-uat.us-east-1.elasticbeanstalk.com");
+  const socket = io("https://arkland-erp-b4872258abbf.herokuapp.com/api/v1");
   // const socket = io("https://arkland-erp.herokuapp.com");
 
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
@@ -47,7 +46,7 @@ const Header = ({ toggleSideNav }: any) => {
 
   const [isOpen, setIsopen] = useState(false);
   // const [data, setData] = useState(false);
-  const [showLogout, setShowLogout] = useState<any>(false);
+
 
 
   const ToggleSidebar = () => {
@@ -170,9 +169,8 @@ const Header = ({ toggleSideNav }: any) => {
                     Profile
                   </NavLink>
                   <NavLink
-                    to=""
-                    className="drop-logout"
-                    onClick={() => setShowLogout(true)}>
+                    to="/profile"
+                    className="drop-logout" >
                     <AiOutlineLogout size={20} className="dropdown-icons-tools" />
                     Logout
                   </NavLink>
@@ -182,7 +180,7 @@ const Header = ({ toggleSideNav }: any) => {
           </div>
         </div>
       </div>
-      <LogoutOption showLogout={showLogout} setShowLogout={setShowLogout} socket={socket} />
+
       <MobileSideBar
         ToggleSidebar={ToggleSidebar}
         isOpen={isOpen}

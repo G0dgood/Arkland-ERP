@@ -5,8 +5,6 @@ import { MdOutlineClose } from 'react-icons/md'
 import { fireAlert } from '../../utils/Alert'
 import { createHOD, reset } from '../../features/HOD/hodSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
-import { allEmployee } from '../../features/Employee/employeeSlice'
-import { allDepartments } from '../../features/Department/departmentSlice'
 import SelectInput from '../SelectInput'
 import HttpService from '../HttpService'
 
@@ -15,21 +13,6 @@ import HttpService from '../HttpService'
 const CreateHODModal = () => {
 	const dispatch = useAppDispatch();
 	const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.hod)
-
-
-	useEffect(() => {
-		setTimeout(() => {
-			dispatch(allDepartments());
-		}, 2000);
-
-	}, [dispatch]);
-
-	useEffect(() => {
-		setTimeout(() => {
-			dispatch(allEmployee());
-		}, 4000);
-	}, [dispatch]);
-
 
 
 	const [lgShow, setLgShow] = useState(false);
@@ -42,6 +25,9 @@ const CreateHODModal = () => {
 		department: " ",
 		user: " "
 	})
+
+
+
 	const [input, setInput] = useState<any>({
 		name: " ",
 		department: " ",
@@ -61,7 +47,6 @@ const CreateHODModal = () => {
 
 
 
-
 	const title = "Successful";
 	const html = "HOD Created!";
 	const icon = "success";
@@ -75,10 +60,11 @@ const CreateHODModal = () => {
 				user: " "
 			})
 			setLgShow(false)
-
 			dispatch(reset());
 		}
 	}, [createisSuccess, dispatch, html])
+
+
 
 	const handleOnChange = (input: any, value: any) => {
 		setInputs((prevState: any) => ({
@@ -90,7 +76,7 @@ const CreateHODModal = () => {
 	const handleCreate = (e: any) => {
 		e.preventDefault();
 		// @ts-ignore
-		dispatch(createHOD(inputs));
+		dispatch(createHOD(input));
 	}
 
 	const getData = async () => {
@@ -160,14 +146,14 @@ const CreateHODModal = () => {
 							<div className="Modal-textarea-middle">
 								<div className="col">
 									<div className="form-group">
-										<textarea rows={6} className='Modal-textarea' placeholder='Enter broadcast message'
+										<div>Name</div>
+										<textarea rows={1} className='Modal-textarea' placeholder='Enter broadcast message'
 											value={inputs.name}
 											onChange={(e) => handleOnChange("name", e.target.value)} />
 									</div>
-
-
 								</div>
 							</div>
+
 							<div className="modal-input-sub-space">
 								<div className="col" mt-2>
 									<SelectInput
@@ -180,8 +166,8 @@ const CreateHODModal = () => {
 										// defaultInputValue={defaultValue}
 										onChange={(e: any) => handleOnChange("department", e)} />
 								</div>
-								<div className="col mt-5">
 
+								<div className="col mt-5">
 									<SelectInput
 										isDisabled={isLoading}
 										isLoading={isLoading}
@@ -198,8 +184,8 @@ const CreateHODModal = () => {
 										variant="contained"
 										className="Add-btn-modal"
 										type="submit"
-										disabled={createisLoading}
-									>
+										disabled={createisLoading}>
+
 										{createisLoading ? <Spinner animation="border" /> : "Create"}
 									</Button>
 								</div>

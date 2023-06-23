@@ -37,7 +37,6 @@ const ViewSiteWorkerRequest = () => {
     ) : !viewdata || viewdata === undefined ? (
      <div className="table-loader-announcement">
       <div >
-       {/* eslint-disable-next-line jsx-a11y/alt-text */}
        <GiTeamIdea size={80} />
        <p className="mt-3">No Request details</p>
       </div>

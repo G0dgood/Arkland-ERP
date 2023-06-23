@@ -6,6 +6,8 @@ import projectBack from "../../../assets/vectors/project-back.svg";
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import RequestEmployeeTerminationModal from "../../../components/Modals/RequestEmployeeTerminationModal";
 import { viewWarning } from "../../../features/Employee/employeeSlice";
+import UpdateWarning from "./UpdateWarning";
+import RespondToWarning from "./RespondToWarning";
 
 
 const ViewWarning = () => {
@@ -45,7 +47,10 @@ const ViewWarning = () => {
          title="Return"
         />
        </div>
+
        <div className="employee-main-div-col-header-buttons">
+        {/* <RespondToWarning id={id} /> */}
+        <UpdateWarning id={id} />
         <RequestEmployeeTerminationModal />
        </div>
 
