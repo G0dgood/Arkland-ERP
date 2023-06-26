@@ -115,7 +115,7 @@ const TerminationList = () => {
           <td className="table-datacell datatype-numeric">
            {item?.description}
           </td>
-          <td className="table-datacell datatype-numeric">
+          <td className="table-datacell datatype-numeric" key={i}>
            {item?.status === "pending" ? (
             <BsClock
              size={25}
@@ -135,7 +135,7 @@ const TerminationList = () => {
           <td className="table-datacell datatype-numeric">
            {item?.created_by?.full_name}
           </td>
-          <td className="table-datacell datatype-numeric">
+          <td className="table-datacell datatype-numeric" key={i}>
            <Link to={`/terminations/${item?._id}`} >
             <Button id="team-applicatiom-update"  >View</Button>
            </Link>

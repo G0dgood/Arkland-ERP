@@ -111,8 +111,7 @@ const Address = ({
                     <Button
                       variant="outlined"
                       className={"Add-btn-edit"}
-                      onClick={() => handleSubmit(values)}
-                    >
+                      onClick={() => handleSubmit(values)} >
                       View Details
                     </Button>
                   </div>

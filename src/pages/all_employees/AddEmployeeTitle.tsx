@@ -1,32 +1,14 @@
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
-const AddEmployeeTitle = ({ setActive, active, click }: any) => {
+const AddEmployeeTitle = ({ setActive, active, click, setFinish, handleSubmitMyForm, decrementCount, incrementCountCancel, incrementCount, finish }: any) => {
   const navigate = useNavigate();
 
-  const [finish, setFinish] = useState<boolean>(false);
 
-  // Function to increment count by 1
-  const incrementCountCancel = () => {
-    // Update state with incremented value
-    setActive((active = 1));
-  };
-  // Function to increment count by 1
-  const incrementCount = () => {
-    // Update state with incremented value
-    if (active !== 6) {
-      setActive(active + 1);
-    }
-  };
-  // Function to decrementCount count by 1
-  const decrementCount = () => {
-    // Update state with incremented value
-    if (active !== 1) {
-      setActive(active - 1);
-    }
-  };
+
+
 
   useEffect(() => {
     if (active === 6) {
@@ -34,7 +16,7 @@ const AddEmployeeTitle = ({ setActive, active, click }: any) => {
     } else {
       setFinish(!true);
     }
-  }, [active]);
+  }, [active, setFinish]);
 
   return (
     <div className="addemployeecontainer-sup">
@@ -69,8 +51,7 @@ const AddEmployeeTitle = ({ setActive, active, click }: any) => {
             <Button
               variant="contained"
               className="addemployee-back2"
-              onClick={incrementCount}
-            >
+              onClick={incrementCount}  >
               FINISH
             </Button>
           ) : (

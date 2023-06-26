@@ -112,10 +112,7 @@ const WarningList = () => {
                 <NoRecordFound colSpan={8} />
               ) : (
                 displayData.map((item: any, i: any) => (
-                  <tr
-                    className="data-table-row"
-
-                    key={i}>
+                  <tr className="data-table-row" key={i}>
                     <td className="table-datacell datatype-string">
                       {item?.employee?.full_name}
                     </td>
@@ -131,7 +128,7 @@ const WarningList = () => {
                     <td className="table-datacell datatype-numeric">
                       {item?.status}
                     </td>
-                    <td className="table-datacell datatype-numeric">
+                    <td className="table-datacell datatype-numeric" key={i}>
                       <Link to={`/warning/warning/${item?._id}`}  >
                         <Button id="team-applicatiom-update">  View</Button>
                       </Link>

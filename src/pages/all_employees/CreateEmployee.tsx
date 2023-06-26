@@ -12,10 +12,12 @@ import CreateEmployeeView from "./employeeInputs/CreateEmployeeView";
 import { useAppDispatch } from "../../store/useStore";
 
 import HttpService from "../../components/HttpService";
+import { Button } from "@material-ui/core";
 
 
 const CreateEmployee = () => {
   const dispatch = useAppDispatch();
+  const [finish, setFinish] = useState<boolean>(false);
   const [employee, setEmployee] = useState({
     first_name: "",
     middle_name: "",
@@ -68,6 +70,8 @@ const CreateEmployee = () => {
     nin: "",
     marital_status: "",
   });
+
+  console.log('employee', employee)
   // basic_salary: number,
   // meal_allowance: number,
   // utility_allowance: number,
@@ -75,7 +79,7 @@ const CreateEmployee = () => {
   // housing_allowance: number,
   // transportation_allowance: number,
   // State to store count value
-  const [active, setActive] = useState<number>(1);
+  let [active, setActive] = useState<number>(1);
   const [departments, setDepartments] = useState([]);
   const [roles, setRoles] = useState([]);
 
@@ -83,7 +87,25 @@ const CreateEmployee = () => {
     setActive(active);
   }, [active]);
 
-
+  // Function to increment count by 1
+  const incrementCountCancel = () => {
+    // Update state with incremented value
+    setActive((active = 1));
+  };
+  // Function to increment count by 1
+  const incrementCount = () => {
+    // Update state with incremented value
+    if (active !== 6) {
+      setActive(active + 1);
+    }
+  };
+  // Function to decrementCount count by 1
+  const decrementCount = () => {
+    // Update state with incremented value
+    if (active !== 1) {
+      setActive(active - 1);
+    }
+  };
   const submitMyFormRef: any = React.useRef(null);
 
   const handleSubmitMyForm = (e: Event) => {
@@ -138,6 +160,8 @@ const CreateEmployee = () => {
       })
     );
 
+  console.log('active', active)
+
   return (
     <>
       <Helmet>
@@ -146,9 +170,14 @@ const CreateEmployee = () => {
       <div  >
         <div className="addemployeecontainer">
           <AddEmployeeTitle
+            incrementCountCancel={incrementCountCancel}
+            incrementCount={incrementCount}
+            decrementCount={decrementCount}
             setActive={setActive}
             active={active}
             click={handleSubmitMyForm}
+            setFinish={setFinish}
+            finish={finish}
           />
           {active === 6 ? (
             ""
@@ -201,6 +230,45 @@ const CreateEmployee = () => {
               setActive={setActive}
               bindSubmitForm={bindSubmitForm}
             />
+
+            {active === 6 || active === 5 ? " " :
+              <div className="contained-push-btn">
+                <div></div>
+                <div className="addemployee-sup">
+                  <div>
+                    <Button
+                      id={"push-btn-decrementCount"}
+                      variant="outlined"
+                      className="addemployee-back"
+                      onClick={decrementCount}
+                    >
+                      BACK
+                    </Button>
+                  </div>
+                  <div className="addemployee-space" />
+
+                  <div>
+                    {finish ? (
+                      <Button
+                        variant="contained"
+                        className="addemployee-back2"
+                        onClick={incrementCount} >
+                        FINISH
+                      </Button>
+                    ) : (
+                      // @ts-ignore
+                      <Button
+                        variant="contained"
+                        className="addemployee-back2"
+                        onClick={handleSubmitMyForm}
+                        type="submit" >
+                        CONTINUE
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            }
           </div>
         </div>
       </div>

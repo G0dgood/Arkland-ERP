@@ -106,7 +106,7 @@ const Team = () => {
 											{/* {new Date(item?.time_in).toLocaleString()} */}
 											{moment(item?.updated_by).format("DD-MM-YYYY")}
 										</td>
-										<td className="table-datacell datatype-numeric">
+										<td className="table-datacell datatype-numeric" key={i}>
 
 											<Button id="team-applicatiom-update" onClick={() => navigate(`/team/team/view/${item?.id}`)}>View</Button>
 										</td>

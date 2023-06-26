@@ -279,7 +279,7 @@ display: block;
 }
 
 .weekly-report-title{
-	overflow-x: scroll;
+	overflow-x: scroll !important;
 	text-align: center; 
 	white-space: nowrap;
 	color: c.color(primary-color);

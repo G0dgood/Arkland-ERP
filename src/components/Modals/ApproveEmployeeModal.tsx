@@ -53,7 +53,7 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 							<div className="row">
 								<div className="col-md-4">
 									<div className="profile-img">
-										<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+										{/* <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" /> */}
 										<div className="file btn btn-lg btn-primary">
 											Change Photo
 											<input type="file" name="file" />
@@ -77,10 +77,10 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 										<p className="proile-rating">Employment Duration : <span>{data?.employment_duration}</span></p>
 										<ul className="nav nav-tabs" id="myTab" role="tablist">
 											<li className="nav-item">
-												<a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+												<a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"> </a>
 											</li>
 											<li className="nav-item">
-												<a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+												<a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Details</a>
 											</li>
 										</ul>
 									</div>

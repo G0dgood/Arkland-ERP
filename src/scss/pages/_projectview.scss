@@ -951,7 +951,7 @@ flex-direction: column;
   background-color: c.color(primary-color)  !important;
   border: 0 !important;
   margin: auto !important;
-  padding: 10px 30px !important;
+  padding: 5px 15px !important;
   color: #fff !important;
   font-size: 12px !important;
   font-weight: 600 !important;
@@ -967,7 +967,7 @@ flex-direction: column;
   flex-direction: column;
   overflow: auto;
   background-color: var(--theme-bg-color);
-    width: 100%;
+  width: 100%;
 }
 .mail-detail-profile {
   display: flex;
@@ -1324,8 +1324,6 @@ flex-direction: column;
   .mail-icons svg:not(:first-child) {
     display: none;
   }
-
-  
 
   .calendar-container {
     padding: 30px 20px;

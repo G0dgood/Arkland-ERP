@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +30,29 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
     dispatch(createEmployee(inputs));
   };
 
+  const [inputs, setInputs] = useState({
+    basic_salary: "",
+    meal_allowance: "",
+    utility_allowance: "",
+    medical_allowance: "",
+    housing_allowance: "",
+    transportation_allowance: "",
+
+  });
+
+  useEffect(() => {
+    setInputs((prevState: any) => ({
+      ...prevState,
+      basic_salary: employee.salary * 0.3,
+      meal_allowance: employee.salary * 0.1,
+      utility_allowance: employee.salary * 0.1,
+      medical_allowance: employee.salary * 0.1,
+      housing_allowance: employee.salary * 0.15,
+      transportation_allowance: employee.salary * 0.15,
+    }));
+  }, [employee])
+
+  console.log('employee', employee.salary)
 
   function checkDepartment(id: any): any {
     let name = [] as any;
@@ -138,15 +161,15 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
         <div>
           <div className="getjob-application-details">
             <p> Basic Salary</p>
-            <p> ₦ {employee?.basic_salary}</p>
+            <p> ₦ {inputs?.basic_salary}</p>
             <p> Medical Allowance</p>
-            <p> ₦ {employee?.medical_allowance}</p>
+            <p> ₦ {inputs?.medical_allowance}</p>
             <p> Housing Allowance</p>
-            <p>₦ {employee?.housing_allowance}</p>
+            <p>₦ {inputs?.housing_allowance}</p>
             <p> Transportation Allowance</p>
-            <p>₦ {employee?.transportation_allowance} </p>
+            <p>₦ {inputs?.transportation_allowance} </p>
             <p> Utility Allowance</p>
-            <p>₦ {employee?.utility_allowance}</p>
+            <p>₦ {inputs?.utility_allowance}</p>
           </div>
         </div>
       </div>

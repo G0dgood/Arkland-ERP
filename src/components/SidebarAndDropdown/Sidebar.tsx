@@ -38,6 +38,15 @@ const Sidebar = ({
       toggled={toggled}
       onToggle={handleToggleSidebar}
       breakPoint="md"
+      // collapsedWidth="4.5rem"
+      style={{
+        height: '100%',
+        overflowY: "scroll",
+        top: 'auto',
+        // position: 'sticky',
+        padding: '0rem',
+        margin: '0rem',
+      }}
     >
 
       {/* Content */}
@@ -50,10 +59,10 @@ const Sidebar = ({
 
           {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
             <SubMenu suffix={<span className="badge yellow">3</span>} title={'KPI Assessment'} icon={<FiPieChart size={20} />} >
-
-              <MenuItem className='Side__Content' active={pathname === '/kpiassessment'} icon={<FiPieChart size={20} />}>My Assessment <Link to="/kpiassessment" /> </MenuItem>
-
-              {(isTeamLead) && (
+              {(isTeamLead || isHRHead || isSuperAdmin || isAdmin) ? "" : (
+                <MenuItem className='Side__Content' active={pathname === '/kpiassessment'} icon={<FiPieChart size={20} />}>My Assessment <Link to="/kpiassessment" /> </MenuItem>
+              )}
+              {(isTeamLead || isHeadOfDepartment) && (
                 <MenuItem className='Side__Content' active={pathname === '/kpiassessment/kpiassessment/teamkpi'}>Team KPI <Link to="/kpiassessment/kpiassessment/teamkpi" /> </MenuItem>)}
 
               {(isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (

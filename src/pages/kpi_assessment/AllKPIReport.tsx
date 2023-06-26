@@ -101,7 +101,7 @@ const AllKPIReport = () => {
 										<td className="table-datacell datatype-numeric">
 											{moment(item?.created_at).format("DD-MM-YYYY")}
 										</td>
-										<td className="table-datacell datatype-numeric">
+										<td className="table-datacell datatype-numeric" key={i}>
 											{item?.month === 1
 												? "January"
 												: item?.month === 2
@@ -131,7 +131,7 @@ const AllKPIReport = () => {
 										<td className="table-datacell datatype-numeric">
 											{item?.performance_percentage_employee}%
 										</td>
-										<td className="table-datacell datatype-numeric">
+										<td className="table-datacell datatype-numeric" key={i}>
 											<Button
 												className={
 													item?.status === "active"
@@ -142,7 +142,7 @@ const AllKPIReport = () => {
 													: item?.status}
 											</Button>
 										</td>
-										<td className="table-datacell datatype-numeric">
+										<td className="table-datacell datatype-numeric" key={i}>
 
 											{/* @ts-ignore */}
 											<Button id="team-applicatiom-update" onClick={() => handleView(item)}>

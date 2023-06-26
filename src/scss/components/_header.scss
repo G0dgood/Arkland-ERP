@@ -11,6 +11,15 @@
 .header-container {
   display: flex;
   justify-content: space-between;
+ 
+}
+
+@media only screen and (max-width: 1220px) {
+  .header-container {
+  display: flex;
+  justify-content: space-between;
+  overflow-x: scroll;
+}
 }
 
 .header-container .header-left {
@@ -43,6 +52,9 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  border: 1px solid c.color(primary-color);
+  padding: 4px ;
+  border-radius: 50px ;
 }
 .header-container .header-user-details i.fa-user {
   background-color: #990000;
@@ -233,7 +245,7 @@
   border-radius: 5px;
   box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
   color: #444444; 
-  position: absolute;
+  position: relative;
   right: 16rem;
   top: 4rem;  
   z-index: 1000; 
@@ -250,18 +262,18 @@
 }
 
 @media screen and (max-width: 1520px) {
- .user-details-noti{ 
-   animation-duration: 500ms;
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
-  color: #444444; 
-  position: absolute;
-  right: 13.6rem;
-  top: 0rem;  
-  z-index: 1000; 
- scroll-padding-top: 0px !important;
-}
+//  .user-details-noti{ 
+//    animation-duration: 500ms;
+//   background: #fff;
+//   border-radius: 5px;
+//   box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
+//   color: #444444; 
+ 
+//   right: 13.6rem;
+//   top: 0rem;  
+//   z-index: 1000; 
+//  scroll-padding-top: 0px !important;
+// }
 
 }
 
@@ -270,19 +282,30 @@
     display: none !important;
   }
 
-  .user-details-noti{ 
-   animation-duration: 500ms;
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
-  color: #444444; 
-  position: absolute;
-  right: 7rem;
-  top: 0rem;  
-  z-index: 1000; 
- scroll-padding-top: 0px !important;
-}
+//   .user-details-noti{ 
+//    animation-duration: 500ms;
+//   background: #fff;
+//   border-radius: 5px;
+//   box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #CCCCCC, 0 0 2px 5px #DDDDDD;
+//   color: #444444; 
+//   position: absolute;
+//   right: 7rem;
+//   top: 0rem;  
+//   z-index: 1000; 
+//  scroll-padding-top: 0px !important;
+// }
 .Messages-button .badge {
    display: none !important;
 }
+}
+
+.drop-logout-container{
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.button-logout{
+  width: 75px;
+  height: 35px;
 }

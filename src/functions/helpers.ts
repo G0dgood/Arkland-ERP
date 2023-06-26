@@ -101,7 +101,7 @@ export const visaOptions = [
 ];
 
 export const disabilityOptions = [
-  "Does employee have disability?",
+  "Does employee have any disability?",
   "Yes",
   "No",
 ];

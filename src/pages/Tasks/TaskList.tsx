@@ -90,7 +90,7 @@ const TaskList = () => {
 											{/* {new Date(item?.time_in).toLocaleString()} */}
 											{moment(item?.created_at).format("DD-MM-YYYY")}
 										</td>
-										<td className="table-datacell datatype-numeric">
+										<td className="table-datacell datatype-numeric" key={i}>
 											<Button id="team-applicatiom-update" onClick={() => navigate(`/tasks/tasks/${item?.id}`)}>View</Button>
 										</td>
 										{/* <td className="table-datacell datatype-numeric">

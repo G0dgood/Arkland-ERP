@@ -32,31 +32,8 @@ const TeamLeaveApplications = () => {
 		dispatch(getTeamLeave(id));
 	}, [dispatch, id])
 
-	// const [activities, setactivities] = useState<any>(newg?.map((item: any, i: any) => (
+	const [activities, setactivities] = useState<any>(teamdata)
 
-	// 	{
-	// 		id: i + 1,
-	// 		name: item?.fullName?.value,
-	// 		nameComment: item?.fullName?.comment,
-	// 		address: item?.address?.value,
-	// 		addressComment: item?.address?.comment,
-
-	// 	})) || []);
-
-	// useEffect(() => {
-	// 	if (newg) {
-	// 		setactivities(newg?.map((item: any, i: any) => (
-
-	// 			{
-	// 				id: i + 1,
-	// 				name: item?.fullName?.value,
-	// 				nameComment: item?.fullName?.comment,
-	// 				address: item?.address?.value,
-	// 				addressComment: item?.address?.comment,
-
-	// 			})))
-	// 	}
-	// }, [newg])
 
 
 	const [displayData, setDisplayData] = useState([]);
@@ -150,7 +127,7 @@ const TeamLeaveApplications = () => {
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}
-					data={teamdata?.data}
+					data={activities?.data}
 					entriesPerPage={entriesPerPage}
 					Total={"Team Leave"}
 				/>

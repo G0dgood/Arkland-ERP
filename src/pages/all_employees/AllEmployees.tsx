@@ -208,9 +208,9 @@ const AllEmployees = () => {
                         </td>
                         <td className="table-datacell datatype-numeric">
                           {item?.status === "in review" ? (
-                            <ApproveEmployeeModal id={item?.id} data={item} setReset={setReset} />
+                            <ApproveEmployeeModal id={item?.id} data={item} setReset={setReset} key={i} />
                           ) : (
-                            <Button className="table-link-active"  >
+                            <Button className="table-link-active" key={i}>
                               Approved
                             </Button>
                           )}

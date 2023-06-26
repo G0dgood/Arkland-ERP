@@ -128,3 +128,23 @@ aside.close{left:0;transition:.5s;transition-timing-function: cubic-bezier(0.9,0
    width: 8rem;  
 		 height: 5rem;
  }
+
+
+//  full sidebar pro
+
+.pro-sidebar {
+    color: rgb(26, 26, 26) !important;
+    height: 100% !important;  
+}
+.mobile-sidebar{
+  display: none !important;
+}
+@media (max-width: 768px){ 
+.pro-sidebar.md {
+    position: fixed !important;  
+    // left: -20px !important;  
+} 
+.mobile-sidebar{
+  display: block !important;
+}
+}

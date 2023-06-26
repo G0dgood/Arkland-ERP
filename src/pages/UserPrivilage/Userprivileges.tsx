@@ -59,10 +59,9 @@ const Userprivileges = () => {
 
 	return (
 		<div  >
-			<div className='SiteWorkermaindiv'>
-				<div className='SiteWorkermaindivsub'>
-
-					<AssignPrivilegesModal />
+			<div id='main-space'>
+				<div className="SiteWorkermaindivsub">
+					<span className="SupportmainTitleh3">User Privileges</span>
 				</div>
 				<div>
 					<EntriesPerPage
@@ -71,8 +70,12 @@ const Userprivileges = () => {
 						setEntriesPerPage={setEntriesPerPage}
 					/>
 				</div>
-				<div>
+				<div className='Announcements-row '>
 					<MainSearch placeholder={'Search...      User Privileges'} onChange={onChange} result={result} />
+					<div className='SiteWorkermaindivsub  maindivsub '  >
+						<AssignPrivilegesModal />
+					</div>
+
 				</div>
 			</div>
 

@@ -111,7 +111,7 @@ const HODList = () => {
 													{item?.status}
 												</td>
 												<td className="table-datacell datatype-numeric">
-													<div className="table-active-items">
+													<div className="table-active-items" key={i}>
 														{/* <span> */}
 														{item?.status === "in review" ? (
 															<span

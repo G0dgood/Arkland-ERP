@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import { Button, Nav, Spinner } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { TfiAlignJustify } from "react-icons/tfi";
 import logo from "../assets/images/ASLLOGO.svg";
-import { AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineLogout, AiOutlinePoweroff } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 import MobileSideBar from "./MobileSideBar";
@@ -27,8 +27,11 @@ const Header = ({ toggleSideNav }: any) => {
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const [network, setnetwork] = useState<any>();
   const [dropDown, setDropDown] = useState(false);
+  const [drop, setDrop] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
+
   const [notification, setNotification] = useState<any>(userInfo.notifications);
   const url = "notifications"
 
@@ -53,13 +56,13 @@ const Header = ({ toggleSideNav }: any) => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
   };
 
-  // const handleNoti = () => {
-  //   if (!dropDownNoti) {
-  //     setDropDownNoti(true)
-  //   } else {
-  //     setDropDownNoti(false)
-  //   }
-  // }
+  const handleClick = () => {
+    if (!drop) {
+      setDrop(true)
+    } else {
+      setDrop(false)
+    }
+  }
 
 
   const handleNext = async () => {
@@ -97,11 +100,24 @@ const Header = ({ toggleSideNav }: any) => {
       })
   }
 
-
+  const handleLogout = async () => {
+    setisLoading(true);
+    socket.disconnect()
+    try {
+      await HttpService.patch("me/logout", {})
+      dataService.clearData()
+      setisLoading(false);
+      window.location.replace("/");
+    } catch (error) {
+      setisLoading(false);
+      dataService.clearData()
+      window.location.replace("/");
+    }
+  };
 
 
   return (
-    <div id="header" onMouseLeave={() => setDropDownNoti(false)} >
+    <div id="header" onMouseLeave={() => { setDropDownNoti(false); setDrop(false); setDropDown(false) }} >
       <Toaster
         position="top-center"
         toastOptions={{
@@ -151,7 +167,7 @@ const Header = ({ toggleSideNav }: any) => {
 
           <div
             className="d-flex header-user-details"
-            onClick={() => setDropDown(!dropDown)}
+            onClick={() => setDropDown(true)}
           // onClick={() => setDropDown(true)}
           >
             <span className="dropdown-names">
@@ -162,21 +178,55 @@ const Header = ({ toggleSideNav }: any) => {
             </div>
 
             {dropDown && (
-              <div className="dropdown">
+              <div className="dropdown"  >
                 <Nav className="flex-column">
                   <NavLink to="/profile" className="drop-user-settings">
                     <CgProfile size={20} className="dropdown-icons-tools" />
                     Profile
                   </NavLink>
                   <NavLink
-                    to="/profile"
+                    to=""
+                    onClick={handleClick}
                     className="drop-logout" >
                     <AiOutlineLogout size={20} className="dropdown-icons-tools" />
                     Logout
                   </NavLink>
+                  {drop &&
+                    <div className="drop-logout  drop-logout-container" >
+                      <Button className="button-logout">NO</Button>
+                      <Button className="button-logout" onClick={handleLogout}>
+                        {isLoading ? <Spinner animation="border" size="sm" /> : "YES"}
+                      </Button>
+                    </div>}
                 </Nav>
               </div>
             )}
+            {/* {dropDown && (
+              <div className="dropdown">
+                <div className="flex-column">
+                  <div
+                    id="i"
+                    className="drop-user-settings" >
+                    <CgProfile className="dropdown-icons-tools" size={20} />
+                    Profile
+                  </div>
+                  <div id="i"
+                    className="drop-logout"
+                  // onClick={handleClick}
+                  >
+                    <AiOutlinePoweroff className="dropdown-icons-tools" size={20} />
+                    Logout
+                  </div>
+                </div>
+                {drop &&
+                  <div className="drop-logout  drop-logout-container" >
+                    <Button className="button-logout " onClick={() => setDrop(false)}>NO</Button>
+                    <Button className="button-logout" onClick={handleLogout}>
+                      {isLoading ? <Spinner animation="border" size="sm" /> : "YES"}
+                    </Button>
+                  </div>}
+              </div>
+            )} */}
           </div>
         </div>
       </div>

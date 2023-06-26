@@ -14,7 +14,6 @@ const Schedule = ({ tasks, isLoading }: any) => {
           <h6>{"UPCOMING ToDos"}</h6>
           <span>Today, {moment(Date.now()).format("DD-MMMM-YYYY")}</span>
         </div>
-
         {isLoading ? (
           <div className="table-loader-announcement1">
             <BounceLoader color={"#990000"} loading={isLoading} />
@@ -29,7 +28,6 @@ const Schedule = ({ tasks, isLoading }: any) => {
           </div>
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "1fr" }}>
-
             <div className="Announcement-container">
               {tasks?.map((item: any, i: any) => (
                 <div key={i}>
@@ -48,11 +46,7 @@ const Schedule = ({ tasks, isLoading }: any) => {
 
                     <div className="FiTrash2" style={{ display: "flex", paddingRight: "10px" }} >
                       < ViewScheduleModal id={item?.id} />
-
-
                     </div>
-
-
                   </div>
                 </div>
               ))}

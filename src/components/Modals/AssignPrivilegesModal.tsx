@@ -106,25 +106,21 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 	};
 
 
-
-
-
 	const Role: any = [
 		"employee",
 		"team lead",
-		"head of department",
 		"HR editor",
 		"HR admin",
 		"HR head",
 		"admin",
 		"super admin",
-		"master"
+		"management"
 	]
 
 	return (
 		<div>
 			<Button variant="contained" className="Add-btn"
-				onClick={() => setLgShow(true)}>
+				onClick={() => { setLgShow(true); handelclick() }}>
 				Assign Privilege
 			</Button>
 			<Modal
@@ -138,7 +134,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 					</span>
 					<span className='span-center-title'>Assign Privilege</span>
-					<Button style={{ color: '#fff' }} onClick={() => { setLgShow(false); handelclick() }}>
+					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

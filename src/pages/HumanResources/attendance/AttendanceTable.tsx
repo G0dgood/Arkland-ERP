@@ -40,7 +40,7 @@ const AttendanceTable = () => {
   const [displayData, setDisplayData] = useState([]);
   return (
     <div  >
-      <div className="SiteWorkermaindiv">
+      <div id='main-space'>
         <div className="SiteWorkermaindivsub">
           <span className="SupportmainTitleh3">HR EMPLOYEE ATTENDANCE</span>
         </div>
@@ -141,7 +141,7 @@ const AttendanceTable = () => {
                         {item?.ip_checked === true ? "Yes" : "No"}
                       </Button>
                     </td>
-                    <td className="table-datacell datatype-numeric">
+                    <td className="table-datacell datatype-numeric" key={i}>
                       <Button
                         className={
                           item?.is_hr_assisted === true

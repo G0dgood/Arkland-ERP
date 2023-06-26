@@ -9,22 +9,18 @@ import { fireAlert } from '../utils/Alert';
 
 const ClockIn = () => {
 	const dispatch = useAppDispatch();
-	const { isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.attendance)
+	const { isLoading, isSuccess } = useAppSelector((state: any) => state.attendance)
 
 
 
 	const [show, setShow] = useState<any>(false);
 
 	useEffect(() => {
-		if (isError) {
-			fireAlert("Clock in error", message, "error");
+		if (isSuccess) {
+			fireAlert("successful", "Clock in success", "success");
 			dispatch(reset());
 		}
-		else if (isSuccess) {
-			fireAlert("Clock in success", message, "success");
-			dispatch(reset());
-		}
-	}, [isError, message, dispatch, isSuccess])
+	}, [dispatch, isSuccess])
 
 	function updateClock(hours: any, minutes: any, seconds: any) {
 
@@ -69,7 +65,6 @@ const ClockIn = () => {
 	return (
 		<div>
 			<Button
-				variant="contained"
 				className="Add-btn"
 				onClick={() => setShow(true)}
 			>

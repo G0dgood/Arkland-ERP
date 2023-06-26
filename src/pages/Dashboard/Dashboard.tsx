@@ -13,7 +13,7 @@ const Dashboard = () => {
 
 
   return (
-    <div  >
+    <div className="h-100">
       {(isSuperAdmin ||
         isHRHead ||
         isHrAdmin) ? (

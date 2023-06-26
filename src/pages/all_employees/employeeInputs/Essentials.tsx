@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import moment from "moment";
@@ -34,16 +34,16 @@ const Essentials = ({
     return show;
   };
   const [is_expatriateValue, set_is_expatriateValue] = React.useState(false);
-  const [disability, setDisability] = React.useState(false);
-  const formatToTrue = (value?: any) => {
-    if (value === "Yes") {
-      setDisability(!false);
-      return true;
-    } else if (value === "No" || "Does employee have disability?") {
-      setDisability(!true);
-      return false;
-    }
-  };
+  // const [disability, setDisability] = React.useState(false);
+  // const formatToTrue = (value?: any) => {
+  //   if (value === "Yes") {
+  //     setDisability(!false);
+  //     return true;
+  //   } else if (value === "No" || "Does employee have disability?") {
+  //     setDisability(!true);
+  //     return false;
+  //   }
+  // };
   const visaController = (value?: string) => {
     if (value === "Yes") {
       set_is_expatriateValue(true);
@@ -53,15 +53,40 @@ const Essentials = ({
       return false;
     }
   };
+  const [inputs, setInputs] = useState<any>({
+    has_disability: false
 
+  })
+  const [isInputs, setisInputs] = useState<boolean>(false)
+
+
+
+  useEffect(() => {
+    setInputs((prevState: any) => ({
+
+      ...prevState,
+      has_disability: isInputs,
+
+    }));
+  }, [isInputs])
   const handleSubmit = (values?: any) => {
     // console.log("Values", values);
-    setEmployee({ ...employee, ...values });
+    setEmployee({ ...employee, ...values, ...inputs });
     setActive(2);
   };
+
+
+
+
+
+  const handleOnChange = (input: string, value: any) => {
+    setisInputs(!isInputs)
+  };
+
   return (
     <div className={active === 1 ? "EssentialsContainer" : "d-none"}>
       <Formik
+        enableReinitialize={true}
         initialValues={{
           first_name: "",
           middle_name: "",
@@ -72,7 +97,7 @@ const Essentials = ({
           phone: "",
           gender: "",
           date_of_birth: "",
-          has_disability: "",
+          // isInputs: isinputs,
           disability: "",
           visa_type: "",
           is_expatriate: "",
@@ -232,22 +257,54 @@ const Essentials = ({
                   <div className="row-item">
                     <div className="col">
                       <div className="form-group">
-                        <SelectField
+                        {/* <SelectField
                           label="Disability"
                           name="disability"
                           options={disabilityOptions}
                           className="form-group__gender"
                           onChange={(event: any) => {
                             setFieldValue(
-                              "has_disability",
+                              "isInputs",
                               formatToTrue(event?.target.value)
                             );
                           }}
-                        />
+                        /> */}
+                        <label htmlFor="YES" style={{ marginBottom: "1rem" }}>Disability</label>
+                        <div className="radio-contain">
+                          <div style={{ marginRight: "2rem" }}>
+                            <input type="radio" id="YES" name="name"
+                              disabled={isInputs === true}
+                              checked={isInputs === true}
+                              // onChange={(event: any) => {
+                              //   handleOnChange(
+                              //     "disable",
+                              //     formatToTrue(event?.target.checked)
+                              //   )
+                              // }}
+                              onChange={(e) => handleOnChange("isInputs", e)}
+                            />
+                            <label htmlFor="YES">YES</label>
+                          </div>
+
+                          <div>
+                            <input type="radio" id="NO" name="name"
+                              disabled={isInputs === false}
+                              checked={isInputs === false}
+                              // onChange={(event: any) => {
+                              //   handleOnChange(
+                              //     "disable",
+                              //     formatToTrue(event?.target.checked)
+                              //   )
+                              // }}
+                              onChange={(e) => handleOnChange("isInputs", e)} />
+                            <label htmlFor="NO">NO</label>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                     <div className="imput-space" />
-                    {disability ? (
+                    {isInputs ? (
                       <div className="col">
                         <div className="form-group">
                           <InputField

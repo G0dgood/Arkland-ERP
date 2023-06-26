@@ -23,11 +23,11 @@ const AdminAnnouncement = ({ announcements, isLoading }: any) => {
     <div className="admin-main-div-col-2-sub">
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
-          <span className="sub-text-contained">
-            <h4>Announcement</h4>
-          </span>
+          {/* <span className="sub-text-contained"> */}
+          <h5>Announcement</h5>
+          {/* </span> */}
         </div>
-        <ClockIn />
+        {/* <ClockIn /> */}
       </div>
 
       <div>
@@ -53,10 +53,7 @@ const AdminAnnouncement = ({ announcements, isLoading }: any) => {
                       <div className="main-todo-note">
                         <div>{item.message}</div>
                         <div className="main-todo-note-minutes">
-                          {" "}
-                          {moment
-                            .duration(moment().diff(item.created_at))
-                            .humanize()}{" "}
+                          {moment.duration(moment().diff(item.created_at)).humanize()}{" "}
                           ago
                         </div>
                       </div>
@@ -73,9 +70,9 @@ const AdminAnnouncement = ({ announcements, isLoading }: any) => {
           </>
         )}
       </div>
-      <Button variant="outlined" className="show-btn-schedule" onClick={() => navigate("/announcements")}>
+      {/* <Button variant="outlined" className="show-btn-schedule" onClick={() => navigate("/announcements")}>
         See All Announcement
-      </Button>
+      </Button> */}
     </div>
   );
 };

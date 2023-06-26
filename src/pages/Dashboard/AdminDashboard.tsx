@@ -96,24 +96,28 @@ const AdminDashboard = () => {
     </div>
 
     {/* </div> */}
-    <div className="row" >
-     <div className="Average-container-card" style={{ width: "34vw", margin: "1rem" }} >
-      <MdOpenInFull className="barchat-OpenInFull" onClick={handleShow} />
-      <Barchat departments={!departments?.length ? [] : departments} employees={!employees?.length ? [] : employees} />
-      <FullBarChart departments={!departments?.length ? [] : departments} employees={!employees?.length ? [] : employees} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
-     </div>
-     <div className="Average-container-card" style={{ width: "15vw", margin: "1rem" }}>
-      <DonutChat employees={!employees?.length ? 0 : employees} />
+    <div className="container">
+     <div className="row" >
+      <div className="Average-container-card col-8  w-65"  >
+       <MdOpenInFull className="barchat-OpenInFull" onClick={handleShow} />
+       <Barchat departments={!departments?.length ? [] : departments} employees={!employees?.length ? [] : employees} />
+       <FullBarChart departments={!departments?.length ? [] : departments} employees={!employees?.length ? [] : employees} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
+      </div>
+      <div className="Average-container-card col-3 ms-4 w-5"  >
+       <DonutChat employees={!employees?.length ? 0 : employees} />
+      </div>
      </div>
     </div>
-    <AdminAnnouncement announcements={announcement} isLoading={isLoading} />
+    <div >
+     <AdminAnnouncement announcements={announcement} isLoading={isLoading} />
+    </div>
     {/* <Announcement /> */}
    </div>
-
-   {/* Todos start */}
-   <Schedule tasks={tasks} isLoading={isLoading} />
-   {/* Todos end */}
-
+   <div>
+    {/* Todos start */}
+    <Schedule tasks={tasks} isLoading={isLoading} />
+    {/* Todos end */}
+   </div>
   </div>
  );
 };

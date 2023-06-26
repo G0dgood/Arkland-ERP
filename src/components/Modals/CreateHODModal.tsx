@@ -97,6 +97,8 @@ const CreateHODModal = () => {
 		}
 	}
 
+	// console.log('employee', employees)
+
 	const availableDepartment = [] as any;
 	departments &&
 		departments.forEach((department: any) =>
@@ -111,7 +113,7 @@ const CreateHODModal = () => {
 	employees &&
 		employees.forEach((employee: any) =>
 			availableEmployees.push({
-				value: employee?.id,
+				value: employee?.user,
 				label: employee?.full_name,
 			})
 		);

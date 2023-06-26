@@ -71,42 +71,47 @@ const StaffDashboard = () => {
     <div className="main-div">
       <TodoShowAll showDrawer={showDrawer} setShowDrawer={setShowDrawer} />
       <div className="main-div-col-1">
-        <div className="main-div-col-1-sub">
-          <div className="main-div-col-1-sub-min">
-            <div className="main-div-col-1-sub-min-img">
-              <img src={img} alt="User" className="main-sub-img" />
-            </div>
-            <div className="main-div-col-1-sub-min-text">
-              <div className="main-min-text">
-                <h4 className="main-min-text-header">
-                  Welcome to Your Dashboard!
-                </h4>
-                <p className="main-min-text2">
-                  {Quote?.getQuote()?.text}<span className="main-min-text2-span"> - {Quote?.getQuote()?.author}</span>
-                </p>
+        <div>
+          <div className="main-div-col-1-sub">
+            <div className="main-div-col-1-sub-min">
+              <div className="main-div-col-1-sub-min-img">
+                <img src={img} alt="User" className="main-sub-img" />
+              </div>
+              <div className="main-div-col-1-sub-min-text">
+                <div className="main-min-text">
+                  <h4 className="main-min-text-header">
+                    Welcome to Your Dashboard!
+                  </h4>
+                  <p className="main-min-text2">
+                    {Quote?.getQuote()?.text}<span className="main-min-text2-span"> - {Quote?.getQuote()?.author}</span>
+                  </p>
 
+                </div>
               </div>
             </div>
-          </div>
-          <div className="main-div-col-2-sub-min">
-            <span className="OpenInFull">
-              <MdOpenInFull />
-            </span>
-            <h1 className="event-time">{time}</h1>
-            <h1 className="event-days">{day}</h1>
-            <p className="event-months">
-              {date.toUpperCase()} {month} {year}
-            </p>
-            {/* <CreateEvent /> */}
+            <div className="main-div-col-2-sub-min">
+              <span className="OpenInFull">
+                <MdOpenInFull />
+              </span>
+              <h1 className="event-time">{time}</h1>
+              <h1 className="event-days">{day}</h1>
+              <p className="event-months">
+                {date.toUpperCase()} {month} {year}
+              </p>
+              {/* <CreateEvent /> */}
+            </div>
           </div>
         </div>
         {/* Announcement */}
-        <Announcement announcement={announcement} isLoading={isLoading} />
+        <div style={{ marginTop: "2rem" }}  >
+          <Announcement announcement={announcement} isLoading={isLoading} />
+        </div>
       </div>
-
-      {/* Todos start */}
-      <Todos showDrawer={showDrawer} setShowDrawer={setShowDrawer} tasks={tasks} isLoading={isLoading} />
-      {/* Todos end */}
+      <div >
+        {/* Todos start */}
+        <Todos showDrawer={showDrawer} setShowDrawer={setShowDrawer} tasks={tasks} isLoading={isLoading} />
+        {/* Todos end */}
+      </div>
     </div>
   );
 };

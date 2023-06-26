@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import TableLoader from '../../components/TableLoader';
-import { fireAlert } from '../../utils/Alert';
+// import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { Button } from '@material-ui/core';
 import { BsCheckCircle } from 'react-icons/bs';
 import moment from 'moment';
 import Pagination from '../../components/Pagination';
-import { getAnnouncement, reset } from '../../features/Announcement/announcemetSlice';
+import { getAnnouncement } from '../../features/Announcement/announcemetSlice';
 import { useNavigate } from 'react-router-dom';
 import CreateAnnouncementModal from '../../components/Modals/CreateAnnouncementModal';
 
 const Announcements = () => {
 	const dispatch = useAppDispatch();
+	const { createisSuccess } = useAppSelector((state: any) => state.announcement)
 	const { data, isLoading } = useAppSelector((state: any) => state.announcement)
 	const navigate = useNavigate();
 
@@ -20,7 +21,10 @@ const Announcements = () => {
 
 	useEffect(() => {
 		dispatch(getAnnouncement());
-	}, [dispatch]);
+		if (createisSuccess) {
+			dispatch(getAnnouncement());
+		}
+	}, [createisSuccess, dispatch]);
 
 
 	const [sortData, setSortData] = useState([]);
@@ -53,10 +57,9 @@ const Announcements = () => {
 
 	return (
 		<div  >
-
-			<div className='SiteWorkermaindiv'>
-				<div className='SiteWorkermaindivsub'>
-					<CreateAnnouncementModal />
+			<div id='main-space'>
+				<div className="SiteWorkermaindivsub">
+					<span className="SupportmainTitleh3">Announcement</span>
 				</div>
 				<div>
 					<EntriesPerPage
@@ -65,9 +68,13 @@ const Announcements = () => {
 						setEntriesPerPage={setEntriesPerPage}
 					/>
 				</div>
-				<div>
+				<div className='Announcements-row '>
 					<MainSearch placeholder={'Search...     Announcements '} />
+					<div className='SiteWorkermaindivsub  maindivsub '  >
+						<CreateAnnouncementModal />
+					</div>
 				</div>
+
 			</div>
 
 			<section className="md-ui component-data-table">

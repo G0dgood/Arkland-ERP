@@ -5,7 +5,7 @@ import InputField from "../../../components/Inputs/InputField";
 import { EmployeeFormProps } from "../../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
 import { removeNonNumeric } from "../../../utils/numbers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Finance = ({
  active,
@@ -24,19 +24,37 @@ const Finance = ({
  });
  const [gross_salary, setgsross_salary] = useState<any>(0)
 
- console.log('gross_salary', gross_salary)
 
- const basic_salary = gross_salary * 0.3;
- const meal_allowance = gross_salary * 0.1;
- const utility_allowance = gross_salary * 0.1;
- const medical_allowance = gross_salary * 0.1;
- const housing_allowance = gross_salary * 0.15;
- const transportation_allowance = gross_salary * 0.15;
 
- console.log('salary', basic_salary, meal_allowance, utility_allowance)
+
+ const [inputs, setInputs] = useState({
+
+  basic_salary: "",
+  meal_allowance: "",
+  utility_allowance: "",
+  medical_allowance: "",
+  housing_allowance: "",
+  transportation_allowance: "",
+
+ });
+
+ useEffect(() => {
+  setInputs((prevState: any) => ({
+   ...prevState,
+   basic_salary: gross_salary * 0.3,
+   meal_allowance: gross_salary * 0.1,
+   utility_allowance: gross_salary * 0.1,
+   medical_allowance: gross_salary * 0.1,
+   housing_allowance: gross_salary * 0.15,
+   transportation_allowance: gross_salary * 0.15,
+  }));
+ }, [gross_salary])
+
+
+
 
  const handleSubmit = (values?: any) => {
-  console.log("Values", values);
+  // console.log("Values", values);
   setEmployee({ ...employee, ...values });
   setActive(3);
  };
@@ -44,18 +62,18 @@ const Finance = ({
  return (
   <div className={active === 2 ? "EssentialsContainer" : "d-none"}>
    <Formik
-    // enableReinitialize={true}
+    enableReinitialize
     initialValues={{
      bank_name: "",
      bank_account_number: "",
      bank_account_name: "",
      salary: "",
-     basic_salary: basic_salary,
-     meal_allowance: meal_allowance,
-     utility_allowance: utility_allowance,
-     medical_allowance: medical_allowance,
-     housing_allowance: housing_allowance,
-     transportation_allowance: transportation_allowance,
+     // basic_salary: inputs.basic_salary,
+     // meal_allowance: inputs.meal_allowance,
+     // utility_allowance: inputs.utility_allowance,
+     // medical_allowance: inputs.medical_allowance,
+     // housing_allowance: inputs.housing_allowance,
+     // transportation_allowance: inputs.transportation_allowance,
     }}
     onSubmit={handleSubmit}
     validationSchema={validate}
@@ -158,13 +176,13 @@ const Finance = ({
              id="basic_salary"
              name="basic_salary"
              placeholder="Enter employee basic salary"
-             value={values.basic_salary}
-             onChange={(event: any) => {
-              setFieldValue(
-               "basic_salary",
-               removeNonNumeric(event?.target.value)
-              );
-             }}
+             value={inputs.basic_salary}
+             // onChange={(event: any) => {
+             //  setFieldValue(
+             //   "basic_salary",
+             //   removeNonNumeric(event?.target.value)
+             //  );
+             // }}
              inputMode="numeric"
             />
            </div>
@@ -187,7 +205,7 @@ const Finance = ({
              id="utility_allowance"
              className="form-group__gender cleaveInput"
              name="utility_allowance"
-             value={values.utility_allowance}
+             value={inputs.utility_allowance}
              onChange={(event: any) => {
               setFieldValue(
                "utility_allowance",
@@ -217,7 +235,7 @@ const Finance = ({
              id="medical_allowance"
              className="form-group__gender cleaveInput"
              name="medical_allowance"
-             value={values.medical_allowance}
+             value={inputs.medical_allowance}
              onChange={(event: any) => {
               setFieldValue(
                "medical_allowance",
@@ -245,7 +263,7 @@ const Finance = ({
              id="housing_allowance"
              className="form-group__gender cleaveInput"
              name="housing_allowance"
-             value={values.housing_allowance}
+             value={inputs.housing_allowance}
              onChange={(event: any) => {
               setFieldValue(
                "housing_allowance",
@@ -275,7 +293,7 @@ const Finance = ({
              id="transportation_allowance"
              className="form-group__gender cleaveInput"
              name="transportation_allowance"
-             value={values.transportation_allowance}
+             value={inputs.transportation_allowance}
              onChange={(event: any) => {
               setFieldValue(
                "transportation_allowance",
@@ -304,7 +322,7 @@ const Finance = ({
              id="meal_allowance"
              className="form-group__gender cleaveInput"
              name="meal_allowance"
-             value={values.meal_allowance}
+             value={inputs.meal_allowance}
              onChange={(event: any) => {
               setFieldValue(
                "meal_allowance",

@@ -32,6 +32,7 @@
 @use "./pages/NotFound";
 @use "./pages/team";
 @use "./pages/viewsiteworkerrequest";
+@use "./pages/announcement.scss";
 
 @use "./abstracts/colors" as c;
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css);
@@ -120,6 +121,22 @@ main {
   padding: 30px;
   height: 100%;
   overflow-y: scroll
+}
+@media only screen and (max-width: 1200px) {
+main {
+  grid-area: main;
+  padding: 10px;
+  height: 100%;
+  overflow-y: scroll
+}
+}
+@media only screen and (max-width: 600px) {
+main {
+  grid-area: main;
+  padding: 10px;
+  height: 100%;
+  overflow-y: scroll
+}
 }
 
 // .YEPft {
@@ -423,5 +440,15 @@ form.searchbox button:hover {
   .btn-delete-field-icon{
     margin-right: 0.5rem;
   }
+
+  #main-space{
+  display: flex;
+	justify-content: space-between !important;
+ align-items: center; 
+  }
+
+  .SupportmainTitleh3{ 
+	white-space: nowrap !important;
+}
  
  
