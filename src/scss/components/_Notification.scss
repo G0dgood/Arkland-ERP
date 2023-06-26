@@ -181,8 +181,8 @@
 
 #faq-container-noti {
   width: 400px !important;
-  height: 600px !important;
-  // height: 600px !important;
+  height: 100% !important;
+  max-height: 600px !important;
   margin: 0 auto;
   border-radius: 10px;
   background-color: #fff;

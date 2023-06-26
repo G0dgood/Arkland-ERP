@@ -7,6 +7,7 @@ import moment from 'moment';
 import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hrApproveEmployees, reset } from '../../features/Employee/employeeSlice';
+import { BiUser } from 'react-icons/bi';
 
 
 const ApproveEmployeeModal = ({ id, data }: any) => {
@@ -48,16 +49,17 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 					</Button>
 				</Modal.Header>
 				<Modal.Body>
-					<div className="container emp-profile">
+					<div className="  ">
 						<form method="post">
 							<div className="row">
 								<div className="col-md-4">
 									<div className="profile-img">
+										<BiUser size={80} />
 										{/* <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" /> */}
-										<div className="file btn btn-lg btn-primary">
+										{/* <div className="file btn btn-lg btn-primary">
 											Change Photo
 											<input type="file" name="file" />
-										</div>
+										</div> */}
 									</div>
 								</div>
 								<div className="col-md-6">
@@ -76,11 +78,9 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 										</h6>
 										<p className="proile-rating">Employment Duration : <span>{data?.employment_duration}</span></p>
 										<ul className="nav nav-tabs" id="myTab" role="tablist">
+
 											<li className="nav-item">
-												<a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"> </a>
-											</li>
-											<li className="nav-item">
-												<a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Details</a>
+												<a id="profile-tab "> <h5>Details</h5> </a>
 											</li>
 										</ul>
 									</div>
@@ -165,7 +165,7 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 													<p>{data?.institution_attended}</p>
 												</div>
 											</div>
-											<div className="row">
+											<div className="row m-b-1">
 												<div className="col-md-6">
 													<label>Marital Status</label>
 												</div>
@@ -174,11 +174,14 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 												</div>
 											</div>
 											<div className="row">
-												<div className="col-md-12">
-													<label>State of origin</label><br />
+												<div className="col-md-6">
+													<label>State of origin</label>
+												</div>
+												<div className="col-md-6">
 													<p>{data?.state_of_origin}</p>
 												</div>
 											</div>
+
 										</div>
 									</div>
 								</div>

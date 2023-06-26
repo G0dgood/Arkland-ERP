@@ -64,19 +64,6 @@ const AllEmployees = () => {
   }, [entriesPerPage]);
 
 
-
-  const header = [
-    { title: "FULL NAME", prop: "full_name" },
-    { title: "EMAIL", prop: "email" },
-    { title: "ROLE", prop: "role" },
-    { title: "DEPARTMENT", prop: "department" },
-    { title: "CATEGORY", prop: "category" },
-    { title: "STATUS", prop: "status" },
-    { title: "APPROVE", prop: "status" },
-    { title: "ACTION" },
-  ];
-
-
   return (
     <div>
 
@@ -166,18 +153,16 @@ const AllEmployees = () => {
               <table className="main-table-content">
                 <thead className="data-table-header">
                   <tr className="data-table-row">
-                    {header.map((i, index) => {
-                      return (
-                        <>
-                          <td
-                            className="table-datacell datatype-numeric"
-                            key={index}
-                          >
-                            {i.title}
-                          </td>
-                        </>
-                      );
-                    })}
+                    <td className="table-datacell datatype-numeric"  > FULL NAME </td>
+                    <td className="table-datacell datatype-numeric"  > EMAIL </td>
+                    <td className="table-datacell datatype-numeric"  > ROLE </td>
+                    <td className="table-datacell datatype-numeric"  > DEPARTMENT </td>
+                    <td className="table-datacell datatype-numeric"  > CATEGORY </td>
+                    <td className="table-datacell datatype-numeric"  > STATUS</td>
+                    {(isSuperAdmin || isAdmin || isMaster) && (
+                      <td className="table-datacell datatype-numeric"  > APPROVE</td>
+                    )}
+                    <td className="table-datacell datatype-numeric"  > ACTION</td>
                   </tr>
                 </thead>
                 <tbody className="data-table-content">
@@ -206,17 +191,18 @@ const AllEmployees = () => {
                         <td className="table-datacell datatype-numeric">
                           {item?.status}
                         </td>
+                        {(isSuperAdmin || isAdmin || isMaster) && (
+                          <td className="table-datacell datatype-numeric">
+                            {item?.status === "in review" ? (
+                              <ApproveEmployeeModal id={item?.id} data={item} setReset={setReset} key={i} />
+                            ) : (
+                              <Button className="table-link-active" key={i}>
+                                Approved
+                              </Button>
+                            )}
+                          </td>)}
                         <td className="table-datacell datatype-numeric">
-                          {item?.status === "in review" ? (
-                            <ApproveEmployeeModal id={item?.id} data={item} setReset={setReset} key={i} />
-                          ) : (
-                            <Button className="table-link-active" key={i}>
-                              Approved
-                            </Button>
-                          )}
-                        </td>
-                        <td className="table-datacell datatype-numeric">
-                          <div className="table-active-items">
+                          <div className="table-active-items" key={i}>
                             <span
                               className="lock-icon-color"
                               title="View employee "

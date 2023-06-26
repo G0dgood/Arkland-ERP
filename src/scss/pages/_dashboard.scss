@@ -299,8 +299,8 @@ overflow-y: scroll;
 
 .Announcement-container {
   margin: auto;
-  // overflow-y: scroll !important; 
-  // max-height: 35rem !important;
+  overflow-y: auto !important; 
+  max-height: 28rem !important;
 }
 .Admin-Announcement-container {
  height: 16rem !important;
@@ -388,10 +388,18 @@ overflow-y: scroll;
 }
 
 @media only screen and (max-width: 720px) {
-  .Announcement-sub-2 {
- overflow-y: scroll !important; 
-  max-height: 20rem !important;
+  .Announcement-container {
+  margin: auto;
+  overflow-y: auto  ; 
+   height: 18rem ; 
 }
+.header-logo-text1 {
+  display: none !important;
+}
+//   .Announcement-sub-2 {
+//  overflow-y: scroll !important; 
+//   max-height: 20rem !important;
+// }
   .main-div-col-2{
     // transform: scale(0.9) !important;
   }
