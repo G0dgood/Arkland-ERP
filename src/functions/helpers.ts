@@ -132,7 +132,7 @@ export const ACADEMIC_QUALIFICATIONS = [
 
 export const categoryOptions = [
   "Select staff category",
-  "Master",
+  "Sanagement",
   "Senior",
   "Junior",
 ];

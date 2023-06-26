@@ -11,7 +11,7 @@ const dataService = new DataService();
 
 const LogoutOption = () => {
 
-	const socket = io("https://arkland-erp-b4872258abbf.herokuapp.com/api/v1");
+	const socket = io("https://arkland-erp-b4872258abbf.herokuapp.com");
 	const [showLogout, setShowLogout] = useState<any>(false);
 	const [isLoading, setisLoading] = useState<any>(false);
 	const handleLogoutClose = () => setShowLogout(false);
@@ -21,13 +21,13 @@ const LogoutOption = () => {
 		socket.disconnect()
 		try {
 			await HttpService.patch("me/logout", {})
+			window.location.replace("/");
 			dataService.clearData()
 			setisLoading(false);
-			window.location.replace("/");
 		} catch (error) {
+			window.location.replace("/");
 			setisLoading(false);
 			dataService.clearData()
-			window.location.replace("/");
 		}
 	};
 

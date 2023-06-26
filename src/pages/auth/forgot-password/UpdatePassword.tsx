@@ -13,7 +13,7 @@ import fourth from "../../../assets/images/A&A.jpg";
 import fifth from "../../../assets/images/PHOENIX.jpg";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import InputField from "../../../components/Inputs/InputField";
-import { fireAlert } from "../../../utils/Alert";
+import { fireAlert, fireAlert2 } from "../../../utils/Alert";
 import { useNavigate } from "react-router-dom";
 import HttpService from "../../../components/HttpService";
 import DataService from "../../../utils/dataService";
@@ -66,10 +66,11 @@ const UpdatePassword = () => {
       dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
       resetForm(values);
       setLoading(false);
-      fireAlert("Successful", "Password update successful", "success");
-      setTimeout(() => {
-        window.location.replace("/");
-      }, 5000);
+      // fireAlert("Successful", "Password update successful", "success");
+      fireAlert2("Successful", "Password update successful", "success", "/");
+      // setTimeout(() => {
+      //   window.location.replace("/");
+      // }, 5000);
     } catch (error) {
       setLoading(false);
       // @ts-ignore

@@ -132,7 +132,7 @@ const CreateTeamLead = () => {
 				variant="contained"
 				className="Add-btn"
 				onClick={() => { setShow(true); getData() }} >
-				Create Team Members
+				Create Team Lead
 			</Button>
 			<Modal
 				size="lg"
@@ -142,7 +142,7 @@ const CreateTeamLead = () => {
 			>
 				<Modal.Header>
 					<span></span>
-					<span className="span-center-title"> Create Team Members</span>
+					<span className="span-center-title"> Create Team Lead</span>
 					<Button
 						style={{ color: "#fff" }}
 						onClick={() => setShow(false)}

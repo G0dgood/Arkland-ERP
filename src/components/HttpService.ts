@@ -152,7 +152,7 @@ class HttpService {
              fireAlert("Error", e.response.data.message, "error");
         }
       
-        else if (e.response.status === 403 && e.response.data.error_code === 23) {   
+        else if (e.response.status === 403 && e.response.data.error_code === 24) {   
              fireAlert2(e.response.data.message, "You will be redirected!", "warning", "/update-password"); 
         }
         else if (e.response.data.message === "Request failed with status code 500" ? false : e.response.data.message) { 

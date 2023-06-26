@@ -303,16 +303,16 @@ overflow-y: scroll;
   // max-height: 35rem !important;
 }
 .Admin-Announcement-container {
- 
+ height: 16rem !important;
   overflow-y: auto !important;
 }
 
 .BsFillPinAngleFill {
   margin-right: 1rem;
 }
-// .main-todo-note {
-//   margin-left: 0.8rem;
-// }
+.main-todo-note {
+  margin-left: 0.8rem;
+}
 
 .Announcement-sub-text {
   display: flex !important;

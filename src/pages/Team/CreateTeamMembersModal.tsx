@@ -4,7 +4,7 @@ import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
-import { createTeamMembers, viewTeam } from '../../features/Team/teamSlice';
+import { createTeamMembers, viewTeam, reset } from '../../features/Team/teamSlice';
 import SelectInput from '../../components/SelectInput';
 import { allEmployee } from '../../features/Employee/employeeSlice';
 import { InputField } from '../../components/TableOptions';
@@ -43,8 +43,15 @@ const CreateTeamMembers = ({ id }: any) => {
 
 	useEffect(() => {
 		if (createTeamMembersisSuccess) {
+			dispatch(reset());
+		}
+	}, [createTeamMembersisSuccess, dispatch]);
+
+	useEffect(() => {
+		if (createTeamMembersisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Team member created  successfully", "success");
+			dispatch(reset());
 			dispatch(viewTeam());
 		}
 	}, [createTeamMembersisSuccess, dispatch]);

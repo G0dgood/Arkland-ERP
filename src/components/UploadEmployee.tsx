@@ -10,12 +10,9 @@ import { useAppDispatch } from "../store/useStore";
 
 const UploadEmployee = () => {
   const dispatch = useAppDispatch();
-
-
   const [message, setMessage] = useState("");
   const [isSuccess, setisSuccess] = useState(false);
   const [isLoading, setisLoading] = useState(false);
-
   const url = `hr/employees/bulk-upload`
 
 
@@ -27,7 +24,7 @@ const UploadEmployee = () => {
   const handleShow = () => setShow(true);
   const [file, setFile] = useState<any>()
 
-  // console.log('file', file)
+
 
 
   const submitHandler = async () => {
@@ -36,6 +33,7 @@ const UploadEmployee = () => {
     await HttpService.uploadFile(url, {}, { employees: file })
       .then((response) => {
         setisLoading(false)
+        setisSuccess(true)
       })
       .catch((error) => {
         // console.log('error', error);
@@ -56,7 +54,6 @@ const UploadEmployee = () => {
       setTimeout(() => {
         setisSuccess(false)
         setMessage("")
-        // setReload(false)
       }, 5000);
     }
   }, [dispatch, isSuccess, message])

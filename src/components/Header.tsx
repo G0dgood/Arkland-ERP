@@ -5,7 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { TfiAlignJustify } from "react-icons/tfi";
 import logo from "../assets/images/ASLLOGO.svg";
-import { AiOutlineLogout, AiOutlinePoweroff } from "react-icons/ai";
+import { AiOutlineLogout } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 import MobileSideBar from "./MobileSideBar";
@@ -21,7 +21,7 @@ import { io } from "socket.io-client";
 const dataService = new DataService()
 const Header = ({ toggleSideNav }: any) => {
 
-  const socket = io("https://arkland-erp-b4872258abbf.herokuapp.com/api/v1");
+  const socket = io("https://arkland-erp-b4872258abbf.herokuapp.com");
   // const socket = io("https://arkland-erp.herokuapp.com");
 
   const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
@@ -105,13 +105,13 @@ const Header = ({ toggleSideNav }: any) => {
     socket.disconnect()
     try {
       await HttpService.patch("me/logout", {})
+      window.location.replace("/");
       dataService.clearData()
       setisLoading(false);
-      window.location.replace("/");
     } catch (error) {
+      window.location.replace("/");
       setisLoading(false);
       dataService.clearData()
-      window.location.replace("/");
     }
   };
 
@@ -153,7 +153,7 @@ const Header = ({ toggleSideNav }: any) => {
           <Socket setNotification={setNotification} socket={socket} />
           {/* @ts-ignore */}
           <div className="hand-noficational-place-sup" >
-            <div className="Messages-button" onMouseEnter={() => { setDropDownNoti(true) }} >
+            <div className="Messages-button" onClick={() => { setDropDownNoti(true) }} >
               <span className="content">
                 <IoIosNotifications size={30} />
               </span>
