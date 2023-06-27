@@ -15,15 +15,19 @@ const ProjectView = () => {
   const navigate = useNavigate();
 
   const { data, isLoading, message } = useAppSelector((state: any) => state.project)
-
+  const { createisSuccess } = useAppSelector((state: any) => state.project)
 
 
 
   useEffect(() => {
     // @ts-ignore
     dispatch(allProject());
+    if (createisSuccess) {
+      // @ts-ignore
+      dispatch(allProject());
+    }
 
-  }, [dispatch, message]);
+  }, [createisSuccess, dispatch, message]);
 
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } = getUserPrivileges();
 
