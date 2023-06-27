@@ -26,8 +26,10 @@ const DeleteAnnouncementModal = ({ id }: any) => {
 			fireAlert(title, html, icon);
 			setShow(false)
 			dispatch(reset());
+			// @ts-ignore
+			dispatch(deleteAnnouncement(id));
 		}
-	}, [deleteisSuccess, dispatch, html])
+	}, [deleteisSuccess, dispatch, html, id])
 
 	const handleDelete = () => {
 		// @ts-ignore

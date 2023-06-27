@@ -166,11 +166,10 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   const [hods, setHOD] = useState([])
 
-
-
   useEffect(() => {
     getData()
   }, [])
+
   const [isLoading, setisLoading] = useState(false)
 
   const getData = async () => {

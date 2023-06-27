@@ -89,7 +89,7 @@ const ManagerWeeklyReport = () => {
 										<td className="table-datacell datatype-numeric">
 											<Link to={`/weeklyreport/weeklyreport/manager/view/${item?._id}`}>
 
-												<Button id="team-applicatiom-update">	{item?.status === "acknowledged" ? 'View' : 'Update'}</Button>
+												<Button id="team-applicatiom-update">View</Button>
 											</Link>
 
 										</td>

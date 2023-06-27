@@ -10,7 +10,7 @@ import Pagination from "../../components/Pagination";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import TableLoader from "../../components/TableLoader";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { getWarning, reset } from "../../features/Employee/employeeSlice";
+import { getWarning } from "../../features/Employee/employeeSlice";
 import { Button } from "@material-ui/core";
 import DeactivateExpiredWarnings from "./warnings/DeactivateExpiredWarnings";
 
@@ -29,6 +29,7 @@ const WarningList = () => {
   }, [deactivateWarningisSuccess, dispatch]);
 
 
+  console.log('warningdata', warningdata)
 
 
   const header = [
@@ -59,7 +60,6 @@ const WarningList = () => {
   useEffect(() => {
 
     if (createwarningisSuccess) {
-      dispatch(reset());
       dispatch(getWarning());
     }
   }, [warningmessage, warningisError, dispatch, createwarningisSuccess])

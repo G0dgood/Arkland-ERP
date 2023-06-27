@@ -167,7 +167,7 @@ const Login = () => {
                         </div>
                       </div>
 
-                      <Button type="submit" disabled={isLoading}>
+                      <Button type="submit"  >
                         {isLoading ? <Spinner animation="border" /> : "Login"}
                       </Button>
                     </Form>

@@ -73,7 +73,8 @@ const deleteEmployees = async (id: any) => {
    return data
   }
   const getWarning = async (id: any) => {   
-     const { data }: any = await HttpService.get(`hr/warnings`) 
+    const { data }: any = await HttpService.get(`hr/warnings`) 
+    
    return data
   }
  

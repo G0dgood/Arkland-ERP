@@ -6,6 +6,7 @@ import { reset, viewDepartments } from "../../features/Department/departmentSlic
 import { BounceLoader } from "react-spinners";
 import DeleteDepartment from "../../components/Modals/DeleteDepartment";
 import projectBack from "../../assets/vectors/project-back.svg";
+import CopyToClipboardButton from "../../components/CopyToClipboardButton";
 
 
 const ViewDepartments = () => {
@@ -90,6 +91,13 @@ const ViewDepartments = () => {
 
                       <p>Status</p>
                       <p> {viewdata?.department?.status} </p>
+
+                      <p >Department ID</p>
+                      <div style={{ display: "flex" }}>
+                        <p> {viewdata?.department?.id} </p>
+                        <CopyToClipboardButton url={viewdata?.department?.id} />
+                      </div>
+
                     </div>
                   </div>
                 </div>

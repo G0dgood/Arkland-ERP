@@ -1,4 +1,5 @@
 
+import moment from 'moment';
 import TableLoader from '../../components/TableLoader';
 import { NoRecordFound, TableFetch } from '../../components/TableOptions';
 
@@ -63,12 +64,11 @@ const WeeklyReportTable = ({ isLoading, data }: any) => {
 									value={item.next}
 									rows={5}
 									placeholder="Next Action" /></td>
-								<td>	<input
-									id='kpi-textarea'
-									type="date"
-									className='Performance-Indicator-input2'
-									value={item.due_date_for_next}
-									placeholder="Due Date" /></td>
+								<td>
+									<div className='Performance-Indicator-input2 format-Indicator' id='kpi-textarea'>
+										{moment(item?.due_date_for_next).format("DD-MM-YYYY")}
+									</div></td>
+
 								<td>	<textarea
 									id='kpi-textarea'
 									className='Performance-Indicator-input2'
@@ -86,7 +86,6 @@ const WeeklyReportTable = ({ isLoading, data }: any) => {
 										id='kpi-textarea'
 										className='Performance-Indicator-input2'
 										value={item.blockers}
-										// onChange={(e) => handleChange("blockers", e.target.value, item.id)}
 										rows={5} placeholder="Challenges and Limitations" />
 								</td>
 							</tr>

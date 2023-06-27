@@ -65,6 +65,7 @@ import TeamLead from "./components/TeamLead";
 import ViewPrivilage from "./pages/UserPrivilage/ViewPrivilage";
 import ManagerWeeklyReport from "./pages/WeeklyReport/ManagerWeeklyReport";
 import ManagerWeeklyReportView from "./pages/WeeklyReport/ManagerWeeklyReportView";
+import AdminKPAssessment from "./pages/kpi_assessment/AdminKPAssessment";
 
 
 
@@ -113,10 +114,8 @@ const App: React.FC<any> = () => {
             <Route index element={<MyKPIAssessment />} />
             <Route path="kpiassessment/:id" element={<KPIDetails />} />
             <Route path="kpiassessment/teamkpi" element={<TeamKPI />} />
-            <Route
-              path="kpiassessment/teamkpi/view/:id"
-              element={<ViewKPAssessment />}
-            />
+            <Route path="kpiassessment/teamkpi/view/:id" element={<ViewKPAssessment />} />
+            <Route path="adminkpiassessment/teamkpi/view/:id" element={<AdminKPAssessment />} />
             <Route path="kpiassessment/admin" element={<AllKPIReport />} />
           </Route>
 

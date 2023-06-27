@@ -50,11 +50,11 @@ const Announcement = ({ announcement: data, isLoading }: any) => {
       </div>
       <div>
         {isLoading ? (
-          <div className="table-loader-announcement">
-            <BounceLoader color={"#990000"} loading={isLoading} />
+          <div className="table-loader-announcement" >
+            <BounceLoader color={"#990000"} loading={isLoading} id="BounceLoader-new" />
           </div>
         ) : data?.length === 0 || data === undefined ? (
-          <div className="table-loader-announcement">
+          <div className="table-loader-announcement" id="BounceLoader-new">
             <div>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-announcement-marketing-outline-others-phat-plus.png" />
@@ -79,8 +79,6 @@ const Announcement = ({ announcement: data, isLoading }: any) => {
                       <ViewAnnouncementModal id={item?._id} />
                     </span>
                     {(isSuperAdmin ||
-                      isTeamLead ||
-                      isHeadOfDepartment ||
                       isHRHead ||
                       isHrAdmin) &&
                       <span className="BsFillPinAngleFill">

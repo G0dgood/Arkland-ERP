@@ -8,6 +8,7 @@ import moment from 'moment';
 import CreateTaskModal from './CreateTaskModal';
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
+import { getUserPrivileges } from '../../functions/auth';
 
 
 const TaskList = () => {
@@ -19,7 +20,13 @@ const TaskList = () => {
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
 	});
-
+	const {
+		isHRHead,
+		isHeadOfDepartment,
+		isTeamLead,
+		isSuperAdmin,
+		isHrAdmin,
+	} = getUserPrivileges();
 
 
 	useEffect(() => {
@@ -40,9 +47,12 @@ const TaskList = () => {
 		<div >
 			<div className="SiteWorkermaindiv">
 				<div className="SiteWorkermaindivsub">
-					<span className="SupportmainTitleh3">TASK </span>
+					<span className="SupportmainTitleh3">TASK</span>
 				</div>
-				<CreateTaskModal />
+				{(isSuperAdmin ||
+					isHRHead ||
+					isHrAdmin) &&
+					(<CreateTaskModal />)}
 			</div>
 			<section className="md-ui component-data-table">
 				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
@@ -93,28 +103,7 @@ const TaskList = () => {
 										<td className="table-datacell datatype-numeric" key={i}>
 											<Button id="team-applicatiom-update" onClick={() => navigate(`/tasks/tasks/${item?.id}`)}>View</Button>
 										</td>
-										{/* <td className="table-datacell datatype-numeric">
-											<Button
-												className={
-													item?.ip_checked === true
-														? "table-link"
-														: "table-link-active"
-												}
-											>
-												{item?.ip_checked === true ? "Yes" : "No"}
-											</Button>
-										</td> */}
-										{/* <td className="table-datacell datatype-numeric">
-											<Button
-												className={
-													item?.is_hr_assisted === true
-														? "table-link"
-														: "table-link-active"
-												}
-											>
-												{item?.is_hr_assisted === true ? "Yes" : "No"}
-											</Button>
-										</td> */}
+
 									</tr>
 								))
 							)}

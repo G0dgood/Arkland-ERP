@@ -115,8 +115,6 @@ const ViewKPAssessment = () => {
 								<textarea rows="4" placeholder="Add an extended comment" required className='m-t-5' value={viewdata?.employee_comment} />
 							</div>
 						}
-
-
 					</div>
 				</section>
 			</div>

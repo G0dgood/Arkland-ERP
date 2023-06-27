@@ -35,11 +35,10 @@ const LogoutOption = () => {
 	return (
 		<div>
 			<Button onClick={() => setShowLogout(true)}>
-				<AiOutlineLogout size={30} color='red' />
+				<AiOutlineLogout size={30} color='red' /> <span className='LogoutOption-Logout'>Logout</span>
 			</Button>
 			<Modal
 				show={showLogout}
-				// onHide={handleLogoutClose}
 				backdrop="static"
 				// keyboard={false}
 				className="kpi-modal"

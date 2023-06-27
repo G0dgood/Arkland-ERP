@@ -18,10 +18,10 @@ const CreateAnnouncementModal = () => {
   const [inputs, setInputs] = useState<any>({
     message: "",
     audience_scope: "",
-    // employee_role: "",
-    // team: "",
-    // department: "",
-    // project: "",
+    employee_role: "",
+    team: "",
+    department: "",
+    project: "",
   })
   const [projects, setProject] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
@@ -34,10 +34,10 @@ const CreateAnnouncementModal = () => {
   const announcementOptions = [
     "",
     "general",
-    // "employee role",
-    // "team",
-    // "department",
-    // "project",
+    "employee role",
+    "team",
+    "department",
+    "project",
   ];
 
   const getData = async () => {
@@ -47,7 +47,7 @@ const CreateAnnouncementModal = () => {
       const employees: any = await HttpService.get(employeesUrl)
       setEmployees(employees?.data?.data)
 
-      const departmentsUrl = "hr/departments"
+      const departmentsUrl = "departments"
       const departments: any = await HttpService.get(departmentsUrl)
       setDepartments(departments?.data?.data)
 
@@ -161,11 +161,13 @@ const CreateAnnouncementModal = () => {
     }, {});
 
 
+  console.log('createAnnouncementValues', createAnnouncementValues)
+
 
   const handleCreate = (e: any) => {
     e.preventDefault();
     // @ts-ignore
-    dispatch(createAnnouncement(inputs));
+    // dispatch(createAnnouncement(inputs));
 
   }
 

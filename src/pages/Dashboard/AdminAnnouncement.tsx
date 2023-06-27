@@ -2,7 +2,7 @@ import moment from "moment";
 import { BounceLoader } from "react-spinners";
 import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import ClockIn from "../../components/ClockIn";
-import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 
 
@@ -24,7 +24,7 @@ const AdminAnnouncement = ({ announcements, isLoading }: any) => {
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
           {/* <span className="sub-text-contained"> */}
-          <h5>Announcementd</h5>
+          <h5>Announcement</h5>
           {/* </span> */}
         </div>
         <ClockIn />

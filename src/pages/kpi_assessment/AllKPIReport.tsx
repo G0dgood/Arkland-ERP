@@ -51,7 +51,7 @@ const AllKPIReport = () => {
 	}, [dispatch, id]);
 
 	const handleView = (item: any) => {
-		navigate(`/kpiassessment/kpiassessment/teamkpi/view/${item?._id}`, { state: { name: 'admin' } })
+		navigate(`/kpiassessment/adminkpiassessment/teamkpi/view/${item?._id}`, { state: { name: 'admin' } })
 	}
 
 	const month = ["January", "February", "March", "April", "May", "June", "July", "	August", "September", "October", "November", "December"]

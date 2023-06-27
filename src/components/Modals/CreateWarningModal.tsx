@@ -82,7 +82,7 @@ const CreateWarningModal = ({ id }: any) => {
         <Modal.Body>
           <Formik
             initialValues={{
-              employee: id ? id : "",
+              employee: "",
               misconduct: "",
               message: "",
             }}

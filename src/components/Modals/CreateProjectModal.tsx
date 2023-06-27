@@ -40,7 +40,6 @@ const CreateProjectModal = (props: any) => {
     if (createisSuccess) {
       fireAlert("Successful", "Project Created Successfully", "success");
       setLgShow(false)
-      navigate(-1)
       dispatch(reset());
     }
   }, [createisSuccess, dispatch, navigate])
@@ -59,7 +58,7 @@ const CreateProjectModal = (props: any) => {
     // setisLoading(true)
     try {
 
-      const departmentsUrl = "hr/departments"
+      const departmentsUrl = "employees/departments"
       const departments: any = await HttpService.get(departmentsUrl)
       setDepartments(departments?.data?.data)
 
@@ -120,8 +119,7 @@ const CreateProjectModal = (props: any) => {
         size="lg"
         show={lgShow}
         aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+        centered >
         <Modal.Header>
           <span></span>
           <span className="span-center-title">Create Project</span>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { FiChevronLeft } from 'react-icons/fi';
 import { BsDot } from 'react-icons/bs';
@@ -5,6 +6,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment';
 import LogoutOption from '../../components/LogoutOption';
 import DataService from '../../utils/dataService';
+import { Button } from 'react-bootstrap';
 
 
 
@@ -28,12 +30,14 @@ const Profile = () => {
 				</Link>
 				<div className="profile-body-container-sup">
 					<span>
-						<FiChevronLeft size={30} />
-					</span>
-					<span>
+						<Link to='/'>
+							<FiChevronLeft size={30} />
+						</Link>
 
-						<LogoutOption />
 					</span>
+					<span><LogoutOption /></span>
+
+
 				</div>
 				<div className="profile-body-container-sup-title">
 					<span className="profile-image">
@@ -42,15 +46,15 @@ const Profile = () => {
 					<span>
 						<span className='profile-image-name'>
 							<p className='profile-image-name-sub1' style={{ marginBottom: "0px" }}>{userInfo?.full_name}</p>
-							<p> <BsDot size={20} color={"green"} /> {userInfo?.status}</p>
+							<p> <BsDot size={20} color={"green"} /> {userInfo?.role?.status}</p>
 						</span>
 						<p>
-							<span className='profile-image-name-sub2'>IT</span>Developer</p>
+							<span className='profile-image-name-sub2'>{userInfo?.department?.name}</span>Developer</p>
 					</span>
 				</div>
 				<div className='profile-image-name-sub3'>
 					<span className='profile-image-name-number'>{userInfo?.employee?.phone}</span>
-					<a href='jamesabiodun@arkland.com'>{userInfo?.employee?.address}</a>
+					<a>{userInfo?.employee?.address}</a>
 				</div>
 				<div className='General-Information'>
 					<h5>General Information</h5>

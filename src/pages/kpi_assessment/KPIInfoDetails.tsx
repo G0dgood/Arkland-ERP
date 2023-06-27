@@ -117,7 +117,7 @@ const KPIInfoDetails = ({ viewdata, setHodscore }: any) => {
 							<div className="factor_area">
 								<p>Job Knowledge</p>
 								<div>
-									<p>{kpiData3.Weight1}</p>
+									<p>{kpiData3?.Weight1}</p>
 								</div>
 							</div>
 							<div className="rate_area">
