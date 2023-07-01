@@ -15,11 +15,12 @@ const HRUpdateLeave = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const { teamviewdata: data, teamviewisLoading: isLoading } = useAppSelector((state: any) => state.leave)
+	const { teamviewdata: datas, teamviewisLoading: isLoading } = useAppSelector((state: any) => state.leave)
 
 	const { hrApproveisLoading, hrApproveisSuccess } = useAppSelector((state: any) => state.leave)
 	const { rejectisLoading, rejectisSuccess } = useAppSelector((state: any) => state.leave)
-
+	const data = datas[0]
+	console.log('data', data)
 
 	useEffect(() => {
 		dispatch(viewTeamLeave(id));

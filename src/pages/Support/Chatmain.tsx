@@ -4,10 +4,6 @@ import React from 'react'
 const Chatmain = ({ userID }: any) => {
 
 
-
-
-
-
 	return (
 		<div className="chat-area">
 			<div className="chat-area-header">

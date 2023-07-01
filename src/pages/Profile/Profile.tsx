@@ -2,7 +2,7 @@
 
 import { FiChevronLeft } from 'react-icons/fi';
 import { BsDot } from 'react-icons/bs';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import moment from 'moment';
 import LogoutOption from '../../components/LogoutOption';
 import DataService from '../../utils/dataService';
@@ -12,7 +12,8 @@ import { Button } from 'react-bootstrap';
 
 const dataService = new DataService()
 const Profile = () => {
-
+	const locat = useLocation()
+	// const chat = location;
 
 
 	// @ts-ignore

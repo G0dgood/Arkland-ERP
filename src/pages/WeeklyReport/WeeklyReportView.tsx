@@ -18,12 +18,23 @@ const WeeklyReportView = () => {
 	const dispatch = useAppDispatch();
 	const { id } = useParams()
 	const navigate = useNavigate();
+	const [activities, setactivities] = useState<any>();
+	const [inputs, setInput] = useState<any>({
+		assessment: "",
+		week: "0",
+		activities: [],
+	})
 
-
-
-
-	const [inputs, setInputs] = useState([]);
-
+	useEffect(() => {
+		setInput((prevState: any) => {
+			return ({
+				...prevState,
+				assessment: viewdata?.self_assessment,
+				week: viewdata?.week,
+				activities: activities
+			});
+		});
+	}, [activities, viewdata?.self_assessment, viewdata?.week]);
 
 	useEffect(() => {
 		// @ts-ignore
@@ -43,6 +54,13 @@ const WeeklyReportView = () => {
 
 
 
+
+
+
+
+
+
+
 	useEffect(() => {
 		if (deleteisSuccess) {
 			fireAlert("Delete successful", "Delete Weekly Reports success", 'success');
@@ -57,13 +75,11 @@ const WeeklyReportView = () => {
 				dispatch(reset());
 			}, 2000);
 		}
-
 	}, [deleteisSuccess, deletemessage, dispatch, navigate, updateisSuccess, updatemessage, viewdata]);
 
 	return (
 		<div  >
 			<div>
-
 				<div className='weekly-top-container'>
 					<div className='weeklyreporttop-container-card-1'>
 						<div className='weekly-top-card-1-sub'>
@@ -89,25 +105,27 @@ const WeeklyReportView = () => {
 						</div>
 					</div>
 				</div>
-				<div className='weekly-report-title'>
-					<div className='weekly-delete'>
+				<div className='weekly-report-title' >
+					<div className='weekly-delete' >
 						<div className='weekly-number'>
 							<h4>Week {viewdata?.week}
 							</h4>
 						</div>
-						<div className='weekly-delete-btn'>
+						<div className='weekly-delete-btn' style={{ display: "flex", alignItems: "center", color: "#e2522e", }}> <h5 style={{ marginRight: "1rem", }}> Delete </h5>
 							{viewdata?.status === "acknowledged" ? "" : <Button className={"table-link"} onClick={handleDelete}>{deleteisLoading ? <Spinner animation="border" /> : 'Delete'}</Button>}
-
 						</div>
-						<div>
-							{viewdata?.status === "acknowledged" ? "" : <Button className="table-link-active" onClick={handleUpate}>	{updateisLoading ? <Spinner animation="border" /> : 'Update'}</Button>}
+
+						<div style={{ display: "flex", alignItems: "center", color: "#29CC97" }} >
+							<h5 style={{ marginRight: "1rem" }}  > Update </h5>
+							{viewdata?.status === "acknowledged" ? "" : <Button className="table-link-active" onClick={handleUpate}>
+								{updateisLoading ? <Spinner animation="border" /> : 'Update'}</Button>}
 
 						</div>
 					</div>
 				</div>
 				<div>
 					{viewisLoading ? <TableLoader isLoading={viewisLoading} /> : ''}
-					<WeeklyReportTable5 data={viewdata?.activities} isLoading={viewisLoading} setInputs={setInputs} />
+					<WeeklyReportTable5 data={viewdata?.activities} isLoading={viewisLoading} setactivities={setactivities} activities={activities} />
 				</div>
 			</div>
 		</div>

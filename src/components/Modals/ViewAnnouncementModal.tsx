@@ -16,15 +16,13 @@ const ViewAnnouncementModal = ({ id }: any) => {
 	const handleClick = (id: any) => {
 		// @ts-ignore
 		dispatch(viewMeAnnouncement(id));
-
 	}
 
 	return (
-
 		<div>
 			<FiEye
 				style={{ marginRight: "10px" }}
-				size={25}
+				size={20}
 				// @ts-ignore 
 				onClick={() => { setViewShow(true); handleClick(id) }}
 				cursor="pointer"

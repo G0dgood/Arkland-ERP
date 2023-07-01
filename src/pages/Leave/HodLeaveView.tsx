@@ -13,10 +13,11 @@ import { SlBriefcase } from 'react-icons/sl';
 
 const HodLeaveView = () => {
 	const dispatch = useAppDispatch();
-	const { teamviewdata: data, teamviewisLoading, teamviewmessage } = useAppSelector((state: any) => state.leave)
+	const { teamviewdata: datas, teamviewisLoading, teamviewmessage } = useAppSelector((state: any) => state.leave)
 	const { hodApproveisLoading, hodApprovemessage, hodApproveisSuccess } = useAppSelector((state: any) => state.leave)
 	const { rejectisLoading, rejectisSuccess } = useAppSelector((state: any) => state.leave)
 
+	const data = datas[0]
 	const { id } = useParams()
 	const navigate = useNavigate();
 
@@ -36,7 +37,7 @@ const HodLeaveView = () => {
 		description: "",
 		leave_type: ""
 	})
-	console.log('data', data)
+
 
 
 	useEffect(() => {
@@ -83,7 +84,7 @@ const HodLeaveView = () => {
 		});
 	}, [setInputs, data]);
 
-	console.log('id', id)
+
 
 	const handleApproved = () => {
 		dispatch(hodApproveLeave(id));

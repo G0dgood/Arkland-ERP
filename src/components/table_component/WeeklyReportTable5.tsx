@@ -1,14 +1,44 @@
 
 
+import { useEffect } from 'react';
 import { NoRecordFound, TableFetch } from '../TableOptions'
 
-const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
+const WeeklyReportTable5 = ({ data, isLoading, setactivities, activities }: any) => {
 
-	const handleChange = (input: any, value: any) => {
-		setInputs((prevState: any) => ({
-			...prevState,
-			[input]: value,
-		}));
+
+
+	useEffect(() => {
+		if (data) {
+			try {
+				setactivities(data?.map((item: any, i: any) => (
+
+					{
+						id: i + 1,
+						completed: item.completed,
+						in_progress: item.in_progress,
+						next: item.next,
+						due_date_for_next: item.due_date_for_next,
+						next_week_tasks: item.next_week_tasks,
+						issues: item.issues,
+						blockers: item.blockers
+
+					})))
+			} catch (err) {
+				console.log(err);
+			}
+		}
+
+	}, [data, setactivities])
+
+
+	const handleChange = (input: any, value: any, index: any,) => {
+		setactivities((prevState: any) => {
+			let items = [...prevState];
+			let oldItem = items.findIndex((x) => x.id === index);
+			let newItem = { ...items[oldItem], [input]: value };
+			items[oldItem] = newItem;
+			return items
+		})
 	};
 
 	return (
@@ -37,7 +67,7 @@ const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
 					) : data?.length === 0 || data?.length === undefined ? (
 						<NoRecordFound colSpan={8} />
 					) : (
-						data?.map((item: any, i: any) => (
+						activities?.map((item: any, i: any) => (
 							<tr key={i}>
 								<td >
 									<div id="td-span-row">
@@ -45,7 +75,7 @@ const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
 											id='kpi-textarea'
 											className='Performance-Indicator-input2'
 											value={item.completed}
-											onChange={(e) => handleChange("completed", e.target.value)}
+											onChange={(e) => handleChange("completed", e.target.value, item.id)}
 											rows={5}
 											placeholder="Activities Completed This Week" />
 									</div>
@@ -55,36 +85,37 @@ const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
 										id='kpi-textarea'
 										className='Performance-Indicator-input2'
 										value={item.in_progress}
-										onChange={(e) => handleChange("in_progress", e.target.value)}
+										onChange={(e) => handleChange("in_progress", e.target.value, item.id)}
 										rows={5}
 										placeholder="Activities" />
 								</td>
-								<td>	<textarea
-									id='kpi-textarea'
-									className='Performance-Indicator-input2'
-									value={item.next}
-									onChange={(e) => handleChange("next", e.target.value)}
-									rows={5}
-									placeholder="Next Action" /></td>
+								<td>
+									<textarea
+										id='kpi-textarea'
+										className='Performance-Indicator-input2'
+										value={item.next}
+										onChange={(e) => handleChange("next", e.target.value, item.id)}
+										rows={5}
+										placeholder="Next Action" /></td>
 								<td>	<input
 									id='kpi-textarea'
 									type="date"
 									className='Performance-Indicator-input2'
 									value={item.due_date_for_next}
-									onChange={(e) => handleChange("due_date_for_next", e.target.value)}
+									onChange={(e) => handleChange("due_date_for_next", e.target.value, item.id)}
 									placeholder="Due Date" /></td>
 								<td>	<textarea
 									id='kpi-textarea'
 									className='Performance-Indicator-input2'
 									value={item.next_week_tasks}
-									onChange={(e) => handleChange("next_week_tasks", e.target.value)}
+									onChange={(e) => handleChange("next_week_tasks", e.target.value, item.id)}
 									rows={5}
 									placeholder="Activities To Be Started Next Week" /></td>
 								<td>	<textarea
 									id='kpi-textarea'
 									className='Performance-Indicator-input2'
 									value={item.issues}
-									onChange={(e) => handleChange("issues", e.target.value)}
+									onChange={(e) => handleChange("issues", e.target.value, item.id)}
 									rows={5}
 									placeholder="Issues For Immediate Attention" /></td>
 								<td>
@@ -92,7 +123,7 @@ const WeeklyReportTable5 = ({ data, isLoading, setInputs }: any) => {
 										id='kpi-textarea'
 										className='Performance-Indicator-input2'
 										value={item.blockers}
-										// onChange={(e) => handleChange("blockers", e.target.value, item.id)}
+										onChange={(e) => handleChange("blockers", e.target.value, item.id)}
 										rows={5} placeholder="Challenges and Limitations" />
 								</td>
 							</tr>

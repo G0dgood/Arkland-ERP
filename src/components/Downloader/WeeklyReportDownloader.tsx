@@ -23,8 +23,23 @@ const WeeklyReportDownloader = ({ data }: any) => {
 			newData.push({
 				employee_name: item.employee_name,
 				employee_supervisor: item.employee_supervisor,
-				month_created: item.month_created === 1 ? "January" : item.month_created === 2 ? "February" : item.month_created === 3 ? "March" : item.month_created === 4 ? "April" : item.month_created === 5 ? "May" : item.month_created === 6 ? "June" : item.month_created === 7 ? "July" : item.month_created === 8 ? "August" : item.month_created === 9 ? "September" : item.month_created === 10 ? "October" : item.month_created === 11 ? "November" : "December",
-				week: item.week === 1 ? "Monday" : item.week === 2 ? "Tuesday" : item.week === 3 ? "Wednesday" : item.week === 4 ? "Thursday" : item.week === 5 ? "Friday" : item.week === 6 ? "Saturday" : "Sunday",
+				month_created: item.month_created === 1 ? "January" :
+					item.month_created === 2 ? "February" :
+						item.month_created === 3 ? "March" :
+							item.month_created === 4 ? "April" :
+								item.month_created === 5 ? "May" :
+									item.month_created === 6 ? "June" :
+										item.month_created === 7 ? "July" :
+											item.month_created === 8 ? "August" :
+												item.month_created === 9 ? "September" :
+													item.month_created === 10 ? "October" :
+														item.month_created === 11 ? "November" : "December",
+				week: item.week === 1 ? "Monday" :
+					item.week === 2 ? "Tuesday" :
+						item.week === 3 ? "Wednesday" :
+							item.week === 4 ? "Thursday" :
+								item.week === 5 ? "Friday" :
+									item.week === 6 ? "Saturday" : "Sunday",
 				week_day_created: item?.week_day_created,
 				self_assessment: item?.self_assessment,
 				employment_date: moment(item?.created_at).format("DD-MM-YYYY") === "Invalid date" ? "No Date Given" : moment(item?.created_at).format("DD-MM-YYYY"),
@@ -50,7 +65,7 @@ const WeeklyReportDownloader = ({ data }: any) => {
 			<Button
 				variant="contained"
 				className="Add-btn" >
-				<AiOutlineDownload size={25} />
+				<AiOutlineDownload size={20} />
 				Download Report
 			</Button>
 		</CSVLink>

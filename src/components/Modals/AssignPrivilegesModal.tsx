@@ -39,6 +39,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 
 	const availableEmployees = [] as any;
+	console.log('availableEmployees', employees)
 
 	employees &&
 		employees.forEach((employee: any) =>

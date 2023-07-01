@@ -15,11 +15,11 @@
 }
 
 @media screen and (max-width: 1500px) {
-  .kpi-top-container {
-   display: grid;
-  grid-template-columns: 3fr 2fr ;
-   transform: scale(0.9) !important;
-  }
+  // .kpi-top-container {
+  //  display: grid;
+  // grid-template-columns: 3fr 2fr ;
+  //  transform: scale(0.9) !important;
+  // }
 .grading-system-contain {
   display: grid;
  grid-template-columns: 3fr 2fr ;
@@ -51,7 +51,7 @@
   .kpi-top-container {
    display: grid;
   grid-template-columns: 1fr ;
-  transform: scale(0.8) !important;
+  // transform: scale(0.8) !important;
   }
   .kpi-top-container-card-2 {
     // margin-top: 2rem !important;
@@ -124,7 +124,7 @@ align-items: center;
 }
 
 .kpi-top-card-1 { 
-  height: 55px;
+  height: 40px;
   background-color: c.color(primary-color);
   border-radius: 4px;
   display: flex;
@@ -132,7 +132,7 @@ align-items: center;
   padding-left: 20px;
   color: c.color(white);
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   box-shadow: c.$box-card-shadow;
 }
 .kpi-top-card-1-sub {
@@ -147,16 +147,16 @@ align-items: center;
 
 .kpi-top-card-1-sub p:nth-child(odd) {
   color: c.color(grey-100);
-  font-size: 16px;
+  // font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-
+font-weight: bold;
   border-right: 1px solid #ededed;
   padding-left: 2rem !important;
 }
 .kpi-top-card-1-sub p {
   border-top: 1px solid #ededed;
-  padding: 20px;
+  padding: 10px 20px;
   margin: 0;
 }
 .kpi-top-card-1-sub p:first-child {
@@ -339,14 +339,14 @@ input[id=radio-2]:checked ~ #glider {
   transition: 0.25s ease-out !important;
 }
 
-@media (max-width: 700px) {
-  #tabs {
-    transform: scale(0.6) !important;
-  }
-}
+// @media (max-width: 700px) {
+//   #tabs {
+//     transform: scale(0.6) !important;
+//   }
+// }
 
 #kpi-textarea{
-  height: 5rem !important;
+  height: 3rem !important;
   padding: 5px;
 }
 
@@ -372,6 +372,19 @@ textarea{
   -o-border-radius: 4px;
   border-radius: 4px;
   width: 60%; 
+}
+
+@media screen and (max-width: 950px) {
+  .shareCommentContainer{
+  background: none repeat scroll 0 0 #f4b6b6;
+   margin: 20px 10px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  width: 100%; 
+} 
 }
 
 .shareCommentContainer textarea {
@@ -464,10 +477,10 @@ textarea{
 // }
 
 
-#performance section,
-#performance table {
-  margin-top: 1rem;
-}
+// #performance section,
+// #performance table {
+//   margin-top: 1rem;
+// }
 
 #performance .area-grid {
   display: grid;
@@ -496,7 +509,7 @@ textarea{
 }
 
 #performance .evaluation-area_cont {
-  padding: 1.15rem;
+  padding: 0px 1.15rem 1.15rem 1.15rem;
 }
 
 #performance .evaluation-area .add-field {
@@ -727,13 +740,14 @@ textarea{
     border-radius: 3px !important;
     border: 1px solid red !important; 
 }
- .table-create-btn  {
-  //  text-align: center;
+ .table-create-btn  { 
     color: #fff !important;
-    background-color: c.color(primary-color) !important;
-    padding: 0.15rem 1rem !important;
+    background-color: c.color(primary-color) !important;  
     border-radius: 3px !important;
-    border: 1px solid c.color(primary-color) !important; 
+    cursor: pointer !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    padding: 0.15rem 1rem !important;
 }
 
 .BiUser-user{

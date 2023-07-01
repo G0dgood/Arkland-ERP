@@ -22,28 +22,6 @@ import { reset, updatePassword } from "../../../features/User/userSlice";
 
 const dataService = new DataService()
 const UpdatePassword = () => {
-  // const dispatch = useAppDispatch();
-  // const { updateisLoading, updateisSuccess } = useAppSelector((state: any) => state.userinfo)
-
-
-  // useEffect(() => {
-  //   if (updateisSuccess) {
-  //     fireAlert("Successful", "Password update successful", "success");
-
-  //     setTimeout(() => {
-  //       navigate("/login");
-  //     }, 5000);
-
-  //     dispatch(reset());
-  //   }
-  // }, [updateisSuccess, dispatch, navigate])
-
-  // const handleSubmit = async (values: any, { resetForm }: any) => {
-  //   const inputs = { ...values };
-  //   // @ts-ignore
-  //   dispatch(updatePassword(inputs));
-  // };
-
 
 
   const [isLoading, setLoading] = React.useState(false);
@@ -59,18 +37,16 @@ const UpdatePassword = () => {
     setLoading(true);
     try {
       const response: any = await HttpService.patch("me/password", values)
+      console.log('response', response)
       const token = response.data.token
       dataService.setToken(token)
-      const { department, role, employee, privileges, notifications } = response.data
+      const { department, role, employee, privileges, notifications } = response.data.data
       const userInfo = { department, role, employee, privileges, notifications }
       dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
       resetForm(values);
       setLoading(false);
-      // fireAlert("Successful", "Password update successful", "success");
       fireAlert2("Successful", "Password update successful", "success", "/");
-      // setTimeout(() => {
-      //   window.location.replace("/");
-      // }, 5000);
+
     } catch (error) {
       setLoading(false);
       // @ts-ignore

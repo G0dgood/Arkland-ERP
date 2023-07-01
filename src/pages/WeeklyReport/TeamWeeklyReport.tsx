@@ -28,10 +28,6 @@ const TeamWeeklyReport = () => {
 	});
 
 
-
-
-
-
 	const [displayData, setDisplayData] = useState([]);
 
 	return (

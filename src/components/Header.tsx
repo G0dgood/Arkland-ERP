@@ -185,7 +185,9 @@ const Header = ({ toggleSideNav }: any) => {
                     Profile
                   </NavLink>
                   <NavLink
-                    to=""
+                    to={""}
+                    // @ts-ignore
+                    // to={{ pathname: '/profile', state: { title: 'from home page' } }}
                     onClick={handleClick}
                     className="drop-logout" >
                     <AiOutlineLogout size={20} className="dropdown-icons-tools" />

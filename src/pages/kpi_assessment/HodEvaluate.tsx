@@ -4,7 +4,7 @@ import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { hodReviewAssessment } from '../../features/KPIAssessment/assessmentSlice';
+import { hodReviewAssessment, reset } from '../../features/KPIAssessment/assessmentSlice';
 
 
 const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
@@ -130,8 +130,9 @@ const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
       fireAlert(title, html, icon);
       navigate("/kpiassessment/kpiassessment/teamkpi")
     }
+    dispatch(reset());
 
-  }, [html, title, icon, hodreviewisSuccess, navigate]);
+  }, [html, title, icon, hodreviewisSuccess, navigate, dispatch]);
 
 
 

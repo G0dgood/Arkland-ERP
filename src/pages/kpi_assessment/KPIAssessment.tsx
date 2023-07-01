@@ -166,6 +166,8 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   const [hods, setHOD] = useState([])
 
+
+
   useEffect(() => {
     getData()
   }, [])
@@ -177,7 +179,6 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     try {
       const hodsUrl = `employees`
       const hods: any = await HttpService.get(hodsUrl)
-
       setHOD(hods?.data?.data?.data)
 
       setisLoading(false)

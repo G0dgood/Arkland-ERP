@@ -57,7 +57,7 @@ const CreateTeamLead = () => {
 		department: "",
 	})
 
-
+	console.log('inputs', inputs)
 
 
 
@@ -92,7 +92,7 @@ const CreateTeamLead = () => {
 	employees &&
 		employees.forEach((employee: any) =>
 			availableEmployees.push({
-				value: employee?.id,
+				value: employee?.user,
 				label: employee?.full_name,
 			})
 		);

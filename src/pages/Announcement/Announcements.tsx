@@ -53,7 +53,7 @@ const Announcements = () => {
 
 	const [displayData, setDisplayData] = useState([]);
 
-
+	// console.log('displayData', displayData)
 
 	return (
 		<div  >
@@ -83,7 +83,7 @@ const Announcements = () => {
 					<table className="main-table-content">
 						<thead className="data-table-header">
 							<tr className="data-table-row" >
-								<td className="table-datacell datatype-numeric">Description</td>
+								<td className="table-datacell datatype-numeric">Audience Scope</td>
 								<td className="table-datacell datatype-numeric">Message</td>
 								<td className="table-datacell datatype-numeric">Created Date</td>
 								<td className="table-datacell datatype-numeric">Status</td>
@@ -97,10 +97,10 @@ const Announcements = () => {
 							) : displayData?.length === 0 || displayData == null ? (
 								<NoRecordFound colSpan={8} />
 							) : (
-								displayData.map((item: any, i: any) => (
+								displayData?.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
-										<td className="table-datacell datatype-numeric">{item?.description}</td>
-										<td className="table-datacell datatype-numeric">{item?.message}</td>
+										<td className="table-datacell datatype-numeric">{item?.audience_scope}</td>
+										<td className="table-datacell datatype-numeric">{item?.message.slice(0, 50)}</td>
 										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
 										<td className="table-datacell datatype-numeric">
 											{item?.status === "active" ? <BsCheckCircle size={25} color={"green"} /> : <BsCheckCircle size={25} color={"red"} className="icon-bold" />}

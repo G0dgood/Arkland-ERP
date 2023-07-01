@@ -58,7 +58,7 @@ const CreateProjectModal = (props: any) => {
     // setisLoading(true)
     try {
 
-      const departmentsUrl = "employees/departments"
+      const departmentsUrl = "hr/departments"
       const departments: any = await HttpService.get(departmentsUrl)
       setDepartments(departments?.data?.data)
 

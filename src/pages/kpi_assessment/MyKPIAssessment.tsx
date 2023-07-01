@@ -79,7 +79,7 @@ const MyKPIAssessment = () => {
             setEntriesPerPage={setEntriesPerPage}
           />
         </div>
-        <div style={{ display: "flex", marginRight: "1rem" }}>
+        <div style={{ display: "flex", }}>
           <MainSearch placeholder={"Search...     KPI Assessment"} />
           <CreateKpiModal />
         </div>

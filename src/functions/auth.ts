@@ -1,5 +1,4 @@
-import { sessionExpired, updatePassword } from "../utils/sessionExpires";
-import DataService from "../utils/dataService";
+ import DataService from "../utils/dataService";
  
 
 const dataService =  new DataService();
@@ -55,21 +54,4 @@ export function getUserPrivileges(): {
   };
 }
 
-export async function handleUnauthorizedError() {
-  // const meResponse = await fetch(
-  //   `${process.env.REACT_APP_API}/me`,
-  //   getRequestOptions
-  // );
-  // const meData = await meResponse.json();
-  // if (meData?.data?.user?.require_new_password === true) {
-  //   updatePassword().then(() => {
-  //     window.location.replace("/update-password");
-  //   });
-  // } else {
-    // sessionExpired().then(() => {
-    //   removeData();
-    //   window.location.replace("/");
-    //   window.location.reload();
-    // });
-  // }
-}
+ 

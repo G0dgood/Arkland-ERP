@@ -74,7 +74,7 @@ const TeamWeeklyReportUpdate = () => {
 			</div>
 			<div className='weekly-report-title'>
 				<div className='weekly-delete'>
-					<div>
+					<div style={{ marginRight: "2rem" }}>
 						<h4>Week {viewdata?.week}
 						</h4>
 					</div>

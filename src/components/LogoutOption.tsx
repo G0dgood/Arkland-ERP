@@ -25,6 +25,7 @@ const LogoutOption = () => {
 			dataService.clearData()
 			setisLoading(false);
 		} catch (error) {
+			console.log('error', error)
 			window.location.replace("/");
 			setisLoading(false);
 			dataService.clearData()

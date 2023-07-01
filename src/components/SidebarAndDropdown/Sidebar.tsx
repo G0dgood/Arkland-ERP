@@ -29,7 +29,7 @@ const Sidebar = ({
 
  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead, isHeadOfDepartment, isMaster } = getUserPrivileges();
 
-
+ console.log('isTeamLead', isTeamLead)
  const { pathname } = useLocation();
  return (
   <ProSidebar
@@ -49,16 +49,15 @@ const Sidebar = ({
     fontSize: "12px"
    }}
   >
-
    {/* Content */}
    <SidebarContent>
     <Menu iconShape="circle">
      <MenuItem className='Side__Content' active={pathname === '/'} icon={<TfiLayoutGrid2 size={20} />} suffix={<span className="badge red">NEW</span>} >
       Dashboard  <Link to="/" /> </MenuItem>
-     {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) ? "" : (
+     {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster || isHeadOfDepartment) ? "" : (
       <MenuItem className='Side__Content' active={pathname === '/kpiassessment'} icon={<FiPieChart size={20} />}>My Assessment <Link to="/kpiassessment" /> </MenuItem>)}
 
-     {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
+     {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster || isHeadOfDepartment) && (
       <SubMenu suffix={<span className="badge yellow">3</span>} title={'KPI Assessment'} icon={<FiPieChart size={20} />} >
        {(isTeamLead || isHRHead || isSuperAdmin || isAdmin) ? "" : (
         <MenuItem className='Side__Content' active={pathname === '/kpiassessment'} icon={<FiPieChart size={20} />}>My Assessment <Link to="/kpiassessment" /> </MenuItem>
@@ -75,7 +74,7 @@ const Sidebar = ({
        <MenuItem className='Side__Content' active={pathname === '/weeklyreport'}>  <Link to="/weeklyreport" />Create Weekly Report</MenuItem>)}
       {(isTeamLead || isHRHead || isAdmin || isHrAdmin || !isSuperAdmin) && (
        <MenuItem className='Side__Content' active={pathname === 'weeklyreport/weeklyreport/myweeklyreport'}>  <Link to="weeklyreport/weeklyreport/myweeklyreport" />My Weekly report</MenuItem>)}
-      {(isTeamLead) && (
+      {(isTeamLead || isHeadOfDepartment) && (
        <MenuItem className='Side__Content' active={pathname === '/weeklyreport/weeklyreport/team'}> <Link to="/weeklyreport/weeklyreport/team" />Team Weekly Report</MenuItem>)}
       {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
        <MenuItem className='Side__Content' active={pathname === '/weeklyreport/weeklyreport/manager'} icon={<TfiAnnouncement size={23} />}> Employee Report<Link to="/weeklyreport/weeklyreport/manager" />  </MenuItem>)}
@@ -128,19 +127,21 @@ const Sidebar = ({
      {(isHRHead || isHrAdmin) && (
       <MenuItem className='Side__Content' active={pathname === '/workers_request'} icon={<FiUserPlus size={25} />}> Workers Request <Link to="/workers_request" />  </MenuItem>)}
 
-     {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) ? "" : (
+     {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster || isHeadOfDepartment) ? "" : (
       <MenuItem className='Side__Content' active={pathname === '/leave'} icon={<BsBriefcase size={25} />}> Leave <Link to="/leave" />  </MenuItem>)}
 
-     {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
+     {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster || isHeadOfDepartment) && (
       <SubMenu title={'Leave Management'} icon={<BsBriefcase size={22} />}>
-       <MenuItem className='Side__Content' active={pathname === '/leave'}>  <Link to="/leave" /> Leave </MenuItem>
-       {(isTeamLead) && (
+
+       {(isSuperAdmin || isAdmin || isHrAdmin || isMaster) ? "" : (
+        <MenuItem className='Side__Content' active={pathname === '/leave'}>  <Link to="/leave" /> Leave </MenuItem>)}
+       {(isTeamLead || isHeadOfDepartment) && (
         <MenuItem className='Side__Content' active={pathname === '/leave/leave/team'}> <Link to="/leave/leave/team" />Team Leave</MenuItem>
        )}
-       {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
+       {(isHRHead || isHrAdmin) && (
         <MenuItem className='Side__Content' active={pathname === '/leave/leave/hr'}>  <Link to="/leave/leave/hr" />HR Leave</MenuItem>
        )}
-       {(isSuperAdmin || isAdmin || isMaster) && (
+       {(isSuperAdmin || isAdmin) && (
         <MenuItem className='Side__Content' active={pathname === '/leave/leave/admin'}>  <Link to="/leave/leave/admin" />Admin Leave</MenuItem>
        )}
       </SubMenu>)}

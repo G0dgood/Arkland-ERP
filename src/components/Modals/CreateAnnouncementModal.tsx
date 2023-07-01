@@ -23,6 +23,14 @@ const CreateAnnouncementModal = () => {
     department: "",
     project: "",
   })
+  const [input, setInput] = useState<any>({
+    message: "",
+    audience_scope: "",
+    employee_role: "",
+    team: "",
+    department: "",
+    project: "",
+  })
   const [projects, setProject] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
   const [roles, setEmployees] = useState<any>([]);
@@ -47,7 +55,7 @@ const CreateAnnouncementModal = () => {
       const employees: any = await HttpService.get(employeesUrl)
       setEmployees(employees?.data?.data)
 
-      const departmentsUrl = "departments"
+      const departmentsUrl = "hr/departments"
       const departments: any = await HttpService.get(departmentsUrl)
       setDepartments(departments?.data?.data)
 
@@ -68,6 +76,8 @@ const CreateAnnouncementModal = () => {
     }
   }
 
+  console.log(
+    'teams', teams,)
 
 
   const availablleRoles = [] as any;
@@ -107,12 +117,6 @@ const CreateAnnouncementModal = () => {
 
 
   const availablleProject = [] as any;
-
-
-
-
-
-
   projects &&
     projects.forEach((project: any) =>
       availablleProject?.push({
@@ -122,8 +126,26 @@ const CreateAnnouncementModal = () => {
     );
 
 
+  const handleOnChange = (input: any, value: any) => {
+    setInput((prevState: any) => ({
+      ...prevState,
+      [input]: value,
+    }));
+  };
+  useEffect(() => {
+    setInputs((prevState: any) => {
+      return {
+        ...prevState,
+        message: input.message,
+        audience_scope: input.audience_scope,
+        employee_role: input.employee_role?.value,
+        team: input.team?.value,
+        department: input.department?.value,
+        project: input.project?.value,
 
-
+      };
+    });
+  }, [input.audience_scope, input.department, input.employee_role, input.message, input.project, input.team]);
 
   const title = "Successful";
   const html = "Announcement Created!";
@@ -144,12 +166,12 @@ const CreateAnnouncementModal = () => {
     }
   }, [createisSuccess, dispatch, html])
 
-  const handleOnChange = (input: any, value: any) => {
-    setInputs((prevState: any) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  };
+  // const handleOnChange = (input: any, value: any) => {
+  //   setInputs((prevState: any) => ({
+  //     ...prevState,
+  //     [input]: value,
+  //   }));
+  // };
 
   const createAnnouncementValues = Object.entries(inputs)
     .filter(([key, value]) => value !== "")
@@ -161,13 +183,13 @@ const CreateAnnouncementModal = () => {
     }, {});
 
 
-  console.log('createAnnouncementValues', createAnnouncementValues)
+  console.log('createAnnouncementValues', inputs)
 
 
   const handleCreate = (e: any) => {
     e.preventDefault();
     // @ts-ignore
-    // dispatch(createAnnouncement(inputs));
+    dispatch(createAnnouncement(createAnnouncementValues));
 
   }
 

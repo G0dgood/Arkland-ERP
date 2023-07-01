@@ -12,7 +12,7 @@ const ViewHOD = () => {
 	const { viewdata, viewisLoading }: any = useAppSelector((state: any) => state.hod)
 
 
-
+	console.log('viewdata', viewdata)
 
 	const navigate = useNavigate();
 	const { id } = useParams<{ id: any }>();

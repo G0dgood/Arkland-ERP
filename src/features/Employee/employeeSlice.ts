@@ -796,6 +796,7 @@ export const authSlice = createSlice({
         state.warningisLoading = false
         state.warningisSuccess = true
         state.warningdata = action.payload    
+        console.log('action.payload  ',action.payload  )
       })
       .addCase(getWarning.rejected, (state:any, action) => {
         state.warningisLoading = false

@@ -18,6 +18,7 @@ const dataService = new DataService()
 const TeamKPI = () => {
   const dispatch = useAppDispatch();
   const { teamdata, teamisLoading } = useAppSelector((state: any) => state.assessment)
+  const { hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
   const navigate = useNavigate();
 
   const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
@@ -58,7 +59,11 @@ const TeamKPI = () => {
   useEffect(() => {
     // @ts-ignore
     dispatch(teamAssessment(id));
-  }, [dispatch, id]);
+    // if (hodreviewisSuccess) {
+    //   // @ts-ignore
+    //   dispatch(teamAssessment(id));
+    // }
+  }, [dispatch, hodreviewisSuccess, id]);
 
   const handleView = (item: any) => {
     navigate(`/kpiassessment/kpiassessment/teamkpi/view/${item?._id}`, { state: { name: 'hod' } })

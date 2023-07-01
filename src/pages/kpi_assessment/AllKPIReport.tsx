@@ -146,7 +146,7 @@ const AllKPIReport = () => {
 
 											{/* @ts-ignore */}
 											<Button id="team-applicatiom-update" onClick={() => handleView(item)}>
-												{item?.status === "active" ? "View" : "Update"}
+												View
 											</Button>
 
 										</td>
