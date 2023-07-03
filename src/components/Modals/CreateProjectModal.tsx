@@ -48,6 +48,7 @@ const CreateProjectModal = (props: any) => {
 
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
+
     const inputs = { ...values };
     // @ts-ignore
     dispatch(createProject(inputs));
@@ -131,14 +132,13 @@ const CreateProjectModal = (props: any) => {
           <Formik
             initialValues={{
               name: "",
-              department: "",
               team: "",
-              lead: "",
               description: "",
               location: "",
               lga: "",
               state: "",
               country: "",
+              commenced_on: "",
               proposed_completion_date: "",
             }}
             onSubmit={handleSubmit}
@@ -167,7 +167,7 @@ const CreateProjectModal = (props: any) => {
                         <div className="form-group">
                           <TextAreaField
                             style={{
-                              height: "12rem",
+                              height: "5rem",
                               lineHeight: "1",
                             }}
                             label="Description"
@@ -181,22 +181,7 @@ const CreateProjectModal = (props: any) => {
                       </div>
                     </div>
                     <div className="Modal-data-time">
-                      <div className="Modal-two-input">
-                        <div className="col">
-                          <div className="form-group">
-                            <ReactSelectField
-                              label="Department"
-                              name="department"
-                              options={availablleDepartments}
-                              className="form-group__gender"
-                              onChange={(event: any) => {
-                                setFieldValue("department", event?.value);
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="div-space" />
+
                       <div className="Modal-two-input">
                         <div className="col">
                           <div className="form-group">
@@ -213,36 +198,7 @@ const CreateProjectModal = (props: any) => {
                         </div>
                       </div>
                       <div className="div-space" />
-                      <div className="Modal-two-input">
-                        <div className="col">
-                          <div className="form-group">
-                            <ReactSelectField
-                              label="Project lead"
-                              name="lead"
-                              options={availablleTeamLeads}
-                              className="form-group__gender"
-                              onChange={(event: any) => {
-                                setFieldValue("lead", event?.value);
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
 
-                    <div className="Modal-data-time">
-                      <div className="Modal-two-input">
-                        <div className="col">
-                          <div className="form-group">
-                            <InputField
-                              label="Location"
-                              name="location"
-                              placeholder="Enter project location"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="div-space" />
                       <div className="Modal-two-input">
                         <div className="col">
                           <div className="form-group">
@@ -258,7 +214,21 @@ const CreateProjectModal = (props: any) => {
                           </div>
                         </div>
                       </div>
+                      <div className="div-space" />
+
+                      <div className="Modal-two-input">
+                        <div className="col">
+                          <div className="form-group">
+                            <InputField
+                              label="Location"
+                              name="location"
+                              placeholder="Enter project location"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
                     <div className="Modal-data-time">
                       <div className="Modal-two-input">
                         <div className="col">
@@ -284,7 +254,26 @@ const CreateProjectModal = (props: any) => {
                         </div>
                       </div>
                     </div>
-                    <div className="Modal-textarea-middle">
+                    <div className="Modal-data-time">
+                      <div className="col">
+                        <div className="form-group">
+                          <CustomInputField
+                            style={{
+                              lineHeight: 1,
+                            }}
+                            type="date"
+                            label="Commenced on"
+                            name="commenced_on"
+                            onChange={(event: any) => {
+                              setFieldValue(
+                                "commenced_on",
+                                formatDate(event?.target.value)
+                              );
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="div-space" />
                       <div className="col">
                         <div className="form-group">
                           <CustomInputField
@@ -304,6 +293,7 @@ const CreateProjectModal = (props: any) => {
                         </div>
                       </div>
                     </div>
+
                     <div className="btn-modal-container">
                       <Button
                         variant="contained"

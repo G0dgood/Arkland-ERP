@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Button, Nav, Spinner } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { TfiAlignJustify } from "react-icons/tfi";
@@ -180,26 +180,26 @@ const Header = ({ toggleSideNav }: any) => {
             {dropDown && (
               <div className="dropdown"  >
                 <Nav className="flex-column">
-                  <NavLink to="/profile" className="drop-user-settings">
+                  <NavLink to="/profile"
+                    state={{ open: false }}
+                    className="drop-user-settings">
                     <CgProfile size={20} className="dropdown-icons-tools" />
                     Profile
                   </NavLink>
                   <NavLink
-                    to={""}
-                    // @ts-ignore
-                    // to={{ pathname: '/profile', state: { title: 'from home page' } }}
+                    to='/profile' state={{ open: true }}
                     onClick={handleClick}
                     className="drop-logout" >
                     <AiOutlineLogout size={20} className="dropdown-icons-tools" />
                     Logout
                   </NavLink>
-                  {drop &&
+                  {/* {drop &&
                     <div className="drop-logout  drop-logout-container" >
                       <Button className="button-logout">NO</Button>
                       <Button className="button-logout" onClick={handleLogout}>
                         {isLoading ? <Spinner animation="border" size="sm" /> : "YES"}
                       </Button>
-                    </div>}
+                    </div>} */}
                 </Nav>
               </div>
             )}
@@ -238,7 +238,7 @@ const Header = ({ toggleSideNav }: any) => {
         isOpen={isOpen}
       // setHideNav={setHideNav}
       />
-    </div>
+    </div >
   );
 };
 

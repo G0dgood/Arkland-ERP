@@ -9,12 +9,12 @@ import { io } from 'socket.io-client';
 
 const dataService = new DataService();
 
-const LogoutOption = () => {
+const LogoutOption = ({ open, setOpen }: any) => {
 
 	const socket = io("https://arkland-erp-b4872258abbf.herokuapp.com");
 	const [showLogout, setShowLogout] = useState<any>(false);
 	const [isLoading, setisLoading] = useState<any>(false);
-	const handleLogoutClose = () => setShowLogout(false);
+
 
 	const handleLogout = async () => {
 		setisLoading(true);
@@ -32,14 +32,22 @@ const LogoutOption = () => {
 		}
 	};
 
+	const handlelogout = () => {
+		setShowLogout(true)
+	}
 
+
+	const handleLogoutClose = () => {
+		setOpen(false)
+		setShowLogout(false);
+	}
 	return (
 		<div>
-			<Button onClick={() => setShowLogout(true)}>
+			<Button onClick={handlelogout}>
 				<AiOutlineLogout size={30} color='red' /> <span className='LogoutOption-Logout'>Logout</span>
 			</Button>
 			<Modal
-				show={showLogout}
+				show={showLogout || open}
 				backdrop="static"
 				// keyboard={false}
 				className="kpi-modal"
@@ -58,7 +66,7 @@ const LogoutOption = () => {
 					<p className="last-line"> </p>
 
 					<div className='deleteKPIHandler'>
-						<span className='deleteKPIHandler-mr' onClick={() => setShowLogout(false)}>
+						<span className='deleteKPIHandler-mr' onClick={handleLogoutClose}>
 							<Button className="table-link-active">
 								Close </Button></span>
 						<span ><Button className="table-link" onClick={handleLogout} >

@@ -1,3 +1,5 @@
+ @use "../abstracts/colors" as c;
+ 
  /* Three columns side by side */
 .column1 {
   float: left;
@@ -7,11 +9,39 @@
 }
 
 /* Display the columns below each other instead of side by side on small screens */
-@media screen and (max-width: 950px) {
+@media only screen and (max-width: 950px) {
   .column1 {
-    width: 100%;
-    display: block;
+    width: 100%; 
   }
+}
+
+@media only screen and (min-width: 951px) {
+  .column1 {
+    width: 50%; 
+  }
+}
+@media only screen and (min-width: 1300px) {
+  .column1 {
+    width: 30%; 
+  }
+}
+@media only screen and (min-width: 1301px) {
+  .column1 {
+    width: 20%; 
+  }
+}
+
+.memberdata{
+  margin-top: 2rem;
+}
+
+.team-container-view{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  padding: 8rem;
+  text-align: center;
 }
 
 /* Add some shadows to create a card effect */
@@ -41,7 +71,7 @@
   display: inline-block;
   padding: 8px;
   color: white;
-  background-color: #000;
+  background-color: c.color(primary-color);
   text-align: center;
   cursor: pointer;
   width: 100%;

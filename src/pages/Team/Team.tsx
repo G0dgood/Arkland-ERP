@@ -92,9 +92,7 @@ const Team = () => {
 												className={
 													item?.status !== "active"
 														? "table-link"
-														: "table-link-active"
-												}
-											>
+														: "table-link-active"} 	>
 												{item?.status}
 											</Button>
 

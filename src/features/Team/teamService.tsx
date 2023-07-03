@@ -21,8 +21,9 @@ const deleteTeam = async (id: any) => {
 	return data
 }
 const getTeammembers = async (id: any) => {
-	console.log('id', id)
+
 	const { data }: any = await HttpService.get(`hr/teams/${id}/employees`)
+
 	return data
 }
 const createTeamMembers = async (input: any) => {
@@ -32,7 +33,10 @@ const createTeamMembers = async (input: any) => {
 	return data
 }
 
-
+const removeTeamMembers = async (id: any) => {
+	const { data }: any = await HttpService.patch(`tasks/${id}`)
+	return data
+}
 
 
 
@@ -42,7 +46,8 @@ const teamService = {
 	viewTeam,
 	deleteTeam,
 	getTeammembers,
-	createTeamMembers
+	createTeamMembers,
+	removeTeamMembers
 }
 
 export default teamService

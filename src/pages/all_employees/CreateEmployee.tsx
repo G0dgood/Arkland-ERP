@@ -71,7 +71,7 @@ const CreateEmployee = () => {
     marital_status: "",
   });
 
-  console.log('employee', employee)
+
   // basic_salary: number,
   // meal_allowance: number,
   // utility_allowance: number,
@@ -160,7 +160,7 @@ const CreateEmployee = () => {
       })
     );
 
-  console.log('active', active)
+
 
   return (
     <>

@@ -44,6 +44,12 @@ const initialState = {
 	createTeamMembersisSuccess: false,
 	createTeamMembersisLoading: false,
 	createTeamMembersmessage: '',
+
+	removeMembersdata: [],
+	removeMembersisError: false,
+	removeMembersisSuccess: false,
+	removeMembersisLoading: false,
+	removeMembersmessage: '',
 }
 
 
@@ -127,6 +133,19 @@ export const createTeamMembers = createAsyncThunk('team/createTeamMembers', asyn
 		return thunkAPI.rejectWithValue(message)
 	}
 })
+// Get Team Members
+// @ts-ignore
+export const removeTeamMembers = createAsyncThunk('team/removeTeamMembers', async (data, thunkAPI) => {
+	try {
+		return await teamService.removeTeamMembers(data)
+	} catch (error: any) {
+		const message = (error.response &&
+			error.response.data &&
+			error.response.data.message) ||
+			error.message || error.toString()
+		return thunkAPI.rejectWithValue(message)
+	}
+})
 
 
 
@@ -168,6 +187,11 @@ export const teamSlice = createSlice({
 			state.createTeamMembersisSuccess = false
 			state.createTeamMembersisError = false
 			state.createTeamMembersmessage = ''
+
+			state.removeMembersisLoading = false
+			state.removeMembersisSuccess = false
+			state.removeMembersisError = false
+			state.removeMembersmessage = ''
 
 		},
 	},
@@ -264,6 +288,21 @@ export const teamSlice = createSlice({
 				state.createTeamMembersisError = true
 				state.createTeamMembersmessage = action.payload
 				state.createTeamMembersdata = null
+			})
+
+			.addCase(removeTeamMembers.pending, (state: any) => {
+				state.removeMembersisLoading = true
+			})
+			.addCase(removeTeamMembers.fulfilled, (state: any, action) => {
+				state.removeMembersisLoading = false
+				state.removeMembersisSuccess = true
+				state.removeMembersdata = action.payload
+			})
+			.addCase(removeTeamMembers.rejected, (state: any, action) => {
+				state.removeMembersisLoading = false
+				state.removeMembersisError = true
+				state.removeMembersmessage = action.payload
+				state.removeMembersdata = null
 			})
 
 	},

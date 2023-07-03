@@ -7,13 +7,14 @@ import moment from 'moment';
 import LogoutOption from '../../components/LogoutOption';
 import DataService from '../../utils/dataService';
 import { Button } from 'react-bootstrap';
+import { useState } from 'react';
 
 
 
 const dataService = new DataService()
 const Profile = () => {
-	const locat = useLocation()
-	// const chat = location;
+	const location = useLocation()
+	const [open, setOpen] = useState<any>(location.state.open);
 
 
 	// @ts-ignore
@@ -36,7 +37,7 @@ const Profile = () => {
 						</Link>
 
 					</span>
-					<span><LogoutOption /></span>
+					<span><LogoutOption open={open} setOpen={setOpen} /></span>
 
 
 				</div>
