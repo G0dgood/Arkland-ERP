@@ -4,6 +4,7 @@ import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 // import { useDepartments } from "../../hooks/useDepartments";
 import { getUserPrivileges } from "../../functions/auth";
+import { Calendars } from "../../components/Calender/Calender";
 
 const EmployeeAttendance = () => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const EmployeeAttendance = () => {
                 View your attendance report
               </div>
             </div>
+            {/* <Calendars /> */}
           </div>
         </div>
       </div>
