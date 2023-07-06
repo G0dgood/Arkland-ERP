@@ -64,6 +64,14 @@ const deleteEmployees = async (id: any) => {
      const { data }: any = await HttpService.get(`hr/terminations/${id}`) 
    return data
   }
+    const createTerminations = async (inputs:AnyArray) => {   
+     const { data }: any = await HttpService.post(`hr/terminations`, inputs) 
+   return data
+  }
+    const teanCreateTerminations = async (inputs:AnyArray) => {   
+     const { data }: any = await HttpService.post(`teams/terminations`, inputs) 
+   return data
+  }
   const approveTerminations = async (id: any) => {   
      const { data }: any = await HttpService.patch(`hr/terminations/${id}`) 
    return data
@@ -142,7 +150,9 @@ const employeeService = {
   viewPrevilage,
   updateWarning,
   deactivateWarning,
-  responseWarning
+  responseWarning,
+  createTerminations,
+  teanCreateTerminations
 }
 
 export default employeeService

@@ -29,7 +29,7 @@ const WarningList = () => {
   }, [deactivateWarningisSuccess, dispatch]);
 
 
-  console.log('warningdata', warningdata)
+
 
 
   const header = [

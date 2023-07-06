@@ -33,7 +33,8 @@ const viewdeleteLeave = async (id: any) => {
 //   return data
 // }
 const getTeamLeave = async (id: any) => {  
-  const { data }: any = await HttpService.get(`leaves/${id}`)  
+  const { data }: any = await HttpService.get(`hr/leaves/list/teams`)   
+  console.log('data',data)
   return data
 }
  

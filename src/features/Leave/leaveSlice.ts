@@ -380,7 +380,7 @@ export const leaveSlice = createSlice({
       .addCase(getTeamLeave.fulfilled, (state, action) => {
         state.teamisLoading= false
         state.teamisSuccess= true
-        state.teamdata= action.payload?.data
+        state.teamdata= action.payload?.data?.data
       })
       .addCase(getTeamLeave.rejected, (state:any, action) => {
         state.teamisLoading= false
@@ -397,7 +397,8 @@ export const leaveSlice = createSlice({
       .addCase(viewTeamLeave.fulfilled, (state, action) => {
         state.teamviewisLoading= false
         state.teamviewisSuccess= true
-        state.teamviewdata= action.payload?.data
+        state.teamviewdata = action.payload?.data
+           console.log('action.payload?.data',action.payload?.data)
       })
       .addCase(viewTeamLeave.rejected, (state:any, action) => {
         state.teamviewisLoading= false

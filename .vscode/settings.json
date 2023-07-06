@@ -102,5 +102,6 @@
     "Workermaindiv",
     "Workermaindivsub",
     "Workerrequest"
-  ]
+  ],
+  "liveServer.settings.port": 5501
 }

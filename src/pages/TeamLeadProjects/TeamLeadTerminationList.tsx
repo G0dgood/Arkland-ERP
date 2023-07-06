@@ -1,41 +1,47 @@
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import { BsCheckCircle, BsClock } from "react-icons/bs";
 import { SlClose } from "react-icons/sl";
-import {
- EntriesPerPage,
- MainSearch,
- NoRecordFound,
- TableFetch,
-} from "../../../components/TableOptions";
-import Pagination from "../../../components/Pagination";
+import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from "../../components/TableOptions";
+import TableLoader from "../../components/TableLoader";
+import Pagination from "../../components/Pagination";
+import HttpService from "../../components/HttpService";
+import moment from "moment";
+import TeamLeadRequestTerminationModal from "./TeamLeadRequestTerminationModal";
 
 
-import TableLoader from "../../../components/TableLoader";
-import { useAppDispatch, useAppSelector } from "../../../store/useStore";
-import { getTerminations } from "../../../features/Employee/employeeSlice";
-import RequestEmployeeTerminationModal from "../../../components/Modals/RequestEmployeeTerminationModal";
 
-const TerminationList = () => {
- const dispatch = useAppDispatch();
+const TeamLeadTerminationList = () => {
+
  const navigate = useNavigate();
+ const [terminationsdata, setTerminationsdata] = useState<any>([])
+ const [terminationsisLoading, setTerminationsisLoading] = useState<any>(false)
 
- const { terminationsdata, terminationsisLoading } = useAppSelector((state: any) => state.employee)
+
  useEffect(() => {
-  // @ts-ignore
-  dispatch(getTerminations());
- }, [dispatch]);
+  getDataMembers()
+ }, [])
 
+ const getDataMembers = async () => {
+  setTerminationsisLoading(true)
+  try {
+   const teamViewUrl = `teams/terminations/list`
+   const teamView: any = await HttpService.get(teamViewUrl)
+   setTerminationsdata(teamView?.data?.data)
+   setTerminationsisLoading(false)
+
+  } catch (error) {
+   setTerminationsisLoading(false)
+  }
+ }
 
  const header = [
   { title: "EMPLOYEE NAME", prop: "employee" },
   { title: "REASON", prop: "reason" },
   { title: "DESCRIPTION", prop: "description" },
   { title: "STATUS", prop: "status" },
-  { title: "CREATED BY", prop: "created_by" },
+  { title: "DATE CREATED", prop: "date_created" },
   { title: "VIEW", prop: "view" }
  ];
 
@@ -70,7 +76,7 @@ const TerminationList = () => {
     </div>
     <div>
      <EntriesPerPage
-      data={terminationsdata?.data}
+      data={terminationsdata}
       entriesPerPage={entriesPerPage}
       setEntriesPerPage={setEntriesPerPage}
      />
@@ -78,7 +84,7 @@ const TerminationList = () => {
     <div>
      <MainSearch placeholder={"Search...          terminations"} />
     </div>
-    <RequestEmployeeTerminationModal />
+    <TeamLeadRequestTerminationModal />
    </div>
    <section className="md-ui component-data-table">
     <div className="main-table-wrapper">
@@ -135,7 +141,7 @@ const TerminationList = () => {
            )}
           </td>
           <td className="table-datacell datatype-numeric">
-           {item?.created_by?.full_name}
+           {moment(item?.item?.created_by).format("DD-MM-YYYY")}
           </td>
           <td className="table-datacell datatype-numeric" key={i}>
            <Link to={`/terminations/${item?._id}`} >
@@ -153,13 +159,13 @@ const TerminationList = () => {
    <footer className="main-table-footer">
     <Pagination
      setDisplayData={setDisplayData}
-     data={terminationsdata?.data}
+     data={terminationsdata}
      entriesPerPage={entriesPerPage}
-     Total={"Employee"}
+     Total={"Termination List"}
     />
    </footer>
   </div>
  );
 };
 
-export default TerminationList;
+export default TeamLeadTerminationList;

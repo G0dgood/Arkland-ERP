@@ -24,7 +24,7 @@ const CreateWarningModal = ({ id }: any) => {
     dispatch(allEmployee());
   }
 
-  const subordinationOptions = ["Type of misconduct", "insubordination"];
+  const subordinationOptions = ["Type of misconduct", "insubordination", "Absenteeism", "Lateness", "Negligence", "Disbedience", "inefficiency", "Incompetence", "Leaving duty post without permission", "Gross Misconduct", "Others"];
 
 
   const handleSubmit = async (values: any, { resetForm }: any) => {

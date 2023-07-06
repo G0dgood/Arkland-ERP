@@ -22,6 +22,7 @@ const ViewLeave = () => {
 	const data = datas[0]
 
 
+	console.log('datas', datas)
 
 	useEffect(() => {
 		dispatch(viewLeave(id));
@@ -86,12 +87,12 @@ const ViewLeave = () => {
 	return (
 		<div>
 			{viewisLoading ? (
-				<div className="isLoading-container-view" >
+				<div className="isLoading-container-view  " >
 					<BounceLoader
 						color={"#990000"} loading={viewisLoading} />
 				</div>
 			) : !data || data === undefined ? (
-				<div className="table-loader-announcement">
+				<div className="table-loader-announcement ">
 					<div>
 						<SlBriefcase size={80} />
 						<p className="mt-3">No Tead Lead details</p>

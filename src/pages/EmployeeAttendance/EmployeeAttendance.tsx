@@ -1,32 +1,32 @@
-import React from "react";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { Button } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
-// import { useDepartments } from "../../hooks/useDepartments";
-import { getUserPrivileges } from "../../functions/auth";
+import { useEffect } from "react";
 import { Calendars } from "../../components/Calender/Calender";
 
+import { myAttendance } from "../../features/Attendances/attendanceSlice";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+
 const EmployeeAttendance = () => {
-  const navigate = useNavigate();
 
-  const [newDepartmentCreated, setNewDepartmentCreated] = React.useState({} as any);
+  const dispatch = useAppDispatch();
+
+  const { mydata, myisLoading } = useAppSelector((state: any) => state.attendance)
+
+  useEffect(() => {
+    dispatch(myAttendance())
+  }, [dispatch])
 
 
+  console.log('mydata', mydata)
 
-  const handleNewDepartmentCreated = () => {
-    setNewDepartmentCreated(!newDepartmentCreated);
-  };
-
-  const randColor = () => {
-    const realColor =
-      "#" +
-      Math.floor(Math.random() * 16777215)
-        .toString(16)
-        .padStart(6, "0")
-        .toUpperCase();
-    console.log("realColor", realColor);
-    return realColor;
-  };
+  // const randColor = () => {
+  //   const realColor =
+  //     "#" +
+  //     Math.floor(Math.random() * 16777215)
+  //       .toString(16)
+  //       .padStart(6, "0")
+  //       .toUpperCase();
+  //   console.log("realColor", realColor);
+  //   return realColor;
+  // };
 
   return (
     <div  >
@@ -36,8 +36,8 @@ const EmployeeAttendance = () => {
             <h5>Employee Attendance</h5>
           </div>
 
-          <div className="subone-col-3">
-            <div
+          <div className="subone-col-12">
+            {/* <div
               className="ProjectView-card"
               onClick={() => navigate(`/attendance/employee/attendance/list`)}
             >
@@ -50,8 +50,8 @@ const EmployeeAttendance = () => {
               <div className="iDotsRounded-text">
                 View your attendance report
               </div>
-            </div>
-            {/* <Calendars /> */}
+            </div> */}
+            <Calendars mydata={mydata} />
           </div>
         </div>
       </div>

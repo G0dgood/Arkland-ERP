@@ -1,40 +1,39 @@
-import { useEffect } from "react";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { BsPlusLg } from "react-icons/bs";
 import { ProgressBar } from "react-bootstrap";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { allProject } from "../../features/Project/projectSlice";
-import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { getUserPrivileges } from "../../functions/auth";
-import CreateProjectModal from "../../components/Modals/CreateProjectModal";
+
 import { BounceLoader } from "react-spinners";
+import { useEffect, useState } from "react";
+import HttpService from "../../components/HttpService";
 
-const ProjectView = () => {
-  const dispatch = useAppDispatch();
+const TeamLeadProject = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState([])
+  const [isLoading, setisLoading] = useState(false)
 
-  const { data, isLoading, message } = useAppSelector((state: any) => state.project)
-  const { createisSuccess } = useAppSelector((state: any) => state.project)
 
 
 
   useEffect(() => {
-    // @ts-ignore
-    dispatch(allProject());
-    if (createisSuccess) {
-      // @ts-ignore
-      dispatch(allProject());
+    getData()
+  }, [])
+
+
+  const getData = async () => {
+    setisLoading(true)
+    try {
+      const projectsUrl = "teams/projects"
+      const projects: any = await HttpService.get(projectsUrl)
+      setData(projects?.data?.data)
+
+
+      setisLoading(false)
+
+    } catch (error) {
+      setisLoading(false)
     }
-
-  }, [createisSuccess, dispatch, message]);
-
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead } = getUserPrivileges();
-
-
-
-
-
+  }
 
 
   const isPrime = (num: number) => {
@@ -49,52 +48,14 @@ const ProjectView = () => {
           <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
             <h5>Projects</h5>
             <div className="Request-btn-modal-container">
-              {/* {(isHRHead ||
-                isSuperAdmin ||
-                isAdmin ||
-                isHrAdmin ||
-                isTeamLead) && ( */}
+
               <div className="Request-btn">
-                <CreateProjectModal />
+                {/* <CreateProjectModal /> */}
               </div>
-              {/* )} */}
-              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
-              {/* <div>
-                <Button
-                  className="subone-header-flex-btn"
-                  onClick={() => navigate("/site-worker-request")}
-                >
-                  <BsPlusLg
-                    size={10}
-                    color="#fff"
-                    className="Create-plue-account"
-                  />{" "}
-                  Request Worker List
-                </Button>
-              </div> */}
-              {/* )} */}
+
             </div>
           </div>
-          <div className="subone-col-2">
-            <div className="subone-col-sup1">
-              <span>Started</span>
-              <span className="subone-col-sup1-circle">
-                <BsPlusLg size={10} color="#5F5E68" />
-              </span>
-            </div>
-            <div className="subone-col-sup2">
-              <span>On Going</span>
-              <span className="subone-col-sup1-circle">
-                <BsPlusLg size={10} color="#5F5E68" />
-              </span>
-            </div>
-            <div className="subone-col-sup3">
-              <span>Completed</span>
-              <span className="subone-col-sup1-circle">
-                <BsPlusLg size={10} color="#5F5E68" />
-              </span>
-            </div>
-          </div>
+
           {isLoading ? (
             <div className="isLoading-container">
               <BounceLoader
@@ -115,7 +76,7 @@ const ProjectView = () => {
                   <div
                     className="ProjectView-card"
                     key={i}
-                    onClick={() => navigate(`/projects/projects/${item.id}`)}
+                    onClick={() => navigate(`/teamleadprojects/teamleadprojects/${item.id}`)}
                   >
                     <div className="iDotsHorizontalRounded">
                       <Button
@@ -142,19 +103,7 @@ const ProjectView = () => {
                     </div>
                     <div className="iDotsRounded-percent-people">
                       <div className="iDotsRounded-percent-list">
-                        {/* <span className="profile-containers">BS</span>
-                        <span className="profile-containers">BN</span>
-                        <span className="profile-containers">JA</span>
-                        <span className="profile-containers">AD</span> */}
                       </div>
-                      {/* <div className="percent-people-grid">
-                          <div>
-                            <HiOutlinePaperClip />6
-                          </div>
-                          <div>
-                            <HiOutlineChatBubbleOvalLeftEllipsis />4
-                          </div>
-                        </div> */}
                     </div>
                   </div>
                 ))}
@@ -265,4 +214,4 @@ const ProjectView = () => {
   );
 };
 
-export default ProjectView;
+export default TeamLeadProject;

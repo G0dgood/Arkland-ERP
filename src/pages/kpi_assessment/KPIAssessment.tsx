@@ -23,7 +23,6 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
   const [kpinputs, setKpInputs] = useState({
     month: 0,
-    employee: "",
     reviewer: "",
     job_knowledge: 0,
     efficiency: 0,
@@ -129,6 +128,8 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     totalScore6,
   ]);
 
+  // @ts-ignore
+  console.log('kpinputs.reviewer?.value', kpinputs.reviewer?.value)
 
   useEffect(() => {
     setInputs((prevState: any) => {
@@ -140,7 +141,6 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
         communication: totalScore4,
         reliability: totalScore5,
         collaboration: totalScore6,
-        employee: userInfo?.employee?._id,
         month: kpinputs.month,
         // @ts-ignore
         reviewer: kpinputs.reviewer?.value,
@@ -179,19 +179,15 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     try {
       const hodsUrl = `employees`
       const hods: any = await HttpService.get(hodsUrl)
-      setHOD(hods?.data?.data?.data)
-
+      setHOD(hods?.data?.data)
       setisLoading(false)
-
     } catch (error) {
       setisLoading(false)
     }
   }
 
 
-
   const availablleHods = [] as any;
-
   hods &&
     hods?.forEach((team: any) =>
       availablleHods.push({
@@ -208,7 +204,6 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     if (createisSuccess) {
       setKpInputs({
         month: 0,
-        employee: "",
         reviewer: "",
         job_knowledge: 0,
         efficiency: 0,

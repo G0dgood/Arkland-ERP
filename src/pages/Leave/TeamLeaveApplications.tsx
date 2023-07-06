@@ -32,7 +32,7 @@ const TeamLeaveApplications = () => {
 		dispatch(getTeamLeave(id));
 	}, [dispatch, id])
 
-	const [activities, setactivities] = useState<any>(teamdata)
+
 
 
 
@@ -105,15 +105,19 @@ const TeamLeaveApplications = () => {
 										<Button className={item?.status === "HOD approved" ? "table-link" :
 											item?.status === "HR approved" ? "table-link-hr" :
 												item?.status === "approved" ? "table-link-active" :
-													item?.status === "rejected" ? "table-link-reject" : "table-link"}>{item?.status === "HOD approved" ? "HOD approved" :
-														item?.status === "HR approved" ? "HR approved" :
-															item?.status === "approved" ? "LEAVE approved" :
-																item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
+													item?.status === "rejected" ? "table-link-reject" : "table-link"}>
+											{item?.status === "HOD approved" ? "HOD approved" :
+												item?.status === "HR approved" ? "HR approved" :
+													item?.status === "approved" ? "LEAVE approved" :
+														item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}
+										</Button>
 									</td>
 									<td className="table-datacell datatype-numeric">
-										<Link to={`/leave/leave/hod/${item?._id}`}  >
+										<Link to={`/leave/leave/hod/${item?._id}`}>
 											{item?.status === "rejected" ? "" :
-												<Button id="team-applicatiom-update">{item?.hod_approved === false ? "Update" : "View"}</Button>
+												<Button id="team-applicatiom-update">
+													{item?.hod_approved === false ? "Update" : "View"}
+												</Button>
 											}
 										</Link>
 									</td>
@@ -127,7 +131,7 @@ const TeamLeaveApplications = () => {
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}
-					data={activities?.data}
+					data={teamdata}
 					entriesPerPage={entriesPerPage}
 					Total={"Team Leave"}
 				/>

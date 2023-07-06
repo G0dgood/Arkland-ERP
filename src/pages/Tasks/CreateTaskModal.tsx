@@ -11,11 +11,10 @@ import { difficultyOptions, priorityOptions } from '../../functions/helpers';
 import { createTask, reset } from '../../features/Tasks/taskSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
-
 import HttpService from '../../components/HttpService';
-import DataService from '../../utils/dataService';
+// import DataService from '../../utils/dataService';
 
-const dataService = new DataService()
+// const dataService = new DataService()
 const CreateTaskModal = ({ view }: any) => {
 	const dispatch = useAppDispatch();
 	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.task)
@@ -23,8 +22,8 @@ const CreateTaskModal = ({ view }: any) => {
 	const [Show, setShow] = useState(false);
 
 
-	const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-	const id = userInfo?.employee?._id
+	// const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+	// const id = userInfo?.employee?._id
 
 	useEffect(() => {
 		if (createisSuccess) {
@@ -46,7 +45,7 @@ const CreateTaskModal = ({ view }: any) => {
 	const getData = async () => {
 		// setisLoading(true)
 		try {
-			const teamsUrl = `hr/teams/${id}/employees`
+			const teamsUrl = `employees/users`
 			const teams: any = await HttpService.get(teamsUrl)
 			setTeamsLead(teams?.data?.data)
 
@@ -62,10 +61,11 @@ const CreateTaskModal = ({ view }: any) => {
 	teamMembers &&
 		teamMembers.forEach((teamMember: any) =>
 			availablleTeamMembers.push({
-				value: teamMember.assigned_to?.id,
-				label: teamMember.assigned_to?.full_name,
+				value: teamMember?.id,
+				label: teamMember?.full_name,
 			})
 		);
+
 
 
 

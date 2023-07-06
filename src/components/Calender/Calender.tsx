@@ -536,15 +536,15 @@ const Calendar = ({ month, year, preloadedEvents = [] }: any) => {
 const dateToday = new Date();
 
 // Get current month in javascript
-const currentMonth = dateToday.getMonth();
+const currentMonth = dateToday.getMonth() + 1;
+const currentYear = dateToday.getFullYear();
 
-// Log it to console
-console.log(currentMonth)
+
 export const Calendars = ({ date, setDate }: any) => (
   <div>
-    <div className="DashboardCalender-top-btn">
-      <div className="Calender-top-btn-sup">
-        {/* <div
+    {/* <div className="DashboardCalender-top-btn">
+      <div className="Calender-top-btn-sup"> */}
+    {/* <div
           className="back"
           onClick={() => {
             const newDate = new Date(date);
@@ -553,16 +553,16 @@ export const Calendars = ({ date, setDate }: any) => (
           }}>
           <MdArrowBackIos size={20} />
         </div> */}
-      </div>
+    {/* </div>
       <div>
         <Button variant="contained" className="Create-event-Calender">
           Add event
         </Button>
       </div>
-    </div>
+    </div> */}
     <Calendar
       month={currentMonth}
-      year={2022}
+      year={currentYear}
       preloadedEvents={preloadedEvents}
     />
     ,

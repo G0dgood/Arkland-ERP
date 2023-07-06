@@ -1,57 +1,65 @@
 import { useEffect, useState } from 'react'
 import Pagination from '../../components/Pagination';
-import { NoRecordFound, TableFetch } from '../../components/TableOptions';
-import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { getTask } from '../../features/Tasks/taskSlice';
-import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
-import CreateTaskModal from './CreateTaskModal';
+import { EntriesPerPage, NoRecordFound, TableFetch } from '../../components/TableOptions';
+import TableLoader from '../../components/TableLoader';
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-// import { getUserPrivileges } from '../../functions/auth';
+import HttpService from '../../components/HttpService';
 
 
-const TaskList = () => {
-	const dispatch = useAppDispatch();
+const TeamLeadTeams = () => {
+
 	const navigate = useNavigate();
-	const { data: tasks, isLoading } = useAppSelector((state: any) => state.task)
-	const { createisSuccess } = useAppSelector((state: any) => state.task)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
 	});
-	// const {
-	// 	isHRHead,
-	// 	isHeadOfDepartment,
-	// 	isTeamLead,
-	// 	isSuperAdmin,
-	// 	isHrAdmin,
-	// } = getUserPrivileges();
+	const [data, setData] = useState([])
+	const [isLoading, setisLoading] = useState(false)
+
+
 
 
 	useEffect(() => {
-		// @ts-ignore
-		dispatch(getTask());
-		if (createisSuccess) {
-			// @ts-ignore
-			dispatch(getTask());
+		getData()
+	}, [])
+	const getData = async () => {
+		setisLoading(true)
+		try {
+			const projectsUrl = "teams"
+			const projects: any = await HttpService.get(projectsUrl)
+			setData(projects?.data?.data)
+			setisLoading(false)
+
+		} catch (error) {
+			setisLoading(false)
 		}
-	}, [createisSuccess, dispatch]);
+	}
 
 
 
-	const header = ["TASK CREATED BY", "TASK ASSIGNED TO", "TASK STATUS", "TASK TITLE", "TASK CREATED TIME", "VIEW"];
+
+
+	const header = ["NAME", "DESCRIPTION", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);
 
 	return (
 		<div >
-			<div className="SiteWorkermaindiv">
-				<div className="SiteWorkermaindivsub">
-					<span className="SupportmainTitleh3">TASK</span>
+			<div className='allemployees-container-main' >
+				<div className='SiteWorkermaindivsub'>
+					<span className='SupportmainTitleh3'>Team List</span>
 				</div>
+				<div>
+					<EntriesPerPage
+						data={displayData}
+						entriesPerPage={entriesPerPage}
+						setEntriesPerPage={setEntriesPerPage}
+					/>
+				</div>
+				<div>
 
-				<CreateTaskModal />
-
+				</div>
 			</div>
 			<section className="md-ui component-data-table">
 				{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
@@ -80,27 +88,32 @@ const TaskList = () => {
 							) : (
 								displayData?.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
-										{/* <td className="table-datacell datatype-numeric">
-											{item?.project?.name}
-										</td> */}
 										<td className="table-datacell datatype-numeric">
-											{item?.created_by?.full_name}
+											{item?.name}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{item?.assigned_to?.full_name}
+											{item?.description.slice(0, 10)}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{item?.status}
+											<Button
+												className={
+													item?.status !== "active"
+														? "table-link"
+														: "table-link-active"} 	>
+												{item?.status}
+											</Button>
+
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{item?.title}
+											{item?.created_at}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{new Date(item?.time_in).toLocaleString()}
-											{moment(item?.created_at).format("DD-MM-YYYY")}
+											{/* {new Date(item?.time_in).toLocaleString()} */}
+											{moment(item?.updated_by).format("DD-MM-YYYY")}
 										</td>
 										<td className="table-datacell datatype-numeric" key={i}>
-											<Button id="team-applicatiom-update" onClick={() => navigate(`/tasks/tasks/${item?.id}`)}>View</Button>
+
+											<Button id="team-applicatiom-update" onClick={() => navigate(`/teamleadprojects/teamleadprojects/teamleadviewteam/${item?.id}`)}>View</Button>
 										</td>
 
 									</tr>
@@ -113,13 +126,13 @@ const TaskList = () => {
 			<footer className="main-table-footer">
 				<Pagination
 					setDisplayData={setDisplayData}
-					data={tasks}
+					data={data}
 					entriesPerPage={entriesPerPage}
-					Total={"Task"}
+					Total={"Team"}
 				/>
 			</footer>
 		</div>
 	)
 }
 
-export default TaskList
+export default TeamLeadTeams

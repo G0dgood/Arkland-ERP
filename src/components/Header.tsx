@@ -30,7 +30,7 @@ const Header = ({ toggleSideNav }: any) => {
   const [drop, setDrop] = useState(false);
   const [dropDownNoti, setDropDownNoti] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isLoading, setisLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const [notification, setNotification] = useState<any>(userInfo.notifications);
   const url = "notifications"
@@ -100,20 +100,46 @@ const Header = ({ toggleSideNav }: any) => {
       })
   }
 
-  const handleLogout = async () => {
-    setisLoading(true);
-    socket.disconnect()
-    try {
-      await HttpService.patch("me/logout", {})
-      window.location.replace("/");
-      dataService.clearData()
-      setisLoading(false);
-    } catch (error) {
-      window.location.replace("/");
-      setisLoading(false);
-      dataService.clearData()
-    }
-  };
+  useEffect(() => {
+    setTimeout(() => {
+      handleRefresh()
+    }, 5000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh])
+
+
+  const handleRefresh = async () => {
+    setLoading(true)
+    const page = 1
+    const size = 10
+    await HttpService.search(url, { page, size })
+      .then((response: any) => {
+        setLoading(false)
+        const newNotification = response?.data?.data
+        userInfo.notifications = newNotification
+        dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+        setNotification(newNotification)
+      })
+      .catch((error) => {
+        setLoading(false)
+      })
+  }
+
+
+  // const handleLogout = async () => {
+  //   setisLoading(true);
+  //   socket.disconnect()
+  //   try {
+  //     await HttpService.patch("me/logout", {})
+  //     window.location.replace("/");
+  //     dataService.clearData()
+  //     setisLoading(false);
+  //   } catch (error) {
+  //     window.location.replace("/");
+  //     setisLoading(false);
+  //     dataService.clearData()
+  //   }
+  // };
 
 
   return (
@@ -150,7 +176,7 @@ const Header = ({ toggleSideNav }: any) => {
           </span>
         </div>
         <div className="hand-noficational-place" >
-          <Socket setNotification={setNotification} socket={socket} />
+          <Socket setNotification={setNotification} socket={socket} setRefresh={setRefresh} />
           {/* @ts-ignore */}
           <div className="hand-noficational-place-sup" >
             <div className="Messages-button" onClick={() => { setDropDownNoti(true) }} >

@@ -66,6 +66,11 @@ import ViewPrivilage from "./pages/UserPrivilage/ViewPrivilage";
 import ManagerWeeklyReport from "./pages/WeeklyReport/ManagerWeeklyReport";
 import ManagerWeeklyReportView from "./pages/WeeklyReport/ManagerWeeklyReportView";
 import AdminKPAssessment from "./pages/kpi_assessment/AdminKPAssessment";
+import TeamLeadProject from "./pages/TeamLeadProjects/TeamLeadProject";
+import ViewTeamLeadProject from "./pages/TeamLeadProjects/ViewTeamLeadProject";
+import TeamLeadTeams from "./pages/TeamLeadProjects/TeamLeadTeams";
+import TeamLeadViewTeam from "./pages/TeamLeadProjects/TeamLeadViewTeam";
+import TeamLeadTerminationList from "./pages/TeamLeadProjects/TeamLeadTerminationList";
 
 
 
@@ -149,6 +154,13 @@ const App: React.FC<any> = () => {
             <Route index element={<Project />} />
             <Route path="projects/:id" element={<ViewProjects />} />
             <Route path="projects/create" element={<CreateProjects />} />
+          </Route>
+          <Route path="teamleadprojects">
+            <Route index element={<TeamLeadProject />} />
+            <Route path="teamleadprojects/:id" element={<ViewTeamLeadProject />} />
+            <Route path="teamleadprojects/teamleadteams" element={<TeamLeadTeams />} />
+            <Route path="teamleadprojects/teamleadviewteam/:id" element={<TeamLeadViewTeam />} />
+            <Route path="teamleadprojects/teamLeadterminationlist" element={<TeamLeadTerminationList />} />
           </Route>
 
           <Route path="departments">

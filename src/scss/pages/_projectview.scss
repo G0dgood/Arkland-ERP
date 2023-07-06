@@ -1107,8 +1107,7 @@ flex-direction: column;
   margin-right: 15px;
   background-color: var(--button-bg-color);
   color: c.color(primary-color) ;
-  width: 50px;
-  padding: 9px;
+  width: 50px; 
   border-radius: 4px;
 }
 .mail-doc-icons svg:not(:last-child) {

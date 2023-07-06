@@ -2,15 +2,16 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
 import { MdOutlineClose } from 'react-icons/md';
-import HttpService from '../HttpService';
-import SelectInput from '../SelectInput';
+import { createRequest, reset } from '../../features/workerRequest/workerRequestSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
-import { createTerminations, reset } from '../../features/Employee/employeeSlice';
+import HttpService from '../../components/HttpService';
+import SelectInput from '../../components/SelectInput';
+import { teanCreateTerminations } from '../../features/Employee/employeeSlice';
 
-const RequestEmployeeTerminationModal = () => {
-	const { TerminationsisLoading, TerminationsisSuccess } = useAppSelector((state: any) => state.employee)
+const TeamLeadRequestTerminationModal = () => {
+	const { teanTerminationsisLoading, teanTerminationsisSuccess } = useAppSelector((state: any) => state.employee)
 	const [deleteShow, setDeleteShow] = React.useState(false);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -31,11 +32,7 @@ const RequestEmployeeTerminationModal = () => {
 	const [input, setInput] = useState<any>({
 		employee: " ",
 		warning: ""
-
 	})
-
-
-
 
 
 
@@ -62,11 +59,11 @@ const RequestEmployeeTerminationModal = () => {
 	const getData = async () => {
 		setisLoading(true)
 		try {
-			const employeesUrl = "hr/employees"
+			const employeesUrl = "employees"
 			const employees: any = await HttpService.get(employeesUrl)
 			setEmployees(employees?.data?.data)
 			setisLoading(false)
-			const warningsUrl = "hr/warnings"
+			const warningsUrl = "teams/terminations/list"
 			const warnings: any = await HttpService.get(warningsUrl)
 			setWarnings(warnings?.data?.data)
 			setisLoading(false)
@@ -89,21 +86,22 @@ const RequestEmployeeTerminationModal = () => {
 	warnings &&
 		warnings.forEach((employee: any) =>
 			availableWarnings.push({
-				value: employee?.id,
-				label: employee?.misconduct,
+				value: employee?._id,
+				label: employee?.reason,
 			})
 		);
 
 
-	const handleTerminations = () => {
+	const handlecreate = () => {
 		const input = inputs
-		dispatch(createTerminations(input));
+		// @ts-ignore
+		dispatch(teanCreateTerminations(input));
 	}
 
 
 
 	useEffect(() => {
-		if (TerminationsisSuccess) {
+		if (teanTerminationsisSuccess) {
 			fireAlert("success", "Termination Request Sucess", "success");
 			setInputs({
 				employee: " ",
@@ -116,7 +114,7 @@ const RequestEmployeeTerminationModal = () => {
 			setDeleteShow(false)
 			navigate(-1)
 		}
-	}, [TerminationsisSuccess, dispatch, navigate])
+	}, [teanTerminationsisSuccess, dispatch, navigate])
 
 
 
@@ -207,8 +205,8 @@ const RequestEmployeeTerminationModal = () => {
 						</div>
 						<div className='btn-modal-container'>
 
-							<Button variant="contained" className="Add-btn-modal" onClick={handleTerminations}  >
-								{TerminationsisLoading ? (
+							<Button variant="contained" className="Add-btn-modal" onClick={handlecreate}  >
+								{teanTerminationsisLoading ? (
 									<Spinner animation="border" />
 								) : (
 									"Request Termination"
@@ -225,4 +223,4 @@ const RequestEmployeeTerminationModal = () => {
 	)
 }
 
-export default RequestEmployeeTerminationModal
+export default TeamLeadRequestTerminationModal

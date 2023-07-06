@@ -42,7 +42,7 @@ const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
                 className="main-todo-Event"
                 style={{ borderRadius: "4px" }}
                 key={i} >
-                <div className="main-todo-container">
+                {/* <div className="main-todo-container">
                   <div className="main-todo-input">
                   </div>
                   <div>
@@ -51,6 +51,14 @@ const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
                       {moment(item?.expected_completion_date).format(
                         "DD-MMMM-YYYY"
                       )}
+                    </div>
+                  </div>
+                </div> */}
+                <div className="main-todo-container">
+                  <div className="main-todo-note">
+                    <div>{item?.title?.slice(0, 65)}</div>
+                    <div className="main-todo-note-minutes">
+                      {moment.duration(moment().diff(item?.created_at)).humanize()}{" "} ago
                     </div>
                   </div>
                 </div>

@@ -68,7 +68,7 @@ const ViewTerminations = () => {
                   <p>Employee</p>
                   <p
                     onClick={() =>
-                      navigate(`/employees/${viewterminationsdata?.data?.employee?.id}`)
+                      navigate(`/employees/employees/${viewterminationsdata?.data?.employee?.id}`)
                     }
                     style={{
                       cursor: "pointer",

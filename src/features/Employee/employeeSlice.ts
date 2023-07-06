@@ -150,6 +150,18 @@ const initialState = {
   responseisSuccess: false,
   responseisLoading: false, 
   responsemessage: '', 
+
+  Terminationsdata:  [],
+  TerminationsisError: false,
+  TerminationsisSuccess: false,
+  TerminationsisLoading: false, 
+  Terminationsmessage: '', 
+
+  teanTerminationsdata:  [],
+  teanTerminationsisError: false,
+  teanTerminationsisSuccess: false,
+  teanTerminationsisLoading: false, 
+  teanTerminationsmessage: '', 
 }
  
 
@@ -442,6 +454,32 @@ export const responseWarning:any = createAsyncThunk('employee/responseWarning', 
     return thunkAPI.rejectWithValue(message)
   }
 })
+export const createTerminations:any = createAsyncThunk('employee/createTerminations', async (data, thunkAPI) => {
+  try {
+     // @ts-ignore
+    return await employeeService.createTerminations(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const teanCreateTerminations:any = createAsyncThunk('employee/teanCreateTerminations', async (data, thunkAPI) => {
+  try {
+     // @ts-ignore
+    return await employeeService.teanCreateTerminations(data )
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
  
 
@@ -571,6 +609,16 @@ export const authSlice = createSlice({
       state.responseisError = false
       state.responsemessage = '' 
 
+      state.TerminationsisLoading = false
+      state.TerminationsisSuccess = false
+      state.TerminationsisError = false
+      state.Terminationsmessage = '' 
+
+      state.teanTerminationsisLoading = false
+      state.teanTerminationsisSuccess = false
+      state.teanTerminationsisError = false
+      state.teanTerminationsmessage = '' 
+
       
     },
   },
@@ -592,20 +640,35 @@ export const authSlice = createSlice({
         state.data = '' 
       })
 
-      //   .addCase(viewPrevilage.pending, (state) => {
-      //   state.viewPrevilageisLoading = true 
-      // })
-      // .addCase(viewPrevilage.fulfilled, (state:any, action) => {
-      //   state.viewPrevilageisLoading = false
-      //   state.viewPrevilageisSuccess = true
-      //   state.viewPrevilagedata = action.payload?.data  
-      // })
-      // .addCase(viewPrevilage.rejected, (state:any, action) => {
-      //   state.viewPrevilageisLoading = false
-      //   state.viewPrevilageisError = true
-      //   state.viewPrevilagemessage = action.payload  
-      //   state.viewPrevilagedata = '' 
-      // })
+        .addCase(createTerminations.pending, (state) => {
+        state.TerminationsisLoading = true 
+      })
+      .addCase(createTerminations.fulfilled, (state:any, action) => {
+        state.TerminationsisLoading = false
+        state.TerminationsisSuccess = true
+        state.Terminationsdata = action.payload?.data  
+      })
+      .addCase(createTerminations.rejected, (state:any, action) => {
+        state.TerminationsisLoading = false
+        state.TerminationsisError = true
+        state.Terminationsmessage = action.payload  
+        state.Terminationsdata = '' 
+      })
+       
+        .addCase(teanCreateTerminations.pending, (state) => {
+        state.teanTerminationsisLoading = true 
+      })
+      .addCase(teanCreateTerminations.fulfilled, (state:any, action) => {
+        state.teanTerminationsisLoading = false
+        state.teanTerminationsisSuccess = true
+        state.teanTerminationsdata = action.payload?.data  
+      })
+      .addCase(teanCreateTerminations.rejected, (state:any, action) => {
+        state.teanTerminationsisLoading = false
+        state.teanTerminationsisError = true
+        state.teanTerminationsmessage = action.payload  
+        state.teanTerminationsdata = '' 
+      })
        
        
 
