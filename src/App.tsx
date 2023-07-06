@@ -107,7 +107,7 @@ const App: React.FC<any> = () => {
           </Route>
 
           <Route path="attendance">
-            <Route index element={<EmployeeAttendance />} />
+            <Route index element={<EmployeeAttendanceTable />} />
             <Route
               path="employee/attendance/list"
               element={<EmployeeAttendanceTable />}
