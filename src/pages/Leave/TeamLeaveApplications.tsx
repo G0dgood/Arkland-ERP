@@ -8,13 +8,11 @@ import { BsCheckCircle, BsClock } from 'react-icons/bs';
 import { SlClose } from 'react-icons/sl';
 import TableLoader from '../../components/TableLoader';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import DataService from '../../utils/dataService';
 import { getTeamLeave } from '../../features/Leave/leaveSlice';
 
 
-const dataService = new DataService()
+
 const TeamLeaveApplications = () => {
-	const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 	const dispatch = useAppDispatch();
 	const { teamdata, teamisLoading } = useAppSelector((state: any) => state.leave)
 
@@ -24,16 +22,9 @@ const TeamLeaveApplications = () => {
 	});
 
 
-
-
-	const id = userInfo?.department?.id
-
 	useEffect(() => {
-		dispatch(getTeamLeave(id));
-	}, [dispatch, id])
-
-
-
+		dispatch(getTeamLeave());
+	}, [dispatch])
 
 
 	const [displayData, setDisplayData] = useState([]);

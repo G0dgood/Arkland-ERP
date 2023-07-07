@@ -71,157 +71,155 @@ import ViewTeamLeadProject from "./pages/TeamLeadProjects/ViewTeamLeadProject";
 import TeamLeadTeams from "./pages/TeamLeadProjects/TeamLeadTeams";
 import TeamLeadViewTeam from "./pages/TeamLeadProjects/TeamLeadViewTeam";
 import TeamLeadTerminationList from "./pages/TeamLeadProjects/TeamLeadTerminationList";
+import TeamAttendance from "./pages/EmployeeAttendance/TeamAttendance";
+import MyWarning from "./pages/MyWarning/MyWarning";
 
 
 
 const dataService = new DataService();
 
 const App: React.FC<any> = () => {
-  const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`);
-  const token = dataService.getToken();
-  const auth = (
-    <Protected loggedIn={user && token}>
-      <Layout />
-    </Protected>
-  );
+ const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`);
+ const token = dataService.getToken();
+ const auth = (
+  <Protected loggedIn={user && token}>
+   <Layout />
+  </Protected>
+ );
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/update-password" element={<UpdatePassword />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+ return (
+  <BrowserRouter>
+   <Routes>
+    <Route path="/login" element={<Login />} />
+    <Route path="/update-password" element={<UpdatePassword />} />
+    <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        {/* protected routes for auth */}
-        <Route path="/" element={auth}>
-          <Route index element={<Dashboard />} />
+    {/* protected routes for auth */}
+    <Route path="/" element={auth}>
+     <Route index element={<Dashboard />} />
 
-          <Route path="employees">
-            <Route index element={<AllEmployees />} />
-            <Route path="employees/:id" element={<ViewEmployee />} />
-            <Route path="employees/edit/:id" element={<AdminEditUser />} />
-            <Route
-              path="/employees/employees/create"
-              element={<CreateEmployee />}
-            />
-          </Route>
+     <Route path="employees">
+      <Route index element={<AllEmployees />} />
+      <Route path="employees/:id" element={<ViewEmployee />} />
+      <Route path="employees/edit/:id" element={<AdminEditUser />} />
+      <Route path="/employees/employees/create" element={<CreateEmployee />} />
+     </Route>
 
-          <Route path="attendance">
-            <Route index element={<EmployeeAttendanceTable />} />
-            <Route
-              path="employee/attendance/list"
-              element={<EmployeeAttendanceTable />}
-            />
-            <Route path="attendance/list/hr" element={<AttendanceTable />} />
-          </Route>
+     <Route path="attendance">
+      <Route index element={<EmployeeAttendanceTable />} />
+      <Route path="employee/attendance/list" element={<EmployeeAttendanceTable />} />
+      <Route path="attendance/list/hr" element={<AttendanceTable />} />
+      <Route path="attendance/teamleadattendance" element={<TeamAttendance />} />
+     </Route>
 
-          <Route path="kpiassessment">
-            <Route index element={<MyKPIAssessment />} />
-            <Route path="kpiassessment/:id" element={<KPIDetails />} />
-            <Route path="kpiassessment/teamkpi" element={<TeamKPI />} />
-            <Route path="kpiassessment/teamkpi/view/:id" element={<ViewKPAssessment />} />
-            <Route path="adminkpiassessment/teamkpi/view/:id" element={<AdminKPAssessment />} />
-            <Route path="kpiassessment/admin" element={<AllKPIReport />} />
-          </Route>
+     <Route path="kpiassessment">
+      <Route index element={<MyKPIAssessment />} />
+      <Route path="kpiassessment/:id" element={<KPIDetails />} />
+      <Route path="kpiassessment/teamkpi" element={<TeamKPI />} />
+      <Route path="kpiassessment/teamkpi/view/:id" element={<ViewKPAssessment />} />
+      <Route path="adminkpiassessment/teamkpi/view/:id" element={<AdminKPAssessment />} />
+      <Route path="kpiassessment/admin" element={<AllKPIReport />} />
+     </Route>
 
-          <Route path="leave">
-            <Route index element={<Leave />} />
-            <Route path="leave/:id" element={<ViewLeave />} />
-            <Route path="leave/hod/:id" element={<HodLeaveView />} />
-            <Route path="leave/team" element={<TeamLeaveApplications />} />
-            <Route path="leave/hr" element={<AllLeaveApplications />} />
-            <Route path="leave/admin" element={<AllLeave />} />
-            <Route path="leave/hr/:id" element={<HRUpdateLeave />} />
-            <Route path="leave/final/:id" element={<FinalLeaveUpdate />} />
-          </Route>
+     <Route path="leave">
+      <Route index element={<Leave />} />
+      <Route path="leave/:id" element={<ViewLeave />} />
+      <Route path="leave/hod/:id" element={<HodLeaveView />} />
+      <Route path="leave/team" element={<TeamLeaveApplications />} />
+      <Route path="leave/hr" element={<AllLeaveApplications />} />
+      <Route path="leave/admin" element={<AllLeave />} />
+      <Route path="leave/hr/:id" element={<HRUpdateLeave />} />
+      <Route path="leave/final/:id" element={<FinalLeaveUpdate />} />
+     </Route>
 
-          <Route path="weeklyreport">
-            <Route index element={<WeeklyReport />} />
-            <Route path="weeklyreport/team" element={<TeamWeeklyReport />} />
-            <Route path="weeklyreport/:id" element={<WeeklyReportView />} />
-            <Route path="weeklyreport/update/:id" element={<TeamWeeklyReportUpdate />} />
-            <Route path="weeklyreport/manager/view/:id" element={<ManagerWeeklyReportView />} />
-            <Route path="weeklyreport/myweeklyreport" element={<MyWeekReport />} />
-            <Route path="weeklyreport/manager" element={<ManagerWeeklyReport />} />
-          </Route>
+     <Route path="weeklyreport">
+      <Route index element={<WeeklyReport />} />
+      <Route path="weeklyreport/team" element={<TeamWeeklyReport />} />
+      <Route path="weeklyreport/:id" element={<WeeklyReportView />} />
+      <Route path="weeklyreport/update/:id" element={<TeamWeeklyReportUpdate />} />
+      <Route path="weeklyreport/manager/view/:id" element={<ManagerWeeklyReportView />} />
+      <Route path="weeklyreport/myweeklyreport" element={<MyWeekReport />} />
+      <Route path="weeklyreport/manager" element={<ManagerWeeklyReport />} />
+     </Route>
 
-          <Route path="announcements">
-            <Route index element={<Announcements />} />
-            <Route path="announcements/:id" element={<AnnouncementsView />} />
-          </Route>
+     <Route path="announcements">
+      <Route index element={<Announcements />} />
+      <Route path="announcements/:id" element={<AnnouncementsView />} />
+     </Route>
 
-          <Route path="projects">
-            <Route index element={<Project />} />
-            <Route path="projects/:id" element={<ViewProjects />} />
-            <Route path="projects/create" element={<CreateProjects />} />
-          </Route>
-          <Route path="teamleadprojects">
-            <Route index element={<TeamLeadProject />} />
-            <Route path="teamleadprojects/:id" element={<ViewTeamLeadProject />} />
-            <Route path="teamleadprojects/teamleadteams" element={<TeamLeadTeams />} />
-            <Route path="teamleadprojects/teamleadviewteam/:id" element={<TeamLeadViewTeam />} />
-            <Route path="teamleadprojects/teamLeadterminationlist" element={<TeamLeadTerminationList />} />
-          </Route>
+     <Route path="projects">
+      <Route index element={<Project />} />
+      <Route path="projects/:id" element={<ViewProjects />} />
+      <Route path="projects/create" element={<CreateProjects />} />
+     </Route>
+     <Route path="teamleadprojects">
+      <Route index element={<TeamLeadProject />} />
+      <Route path="teamleadprojects/:id" element={<ViewTeamLeadProject />} />
+      <Route path="teamleadprojects/teamleadteams" element={<TeamLeadTeams />} />
+      <Route path="teamleadprojects/teamleadviewteam/:id" element={<TeamLeadViewTeam />} />
+      <Route path="teamleadprojects/teamLeadterminationlist" element={<TeamLeadTerminationList />} />
+     </Route>
 
-          <Route path="departments">
-            <Route index element={<Departments />} />
-            <Route path="departments/:id" element={<ViewDepartments />} />
-          </Route>
+     <Route path="departments">
+      <Route index element={<Departments />} />
+      <Route path="departments/:id" element={<ViewDepartments />} />
+     </Route>
 
-          <Route path="profile">
-            <Route index element={<Profile />} />
-          </Route>
-          <Route path="tasks">
-            <Route index element={<TaskList />} />
-            <Route path="tasks/:id" element={<TaskView />} />
-          </Route>
-          <Route path="team">
-            <Route index element={<Team />} />
-            <Route path="team/view/:id" element={<ViewTeam />} />
-          </Route>
+     <Route path="profile">
+      <Route index element={<Profile />} />
+     </Route>
+     <Route path="tasks">
+      <Route index element={<TaskList />} />
+      <Route path="tasks/:id" element={<TaskView />} />
+     </Route>
+     <Route path="team">
+      <Route index element={<Team />} />
+      <Route path="team/view/:id" element={<ViewTeam />} />
+     </Route>
 
-          <Route path="teamlead">
-            <Route index element={<TeamLead />} />
-            <Route path="teamlead/view/:id" element={<TeamLeadView />} />
-          </Route>
+     <Route path="teamlead">
+      <Route index element={<TeamLead />} />
+      <Route path="teamlead/view/:id" element={<TeamLeadView />} />
+     </Route>
 
-          {/* <Route path="terminations"> */}
-          <Route path="/terminations" element={<TerminationList />} />
-          <Route path="/terminations/:id" element={<ViewTerminations />} />
-          {/* </Route> */}
+     {/* <Route path="terminations"> */}
+     <Route path="/terminations" element={<TerminationList />} />
+     <Route path="/terminations/:id" element={<ViewTerminations />} />
+     {/* </Route> */}
 
-          <Route path="warning">
-            <Route index element={<WarningList />} />
-            <Route path="warning/:id" element={<ViewWarning />} />
-          </Route>
+     <Route path="warning">
+      <Route index element={<WarningList />} />
+      <Route path="warning/:id" element={<ViewWarning />} />
+      <Route path="warning/mywarning" element={<MyWarning />} />
+     </Route>
 
-          <Route path="workers_request">
-            <Route index element={<SiteWorkerRequest />} />
-            <Route
-              path="workers_request/view/:id"
-              element={<ViewSiteWorkerRequest />}
-            />
-          </Route>
-          <Route path="hod">
-            <Route index element={<CreateHOD />} />
-            <Route path="hod/viewhod/:id" element={<ViewHOD />} />
-          </Route>
-          <Route path="userrole">
-            <Route path="userrole/viewrole/:id" element={<ViewRole />} />
-          </Route>
-          <Route path="userprivileges">
-            <Route index element={<Userprivileges />} />
-            <Route path="userprivileges/viewprivilage/:id" element={<ViewPrivilage />} />
-          </Route>
+     <Route path="workers_request">
+      <Route index element={<SiteWorkerRequest />} />
+      <Route
+       path="workers_request/view/:id"
+       element={<ViewSiteWorkerRequest />}
+      />
+     </Route>
+     <Route path="hod">
+      <Route index element={<CreateHOD />} />
+      <Route path="hod/viewhod/:id" element={<ViewHOD />} />
+     </Route>
+     <Route path="userrole">
+      <Route path="userrole/viewrole/:id" element={<ViewRole />} />
+     </Route>
+     <Route path="userprivileges">
+      <Route index element={<Userprivileges />} />
+      <Route path="userprivileges/viewprivilage/:id" element={<ViewPrivilage />} />
+     </Route>
 
-          <Route path="/createnewrole" element={<CreateRole />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/policy" element={<Policy />} />
-        </Route>
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
+     <Route path="/createnewrole" element={<CreateRole />} />
+     <Route path="/support" element={<Support />} />
+     <Route path="/policy" element={<Policy />} />
+    </Route>
+    <Route path="*" element={<PageNotFound />} />
+   </Routes>
+  </BrowserRouter>
+ );
 };
 
 export default App;

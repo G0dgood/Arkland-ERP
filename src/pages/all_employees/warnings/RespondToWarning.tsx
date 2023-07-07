@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const RespondToWarning = ({ id }: any) => {
+const RespondToWarning = ({ id, className }: any) => {
 	const dispatch = useAppDispatch();
 	const { responseisLoading, responseisSuccess } = useAppSelector((state: any) => state.employee)
 	const navigate = useNavigate();
@@ -57,7 +57,8 @@ const RespondToWarning = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button variant="contained" className="Add-btn"
+			<Button variant="contained" className={className ? "" : "Add-btn"}
+				id={className}
 				onClick={() => setLgShow(true)}>
 				Response Warning
 			</Button>

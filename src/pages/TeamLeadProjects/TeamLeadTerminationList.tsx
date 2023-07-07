@@ -19,6 +19,8 @@ const TeamLeadTerminationList = () => {
  const [terminationsisLoading, setTerminationsisLoading] = useState<any>(false)
 
 
+
+
  useEffect(() => {
   getDataMembers()
  }, [])

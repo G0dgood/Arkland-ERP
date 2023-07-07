@@ -220,52 +220,57 @@ const ViewProjects = () => {
                       <input type="checkbox" name="msg" id="mail30" className="mail-choice" checked />
                       <label htmlFor="mail30">Project Update.</label>
                     </div>
-                    <div className="mail-doc">
-                      <div className="mail-doc-wrapper">
-                        <BsDot size={20} />
-                        <div className="mail-doc-detail">
-                          <div className="mail-doc-name">Commence Project</div>
+                    {viewdata?.status === "pending" &&
+                      <div className="mail-doc">
+                        <div className="mail-doc-wrapper">
+                          <BsDot size={20} />
+                          <div className="mail-doc-detail">
+                            <div className="mail-doc-name">Commence Project</div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="mail-doc-icons">
-                        <div className="add-task">
-                          <CommenceProjectModal id={id} title={viewdata?.name} />
+                        <div className="mail-doc-icons">
+                          <div className="add-task">
+                            <CommenceProjectModal id={id} title={viewdata?.name} />
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className="mail-doc">
-                      <div className="mail-doc-wrapper">
-                        <BsDot size={20} />
-                        <div className="mail-doc-detail">
-                          <div className="mail-doc-name">Complete Project</div>
+                      </div>}
+                    {(viewdata?.status === "commenced" || viewdata?.status === "reseted") &&
+                      <div className="mail-doc">
+                        <div className="mail-doc-wrapper">
+                          <BsDot size={20} />
+                          <div className="mail-doc-detail">
+                            <div className="mail-doc-name">Complete Project</div>
 
+                          </div>
+                        </div>
+                        <div className="mail-doc-icons">
+                          <div className="add-task">
+                            <CompleteProjectModal id={id} title={viewdata?.name} />
+                          </div>
                         </div>
                       </div>
-                      <div className="mail-doc-icons">
-                        <div className="add-task">
-                          <CompleteProjectModal id={id} title={viewdata?.name} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mail-doc">
-                      <div className="mail-doc-wrapper">
-                        <BsDot size={20} />
-                        <div className="mail-doc-detail">
-                          <div className="mail-doc-name">Suspend Project</div>
+                    }
+                    {viewdata?.status === "commenced" &&
+                      <div className="mail-doc">
+                        <div className="mail-doc-wrapper">
+                          <BsDot size={20} />
+                          <div className="mail-doc-detail">
+                            <div className="mail-doc-name">Suspend Project</div>
 
+                          </div>
+                        </div>
+                        <div className="mail-doc-icons">
+                          <div className="add-task">
+                            <SuspendProjectModal id={id} title={viewdata?.name} />
+                          </div>
                         </div>
                       </div>
-                      <div className="mail-doc-icons">
-                        <div className="add-task">
-                          <SuspendProjectModal id={id} title={viewdata?.name} />
-                        </div>
-                      </div>
-                    </div>
+                    }
                     <div className="mail-doc">
                       <div className="mail-doc-wrapper">
                         <BsDot size={20} />
                         <div className="mail-doc-detail">
-                          <div className="mail-doc-name">Suspend Project</div>
+                          <div className="mail-doc-name">Update Project</div>
 
                         </div>
                       </div>

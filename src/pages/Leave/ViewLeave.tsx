@@ -19,10 +19,10 @@ const ViewLeave = () => {
 	const { viewdata: datas, viewisLoading, viewmessage } = useAppSelector((state: any) => state.leave)
 	const { viewdeleteisLoading, viewdeleteisSuccess } = useAppSelector((state: any) => state.leave)
 
-	const data = datas[0]
+	const data = datas
 
 
-	console.log('datas', datas)
+
 
 	useEffect(() => {
 		dispatch(viewLeave(id));

@@ -89,19 +89,25 @@ const Sidebar = ({
             </MenuItem>
           )}
           {(isTeamLead || isHRHead || isAdmin || isHrAdmin || !isSuperAdmin) && (
-            <MenuItem className='Side__Content' active={pathname === '/attendance'} icon={<HiOutlineUserGroup size={23} />}> Attendance <Link to="/attendance" /> </MenuItem>)}
+            <MenuItem className='Side__Content' active={pathname === '/attendance'} icon={<HiOutlineUserGroup size={23} />}> Attendance <Link to="/attendance" />
+            </MenuItem>)}
 
           {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
             <SubMenu title={'Employees'} icon={<FiUser size={24} />} >
-              <MenuItem className='Side__Content' active={pathname === '/employees'}>  <Link to="/employees" />Employees</MenuItem>
-
-              <MenuItem className='Side__Content' active={pathname === '/terminations'}>  <Link to="/terminations" />Terminations</MenuItem>
-              <MenuItem className='Side__Content' active={pathname === '/hod'}>  <Link to="/hod" />HOD</MenuItem>
+              <MenuItem className='Side__Content' active={pathname === '/employees'}>
+                <Link to="/employees" />Employees</MenuItem>
+              <MenuItem className='Side__Content' active={pathname === '/terminations'}>
+                <Link to="/terminations" />Terminations</MenuItem>
+              <MenuItem className='Side__Content' active={pathname === '/hod'}>
+                <Link to="/hod" />HOD</MenuItem>
               <MenuItem className='Side__Content' active={pathname === '/createnewrole'}>  <Link to="/createnewrole" />Employee Role</MenuItem>
               {(isSuperAdmin || isMaster || isSupport || isAdmin) && (
                 <MenuItem className='Side__Content' active={pathname === '/userprivileges'}>  <Link to="/userprivileges" />User Privileges</MenuItem>)}
             </SubMenu>
           )}
+          <MenuItem className='Side__Content' active={pathname === '/warning/warning/mywarning'} icon={<VscWarning size={20} />}>My Warnings
+            <Link to="/warning/warning/mywarning" />
+          </MenuItem>
 
           {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
             <SubMenu title={'Warning'} icon={<VscWarning size={24} />} >
@@ -117,7 +123,7 @@ const Sidebar = ({
             <MenuItem className='Side__Content' active={pathname === '/departments'} icon={<FiFolder size={20} />}> Departments <Link to="/departments" /> </MenuItem>)}
 
           {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
-            <SubMenu title={'Team Lead Project'} icon={<AiIcons.AiOutlineBank size={25} />} >
+            <SubMenu title={'Team Lead'} icon={<AiIcons.AiOutlineBank size={25} />} >
               <MenuItem className='Side__Content' active={pathname === '/teamleadprojects'}>
                 <Link to="/teamleadprojects" />Projects</MenuItem>
               <MenuItem className='Side__Content' active={pathname === '/teamleadprojects/teamleadprojects/teamleadteams'}
@@ -127,6 +133,9 @@ const Sidebar = ({
               <MenuItem className='Side__Content' active={pathname === '/teamleadprojects/teamleadprojects/teamLeadterminationlist'}
                 icon={<GiTeamIdea size={20} />}>Terminations
                 <Link to="/teamleadprojects/teamleadprojects/teamLeadterminationlist" /> </MenuItem>
+              <MenuItem className='Side__Content' active={pathname === '/attendance/attendance/teamleadattendance'}
+                icon={<GiTeamIdea size={20} />}>Team Attendance
+                <Link to="/attendance/attendance/teamleadattendance" /> </MenuItem>
             </SubMenu>
           )}
           {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (

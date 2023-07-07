@@ -101,9 +101,11 @@ const Header = ({ toggleSideNav }: any) => {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      handleRefresh()
-    }, 5000);
+    if (refresh) {
+      setTimeout(() => {
+        handleRefresh()
+      }, 5000);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh])
 
