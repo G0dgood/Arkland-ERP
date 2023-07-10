@@ -22,8 +22,8 @@ const RespondToWarning = ({ id, className }: any) => {
 	// console.log('response', responseisLoading)
 
 	const input = { inputs, id }
-	const handlecreate = () => {
 
+	const handlecreate = () => {
 		dispatch(responseWarning(input));
 	}
 

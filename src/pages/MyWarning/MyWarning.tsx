@@ -49,7 +49,7 @@ const MyWarning = () => {
     { title: "MISCONDUCT", prop: "misconduct" },
     { title: "NUMBER OF WARNINGS", prop: "count" },
     { title: "STATUS", prop: "status" },
-    { title: "RESPOND", prop: "respond" },
+    // { title: "RESPOND", prop: "respond" },
     // { title: "VIEW", prop: "view" }
   ];
 
@@ -68,7 +68,7 @@ const MyWarning = () => {
   const [displayData, setDisplayData] = useState<any>([]);
 
 
-  console.log('displayData', displayData)
+
 
 
   return (
@@ -76,6 +76,7 @@ const MyWarning = () => {
 
       <div className="SiteWorkermaindiv">
         <div className="SiteWorkermaindivsub">
+          My Warnings
         </div>
         <div>
           <EntriesPerPage
@@ -129,9 +130,9 @@ const MyWarning = () => {
                     <td className="table-datacell datatype-numeric">
                       {item?.status}
                     </td>
-                    <td className="table-datacell datatype-numeric">
+                    {/* <td className="table-datacell datatype-numeric">
                       <RespondToWarning id={item?.id} className={"team-applicatiom-update"} />
-                    </td>
+                    </td> */}
                     {/* <td className="table-datacell datatype-numeric" key={i}>
                       <Link to={`/warning/warning/${item?._id}`}  >
                         <Button id="team-applicatiom-update">  View</Button>

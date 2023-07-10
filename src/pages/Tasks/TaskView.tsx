@@ -93,41 +93,23 @@ const TaskView = () => {
 											</p>
 											<p>Data Created</p>
 											<p> {moment(viewdata?.created_at).format("DD-MM-YYYY")} </p>
-
 											<p>Status</p>
 											<p> {viewdata?.status} </p>
-										</div>
-
-									</div>
-								</div>
-								<h4 style={{ marginTop: "3rem" }}>
-									ProJect
-								</h4>
-								<div className="viewprofile-container" style={{ marginTop: "2rem" }} 	>
-									<div>
-										<div className="getjob-application-details">
-											<p>Project title</p>
-											<p style={{ cursor: "pointer", color: "blue", }}  >
-												{viewdata?.project?.name}
-											</p>
-											<p>State</p>
-											<p>{viewdata?.project?.state} </p>
-											<p>Location</p>
-											<p>{viewdata?.project?.location} </p>
-											<p>LGA</p>
-											<p> {viewdata?.project?.lga}  </p>
-											<p>Data Created</p>
-											<p>{moment(viewdata?.created_at).format("DD-MM-YYYY")} </p>
 											<p>points</p>
 											<p> {viewdata?.points} </p>
-											<p>Status</p>
+											<p>priority</p>
 											<p> {viewdata?.priority} </p>
 											<p>Status</p>
 											<p> {viewdata?.status} </p>
+											<p>Notes</p>
+											{viewdata?.notes?.map((item: any, i: any) => (
+												<p key={i}> {item?.text} </p>
+											))}
 										</div>
 
 									</div>
 								</div>
+
 							</div>
 						</div>
 

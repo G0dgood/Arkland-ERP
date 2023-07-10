@@ -55,7 +55,7 @@ const CreateRole = () => {
 		<div  >
 			<div className='SiteWorkermaindiv'>
 				<div className='SiteWorkermaindivsub'>
-					<CreateRoleModal />
+					Employee Role
 				</div>
 				<div>
 					<EntriesPerPage
@@ -64,8 +64,12 @@ const CreateRole = () => {
 						setEntriesPerPage={setEntriesPerPage}
 					/>
 				</div>
-				<div>
+				<div className='Announcements-row '>
 					<MainSearch placeholder={'Search...         Role'} />
+					<div className='SiteWorkermaindivsub  maindivsub '  >
+						<CreateRoleModal />
+
+					</div>
 				</div>
 			</div>
 			<section className="md-ui component-data-table">

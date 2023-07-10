@@ -128,8 +128,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     totalScore6,
   ]);
 
-  // @ts-ignore
-  console.log('kpinputs.reviewer?.value', kpinputs.reviewer?.value)
+
 
   useEffect(() => {
     setInputs((prevState: any) => {

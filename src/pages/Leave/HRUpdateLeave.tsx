@@ -15,12 +15,12 @@ const HRUpdateLeave = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const { teamviewdata: datas, teamviewisLoading: isLoading } = useAppSelector((state: any) => state.leave)
+	const { teamviewdata: data, teamviewisLoading: isLoading } = useAppSelector((state: any) => state.leave)
 
 	const { hrApproveisLoading, hrApproveisSuccess } = useAppSelector((state: any) => state.leave)
 	const { rejectisLoading, rejectisSuccess } = useAppSelector((state: any) => state.leave)
-	const data = datas[0]
-	console.log('data', data)
+
+
 
 	useEffect(() => {
 		dispatch(viewTeamLeave(id));
@@ -157,7 +157,7 @@ const HRUpdateLeave = () => {
 									</div>
 									<div className='Modal-textarea-middle'>
 										<h6>Description</h6>
-										<textarea rows={6} className='Modal-textarea' placeholder='Enter detailed reason for leave'
+										<textarea rows={3} className='Modal-textarea' placeholder='Enter detailed reason for leave'
 											value={inputs.description}
 											onChange={(e) => handleOnChange("description", e.target.value)} />
 									</div>

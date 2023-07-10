@@ -145,11 +145,10 @@ class HttpService {
 
     handleError(e:any ) { 
    
-        if (e.response.status === 401) { 
-            fireAlert("Authentication error",e.response.data.message, "error");   
-            window.location.replace("/login");
-            this.dataService.clearData(); 
-             fireAlert("Error", e.response.data.message, "error");
+        if (e.response.status === 401 && e.response.statusText === "Unauthorized") { 
+            fireAlert2("Authentication Error",e.response.data.message, "error" , "/login");   
+            // window.location.replace("/login");
+            this.dataService.clearData();  
         }
       
         else if (e.response.status === 403 && e.response.data.error_code === 24) {   
@@ -172,16 +171,4 @@ class HttpService {
 
 export default new HttpService();
 
-//    const Alert = () => {
-//     Swal.fire({
-//       title: "Are you sure?",
-//       text: "You will be redirected",
-//       icon: "warning",
-//       showCancelButton: true,
-//       cancelButtonColor: "#d33",
-//       confirmButtonText: "Okay"
-//     }).then(function () {
-//       // Redirect the user
-//       window.location.href = "/";
-//     });
-//   };
+ 

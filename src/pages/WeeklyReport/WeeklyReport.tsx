@@ -203,9 +203,10 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 								onChange={(e) => handleOnChange("assessment", e.target.value)}>
 								<option value=""></option>
 								<option value="excellent">Execellent</option>
-								<option value="Above Average">Above Average</option>
-								<option value="Average">Average</option>
-								<option value="Below Average">Below Average</option>
+								<option value="above average">Above Average</option>
+								<option value="average">Average</option>
+								<option value="below average">Below Average</option>
+								<option value="poor">Poor</option>
 							</select>
 							</span>
 						</div>

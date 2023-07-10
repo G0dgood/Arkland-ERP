@@ -119,10 +119,7 @@ const deactivateWarning = async () => {
 }
   
 const responseWarning = async ({ input }: any) => { 
-  const { id, inputs } = input
-  
- 
-  
+  const { id, inputs } = input 
      const { data }: any = await HttpService.patch(`hr/warnings/${id}/respond`,  inputs) 
    return data
   }

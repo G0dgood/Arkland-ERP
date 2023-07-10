@@ -12,7 +12,6 @@ const DeleteModals = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { deleteroleisLoading, deleteroleisSuccess } = useAppSelector((state: any) => state.employee)
-
 	const [showdelete, setShowDelete] = useState(false);
 	const handleDeleteClose = () => setShowDelete(false);
 

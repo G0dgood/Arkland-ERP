@@ -8,7 +8,6 @@ import moment from 'moment';
 import CreateTaskModal from './CreateTaskModal';
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-// import { getUserPrivileges } from '../../functions/auth';
 
 
 const TaskList = () => {
@@ -20,13 +19,6 @@ const TaskList = () => {
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
 		return localStorage.getItem("reportsPerPage") || "10";
 	});
-	// const {
-	// 	isHRHead,
-	// 	isHeadOfDepartment,
-	// 	isTeamLead,
-	// 	isSuperAdmin,
-	// 	isHrAdmin,
-	// } = getUserPrivileges();
 
 
 	useEffect(() => {
@@ -80,9 +72,6 @@ const TaskList = () => {
 							) : (
 								displayData?.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
-										{/* <td className="table-datacell datatype-numeric">
-											{item?.project?.name}
-										</td> */}
 										<td className="table-datacell datatype-numeric">
 											{item?.created_by?.full_name}
 										</td>
@@ -96,7 +85,6 @@ const TaskList = () => {
 											{item?.title}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{new Date(item?.time_in).toLocaleString()}
 											{moment(item?.created_at).format("DD-MM-YYYY")}
 										</td>
 										<td className="table-datacell datatype-numeric" key={i}>

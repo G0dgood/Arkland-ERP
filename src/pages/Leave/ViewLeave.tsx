@@ -137,7 +137,7 @@ const ViewLeave = () => {
 									</div>
 									<div className='Modal-textarea-middle'>
 										<h6>Description</h6>
-										<textarea rows={6} className='Modal-textarea' placeholder='Enter detailed reason for leave'
+										<textarea rows={3} className='Modal-textarea' placeholder='Enter detailed reason for leave'
 											value={inputs.description}
 											onChange={(e) => handleOnChange("description", e.target.value)} />
 									</div>

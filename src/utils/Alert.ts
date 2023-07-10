@@ -33,3 +33,4 @@ export const fireAlert2 = ( title: string, message: string, icon: any ,url:any) 
     });
    
 };
+ 

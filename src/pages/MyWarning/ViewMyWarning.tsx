@@ -14,12 +14,8 @@ const ViewWarning = () => {
 	const navigate = useNavigate();
 	const { id } = useParams<{ id: string }>();
 
-
-
 	const [viewwarningdata, setData] = useState<any>([])
 	const [viewwarningisLoading, setisLoading] = useState(false)
-
-	console.log('warningdata', viewwarningdata)
 
 
 	useEffect(() => {
@@ -65,19 +61,15 @@ const ViewWarning = () => {
 							<div className="employee-main-div-col-header-buttons">
 								<RespondToWarning id={id} />
 							</div>
-
 						</div>
-
 						<h4 style={{ marginTop: "3rem" }}>Review Warning</h4>
-
 						<div className="viewprofile-container">
 							<div>
 								<div className="getjob-application-details">
 									<p>Employee</p>
 									<p
 										onClick={() =>
-											navigate(`/employees/employees/${viewwarningdata?.employee?._id}`)
-										}
+											navigate(`/employees/employees/${viewwarningdata?.employee?._id}`)}
 										style={{
 											cursor: "pointer",
 											color: "blue",
@@ -87,10 +79,8 @@ const ViewWarning = () => {
 									</p>
 									<p>Misconduct</p>
 									<p>{viewwarningdata?.misconduct}</p>
-
 									<p>Message</p>
 									<p>{viewwarningdata?.message} </p>
-
 									{viewwarningdata?.as_response ? (
 										<>
 											<p>Response</p>
@@ -99,7 +89,6 @@ const ViewWarning = () => {
 									) : (
 										""
 									)}
-
 									<p>Count</p>
 									<p>{viewwarningdata?.count}</p>
 									<p>Status</p>

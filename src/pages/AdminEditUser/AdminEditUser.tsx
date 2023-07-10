@@ -1,33 +1,46 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useParams, } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { BiUser } from "react-icons/bi";
 import EditProfile from "./components/EditProfile";
 import ResetPassword from "./components/ResetPassword";
-import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { getRole } from "../../features/Employee/employeeSlice";
-import { allDepartments } from "../../features/Department/departmentSlice";
+import HttpService from "../../components/HttpService";
 
 const AdminEditUser = () => {
-  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-  const { data: departments } = useAppSelector((state: any) => state.department)
-  const { getroledata: roles } = useAppSelector((state: any) => state.employee)
   const { state } = useLocation()
   const { employee, salary } = state?.data // Read values passed on state
+
+  const [departments, setDepartments] = useState([]);
+  const [roles, setRoles] = useState([]);
+
 
 
 
   useEffect(() => {
-    dispatch(getRole());
-    dispatch(allDepartments());
-  }, [dispatch]);
+    getData()
+  }, [])
+
+
+  const getData = async () => {
+    try {
+      const rolesUrl = "hr/employee-roles"
+      const roles: any = await HttpService.get(rolesUrl)
+      setRoles(roles?.data?.data)
+
+      const departmentsUrl = "hr/departments"
+      const departments: any = await HttpService.get(departmentsUrl)
+      setDepartments(departments?.data?.data)
+
+    } catch (error) {
+
+    }
+  }
 
 
   const [activeTab, setActiveTab] = useState(0);
 
   const availablleDepartments = [] as any;
-
   departments &&
     departments.forEach((department: any) =>
       availablleDepartments.push({

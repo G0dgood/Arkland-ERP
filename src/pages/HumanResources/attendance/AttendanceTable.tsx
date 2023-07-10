@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import TableLoader from "../../../components/TableLoader";
 import { NoRecordFound, TableFetch } from "../../../components/TableOptions";
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
-import { hrgetAttendance, reset } from "../../../features/Attendances/attendanceSlice";
+import { hrgetAttendance } from "../../../features/Attendances/attendanceSlice";
 import Pagination from "../../../components/Pagination";
-import { fireAlert } from "../../../utils/Alert";
 import HRClockInModal from "../../../components/Modals/HRClockInModal";
 
 
@@ -16,8 +15,6 @@ const AttendanceTable = () => {
   useEffect(() => {
     dispatch(hrgetAttendance())
   }, [dispatch])
-
-
 
 
   // --- Pagination --- //
@@ -34,8 +31,6 @@ const AttendanceTable = () => {
     { title: "WEEK DAY", prop: "week_day_created" },
     { title: "CHECKED-IN OFFICE", prop: "ip_checked" },
     { title: "HR ASSISTED CHECK-IN", prop: "is_hr_assisted" },
-    // { title: "DATE", prop: "created_at" },
-    // { title: "ACTION" },
   ];
   const [displayData, setDisplayData] = useState([]);
   return (
@@ -46,12 +41,7 @@ const AttendanceTable = () => {
         </div>
         <div className="entries-perpage">
           {/* Date range picker */}
-          <form
-            style={{
-              display: "flex",
-              gap: "20px",
-            }}
-          >
+          <form style={{ display: "flex", gap: "20px" }}  >
             {/* <div className="input">
               <label htmlFor="startDate" className="input__label">
                 Start Date

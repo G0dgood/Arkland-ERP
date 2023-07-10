@@ -9,7 +9,7 @@ const getAssessment= async (id: any) => {
 }
 const allAssessment= async ( ) => { 
   
-  const { data }: any = await HttpService.get(`hr/appraisals` )   
+  const { data }: any = await HttpService.get(`hr/appraisals/list/for-management` )   
   return data
 }
  

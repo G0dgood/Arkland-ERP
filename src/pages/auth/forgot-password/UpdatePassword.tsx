@@ -45,8 +45,8 @@ const UpdatePassword = () => {
       dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
       resetForm(values);
       setLoading(false);
-      fireAlert2("Successful", "Password update successful", "success", "/");
-
+      // fireAlert2("Successful", "Password update successful", "success", "");
+      window.location.replace("/login");
     } catch (error) {
       setLoading(false);
       // @ts-ignore
@@ -91,6 +91,7 @@ const UpdatePassword = () => {
                     confirm_password: "",
                   }}
                   onSubmit={handleSubmit}
+                  validationSchema={validate}
                 >
                   {(formik) => (
                     <Form>

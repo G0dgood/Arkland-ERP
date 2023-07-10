@@ -49,7 +49,7 @@ const updateWeeklyReport = async ({id,inputs}:any ) => {
   return data
 }
 //Acknowledge Report
-const acknowledgeReport = async ({id}:any ) => { 
+const acknowledgeReport = async (id:any ) => { 
 	 
   const { data }: any = await HttpService.patch(`hr/weekly-reports/${id}/acknowledge` )   
   return data

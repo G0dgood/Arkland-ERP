@@ -70,16 +70,11 @@ const ViewTerminations = () => {
                     onClick={() =>
                       navigate(`/employees/employees/${viewterminationsdata?.data?.employee?.id}`)
                     }
-                    style={{
-                      cursor: "pointer",
-                      color: "blue",
-                    }}
-                  >
+                    style={{ cursor: "pointer", color: "blue" }} >
                     {viewterminationsdata?.data?.employee?.full_name}
                   </p>
                   <p>Description</p>
                   <p> {viewterminationsdata?.data?.description} </p>
-
                   <p>Status</p>
                   <p> {viewterminationsdata?.data?.status} </p>
                 </div>

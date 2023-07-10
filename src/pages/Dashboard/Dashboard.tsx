@@ -8,6 +8,7 @@ const Dashboard = () => {
     isHRHead,
     isSuperAdmin,
     isHrAdmin,
+    isMaster
   } = getUserPrivileges();
 
 
@@ -16,7 +17,8 @@ const Dashboard = () => {
     <div className="h-100">
       {(isSuperAdmin ||
         isHRHead ||
-        isHrAdmin) ? (
+        isHrAdmin ||
+        isMaster) ? (
         <AdminDashboard />
       ) : (
         <StaffDashboard />
