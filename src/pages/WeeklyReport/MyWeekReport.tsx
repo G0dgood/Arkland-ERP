@@ -95,13 +95,25 @@ const MyWeekReport = ({ setkpidata }: any) => {
                       </span>
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      <Button
+                      <div className={item?.status !== "submitted"
+                        ? "status is-green  move-svg-left"
+                        : "status is-wait move-svg-left"}  >
+                        {item?.status !== "submitted"
+                          ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6L9 17l-5-5" />
+                          </svg>
+                          : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-loader">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                          </svg>}
+                        {item?.status !== "submitted" ? "Completed" : item?.status}
+                      </div>
+                      {/* <Button
                         className={
                           item?.status === "submitted"
                             ? "table-link "
                             : "table-link-active"}>
                         {item?.status}
-                      </Button>
+                      </Button> */}
                     </td>
                     <td className="table-datacell datatype-numeric">
                       <Link to={`/weeklyreport/weeklyreport/${item?._id}`}>

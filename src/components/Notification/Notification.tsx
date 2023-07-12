@@ -22,7 +22,9 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
  const navigate = useNavigate();
  const { paginator } = notification
  const [opens, setOpens] = useState<number[]>([]);
- const handleOpens = (index: number) => {
+
+ const handleOpens = (index: number, item: string) => {
+  // console.log('item', item)
   if (opens.includes(index)) {
    setOpens(opens.filter(x => x !== index));
   }
@@ -224,7 +226,6 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
     </li>
    </ul>
    <div id="faq-container-noti">
-
     {!notification ? <div className="noti-no-record">
      <h6> <RiMessage3Line size={40} color="#999999" style={{ marginRight: "5px" }} />  </h6>
      <span>No Notifications</span></div> :
@@ -296,12 +297,11 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
                       item?.type === "appraisal response" ? () => navigate("/kpiassessment") :
                       item?.type === "salary increment" ? () => navigate("/salary") :
                        ""}>view</span>)}
-       <button className="faq-toggle" onClick={() => { handleOpens(i) }}>
+       <button className="faq-toggle" onClick={() => { handleOpens(i, item) }}>
         <i className="fas fa-angle-down"></i>
        </button>
-       <p style={{ marginLeft: "12px", marginTop: "5px" }}>  {moment
-        .duration(moment().diff(item.created_at))
-        .humanize()}{" "}
+       <p style={{ marginLeft: "12px", marginTop: "5px" }}>
+        {moment.duration(moment().diff(item.created_at)).humanize()}{" "}
         ago</p>
       </div>
      ))

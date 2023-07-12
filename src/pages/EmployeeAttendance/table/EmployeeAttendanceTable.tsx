@@ -85,8 +85,7 @@ const EmployeeAttendanceTable = () => {
                       {item?.employee_name}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {/* {checkForName(item.department, departments)} */}
-
+                      {item?.employee_department?.description}
                     </td>
                     <td className="table-datacell datatype-numeric">
                       {item?.week_day_created}

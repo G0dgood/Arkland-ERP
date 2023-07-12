@@ -39,7 +39,6 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 
 	const availableEmployees = [] as any;
-	console.log('availableEmployees', employees)
 
 	employees &&
 		employees.forEach((employee: any) =>
@@ -114,6 +113,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 		"HR admin",
 		"HR head",
 		"admin",
+		"support",
 		"super admin",
 		"management"
 	]

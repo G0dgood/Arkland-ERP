@@ -111,14 +111,15 @@ const AttendanceTable = () => {
                       {item?.employee_name}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {/* {checkForName(item.department, departments)} */}
+                      {item?.employee_department?.description}
 
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {item?.week_day_created}
+
+                      {new Date(item?.time_in).toLocaleString()}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {new Date(item?.time_in).toLocaleString()}
+                      {item?.week_day_created}
                     </td>
                     <td className="table-datacell datatype-numeric">
                       <Button

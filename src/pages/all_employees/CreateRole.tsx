@@ -9,6 +9,7 @@ import CreateRoleModal from '../../components/Modals/CreateRoleModal'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { getRole } from '../../features/Employee/employeeSlice'
 import { useNavigate } from 'react-router-dom'
+import CopyToClipboardButton from '../../components/CopyToClipboardButton'
 
 
 const CreateRole = () => {
@@ -79,6 +80,7 @@ const CreateRole = () => {
 						<thead className="data-table-header">
 							<tr className="data-table-row" >
 								<td className="table-datacell datatype-numeric">Name</td>
+								<td className="table-datacell datatype-numeric">ID</td>
 								<td className="table-datacell datatype-numeric">Description</td>
 								<td className="table-datacell datatype-numeric">Created Date</td>
 								<td className="table-datacell datatype-numeric">Status</td>
@@ -95,6 +97,9 @@ const CreateRole = () => {
 								displayData.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
 										<td className="table-datacell datatype-numeric">{item?.name}</td>
+										<td className="table-datacell datatype-numeric">
+											<CopyToClipboardButton url={item?.id} padding={"6px"} size={15} />
+										</td>
 										<td className="table-datacell datatype-numeric">{item?.description}</td>
 										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
 

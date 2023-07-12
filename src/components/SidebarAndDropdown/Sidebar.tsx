@@ -155,8 +155,8 @@ const Sidebar = ({
             </SubMenu>
           )}
 
-          {(isHRHead || isSuperAdmin) && (
-            <MenuItem className='Side__Content' active={pathname === '/workers_request'} icon={<FiUserPlus size={17} />}> Workers Request <Link to="/workers_request" />  </MenuItem>)}
+          {(isSupport) && (
+            <MenuItem className='Side__Content' active={pathname === '/workers_request'} icon={<FiUserPlus size={17} />}> Employee Request <Link to="/workers_request" />  </MenuItem>)}
 
           {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster || isHeadOfDepartment) ? "" : (
             <MenuItem className='Side__Content' active={pathname === '/leave'} icon={<BsBriefcase size={17} />}> Leave <Link to="/leave" />  </MenuItem>)}

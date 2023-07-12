@@ -140,7 +140,7 @@ const RequestForWorkersModal = ({ id }: any) => {
 
 	return (
 		<div >
-			<Button className="Add-btn" onClick={handleClick}>Create Request</Button>
+			<Button className="Add-btn" onClick={handleClick}>Create Employee Request</Button>
 
 			<Modal
 				size="lg"
@@ -150,7 +150,7 @@ const RequestForWorkersModal = ({ id }: any) => {
 			>
 				<Modal.Header>
 					<span></span>
-					<span className="span-center-title">Create Worker Request</span>
+					<span className="span-center-title">Create Employee Request</span>
 					<Button
 						style={{ color: "#fff" }}
 						onClick={() => setShow(false)} >

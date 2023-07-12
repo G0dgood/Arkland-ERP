@@ -3,7 +3,7 @@ import { IconButton, Snackbar } from "@mui/material";
 import { ImCopy } from "react-icons/im";
 
 
-const CopyToClipboardButton = ({ url }: any) => {
+const CopyToClipboardButton = ({ url, size, padding }: any) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = (e: any) => {
@@ -15,8 +15,8 @@ const CopyToClipboardButton = ({ url }: any) => {
 
   return (
     <div >
-      <IconButton onClick={handleClick} color="primary" style={{ border: "2px solid black", borderRadius: "50%", marginLeft: "10px", padding: "6px" }}>
-        <ImCopy color="black" />
+      <IconButton onClick={handleClick} color="primary" style={{ border: "2px solid black", borderRadius: "50%", marginLeft: "10px", padding: padding }}>
+        <ImCopy color="black" size={size} />
       </IconButton>
       <Snackbar
         message="Copied to clibboard"

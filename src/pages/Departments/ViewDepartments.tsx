@@ -95,7 +95,7 @@ const ViewDepartments = () => {
                       <p >Department ID</p>
                       <div style={{ display: "flex" }}>
                         <p> {viewdata?.department?.id} </p>
-                        <CopyToClipboardButton url={viewdata?.department?.id} />
+                        <CopyToClipboardButton url={viewdata?.department?.id} padding={"6px"} size={20} />
                       </div>
 
                     </div>

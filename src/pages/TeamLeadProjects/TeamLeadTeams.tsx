@@ -105,10 +105,9 @@ const TeamLeadTeams = () => {
 
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{item?.created_at}
+											{moment(item?.created_at).format("DD-MM-YYYY")}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{/* {new Date(item?.time_in).toLocaleString()} */}
 											{moment(item?.updated_by).format("DD-MM-YYYY")}
 										</td>
 										<td className="table-datacell datatype-numeric" key={i}>

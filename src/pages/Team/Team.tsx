@@ -8,6 +8,7 @@ import { getTeam } from '../../features/Team/teamSlice';
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import CreateTeamModal from './CreateTeamModal';
+import CopyToClipboardButton from '../../components/CopyToClipboardButton';
 
 const Team = () => {
 	const dispatch = useAppDispatch();
@@ -27,7 +28,7 @@ const Team = () => {
 
 
 
-	const header = ["NAME", "DESCRIPTION", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
+	const header = ["NAME", "ID", "DESCRIPTION", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);
 
 	return (
@@ -85,6 +86,9 @@ const Team = () => {
 											{item?.name}
 										</td>
 										<td className="table-datacell datatype-numeric">
+											<CopyToClipboardButton url={item?.id} padding={"6px"} size={15} />
+										</td>
+										<td className="table-datacell datatype-numeric">
 											{item?.description.slice(0, 10)}
 										</td>
 										<td className="table-datacell datatype-numeric">
@@ -94,42 +98,21 @@ const Team = () => {
 														? "table-link"
 														: "table-link-active"} 	>
 												{item?.status}
+
 											</Button>
 
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{item?.created_at}
+											{moment(item?.created_at).format("DD-MM-YYYY")}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											{/* {new Date(item?.time_in).toLocaleString()} */}
 											{moment(item?.updated_by).format("DD-MM-YYYY")}
 										</td>
 										<td className="table-datacell datatype-numeric" key={i}>
 
 											<Button id="team-applicatiom-update" onClick={() => navigate(`/team/team/view/${item?.id}`)}>View</Button>
 										</td>
-										{/* <td className="table-datacell datatype-numeric">
-											<Button
-												className={
-													item?.ip_checked === true
-														? "table-link"
-														: "table-link-active"
-												}
-											>
-												{item?.ip_checked === true ? "Yes" : "No"}
-											</Button>
-										</td> */}
-										{/* <td className="table-datacell datatype-numeric">
-											<Button
-												className={
-													item?.is_hr_assisted === true
-														? "table-link"
-														: "table-link-active"
-												}
-											>
-												{item?.is_hr_assisted === true ? "Yes" : "No"}
-											</Button>
-										</td> */}
+
 									</tr>
 								))
 							)}

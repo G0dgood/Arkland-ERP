@@ -451,4 +451,96 @@ form.searchbox button:hover {
 	white-space: nowrap !important;
 }
  
+
+// table settings
+
+
+ .status {
+  color: #1aa385;
+  display: inline-flex;
+  align-items: center;
+}
+ .status svg {
+  margin-right: 6px;
+  width: 22px;
+  height: 22px;
+  padding: 3px;
+  border-radius: 4px;
+   color: #fff !important;
+  background-color: #1aa385;
+  color: currentColor;
+}
+ .status.is-red {
+  color: red;
+}
+ .status.is-pending {
+  color: #bf8412;
+}
+ .status.is-purple {
+  color: purple;
+}
+ .status.is-red svg {
+  background: red;
+  color: currentcolor;
+}
+ .status.is-pending svg {
+  background: #bf8412;
+  color: currentcolor;
+}
+ .status.is-purple svg {
+  background: purple;
+  color: currentcolor;
+}
+ .status.is-red svg {
+  background: red;
+  color: currentcolor;
+}
+ .status.is-wait {
+  color: #e2522e  !important;
+  position: relative;
+}
+ .status.is-wait:before {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 5;
+  top: 0;
+  content: "";
+  background: #e2522e ;
+  border-radius: 4px;
+}
+ .status.is-wait svg {
+  background-color: transparent;
+  color: currentcolor;
+  -webkit-animation: turn 2s linear infinite both;
+          animation: turn 2s linear infinite both;
+}
+
+@-webkit-keyframes turn {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes turn {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.move-svg-left{
+  // float: left !important;
+  // margin-left: 2rem !important;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 2rem ;
+  
+  
+}
+
+.move-svg-center{
+  display: flex !important;
+  justify-content: center !important;
+  // margin-left: 2rem !important;
+}
  

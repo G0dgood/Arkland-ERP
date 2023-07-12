@@ -122,13 +122,45 @@ const AllLeave = () => {
 													<BsClock size={25} color={"#bf8412"} className="icon-bold" />}
 										</td>
 										<td className="table-datacell datatype-numeric">
-											<Button className={item?.status === "HOD approved" ? "table-link" :
+											<div className={
+												item?.status === "HR approved"
+													? "status is-purple   move-svg-left"
+													: item?.status === "HOD approved"
+														? "status  is-pending move-svg-left" :
+														item?.status === "approved"
+															? "status is-green  move-svg-left" :
+															item?.status === "rejected"
+																? "status is-red move-svg-left" :
+																"status  is-pending" && "status is-wait move-svg-left"}>
+												{item?.status === "HR approved"
+													? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+														<path d="M20 6L9 17l-5-5" />
+													</svg>
+													: item?.status === "HOD approved" ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+														<path d="M20 6L9 17l-5-5" />
+													</svg>
+														: item?.status === "approved" ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+															<path d="M20 6L9 17l-5-5" />
+														</svg>
+															: item?.status === "rejected" ? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+																<path d="M18 6L6 18M6 6l12 12" />
+															</svg>
+																: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-loader">
+																	<path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+																</svg>}
+												{item?.status === "HOD approved" ? "HOD Approved" :
+													item?.status === "HR approved" ? "HR Approved" :
+														item?.status === "approved" ? "Leave Approved" :
+															item?.status === "rejected" ? "Leave Rejected" :
+																"IN Progress"}
+											</div>
+											{/* <Button className={item?.status === "HOD approved" ? "table-link" :
 												item?.status === "HR approved" ? "table-link-hr" :
 													item?.status === "approved" ? "table-link-active" :
 														item?.status === "rejected" ? "table-link-reject" : "table-link"}>{item?.status === "HOD approved" ? "HOD approved" :
 															item?.status === "HR approved" ? "HR approved" :
 																item?.status === "approved" ? "LEAVE approved" :
-																	item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
+																	item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button> */}
 										</td>
 										<td className="table-datacell datatype-numeric">
 											<Link to={`/leave/leave/final/${item?._id}`}  >
