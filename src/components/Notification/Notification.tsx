@@ -4,7 +4,6 @@ import { Button } from "react-bootstrap";
 import { RiMessage3Line, RiTeamLine } from "react-icons/ri";
 import TableLoader from "../TableLoader";
 import { FaRegMoneyBillAlt, FaUserPlus } from "react-icons/fa";
-
 import { HiSpeakerphone } from "react-icons/hi";
 import { BsCalendar2Month, BsChatText, BsFillBriefcaseFill } from "react-icons/bs";
 import { GrStatusWarning, GrUserWorker } from "react-icons/gr";
@@ -33,7 +32,7 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
   }
  }
  const { isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
-
+ 
 
 
 
