@@ -3,8 +3,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { RiMessage3Line, RiTeamLine } from "react-icons/ri";
 import TableLoader from "../TableLoader";
-import { FaRegMoneyBillAlt, FaUserPlus, FaUsersSlash } from "react-icons/fa";
-import { ImBriefcase } from "react-icons/im";
+import { FaRegMoneyBillAlt, FaUserPlus } from "react-icons/fa";
 import { HiSpeakerphone } from "react-icons/hi";
 import { BsCalendar2Month, BsChatText, BsFillBriefcaseFill } from "react-icons/bs";
 import { GrStatusWarning, GrUserWorker } from "react-icons/gr";
@@ -32,177 +31,10 @@ const Notification = ({ handleNext, handlePrev, notification, loading }: any) =>
    setOpens((prevState) => [...prevState, index]);
   }
  }
- const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead, isHeadOfDepartment } = getUserPrivileges();
+ const { isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 
 
 
- const Array = [
-  {
-   notification: "announcement",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "new chat",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "new event",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "new warning",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "salary increment",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "salary decrement",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "annual salary increment",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "appraisal request",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "appraisal response",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "role assignment",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "new HOD",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "new employee",
-   url: "",
-   icon: <FaUserPlus size={20} />,
-  },
-  {
-   notification: "employee approval",
-   url: "",
-   icon: <FaUserPlus size={20} />,
-  },
-  {
-   notification: "team assignment",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "task assignment",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "team removal",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "employment termination",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "termination approval",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "leave application",
-   url: "",
-   icon: <ImBriefcase size={20} />,
-  },
-  {
-   notification: "leave approval",
-   url: "",
-   icon: <ImBriefcase size={20} />,
-  },
-  {
-   notification: "leave rejection",
-   url: "",
-   icon: <ImBriefcase size={20} />,
-  },
-  {
-   notification: "leave HOD approval",
-   url: "",
-   icon: <ImBriefcase size={20} />,
-  },
-  {
-   notification: "leave HR approval",
-   url: "",
-   icon: <ImBriefcase size={20} />,
-  },
-  {
-   notification: "project creation",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "project commencement",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "project completion",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "warning decision",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "warning response",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "assisted clock in",
-   url: "",
-   icon: "",
-  },
-  {
-   notification: "workers request application",
-   url: "",
-   icon: <FaUsersSlash size={20} />,
-  },
-  {
-   notification: "workers request approval",
-   url: "",
-   icon: <FaUsersSlash size={20} />,
-  },
-  {
-   notification: "workers request rejection",
-   url: "",
-   icon: <FaUsersSlash size={20} />,
-  },
-  {
-   notification: "",
-   url: "",
-   icon: <HiSpeakerphone size={20} />,
-  },
- ]
 
 
  // let finalArray: any = []
