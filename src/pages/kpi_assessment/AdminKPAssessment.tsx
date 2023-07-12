@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BiUser } from 'react-icons/bi';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import TableLoader from '../../components/TableLoader';
 import { Button } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
@@ -10,7 +10,6 @@ import KPIAdminDetails from './KPIAdminDetails';
 
 const AdminKPAssessment = ({ data }: any) => {
 	const { id } = useParams()
-	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.assessment)
 

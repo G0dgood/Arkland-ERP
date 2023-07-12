@@ -102,15 +102,12 @@ const StaffDashboard = () => {
             </div>
           </div>
         </div>
-        {/* Announcement */}
         <div style={{ marginTop: "2rem" }}  >
           <Announcement announcement={announcement} isLoading={isLoading} />
         </div>
       </div>
       <div >
-        {/* Todos start */}
         <Todos showDrawer={showDrawer} setShowDrawer={setShowDrawer} tasks={tasks} isLoading={isLoading} />
-        {/* Todos end */}
       </div>
     </div>
   );

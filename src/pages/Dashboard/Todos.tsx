@@ -1,6 +1,5 @@
 import { BounceLoader } from "react-spinners";
 import moment from "moment";
-import { Button } from "@mui/material";
 import ViewScheduleModal from "../../components/Modals/ViewScheduleModal";
 
 
@@ -8,13 +7,13 @@ const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
 
 
 
-  const handleShow = () => {
-    if (!showDrawer) {
-      setShowDrawer(true);
-    } else {
-      setShowDrawer(!showDrawer);
-    }
-  };
+  // const handleShow = () => {
+  //   if (!showDrawer) {
+  //     setShowDrawer(true);
+  //   } else {
+  //     setShowDrawer(!showDrawer);
+  //   }
+  // };
   return (
     <div className="main-div-col-2">
       <div className="main-todo-1">
@@ -42,18 +41,6 @@ const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
                 className="main-todo-Event"
                 style={{ borderRadius: "4px" }}
                 key={i} >
-                {/* <div className="main-todo-container">
-                  <div className="main-todo-input">
-                  </div>
-                  <div>
-                    <div> {item?.title}</div>
-                    <div className="main-todo-input-time">
-                      {moment(item?.expected_completion_date).format(
-                        "DD-MMMM-YYYY"
-                      )}
-                    </div>
-                  </div>
-                </div> */}
                 <div className="main-todo-container">
                   <div className="main-todo-note">
                     <div>{item?.title?.slice(0, 65)}</div>

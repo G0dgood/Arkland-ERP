@@ -2,30 +2,19 @@ import moment from "moment";
 import { BounceLoader } from "react-spinners";
 import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import ClockIn from "../../components/ClockIn";
-// import { Button } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
+
 
 
 const AdminAnnouncement = ({ announcements, isLoading }: any) => {
-  const navigate = useNavigate();
-  // const {
-  //   isHRHead,
-  //   isHeadOfDepartment,
-  //   isTeamLead,
-  //   isSuperAdmin,
-  //   isAdmin,
-  //   // isEmployee,
-  //   isHrAdmin,
-  // } = getUserPrivileges();
+
+
 
 
   return (
     <div className="admin-main-div-col-2-sub">
       <div className="Announcement-sub-1">
         <div className="Announcement-sub-text">
-          {/* <span className="sub-text-contained"> */}
           <h5>Announcement</h5>
-          {/* </span> */}
         </div>
         <ClockIn />
       </div>

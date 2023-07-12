@@ -1,17 +1,14 @@
-import { Button } from '@mui/material';
+
 import { useEffect, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { hodReviewAssessment } from '../../features/KPIAssessment/assessmentSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../store/useStore';
 
 
 const KPIAdminDetails = ({ data, hodscore, setHodscore }: any) => {
 	const navigate = useNavigate();
-	const { id } = useParams()
-	const dispatch = useAppDispatch();
-	const { hodreviewdata, hodreviewisLoading, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
+
+	const { hodreviewdata, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
 	const year = new Date().getFullYear().toString();
 	const location = useLocation();
 	const kpiData3 = ({
@@ -92,16 +89,7 @@ const KPIAdminDetails = ({ data, hodscore, setHodscore }: any) => {
 	const Amount: any = Object.values(kpiData).reduce((a, v) => (a = a + v?.num), 0);
 
 
-	const [input, setinput] = useState<any>({
-		"month": 0,
-		"job_knowledge": 0,
-		"efficiency": 0,
-		"attendance": 0,
-		"communication": 0,
-		"reliability": 0,
-		"collaboration": 0,
-		"comment": ""
-	})
+
 
 
 
@@ -136,29 +124,22 @@ const KPIAdminDetails = ({ data, hodscore, setHodscore }: any) => {
 	const hod: any = Object.values(reviews).reduce((a, v) => (a = a + v?.reviewer), 0);
 
 
-	useEffect(() => {
-		setinput((prevState: any) => {
-			return ({
-				...prevState,
-				month: data?.month
-			});
-		});
-	}, [setinput, data?.month]);
 
 
-	useEffect(() => {
-		setinput((prevState: any) => {
-			return ({
-				...prevState,
-				job_knowledge: totalScore1,
-				efficiency: totalScore2,
-				attendance: totalScore3,
-				communication: totalScore4,
-				reliability: totalScore5,
-				collaboration: totalScore6
-			});
-		});
-	}, [setinput, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
+
+	// useEffect(() => {
+	// 	setinput((prevState: any) => {
+	// 		return ({
+	// 			...prevState,
+	// 			job_knowledge: totalScore1,
+	// 			efficiency: totalScore2,
+	// 			attendance: totalScore3,
+	// 			communication: totalScore4,
+	// 			reliability: totalScore5,
+	// 			collaboration: totalScore6
+	// 		});
+	// 	});
+	// }, [  totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
 
 
 	return (

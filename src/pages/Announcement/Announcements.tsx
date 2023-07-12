@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
 import TableLoader from '../../components/TableLoader';
-// import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { Button } from '@material-ui/core';
 import { BsCheckCircle } from 'react-icons/bs';

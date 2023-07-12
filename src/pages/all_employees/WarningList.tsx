@@ -53,16 +53,13 @@ const WarningList = () => {
 
 
 
-  const [displayData, setDisplayData] = useState([]);
-
-
-
   useEffect(() => {
-
     if (createwarningisSuccess) {
       dispatch(getWarning());
     }
   }, [warningmessage, warningisError, dispatch, createwarningisSuccess])
+
+  const [displayData, setDisplayData] = useState([]);
 
   return (
     <div  >

@@ -3,7 +3,7 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
-import { getUserPrivileges } from "../../functions/auth";
+
 import { allDepartments } from "../../features/Department/departmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 
@@ -17,7 +17,7 @@ const DepartmentsView = () => {
 
 
 
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
+
 
 
 

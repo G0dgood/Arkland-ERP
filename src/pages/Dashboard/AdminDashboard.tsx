@@ -111,7 +111,6 @@ const AdminDashboard = () => {
     <div >
      <AdminAnnouncement announcements={announcement} isLoading={isLoading} />
     </div>
-    {/* <Announcement /> */}
    </div>
    <div>
     {/* Todos start */}

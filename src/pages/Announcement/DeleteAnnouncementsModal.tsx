@@ -12,7 +12,7 @@ const DeleteAnnouncementsModal = ({ id }: any) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [deleteShow, setDeleteShow] = useState(false);
-	const { deleteisError, deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.announcement)
+	const { deleteisLoading, deleteisSuccess } = useAppSelector((state: any) => state.announcement)
 
 
 
@@ -22,11 +22,8 @@ const DeleteAnnouncementsModal = ({ id }: any) => {
 			setDeleteShow(false)
 			navigate(-1)
 			dispatch(reset());
-		} else if (deleteisError) {
-			fireAlert("Announcement Deletion error", deletemessage, "error");
-			dispatch(reset());
 		}
-	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, navigate])
+	}, [deleteisSuccess, dispatch, navigate])
 
 	const handleDeletion = () => {
 		// @ts-ignore

@@ -112,29 +112,6 @@ const TeamLead = () => {
 										<td className="table-datacell datatype-numeric">
 											<Button id="team-applicatiom-update" onClick={() => navigate(`/teamlead/teamlead/view/${item?.id}`)}>View</Button>
 										</td>
-										{/* <td className="table-datacell datatype-numeric">
-											<Button
-												className={
-													item?.ip_checked === true
-														? "table-link"
-														: "table-link-active"
-												}
-											>
-												{item?.ip_checked === true ? "Yes" : "No"}
-											</Button>
-										</td> */}
-										{/* <td className="table-datacell datatype-numeric">
-											<Button
-												className={
-													item?.is_hr_assisted === true
-														? "table-link"
-														: "table-link-active"
-												}
-											>
-												{item?.is_hr_assisted === true ? "Yes" : "No"}
-											</Button>
-										</td> */}
-
 									</tr>
 								))
 							)}

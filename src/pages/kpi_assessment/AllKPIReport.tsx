@@ -54,7 +54,7 @@ const AllKPIReport = () => {
 		navigate(`/kpiassessment/adminkpiassessment/teamkpi/view/${item?._id}`, { state: { name: 'admin' } })
 	}
 
-	const month = ["January", "February", "March", "April", "May", "June", "July", "	August", "September", "October", "November", "December"]
+	// const month = ["January", "February", "March", "April", "May", "June", "July", "	August", "September", "October", "November", "December"]
 
 	return (
 		<div  >
@@ -144,15 +144,6 @@ const AllKPIReport = () => {
 													</svg>}
 												{item?.status === "active" ? "Completed" : item?.status}
 											</div>
-											{/* <Button
-												className={
-													item?.status === "active"
-														? "table-link-active"
-														: "table-link"}  >
-												{item?.status === "active"
-													? "Completed"
-													: item?.status}
-											</Button> */}
 										</td>
 										<td className="table-datacell datatype-numeric" key={i}>
 

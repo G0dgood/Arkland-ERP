@@ -4,7 +4,6 @@ import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal
 import DeleteAnnouncementModal from "../../components/Modals/DeleteAnnouncementModal";
 import ClockIn from "../../components/ClockIn";
 import { BounceLoader } from "react-spinners";
-import { Button } from "@material-ui/core";
 
 
 const Announcement = ({ announcement: data, isLoading }: any) => {
@@ -12,8 +11,6 @@ const Announcement = ({ announcement: data, isLoading }: any) => {
 
   const {
     isHRHead,
-    isHeadOfDepartment,
-    isTeamLead,
     isSuperAdmin,
     isHrAdmin,
   } = getUserPrivileges();
@@ -26,27 +23,7 @@ const Announcement = ({ announcement: data, isLoading }: any) => {
             <h6>Announcement</h6>
           </span>
         </div>
-        {/* {(isSuperAdmin ||
-          isTeamLead ||
-          isHeadOfDepartment ||
-          isHRHead ||
-          isHrAdmin) && (
-            <div>
-              <CreateAnnouncementModal
-
-              />
-            </div>
-          )} */}
         <ClockIn />
-        {/* <div className="clock-work"> */}
-        {/* <div id='clock-in'> */}
-        {/* <div className="clock" >
-            <div className="hour-hand"></div>
-            <div className="minute-hand"></div>
-            <div className="second-hand"></div>
-          </div> */}
-        {/* </div> */}
-        {/* </div> */}
       </div>
       <div>
         {isLoading ? (

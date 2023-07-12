@@ -8,8 +8,6 @@ import {
 	NoRecordFound,
 	TableFetch,
 } from "../../components/TableOptions";
-
-import { getUserPrivileges } from "../../functions/auth";
 import { getHOD } from "../../features/HOD/hodSlice";
 import moment from "moment";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
