@@ -120,7 +120,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 	return (
 		<div>
-			<Button variant="contained" className="Add-btn"
+			<Button variant="contained" className="add-experience"
 				onClick={() => { setLgShow(true); handelclick() }}>
 				Assign Privilege
 			</Button>
@@ -130,12 +130,8 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered>
 				<Modal.Header  >
-
-					<span>
-
-					</span>
 					<span className='span-center-title'>Assign Privilege</span>
-					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
+					<Button onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -173,8 +169,8 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 							value={input.isEmployee}
 							onChange={(e: any) => handleOnChange1("isEmployee", e)}
 						/>
-						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal" onClick={handleLeave} disabled={createisLoading}>
+						<div className='btn-modal-container' style={{ display: "flex", justifyContent: "flex-end" }}>
+							<Button variant="contained" className="add-experience" onClick={handleLeave} disabled={createisLoading}>
 								{createisLoading ? <Spinner animation="border" /> : "Create"}
 							</Button>
 						</div>

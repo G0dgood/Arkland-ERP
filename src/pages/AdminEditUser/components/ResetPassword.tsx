@@ -57,11 +57,11 @@ const ResetPassword = ({ email }: any) => {
                 />
               </div>
             </form>
-            <div className="form_btn">
+            <div className="form_btn" style={{ display: "flex", justifyContent: 'flex-end', }}>
               <Button
                 variant="outlined"
                 type="submit"
-                className={"Add-btn-edit"}
+                className={"add-experience"}
               >
                 {resetisLoading ? <Spinner animation="border" /> : "Update Password"}
               </Button>

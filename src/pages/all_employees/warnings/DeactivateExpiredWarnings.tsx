@@ -28,7 +28,7 @@ const DeactivateExpiredWarnings = () => {
 
 	return (
 		<div>
-			<Button variant="contained" className="Add-btn"
+			<Button variant="contained" className="add-experience"
 				onClick={() => setDeleteShow(true)}>
 				Update Warning
 			</Button>
@@ -39,9 +39,8 @@ const DeactivateExpiredWarnings = () => {
 				centered
 			>
 				<Modal.Header  >
-					<span>{/*  */}</span>
 					<span className="span-center-title">Deactivate Expired Warnings </span>
-					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
+					<Button onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

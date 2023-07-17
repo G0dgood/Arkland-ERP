@@ -27,7 +27,7 @@ const CreateKpiModal = () => {
 
 	return (
 		<>
-			<Button className="table-create-btn" onClick={() => { setShow(true); getData() }} style={{ marginLeft: "1rem" }}>
+			<Button className="add-experience" onClick={() => { setShow(true); getData() }} style={{ marginLeft: "1rem" }}>
 				Create KPI Assessment
 			</Button>
 			<Modal
@@ -36,9 +36,8 @@ const CreateKpiModal = () => {
 				fullscreen={true}
 			>
 				<Modal.Header  >
-					<span></span>
 					<span className="span-center-title">Create Assessment</span>
-					<Button style={{ color: "#fff" }} onClick={() => setShow(false)}>
+					<Button onClick={() => setShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

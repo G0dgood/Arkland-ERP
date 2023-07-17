@@ -123,7 +123,7 @@ const CreateHODModal = () => {
 		<div>
 			<Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => { setLgShow(true); getData() }} >
 				Create HOD
 			</Button>
@@ -135,9 +135,8 @@ const CreateHODModal = () => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title">Create HOD</span>
-					<Button style={{ color: "#fff" }} onClick={() => setLgShow(false)}>
+					<Button onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -184,7 +183,7 @@ const CreateHODModal = () => {
 								<div className="btn-modal-container" >
 									<Button
 										variant="contained"
-										className="Add-btn-modal"
+										className="add-experience"
 										type="submit"
 										disabled={createisLoading}>
 

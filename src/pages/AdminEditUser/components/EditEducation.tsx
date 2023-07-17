@@ -56,7 +56,7 @@ const EditEducation = () => {
         </div>
 
         <div className="form_btn">
-          <Button variant="outlined" className={"Add-btn-edit"}>
+          <Button variant="outlined" className={"add-experience"}>
             Update
           </Button>
         </div>

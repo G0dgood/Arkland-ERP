@@ -3,10 +3,8 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
-
 import { allDepartments } from "../../features/Department/departmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-
 import { BounceLoader } from "react-spinners";
 
 const DepartmentsView = () => {
@@ -14,12 +12,6 @@ const DepartmentsView = () => {
   const navigate = useNavigate();
   const { data, isLoading, } = useAppSelector((state: any) => state.department)
   const { createisSuccess } = useAppSelector((state: any) => state.department)
-
-
-
-
-
-
 
   useEffect(() => {
     // @ts-ignore
@@ -30,20 +22,14 @@ const DepartmentsView = () => {
   }, [createisSuccess, dispatch]);
 
 
-
-
-
   const isPrime = (num: number) => {
     for (let i = 2; i < num; i++) if (num % i === 0) return false;
     return num > 1;
   };
 
 
-
-
   return (
-    <div  >
-
+    <div >
       <div className="ProjectViewContainer">
         <div className="ProjectViewContainer-subone">
           <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
@@ -51,8 +37,7 @@ const DepartmentsView = () => {
             {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
             <div className="Request-btn-modal-container">
               <div className="Request-btn">
-                <CreateDepartmentModal
-                />
+                <CreateDepartmentModal />
               </div>
             </div>
             {/* )} */}
@@ -86,8 +71,7 @@ const DepartmentsView = () => {
                           : isPrime(parseInt(i, 10))
                             ? "iDotsRounded2"
                             : "iDotsRounded3"
-                      }
-                    >
+                      }>
                       {item?.name}
                     </Button>
                     <BiDotsHorizontalRounded color="#97979B" />

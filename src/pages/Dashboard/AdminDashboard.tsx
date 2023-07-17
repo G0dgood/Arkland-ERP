@@ -9,8 +9,9 @@ import { MdOpenInFull } from "react-icons/md";
 import FullBarChart from "../../components/AdminDashboardChat/FullBarChart";
 import { useEffect, useState } from "react";
 import HttpService from "../../components/HttpService";
+import DataService from "../../utils/dataService";
 
-
+const dataService = new DataService()
 const AdminDashboard = () => {
 
  const [show, setShow] = useState<any>(false);
@@ -29,7 +30,11 @@ const AdminDashboard = () => {
 
  useEffect(() => {
   getData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
  }, [])
+
+ // @ts-ignore
+ const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
 
  const getData = async () => {
@@ -54,6 +59,10 @@ const AdminDashboard = () => {
    const tasksUrl = `tasks`
    const tasks: any = await HttpService.get(tasksUrl)
    setTask(tasks?.data?.data)
+
+   const warningUrl = `me/warnings`
+   const warning: any = await HttpService.get(warningUrl)
+   localStorage.setItem(userInfo?.employee?.email, !warning?.data?.data.length ? 0 : warning?.data?.data.length);
 
    setisLoading(false)
 

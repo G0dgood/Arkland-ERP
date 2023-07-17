@@ -10,7 +10,6 @@ import { useAppDispatch } from "../store/useStore";
 
 const UploadEmployee = () => {
   const dispatch = useAppDispatch();
-  const [message, setMessage] = useState("");
   const [isSuccess, setisSuccess] = useState(false);
   const [isLoading, setisLoading] = useState(false);
   const url = `hr/employees/bulk-upload`
@@ -53,10 +52,9 @@ const UploadEmployee = () => {
       fireAlert('Upload Employee', "Upload Employee base is successfull", "success");
       setTimeout(() => {
         setisSuccess(false)
-        setMessage("")
       }, 5000);
     }
-  }, [dispatch, isSuccess, message])
+  }, [dispatch, isSuccess])
 
 
 
@@ -64,7 +62,7 @@ const UploadEmployee = () => {
     <>
       <Button
         variant="contained"
-        className="Add-btn"
+        className="add-experience"
         onClick={handleShow}
       >
         <FiUpload className="icon-space" />
@@ -80,9 +78,8 @@ const UploadEmployee = () => {
         centered
         className="logic-modal">
         <Modal.Header >
-          <span></span>
           <span className="span-center-title">Upload File</span>
-          <Button style={{ color: "#fff" }} onClick={() => setShow(false)}>
+          <Button onClick={() => setShow(false)}>
             <MdOutlineClose size={28} />
           </Button>
         </Modal.Header>

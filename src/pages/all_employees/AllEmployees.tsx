@@ -1,14 +1,12 @@
-import React from "react";
+
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
 import {
-  EmployeeStatus,
   EntriesPerPage,
   MainSearch,
   NoRecordFound,
@@ -75,7 +73,7 @@ const AllEmployees = () => {
                 <div className="allemployees-sup-item1">
                   <Button
                     variant="contained"
-                    className="Add-btn"
+                    className="add-experience"
                     onClick={() => navigate("/employees/employees/create")}
                   // onClick={handleCreateEmployeeClick}
                   >
@@ -85,37 +83,8 @@ const AllEmployees = () => {
                 </div>
               )}
 
-              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
-                <div
-                  className="allemployees-sup-item2"
-                  onClick={() => navigate("/warninglist")}
-                >
-                  <Button variant="contained" className="Add-btn">
-                    Warnings
-                  </Button>
-                </div>
-              )}  
-              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
-                <div
-                  className="allemployees-sup-item2"
-                  onClick={() => navigate("/warninglist")}
-                >
-                  <Button variant="contained" className="Add-btn">
-                    Warnings
-                  </Button>
-                </div>
-              )} */}
               <UploadEmployee />
-              {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
-                <div
-                  className="allemployees-sup-item2"
-                  onClick={() => navigate("/terminations")}
-                >
-                  <Button variant="contained" className="Add-btn">
-                    Terminations
-                  </Button>
-                </div>
-              )} */}
+
             </div>
             <div className="allemployees-sup-item2">
               {/* <div>
@@ -160,7 +129,7 @@ const AllEmployees = () => {
                     <td className="table-datacell datatype-numeric"  > CATEGORY </td>
                     <td className="table-datacell datatype-numeric"  > STATUS</td>
                     {(isSuperAdmin || isAdmin || isMaster) && (
-                      <td className="table-datacell datatype-numeric"  > APPROVE</td>
+                      <td className="table-datacell datatype-numeric"  > Employee</td>
                     )}
                     <td className="table-datacell datatype-numeric"  > ACTION</td>
                   </tr>
@@ -196,9 +165,7 @@ const AllEmployees = () => {
                             {item?.status === "in review" ? (
                               <ApproveEmployeeModal id={item?.id} data={item} setReset={setReset} key={i} />
                             ) : (
-                              <Button className="table-link-active" key={i}>
-                                Approved
-                              </Button>
+                              <ApproveEmployeeModal id={item?.id} data={item} setReset={setReset} key={i} />
                             )}
                           </td>)}
                         <td className="table-datacell datatype-numeric">
@@ -214,7 +181,6 @@ const AllEmployees = () => {
                                 color="green"
                               />
                             </span>
-                            {/* </span> */}
                           </div>
                         </td>
 

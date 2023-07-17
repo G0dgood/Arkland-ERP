@@ -199,7 +199,7 @@ const CreateAnnouncementModal = () => {
     <div>
       <Button
         variant="contained"
-        className="Add-btn"
+        className="add-experience"
         onClick={() => { setLgShow(true); getData() }} >
         Create Announcement
       </Button>
@@ -211,9 +211,8 @@ const CreateAnnouncementModal = () => {
         centered
       >
         <Modal.Header>
-          <span></span>
           <span className="span-center-title">Create Announcement</span>
-          <Button style={{ color: "#fff" }} onClick={() => setLgShow(false)}>
+          <Button onClick={() => setLgShow(false)}>
             <MdOutlineClose size={28} />
           </Button>
         </Modal.Header>
@@ -327,7 +326,7 @@ const CreateAnnouncementModal = () => {
               <div className="btn-modal-container" >
                 <Button
                   variant="contained"
-                  className="Add-btn-modal"
+                  className="add-experience"
                   type="submit"
                   disabled={createisLoading}
                 >

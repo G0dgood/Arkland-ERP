@@ -64,7 +64,7 @@ const WeeklyReportDownloader = ({ data }: any) => {
 
 			<Button
 				variant="contained"
-				className="Add-btn" >
+				className="add-experience" >
 				<AiOutlineDownload size={20} />
 				Download Report
 			</Button>

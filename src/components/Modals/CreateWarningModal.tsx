@@ -24,7 +24,7 @@ const CreateWarningModal = ({ id }: any) => {
     dispatch(allEmployee());
   }
 
-  const subordinationOptions = ["Type of misconduct", "insubordination", "Absenteeism", "Lateness", "Negligence", "Disbedience", "inefficiency", "Incompetence", "Leaving duty post without permission", "Gross Misconduct", "Others"];
+  const subordinationOptions = ["Type of misconduct", "insubordination", "absenteeism", "lateness", "negligence", "disbedience", "inefficiency", "incompetence", "leaving duty post without permission", "gross misconduct", "others"];
 
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
@@ -61,7 +61,7 @@ const CreateWarningModal = ({ id }: any) => {
     <div>
       <Button
         variant="contained"
-        className="Add-btn"
+        className="add-experience"
         onClick={() => { setLgShow(true); handlewarning() }}
       >
         Create Warning
@@ -73,9 +73,8 @@ const CreateWarningModal = ({ id }: any) => {
         centered
       >
         <Modal.Header>
-          <span></span>
           <span className="span-center-title"> Create Warning</span>
-          <Button style={{ color: "#fff" }} onClick={() => setLgShow(false)}>
+          <Button onClick={() => setLgShow(false)}>
             <MdOutlineClose size={28} />
           </Button>
         </Modal.Header>
@@ -148,7 +147,7 @@ const CreateWarningModal = ({ id }: any) => {
                     <div className="btn-modal-container">
                       <Button
                         variant="contained"
-                        className="Add-btn-modal"
+                        className="add-experience"
                         type="submit"
                       >
                         {createwarningisLoading ? <Spinner animation="border" /> : "Create"}

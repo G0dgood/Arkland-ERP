@@ -130,7 +130,7 @@ const CreateTeamLead = () => {
 		<div>
 			<Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => { setShow(true); getData() }} >
 				Create Team Lead
 			</Button>
@@ -141,10 +141,8 @@ const CreateTeamLead = () => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title"> Create Team Lead</span>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setShow(false)}
 					>
 						<MdOutlineClose size={28} />
@@ -217,7 +215,7 @@ const CreateTeamLead = () => {
 								<Button
 									disabled={createisLoading || isLoading}
 									variant="contained"
-									className="Add-btn-modal"
+									className="add-experience"
 									type="submit"
 									onClick={handleSubmit}
 								>

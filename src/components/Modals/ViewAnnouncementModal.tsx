@@ -34,9 +34,8 @@ const ViewAnnouncementModal = ({ id }: any) => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered  >
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title">View Announcement</span>
-					<Button style={{ color: "#fff" }} onClick={() => setViewShow(false)}>
+					<Button onClick={() => setViewShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

@@ -35,7 +35,7 @@ const RejectWorkerRequestModal = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button className="Add-btn" onClick={() => setShow(true)}>Reject Request</Button>
+			<Button className="add-experience" onClick={() => setShow(true)}>Reject Request</Button>
 
 			<Modal
 				size="lg"

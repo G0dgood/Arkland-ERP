@@ -20,11 +20,8 @@ const CreateEvent = () => {
 				centered
 			>
 				<Modal.Header  >
-					<span>
-						{/*  */}
-					</span>
 					<span className="span-center-title" >Create Event</span>
-					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
+					<Button onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -55,7 +52,7 @@ const CreateEvent = () => {
 							</div>
 						</div>
 						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal">
+							<Button variant="contained" className="add-experience">
 								CREATE
 							</Button>
 						</div>

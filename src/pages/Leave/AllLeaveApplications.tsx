@@ -24,7 +24,7 @@ const AllLeaveApplications = () => {
 
 
 	const [sortData, setSortData] = useState([]);
-	const [searchItem, setSearchItem] = useState("");
+
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -33,18 +33,22 @@ const AllLeaveApplications = () => {
 
 	useEffect(() => {
 		localStorage.setItem("reportsPerPage", entriesPerPage);
+
 	}, [entriesPerPage]);
 
-	useEffect(() => {
-		if (data) {
-			const result = data?.data?.filter((object: any) => {
-				// @ts-ignore
-				return JSON?.stringify(object)?.toString()?.includes(searchItem);
-			});
-			setSortData(result);
-		}
 
-	}, [data, searchItem]);
+	useEffect(() => {
+		const Entries = data?.data?.filter((obj: any) => {
+			return obj?.hod_approved === true;
+		})
+		const result = Entries?.filter((object: any) => {
+			// @ts-ignore
+			return JSON?.stringify(object)?.toString()?.includes('');
+		});
+		setSortData(result);
+
+
+	}, [data?.data]);
 
 	const [displayData, setDisplayData] = useState([]);
 

@@ -24,10 +24,11 @@
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  border-bottom: 1px solid #dee2e6;
-  background-color: c.color(primary-color) !important;
+  // border-bottom: 1px solid #dee2e6;
+  // background-color: c.color(primary-color) !important;
   color: c.color(white) !important;
   text-align: center !important;
+  color: #000 !important;
 }
 
 .request-center-title {

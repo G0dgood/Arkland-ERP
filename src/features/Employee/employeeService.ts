@@ -8,8 +8,6 @@ const allEmployee = async (  ) => {
   return data
 }
 
- 
-
 const createEmployeeRole = async (input: any) => {  
 	   const  {data}:any  =  await HttpService.post(`hr/employee-roles`, input)  
   return data

@@ -1,4 +1,3 @@
-import { BsPrefixProps } from "react-bootstrap/esm/helpers";
 
 export interface userInfoInterface {
   deactivated: boolean;

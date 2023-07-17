@@ -4,9 +4,7 @@ import HttpService from '../../components/HttpService'
   
  
 const createLeave = async ( input:any) => { 
-	  
   const  {data} : any = await HttpService.post("leaves", input)
-   
   return data
 }
 
@@ -29,8 +27,7 @@ const viewdeleteLeave = async (id: any) => {
 }
  
 const getTeamLeave = async (id: any) => {  
-  const { data }: any = await HttpService.get(`hr/leaves/list/teams`)   
- 
+  const { data }: any = await HttpService.get(`hr/leaves/list/teams`)    
   return data
 }
  

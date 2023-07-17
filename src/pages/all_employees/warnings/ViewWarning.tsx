@@ -7,7 +7,8 @@ import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import RequestEmployeeTerminationModal from "../../../components/Modals/RequestEmployeeTerminationModal";
 import { viewWarning } from "../../../features/Employee/employeeSlice";
 import UpdateWarning from "./UpdateWarning";
-import RespondToWarning from "./RespondToWarning";
+// import RespondToWarning from "./RespondToWarning";
+import { capitalizeFirstLetters } from "../../../components/CapitalizeFirstLetters";
 
 
 const ViewWarning = () => {
@@ -62,10 +63,8 @@ const ViewWarning = () => {
        <div>
         <div className="getjob-application-details">
          <p>Employee</p>
-         <p
-          onClick={() =>
-           navigate(`/employees/employees/${viewwarningdata?.data?.employee?._id}`)
-          }
+         <p onClick={() =>
+          navigate(`/employees/employees/${viewwarningdata?.data?.employee?._id}`)}
           style={{
            cursor: "pointer",
            color: "blue",
@@ -74,7 +73,7 @@ const ViewWarning = () => {
           {viewwarningdata?.data?.employee?.full_name}
          </p>
          <p>Misconduct</p>
-         <p>{viewwarningdata?.data?.misconduct}</p>
+         <p>{capitalizeFirstLetters(viewwarningdata?.data?.misconduct)} </p>
 
          <p>Message</p>
          <p>{viewwarningdata?.data?.message} </p>

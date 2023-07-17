@@ -95,9 +95,9 @@ const RequestForWorkersModal = ({ id }: any) => {
 			<div className="counter">
 				<p className="count">{count}</p>
 				<div className="controls">
-					<Button className="Add-btn m-2" onClick={increase}>Increase</Button>
-					<Button className="Add-btn m-2" onClick={decrease}>Decrease</Button>
-					<Button className="Add-btn m-2" onClick={reset}>Reset</Button>
+					<Button className="add-experience m-2" onClick={increase}>Increase</Button>
+					<Button className="add-experience m-2" onClick={decrease}>Decrease</Button>
+					<Button className="add-experience m-2" onClick={reset}>Reset</Button>
 				</div>
 			</div>
 		)
@@ -140,7 +140,7 @@ const RequestForWorkersModal = ({ id }: any) => {
 
 	return (
 		<div >
-			<Button className="Add-btn" onClick={handleClick}>Create Employee Request</Button>
+			<Button className="add-experience" onClick={handleClick}>Create Employee Request</Button>
 
 			<Modal
 				size="lg"
@@ -187,7 +187,7 @@ const RequestForWorkersModal = ({ id }: any) => {
 					</div>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button className="Add-btn m-2"
+					<Button className="add-experience m-2"
 						onClick={handleReject}
 						disabled={createisLoading}
 					>

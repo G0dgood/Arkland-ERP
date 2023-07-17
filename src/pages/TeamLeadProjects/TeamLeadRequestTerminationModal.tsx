@@ -135,7 +135,7 @@ const TeamLeadRequestTerminationModal = () => {
 		<div>
 			<Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => { setDeleteShow(true); getData() }}
 			>
 				Request Employee Termination
@@ -205,7 +205,7 @@ const TeamLeadRequestTerminationModal = () => {
 						</div>
 						<div className='btn-modal-container'>
 
-							<Button variant="contained" className="Add-btn-modal" onClick={handlecreate}  >
+							<Button variant="contained" className="add-experience" onClick={handlecreate}  >
 								{teanTerminationsisLoading ? (
 									<Spinner animation="border" />
 								) : (

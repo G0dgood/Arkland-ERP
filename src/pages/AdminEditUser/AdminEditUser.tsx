@@ -96,7 +96,7 @@ const AdminEditUser = () => {
               <Button
                 variant="outlined"
                 key={i}
-                className={activeTab === i ? "Add-btn-edit" : "show-btn-edit"}
+                className={activeTab === i ? "add-experience m-2" : "edit-password-btn"}
                 onClick={() => setActiveTab(i)}
               >
                 {item}

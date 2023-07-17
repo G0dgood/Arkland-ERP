@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { getWarning } from "../../features/Employee/employeeSlice";
 import { Button } from "@material-ui/core";
 import DeactivateExpiredWarnings from "./warnings/DeactivateExpiredWarnings";
+import { capitalizeFirstLetters } from "../../components/CapitalizeFirstLetters";
 
 
 const WarningList = () => {
@@ -117,7 +118,7 @@ const WarningList = () => {
                       {item?.message}
                     </td>
                     <td className="table-datacell datatype-numeric">
-                      {item?.misconduct}
+                      {capitalizeFirstLetters(item?.misconduct)}
                     </td>
                     <td className="table-datacell datatype-numeric">
                       {item?.count}

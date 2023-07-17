@@ -5,11 +5,13 @@ import TodoShowAll from "../../components/TodoShowAll";
 import Todos from "./Todos";
 import Announcement from "./Announcement";
 import HttpService from "../../components/HttpService";
+import DataService from "../../utils/dataService";
 
-
+const dataService = new DataService()
 const StaffDashboard = () => {
   const Quote = require('inspirational-quotes');
-
+  // @ts-ignore
+  const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
   const [showDrawer, setShowDrawer] = useState<any>(false);
   const [announcement, setAnnouncement] = useState<any>([]);
@@ -46,6 +48,7 @@ const StaffDashboard = () => {
 
   useEffect(() => {
     getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -60,7 +63,9 @@ const StaffDashboard = () => {
       const announcement: any = await HttpService.get(announcementsUrl)
       setAnnouncement(announcement?.data?.data)
       setisLoading(false)
-
+      const warningUrl = `me/warnings`
+      const warning: any = await HttpService.get(warningUrl)
+      localStorage.setItem(userInfo?.employee?.email, !warning?.data?.data.length ? 0 : warning?.data?.data.length);
     } catch (error) {
       setisLoading(false)
     }

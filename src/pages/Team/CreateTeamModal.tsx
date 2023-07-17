@@ -17,8 +17,8 @@ const CreateTeamModal = () => {
 		if (createisSuccess) {
 			setShow(false)
 			fireAlert("Success", "Team created successfully", "success");
-			dispatch(getTeam());
 			dispatch(reset());
+			dispatch(getTeam());
 		}
 	}, [createisSuccess, dispatch]);
 
@@ -32,7 +32,7 @@ const CreateTeamModal = () => {
 		<div>
 			<Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => setShow(true)}
 			>
 				Create Team
@@ -44,10 +44,8 @@ const CreateTeamModal = () => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title"> Create Team</span>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setShow(false)}
 					>
 						<MdOutlineClose size={28} />

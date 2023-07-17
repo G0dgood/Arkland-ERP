@@ -29,7 +29,7 @@ const ApproveWorkerRequestModal = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button className="Add-btn" onClick={() => setShow(true)}>Approve Request</Button>
+			<Button className="add-experience" onClick={() => setShow(true)}>Approve Request</Button>
 
 			<Modal
 				size="lg"

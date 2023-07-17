@@ -74,7 +74,7 @@ const UpdateTaskModal = ({ id, title }: any) => {
 		<div>
 			<Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => setShow(true)}
 			>
 				Update Task
@@ -214,7 +214,7 @@ const UpdateTaskModal = ({ id, title }: any) => {
 										<div className="btn-modal-container">
 											<Button
 												variant="contained"
-												className="Add-btn-modal"
+												className="add-experience"
 												type="submit"
 											>
 												{updateisLoading

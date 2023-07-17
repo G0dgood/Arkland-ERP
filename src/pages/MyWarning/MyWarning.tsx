@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {
   EntriesPerPage,
   MainSearch,
@@ -8,9 +8,9 @@ import {
 } from "../../components/TableOptions";
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
-import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
 import HttpService from "../../components/HttpService";
-import RespondToWarning from "../all_employees/warnings/RespondToWarning";
+// import RespondToWarning from "../all_employees/warnings/RespondToWarning";
 
 
 const MyWarning = () => {

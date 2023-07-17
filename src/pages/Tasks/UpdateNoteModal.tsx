@@ -45,7 +45,7 @@ const UpdateNoteModal = ({ id }: any) => {
 		<div>
 			<Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => setShow(true)} >
 				Update Task Note
 			</Button>
@@ -81,7 +81,7 @@ const UpdateNoteModal = ({ id }: any) => {
 					<div className="btn-modal-container">
 						<Button
 							variant="contained"
-							className="Add-btn-modal"
+							className="add-experience"
 							type="submit"
 							onClick={handleSubmit}
 							disabled={noteisLoading}

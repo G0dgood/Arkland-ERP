@@ -63,8 +63,7 @@ const ViewEmployee = () => {
        )}
        {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
         <Button
-         variant="contained"
-         className="Add-btn"
+         className="add-experience"
          onClick={() => navigate(`/employees/employees/edit/${id}`, { state: { data: viewdata } })}
         >
          Edit Employee

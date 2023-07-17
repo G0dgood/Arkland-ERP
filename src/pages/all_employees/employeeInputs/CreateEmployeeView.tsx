@@ -52,7 +52,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
     }));
   }, [employee])
 
-  console.log('employee', employee.salary)
+
 
   function checkDepartment(id: any): any {
     let name = [] as any;
@@ -234,7 +234,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
       <div id="Essential-btn" style={{ marginTop: "20rem" }}>
         <Button
           variant="outlined"
-          className={"Add-btn-edit"}
+          className={"add-experience"}
           onClick={handleSubmit}
         >
           {createemployeeisLoading ? (

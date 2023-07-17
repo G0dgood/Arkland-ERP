@@ -698,11 +698,11 @@ const EditProfile = ({
                   </div>
                 </form>
               </div>
-              <div className="form_btn">
+              <div className="form_btn" style={{ display: "flex", justifyContent: 'flex-end', padding: "1rem" }}>
                 <Button
                   variant="outlined"
                   type="submit"
-                  className={"Add-btn-edit"}
+                  className={"add-experience"}
                 >
                   {updateemployeeisLoading ? <Spinner animation="border" /> : "Update"}
                 </Button>

@@ -109,7 +109,7 @@ const HRClockInModal = () => {
 		<div>
 			<Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => { setShow(true); getData() }}
 			>
 				{false ? <Spinner animation="border" /> : " Clock in"}
@@ -123,9 +123,8 @@ const HRClockInModal = () => {
 				centered
 			>
 				<Modal.Header>
-					<span>{/*  */}</span>
 					<span className="span-center-title">HR Clock IN</span>
-					<Button style={{ color: "#fff" }} onClick={() => setShow(false)}>
+					<Button onClick={() => setShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

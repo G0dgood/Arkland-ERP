@@ -9,7 +9,7 @@ const AddNewSupportMessageModal = (props: any) => {
 
 	return (
 		<div>
-			<Button variant="contained" className="Add-btn"
+			<Button variant="contained" className="add-experience"
 				onClick={() => setLgShow(true)}>
 				New Message
 			</Button>
@@ -20,16 +20,12 @@ const AddNewSupportMessageModal = (props: any) => {
 				centered
 			>
 				<Modal.Header  >
-
-					<span>
-
-					</span>
 					<span className='span-center-title'>New Message</span>
-					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
+					<Button onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 
-				</Modal.Header>
+				</Modal.Header>#b61818#b65e5e
 				<Modal.Body>
 					<div className='Modal-Body'>
 						<h6>Subject</h6>
@@ -56,7 +52,7 @@ const AddNewSupportMessageModal = (props: any) => {
 							</div>
 						</div>
 						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal">
+							<Button variant="contained" className="add-experience">
 								CREATE
 							</Button>
 						</div>

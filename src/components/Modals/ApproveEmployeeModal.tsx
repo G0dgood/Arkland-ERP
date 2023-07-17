@@ -8,13 +8,14 @@ import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hrApproveEmployees, reset } from '../../features/Employee/employeeSlice';
 import { BiUser } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 
 const ApproveEmployeeModal = ({ id, data }: any) => {
 	const dispatch = useAppDispatch();
 	const { approveisLoading, approveisSuccess } = useAppSelector((state: any) => state.employee)
 	const [deleteShow, setDeleteShow] = useState(false);
-
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (approveisSuccess) {
@@ -33,8 +34,8 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 
 	return (
 		<div>
-			<Button className="table-link" onClick={() => setDeleteShow(true)} >
-				Approve
+			<Button className="table-link-active" onClick={() => setDeleteShow(true)} >
+				{data?.status === "in review" ? "Approve" : "View"}
 			</Button>
 			<Modal
 				size="lg"
@@ -42,9 +43,9 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 				centered
 			>
 				<Modal.Header id="displayTermination">
-					<span>{/*  */}</span>
-					<span className="span-center-title">Approve Employee</span>
-					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
+					<span className="span-center-title">
+						{data?.status === "in review" ? "Approve Employee" : "Employee Preview"}</span>
+					<Button onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -68,10 +69,14 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 											{data?.full_name}
 										</h5>
 										<h6>
-											{/* onClick={Employee} */}
-											<Button className="table-link"  >
-												{data?.status}
-											</Button>
+											{data?.status === "in review" ?
+												<Button className="table-link"  >
+													{data?.status}
+												</Button> :
+												<Button className="table-link-active"  >
+													{data?.status}
+												</Button>}
+
 										</h6>
 										<h6>
 											{data?.employment_type}
@@ -181,7 +186,6 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 													<p>{data?.state_of_origin}</p>
 												</div>
 											</div>
-
 										</div>
 									</div>
 								</div>
@@ -190,9 +194,13 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 					</div>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button className="table-link" onClick={handleApprove}>
-						{approveisLoading ? <Spinner animation="border" /> : "Approve"}
-					</Button>
+					{data?.status === "in review" ?
+						<Button className="table-link" onClick={handleApprove}>
+							{approveisLoading ? <Spinner animation="border" /> : "Approve"}
+						</Button> :
+						<Button className="table-link-active" onClick={() => navigate(`/employees/employees/${data?.id}`)} >
+							View More
+						</Button>}
 				</Modal.Footer>
 			</Modal>
 		</div>

@@ -44,9 +44,8 @@ const ViewScheduleModal = ({ id }: any) => {
 				centered >
 
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title">Task Details</span>
-					<Button style={{ color: "#fff" }} onClick={() => setViewShow(false)}>
+					<Button onClick={() => setViewShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

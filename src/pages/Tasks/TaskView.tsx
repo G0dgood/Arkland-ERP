@@ -9,6 +9,7 @@ import moment from 'moment';
 import DeleteTaskModal from './DeleteTaskModal';
 import UpdateTaskModal from './UpdateTaskModal';
 import UpdateNoteModal from './UpdateNoteModal';
+import { getUserPrivileges } from '../../functions/auth';
 
 const TaskView = () => {
 	const navigate = useNavigate();
@@ -18,7 +19,7 @@ const TaskView = () => {
 	const { deleteisSuccess } = useAppSelector((state: any) => state.task)
 	const { updateisSuccess } = useAppSelector((state: any) => state.task)
 	const { noteisSuccess } = useAppSelector((state: any) => state.task)
-
+	const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
 
 	useEffect(() => {
 		if (updateisSuccess) {
@@ -73,11 +74,13 @@ const TaskView = () => {
 											title="Return"
 										/>
 									</div>
-									<div className="employee-main-div-col-header-buttons">
-										<UpdateNoteModal name={viewdata?.name} id={viewdata?.id} />
-										<UpdateTaskModal name={viewdata?.name} id={viewdata?.id} />
-										<DeleteTaskModal name={viewdata?.name} id={viewdata?.id} />
-									</div>
+									{(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && (
+										<div className="employee-main-div-col-header-buttons">
+											<UpdateNoteModal name={viewdata?.name} id={viewdata?.id} />
+											<UpdateTaskModal name={viewdata?.name} id={viewdata?.id} />
+											<DeleteTaskModal name={viewdata?.name} id={viewdata?.id} />
+										</div>
+									)}
 								</div>
 
 								<h4 style={{ marginTop: "3rem" }}>

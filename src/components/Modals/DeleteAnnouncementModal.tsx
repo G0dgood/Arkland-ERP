@@ -52,9 +52,8 @@ const DeleteAnnouncementModal = ({ id }: any) => {
 				className="kpi-modal"
 			>
 				<Modal.Header>
-					<span>{/*  */}</span>
 					<span className="span-center-title">Delete Announcement</span>
-					<Button style={{ color: "#fff" }} onClick={() => setShow(false)}>
+					<Button onClick={() => setShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

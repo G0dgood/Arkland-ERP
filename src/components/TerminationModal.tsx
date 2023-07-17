@@ -19,8 +19,8 @@ const TerminationModal = ({ item, id }: any) => {
 			// @ts-ignore
 			dispatch(viewTerminations(id));
 			setDeleteShow(false);
-			dispatch(reset());
 			fireAlert("Successful", "Termination Approved Successfully!", "success");
+			dispatch(reset());
 		}
 	}, [
 		approveterminationsisSuccess, dispatch, id, rejectterminationsisSuccess])
@@ -38,7 +38,7 @@ const TerminationModal = ({ item, id }: any) => {
 
 	return (
 		<div>
-			<Button variant="contained" className="Add-btn" onClick={() => setDeleteShow(true)}>
+			<Button variant="contained" className="add-experience" onClick={() => setDeleteShow(true)}>
 				UPDATE TERMINATION
 			</Button>
 			<Modal
@@ -47,10 +47,8 @@ const TerminationModal = ({ item, id }: any) => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered >
 				<Modal.Header id="displayTermination">
-					<span></span>
 					<Modal.Title>Terminate Employee</Modal.Title>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setDeleteShow(false)}
 					>
 						<MdOutlineClose size={28} />

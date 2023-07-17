@@ -65,7 +65,7 @@ const ClockIn = () => {
 	return (
 		<div>
 			<Button
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => setShow(true)}
 			>
 				{false ? <Spinner animation="border" /> : " Clock in"}
@@ -79,9 +79,8 @@ const ClockIn = () => {
 				centered
 			>
 				<Modal.Header>
-					<span>{/*  */}</span>
 					<span className="span-center-title"> Clock IN</span>
-					<Button style={{ color: "#fff" }} onClick={() => setShow(false)}>
+					<Button onClick={() => setShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -98,7 +97,7 @@ const ClockIn = () => {
 							<Button className="table-link-active">
 								Close </Button></span>
 						<span ><Button className="table-link" onClick={handleclockIn} >
-							{isLoading ? <Spinner animation="border" /> : "clock in"}
+							{isLoading ? <Spinner animation="border" size='sm' /> : "clock in"}
 						</Button></span>
 					</div>
 				</Modal.Body>

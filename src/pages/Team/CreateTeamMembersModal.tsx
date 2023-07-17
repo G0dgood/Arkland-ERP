@@ -123,10 +123,8 @@ const CreateTeamMembers = ({ id }: any) => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title"> Create Team Members</span>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setShow(false)}
 					>
 						<MdOutlineClose size={28} />

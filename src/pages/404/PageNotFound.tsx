@@ -26,12 +26,9 @@ const PageNotFound = () => {
 			<div className="text-container">
 				<h1>Opp! Sorry...</h1>
 				<p>Page not found</p>
-				{/* <button className="Add-btn" >
-					Back home
-				</button> */}
 				<Button
 					variant="contained"
-					className="Add-btn"
+					className="add-experience"
 					onClick={() => window.location.replace("/")}
 				>
 

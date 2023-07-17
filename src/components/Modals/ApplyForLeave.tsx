@@ -55,22 +55,18 @@ const ApplyForLeave = () => {
 
 	return (
 		<div>
-			<Button variant="contained" className="Add-btn"
+			<Button variant="contained" className="border px-3 p-1 add-experience"
 				onClick={() => setLgShow(true)}>
-				Apply for Leave
+				<i className="fa fa-plus"></i>&nbsp;	Apply for Leave
 			</Button>
-
-
 			<Modal
 				size="lg"
 				show={lgShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered>
 				<Modal.Header  >
-					<span>
-					</span>
 					<span className='span-center-title'>Apply For Leave</span>
-					<Button style={{ color: '#fff' }} onClick={() => setLgShow(false)}>
+					<Button onClick={() => setLgShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -109,7 +105,7 @@ const ApplyForLeave = () => {
 								onChange={(e) => handleOnChange("description", e.target.value)} />
 						</div>
 						<div className='btn-modal-container'>
-							<Button variant="contained" className="Add-btn-modal" onClick={handleLeave}>
+							<Button variant="contained" className="add-experience" onClick={handleLeave}>
 								{isLoading ? <Spinner animation="border" /> : "APPLY"}
 							</Button>
 						</div>

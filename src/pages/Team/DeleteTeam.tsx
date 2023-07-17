@@ -41,9 +41,8 @@ const DeleteTeam = ({ id }: any) => {
 				centered
 			>
 				<Modal.Header  >
-					<span>{/*  */}</span>
 					<span className="span-center-title">Delete Team</span>
-					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
+					<Button onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

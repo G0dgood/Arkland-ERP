@@ -5,12 +5,11 @@ import { MdOutlineClose } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { reset } from '../../features/TeamLead/teamleadSlice';
-import { deleteTask } from '../../features/Tasks/taskSlice';
+import { deleteTask, reset } from '../../features/Tasks/taskSlice';
 import { ImBin } from 'react-icons/im';
 
 
-const DeleteTaskModal = ({ name, id }: any) => {
+const DeleteTaskModal = ({ id }: any) => {
 
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -24,7 +23,8 @@ const DeleteTaskModal = ({ name, id }: any) => {
 			fireAlert("Successful", "Task Deleted Successfully", "success");
 			setDeleteShow(false)
 			navigate(-1)
-			dispatch(reset());
+
+			// dispatch(reset());
 		}
 	}, [deleteisError, deleteisSuccess, deletemessage, dispatch, navigate])
 
@@ -42,10 +42,9 @@ const DeleteTaskModal = ({ name, id }: any) => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header  >
-					<span>{/*  */}</span>
+				<Modal.Header  > 
 					<span className="span-center-title">Delete Tead Lead</span>
-					<Button style={{ color: "#fff" }} onClick={() => setDeleteShow(false)}>
+					<Button   onClick={() => setDeleteShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

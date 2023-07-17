@@ -71,9 +71,9 @@ const CreateTaskModal = ({ view }: any) => {
 
 	return (
 		<div>
-			{view === "team" ? <Button className="add-button" onClick={() => { setShow(true); getData() }}>Add task</Button> : <Button
+			{view === "team" ? <Button className="add-experience" onClick={() => { setShow(true); getData() }}>Add task</Button> : <Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => { setShow(true); getData() }} >
 				Create Task
 			</Button>}
@@ -85,10 +85,8 @@ const CreateTaskModal = ({ view }: any) => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title"> Create Task</span>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setShow(false)}
 					>
 						<MdOutlineClose size={28} />
@@ -216,7 +214,7 @@ const CreateTaskModal = ({ view }: any) => {
 											<Button
 												disabled={createisLoading}
 												variant="contained"
-												className="Add-btn-modal"
+												className="add-experience"
 												type="submit"
 											>
 												{createisLoading

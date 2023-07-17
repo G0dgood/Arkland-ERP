@@ -110,7 +110,7 @@ const Address = ({
                   <div id="Essential-btn">
                     <Button
                       variant="outlined"
-                      className={"Add-btn-edit"}
+                      className={"add-experience"}
                       onClick={() => handleSubmit(values)} >
                       View Details
                     </Button>

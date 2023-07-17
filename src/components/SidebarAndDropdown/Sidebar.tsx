@@ -31,6 +31,9 @@ const Sidebar = ({
   // @ts-ignore
   const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
+  // Retrieve the object from local storage 
+  // @ts-ignore
+  var isWarning = JSON.parse(localStorage.getItem(userInfo?.employee?.email));
 
 
   const { pathname } = useLocation();
@@ -92,7 +95,7 @@ const Sidebar = ({
             </MenuItem>
           )}
           {(isTeamLead || isHRHead || isAdmin || isHrAdmin || !isSuperAdmin) && (
-            <MenuItem className='Side__Content' active={pathname === '/attendance'} icon={<HiOutlineUserGroup size={17} />}> Attendance <Link to="/attendance" />
+            <MenuItem className='Side__Content' active={pathname === '/attendance'} icon={<HiOutlineUserGroup size={17} />}>Attendance <Link to="/attendance" />
             </MenuItem>)}
 
           {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
@@ -108,9 +111,11 @@ const Sidebar = ({
                 <MenuItem className='Side__Content' active={pathname === '/userprivileges'}>  <Link to="/userprivileges" />User Privileges</MenuItem>)}
             </SubMenu>
           )}
-          <MenuItem className='Side__Content' active={pathname === '/warning/warning/mywarning'} icon={<VscWarning size={17} />}>My Warnings
+          {/* eslint-disable-next-line no-mixed-operators */}
+          {!isSuperAdmin && isWarning > 0 || !isAdmin && isWarning > 0 ? <MenuItem className='Side__Content' active={pathname === '/warning/warning/mywarning'} icon={<VscWarning size={17} />}>My Warnings
             <Link to="/warning/warning/mywarning" />
-          </MenuItem>
+          </MenuItem> : ""}
+
 
           {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster) && (
             <SubMenu title={'Warning'} icon={<VscWarning size={17} />} >
@@ -164,7 +169,7 @@ const Sidebar = ({
           {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster || isHeadOfDepartment) && (
             <SubMenu title={'Leave Management'} icon={<BsBriefcase size={17} />}>
 
-              {(isSuperAdmin || isAdmin || isHrAdmin || isMaster) ? "" : (
+              {(isSuperAdmin || isAdmin || isMaster) ? "" : (
                 <MenuItem className='Side__Content' active={pathname === '/leave'}>  <Link to="/leave" /> Leave </MenuItem>)}
               {(isTeamLead || isHeadOfDepartment) && (
                 <MenuItem className='Side__Content' active={pathname === '/leave/leave/team'}> <Link to="/leave/leave/team" />Team Leave</MenuItem>

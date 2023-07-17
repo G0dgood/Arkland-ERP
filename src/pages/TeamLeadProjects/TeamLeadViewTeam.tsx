@@ -2,21 +2,21 @@ import { useEffect, useState } from 'react'
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useNavigate, useParams } from 'react-router-dom'
 import { BounceLoader } from 'react-spinners'
-import { useAppDispatch, useAppSelector } from '../../store/useStore'
-import { getTeammembers } from '../../features/Team/teamSlice';
+
+
 import { RiTeamLine } from 'react-icons/ri';
 import moment from 'moment';
-import DeleteTeam from '../Team/DeleteTeam';
-import CreateTeamMembers from '../Team/CreateTeamMembersModal';
+
+
 import { Button } from '@material-ui/core';
-import RemoveTeamMember from '../Team/RemoveTeamMember';
+
 import HttpService from '../../components/HttpService';
 import TeamLeadTeamMembers from './TeamLeadTeamMembers';
 
 const TeamLeadViewTeam = () => {
 	const { id } = useParams()
 	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
+
 
 	const [viewdata, setViewdata] = useState<any>([])
 	const [viewisLoading, setViewisLoading] = useState<any>([])
@@ -98,11 +98,6 @@ const TeamLeadViewTeam = () => {
 											title="Return"
 										/>
 									</div>
-									{/* <div className="employee-main-div-col-header-buttons">
-										<span><CreateTeamMembers id={id} /></span>
-										<span><RemoveTeamMember id={id} /></span>
-										<DeleteTeam id={id} />
-									</div> */}
 								</div>
 
 								<h4 style={{ marginTop: "3rem" }}>

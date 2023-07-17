@@ -137,7 +137,7 @@ const RequestEmployeeTerminationModal = () => {
 		<div>
 			<Button
 				variant="contained"
-				className="Add-btn"
+				className="add-experience"
 				onClick={() => { setDeleteShow(true); getData() }}
 			>
 				Request Employee Termination
@@ -149,12 +149,12 @@ const RequestEmployeeTerminationModal = () => {
 				centered
 			>
 				<Modal.Header id="displayTermination">
-					<span></span>
+
 					<Modal.Title>
 						Request Employee Termination
 					</Modal.Title>
 					<Button
-						style={{ color: "#fff" }}
+
 						onClick={() => setDeleteShow(false)}
 					>
 						<MdOutlineClose size={28} />

@@ -63,7 +63,7 @@ const EmployeesDownloader = ({ data }: any) => {
 
       <Button
         variant="contained"
-        className="Add-btn" >
+        className="add-experience" >
         <AiOutlineDownload size={25} />
       </Button>
     </CSVLink>

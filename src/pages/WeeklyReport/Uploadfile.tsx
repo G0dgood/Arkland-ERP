@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
 import { FiUpload } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
@@ -114,9 +114,8 @@ const Uploadfile = ({ setFile, setShow, show, submitHandler, isLoading }: any) =
 				centered
 				className="logic-modal">
 				<Modal.Header >
-					<span></span>
 					<span className="span-center-title">Upload File</span>
-					<Button style={{ color: "#fff" }} onClick={() => setShow(false)}>
+					<Button onClick={() => setShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

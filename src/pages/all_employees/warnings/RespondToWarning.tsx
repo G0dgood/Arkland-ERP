@@ -57,7 +57,7 @@ const RespondToWarning = ({ id, className }: any) => {
 
 	return (
 		<div>
-			<Button variant="contained" className={className ? "" : "Add-btn"}
+			<Button variant="contained" className={className ? "" : "add-experience"}
 				id={className}
 				onClick={() => setLgShow(true)}>
 				Response Warning
@@ -69,10 +69,9 @@ const RespondToWarning = ({ id, className }: any) => {
 				centered>
 				<Modal.Header  >
 
-					<span>
-					</span>
+
 					<span className='span-center-title'>Respond Warning </span>
-					<Button style={{ color: '#fff' }} onClick={() => { setLgShow(false) }}>
+					<Button onClick={() => { setLgShow(false) }}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -86,7 +85,7 @@ const RespondToWarning = ({ id, className }: any) => {
 						</div>
 						<div className='btn-modal-container'>
 
-							<Button variant="contained" className="Add-btn-modal" onClick={handlecreate}  >
+							<Button variant="contained" className="add-experience" onClick={handlecreate}  >
 								{responseisLoading ? <Spinner animation="border" /> : "Respond"}
 							</Button>
 						</div>

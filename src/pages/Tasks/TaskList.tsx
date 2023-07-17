@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Pagination from '../../components/Pagination';
 import { NoRecordFound, TableFetch } from '../../components/TableOptions';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { getTask } from '../../features/Tasks/taskSlice';
+import { getTask, reset } from '../../features/Tasks/taskSlice';
 import TableLoader from '../../components/TableLoader';
 import moment from 'moment';
 import CreateTaskModal from './CreateTaskModal';
@@ -14,6 +14,7 @@ const TaskList = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { data: tasks, isLoading } = useAppSelector((state: any) => state.task)
+	const { deleteisSuccess } = useAppSelector((state: any) => state.task)
 	const { createisSuccess } = useAppSelector((state: any) => state.task)
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
@@ -27,9 +28,10 @@ const TaskList = () => {
 		if (createisSuccess) {
 			// @ts-ignore
 			dispatch(getTask());
+		} else if (deleteisSuccess) {
+			dispatch(reset());
 		}
-	}, [createisSuccess, dispatch]);
-
+	}, [createisSuccess, deleteisSuccess, dispatch]);
 
 
 	const header = ["TASK CREATED BY", "TASK ASSIGNED TO", "TASK STATUS", "TASK TITLE", "TASK CREATED TIME", "VIEW"];

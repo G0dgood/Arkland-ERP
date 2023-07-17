@@ -92,7 +92,7 @@ const CreateRoleModal = () => {
 
 	return (
 		<div>
-			<Button variant="contained" className="Add-btn"
+			<Button variant="contained" className="add-experience"
 				onClick={() => setLgShow(true)}>
 				Create Role
 			</Button>
@@ -102,11 +102,8 @@ const CreateRoleModal = () => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered>
 				<Modal.Header  >
-
-					<span>
-					</span>
 					<span className='span-center-title'>Create Role</span>
-					<Button style={{ color: '#fff' }} onClick={() => { setLgShow(false); handleclick() }}>
+					<Button onClick={() => { setLgShow(false); handleclick() }}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
@@ -143,9 +140,8 @@ const CreateRoleModal = () => {
 								value={inputs?.description}
 								onChange={(e) => handleOnChange("description", e.target.value)} />
 						</div>
-						<div className='btn-modal-container'>
-
-							<Button variant="contained" className="Add-btn-modal" onClick={handlecreate}  >
+						<div className='btn-modal-container' style={{ display: "flex", justifyContent: "flex-end" }}>
+							<Button variant="contained" className="add-experience" onClick={handlecreate}  >
 								{createroleisLoading ? <Spinner animation="border" /> : "Create"}
 							</Button>
 						</div>

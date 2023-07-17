@@ -90,9 +90,6 @@ const KPIAdminDetails = ({ data, hodscore, setHodscore }: any) => {
 
 
 
-
-
-
 	const title = "Successful";
 	const html = "KPI Updated!";
 	const icon = "success";
