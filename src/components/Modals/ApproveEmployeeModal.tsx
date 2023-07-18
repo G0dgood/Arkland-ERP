@@ -34,8 +34,8 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 
 	return (
 		<div>
-			<Button className="table-link-active" onClick={() => setDeleteShow(true)} >
-				{data?.status === "in review" ? "Approve" : "View"}
+			<Button className={data?.status === "in review" ? "table-link" : "table-link-active"} onClick={() => setDeleteShow(true)} >
+				{data?.status === "in review" ? data?.status : "Approved"}
 			</Button>
 			<Modal
 				size="lg"
