@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { deleteAssessment, viewAssessment } from '../../features/KPIAssessment/assessmentSlice';
+import { deleteAssessment, reset, viewAssessment } from '../../features/KPIAssessment/assessmentSlice';
 
 
 const KPIDetails = () => {
@@ -39,9 +39,10 @@ const KPIDetails = () => {
 	useEffect(() => {
 		if (deleteisSuccess) {
 			fireAlert("KPI Deleted", "KPI Deleted Successfully", "success");
+			dispatch(reset());
 			navigate(-1)
 		}
-	}, [viewmessage, deletemessage, deleteisSuccess, navigate]);
+	}, [viewmessage, deletemessage, deleteisSuccess, navigate, dispatch]);
 
 
 

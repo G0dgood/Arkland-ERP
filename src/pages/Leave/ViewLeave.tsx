@@ -31,8 +31,8 @@ const ViewLeave = () => {
 	useEffect(() => {
 		if (viewdeleteisSuccess) {
 			fireAlert('leave', 'Leave Deleted Successfully', "success");
-			navigate(-1)
 			dispatch(reset());
+			navigate(-1)
 		}
 	}, [dispatch, id, viewmessage, viewdeleteisSuccess, navigate])
 

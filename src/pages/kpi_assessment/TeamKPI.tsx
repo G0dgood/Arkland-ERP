@@ -24,7 +24,6 @@ const TeamKPI = () => {
   const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
   const [sortData, setSortData] = useState([]);
-  const [searchItem, setSearchItem] = useState("");
 
 
 
@@ -44,11 +43,11 @@ const TeamKPI = () => {
     if (teamdata) {
       const result = teamdata?.filter((object: any) => {
         // @ts-ignore
-        return JSON?.stringify(object)?.toString()?.includes(searchItem);
+        return JSON?.stringify(object)?.toString()?.includes('');
       });
       setSortData(result);
     }
-  }, [teamdata, searchItem]);
+  }, [teamdata]);
 
   const [displayData, setDisplayData] = useState([]);
 

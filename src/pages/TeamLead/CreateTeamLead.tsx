@@ -76,7 +76,7 @@ const CreateTeamLead = () => {
 	useEffect(() => {
 		if (createisSuccess) {
 			setShow(false)
-			fireAlert("Success", "Team member created  successfully", "success");
+			fireAlert("Success", "Project Manager created  successfully", "success");
 			dispatch(reset());
 		}
 	}, [createisError, createisSuccess, createmessage, dispatch]);
@@ -141,7 +141,7 @@ const CreateTeamLead = () => {
 				centered
 			>
 				<Modal.Header>
-					<span className="span-center-title"> Create Team Lead</span>
+					<span className="span-center-title"> Create Project Manager</span>
 					<Button
 						onClick={() => setShow(false)}
 					>

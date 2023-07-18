@@ -44,10 +44,9 @@ const TeamLead = () => {
 
 	return (
 		<div >
-
 			<div className='allemployees-container-main' >
 				<div className='SiteWorkermaindivsub'>
-					<span className='SupportmainTitleh3'>Team Lead List</span>
+					<span className='SupportmainTitleh3'>Project Managers </span>
 				</div>
 				<div>
 					<EntriesPerPage
@@ -124,7 +123,7 @@ const TeamLead = () => {
 					setDisplayData={setDisplayData}
 					data={data}
 					entriesPerPage={entriesPerPage}
-					Total={"Team Lead"}
+					Total={"Project Managers"}
 				/>
 			</footer>
 		</div>

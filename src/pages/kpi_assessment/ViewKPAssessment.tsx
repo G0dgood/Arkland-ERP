@@ -48,8 +48,10 @@ const ViewKPAssessment = () => {
 									<h3>{viewdata?.employee_name}</h3>
 									{/* <p>john.adibe@outcess.com</p> */}
 									<p>ALS/ADM/{viewdata?.employee_id}</p>
-									<p>{location.state.name === "admin" ? "Employee Performance" : "HOD Update Performance "}   <Button className={viewdata?.status === 'active' ? "table-link-active" : "table-link"}>
-										{viewdata?.status === 'active' ? 'Completed' : viewdata?.status}</Button></p>
+									<p>{location.state.name === "admin" ? "Employee Performance" : "HOD Update Performance "}
+										<Button className={viewdata?.status === 'active' ? "table-link-active" : "table-link"}>
+											{viewdata?.status === 'active' ? 'Completed' : viewdata?.status}</Button>
+									</p>
 								</div>
 							</div>
 						</div>
