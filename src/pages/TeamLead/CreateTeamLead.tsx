@@ -57,7 +57,7 @@ const CreateTeamLead = () => {
 		department: "",
 	})
 
-	console.log('inputs', inputs)
+
 
 
 
@@ -132,7 +132,7 @@ const CreateTeamLead = () => {
 				variant="contained"
 				className="add-experience"
 				onClick={() => { setShow(true); getData() }} >
-				Create Team Lead
+				Create Project Manager
 			</Button>
 			<Modal
 				size="lg"
