@@ -8,19 +8,20 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
 import HttpService from "../../components/HttpService";
 import SelectInput from "../../components/SelectInput";
-
+import { FaBeer } from 'react-icons/fa';
+import { BsDashCircleFill, BsPlusCircleFill } from "react-icons/bs";
 
 
 const dataService = new DataService()
-const KPIAssessment = ({ setIsCheck, setShow }: any) => {
+const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField, newKpiField, handleKPIChange, setInputs, inputs, allInput }: any) => {
+
+
 
  const dispatch = useAppDispatch();
  const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.assessment)
-
-
+ const year = new Date().getFullYear().toString();
  const navigate = useNavigate();
  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-
  const [kpinputs, setKpInputs] = useState({
   month: 0,
   reviewer: "",
@@ -33,18 +34,18 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
   comment: "",
  });
 
- const [inputs, setInputs] = useState({
-  month: 0,
-  employee: "",
-  reviewer: "",
-  job_knowledge: 0,
-  efficiency: 0,
-  attendance: 0,
-  communication: 0,
-  reliability: 0,
-  collaboration: 0,
-  comment: "",
- });
+ // const [inputs, setInputs] = useState({
+ //   month: 0,
+ //   employee: "",
+ //   reviewer: "",
+ //   job_knowledge: 0,
+ //   efficiency: 0,
+ //   attendance: 0,
+ //   communication: 0,
+ //   reliability: 0,
+ //   collaboration: 0,
+ //   comment: "",
+ // });
 
 
 
@@ -102,30 +103,24 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
 
 
- const totalScore1 = (kpiData3.Weight1 / 5) * kpinputs.job_knowledge;
- const totalScore2 = (kpiData3.Weight2 / 5) * kpinputs.efficiency;
- const totalScore3 = (kpiData3.Weight3 / 5) * kpinputs.attendance;
- const totalScore4 = (kpiData3.Weight4 / 5) * kpinputs.communication;
- const totalScore5 = (kpiData3.Weight5 / 5) * kpinputs.reliability;
- const totalScore6 = (kpiData3.Weight6 / 5) * kpinputs.collaboration;
+ // const totalScore1 = (kpiData3.Weight1 / 5) * kpinputs.job_knowledge;
+ // const totalScore2 = (kpiData3.Weight2 / 5) * kpinputs.efficiency;
+ // const totalScore3 = (kpiData3.Weight3 / 5) * kpinputs.attendance;
+ const totalScore1 = kpinputs.job_knowledge;
+ const totalScore2 = kpinputs.efficiency;
+ const totalScore3 = kpinputs.attendance;
+ // const totalScore4 = (kpiData3.Weight4 / 5) * kpinputs.communication;
+ // const totalScore5 = (kpiData3.Weight5 / 5) * kpinputs.reliability;
+ // const totalScore6 = (kpiData3.Weight6 / 5) * kpinputs.collaboration;
 
  const [kpiscore, setkpiscore] = useState();
  useEffect(() => {
-  const kpi: any =
-   totalScore1 +
-   totalScore2 +
-   totalScore3 +
-   totalScore4 +
-   totalScore5 +
-   totalScore6;
+  const kpi: any = 0
   setkpiscore(kpi);
  }, [
   totalScore1,
   totalScore2,
   totalScore3,
-  totalScore4,
-  totalScore5,
-  totalScore6,
  ]);
 
 
@@ -137,16 +132,13 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
     job_knowledge: totalScore1,
     efficiency: totalScore2,
     attendance: totalScore3,
-    communication: totalScore4,
-    reliability: totalScore5,
-    collaboration: totalScore6,
     month: kpinputs.month,
     // @ts-ignore
     reviewer: kpinputs.reviewer?.value,
     comment: kpinputs.comment,
    };
   });
- }, [kpinputs.comment, kpinputs.job_knowledge, kpinputs.month, kpinputs.reviewer, setInputs, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6, userInfo?.employee?._id]);
+ }, [kpinputs.comment, kpinputs.job_knowledge, kpinputs.month, kpinputs.reviewer, setInputs, totalScore1, totalScore2, totalScore3, userInfo?.employee?._id]);
 
 
  useEffect(() => {
@@ -160,7 +152,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
  const handelkpi = (e: any) => {
   // @ts-ignore
-  dispatch(createAssessment(inputs));
+  dispatch(createAssessment(allInput));
  };
 
  const [hods, setHOD] = useState([])
@@ -197,7 +189,6 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
 
 
 
- const year = new Date().getFullYear().toString();
 
  useEffect(() => {
   if (createisSuccess) {
@@ -215,6 +206,8 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
   }
 
  }, [setIsCheck, createisSuccess]);
+
+
 
  return (
   <div>
@@ -323,6 +316,15 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
         <div className="table-datacell-button-bottom-color2">{!kpiscore ? 0 : kpiscore}</div>
        </div>
       </div>
+      <div className="kpi-add-more">
+       <h6>Add more field</h6>
+       <Button onClick={handleAddField} >
+        <BsPlusCircleFill size={30} color={'green'} />
+       </Button>
+       <Button onClick={handleRemoveField}>
+        <BsDashCircleFill size={30} color={'red'} />
+       </Button>
+      </div>
      </div>
     </div>
    </div>
@@ -378,7 +380,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
           <input
            className="Performance-Indicator-input1"
            value={kpiData3.Weight1}
-
+           disabled
           />
          </td>
 
@@ -400,7 +402,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
          <td className="table-datacell datatype-numeric">
           <input
            className="Performance-Indicator-input1"
-           value={!totalScore1 ? "" : totalScore1}
+           value={''}
           />{" "}
          </td>
         </tr>
@@ -411,8 +413,8 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
           <input
            className="Performance-Indicator-input"
            value={kpiData1.Performance2}
-
           />
+
          </td>
          <td className="table-datacell datatype-numeric">
           <textarea
@@ -426,17 +428,16 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
           <input
            className="Performance-Indicator-input1"
            value={kpiData3.Weight2}
-
+           disabled
           />
          </td>
          <td className="table-datacell datatype-numeric">
           <select
            className="performance-field"
-           name="score"
+           name="efficiency"
            required
            value={kpinputs.efficiency}
-           onChange={(e) => handleOnChange("efficiency", e.target.value)}
-          >
+           onChange={(e) => handleOnChange("efficiency", e.target.value)} >
            <option></option>
            {[1, 2, 3, 4, 5].map(item =>
             <option key={item} value={item}>{item}</option>
@@ -446,7 +447,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
          <td className="table-datacell datatype-numeric">
           <input
            className="Performance-Indicator-input1"
-           value={!totalScore2 ? "" : totalScore2}
+           value={''}
           />{" "}
          </td>
         </tr>
@@ -454,11 +455,8 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
         {/* three */}
         <tr className="data-table-row">
          <td className="table-datacell datatype-string">
-          <input
-           className="Performance-Indicator-input"
-           value={kpiData1.Performance3}
-
-          />
+          <input className="Performance-Indicator-input"
+           value={kpiData1.Performance3} />
          </td>
          <td className="table-datacell datatype-numeric">
           <textarea
@@ -473,7 +471,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
           <input
            className="Performance-Indicator-input1"
            value={kpiData3.Weight3}
-
+           disabled
           />{" "}
          </td>
          <td className="table-datacell datatype-numeric">
@@ -482,8 +480,7 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
            name="score"
            required
            value={kpinputs.attendance}
-           onChange={(e) => handleOnChange("attendance", e.target.value)}
-          >
+           onChange={(e) => handleOnChange("attendance", e.target.value)} >
            <option></option>
            {[1, 2, 3, 4, 5].map(item =>
             <option key={item} value={item}>{item}</option>
@@ -493,147 +490,57 @@ const KPIAssessment = ({ setIsCheck, setShow }: any) => {
          <td className="table-datacell datatype-numeric">
           <input
            className="Performance-Indicator-input1"
-           value={!totalScore3 ? "" : totalScore3}
+           value={''}
           />{" "}
          </td>
         </tr>
 
         {/* four */}
-        <tr className="data-table-row">
-         <td className="table-datacell datatype-string">
-          <input
-           className="Performance-Indicator-input"
-           value={kpiData1.Performance4}
-
-          />
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <textarea
-           id="kpi-textarea"
-           className="Performance-Indicator-input2"
-           value={kpiData2.IndicatorDescription4}
-
-
-           rows={5}
-          />{" "}
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={kpiData3.Weight4}
-
-          />{" "}
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <select
-           className="performance-field"
-           name="score"
-           required
-           value={kpinputs.communication}
-           onChange={(e) => handleOnChange("communication", e.target.value)}
-          >
-           <option></option>
-           {[1, 2, 3, 4, 5].map(item =>
-            <option key={item} value={item}>{item}</option>
-           )}
-          </select>
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={!totalScore4 ? "" : totalScore4}
-          />{" "}
-         </td>
-        </tr>
-
-        {/* five */}
-        <tr className="data-table-row">
-         <td className="table-datacell datatype-string">
-          <input
-           className="Performance-Indicator-input"
-           value={kpiData1.Performance5}
-
-          />
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <textarea
-           id="kpi-textarea"
-           className="Performance-Indicator-input2"
-           value={kpiData2.IndicatorDescription5}
-
-           rows={5}
-          />
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={kpiData3.Weight5}
-
-          />
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <select
-           className="performance-field"
-           name="score"
-           required
-           value={kpinputs.reliability}
-           onChange={(e) => handleOnChange("reliability", e.target.value)}
-          >
-           <option></option>
-           {[1, 2, 3, 4, 5].map(item =>
-            <option key={item} value={item}>{item}</option>
-           )}
-          </select>
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={!totalScore5 ? "" : totalScore5}
-          />{" "}
-         </td>
-        </tr>
-        {/* six */}
-        <tr className="data-table-row">
-         <td className="table-datacell datatype-string">
-          <input
-           className="Performance-Indicator-input"
-           value={kpiData1.Performance6}
-          />
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <textarea
-           id="kpi-textarea"
-           className="Performance-Indicator-input2"
-           value={kpiData2.IndicatorDescription6}
-           rows={5} />
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={kpiData3.Weight6}
-          />
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <select
-           className="performance-field"
-           name="score"
-           required
-           value={kpinputs.collaboration}
-           onChange={(e) => handleOnChange("collaboration", e.target.value)}
-          >
-           <option></option>
-           {[1, 2, 3, 4, 5].map(item =>
-            <option key={item} value={item}>{item}</option>
-           )}
-          </select>
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={!totalScore6 ? "" : totalScore6}
-          />{" "}
-         </td>
-        </tr>
+        {newKpiField?.map((item: any, i: any) => (
+         <tr className="data-table-row" key={i}>
+          <td className="table-datacell datatype-string">
+           <p>
+            Enter Indicator Description  <span style={{ color: "green", fontWeight: "bold" }}>{item.id}</span>
+           </p>
+          </td>
+          <td className="table-datacell datatype-numeric">
+           <textarea
+            id="kpi-textarea"
+            className="Performance-Indicator-input2"
+            value={item.name}
+            onChange={(e) => handleKPIChange("name", e.target.value, item.id)}
+            rows={5}
+           />{" "}
+          </td>
+          <td className="table-datacell datatype-numeric">
+           <input
+            className="Performance-Indicator-input1"
+            value={0}
+            disabled
+           />{" "}
+          </td>
+          <td className="table-datacell datatype-numeric">
+           <select
+            className="performance-field"
+            name="score"
+            required
+            value={item.score}
+            onChange={(e) => handleKPIChange("score", e.target.value, item.id)}
+           >
+            <option></option>
+            {[1, 2, 3, 4, 5].map(item =>
+             <option key={item} value={item}>{item}</option>
+            )}
+           </select>
+          </td>
+          <td className="table-datacell datatype-numeric">
+           <input
+            className="Performance-Indicator-input1"
+            value={0}
+           />
+          </td>
+         </tr>
+        ))}
        </tbody>
        <tr className="data-table-row">
         <td className="table-datacell datatype-string table-datacell-color">

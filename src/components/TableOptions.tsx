@@ -88,11 +88,11 @@ const NoRecordFound = ({ colSpan }: any) => (
 );
 
 // Search
-const MainSearch = ({ placeholder, result, onChange }: any) => {
+const MainSearch = ({ placeholder, setSearchItem, searchItem }: any) => {
   return (
 
     <div className="search-entries">
-      <Search placeHolder={placeholder} value={result} onChange={onChange} />
+      <Search placeHolder={placeholder} value={searchItem} onChange={(e: any) => setSearchItem(e.target.value)} />
     </div>
     // <div className="Search-input-bg">
     //   <GoSearch className="Search-input" />

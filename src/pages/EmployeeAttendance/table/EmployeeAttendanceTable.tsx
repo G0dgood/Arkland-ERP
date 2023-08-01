@@ -9,6 +9,11 @@ import {
 } from "../../../components/TableOptions";
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import { myAttendance } from "../../../features/Attendances/attendanceSlice";
+import React from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import moment from "moment";
+import { Calendars } from "../../../components/Calender/Calender";
 
 
 const EmployeeAttendanceTable = () => {
@@ -38,11 +43,63 @@ const EmployeeAttendanceTable = () => {
     // { title: "ACTION" },
   ];
 
+  const attendanceEvents = !mydata ? "" : mydata?.map((obj: any) => {
+    return {
+      title: obj?.employee_department?.description,  // You can add or modify properties here as needed
+      start: moment(obj?.time_in).format("YYYY-MM-DD"),
+      end: moment(obj?.time_in).format("YYYY-MM-DD"),
+      color: '#2196F3',
+    };
+  });
+
+  console.log('mydata', mydata)
+  // const attendanceEvents = [
+  //   {
+  //     title: 'John Doe',
+  //     start: '2023-07-01',
+  //     end: '2023-07-05',
+  //     color: '#2196F3',
+  //   },
+  //   // Add more attendance events as needed
+  // ];
+
+  const holidayEvents = [
+    {
+      title: 'New Year',
+      start: '2023-01-01',
+      allDay: true,
+      color: '#FF0000',
+    },
+    {
+      title: 'Christmas',
+      start: '2023-12-25',
+      allDay: true,
+      color: '#FF0000',
+    },
+    // Add more holiday events as needed
+  ];
+  function isHoliday(date: any) {
+    // Implement your logic to check if the given date is a holiday
+    // Return true if it is a holiday, false otherwise
+    const holidays = ['2023-07-04', '2023-09-03', '2023-12-25'];
+    const formattedDate = date.toISOString().split('T')[0];
+    return holidays.includes(formattedDate);
+  }
+  const AttendanceCalendar = ({ attendanceEvents }: any) => {
+    return (
+      <FullCalendar
+        plugins={[dayGridPlugin]}
+        initialView="dayGridMonth"
+        events={attendanceEvents.concat(holidayEvents)}
+        height={"70vh"}
+      />
+    );
+  };
   return (
     <div  >
       <div className="SiteWorkermaindiv">
         <div className="SiteWorkermaindivsub">
-          <span className="SupportmainTitleh3">EMPLOYEE ATTENDANCE</span>
+          <span className="SupportmainTitleh3">Employee Attendance</span>
         </div>
         <div>
           <EntriesPerPage
@@ -51,11 +108,24 @@ const EmployeeAttendanceTable = () => {
             setEntriesPerPage={setEntriesPerPage}
           />
         </div>
-        <div>
+        {/* <div>
           <MainSearch placeholder={"Search...          Attendance"} />
-        </div>
+        </div> */}
       </div>
-      <section className="md-ui component-data-table">
+      <Calendars />
+      {/* <div className="calendar-container">
+        {myisLoading ? (
+          <TableFetch colSpan={8} />
+        ) : mydata?.length === 0 || mydata == null ? (
+          <NoRecordFound colSpan={8} />
+        ) : (
+          <div>
+            <AttendanceCalendar attendanceEvents={attendanceEvents} />
+          </div>
+
+        )}
+      </div> */}
+      {/* <section className="md-ui component-data-table">
         {myisLoading ? <TableLoader isLoading={myisLoading} /> : ""}
         <div className="main-table-wrapper">
           <table className="main-table-content">
@@ -121,7 +191,7 @@ const EmployeeAttendanceTable = () => {
             </tbody>
           </table>
         </div>
-      </section>
+      </section> */}
 
       {/* <footer className="main-table-footer">
 				<Pagination

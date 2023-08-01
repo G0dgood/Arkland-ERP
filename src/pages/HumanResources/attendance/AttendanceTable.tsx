@@ -6,7 +6,8 @@ import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import { hrgetAttendance } from "../../../features/Attendances/attendanceSlice";
 import Pagination from "../../../components/Pagination";
 import HRClockInModal from "../../../components/Modals/HRClockInModal";
-
+import { FcOvertime, FcClock } from 'react-icons/fc';
+import { BsCalendar2Week, BsDot } from "react-icons/bs";
 
 const AttendanceTable = () => {
   const dispatch = useAppDispatch();
@@ -35,46 +36,12 @@ const AttendanceTable = () => {
   const [displayData, setDisplayData] = useState([]);
   return (
     <div  >
+
       <div id='main-space'>
         <div className="SiteWorkermaindivsub">
           <span className="SupportmainTitleh3">HR EMPLOYEE ATTENDANCE</span>
         </div>
         <div className="entries-perpage">
-          {/* Date range picker */}
-          <form style={{ display: "flex", gap: "20px" }}  >
-            {/* <div className="input">
-              <label htmlFor="startDate" className="input__label">
-                Start Date
-              </label>
-              <input
-                className="input__field"
-                style={{
-                  lineHeight: "1",
-                }}
-                type="date"
-                id="startDate"
-                name="startDate"
-                value={startDate}
-                onChange={handleChange}
-              />
-            </div> */}
-            {/* <div className="input"> */}
-            {/* <label htmlFor="endDate" className="input__label">
-                End Date
-              </label> */}
-            {/* <input
-                className="input__field"
-                style={{
-                  lineHeight: "1",
-                }}
-                type="date"
-                id="endDate"
-                name="endDate"
-                value={endDate}
-                onChange={handleChange}
-              /> */}
-            {/* </div> */}
-          </form>
           <div>
             <HRClockInModal />
           </div>

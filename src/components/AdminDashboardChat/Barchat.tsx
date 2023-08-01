@@ -58,7 +58,9 @@ const Barchat = ({ employees, departments }: any) => {
         label: "People in Department",
         data: people?.splice(0, 9),
         backgroundColor: "#990000",
-        barPercentage: 0.2,
+        borderRadius: 75,
+        borderSkipped: false,
+        barPercentage: 0.15,
       },
     ],
   };

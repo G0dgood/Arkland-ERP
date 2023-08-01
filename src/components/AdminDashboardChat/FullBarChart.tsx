@@ -66,7 +66,9 @@ const FullBarChart = ({ departments, employees, setShow, show, fullscreen }: any
         label: "People in Department",
         data: people,
         backgroundColor: "#990000",
-        barPercentage: 0.2,
+        borderRadius: 75,
+        borderSkipped: false,
+        barPercentage: 0.15,
       },
     ],
   };

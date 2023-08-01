@@ -9,6 +9,17 @@ import HttpService from '../HttpService';
 const CreateKpiModal = () => {
 	const [show, setShow] = useState(false);
 	const [hods, setHods] = useState<any>([]);
+	const [count, setCount] = useState<number>(0)
+	const [inputs, setInputs] = useState<any>({
+		month: 0,
+		reviewer: "",
+		job_knowledge: 0,
+		efficiency: 0,
+		attendance: 0,
+		other_parameters: [],
+		comment: ""
+	})
+
 
 
 	const getData = async () => {
@@ -25,6 +36,59 @@ const CreateKpiModal = () => {
 		}
 	}
 
+	const [newKpiField, setNewKpiField] = useState<any>([
+		{
+			id: 1,
+			"name": "",
+			score: 0,
+		}
+	]);
+
+	// --- Adds New Performance Field --- //
+	const handleAddField = () => {
+		setCount(count + 1)
+		setNewKpiField([
+			...newKpiField,
+			{
+				id: newKpiField.length + 1,
+				"name": "",
+				score: 0,
+			}
+		]);
+	};
+
+	// --- Remove New Weekly Field   --- //
+	const handleRemoveField = (index: any) => {
+		setCount(count - 1)
+		const field = [...newKpiField];
+		field.splice(index, 1);
+		setNewKpiField(field);
+	};
+
+	// const handleKPIChange = (input: any, value: any) => {
+	// 	setInputs((prevState: any) => ({
+	// 		...prevState,
+	// 		[input]: value,
+	// 	}));
+	// };
+
+	const handleKPIChange = (input: any, value: any, index: any,) => {
+		let items = [...newKpiField];
+		let oldItem = items.findIndex((x) => x.id === index);
+		let newItem = { ...items[oldItem], [input]: value };
+		items[oldItem] = newItem;
+		setNewKpiField(items);
+	};
+
+	const other_parameters = newKpiField?.map((item: any) => ({
+		"name": item.name,
+		score: item.score,
+	}));
+
+	const allInput = { ...inputs, other_parameters }
+
+	console.log('allInput', allInput)
+
 	return (
 		<>
 			<Button className="add-experience" onClick={() => { setShow(true); getData() }} style={{ marginLeft: "1rem" }}>
@@ -37,13 +101,24 @@ const CreateKpiModal = () => {
 			>
 				<Modal.Header  >
 					<span className="span-center-title">Create Assessment</span>
+
 					<Button onClick={() => setShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>
 				<Modal.Body>
 					<main>
-						<KPIAssessment setShow={setShow} hods={hods} />
+						<KPIAssessment
+							setShow={setShow}
+							hods={hods}
+							handleRemoveField={handleRemoveField}
+							handleAddField={handleAddField}
+							newKpiField={newKpiField}
+							handleKPIChange={handleKPIChange}
+							setInputs={setInputs}
+							inputs={inputs}
+							allInput={allInput}
+						/>
 					</main>
 				</Modal.Body>
 			</Modal>

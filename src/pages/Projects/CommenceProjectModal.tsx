@@ -36,10 +36,8 @@ const CommenceProjectModal = ({ id, title }: any) => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title">Commence Project </span>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setShow(false)} >
 						<MdOutlineClose size={28} />
 					</Button>
@@ -50,13 +48,9 @@ const CommenceProjectModal = ({ id, title }: any) => {
 					<h5 className="last-line">Ensure you've "Checked" before you hit "Commence"</h5>
 
 					<div className='deleteKPIHandler'>
-						<span className='deleteKPIHandler-mr'>
-							<Button className="table-link-active">
-								Close
-							</Button>
-						</span>
+
 						<span >
-							<Button className="table-link" onClick={handleCommence} >
+							<Button className="add-experience" onClick={handleCommence} >
 								{commenceisLoading ? <Spinner animation="border" /> : "Commence"}
 							</Button>
 						</span>

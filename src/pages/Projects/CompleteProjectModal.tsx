@@ -35,10 +35,8 @@ const CompleteProjectModal = ({ id, title }: any) => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title">Complete Project</span>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setShow(false)} >
 						<MdOutlineClose size={28} />
 					</Button>
@@ -49,14 +47,10 @@ const CompleteProjectModal = ({ id, title }: any) => {
 					<h5 className="last-line">Ensure you've "Checked" before you hit "Complete"</h5>
 
 					<div className='deleteKPIHandler'>
-						<span className='deleteKPIHandler-mr'>
-							<Button className="table-link-active">
-								Close
-							</Button>
-						</span>
+
 						<span >
-							<Button className="table-link" onClick={handleComplete} >
-								{completeisLoading ? <Spinner animation="border" /> : "Complete"}
+							<Button className="add-experience" onClick={handleComplete} >
+								{completeisLoading ? <Spinner animation="border" size='sm' /> : "Complete"}
 							</Button>
 						</span>
 					</div>

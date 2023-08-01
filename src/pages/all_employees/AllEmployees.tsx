@@ -20,11 +20,15 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import UploadEmployee from "../../components/UploadEmployee";
 
 const AllEmployees = () => {
-
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isMaster } = getUserPrivileges();
   const dispatch = useAppDispatch();
   const { data, isLoading } = useAppSelector((state: any) => state.employee)
   const { approveisSuccess } = useAppSelector((state: any) => state.employee)
   const [reset, setReset] = useState(false);
+  const [displayData, setDisplayData] = useState([]);
+  const [searchItem, setSearchItem] = useState("");
+  const [sortedItem, setSortedItem] = useState([]);
+  const [sortedData, setSortedData] = useState([]);
   const navigate = useNavigate();
 
 
@@ -43,13 +47,29 @@ const AllEmployees = () => {
   }, [approveisSuccess, dispatch, reset]);
 
 
+  useEffect(() => {
+    // Filter our suggestions that don't contain the user's input
+    const unLinked = data?.filter((suggestion: any) =>
+      // @ts-ignore  
+      suggestion?.full_name?.toLowerCase()?.startsWith(searchItem?.toLowerCase()) ||
+      // @ts-ignore  
+      suggestion?.email?.toLowerCase()?.startsWith(searchItem?.toLowerCase()) ||
+      // @ts-ignore  
+      suggestion?.role?.name?.toLowerCase()?.startsWith(searchItem?.toLowerCase()) ||
+      // @ts-ignore  
+      suggestion?.department?.name?.toLowerCase()?.startsWith(searchItem?.toLowerCase())
+    );
+    setSortedItem(unLinked)
+
+  }, [data, searchItem]);
+
+  useEffect(() => {
+    // Sort the data alphabetically by name
+    const sorted = sortedItem?.slice().sort((a: any, b: any) => a.full_name.localeCompare(b.full_name));
+    setSortedData(sorted);
+  }, [sortedItem]);
 
 
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isMaster } = getUserPrivileges();
-
-
-  const [displayData, setDisplayData] = useState([]);
-  const [searchItem, setSearchItem] = useState("");
 
 
   // --- Pagination --- //
@@ -112,7 +132,7 @@ const AllEmployees = () => {
               />
             </div>
             <div>
-              {data && <EmployeesDownloader data={data} />}
+              {sortedData && <EmployeesDownloader data={sortedData} />}
 
             </div>
           </div>
@@ -142,16 +162,16 @@ const AllEmployees = () => {
                   ) : (
                     displayData?.map((item: any, i: any) => (
                       <tr className="data-table-row" key={i}>
-                        <td className="table-datacell datatype-numeric">
+                        <td className="table-datacell  ">
                           {item?.full_name}
                         </td>
-                        <td className="table-datacell datatype-numeric">
+                        <td className="table-datacell  ">
                           {item?.email}
                         </td>
-                        <td className="table-datacell datatype-numeric">
-                          {item?.role?.description}
+                        <td className="table-datacell">
+                          {item?.role?.name}
                         </td>
-                        <td className="table-datacell datatype-numeric">
+                        <td className="table-datacell  ">
                           {item?.department?.name}
                         </td>
                         <td className="table-datacell datatype-numeric">
@@ -195,7 +215,7 @@ const AllEmployees = () => {
         <footer className="main-table-footer">
           <Pagination
             setDisplayData={setDisplayData}
-            data={data}
+            data={sortedData}
             entriesPerPage={entriesPerPage}
             Total={"Employee"}
           />

@@ -72,6 +72,12 @@ const initialState = {
   viewroleisLoading: false, 
   viewrolemessage: '', 
 
+  editroledata:  [],
+  editroleisError: false,
+  editroleisSuccess: false,
+  editroleisLoading: false, 
+  editrolemessage: '', 
+
   terminationsdata:  [],
   terminationsisError: false,
   terminationsisSuccess: false,
@@ -261,6 +267,18 @@ export const getRole = createAsyncThunk('employee/getRole', async (data, thunkAP
 export const viewRole = createAsyncThunk('employee/viewRole', async (data, thunkAPI) => {
   try {
     return await employeeService.viewRole(data)
+    
+  } catch (error: any) {   
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message || error.toString()   
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const editRole = createAsyncThunk('employee/editRole', async (data, thunkAPI) => {
+  try {
+    return await employeeService.editRole(data)
     
   } catch (error: any) {   
     const message = (error.response && 
@@ -543,6 +561,11 @@ export const authSlice = createSlice({
       state.viewroleisSuccess = false
       state.viewroleisError = false
       state.viewrolemessage = '' 
+
+      state.editroleisLoading = false
+      state.editroleisSuccess = false
+      state.editroleisError = false
+      state.editrolemessage = '' 
       
       state.terminationsisLoading = false
       state.terminationsisSuccess = false
@@ -760,6 +783,21 @@ export const authSlice = createSlice({
         state.viewroleisError = true
         state.viewrolemessage = action.payload    
         state.viewroledata = '' 
+      })
+
+      .addCase(editRole.pending, (state) => {
+        state.editroleisLoading = true 
+      })
+      .addCase(editRole.fulfilled, (state:any, action) => {
+        state.editroleisLoading = false
+        state.editroleisSuccess = true
+        state.editroledata = action.payload?.data    
+      })
+      .addCase(editRole.rejected, (state:any, action) => {
+        state.editroleisLoading = false
+        state.editroleisError = true
+        state.editrolemessage = action.payload    
+        state.editroledata = '' 
       })
        
       .addCase(deleteRole.pending, (state) => {

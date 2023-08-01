@@ -45,7 +45,7 @@ const RequestForWorkersModal = ({ id }: any) => {
 
 	// --- Remove Request Field   --- //
 	const handleRemoveField = (index: any) => {
-		setCounts(count - 1)
+		setCounts(counts - 1)
 		const field = [...newInputField];
 		field.splice(index, 1);
 		setnewInputField(field);

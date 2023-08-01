@@ -15,14 +15,14 @@ export const difficultyOptions = [
 ];
 
 export const genderOptions = [
-  "Select employee gender",
+  "SELECT EMPLOYEE GENDER ",
   "male",
   "female",
   "I will rather not say",
 ];
 
 export const visaOptions = [
-  "Select visa type",
+  "SELECT VISA TYPE type",
   "F2A - Non-Accredited Diplomatic Visa",
   "F3B - Transit Without Visa",
   "F3C - Transit With Visa",
@@ -101,13 +101,13 @@ export const visaOptions = [
 ];
 
 export const disabilityOptions = [
-  "Does employee have any disability?",
+  "DOSE EMPLOYEE HAVE ANY DISABILITY?",
   "Yes",
   "No",
 ];
-export const isExpatriateOptions = ["Is employee an expatriate?", "Yes", "No"];
+export const isExpatriateOptions = ["IS EMPLOYEE AN EXPATRIATE?", "Yes", "No"];
 export const martialStatusOptions = [
-  "Select marital status",
+  "SELECT MARITAL STATUS",
   "single",
   "married",
   "divorced",
@@ -118,7 +118,7 @@ export const martialStatusOptions = [
 ];
 
 export const ACADEMIC_QUALIFICATIONS = [
-  "Select qualification",
+  "SELECT QUALIFICATION",
   "Doctorate",
   "Master's",
   "Post Graduate Diploma",
@@ -131,7 +131,7 @@ export const ACADEMIC_QUALIFICATIONS = [
 ];
 
 export const categoryOptions = [
-  "Select staff category",
+  "SELECT STAFF CATEGORY",
   "Sanagement",
   "Senior",
   "Junior",

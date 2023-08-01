@@ -64,7 +64,7 @@ const TeamAttendance = () => {
 		<div  >
 			<div className="SiteWorkermaindiv">
 				<div className="SiteWorkermaindivsub">
-					<span className="SupportmainTitleh3">TEAM ATTENDANCE</span>
+					<span className="SupportmainTitleh3">Team Attendance</span>
 				</div>
 				<div>
 					<EntriesPerPage

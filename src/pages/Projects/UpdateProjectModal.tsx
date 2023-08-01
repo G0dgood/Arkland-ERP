@@ -57,10 +57,8 @@ const UpdateProjectModal = ({ id, title }: any) => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title">Update Project </span>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setShow(false)} >
 						<MdOutlineClose size={28} />
 					</Button>
@@ -106,14 +104,14 @@ const UpdateProjectModal = ({ id, title }: any) => {
 								</div>
 							</div>
 
-							<div className="btn-modal-container">
+							<div className="btn-modal-container d-flex justify-content-end" >
 								<Button
 									variant="contained"
-									className="Add-btn-modal"
+									className="add-experience"
 									type="submit"
 									onClick={handleSubmit}
 								>
-									{updateisLoading ? <Spinner animation="border" /> : "Create Team"}
+									{updateisLoading ? <Spinner animation="border" size='sm' /> : "Create Team"}
 								</Button>
 							</div>
 						</div>

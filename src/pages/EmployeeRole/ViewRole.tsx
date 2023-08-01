@@ -6,6 +6,7 @@ import projectBack from "../../assets/vectors/project-back.svg";
 import moment from 'moment';
 import { viewRole } from '../../features/Employee/employeeSlice';
 import DeleteModals from '../../components/DeleteModals';
+import CreateRoleModal from '../../components/Modals/CreateRoleModal';
 
 
 const ViewRole = () => {
@@ -45,7 +46,7 @@ const ViewRole = () => {
 								/>
 							</div>
 							<div className="employee-main-div-col-header-buttons">
-
+								<CreateRoleModal id={id} viewroledata={viewroledata} />
 								<DeleteModals id={id} />
 							</div>
 						</div>

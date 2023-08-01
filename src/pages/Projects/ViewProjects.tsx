@@ -114,7 +114,7 @@ const ViewProjects = () => {
               </div> */}
             </div>
             <div className="side-wrapper">
-              <div className="project-title">Project</div>
+              <div className="project-title">Project Details </div>
               <div className="project-name">
                 <div className="project-department">Country : {viewdata?.country}</div>
                 <div className="project-department">LGA : {viewdata?.lga}</div>
@@ -220,7 +220,7 @@ const ViewProjects = () => {
                       <input type="checkbox" name="msg" id="mail30" className="mail-choice" checked />
                       <label htmlFor="mail30">Project Update.</label>
                     </div>
-                    {viewdata?.status === "pending" &&
+                    {(viewdata?.status === "pending") &&
                       <div className="mail-doc">
                         <div className="mail-doc-wrapper">
                           <BsDot size={20} />
@@ -234,7 +234,7 @@ const ViewProjects = () => {
                           </div>
                         </div>
                       </div>}
-                    {(viewdata?.status === "commenced" || viewdata?.status === "reseted") &&
+                    {(viewdata?.status === "commenced" || viewdata?.status === "reseted" || viewdata?.status === "suspended") &&
                       <div className="mail-doc">
                         <div className="mail-doc-wrapper">
                           <BsDot size={20} />

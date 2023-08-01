@@ -1,11 +1,12 @@
 import moment from 'moment'
 import React, { useState } from 'react'
-import { Button, Modal } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
 import { BounceLoader } from 'react-spinners'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { FiEye } from 'react-icons/fi'
 import { viewTask } from '../../features/Tasks/taskSlice'
+import { Button } from '@material-ui/core'
 
 const ViewScheduleModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
@@ -45,6 +46,8 @@ const ViewScheduleModal = ({ id }: any) => {
 
 				<Modal.Header>
 					<span className="span-center-title">Task Details</span>
+
+
 					<Button onClick={() => setViewShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>

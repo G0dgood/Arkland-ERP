@@ -3,16 +3,17 @@ import React, { useEffect, useState, Fragment } from "react";
 import { Modal } from "react-bootstrap";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { Button } from "@material-ui/core";
-import { DAYS_SHORT, MONTHS, SAMPLE_META, preloadedEvents } from "./CalenderOptions";
+import { DAYS_SHORT, MONTHS, SAMPLE_META, Loader } from "./CalenderOptions";
+import { Navigation } from "./CalenderNavigation";
+import { Grid } from "./GridCalender";
+import EventForm from "./EventForm";
+import Event from "./Event";
+import { Feedback } from "./Feedback";
 
-// Sample events calendar build, explained and detailed over at
-// https://justacoding.blog/react-calendar-component-example-with-events/
 
-// Some config for convenience
+
+
 const MOCK_LOADING_TIME = 1000;
-
-
-
 
 
 const toStartOfDay = (date: string | number | Date) => {
@@ -40,7 +41,6 @@ const dateToInputFormat = (date: { getMonth: () => number; getDate: () => any; g
   const day = pad(date.getDate());
   const hours = pad(date.getHours());
   const minutes = pad(date.getMinutes());
-
   return `${date.getFullYear()}-${month}-${day}T${hours}:${minutes}`;
 };
 
@@ -62,53 +62,14 @@ const parseEvents = (events: any[]) => {
 
 const findEventsForDate = (events: any[], date: Date) => {
   const dateTime = date.getTime();
-
   return events.filter((event: { from: any; to: any; }) => {
     const eventFromTime = toStartOfDay(event.from).getTime();
     const eventToTime = toStartOfDay(event.to).getTime();
-
     return dateTime >= eventFromTime && dateTime <= eventToTime;
   });
 };
 
-// Top bar, contains the month/year combo as well as back/forward links
-const Navigation = ({ date, setDate, setShowingEventForm }: any) => {
-  return (
-    <div className="navigation">
-      <div
-        className="back"
-        onClick={() => {
-          const newDate = new Date(date);
-          newDate.setMonth(newDate.getMonth() - 1);
-          setDate(newDate);
-        }}>
-        {<MdArrowBackIos size={20} />}{" "}
-        {MONTHS[date.getMonth() === 0 ? 11 : date.getMonth() - 1]}
-      </div>
 
-      <div className="monthAndYear">
-        {MONTHS[date.getMonth()]} {date.getFullYear()}
-        <a
-          // eslint-disable-next-line no-script-url
-          href="javascript:;"
-          onClick={() => setShowingEventForm({ visible: true })}>
-          +
-        </a>
-      </div>
-
-      <div
-        className="forward"
-        onClick={() => {
-          const newDate = new Date(date);
-          newDate.setMonth(newDate.getMonth() + 1);
-          setDate(newDate);
-        }}>
-        {MONTHS[date.getMonth() === 11 ? 0 : date.getMonth() + 1]}{" "}
-        {<MdArrowForwardIos size={20} />}
-      </div>
-    </div>
-  );
-};
 
 // Week day headers: Mon, Tue, Wed etc
 const DayLabels = () => {
@@ -134,276 +95,44 @@ const MiniEvent = ({ event, setViewingEvent }: any) => {
   );
 };
 
-// The main event view, opens in a modal and contains all information
-// about the event in question
-const Event = ({
-  event,
-  setViewingEvent,
-  setShowingEventForm,
-  deleteEvent,
-}: any) => {
-  return (
-    <Modals
-      onClose={() => setViewingEvent(null)}
-      title={`${event.name} (${event.type})`}
-      className="eventModal">
-      <p>
-        From <b>{event.dateFrom}</b> to <b>{event.dateTo}</b>
-      </p>
-      <p>{event.meta}</p>
 
-      <button
-        className="button-green"
-        // @ts-ignore
-        // eslint-disable-next-line no-script-url
-        href="javascript:;"
-        onClick={() => {
-          setViewingEvent(null);
-          setShowingEventForm({ visible: true, withEvent: event });
-        }}>
-        Change this event
-      </button>
 
-      <button
-        className="button-red"
-        // @ts-ignore
-        // eslint-disable-next-line no-script-url
-        href="javascript:;"
-        onClick={() => deleteEvent(event)}>
-        Delete this event
-      </button>
 
-      <a
-        className="close"
-        // eslint-disable-next-line no-script-url
-        href="javascript:;"
-        onClick={() => setViewingEvent(null)}>
-        Back to calendar
-      </a>
-    </Modals>
-  );
-};
 
-// Form to add new events or edit existing events
-// In a real implementation, we'd have some frontend
-// validation and also the equivalent in our
-// backend service...
-const EventForm = ({
-  setShowingEventForm,
-  addEvent,
-  editEvent,
-  withEvent,
-  setViewingEvent,
-  preselectedDate,
-}: any) => {
-  const newEvent = withEvent || {};
-  if (!withEvent && !!preselectedDate) {
-    newEvent.dateFrom = dateToInputFormat(preselectedDate);
-  }
-  const [event, setEvent] = useState(newEvent);
-
-  return (
-    <Modals
-      onClose={() => setShowingEventForm({ visible: false })}
-      title={`${withEvent ? "Edit event" : "Add a new event"}`}>
-      <div className="form">
-        <label>
-          Name
-          <input
-            type="text"
-            placeholder="ie. My Event"
-            defaultValue={event.name}
-            onChange={(e) => setEvent({ ...event, name: e.target.value })}
-          />
-        </label>
-
-        <label>
-          Date from
-          <input
-            type="datetime-local"
-            defaultValue={event.dateFrom || dateToInputFormat(preselectedDate)}
-            onChange={(e) => setEvent({ ...event, dateFrom: e.target.value })}
-          />
-        </label>
-
-        <label>
-          Date to
-          <input
-            type="datetime-local"
-            defaultValue={event.dateTo}
-            onChange={(e) => setEvent({ ...event, dateTo: e.target.value })}
-          />
-        </label>
-
-        <label>
-          Type
-          <select
-            value={event.type ? event.type.toLowerCase() : "standard"}
-            onChange={(e) => setEvent({ ...event, type: e.target.value })}>
-            <option value="standard">Standard</option>
-            <option value="busy">Busy</option>
-            <option value="holiday">Holiday</option>
-          </select>
-        </label>
-
-        <label>
-          Description
-          <input
-            type="text"
-            placeholder="Describe the event"
-            defaultValue={event.meta}
-            onChange={(e) => setEvent({ ...event, meta: e.target.value })}
-          />
-        </label>
-
-        {withEvent ? (
-          <Fragment>
-            <button onClick={() => editEvent(event)}>Edit event</button>
-            <a
-              className="close"
-              // eslint-disable-next-line no-script-url
-              href="javascript:;"
-              onClick={() => {
-                setShowingEventForm({ visible: false });
-                setViewingEvent(event);
-              }}>
-              Cancel (go back to event view)
-            </a>
-          </Fragment>
-        ) : (
-          <Fragment>
-            <button onClick={() => addEvent(event)}>
-              Add event to calendar
-            </button>
-            <a
-              className="close"
-              // eslint-disable-next-line no-script-url
-              href="javascript:;"
-              onClick={() => setShowingEventForm({ visible: false })}>
-              Cancel (go back to calendar)
-            </a>
-          </Fragment>
-        )}
-      </div>
-    </Modals>
-  );
-};
-
-// Generic component - modal to present children within
-const Modals = ({ children, onClose, title, className }: any) => {
-  return (
-    // @ts-ignore
-    <Modal show={true} size="md">
-      <Fragment>
-        <div className="overlay" onClick={onClose} />
-        <div className={`modal-calender ${className}`}>
-          <h3>{title}</h3>
-          <div className="inner">{children}</div>
-        </div>
-      </Fragment>
-    </Modal>
-  );
-};
-
-// Generic component - a nicely animated loading spinner
-const Loader = () => {
-  return (
-    <Fragment>
-      <div className="overlay" />
-      <div className="loader">
-        <div className="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </Fragment>
-  );
-};
-
-// Generic component - simple feedback after an action has taken place
-const Feedback = ({ message, type }: any) => {
-  return <div className={`feedback ${type}`}>{message}</div>;
-};
-
-// The grid of days, renders a month's worth of days and
-// also populates the events on the relevant dates
-const Grid = ({
-  date,
-  events,
-  setViewingEvent,
-  setShowingEventForm,
-  actualDate,
-}: any) => {
-  const ROWS_COUNT = 6;
-  const currentDate = toStartOfDay(new Date());
-
-  // Finds the closest Monday relative to the first day of
-  // the target month/year combination
-  // Then increment upon this day until we have a full set
-  // of date objects to work with
-  const startingDate = new Date(date.getFullYear(), date.getMonth(), 1);
-  startingDate.setDate(startingDate.getDate() - (startingDate.getDay() - 1));
-
-  const dates = [];
-  for (let i = 0; i < ROWS_COUNT * 7; i++) {
-    const date = new Date(startingDate);
-    dates.push({ date, events: findEventsForDate(events, date) });
-    startingDate.setDate(startingDate.getDate() + 1);
-  }
-
-  return (
-    <Fragment>
-      {dates.map((date, index) => {
-        return (
-          <div
-            key={index}
-            className={`cell ${date.date.getTime() === currentDate.getTime() ? "current" : ""
-              } ${date.date.getMonth() !== actualDate.getMonth() ? "otherMonth" : ""
-              }`}>
-            <div className="date">
-              {date.date.getDate()}
-              <a
-                // eslint-disable-next-line no-script-url
-                href="javascript:;"
-                className="addEventOnDay"
-                onClick={() =>
-                  setShowingEventForm({
-                    visible: true,
-                    preselectedDate: date.date,
-                  })
-                }>
-                +
-              </a>
-            </div>
-            {date.events.map((event: any, index: React.Key | null | undefined) => (
-              <MiniEvent
-                key={index}
-                event={event}
-                setViewingEvent={setViewingEvent}
-              />
-            ))}
-          </div>
-        );
-      })}
-    </Fragment>
-  );
-};
 
 // The "main" component, our actual calendar
-const Calendar = ({ month, year, preloadedEvents = [] }: any) => {
-  const selectedDate = new Date(year, month - 1);
+const Calendar = ({ month, year, preloadedEvents = [], mydata }: any) => {
 
+
+  console.log('mydata', mydata)
+
+  // const activities = mydata?.map((item: any) => ({
+  // completed: item.completed,
+  // in_progress: item.in_progress,
+  // next: item.next,
+  // due_date_for_next: item.due_date_for_next,
+  // next_week_tasks: item.next_week_tasks,
+  // issues: item.issues,
+  // blockers: item.blockers
+  // }));
+
+  const activities = mydata?.map((item: any) => ({
+    id: item?.id,
+    name: item?.employee_name,
+    dateFrom: item?.time_in,
+    dateTo: item?.time_in,
+    meta: item?.employee_name,
+    type: "clock in",
+  }));
+
+  console.log('activities', mydata)
+
+  const selectedDate = new Date(year, month - 1);
   const [date, setDate] = useState(selectedDate);
   const [viewingEvent, setViewingEvent] = useState(false);
   const [showingEventForm, setShowingEventForm] = useState({ visible: false });
   const [isLoading, setIsLoading] = useState(false);
-  const [feedback, setFeedback] = useState();
+  const [feedback, setFeedback] = useState<any>();
 
   const parsedEvents = parseEvents(preloadedEvents);
   const [events, setEvents] = useState(parsedEvents);
@@ -434,10 +163,8 @@ const Calendar = ({ month, year, preloadedEvents = [] }: any) => {
     // below
     setTimeout(() => {
       const parsedEvents = parseEvents([event]);
-
       const updatedEvents = [...events];
       updatedEvents.push(parsedEvents[0]);
-
       setEvents(updatedEvents);
       setIsLoading(false);
       showFeedback({ message: "Event created successfully", type: "success" });
@@ -450,7 +177,6 @@ const Calendar = ({ month, year, preloadedEvents = [] }: any) => {
 
     setTimeout(() => {
       const parsedEvent = parseEvents([event]);
-
       const updatedEvents = [...events].map((updatedEvent) => {
         // @ts-ignore
         return updatedEvent.id === event.id ? parsedEvent[0] : updatedEvent;
@@ -497,6 +223,7 @@ const Calendar = ({ month, year, preloadedEvents = [] }: any) => {
         date={date}
         setDate={setDate}
         setShowingEventForm={setShowingEventForm}
+        MONTHS={MONTHS}
       />
       {/* @ts-ignore */}
       <DayLabels />
@@ -506,6 +233,9 @@ const Calendar = ({ month, year, preloadedEvents = [] }: any) => {
         setShowingEventForm={setShowingEventForm}
         setViewingEvent={setViewingEvent}
         actualDate={date}
+        toStartOfDay={toStartOfDay}
+        findEventsForDate={findEventsForDate}
+        MiniEvent={MiniEvent}
       />
       {viewingEvent && (
         <Event
@@ -526,6 +256,8 @@ const Calendar = ({ month, year, preloadedEvents = [] }: any) => {
           addEvent={addEvent}
           editEvent={editEvent}
           setViewingEvent={setViewingEvent}
+          toStartOfDay={toStartOfDay}
+          dateToInputFormat={dateToInputFormat}
         />
       )}
     </div>
@@ -540,8 +272,96 @@ const currentMonth = dateToday.getMonth() + 1;
 const currentYear = dateToday.getFullYear();
 
 
-export const Calendars = ({ date, setDate }: any) => (
-  <div>
+const preloadedEvents = [
+
+  {
+    id: 1,
+    name: "Good Friday",
+    dateFrom: "2023-04-10",
+    dateTo: "2023-04-10",
+    meta: "Commemorates the crucifixion of Jesus Christ.",
+    type: "Holiday",
+  },
+  {
+    id: 2,
+    name: "Easter Monday",
+    dateFrom: "2023-04-13",
+    dateTo: "2023-04-13",
+    meta: "Celebrates the resurrection of Jesus Christ.",
+    type: "Holiday",
+  },
+  {
+    id: 3,
+    name: "Workers' Day (Labour Day)",
+    dateFrom: "2023-05-01",
+    dateTo: "2023-05-01",
+    meta: "Honors workers and laborers' contributions.",
+    type: "Holiday",
+  },
+  {
+    id: 10,
+    name: "Democracy Day",
+    dateFrom: "2023-06-12",
+    dateTo: "2023-06-12",
+    meta: "Celebrates Nigeria's return to democratic rule in 1999.",
+    type: "Holiday",
+  },
+  {
+    id: 4,
+    name: "Eid al-Fitr (End of Ramadan)",
+    dateFrom: "2023-05-24",
+    dateTo: "2023-05-24",
+    meta: "Marks the end of Ramadan, the Islamic holy month of fasting.",
+    type: "Holiday",
+  },
+  {
+    id: 5,
+    name: "Eid al-Adha (Festival of Sacrifice)",
+    dateFrom: "2023-07-31",
+    dateTo: "2023-07-31",
+    meta: "Commemorates Ibrahim's willingness to sacrifice his son as an act of obedience to God.",
+    type: "Holiday",
+  },
+  {
+    id: 6,
+    name: "Independence Day",
+    dateFrom: "2023-10-01",
+    dateTo: "2023-10-01",
+    meta: "Marks Nigeria's independence from British colonial rule in 1960.",
+    type: "Holiday",
+  },
+  {
+    id: 7,
+    name: "Id el Maulud (Birth of the Prophet)",
+    dateFrom: "2023-10-29",
+    dateTo: "2023-10-29",
+    meta: "Celebrates the birth of Prophet Muhammad.",
+    type: "Holiday",
+  },
+  {
+    id: 8,
+    name: "Christmas Day",
+    dateFrom: "2023-12-25",
+    dateTo: "2023-12-25",
+    meta: "Commemorates the birth of Jesus Christ.",
+    type: "Holiday",
+  },
+  {
+    id: 9,
+    name: "Boxing Day",
+    dateFrom: "2023-12-26",
+    dateTo: "2023-12-26",
+    meta: "Traditionally observed as a day of giving to the less fortunate.",
+    type: "Holiday",
+  }
+]
+
+
+
+export const Calendars = ({ date, setDate, mydata }: any) => (
+
+
+  <div className="contain-Calendar">
     {/* <div className="DashboardCalender-top-btn">
       <div className="Calender-top-btn-sup"> */}
     {/* <div
@@ -564,7 +384,8 @@ export const Calendars = ({ date, setDate }: any) => (
       month={currentMonth}
       year={currentYear}
       preloadedEvents={preloadedEvents}
+      mydata={mydata}
     />
-    ,
+
   </div>
 );

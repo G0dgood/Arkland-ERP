@@ -47,10 +47,8 @@ const SuspendProjectModal = ({ id, title }: any) => {
 				centered
 			>
 				<Modal.Header>
-					<span></span>
 					<span className="span-center-title">Suspend {title} Project</span>
 					<Button
-						style={{ color: "#fff" }}
 						onClick={() => setShow(false)} >
 						<MdOutlineClose size={28} />
 					</Button>
@@ -72,13 +70,13 @@ const SuspendProjectModal = ({ id, title }: any) => {
 								</div>
 							</div>
 
-							<div className="btn-modal-container">
+							<div className="btn-modal-container" style={{ display: "flex", justifyContent: "flex-end" }}>
 								<Button
 									variant="contained"
-									className="Add-btn-modal"
+									className="add-experience"
 									type="submit"
 									onClick={handleSubmit}>
-									{suspendisLoading ? <Spinner animation="border" /> : "Suspend"}
+									{suspendisLoading ? <Spinner animation="border" size='sm' /> : "Suspend"}
 								</Button>
 							</div>
 						</div>

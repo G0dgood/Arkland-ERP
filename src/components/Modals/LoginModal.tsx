@@ -1,20 +1,14 @@
-import React, { useState } from 'react'
-
+import { useState } from 'react'
 import { Formik } from 'formik';
 import * as yup from 'yup'
 import { Button } from '@material-ui/core';
-
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { MdClear } from 'react-icons/md';
 
-// import { reset } from '../../features/authSlice';
+
 
 
 const LoginModal = ({ showModal, setShowModal }: any) => {
-
-
-
-
 
 	const [passwordShown, setPasswordShown] = useState(true);
 	const togglePasswordVisiblity = () => {

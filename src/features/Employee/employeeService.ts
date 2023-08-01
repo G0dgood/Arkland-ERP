@@ -43,6 +43,12 @@ const deleteEmployees = async (id: any) => {
    const { data }: any = await HttpService.get(`hr/employee-roles/${id}`) 
    return data
  }
+
+const editRole = async (input: any,) => {   
+   const {id , inputs} = input
+   const { data }: any = await HttpService.patch(`hr/employee-roles/${id}`,inputs) 
+   return data
+ }
   
  const viewPrevilage = async (id: any) => {   
    const { data }: any = await HttpService.get(`admin/privileges/${id}`) 
@@ -147,7 +153,8 @@ const employeeService = {
   deactivateWarning,
   responseWarning,
   createTerminations,
-  teanCreateTerminations
+  teanCreateTerminations,
+  editRole
 }
 
 export default employeeService

@@ -5,6 +5,9 @@ import { useEffect } from 'react'
 const KPIInfoDetails = ({ viewdata, setHodscore }: any) => {
 
 
+	console.log('viewdata', viewdata?.parameters)
+
+
 	const kpiData = [
 		{
 			'Performance': 'Job Knowledge',
@@ -20,21 +23,6 @@ const KPIInfoDetails = ({ viewdata, setHodscore }: any) => {
 			'Performance': ' Attendance',
 			'num': viewdata?.attendance_employee,
 			'reviewer': viewdata?.attendance_reviewer
-		},
-		{
-			'Performance': 'Software Development',
-			'num': viewdata?.communication_employee,
-			'reviewer': viewdata?.communication_reviewer
-		},
-		{
-			'Performance': 'Team work',
-			'num': viewdata?.reliability_employee,
-			'reviewer': viewdata?.reliability_reviewer
-		},
-		{
-			'Performance': 'Debugging',
-			'num': viewdata?.collaboration_employee,
-			'reviewer': viewdata?.collaboration_reviewer
 		},
 	];
 
@@ -155,35 +143,9 @@ const KPIInfoDetails = ({ viewdata, setHodscore }: any) => {
 								{viewdata?.attendance_reviewer}
 							</div>
 						</div>
-						<div className="added-field">
-							<div className="factor_area">
-								<p>Software Development</p>
-								<div>
-									<p>{kpiData3.Weight4}</p>
-								</div>
-							</div>
-							<div className="rate_area">
-								<p>{viewdata?.communication_employee}</p>
-							</div>
-							<div className="btn_area">
-								{viewdata?.communication_reviewer}
-							</div>
-						</div>
-						<div className="added-field">
-							<div className="factor_area">
-								<p>Team work</p>
-								<div>
-									<p>{kpiData3.Weight5}</p>
-								</div>
-							</div>
-							<div className="rate_area">
-								<p>{viewdata?.reliability_employee}</p>
-							</div>
-							<div className="btn_area">
-								{viewdata?.reliability_reviewer}
-							</div>
-						</div>
-						<div className="added-field">
+
+
+						{/* <div className="added-field">
 							<div className="factor_area">
 								<p>Debugging</p>
 								<div>
@@ -196,7 +158,8 @@ const KPIInfoDetails = ({ viewdata, setHodscore }: any) => {
 							<div className="btn_area">
 								<p>{viewdata?.collaboration_reviewer}</p>
 							</div>
-						</div>
+						</div> */}
+
 						<div className="added-field">
 							<div className="factor_area Grade-title">
 								<p>Total </p>

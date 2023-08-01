@@ -34,11 +34,6 @@ const RequestEmployeeTerminationModal = () => {
 
 	})
 
-
-
-
-
-
 	useEffect(() => {
 		setInputs((prevState: any) => {
 			return ({
@@ -54,10 +49,6 @@ const RequestEmployeeTerminationModal = () => {
 	const [isLoading, setisLoading] = useState<any>([]);
 	const [employees, setEmployees] = useState<any>([]);
 	const [warnings, setWarnings] = useState<any>([]);
-
-
-
-
 
 	const getData = async () => {
 		setisLoading(true)

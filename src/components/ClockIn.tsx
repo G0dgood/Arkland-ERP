@@ -17,6 +17,7 @@ const ClockIn = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
+			setShow(false)
 			fireAlert("successful", "Clock in success", "success");
 			dispatch(reset());
 		}

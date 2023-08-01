@@ -44,10 +44,12 @@ const CreateRole = () => {
 	useEffect(() => {
 		if (getroledata) {
 			// @ts-ignore
-			const result = getroledata?.filter((data) => data?.name.toString()?.includes(searchItem));
+			const result = getroledata?.filter((data) => data?.name?.toString()?.includes(searchItem));
 			setSortData(result);
 		}
 	}, [getroledata, searchItem]);
+
+
 
 
 
@@ -96,7 +98,7 @@ const CreateRole = () => {
 							) : (
 								displayData.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
-										<td className="table-datacell datatype-numeric">{item?.name}</td>
+										<td className="table-datacell  ">{item?.name}</td>
 										<td className="table-datacell datatype-numeric">
 											<CopyToClipboardButton url={item?.id} padding={"6px"} size={15} />
 										</td>

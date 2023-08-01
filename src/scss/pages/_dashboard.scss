@@ -542,8 +542,17 @@ overflow-y: scroll;
   flex-wrap: wrap;
   width: 100%;
   font-family: sans-serif;
-  border: 4px solid #e6e6e6;
+  // border: 4px solid #e6e6e6;
   position: relative;
+  
+ 
+}
+
+.contain-Calendar{
+ background-color: #fff !important;
+ padding: 1rem;
+margin-top: 2rem;
+border: 1px solid #e8e8e8 !important;
 }
 
 .calendar a {
@@ -594,20 +603,29 @@ overflow-y: scroll;
   padding: 3px;
   font-size: 1em;
   cursor: pointer;
+    //  color: #e7713c;
+  font-weight: bold;
+  border-radius: 2px;
 }
 
 .miniEvent.holiday {
-  background: #3fb73f;
+  background: #3fb73f4c;
+  color: #3fb73f;
+  font-weight: bold;
+  border-radius: 2px;
 }
 
 .miniEvent.busy {
-  background: #e7713c;
+  background: #e7723c4c;
+   color: #e7713c;
+  font-weight: bold;
+  border-radius: 2px;
 }
 
 .navigation {
   width: 100%;
   padding: 10px 8px 14px 8px;
-  border-bottom: 3px solid #b3b3b3;
+  // border-bottom: 3px solid #b3b3b3;
 }
 
 .navigation div {

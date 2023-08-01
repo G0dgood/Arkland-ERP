@@ -54,13 +54,6 @@ const WeeklyReportView = () => {
 
 
 
-
-
-
-
-
-
-
 	useEffect(() => {
 		if (deleteisSuccess) {
 			fireAlert("Delete successful", "Delete Weekly Reports success", 'success');

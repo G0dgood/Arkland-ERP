@@ -104,9 +104,9 @@ const Finance = ({
             <CustomInputField
              type="number"
              maxLength={10}
-             label="Bank Account Number"
+             label="BANK ACCOUNT NUMBER"
              name="bank_account_number"
-             placeholder="Enter bank account number"
+             placeholder="ENTER BANK ACCOUNT NUMBER"
              onChange={(event: any) => {
               setFieldValue(
                "bank_account_number",

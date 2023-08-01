@@ -23,10 +23,10 @@ const ViewAnnouncementModal = ({ id }: any) => {
 			<FiEye
 				style={{ marginRight: "10px" }}
 				size={20}
-				// @ts-ignore 
 				onClick={() => { setViewShow(true); handleClick(id) }}
 				cursor="pointer"
 				title="VIEW ANNOUNCEMENT"
+				color='#gray'
 			/>
 			<Modal
 				size="lg"
@@ -35,6 +35,7 @@ const ViewAnnouncementModal = ({ id }: any) => {
 				centered  >
 				<Modal.Header>
 					<span className="span-center-title">View Announcement</span>
+
 					<Button onClick={() => setViewShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>

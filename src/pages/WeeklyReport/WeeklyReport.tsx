@@ -18,9 +18,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const navigate = useNavigate();
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-
-
-
+	const [show, setShow] = useState(false);
 	const [count, setCount] = useState<number>(0)
 	const [files, setFile] = useState([]);
 	const [inputs, setInputs] = useState<any>({
@@ -106,14 +104,12 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const blob = files?.map((item: any) => item.file)
 
 	const submitHandler = async () => {
-
 		setisLoading(true)
 		const fileObject: any = {}
 		// @ts-ignore
 		for (let i = 0; i < blob?.length; i++) {
 			fileObject[i] = blob[i]
 		}
-
 		allInput.activities = JSON.stringify(allInput.activities)
 		await HttpService.uploadFile(url, allInput, fileObject, "file")
 			.then((response) => {
@@ -141,9 +137,6 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			navigate('/weeklyreport/weeklyreport/myweeklyreport')
 		}
 	}, [html, setIsCheck, dispatch, isSuccess, message, navigate])
-
-
-	const [show, setShow] = useState(false);
 
 
 
@@ -234,7 +227,6 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 						{!show && <Button className="ccsnl-btn WeeKlyReport-tab"
 							onClick={submitHandler}>
 							{isLoading ? <Spinner animation="border" /> : "Sumbit"} </Button>}
-
 					</div>
 				</div>
 			</div>

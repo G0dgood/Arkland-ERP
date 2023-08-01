@@ -5,30 +5,27 @@ import { MdOutlineClose } from 'react-icons/md';
 import { fireAlert } from "../../utils/Alert";
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { allDepartments } from '../../features/Department/departmentSlice';
-import { createEmployeeRole, reset } from '../../features/Employee/employeeSlice';
+import { createEmployeeRole, editRole, reset } from '../../features/Employee/employeeSlice';
+import { useNavigate } from 'react-router-dom';
 
 
-const CreateRoleModal = () => {
+const CreateRoleModal = ({ id, viewroledata }: any) => {
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-
+	const [departmentss, setDepartmentss] = useState([]);
 	const { data } = useAppSelector((state: any) => state.department)
-	const { createroleisLoading, createrolemessage, createroleisSuccess } = useAppSelector((state: any) => state.employee)
+	const { createroleisLoading, createroleisSuccess } = useAppSelector((state: any) => state.employee)
+	const { editroleisLoading, editroleisSuccess } = useAppSelector((state: any) => state.employee)
 
 	const handleclick = () => {
-
 		// @ts-ignore
 		dispatch(allDepartments());
 	}
-
-	const [departmentss, setDepartmentss] = useState([]);
-
-
 	useEffect(() => {
 		if (data) {
 			setDepartmentss(data)
 		}
 	}, [data])
-
 
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
@@ -38,23 +35,23 @@ const CreateRoleModal = () => {
 	})
 
 
-
-
-
 	const handlecreate = () => {
-
 		// @ts-ignore
 		dispatch(createEmployeeRole(inputs));
 	}
 
-	const html = "Role Created!";
-	const icon = "success";
+	const input = { id, inputs }
+	const handleEdit = () => {
+		// @ts-ignore
+		dispatch(editRole(input));
+	}
+
 
 
 
 	useEffect(() => {
 		if (createroleisSuccess) {
-			fireAlert("success", html, icon);
+			fireAlert("success", "Role Created!", "success");
 			setInputs({
 				name: "",
 				department: "",
@@ -64,8 +61,23 @@ const CreateRoleModal = () => {
 			dispatch(reset());
 			setLgShow(false)
 		}
-	}, [createroleisSuccess, createrolemessage, dispatch, html])
+	}, [createroleisSuccess, dispatch])
 
+
+
+	useEffect(() => {
+		if (editroleisSuccess) {
+			fireAlert("success", "Role Edited!", "success");
+			setInputs({
+				name: "",
+				department: "",
+				description: "",
+			})
+			dispatch(reset());
+			setLgShow(false)
+			navigate(-1)
+		}
+	}, [editroleisSuccess, dispatch, navigate])
 
 
 	const handleOnChange = (input: any, value: any) => {
@@ -75,26 +87,23 @@ const CreateRoleModal = () => {
 		}));
 	};
 
-
-
-
-	// const Role: any = [
-	// 	"employee",
-	// 	"team lead",
-	// 	"head of department",
-	// 	"HR editor",
-	// 	"HR admin",
-	// 	"HR head",
-	// 	"admin",
-	// 	"super admin",
-	// 	"master"
-	// ]
+	// Gets the previous state
+	useEffect(() => {
+		setInputs((prevState: any) => {
+			return ({
+				...prevState,
+				name: viewroledata?.name,
+				department: viewroledata?.department?.id,
+				description: viewroledata?.description,
+			});
+		});
+	}, [viewroledata, setInputs]);
 
 	return (
 		<div>
 			<Button variant="contained" className="add-experience"
 				onClick={() => setLgShow(true)}>
-				Create Role
+				{id ? "Edit Role" : "	Create Role"}
 			</Button>
 			<Modal
 				size="lg"
@@ -102,7 +111,7 @@ const CreateRoleModal = () => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered>
 				<Modal.Header  >
-					<span className='span-center-title'>Create Role</span>
+					<span className='span-center-title'>	{id ? "Edit Role" : "	Create Role"}</span>
 					<Button onClick={() => { setLgShow(false); handleclick() }}>
 						<MdOutlineClose size={28} />
 					</Button>
@@ -110,17 +119,14 @@ const CreateRoleModal = () => {
 				<Modal.Body>
 					<div className='Modal-Body'>
 						<h6>Name</h6>
-						<div className='Modal-data-time'>
-
+						<div className='Modal-data-time mb-3'>
 							<input
 								type='text'
 								id="Modal-textarea-input-sub"
 								value={inputs.name}
 								onChange={(e) => handleOnChange("name", e.target.value)} />
+						</div>
 
-						</div>
-						<div className='Modal-data-time'>
-						</div>
 						<h6>Department</h6>
 						<select id="Modal-textarea-input-sub"
 							value={inputs.department}
@@ -132,21 +138,19 @@ const CreateRoleModal = () => {
 								</option>
 							))}
 						</select >
-						<div className='Modal-data-time'>
-						</div>
-						<div className='Modal-textarea-middle'>
+
+						<div className='Modal-textarea-middle mt-3'>
 							<h6>Description</h6>
 							<textarea rows={6} className='Modal-textarea' placeholder='Enter role description'
 								value={inputs?.description}
 								onChange={(e) => handleOnChange("description", e.target.value)} />
 						</div>
 						<div className='btn-modal-container' style={{ display: "flex", justifyContent: "flex-end" }}>
-							<Button variant="contained" className="add-experience" onClick={handlecreate}  >
-								{createroleisLoading ? <Spinner animation="border" /> : "Create"}
+							<Button variant="contained" className="add-experience" onClick={id ? handleEdit : handlecreate}  >
+								{createroleisLoading || editroleisLoading ? <Spinner animation="border" /> : id ? "Edit Role" : "	Create Role"}
 							</Button>
 						</div>
 					</div>
-
 				</Modal.Body>
 			</Modal>
 		</div>
