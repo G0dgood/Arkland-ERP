@@ -168,7 +168,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
  const getData = async () => {
   setisLoading(true)
   try {
-   const hodsUrl = `employees`
+   const hodsUrl = `employees/hods`
    const hods: any = await HttpService.get(hodsUrl)
    setHOD(hods?.data?.data)
    setisLoading(false)
@@ -183,7 +183,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
   hods?.forEach((team: any) =>
    availablleHods.push({
     value: team.id,
-    label: team.full_name,
+    label: team.name,
    })
   );
 

@@ -65,12 +65,7 @@ const CreateKpiModal = () => {
 		setNewKpiField(field);
 	};
 
-	// const handleKPIChange = (input: any, value: any) => {
-	// 	setInputs((prevState: any) => ({
-	// 		...prevState,
-	// 		[input]: value,
-	// 	}));
-	// };
+
 
 	const handleKPIChange = (input: any, value: any, index: any,) => {
 		let items = [...newKpiField];
@@ -87,7 +82,8 @@ const CreateKpiModal = () => {
 
 	const allInput = { ...inputs, other_parameters }
 
-	console.log('allInput', allInput)
+
+
 
 	return (
 		<>
@@ -97,8 +93,7 @@ const CreateKpiModal = () => {
 			<Modal
 				show={show}
 				onHide={() => setShow(false)}
-				fullscreen={true}
-			>
+				fullscreen={true}>
 				<Modal.Header  >
 					<span className="span-center-title">Create Assessment</span>
 

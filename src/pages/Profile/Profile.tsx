@@ -1,12 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
 import { FiChevronLeft } from 'react-icons/fi';
 import { BsDot } from 'react-icons/bs';
 import { Link, useLocation } from 'react-router-dom'
 import moment from 'moment';
 import LogoutOption from '../../components/LogoutOption';
 import DataService from '../../utils/dataService';
-// import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 
 
@@ -19,23 +17,6 @@ const Profile = () => {
 
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-
-	// const [inputs, setInputs] = useState({
-	// 	first_name: "",
-	// 	middle_name: "",
-	// 	last_name: "",
-	// 	personal_email: "",
-	// 	email: "",
-	// 	phone: "",
-	// 	gender: "",
-	// 	institution_attended: "",
-	// 	visa_type: "",
-	// 	course_studied: "",
-	// 	qualification: "",
-	// 	department: "",
-	// 	role: "",
-	// });
-
 	const { privileges } = userInfo
 
 

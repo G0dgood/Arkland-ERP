@@ -78,7 +78,7 @@ const ManagerWeeklyReport = () => {
 							) : (
 								displayData?.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
-										<td className="table-datacell datatype-numeric"> {item?.employee_name}</td>
+										<td className="table-datacell  "> {item?.employee_name}</td>
 										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
 										<td className="table-datacell datatype-numeric">{item?.week}</td>
 										<td className="table-datacell datatype-numeric">{item?.self_assessment}</td>

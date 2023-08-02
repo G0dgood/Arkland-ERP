@@ -79,7 +79,7 @@ const AllKPIReport = () => {
 					<table className="main-table-content">
 						<thead className="data-table-header">
 							<tr className="data-table-row">
-								<td className="table-datacell datatype-name">FULL NAME</td>
+								<td className="table-datacell  ">FULL NAME</td>
 								<td className="table-datacell datatype-numeric">YEAR</td>
 								<td className="table-datacell datatype-numeric">MONTH</td>
 								<td className="table-datacell datatype-numeric">AVERAGE</td>
@@ -95,7 +95,7 @@ const AllKPIReport = () => {
 							) : (
 								displayData.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
-										<td className="table-datacell datatype-numeric">
+										<td className="table-datacell ">
 											{item.employee_name}
 										</td>
 										<td className="table-datacell datatype-numeric">

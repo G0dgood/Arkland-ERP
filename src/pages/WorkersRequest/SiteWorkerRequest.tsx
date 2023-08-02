@@ -82,16 +82,16 @@ const SiteWorkerRequest = () => {
               ) : (
                 requestWorkers.map((item: any, i: any) => (
                   <tr className="data-table-row">
-                    <td className="table-datacell datatype-numeric">
+                    <td className="table-datacell  ">
                       {item?.project?.country}
                     </td>
-                    <td className="table-datacell datatype-numeric">
+                    <td className="table-datacell  ">
                       {item.team?.name}
                     </td>
-                    <td className="table-datacell datatype-numeric">
+                    <td className="table-datacell  c">
                       {item.team_lead?.name}
                     </td>
-                    <td className="table-datacell datatype-numeric">
+                    <td className="table-datacell  ">
                       {item?.requests?.[0].role_name}
                     </td>
                     <td className="table-datacell datatype-numeric">

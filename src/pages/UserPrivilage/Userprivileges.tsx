@@ -85,8 +85,8 @@ const Userprivileges = () => {
 					<table className="main-table-content">
 						<thead className="data-table-header">
 							<tr className="data-table-row" >
-								<td className="table-datacell datatype-numeric">Name</td>
-								<td className="table-datacell datatype-numeric">Role</td>
+								<td className="table-datacell  ">Name</td>
+								<td className="table-datacell  ">Role</td>
 								<td className="table-datacell datatype-numeric">Created Date</td>
 								<td className="table-datacell datatype-numeric">Status</td>
 								<td className="table-datacell datatype-numeric">View</td>

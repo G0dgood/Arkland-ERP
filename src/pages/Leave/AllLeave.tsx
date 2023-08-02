@@ -19,12 +19,6 @@ const AllLeave = () => {
 
 
 
-
-
-
-
-
-
 	useEffect(() => {
 
 		dispatch(getAllLeave());

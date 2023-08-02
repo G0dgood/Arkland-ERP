@@ -57,7 +57,7 @@ const TeamWeeklyReport = () => {
 					<table className="main-table-content">
 						<thead className="data-table-header">
 							<tr className="data-table-row" >
-								<td className="table-datacell datatype-name">Full Name</td>
+								<td className="table-datacell  ">Full Name</td>
 								<td className="table-datacell datatype-numeric">Year</td>
 								<td className="table-datacell datatype-numeric">Week</td>
 								<td className="table-datacell datatype-numeric">Self Assessment</td>

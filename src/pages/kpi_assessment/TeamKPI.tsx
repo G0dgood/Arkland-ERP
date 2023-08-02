@@ -93,7 +93,7 @@ const TeamKPI = () => {
           <table className="main-table-content">
             <thead className="data-table-header">
               <tr className="data-table-row">
-                <td className="table-datacell datatype-name">FULL NAME</td>
+                <td className="table-datacell  ">FULL NAME</td>
                 <td className="table-datacell datatype-numeric">YEAR</td>
                 <td className="table-datacell datatype-numeric">MONTH</td>
                 <td className="table-datacell datatype-numeric">AVERAGE</td>

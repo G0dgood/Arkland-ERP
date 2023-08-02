@@ -142,7 +142,7 @@ const AllEmployees = () => {
               <table className="main-table-content">
                 <thead className="data-table-header">
                   <tr className="data-table-row">
-                    <td className="table-datacell datatype-numeric"  > FULL NAME </td>
+                    <td className="table-datacell  "  > FULL NAME </td>
                     <td className="table-datacell datatype-numeric"  > EMAIL </td>
                     <td className="table-datacell datatype-numeric"  > ROLE </td>
                     <td className="table-datacell datatype-numeric"  > DEPARTMENT </td>

@@ -81,7 +81,7 @@ const CreateRole = () => {
 					<table className="main-table-content">
 						<thead className="data-table-header">
 							<tr className="data-table-row" >
-								<td className="table-datacell datatype-numeric">Name</td>
+								<td className="table-datacell  ">Name</td>
 								<td className="table-datacell datatype-numeric">ID</td>
 								<td className="table-datacell datatype-numeric">Description</td>
 								<td className="table-datacell datatype-numeric">Created Date</td>

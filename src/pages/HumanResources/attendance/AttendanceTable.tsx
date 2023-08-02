@@ -74,10 +74,10 @@ const AttendanceTable = () => {
               ) : (
                 displayData?.map((item: any, i: any) => (
                   <tr className="data-table-row" key={i}>
-                    <td className="table-datacell datatype-numeric">
+                    <td className="table-datacell  ">
                       {item?.employee_name}
                     </td>
-                    <td className="table-datacell datatype-numeric">
+                    <td className="table-datacell  ">
                       {item?.employee_department?.description}
 
                     </td>

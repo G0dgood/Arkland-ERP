@@ -24,6 +24,7 @@ const ViewKPAssessment = () => {
 	]
 
 
+
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(viewAssessment(id));

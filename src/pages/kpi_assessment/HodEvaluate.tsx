@@ -307,16 +307,6 @@ const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
            {Object.keys(!hodreviewdata ? [] : hodreviewdata).map((key: any) => {
             <p>{hodreviewdata[key]?.reviewer_score}</p>
            })}
-
-           {/* {data?.status === 'active' ? data?.job_knowledge_reviewer :
-            <select value={employeegrade.employeegrade1}
-             onChange={(e) => handleOnChange4('employeegrade1', e.target.value)}>
-             <option></option>
-             {[1, 2, 3, 4, 5].map(item =>
-              <option key={item} value={item}>{item}</option>
-             )}
-            </select>
-           } */}
           </div>
          </div>
 

@@ -4,10 +4,7 @@ import { useEffect } from 'react'
 
 const KPIInfoDetails = ({ viewdata, setHodscore }: any) => {
 
-
-	console.log('viewdata', viewdata?.parameters)
-
-
+ 
 	const kpiData = [
 		{
 			'Performance': 'Job Knowledge',
