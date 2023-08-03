@@ -29,8 +29,8 @@ const teamAssessment = async (id:any) => {
 }
 
 const hodReviewAssessment = async (  inputs: any) => {  
- const {id , inputr} = inputs
-    const { data }: any = await HttpService.patch(`hr/appraisals/${id}/review`, inputr)   
+ const {id , input} = inputs
+    const { data }: any = await HttpService.patch(`hr/appraisals/${id}/review`, input)   
   return data
 }
 

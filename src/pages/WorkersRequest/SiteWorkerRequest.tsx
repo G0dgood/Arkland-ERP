@@ -20,15 +20,10 @@ const SiteWorkerRequest = () => {
   const { data: requestWorkers, isLoading } = useAppSelector((state: any) => state.worker)
 
 
-
-
   useEffect(() => {
     // @ts-ignore
     dispatch(getRequest());
   }, [dispatch]);
-
-
-
 
   const header = [
     { title: "PROJECT", prop: "project" },

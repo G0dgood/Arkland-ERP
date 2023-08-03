@@ -4,6 +4,7 @@ import { fireAlert } from '../../utils/Alert';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/useStore';
 import { Button } from '@material-ui/core';
+import { calculateTotalScore, getTotalReviewerScore, getTotalScore, getTotalScoreSum, getTotalScoreWeight } from '../../utils/helpers';
 
 
 const KPIAdminDetails = ({ data }: any) => {
@@ -14,7 +15,7 @@ const KPIAdminDetails = ({ data }: any) => {
 	const location = useLocation();
 
 
-	console.log('viewdata', data)
+
 
 
 
@@ -36,10 +37,6 @@ const KPIAdminDetails = ({ data }: any) => {
 		}
 
 	}, [html, title, icon, hodreviewisSuccess, navigate]);
-
-
-
-
 
 
 	const reviews = [
@@ -80,12 +77,9 @@ const KPIAdminDetails = ({ data }: any) => {
 
 
 
-	useEffect(() => {
-		setData(parameters)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data])
 
-	const [datas, setData] = useState<any>(parameters);
+
+
 
 
 	return (
@@ -114,7 +108,7 @@ const KPIAdminDetails = ({ data }: any) => {
 							</div>
 						</div>
 
-						{Object.keys(!datas ? [] : datas).map((key) => {
+						{Object.keys(!parameters ? [] : parameters).map((key) => {
 							if (key === '_id') return null;
 							return (
 								<div key={key}>
@@ -122,17 +116,18 @@ const KPIAdminDetails = ({ data }: any) => {
 										<div className="factor_area">
 											<p>{key}</p>
 											<div>
-												<p>{datas[key].score_weight}</p>
+												<p>{parameters[key].score_weight}</p>
 											</div>
 										</div>
 										<div className="rate_area">
-											{datas[key].score}
+											{parameters[key].score}
 										</div>
 										<div className="btn_area">
 											{/* @ts-ignore */}
-											{Object.keys(!hodreviewdata ? [] : hodreviewdata).map((key: any) => {
+											{/* {Object.keys(!hodreviewdata ? [] : hodreviewdata).map((key: any) => {
 												<p>{hodreviewdata[key]?.reviewer_score}</p>
-											})}
+											})} */}
+											{calculateTotalScore(parameters[key].score_weight, parameters[key].score)}
 										</div>
 									</div>
 
@@ -140,23 +135,24 @@ const KPIAdminDetails = ({ data }: any) => {
 							)
 						})}
 
-						{/* <div className="added-field">
-       <div className="factor_area Grade-title">
-        <p>Total</p>
-        <div>
-         <p>{Weight}</p>
-        </div>
-       </div>
-       <div className="rate_area Grade-title">
-        <p>{!Amount ? "0" : Amount}</p>
-       </div>
-       {location.state.name === "admin" ? "" : <div className="btn_area Grade-title">
-        {data?.status === 'active' ? hod : <p> {hodscore}</p>}
-       </div>}
-       {location.state.name === "admin" && <div className="btn_area Grade-title">
-        <p> {hodscore}</p>
-       </div>} 
-      </div> */}
+						<div className="added-field">
+							<div className="factor_area Grade-title">
+								<p>Total</p>
+								<div>
+									<p>{getTotalScoreWeight(parameters)}</p>
+								</div>
+							</div>
+							<div className="rate_area Grade-title">
+								<p>{getTotalScore(parameters)}</p>
+							</div>
+							{location.state.name === "admin" ? "" : <div className="btn_area Grade-title">
+								{/* {data?.status === 'active' ? hod : <p> {hodscore}</p>} */}
+							</div>}
+							{location.state.name === "admin" && <div className="btn_area Grade-title">
+								<p> {getTotalReviewerScore(parameters)}</p>
+
+							</div>}
+						</div>
 					</div>
 
 

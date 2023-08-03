@@ -64,13 +64,15 @@ const KPIDetails = () => {
 									{/* <p>john.adibe@outcess.com</p> */}
 									<p>ALS/ADM/{viewdata?.employee_id}</p>
 									<span className="app-chat--icon">
-										<span>My Assessment Performance</span> 		<Button className={viewdata?.status === 'active' ? "table-link-active" : "table-link"}>
+										{/* <span>My Assessment Performance</span> */}
+										<Button className={viewdata?.status === 'active' ? "table-link-active  " : "table-link   "} style={{ marginRight: "2rem" }}>
 											{viewdata?.status === 'active' ? 'Completed' : viewdata?.status}</Button>
+										{/* @ts-ignore */}
+										{viewdata?.status === 'active' ? '' :
+											<Button className={"table-link"} onClick={handleDelete}>{deleteisLoading ? <Spinner animation="border" /> : 'Delete'}</Button>}
 									</span>
 								</div>
-								{/* @ts-ignore */}
-								{viewdata?.status === 'active' ? '' :
-									<Button className={"table-link"} onClick={handleDelete}>{deleteisLoading ? <Spinner animation="border" /> : 'Delete'}</Button>}
+
 							</div>
 						</div>
 						{viewisLoading ? <TableLoader isLoading={viewisLoading} /> : ""}
@@ -101,6 +103,7 @@ const KPIDetails = () => {
 								<p id="avg-rating">{viewdata?.total_performance_percentage}{viewdata?.total_performance_percentage === undefined ? '' : '%'}</p>
 							</div>
 						</div>
+
 						<div className="kpi-summary">
 							<div className="kpi-summary-title">
 								<p>{viewdata?.employee_name}'s  comment</p>

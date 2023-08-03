@@ -5,179 +5,31 @@ import { fireAlert } from '../../utils/Alert';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hodReviewAssessment, reset } from '../../features/KPIAssessment/assessmentSlice';
+import { calculateTotalScore } from '../../utils/helpers';
 
 
-const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
+const HodEvaluation = ({ data }: any) => {
  const navigate = useNavigate();
  const { id } = useParams()
  const dispatch = useAppDispatch();
- const { hodreviewdata, hodreviewisLoading, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
+ const { hodreviewisLoading, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
  const year = new Date().getFullYear().toString();
  const location = useLocation();
 
 
- console.log('hodreviewdata', hodreviewdata)
-
-
- const kpiData3 = ({
-  Weight1: 20,
-  Weight2: 15,
-  Weight3: 15,
-  Weight4: 15,
-  Weight5: 15,
-  Weight6: 20,
- });
-
- const [employeegrade, setemployeegrade] = useState<any>({
-  employeegrade1: 0,
-  employeegrade2: 0,
-  employeegrade3: 0,
-  employeegrade4: 0,
-  employeegrade5: 0,
-  employeegrade6: 0,
- })
-
-
- // const Weight = kpiData3.Weight1 +
- //  kpiData3.Weight2 +
- //  kpiData3.Weight3 +
- //  kpiData3.Weight4 +
- //  kpiData3.Weight5 +
- //  kpiData3.Weight6
-
-
-
-
-
-
-
- const kpiData: any = [
-  {
-   'Performance': 'Job Knowledge',
-   'num': hodreviewdata?.data?.job_knowledge_employee,
-   'employeegrade': 0
-  },
-  {
-   'Performance': 'Efficiency',
-   'num': hodreviewdata?.data?.efficiency_employee,
-   'employeegrade': 0
-  },
-  {
-   'Performance': ' Attendance',
-   'num': hodreviewdata?.data?.attendance_employee,
-   'employeegrade': 0
-  },
-  {
-   'Performance': 'Software Development',
-   'num': hodreviewdata?.data?.communication_employee
-  },
-  {
-   'Performance': 'Team work',
-   'num': hodreviewdata?.data?.reliability_employee
-  },
-  {
-   'Performance': 'Debugging',
-   'num': hodreviewdata?.data?.collaboration_employee
-  },
- ];
-
- const totalScore1 = (kpiData3.Weight1 / 5) * employeegrade.employeegrade1
- const totalScore2 = (kpiData3.Weight2 / 5) * employeegrade.employeegrade2
- const totalScore3 = (kpiData3.Weight3 / 5) * employeegrade.employeegrade3
- const totalScore4 = (kpiData3.Weight4 / 5) * employeegrade.employeegrade4
- const totalScore5 = (kpiData3.Weight5 / 5) * employeegrade.employeegrade5
- const totalScore6 = (kpiData3.Weight6 / 5) * employeegrade.employeegrade6
-
-
- useEffect(() => {
-  const kpi: any = totalScore1 + totalScore2 + totalScore3 + totalScore4 + totalScore5 + totalScore6
-  setHodscore(kpi)
- }, [setHodscore, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6])
-
-
-
-
- // calculates the total in a Columns
- //  @ts-ignore  
- const Amount: any = Object.values(kpiData).reduce((a, v) => (a = a + v?.num), 0);
-
-
- const [input, setinput] = useState<any>({
-  "month": 0,
-  "job_knowledge": 0,
-  "efficiency": 0,
-  "attendance": 0,
-  "communication": 0,
-  "reliability": 0,
-  "collaboration": 0,
-  "comment": ""
- })
-
-
- const handleOnChange = (input: string, value: any) => {
-  setinput((prevState: any) => ({
-   ...prevState,
-   [input]: value,
-  }));
- };
-
-
-
- const title = "Successful";
- const html = "KPI Updated!";
- const icon = "success";
-
 
  useEffect(() => {
   if (hodreviewisSuccess) {
-   fireAlert(title, html, icon);
+   fireAlert("Successful", "KPI Updated!", "success");
    navigate("/kpiassessment/kpiassessment/teamkpi")
   }
   dispatch(reset());
 
- }, [html, title, icon, hodreviewisSuccess, navigate, dispatch]);
+ }, [hodreviewisSuccess, navigate, dispatch]);
 
-
-
-
-
-
- const reviews = [
-  { 'reviewer': data?.job_knowledge_employee },
-  { 'reviewer': data?.efficiency_reviewer },
-  { 'reviewer': data?.attendance_reviewer },
-  { 'reviewer': data?.communication_reviewer },
-  { 'reviewer': data?.reliability_reviewer },
-  { 'reviewer': data?.collaboration_reviewer },
- ];
 
  //  @ts-ignore  
- const hod: any = Object.values(reviews).reduce((a, v) => (a = a + v?.reviewer), 0);
-
-
- useEffect(() => {
-  setinput((prevState: any) => {
-   return ({
-    ...prevState,
-    month: data?.month
-   });
-  });
- }, [setinput, data?.month]);
-
-
- useEffect(() => {
-  setinput((prevState: any) => {
-   return ({
-    ...prevState,
-    job_knowledge: totalScore1,
-    efficiency: totalScore2,
-    attendance: totalScore3,
-    communication: totalScore4,
-    reliability: totalScore5,
-    collaboration: totalScore6
-   });
-  });
- }, [setinput, totalScore1, totalScore2, totalScore3, totalScore4, totalScore5, totalScore6]);
+ // const hod: any = Object.values(reviews).reduce((a, v) => (a = a + v?.reviewer), 0);
 
 
 
@@ -222,39 +74,36 @@ const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
    },
   }));
  };
- const [inputr, setinputr] = useState<any>({
-  "parameters": {
-   "Hi Guys Joel here from Uganda the Pearl Of Africa,…ited about this journey with you all": { "score": 0, "score_weight": 20 },
-   "attendance": { "score": 5, "score_weight": 20 },
-   "collaboration": { "score": 5, "score_weight": 20 },
-   "communication": { "score": 5, "score_weight": 0 },
-   "efficiency": { "score": 5, "score_weight": 15 },
-   "job_knowledge": { "score": 5, "score_weight": 20 },
-   "reliability": { "score": 5, "score_weight": 10 }
+
+ const [input, setinput] = useState<any>({
+  parameters: {
   },
-  "comment": "You no try anything"
+  comment: " "
  })
+
+ console.log('input', input)
+
  useEffect(() => {
-  setinputr((prevState: any) => {
+  setinput((prevState: any) => {
    return ({
     ...prevState,
     parameters: datas,
-    comment: input.comment
    });
   });
- }, [setinputr, datas, input.comment]);
+ }, [setinput, datas]);
 
  const handelHodkpi = (e: any) => {
   e.preventDefault();
-  const inputs = { id, inputr }
+  const inputs = { id, input }
   //  @ts-ignore  
   dispatch(hodReviewAssessment(inputs));
  }
-
- console.log('inputr', inputr)
-
-
-
+ const handleOnChange = (input: string, value: any) => {
+  setinput((prevState: any) => ({
+   ...prevState,
+   [input]: value,
+  }));
+ };
 
  return (
   <form onSubmit={handelHodkpi}>
@@ -303,10 +152,7 @@ const HodEvaluation = ({ data, hodscore, setHodscore }: any) => {
            {datas[key].score}
           </div>
           <div className="btn_area">
-           {/* @ts-ignore */}
-           {Object.keys(!hodreviewdata ? [] : hodreviewdata).map((key: any) => {
-            <p>{hodreviewdata[key]?.reviewer_score}</p>
-           })}
+           {calculateTotalScore(parameters[key]?.score_weight, parameters[key]?.score)}
           </div>
          </div>
 

@@ -1,5 +1,3 @@
-
-
 import { useEffect } from 'react';
 import { NoRecordFound, TableFetch } from '../TableOptions'
 
@@ -11,7 +9,6 @@ const WeeklyReportTable5 = ({ data, isLoading, setactivities, activities }: any)
 		if (data) {
 			try {
 				setactivities(data?.map((item: any, i: any) => (
-
 					{
 						id: i + 1,
 						completed: item.completed,

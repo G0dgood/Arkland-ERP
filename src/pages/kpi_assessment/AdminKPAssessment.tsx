@@ -35,9 +35,6 @@ const AdminKPAssessment = ({ data }: any) => {
 
 
 
-
-
-
 	return (
 		<div>
 			<div id="performance">

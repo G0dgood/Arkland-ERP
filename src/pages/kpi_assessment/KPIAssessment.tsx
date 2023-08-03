@@ -10,6 +10,7 @@ import HttpService from "../../components/HttpService";
 import SelectInput from "../../components/SelectInput";
 import { FaBeer } from 'react-icons/fa';
 import { BsDashCircleFill, BsPlusCircleFill } from "react-icons/bs";
+import { myAttendance } from "../../features/Attendances/attendanceSlice";
 
 
 const dataService = new DataService()
@@ -34,18 +35,6 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
   comment: "",
  });
 
- // const [inputs, setInputs] = useState({
- //   month: 0,
- //   employee: "",
- //   reviewer: "",
- //   job_knowledge: 0,
- //   efficiency: 0,
- //   attendance: 0,
- //   communication: 0,
- //   reliability: 0,
- //   collaboration: 0,
- //   comment: "",
- // });
 
 
 
@@ -71,10 +60,8 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
   IndicatorDescription3: "Frequency of times at work",
   IndicatorDescription4:
    "Completes clearly defined tasks and works and also learn the relevant technologies to improve the company sales mobile application solutions.",
-  IndicatorDescription5:
-   "Collaborate with other team members and  communicates when something is blocking.",
-  IndicatorDescription6:
-   "Helps debug technical problems. Submits issues so that we can document and improve our service.",
+
+
  });
 
  const kpiData3: any = ({
@@ -103,15 +90,10 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
 
 
 
- // const totalScore1 = (kpiData3.Weight1 / 5) * kpinputs.job_knowledge;
- // const totalScore2 = (kpiData3.Weight2 / 5) * kpinputs.efficiency;
- // const totalScore3 = (kpiData3.Weight3 / 5) * kpinputs.attendance;
+
  const totalScore1 = kpinputs.job_knowledge;
  const totalScore2 = kpinputs.efficiency;
  const totalScore3 = kpinputs.attendance;
- // const totalScore4 = (kpiData3.Weight4 / 5) * kpinputs.communication;
- // const totalScore5 = (kpiData3.Weight5 / 5) * kpinputs.reliability;
- // const totalScore6 = (kpiData3.Weight6 / 5) * kpinputs.collaboration;
 
  const [kpiscore, setkpiscore] = useState();
  useEffect(() => {
@@ -168,7 +150,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
  const getData = async () => {
   setisLoading(true)
   try {
-   const hodsUrl = `employees/hods`
+   const hodsUrl = `employees`
    const hods: any = await HttpService.get(hodsUrl)
    setHOD(hods?.data?.data)
    setisLoading(false)
@@ -180,14 +162,14 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
 
  const availablleHods = [] as any;
  hods &&
-  hods?.forEach((team: any) =>
+  hods?.forEach((hod: any) =>
    availablleHods.push({
-    value: team.id,
-    label: team.name,
+    value: hod.id,
+    label: hod.full_name,
    })
   );
 
-
+ console.log('hods', hods)
 
 
  useEffect(() => {
@@ -267,8 +249,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
             name="month"
             value={kpinputs.month}
             required
-            onChange={(e) => handleOnChange("month", e.target.value)}
-           >
+            onChange={(e) => handleOnChange("month", e.target.value)}>
             <option> </option>
             <option value="1">January</option>
             <option value="2">February</option>
@@ -286,20 +267,8 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
           </div>
          </div>
 
-         <div className=" entries-perpage ">
-          {/* <div>HOD :</div> */}
-          {/* <select
-                      name="line-manager"
-                      value={kpinputs?.reviewer}
-                      onChange={(e) => handleOnChange("reviewer", e.target.value)}
-                      required >
-                      <option> </option>
-                      {hods?.map((employ: any) => (
-                        <option key={employ?._id} value={employ?.id}>
-                          {employ?.name}
-                        </option>
-                      ))}
-                    </select> */}
+         <div className="entries-perpage ">
+
           <SelectInput
            label="HOD :"
            isDisabled={isLoading}
@@ -316,15 +285,15 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
         <div className="table-datacell-button-bottom-color2">{!kpiscore ? 0 : kpiscore}</div>
        </div>
       </div>
-      <div className="kpi-add-more">
+      {/* <div className="kpi-add-more">
        <h6>Add more field</h6>
        <Button onClick={handleAddField} >
         <BsPlusCircleFill size={30} color={'green'} />
        </Button>
-       <Button onClick={handleRemoveField}>
+       <Button onClick={() => handleRemoveField()}>
         <BsDashCircleFill size={30} color={'red'} />
        </Button>
-      </div>
+      </div> */}
      </div>
     </div>
    </div>
@@ -346,7 +315,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
           Employee Grade
          </td>
          <td className="table-datacell datatype-numeric">
-          Employee Score
+          Add & Delete Field
          </td>
         </tr>
        </thead>
@@ -370,8 +339,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
            className="Performance-Indicator-input2"
            value={kpiData2.IndicatorDescription2}
            onChange={(e) =>
-            handleOnChange("IndicatorDescription1", e.target.value)
-           }
+            handleOnChange("IndicatorDescription1", e.target.value)}
            rows={4}
           />
          </td>
@@ -390,7 +358,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
            name="score"
            required
            value={kpinputs.job_knowledge}
-           onChange={(e) => handleOnChange("job_knowledge", e.target.value)}
+           onChange={(e) => handleOnChange("job_knowledge", parseInt(e.target.value))}
           >
            <option>
            </option>
@@ -398,12 +366,6 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
             <option key={item} value={item}>{item}</option>
            )}
           </select>
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={''}
-          />{" "}
          </td>
         </tr>
 
@@ -444,12 +406,6 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
            )}
           </select>
          </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={''}
-          />{" "}
-         </td>
         </tr>
 
         {/* three */}
@@ -480,18 +436,12 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
            name="score"
            required
            value={kpinputs.attendance}
-           onChange={(e) => handleOnChange("attendance", e.target.value)} >
+           onChange={(e) => handleOnChange("attendance", parseInt(e.target.value))} >
            <option></option>
            {[1, 2, 3, 4, 5].map(item =>
             <option key={item} value={item}>{item}</option>
            )}
           </select>
-         </td>
-         <td className="table-datacell datatype-numeric">
-          <input
-           className="Performance-Indicator-input1"
-           value={''}
-          />{" "}
          </td>
         </tr>
 
@@ -499,15 +449,17 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
         {newKpiField?.map((item: any, i: any) => (
          <tr className="data-table-row" key={i}>
           <td className="table-datacell datatype-string">
-           <p>
-            Enter Indicator Description  <span style={{ color: "green", fontWeight: "bold" }}>{item.id}</span>
-           </p>
+           <input className="Performance-Indicator-input"
+            value={item.description}
+            onChange={(e) => handleKPIChange("description", e.target.value, item.id)} />
+
           </td>
           <td className="table-datacell datatype-numeric">
            <textarea
             id="kpi-textarea"
             className="Performance-Indicator-input2"
             value={item.name}
+            required
             onChange={(e) => handleKPIChange("name", e.target.value, item.id)}
             rows={5}
            />{" "}
@@ -525,7 +477,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
             name="score"
             required
             value={item.score}
-            onChange={(e) => handleKPIChange("score", e.target.value, item.id)}
+            onChange={(e) => handleKPIChange("score", parseInt(e.target.value), item.id)}
            >
             <option></option>
             {[1, 2, 3, 4, 5].map(item =>
@@ -534,10 +486,14 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
            </select>
           </td>
           <td className="table-datacell datatype-numeric">
-           <input
-            className="Performance-Indicator-input1"
-            value={0}
-           />
+           <div className="kpi-add-more">
+            <Button onClick={handleAddField} >
+             <BsPlusCircleFill size={30} color={'green'} />
+            </Button>
+            <Button onClick={() => handleRemoveField(i)}>
+             <BsDashCircleFill size={30} color={'red'} />
+            </Button>
+           </div>
           </td>
          </tr>
         ))}
@@ -551,9 +507,6 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
          {Weight}
         </td>
         <td className="table-datacell datatype-numeric table-datacell-color">
-        </td>
-        <td className="table-datacell datatype-numeric table-datacell-color2">
-         {kpiscore}
         </td>
        </tr>
       </table>

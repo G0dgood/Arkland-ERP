@@ -30,7 +30,7 @@ const Lightboxs = ({ img }: any) => {
 					<span>
 					</span>
 					<span className='span-center-title'>{img.length > 1 ? `Total of ${img.length} Files` : "View File"}</span>
-					<Button style={{ color: '#fff' }} onClick={() => { setShow(false) }}>
+					<Button onClick={() => { setShow(false) }}>
 						<MdOutlineClose size={28} />
 					</Button>
 				</Modal.Header>

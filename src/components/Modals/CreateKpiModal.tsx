@@ -39,8 +39,9 @@ const CreateKpiModal = () => {
 	const [newKpiField, setNewKpiField] = useState<any>([
 		{
 			id: 1,
-			"name": "",
+			name: "",
 			score: 0,
+			description: "",
 		}
 	]);
 
@@ -51,8 +52,9 @@ const CreateKpiModal = () => {
 			...newKpiField,
 			{
 				id: newKpiField.length + 1,
-				"name": "",
+				name: "",
 				score: 0,
+				description: "",
 			}
 		]);
 	};
@@ -76,14 +78,15 @@ const CreateKpiModal = () => {
 	};
 
 	const other_parameters = newKpiField?.map((item: any) => ({
-		"name": item.name,
+		name: item.name,
 		score: item.score,
+		description: item.description,
 	}));
 
 	const allInput = { ...inputs, other_parameters }
 
 
-
+	console.log('allInput', allInput)
 
 	return (
 		<>

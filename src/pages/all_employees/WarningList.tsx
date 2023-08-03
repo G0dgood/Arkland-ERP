@@ -53,7 +53,6 @@ const WarningList = () => {
   }, [entriesPerPage]);
 
 
-
   useEffect(() => {
     if (createwarningisSuccess) {
       dispatch(getWarning());
@@ -70,7 +69,6 @@ const WarningList = () => {
           <CreateWarningModal />
           <span style={{ marginLeft: "1rem" }}>
             <DeactivateExpiredWarnings /></span>
-
         </div>
         <div>
           <EntriesPerPage

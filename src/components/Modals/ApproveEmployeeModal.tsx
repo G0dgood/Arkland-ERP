@@ -79,6 +79,7 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 
 										</h6>
 										<h6>
+											{/* <capitalizeFirstLetters str={data?.employment_type} /> */}
 											{data?.employment_type}
 										</h6>
 										<p className="proile-rating">Employment Duration : <span>{data?.employment_duration}</span></p>
@@ -160,14 +161,6 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 												</div>
 												<div className="col-md-6">
 													<p>{data?.gender}</p>
-												</div>
-											</div>
-											<div className="row">
-												<div className="col-md-6">
-													<label>Institution Attended</label>
-												</div>
-												<div className="col-md-6">
-													<p>{data?.institution_attended}</p>
 												</div>
 											</div>
 											<div className="row m-b-1">
