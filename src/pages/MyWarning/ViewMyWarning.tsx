@@ -1,11 +1,12 @@
 
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
-import { BounceLoader } from "react-spinners";
+
 import projectBack from "../../../assets/vectors/project-back.svg";
 import RespondToWarning from "../all_employees/warnings/RespondToWarning";
 import { useEffect, useState } from "react";
 import HttpService from "../../components/HttpService";
+import { SVGLoader } from "../../components/SVGLoader";
 
 
 
@@ -39,10 +40,7 @@ const ViewWarning = () => {
 		<div  >
 			{viewwarningisLoading ? (
 				<div className="isLoading-container-view" >
-					<BounceLoader
-						color={"#990000"}
-						loading={viewwarningisLoading}
-					/>
+					<SVGLoader width={"60px"} height={"60px"} />
 				</div>
 			) : (
 				<div className="EssentialsContainer">

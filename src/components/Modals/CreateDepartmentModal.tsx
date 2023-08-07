@@ -8,11 +8,14 @@ import { fireAlert } from "../../utils/Alert";
 import InputField from "../Inputs/InputField";
 import TextAreaField from "../Inputs/TextAreaField";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { createDepartments, reset } from "../../features/Department/departmentSlice";
+import { createDepartments, editDepartments, reset } from "../../features/Department/departmentSlice";
+import { useNavigate } from "react-router-dom";
 
-const CreateDepartmentModal = () => {
+const CreateDepartmentModal = ({ edit, id }: any) => {
+ const navigate = useNavigate();
  const dispatch = useAppDispatch();
  const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.department)
+ const { editisLoading, editisSuccess } = useAppSelector((state: any) => state.department)
  const [lgShow, setLgShow] = useState(false);
 
  useEffect(() => {
@@ -21,12 +24,28 @@ const CreateDepartmentModal = () => {
    fireAlert("Success", "Department created successfully", "success");
    dispatch(reset());
   }
- }, [createisSuccess, dispatch]);
+ }, [createisSuccess, dispatch,]);
+
+ useEffect(() => {
+  if (editisSuccess) {
+   setLgShow(false)
+   fireAlert("Success", "Department edited successfully", "success");
+   dispatch(reset());
+   navigate(-1)
+  }
+ }, [dispatch, editisSuccess, navigate]);
 
  const handleSubmit = async (values: any) => {
   const input = { ...values };
-  // @ts-ignore
-  dispatch(createDepartments(input));
+  const inputs = { id, input }
+  if (edit) {
+
+   // @ts-ignore
+   dispatch(editDepartments(inputs));
+  } else {
+   // @ts-ignore
+   dispatch(createDepartments(input));
+  }
 
  };
 
@@ -36,8 +55,9 @@ const CreateDepartmentModal = () => {
     className="subone-header-flex-btn"
     onClick={() => setLgShow(true)}
    >
-    <BsPlusLg size={10} color="#fff" className="Create-plue-account" />{" "}
-    Create Department
+    <BsPlusLg size={10} color="#fff" className="Create-plue-account" />
+    {edit ? "Edit Department" : "Create Department"}
+
    </Button>
    <Modal
     size="lg"
@@ -46,7 +66,7 @@ const CreateDepartmentModal = () => {
     centered
    >
     <Modal.Header>
-     <span className="span-center-title">Create Department</span>
+     <span className="span-center-title">{edit ? "Edit Department" : "Create Department"}</span>
      <Button onClick={() => setLgShow(false)}>
       <MdOutlineClose size={28} />
      </Button>
@@ -92,13 +112,13 @@ const CreateDepartmentModal = () => {
            </div>
           </div>
 
-          <div className="btn-modal-container">
+          <div className="btn-modal-container" style={{ display: "flex", justifyContent: "flex-end" }}>
            <Button
             variant="contained"
             className="add-experience"
             type="submit"
            >
-            {createisLoading ? <Spinner animation="border" /> : "Create"}
+            {createisLoading || editisLoading ? <Spinner animation="border" /> : edit ? "Edit  " : "Create  "}
            </Button>
           </div>
          </div>

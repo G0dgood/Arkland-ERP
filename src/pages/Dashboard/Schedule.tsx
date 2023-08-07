@@ -1,10 +1,8 @@
-import { BounceLoader } from "react-spinners";
 import moment from "moment";
 import ViewScheduleModal from "../../components/Modals/ViewScheduleModal";
+import { SVGLoader } from "../../components/SVGLoader";
 
 const Schedule = ({ tasks, isLoading }: any) => {
-
-
 
 
  return (
@@ -16,7 +14,7 @@ const Schedule = ({ tasks, isLoading }: any) => {
     </div>
     {isLoading ? (
      <div className="table-loader-announcement1">
-      <BounceLoader color={"#990000"} loading={isLoading} />
+      <SVGLoader width={"40px"} height={"40px"} />
      </div>
     ) : tasks?.length === 0 || tasks === undefined || tasks === null ? (
      <div className="table-loader-announcement1">

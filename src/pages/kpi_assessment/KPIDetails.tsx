@@ -8,6 +8,7 @@ import { Spinner } from 'react-bootstrap';
 import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { deleteAssessment, reset, viewAssessment } from '../../features/KPIAssessment/assessmentSlice';
+import { gradeSystem } from '../../utils/ShareData';
 
 
 const KPIDetails = () => {
@@ -25,13 +26,6 @@ const KPIDetails = () => {
 	}, [dispatch, id]);
 
 
-	const gradeSystem = [
-		{ rate: 5, definition: "Outstanding" },
-		{ rate: 4, definition: "Very Good" },
-		{ rate: 3, definition: "Good" },
-		{ rate: 2, definition: "Average" },
-		{ rate: 1, definition: "Below Average/Poor" },
-	]
 
 
 	const [hodscore, setHodscore] = useState('')
@@ -90,19 +84,19 @@ const KPIDetails = () => {
 							)}
 						</div>
 						{/* } */}
-						<div className="kpi-summary">
+						{/* <div className="kpi-summary">
 							<div className="kpi-summary-title">
 								<p>KPI Summary</p>
 							</div>
 							<div className="kpi-summary-body m-t-10" >
 								<p>Total</p>
-								<p id="total-rating">{viewdata?.performance_percentage_employee}%</p>
+								<p id="total-rating">{viewdata?.performance_percentage_employee} {viewdata?.performance_percentage_employee === undefined ? '' : '%'}</p>
 								<p>HOD Score</p>
 								<p id="avg-rating">{viewdata?.performance_percentage_reviewer}{viewdata?.performance_percentage_reviewer === undefined ? '' : '%'}</p>
 								<p>Average Score</p>
 								<p id="avg-rating">{viewdata?.total_performance_percentage}{viewdata?.total_performance_percentage === undefined ? '' : '%'}</p>
 							</div>
-						</div>
+						</div> */}
 
 						<div className="kpi-summary">
 							<div className="kpi-summary-title">

@@ -51,7 +51,7 @@ const CreateEvent = () => {
 								<input id='Modal-textarea-input-sub' placeholder='Select end date of leave' type={'time'} />
 							</div>
 						</div>
-						<div className='btn-modal-container'>
+						<div className='btn-modal-container' style={{ display: "flex", justifyContent: "flex-end" }}>
 							<Button variant="contained" className="add-experience">
 								CREATE
 							</Button>

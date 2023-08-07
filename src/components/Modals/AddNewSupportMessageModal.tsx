@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Button } from '@material-ui/core';
 import { MdOutlineClose } from 'react-icons/md';
@@ -44,11 +44,7 @@ const AddNewSupportMessageModal = (props: any) => {
 							<div className='Modal-two-input'>
 								<h6>Time</h6>
 								<input id='Modal-textarea-input-sub' placeholder='What is the announcement about' type={'time'} />
-								{/* <select id="Modal-textarea-input-sub" >
-									<option value="none">(None)</option>
-									<option value="AL">Alabama</option>
-									<option value="AK">Alaska</option>
-								</select > */}
+
 							</div>
 						</div>
 						<div className='btn-modal-container'>
@@ -59,9 +55,6 @@ const AddNewSupportMessageModal = (props: any) => {
 					</div>
 
 				</Modal.Body>
-				{/* <Modal.Footer>
-					<Button onClick={props.onHide}>Close</Button>
-				</Modal.Footer> */}
 			</Modal>
 		</div>
 	)

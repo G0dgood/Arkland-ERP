@@ -236,3 +236,161 @@ margin-right: 10px;
 .data-hod_approved-span{
 	margin-right: 2rem !important;
 }
+
+
+
+// New leave application
+
+.leave-con{
+  width: 100%;
+  height: 100%;
+  padding: 0px 2rem;
+}
+
+.leave-appli-title{
+  display: flex; 
+  align-items: center; 
+
+}
+
+.leave-appli-title-span{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+border: 2px solid #AC1B1B;
+border-radius: 100%; 
+margin-right: 2rem; 
+  padding: 5px;
+}
+
+.leave-appli-title-name{
+  width: 400px;
+}
+
+.leave-appli-board{
+  width: 30% !important;
+  height: 70px;
+ border: 2px solid #e3e3e3 !important;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #fff ;
+}
+
+.leave-details-view{
+  display: flex;
+  margin-top: 3rem; 
+}
+
+.leave-details-view-one{
+  height: inherit !important; 
+  width: 80%; 
+  background-color: #fff;
+  margin-right: 1rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+
+}
+.leave-details-view-two{
+  width: 20%; 
+  height: 100%; 
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24); 
+  border-radius: 5px;
+  padding: 1rem;
+}
+.History-styles{
+  font-weight: bold;
+}
+
+.History-styles-details{
+  display: flex;
+  background-color: #f0dada;
+  border-radius: 3px;
+  padding: 0.8rem;
+
+}
+
+.History-styles-star{
+  margin-right: 10px;
+}
+
+.request_submitted-style{
+  font-weight: bold;
+}
+.request_submitted-style-two{
+  font-weight: 600;
+}
+
+.leave-details-status{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.pending-incon-status{
+  background-color: #F4F5F7;
+    border-radius: 70px;
+ padding: 5px 10px;
+ font-weight: bold;
+}
+
+.pending-incon-status-styles{
+  margin-right: 10px;
+}
+.leave-date-con-style{
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.propose-change{
+  display: flex;
+  justify-content: space-evenly;
+  background-color:#f0dada ;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.propose-change-weeks{
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.leave-date-con-style-card{
+  display: flex;
+  justify-content: space-between;
+    align-items: center;
+}
+
+.leave-date-con-style-status{
+  border: 2px solid #e3e3e3 !important;
+  width: 45%;
+  padding: 1rem;
+  border-radius: 5px;
+
+}
+
+.leave-date-con-style-status-sup{
+  display: flex;
+  justify-content: space-between;
+}
+
+.note-preview{
+  width: 100%;
+  height: 100px;
+  border: 2px solid #e3e3e3 !important;
+  margin-top: 2rem ;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: #F9FAFC;
+}
+
+.leave-detailed-reason{
+  margin-top: 2rem;
+}

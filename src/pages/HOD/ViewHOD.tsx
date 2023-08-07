@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { BounceLoader } from 'react-spinners';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import projectBack from "../../assets/vectors/project-back.svg";
 import { viewHOD } from '../../features/HOD/hodSlice';
 import moment from 'moment';
 import DeleteHOD from './DeleteHOD';
+import { SVGLoader } from '../../components/SVGLoader';
 
 const ViewHOD = () => {
 	const dispatch = useAppDispatch();
@@ -24,10 +25,7 @@ const ViewHOD = () => {
 		<div  >
 			{viewisLoading ? (
 				<div className="isLoading-container-view" >
-					<BounceLoader
-						color={"#990000"}
-						loading={viewisLoading}
-					/>
+					<SVGLoader width={"60px"} height={"60px"} />
 				</div>
 			) : (
 				<div className="EssentialsContainer">

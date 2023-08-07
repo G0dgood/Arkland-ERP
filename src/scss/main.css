@@ -451,6 +451,8 @@
 
 .btn-modal-container {
   padding-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .Create-event {

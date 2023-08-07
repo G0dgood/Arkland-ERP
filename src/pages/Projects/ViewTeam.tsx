@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useNavigate, useParams } from 'react-router-dom'
-import { BounceLoader } from 'react-spinners'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { getTeammembers, viewTeam } from '../../features/Team/teamSlice';
 import { RiTeamLine } from 'react-icons/ri';
@@ -11,6 +10,7 @@ import CreateTeamMembers from '../Team/CreateTeamMembersModal';
 import TeamMembers from '../Team/TeamMembers';
 import { Button } from '@material-ui/core';
 import RemoveTeamMember from '../Team/RemoveTeamMember';
+import { SVGLoader } from '../../components/SVGLoader';
 
 const ViewTeam = () => {
 	const { id } = useParams()
@@ -41,8 +41,7 @@ const ViewTeam = () => {
 			{
 				viewisLoading ? (
 					<div className="isLoading-container-view" >
-						<BounceLoader
-							color={"#990000"} loading={viewisLoading} />
+						<SVGLoader width={"60px"} height={"60px"} />
 					</div>
 				) : !viewdata || viewdata === undefined ? (
 					<div className="table-loader-image">
@@ -109,7 +108,7 @@ const ViewTeam = () => {
 								</div>
 								{memberisLoading ? (
 									<div className="team-container-view" >
-										<BounceLoader color={"#990000"} loading={true} />
+										<SVGLoader width={"60px"} height={"60px"} />
 									</div>
 								) : show && memberdata?.length === 0 ? (
 									<div className="team-container-view">

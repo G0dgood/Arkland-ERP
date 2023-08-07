@@ -6,32 +6,19 @@ import { Button } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { viewAssessment } from '../../features/KPIAssessment/assessmentSlice';
 import KPIAdminDetails from './KPIAdminDetails';
+import { gradeSystem } from '../../utils/ShareData';
+import { KPISummary } from '../../utils/KpiFunctions';
 
 
-const AdminKPAssessment = ({ data }: any) => {
+const AdminKPAssessment = () => {
 	const { id } = useParams()
 	const dispatch = useAppDispatch();
+	const [hodscore, setHodscore] = useState(null)
 	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.assessment)
-
-
-
-
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(viewAssessment(id));
 	}, [dispatch, id]);
-
-
-	const gradeSystem = [
-		{ rate: 5, definition: "Outstanding" },
-		{ rate: 4, definition: "Very Good" },
-		{ rate: 3, definition: "Good" },
-		{ rate: 2, definition: "Average" },
-		{ rate: 1, definition: "Below Average/Poor" },
-	]
-
-
-	const [hodscore, setHodscore] = useState('')
 
 
 
@@ -68,33 +55,26 @@ const AdminKPAssessment = ({ data }: any) => {
 								</div>
 							)}
 						</div>
-						{/* } */}
-						<div className="kpi-summary">
-							<div className="kpi-summary-title">
-								<p>KPI Summary</p>
-							</div>
-							<div className="kpi-summary-body m-t-10" >
-								<p>Total</p>
-								<p id="total-rating">{viewdata?.performance_percentage_employee}%</p>
-								<p>HOD Score</p>
-								<p id="avg-rating">{viewdata?.performance_percentage_reviewer}{viewdata?.performance_percentage_reviewer === undefined ? '' : '%'}</p>
-								<p>Average Score</p>
-								<p id="avg-rating">{viewdata?.total_performance_percentage}{viewdata?.total_performance_percentage === undefined ? '' : '%'}</p>
-							</div>
-						</div>
+
+						{/* KPISummary */}
+						{KPISummary(viewdata)}
+						{/* KPISummary  END*/}
+
 						<div className="kpi-summary">
 							<div className="kpi-summary-title">
 								<p>{viewdata?.employee_name}'s  comment</p>
 							</div>
 							{/* @ts-ignore */}
-							<textarea rows="4" placeholder="Add an extended comment" required className='m-t-5' value={viewdata?.employee_comment} />
-						</div>
+							<textarea rows="4" placeholder="Add an extended comment"
+								className='m-t-5' value={viewdata?.employee_comment} />
+							KPISummary</div>
 						<div className="kpi-summary">
 							<div className="kpi-summary-title">
 								<p>HOD comment</p>
 							</div>
 							{/* @ts-ignore */}
-							<textarea rows="4" placeholder="Add an extended comment" required className='m-t-5' value={viewdata?.reviewer_comment} />
+							<textarea rows="4" placeholder="Add an extended comment"
+								className='m-t-5' value={viewdata?.reviewer_comment} />
 						</div>
 					</div>
 				</section>

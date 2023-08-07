@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
 import { allDepartments } from "../../features/Department/departmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { BounceLoader } from "react-spinners";
+import { SVGLoader } from "../../components/SVGLoader";
 
 const DepartmentsView = () => {
   const dispatch = useAppDispatch();
@@ -34,18 +34,15 @@ const DepartmentsView = () => {
         <div className="ProjectViewContainer-subone">
           <div className="subone-col-1 subtwo-content-one-sub1-content subone-header-flex">
             <h5>Department</h5>
-            {/* {(isHRHead || isSuperAdmin || isAdmin || isHrAdmin) && ( */}
             <div className="Request-btn-modal-container">
               <div className="Request-btn">
                 <CreateDepartmentModal />
               </div>
             </div>
-            {/* )} */}
           </div>
           {isLoading ? (
             <div className="isLoading-container">
-              <BounceLoader
-                color={"#990000"} loading={isLoading} />
+              <SVGLoader width={"60px"} height={"60px"} />
             </div>
           ) : data?.length === 0 || data?.length === undefined ? (
             <div className="table-loader-announcement">

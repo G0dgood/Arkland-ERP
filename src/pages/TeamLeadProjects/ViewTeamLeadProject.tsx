@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useAppDispatch } from "../../store/useStore";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
-import { BounceLoader } from "react-spinners";
+
 import { GiCrane } from "react-icons/gi";
 import { ProgressBar } from "react-bootstrap";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
@@ -11,6 +11,7 @@ import HttpService from "../../components/HttpService";
 import { BiUser } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 import moment from "moment";
+import { SVGLoader } from "../../components/SVGLoader";
 
 
 
@@ -84,7 +85,7 @@ const ViewTeamLeadProject = () => {
     <div>
       {viewisLoading ? (
         <div className="isLoading-container-view" >
-          <BounceLoader color={"#990000"} loading={viewisLoading} />
+          <SVGLoader width={"60px"} height={"60px"} />
         </div>
       ) : !viewdata || viewdata === undefined ? (
         <div className="table-loader-image">
@@ -160,7 +161,7 @@ const ViewTeamLeadProject = () => {
                   </div>
                   {isLoading ?
                     <div className=" " style={{ display: "flex", justifyContent: "center", marginTop: "10rem" }} >
-                      <BounceLoader color={"#990000"} loading={isLoading} /> </div> :
+                      <SVGLoader width={"60px"} height={"60px"} /></div> :
                     !teammenbers || teammenbers === undefined || teammenbers.length === 0 ? (
                       <div style={{ display: "flex", justifyContent: "center", marginTop: "10rem", alignItems: "center", alignSelf: "center", textAlign: "center" }}>
                         <div>

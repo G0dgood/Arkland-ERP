@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { BounceLoader } from "react-spinners";
 import projectBack from "../../../assets/vectors/project-back.svg";
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import TerminationModal from "../../../components/TerminationModal";
 import { viewTerminations } from "../../../features/Employee/employeeSlice";
+import { SVGLoader } from "../../../components/SVGLoader";
 
 
 
@@ -30,10 +30,7 @@ const ViewTerminations = () => {
     <div  >
       {viewterminationsisLoading ? (
         <div className="isLoading-container-view" >
-          <BounceLoader
-            color={"#990000"}
-            loading={viewterminationsisLoading}
-          />
+          <SVGLoader width={"60px"} height={"60px"} />
         </div>
       ) : (
         <div className="EssentialsContainer">

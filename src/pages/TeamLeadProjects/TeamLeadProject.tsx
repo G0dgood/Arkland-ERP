@@ -2,10 +2,9 @@ import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { ProgressBar } from "react-bootstrap";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-
-import { BounceLoader } from "react-spinners";
 import { useEffect, useState } from "react";
 import HttpService from "../../components/HttpService";
+import { SVGLoader } from "../../components/SVGLoader";
 
 const TeamLeadProject = () => {
   const navigate = useNavigate();
@@ -58,8 +57,7 @@ const TeamLeadProject = () => {
 
           {isLoading ? (
             <div className="isLoading-container">
-              <BounceLoader
-                color={"#990000"} loading={isLoading} />
+              <SVGLoader width={"60px"} height={"60px"} />
             </div>
           ) : data?.length === 0 ? (
             <div className="table-loader-announcement">

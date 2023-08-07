@@ -7,8 +7,8 @@ import { fireAlert } from '../../utils/Alert';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hodApproveLeave, rejectLeave, reset, viewTeamLeave } from '../../features/Leave/leaveSlice';
-import { BounceLoader } from 'react-spinners';
 import { SlBriefcase } from 'react-icons/sl';
+import { SVGLoader } from '../../components/SVGLoader';
 
 
 const HodLeaveView = () => {
@@ -98,8 +98,7 @@ const HodLeaveView = () => {
     <div>
       {teamviewisLoading ? (
         <div className="isLoading-container-view" >
-          <BounceLoader
-            color={"#990000"} loading={teamviewisLoading} />
+          <SVGLoader width={"60px"} height={"60px"} />
         </div>
       ) : !data || data === undefined ? (
         <div className="table-loader-announcement">

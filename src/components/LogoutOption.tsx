@@ -43,7 +43,7 @@ const LogoutOption = ({ open, setOpen }: any) => {
 	return (
 		<div>
 			<Button onClick={handlelogout}>
-				<AiOutlineLogout size={30} color='red' /> <span className='LogoutOption-Logout'>Logout</span>
+				<AiOutlineLogout size={20} color='#fff' /> <span className='LogoutOption-Logout'>Logout</span>
 			</Button>
 			<Modal
 				show={showLogout || open}

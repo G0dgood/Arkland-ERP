@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { BounceLoader } from 'react-spinners';
+
 import { GiTeamIdea } from 'react-icons/gi';
 import { useNavigate, useParams } from 'react-router-dom';
 import { viewRequest } from '../../features/workerRequest/workerRequestSlice';
@@ -11,6 +11,7 @@ import { FiUserPlus } from 'react-icons/fi';
 import { NoRecordFound } from '../../components/TableOptions';
 import ApproveWorkerRequestModal from './ApproveWorkerRequestModal';
 import RejectWorkerRequestModal from './RejectWorkerRequestModal';
+import { SVGLoader } from '../../components/SVGLoader';
 
 const ViewSiteWorkerRequest = () => {
  const navigate = useNavigate();
@@ -32,7 +33,7 @@ const ViewSiteWorkerRequest = () => {
    {
     viewisLoading ? (
      <div className="isLoading-container-view" >
-      <BounceLoader color={"#990000"} loading={viewisLoading} />
+      <SVGLoader width={"60px"} height={"60px"} />
      </div>
     ) : !viewdata || viewdata === undefined ? (
      <div className="table-loader-announcement">

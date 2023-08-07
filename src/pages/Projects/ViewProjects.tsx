@@ -9,13 +9,13 @@ import UpdateProjectModal from "./UpdateProjectModal";
 import SuspendProjectModal from "./SuspendProjectModal";
 import CompleteProjectModal from "./CompleteProjectModal";
 import CommenceProjectModal from "./CommenceProjectModal";
-import { BounceLoader } from "react-spinners";
 import { GiCrane } from "react-icons/gi";
 import { ProgressBar } from "react-bootstrap";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import HttpService from "../../components/HttpService";
 import { FaUserCircle } from "react-icons/fa";
 import { BiUser } from "react-icons/bi";
+import { SVGLoader } from "../../components/SVGLoader";
 
 
 
@@ -28,20 +28,17 @@ const ViewProjects = () => {
   const { completeisSuccess } = useAppSelector((state: any) => state.project)
   const { suspendisSuccess } = useAppSelector((state: any) => state.project)
   const { id } = useParams();
-
-
   const [isLoading, setisLoading] = useState(false)
   const [teammenbers, setTeammenbers] = useState([])
 
 
-  console.log('teammenbers', teammenbers.length)
+
 
   useEffect(() => {
     if (viewdata?.team?.id) {
       setTimeout(() => {
         getData()
       }, 4000);
-
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewdata, viewdata?.team?.id])
@@ -72,7 +69,7 @@ const ViewProjects = () => {
     <div>
       {viewisLoading ? (
         <div className="isLoading-container-view" >
-          <BounceLoader color={"#990000"} loading={viewisLoading} />
+          <SVGLoader width={"60px"} height={"60px"} />
         </div>
       ) : !viewdata || viewdata === undefined ? (
         <div className="table-loader-image">
@@ -157,7 +154,8 @@ const ViewProjects = () => {
                   </div> */}
                   {isLoading ?
                     <div className=" " style={{ display: "flex", justifyContent: "center", marginTop: "10rem" }} >
-                      <BounceLoader color={"#990000"} loading={isLoading} /> </div> :
+                      <SVGLoader width={"60px"} height={"60px"} />
+                    </div> :
                     !teammenbers || teammenbers === undefined || teammenbers.length === 0 ? (
                       <div style={{ display: "flex", justifyContent: "center", marginTop: "10rem", alignItems: "center", alignSelf: "center", textAlign: "center" }}>
                         <div>

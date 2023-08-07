@@ -64,13 +64,6 @@ const MyKPIAssessment = () => {
   <div>
    <div className="SiteWorkermaindiv">
     <div className="SiteWorkermaindivsub">
-     {/* <Button variant="contained"
-						className="back-btn-icon"
-						id="Add-btn-sub"
-						onClick={() => navigate("/leave")}>
-						<FaArrowLeft size={25} />
-					</Button> */}
-
      <span className="SupportmainTitleh3">KPI Assessment</span>
     </div>
     <div>

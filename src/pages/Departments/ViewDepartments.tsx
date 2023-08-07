@@ -3,10 +3,11 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { reset, viewDepartments } from "../../features/Department/departmentSlice";
-import { BounceLoader } from "react-spinners";
 import DeleteDepartment from "../../components/Modals/DeleteDepartment";
 import projectBack from "../../assets/vectors/project-back.svg";
 import CopyToClipboardButton from "../../components/CopyToClipboardButton";
+import { SVGLoader } from "../../components/SVGLoader";
+import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
 
 
 const ViewDepartments = () => {
@@ -41,8 +42,7 @@ const ViewDepartments = () => {
       {
         viewisLoading ? (
           <div className="isLoading-container-view" >
-            <BounceLoader
-              color={"#990000"} loading={viewisLoading} />
+            <SVGLoader width={"60px"} height={"60px"} />
           </div>
         ) : !viewdata || viewdata === undefined ? (
           <div className="table-loader-announcement">
@@ -68,6 +68,7 @@ const ViewDepartments = () => {
                     />
                   </div>
                   <div className="employee-main-div-col-header-buttons">
+                    <CreateDepartmentModal edit={"Edit Department"} id={viewdata?.department?.id} />
                     <DeleteDepartment id={viewdata?.department?.id} />
                   </div>
                 </div>

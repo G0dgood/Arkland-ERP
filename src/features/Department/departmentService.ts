@@ -16,6 +16,11 @@ const createDepartments = async (   input:any) => {
   const  {data}:any  =  await HttpService.post(`hr/departments`, input) 
   return data
 }
+const editDepartments = async (inputs: any) => {  
+  const {id, input} = inputs
+  const  {data}:any  =  await HttpService.patch(`hr/departments/${id}`, input) 
+  return data
+}
 
 const deleteDepartments = async (   id:any) => {  
   const  {data}:any  =  await HttpService.delete(`hr/departments/${id}`) 
@@ -26,7 +31,8 @@ const departmentsService = {
   allDepartments,   
   viewDepartments,
   createDepartments,
-  deleteDepartments
+  deleteDepartments,
+  editDepartments
 }
 
 export default departmentsService

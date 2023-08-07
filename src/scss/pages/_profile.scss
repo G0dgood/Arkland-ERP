@@ -124,7 +124,7 @@ span .profile-image-name-sub2{
 
 .LogoutOption-Logout{
  font-weight: bold  !important;
- color: red  !important;
+ color: #fff  !important;
 }
 
 
@@ -174,5 +174,191 @@ span .profile-image-name-sub2{
     border-radius: 4px !important;
     font-size: 0.8rem !important;
      
+}
+
+
+// pubile
+
+
+  #profile-details{
+    display:flex; 
+    background-color: #990000;
+    border-radius: 10px;
+    color: white;
+    padding: 1rem;
+    padding-bottom: 5rem;  
+     border: 1px solid #e8e8e8 !important;  
+     background-image: url('../../assets/images/back-fire.png');
+     /* background-position: center; */
+      background-repeat: no-repeat;
+      background-size: cover;
+} 
+
+#profile-details .employee-passport{
+    margin-right: 1rem;
+}  
+
+#profile-details .employee-details { 
+   width:50%; 
+      margin-right: 7rem;
+      padding-top: 1rem; 
+}
+
+#profile-details.profile-edit{
+    margin:2em 0em 1em 0em;
+    width: 1rem;
+}
+
+#profile-details .profile-edit button{
+    margin: 2em 0em 2em 0em;
+    background: none;
+    color:white;
+    cursor: pointer;    
+}
+
+#profile-details .profile-edit button .icon{
+    margin-right: .5em;
+}
+
+
+#Employee-info{
+    padding: 2em;     
+}
+
+#Employee-info .all-info{
+    margin-top: -150px;      
+}
+
+
+#Employee-info .information1{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 3em;
+    margin-left: -2em;
+    margin-right: -2em;
+}
+#Employee-info .information2{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: -2em;
+    margin-right: -2em;
+}
+
+
+#Employee-info .Personal-Information, .Profile-Information, .Education-information, .Next-of-kin{
+   
+    background-color: white;
+    border-radius: 10px;
+    max-width:100%;
+    padding:2em;
+    margin: 1em;
+ border: 1px solid #e8e8e8 !important;  
+}
+
+#Employee-info .id{
+    background-color: orangered;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#Employee-info p{
+    margin: 1rem;
+}
+
+#Employee-info .title{
+    opacity: 0.6;
+}
+
+
+@media screen and (max-width:820px){
+    #profile-details{
+        display:grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+       
+    }
+    #profile-details .employee-passport{
+        width:50%;  
+        margin: auto;
+        padding: 1em; 
+        text-align: center;
+    }  
+
+    #profile .employee{
+       
+        width: 100%;
+        margin: auto;
+    }
+    #profile .employee h5, h6{
+       text-align: center;
+    }
+
+    #profile-details .employee-details  { 
+        margin: auto;
+        text-align: center;
+       width: 100% !important;
+    }
+    #profile-details .profile-edit{
+        text-align: center;
+        width: 100%; 
+        margin-top:-1em;
+        margin-bottom: 0px !important;
+       
+    }
+
+    #Employee-info .all-info{
+        margin-top: -150px;  
+       
+    }
+    #Employee-info .Personal-Information, .Profile-Information, .Education-information, .Next-of-kin{
+       
+        background-color: white;
+        border-radius: 10px;
+        // width:100%;
+        padding: 0;  
+        border: 1px solid #e8e8e8 !important;
+    }
+    
+    #Employee-info .information1{
+        display:grid;
+        grid-template-columns: 1fr;
+        gap:2em;
+       
+    }
+    #Employee-info .information2{
+        display:grid;
+        grid-template-columns: 1fr;
+        margin-top: 2em;
+        margin-right: -2em;
+        gap:2em;
+    
+    }
+    #Employee-info .Profile-Information{
+        margin-left: 1em;
+         padding: 0;  
+    }
+    
+    #Employee-info .title{
+        opacity: 0.6;
+    }
+    
+    .Profile-Information, .Personal-Information{
+        margin:0;
+        padding: 0;
+        
+    }
+    #Employee-info .information1 h3, .information2 h3{
+        padding:1rem;
+    }
+
+    
+    @media screen and (min-width:768px){
+       #Employee-info{
+           margin-left: 2em;
+       } 
+        
+    } 
+
+    
 }
 

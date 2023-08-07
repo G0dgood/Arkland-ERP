@@ -6,6 +6,7 @@ import TableLoader from '../../components/TableLoader'
 import { Button } from '@material-ui/core'
 import { viewAssessment } from '../../features/KPIAssessment/assessmentSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
+import { gradeSystem } from '../../utils/ShareData'
 
 const ViewKPAssessment = () => {
 	const { id } = useParams()
@@ -15,13 +16,6 @@ const ViewKPAssessment = () => {
 	const [hodscore, setHodscore] = useState<number>(0);
 	const [broughtDownAverage, setBroughtDownAverage] = useState<any>(0);
 
-	const gradeSystem = [
-		{ rate: 5, definition: "Outstanding" },
-		{ rate: 4, definition: "Very Good" },
-		{ rate: 3, definition: "Good" },
-		{ rate: 2, definition: "Average" },
-		{ rate: 1, definition: "Below Average/Poor" },
-	]
 
 
 
@@ -73,7 +67,7 @@ const ViewKPAssessment = () => {
 							)}
 						</div>
 
-						{viewdata?.status === 'active' ? <div className="kpi-summary">
+						{/* {viewdata?.status === 'active' ? <div className="kpi-summary">
 							<div className="kpi-summary-title">
 								<p>KPI Summary</p></div>
 							<div className="kpi-summary-body final-rating-summary">
@@ -95,7 +89,7 @@ const ViewKPAssessment = () => {
 								<p id="final-avg">{!broughtDownAverage || broughtDownAverage ===
 									Infinity ? "0" : broughtDownAverage}%</p>
 							</div>
-						</div>}
+						</div>} */}
 						{viewdata?.status === 'active' ? <div>
 							<div className="kpi-summary">
 								<div className="kpi-summary-title">

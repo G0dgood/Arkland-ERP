@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { GiTeamIdea } from 'react-icons/gi';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BounceLoader } from 'react-spinners';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { viewTask } from '../../features/Tasks/taskSlice';
 import projectBack from "../../assets/vectors/project-back.svg";
@@ -10,6 +9,7 @@ import DeleteTaskModal from './DeleteTaskModal';
 import UpdateTaskModal from './UpdateTaskModal';
 import UpdateNoteModal from './UpdateNoteModal';
 import { getUserPrivileges } from '../../functions/auth';
+import { SVGLoader } from '../../components/SVGLoader';
 
 const TaskView = () => {
 	const navigate = useNavigate();
@@ -49,7 +49,7 @@ const TaskView = () => {
 			{
 				viewisLoading ? (
 					<div className="isLoading-container-view" >
-						<BounceLoader color={"#990000"} loading={viewisLoading} />
+						<SVGLoader width={"60px"} height={"60px"} />
 					</div>
 				) : !viewdata || viewdata === undefined ? (
 					<div className="table-loader-announcement">

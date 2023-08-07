@@ -8,7 +8,6 @@ import HttpService from '../HttpService';
 
 const CreateKpiModal = () => {
 	const [show, setShow] = useState(false);
-	const [hods, setHods] = useState<any>([]);
 	const [count, setCount] = useState<number>(0)
 	const [inputs, setInputs] = useState<any>({
 		month: 0,
@@ -20,21 +19,6 @@ const CreateKpiModal = () => {
 		comment: ""
 	})
 
-
-
-	const getData = async () => {
-		// setisLoading(true)
-		try {
-			const employeesUrl = "hr/hods"
-			const employees: any = await HttpService.get(employeesUrl)
-			setHods(employees?.data?.data)
-
-			// setisLoading(false)
-
-		} catch (error) {
-			// setisLoading(false)
-		}
-	}
 
 	const [newKpiField, setNewKpiField] = useState<any>([
 		{
@@ -86,11 +70,11 @@ const CreateKpiModal = () => {
 	const allInput = { ...inputs, other_parameters }
 
 
-	console.log('allInput', allInput)
+
 
 	return (
 		<>
-			<Button className="add-experience" onClick={() => { setShow(true); getData() }} style={{ marginLeft: "1rem" }}>
+			<Button className="add-experience" onClick={() => { setShow(true) }} style={{ marginLeft: "1rem" }}>
 				Create KPI Assessment
 			</Button>
 			<Modal
@@ -108,7 +92,6 @@ const CreateKpiModal = () => {
 					<main>
 						<KPIAssessment
 							setShow={setShow}
-							hods={hods}
 							handleRemoveField={handleRemoveField}
 							handleAddField={handleAddField}
 							newKpiField={newKpiField}

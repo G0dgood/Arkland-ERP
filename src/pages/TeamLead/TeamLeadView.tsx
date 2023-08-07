@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BounceLoader } from 'react-spinners';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { viewTeamLead } from '../../features/TeamLead/teamleadSlice';
@@ -7,6 +7,7 @@ import projectBack from "../../assets/vectors/project-back.svg";
 import moment from 'moment';
 import DeleteTeamLeadModal from './DeleteTeamLeadModal';
 import { GiTeamIdea } from 'react-icons/gi';
+import { SVGLoader } from '../../components/SVGLoader';
 
 const TeamLeadView = () => {
 	const navigate = useNavigate();
@@ -31,8 +32,7 @@ const TeamLeadView = () => {
 			{
 				viewisLoading ? (
 					<div className="isLoading-container-view" >
-						<BounceLoader
-							color={"#990000"} loading={viewisLoading} />
+						<SVGLoader width={"60px"} height={"60px"} />
 					</div>
 				) : !viewdata || viewdata === undefined ? (
 					<div className="table-loader-announcement">

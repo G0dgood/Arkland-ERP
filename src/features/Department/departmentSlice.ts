@@ -24,6 +24,12 @@ const initialState = {
   createisLoading: false, 
   createmessage: '', 
 
+  editdata:'',
+  editisError: false,
+  editisSuccess: false,
+  editisLoading: false, 
+  editmessage: '', 
+
   deletedata:'',
   deleteisError: false,
   deleteisSuccess: false,
@@ -68,6 +74,17 @@ export const createDepartments = createAsyncThunk('departments/createDepartments
     return thunkAPI.rejectWithValue(message)
   }
 })
+export const editDepartments = createAsyncThunk('departments/editDepartments', async (data,  thunkAPI) => {
+  try {
+    return await employeeService.editDepartments(data )
+  } catch (error: any) {
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString()  
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 export const deleteDepartments = createAsyncThunk('departments/deleteDepartments', async (data,  thunkAPI) => {
   try {
@@ -104,6 +121,11 @@ export const departmentSlice = createSlice({
       state.createisSuccess = false
       state.createisError = false
       state.createmessage = '' 
+
+      state.editisLoading = false
+      state.editisSuccess = false
+      state.editisError = false
+      state.editmessage = '' 
 
       state.deleteisLoading = false
       state.deleteisSuccess = false
@@ -160,6 +182,22 @@ export const departmentSlice = createSlice({
         state.createisError = true
         state.createmessage = action.payload
         state.createdata = null 
+      })
+
+      .addCase(editDepartments.pending, (state) => {
+        state.editisLoading = true 
+      })
+      .addCase(editDepartments.fulfilled, (state:any, action) => {
+        state.editisLoading = false
+        state.editisSuccess = true
+        state.editdata = action.payload 
+          
+      })
+      .addCase(editDepartments.rejected, (state:any, action) => {
+        state.editisLoading = false
+        state.editisError = true
+        state.editmessage = action.payload
+        state.editdata = null 
       })
 
       .addCase(deleteDepartments.pending, (state) => {

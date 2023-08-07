@@ -5,10 +5,11 @@ import { Button } from '@material-ui/core';
 import moment from 'moment'
 import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
-import { BounceLoader } from 'react-spinners'
+
 import { SlBriefcase } from 'react-icons/sl'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { hrApproveLeave, rejectLeave, reset, viewTeamLeave, } from '../../features/Leave/leaveSlice';
+import { SVGLoader } from '../../components/SVGLoader';
 
 
 const HRUpdateLeave = () => {
@@ -106,8 +107,7 @@ const HRUpdateLeave = () => {
 		<div>
 			{isLoading ? (
 				<div className="isLoading-container-view" >
-					<BounceLoader
-						color={"#990000"} loading={isLoading} />
+					<SVGLoader width={"60px"} height={"60px"} />
 				</div>
 			) : !data || data === undefined ? (
 				<div className="table-loader-announcement">

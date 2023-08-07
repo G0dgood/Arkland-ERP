@@ -1,57 +1,27 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { fireAlert } from '../../utils/Alert';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/useStore';
-import { Button } from '@material-ui/core';
-import { calculateTotalScore, getTotalReviewerScore, getTotalScore, getTotalScoreSum, getTotalScoreWeight } from '../../utils/helpers';
+import { calculateTotalScore, getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
+
+
 
 
 const KPIAdminDetails = ({ data }: any) => {
 	const navigate = useNavigate();
 
-	const { hodreviewdata, hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
+	const { hodreviewisSuccess } = useAppSelector((state: any) => state.assessment)
 	const year = new Date().getFullYear().toString();
-	const location = useLocation();
-
-
-
-
-
-
-	// calculates the total in a Columns
-	//  @ts-ignore  
-	// const Amount: any = Object.values(kpiData).reduce((a, v) => (a = a + v?.num), 0);
-
-
-
-	const title = "Successful";
-	const html = "KPI Updated!";
-	const icon = "success";
 
 
 	useEffect(() => {
 		if (hodreviewisSuccess) {
-			fireAlert(title, html, icon);
+			fireAlert("Successful", "KPI Updated!", "success");
 			navigate("/kpiassessment/kpiassessment/teamkpi")
 		}
 
-	}, [html, title, icon, hodreviewisSuccess, navigate]);
-
-
-	const reviews = [
-		{ 'reviewer': data?.job_knowledge_employee },
-		{ 'reviewer': data?.efficiency_reviewer },
-		{ 'reviewer': data?.attendance_reviewer },
-		{ 'reviewer': data?.communication_reviewer },
-		{ 'reviewer': data?.reliability_reviewer },
-		{ 'reviewer': data?.collaboration_reviewer },
-	];
-
-	//  @ts-ignore  
-	const hod: any = Object.values(reviews).reduce((a, v) => (a = a + v?.reviewer), 0);
-
-
+	}, [hodreviewisSuccess, navigate]);
 
 
 	const mappedParameters: any = Object.keys(!data.parameters ? [] : data.parameters).map((key) => {
@@ -76,15 +46,8 @@ const KPIAdminDetails = ({ data }: any) => {
 	});
 
 
-
-
-
-
-
-
 	return (
 		<form  >
-
 			<div className="top-fields">
 				<p>{data?.month} | {year} </p>
 			</div>
@@ -103,9 +66,11 @@ const KPIAdminDetails = ({ data }: any) => {
 							<div className="rate_area Grade-title">
 								<p>Staff Score</p>
 							</div>
-							<div className="btn_area Grade-title">
-								<p>HOD Grade</p>
-							</div>
+							{data?.status === "in review" ? "" :
+								<div className="btn_area Grade-title">
+									<p>HOD Grade</p>
+								</div>}
+
 						</div>
 
 						{Object.keys(!parameters ? [] : parameters).map((key) => {
@@ -122,15 +87,11 @@ const KPIAdminDetails = ({ data }: any) => {
 										<div className="rate_area">
 											{parameters[key].score}
 										</div>
-										<div className="btn_area">
-											{/* @ts-ignore */}
-											{/* {Object.keys(!hodreviewdata ? [] : hodreviewdata).map((key: any) => {
-												<p>{hodreviewdata[key]?.reviewer_score}</p>
-											})} */}
-											{calculateTotalScore(parameters[key].score_weight, parameters[key].score)}
-										</div>
+										{data?.status === "in review" ? "" :
+											<div className="btn_area">
+												{calculateTotalScore(parameters[key].score_weight, parameters[key].score)}
+											</div>}
 									</div>
-
 								</div>
 							)
 						})}
@@ -145,13 +106,10 @@ const KPIAdminDetails = ({ data }: any) => {
 							<div className="rate_area Grade-title">
 								<p>{getTotalScore(parameters)}</p>
 							</div>
-							{location.state.name === "admin" ? "" : <div className="btn_area Grade-title">
-								{/* {data?.status === 'active' ? hod : <p> {hodscore}</p>} */}
-							</div>}
-							{location.state.name === "admin" && <div className="btn_area Grade-title">
-								<p> {getTotalReviewerScore(parameters)}</p>
-
-							</div>}
+							{data?.status === "in review" ? "" :
+								<div className="btn_area Grade-title">
+									<p> {hodTotalScore(parameters)}</p>
+								</div>}
 						</div>
 					</div>
 

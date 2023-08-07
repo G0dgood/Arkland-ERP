@@ -1,6 +1,7 @@
-import { BounceLoader } from "react-spinners";
+
 import moment from "moment";
 import ViewScheduleModal from "../../components/Modals/ViewScheduleModal";
+import { SVGLoader } from "../../components/SVGLoader";
 
 
 const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
@@ -23,7 +24,7 @@ const Todos = ({ showDrawer, setShowDrawer, tasks, isLoading }: any) => {
 
         {isLoading ? (
           <div className="table-loader-announcement1">
-            <BounceLoader color={"#990000"} loading={isLoading} />
+            <SVGLoader width={"40px"} height={"40px"} />
           </div>
         ) : tasks?.length === 0 || tasks === undefined ? (
           <div className="table-loader-announcement1">

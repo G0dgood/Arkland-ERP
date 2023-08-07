@@ -155,3 +155,38 @@ input[type="radio"]:checked + label::after
 .radio-contain{
   display: flex;
 }
+
+.table-link-btn-new { 
+    color: #fff !important;
+    padding: 0.15rem 1rem !important;
+    border-radius: 3px !important; 
+    background-color: #990000 !important;
+        border: 1px solid #990000 !important; 
+        height: 2rem !important;
+}
+.table-link-btn-new:hover { 
+    color: #990000 !important;
+    padding: 0.15rem 1rem !important;
+    border-radius: 3px !important; 
+      border: 1px solid #990000 !important; 
+      background-color: #fff !important;
+}
+
+.table-link-off-active { 
+    color: #990000 !important;
+    padding: 0.15rem 1rem !important;
+    border-radius: 3px !important;
+    border: 1px solid #990000 !important; 
+      height: 2rem !important;
+}
+.table-link-off-active:hover { 
+    color: #fff !important;
+    padding: 0.15rem 1rem !important;
+    border-radius: 3px !important;
+    // border: 1px solid #990000 !important; 
+    background-color: #990000 !important;
+}
+
+
+
+ 

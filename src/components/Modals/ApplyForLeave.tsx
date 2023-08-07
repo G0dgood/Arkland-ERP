@@ -83,7 +83,7 @@ const ApplyForLeave = () => {
 						</select >
 						<div className='Modal-data-time'>
 						</div>
-						<div className='Modal-data-time'>
+						<div className='Modal-data-time mt-4'>
 							<div className='Modal-two-input'>
 								<h6>Start Date</h6>
 								<input id='Modal-textarea-input-sub' placeholder='Select start date of leave' type={'date'}
@@ -104,9 +104,9 @@ const ApplyForLeave = () => {
 								value={inputs.description}
 								onChange={(e) => handleOnChange("description", e.target.value)} />
 						</div>
-						<div className='btn-modal-container'>
-							<Button variant="contained" className="add-experience" onClick={handleLeave}>
-								{isLoading ? <Spinner animation="border" /> : "APPLY"}
+						<div className='btn-modal-container' style={{ display: "flex", justifyContent: "flex-end" }}>
+							<Button variant="contained" className="table-link-btn-new " onClick={handleLeave}>
+								{isLoading ? <Spinner animation="border" size='sm' /> : "APPLY"}
 							</Button>
 						</div>
 					</div>

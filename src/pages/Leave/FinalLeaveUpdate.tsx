@@ -7,8 +7,8 @@ import { Spinner } from 'react-bootstrap'
 import { fireAlert } from '../../utils/Alert'
 import { finalApproveLeave, rejectLeave, reset, viewTeamLeave } from '../../features/Leave/leaveSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
-import { BounceLoader } from 'react-spinners';
 import { SlBriefcase } from 'react-icons/sl';
+import { SVGLoader } from '../../components/SVGLoader';
 
 
 
@@ -103,8 +103,7 @@ const FinalLeaveUpdate = () => {
 		<div>
 			{viewisLoading ? (
 				<div className="isLoading-container-view" >
-					<BounceLoader
-						color={"#990000"} loading={viewisLoading} />
+					<SVGLoader width={"60px"} height={"60px"} />
 				</div>
 			) : !data || data === undefined ? (
 				<div className="table-loader-announcement">

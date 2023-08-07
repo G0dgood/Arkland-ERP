@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { BounceLoader } from 'react-spinners';
+
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import projectBack from "../../assets/vectors/project-back.svg";
 import moment from 'moment';
 import { viewPrevilage } from '../../features/Employee/employeeSlice';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import DeletePrivileges from './DeletePrivileges';
+import { SVGLoader } from '../../components/SVGLoader';
 
 
 const ViewPrivilage = () => {
@@ -26,7 +27,7 @@ const ViewPrivilage = () => {
 		<div>
 			{viewPrevilageisLoading ? (
 				<div className="isLoading-container-view" >
-					<BounceLoader color={"#990000"} loading={viewPrevilageisLoading} />
+					<SVGLoader width={"60px"} height={"60px"} />
 				</div>
 			) : !viewPrevilagedata || viewPrevilagedata === undefined ? (
 				<div className="table-loader-announcement">

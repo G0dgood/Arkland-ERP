@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { BounceLoader } from 'react-spinners';
 import { useNavigate, useParams } from 'react-router-dom';
 import projectBack from "../../assets/vectors/project-back.svg";
 import moment from 'moment';
 import { viewRole } from '../../features/Employee/employeeSlice';
 import DeleteModals from '../../components/DeleteModals';
 import CreateRoleModal from '../../components/Modals/CreateRoleModal';
+import { SVGLoader } from '../../components/SVGLoader';
 
 
 const ViewRole = () => {
@@ -27,10 +27,7 @@ const ViewRole = () => {
 		<div  >
 			{viewroleisLoading ? (
 				<div className="isLoading-container-view" >
-					<BounceLoader
-						color={"#990000"}
-						loading={viewroleisLoading}
-					/>
+					<SVGLoader width={"60px"} height={"60px"} />
 				</div>
 			) : (
 				<div className="EssentialsContainer">

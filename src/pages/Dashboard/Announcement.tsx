@@ -3,7 +3,8 @@ import { getUserPrivileges } from "../../functions/auth";
 import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import DeleteAnnouncementModal from "../../components/Modals/DeleteAnnouncementModal";
 import ClockIn from "../../components/ClockIn";
-import { BounceLoader } from "react-spinners";
+import { SVGLoader } from "../../components/SVGLoader";
+
 
 
 const Announcement = ({ announcement: data, isLoading }: any) => {
@@ -27,11 +28,11 @@ const Announcement = ({ announcement: data, isLoading }: any) => {
       </div>
       <div>
         {isLoading ? (
-          <div className="table-loader-announcement" >
-            <BounceLoader color={"#990000"} loading={isLoading} id="BounceLoader-new" />
+          <div className="table-loader-announcement" style={{ paddingTop: "15rem" }}>
+            <SVGLoader width={"40px"} height={"40px"} />
           </div>
         ) : data?.length === 0 || data === undefined ? (
-          <div className="table-loader-announcement" id="BounceLoader-new">
+          <div className="table-loader-announcement" id="BounceLoader-new" style={{ paddingTop: "14rem" }}>
             <div>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-announcement-marketing-outline-others-phat-plus.png" />

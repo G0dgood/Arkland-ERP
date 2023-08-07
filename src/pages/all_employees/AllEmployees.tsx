@@ -49,7 +49,7 @@ const AllEmployees = () => {
 
   useEffect(() => {
     // Filter our suggestions that don't contain the user's input
-    const unLinked = data?.filter((suggestion: any) =>
+    const unLinked = !data ? [] : data?.filter((suggestion: any) =>
       // @ts-ignore  
       suggestion?.full_name?.toLowerCase()?.startsWith(searchItem?.toLowerCase()) ||
       // @ts-ignore  

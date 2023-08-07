@@ -1,14 +1,13 @@
 import moment from 'moment';
 import { useEffect } from 'react'
-import {
-	BounceLoader
-} from 'react-spinners';
+
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TfiAnnouncement } from 'react-icons/tfi';
 import projectBack from "../../assets/vectors/project-back.svg";
 import DeleteAnnouncementsModal from './DeleteAnnouncementsModal';
 import { viewAnnouncement } from '../../features/Announcement/announcemetSlice';
+import { SVGLoader } from '../../components/SVGLoader';
 
 const AnnouncementsView = () => {
 	const navigate = useNavigate();
@@ -29,8 +28,7 @@ const AnnouncementsView = () => {
 			{
 				viewisLoading ? (
 					<div className="isLoading-container-view" >
-						<BounceLoader
-							color={"#990000"} loading={viewisLoading} />
+						<SVGLoader width={"60px"} height={"60px"} />
 					</div>
 				) : !viewdata || viewdata === undefined ? (
 					<div className="table-loader-announcement">

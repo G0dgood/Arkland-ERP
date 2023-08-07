@@ -1,7 +1,8 @@
 import moment from "moment";
-import { BounceLoader } from "react-spinners";
 import ViewAnnouncementModal from "../../components/Modals/ViewAnnouncementModal";
 import ClockIn from "../../components/ClockIn";
+import { SVGLoader } from "../../components/SVGLoader";
+
 
 
 
@@ -21,8 +22,8 @@ const AdminAnnouncement = ({ announcements, isLoading }: any) => {
 
       <div>
         {isLoading ? (
-          <div className="table-loader-announcement">
-            <BounceLoader color={"#990000"} loading={isLoading} />
+          <div className="table-loader-announcement" style={{ paddingTop: "7rem" }}>
+            <SVGLoader width={"40px"} height={"40px"} />
           </div>
         ) : announcements?.length === 0 || announcements == null ? (
           <div className="table-loader-announcement">

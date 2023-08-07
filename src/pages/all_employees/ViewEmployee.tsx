@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import { BounceLoader } from "react-spinners";
 import projectBack from "../../assets/vectors/project-back.svg";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
 import { getUserPrivileges } from "../../functions/auth";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { hrViewEmployees } from "../../features/Employee/employeeSlice";
 import DeleteEmployeeModal from "../../components/Modals/DeleteEmployeeModal";
+import { SVGLoader } from "../../components/SVGLoader";
 
 
 
@@ -40,10 +40,7 @@ const ViewEmployee = () => {
   <div>
    {viewisLoading ? (
     <div className="isLoading-container-view">
-     <BounceLoader
-      color={"#990000"}
-      loading={viewisLoading}
-     />
+     <SVGLoader width={"60px"} height={"60px"} />
     </div>
    ) : (
     <div className="employee-main-div-col">

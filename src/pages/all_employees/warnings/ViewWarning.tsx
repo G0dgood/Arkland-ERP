@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
-import { BounceLoader } from "react-spinners";
 import projectBack from "../../../assets/vectors/project-back.svg";
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import RequestEmployeeTerminationModal from "../../../components/Modals/RequestEmployeeTerminationModal";
@@ -9,6 +8,7 @@ import { viewWarning } from "../../../features/Employee/employeeSlice";
 import UpdateWarning from "./UpdateWarning";
 // import RespondToWarning from "./RespondToWarning";
 import { capitalizeFirstLetters } from "../../../components/CapitalizeFirstLetters";
+import { SVGLoader } from "../../../components/SVGLoader";
 
 
 const ViewWarning = () => {
@@ -30,10 +30,7 @@ const ViewWarning = () => {
   <div  >
    {viewwarningisLoading ? (
     <div className="isLoading-container-view" >
-     <BounceLoader
-      color={"#990000"}
-      loading={viewwarningisLoading}
-     />
+     <SVGLoader width={"60px"} height={"60px"} />
     </div>
    ) : (
     <div className="EssentialsContainer">

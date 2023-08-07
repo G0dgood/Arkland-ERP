@@ -6,8 +6,8 @@ import moment from 'moment';
 import LogoutOption from '../../components/LogoutOption';
 import DataService from '../../utils/dataService';
 import { useState } from 'react';
-
-
+import { FiUser } from "react-icons/fi";
+import { FaWrench } from 'react-icons/fa';
 
 const dataService = new DataService()
 const Profile = () => {
@@ -19,101 +19,97 @@ const Profile = () => {
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 	const { privileges } = userInfo
 
+	console.log('userInfo', userInfo)
+
 
 	return (
-		<div className="profile-body">
-			<div  >
-				<Link to='/home'>
-					{/* <img className="demo-bg" src={logo} alt="" />   */}
+		// <div className="profile-body">
+		<div className='main-profile'>
+
+			<div id='profile-details'>
+				<div className='employee-passport'>
+					<FiUser size={80} />
+				</div>
+				<div className='employee-details'>
+					<h5>{userInfo?.employee?.full_name}</h5>
+					<h6>{userInfo?.employee?.email}</h6>
+					{/* <h6>{userInfo?.role?.status}</h6> */}
+					{/* <p>Freelancers and entrepreneur use about me to grow their
+						audience and get more client. Create are page to present
+						what you are and do in one link.
+					</p> */}
+				</div>
+				<div className='profile-edit'>
+					<LogoutOption open={open} setOpen={setOpen} />
+					{/* <Link to='/profile/edit'>
+						<button>
+							<FaWrench className="icon" /> Edit profile </button>
+					</Link> */}
+				</div>
+			</div>
+
+			<div id='Employee-info'>
+				<div className='all-info'>
+					<div className='information1'>
+						<div className='Personal-Information'>
+							<h3>Personal Information</h3>
+
+							<p><span className='title'>Full Name: </span>{userInfo?.employee?.full_name}</p>
+							<p><span className='title'>Email Address: </span>{userInfo?.employee?.email}</p>
+							<p><span className='title'>Adress: </span>{userInfo?.employee?.address}</p>
+							<p><span className='title'>Date Of Birth: </span>{moment(userInfo?.date_of_birth).format("DD-MM-YYYY")}</p>
+							<p><span className='title'>City: </span>{userInfo?.employee?.city}</p>
+						</div>
+
+						<div className='Profile-Information'>
+							<h3>Profile Information</h3>
+							<p><span className='title'>Employee ID: </span><span className="id">als-{userInfo?.employee?.employee_id}</span></p>
+							<p><span className='title'>Gender: </span>Male</p>
+							<p><span className='title'>Contact Number: </span>{userInfo?.employee?.phone}</p>
+							<p><span className='title'>Role: </span>{userInfo?.role?.name}</p>
+							<p><span className='title'>Department: </span>{userInfo?.department?.name}</p>
+						</div>
+					</div>
+				</div>
+
+				<div className='information2'>
+					<div className='Education-information'>
+						<h3>Privileges</h3>
+						{privileges?.map((item: any, i: any) => (
+							<p key={i}><span className='title'>Role: </span>{item?.role}</p>
+						))}
+					</div>
+
+					<div className="Next-of-kin">
+						<h3>OThers</h3>
+						<p><span className='title'>Date of Joining: </span>{moment(userInfo?.employee?.employment_date).format("DD-MM-YYYY")}</p>
+						<p><span className='title'>Address: </span>{userInfo?.employee?.address}</p>
+						<p><span className='title'>Email Address: </span>{userInfo?.employee?.email}</p>
+						<p><span className='title'>Institution_Attended: </span>{userInfo?.employee?.institution_attended} </p>
+						<p><span className='title'>Qualification: </span> {userInfo?.employee?.qualification}</p>
+					</div>
+				</div>
+			</div>
+
+
+
+			{/* <div  >
+				<Link to='/home'> 
 				</Link>
 				<div className="profile-body-container-sup">
 					<span>
 						<Link to='/'>
 							<FiChevronLeft size={30} />
-						</Link>
-
+						</Link> 
 					</span>
-					<span><LogoutOption open={open} setOpen={setOpen} /></span>
-
-
+					<span>
+						<LogoutOption open={open} setOpen={setOpen} />
+					</span> 
 				</div>
-			</div>
+			</div> */}
 
-			<div className="container rounded bg-white mt-5 mb-5">
-				<div className="row">
-					<div className="col-md-3 border-right">
-						<div className="d-flex flex-column align-items-center text-center p-3 py-5">
-							{/* eslint-disable-next-line jsx-a11y/alt-text */}
-							<img className="rounded-circle " width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" /><span className="font-weight-bold">{userInfo?.employee?.full_name}</span>
-							<span className="text-black-50">{userInfo?.employee?.email}</span>
-							<span>
-								<span className='profile-image-name'>
-									<p className='profile-image-name-sub1' style={{ marginBottom: "0px" }}>{userInfo?.full_name}</p>
-									<p> <BsDot size={20} color={"green"} /> {userInfo?.role?.status}</p>
-								</span>
-								<p>
-									<span className='profile-image-name-sub2'>{userInfo?.department?.name}
-									</span> </p>
-							</span>
-						</div>
-					</div>
-					<div className="col-md-5 border-right">
-						<div className="p-3 py-5">
-							<div className="d-flex justify-content-between align-items-center mb-3">
-								<h4 className="text-right">Profile  </h4>
-							</div>
 
-							<div className="row mt-3">
-								<div className="getjob-application-details">
-									<p>Date of Birth</p>
-									<p>{moment(userInfo?.date_of_birth).format("DD-MM-YYYY")}</p>
-									<p>Full Name</p>
-									<p>{userInfo?.employee?.full_name}</p>
-									<p>Address</p>
-									<p>{userInfo?.employee?.address}</p>
-									<p>City</p>
-									<p>{userInfo?.employee?.city}</p>
-									<p>Phone</p>
-									<p>{userInfo?.employee?.phone}</p>
-								</div>
 
-							</div>
-							<div className="row mt-3">
-								<div className='General-Information '>
-
-									<div className="d-flex justify-content-between align-items-center mb-3">
-										<h4 className="text-right">Privileges</h4>
-									</div>
-								</div>
-								<div>
-									{privileges?.map((item: any, i: any) => (
-										<div className="getjob-application-details" key={i}>
-											<p>Role</p>
-											<p>{item?.role}</p>
-										</div>
-									))}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="col-md-4">
-						<div className="p-3 py-5 mb-5">
-							<div className="getjob-application-details">
-								<p>Date of Joining</p>
-								<p>{moment(userInfo?.employee?.employment_date).format("DD-MM-YYYY")}</p>
-								<p>Role</p>
-								<p>{userInfo?.role?.name}</p>
-								<p>Department</p>
-								<p>{userInfo?.department?.name}</p>
-								<p>Employer ID</p>
-								<p>als-{userInfo?.employee?.employee_id}</p>
-							</div>
-						</div>
-						<div>
-						</div>
-					</div>
-				</div>
-			</div>
 
 		</div>
 	)

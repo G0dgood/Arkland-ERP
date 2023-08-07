@@ -2,11 +2,12 @@ import { Button } from '@material-ui/core';
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
-import { BounceLoader, } from 'react-spinners';
 import moment from 'moment';
 import { FiEye } from 'react-icons/fi';
 import { viewMeAnnouncement } from '../../features/Announcement/announcemetSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { SVGLoader } from '../SVGLoader';
+
 
 const ViewAnnouncementModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
@@ -43,10 +44,7 @@ const ViewAnnouncementModal = ({ id }: any) => {
 				<Modal.Body>
 					{meisLoading ? (
 						<div className="table-loader-announcement1">
-							<BounceLoader
-								color={"#990000"}
-								loading={meisLoading}
-							/>
+							<SVGLoader width={"40px"} height={"40px"} />
 						</div>
 					) : (
 						<div className="getjob-application-details">

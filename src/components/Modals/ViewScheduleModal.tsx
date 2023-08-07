@@ -1,12 +1,14 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { MdOutlineClose } from 'react-icons/md'
-import { BounceLoader } from 'react-spinners'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { FiEye } from 'react-icons/fi'
 import { viewTask } from '../../features/Tasks/taskSlice'
 import { Button } from '@material-ui/core'
+import { SVGLoader } from '../SVGLoader'
+
+
 
 const ViewScheduleModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
@@ -46,8 +48,6 @@ const ViewScheduleModal = ({ id }: any) => {
 
 				<Modal.Header>
 					<span className="span-center-title">Task Details</span>
-
-
 					<Button onClick={() => setViewShow(false)}>
 						<MdOutlineClose size={28} />
 					</Button>
@@ -56,10 +56,7 @@ const ViewScheduleModal = ({ id }: any) => {
 				<Modal.Body>
 					{viewisLoading ? (
 						<div className="table-loader-announcement1">
-							<BounceLoader
-								color={"#990000"}
-								loading={viewisLoading}
-							/>
+							<SVGLoader width={"40px"} height={"40px"} />
 						</div>
 					) : (
 						<div className="getjob-application-details">

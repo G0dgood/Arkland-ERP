@@ -8,7 +8,7 @@ import { allProject } from "../../features/Project/projectSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { getUserPrivileges } from "../../functions/auth";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
-import { BounceLoader } from "react-spinners";
+import { SVGLoader } from "../../components/SVGLoader";
 
 const ProjectView = () => {
   const dispatch = useAppDispatch();
@@ -97,8 +97,7 @@ const ProjectView = () => {
           </div>
           {isLoading ? (
             <div className="isLoading-container">
-              <BounceLoader
-                color={"#990000"} loading={isLoading} />
+              <SVGLoader width={"60px"} height={"60px"} />
             </div>
           ) : data?.length === 0 ? (
             <div className="table-loader-announcement">

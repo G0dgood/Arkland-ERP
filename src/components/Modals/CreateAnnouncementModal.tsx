@@ -34,7 +34,6 @@ const CreateAnnouncementModal = () => {
   const [projects, setProject] = useState<any>([]);
   const [departments, setDepartments] = useState<any>([]);
   const [roles, setEmployees] = useState<any>([]);
-  const [teamLeads, setTeamslead] = useState([]);
   const [teams, setTeams] = useState([]);
 
 
@@ -66,19 +65,12 @@ const CreateAnnouncementModal = () => {
       const teamsUrl = `hr/teams`
       const teams: any = await HttpService.get(teamsUrl)
       setTeams(teams?.data?.data)
-
-
-
       setisLoading(false)
 
     } catch (error) {
       setisLoading(false)
     }
   }
-
-  console.log(
-    'teams', teams,)
-
 
   const availablleRoles = [] as any;
   roles &&
@@ -183,7 +175,7 @@ const CreateAnnouncementModal = () => {
     }, {});
 
 
-  console.log('createAnnouncementValues', inputs)
+
 
 
   const handleCreate = (e: any) => {
@@ -323,7 +315,7 @@ const CreateAnnouncementModal = () => {
                 )}
               </div>
 
-              <div className="btn-modal-container" >
+              <div className="btn-modal-container" style={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button
                   variant="contained"
                   className="add-experience"
