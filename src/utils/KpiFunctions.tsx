@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 
 
@@ -61,7 +61,7 @@ export const getTotalReviewerScore = (parameters: any) => {
 // Function to calculate the total score for each entry
 export const calculateTotalScore = (weights: number, scores: number) => {
 	if (!weights) {
-		return "-";
+		return "";
 	} else {
 		const totalScore = (weights / 5) * scores;
 
@@ -120,10 +120,10 @@ export const KPISummary = (data: any,) => {
 	});
 
 	// Performance  Percentage Calculation
-	const broughtDownAverage = (getTotalScore: any, hodTotalScore: any) => {
-		const finalscore: any = (100 + hodTotalScore) / (hodTotalScore === 0 ? 0 : 2)
-		return finalscore
-	}
+	// const broughtDownAverage = (getTotalScore: any, hodTotalScore: any) => {
+	// 	const finalscore: any = (100 + hodTotalScore) / (hodTotalScore === 0 ? 0 : 2)
+	// 	return finalscore
+	// }
 
 
 
@@ -146,12 +146,12 @@ export const KPISummary = (data: any,) => {
 					<p>KPI Summary</p>
 				</div>
 				<div className="kpi-summary-body m-t-10" >
-					<p>Total</p>
-					<p id="total-rating">{getTotalScore(parameters)}</p>
+					<p>Employee Score</p>
+					<p id="total-rating">{!data?.performance_percentage_employee ? "" : data.performance_percentage_employee}</p>
 					<p>HOD Score</p>
-					<p id="avg-rating">{hodTotalScore(parameters)}</p>
+					<p id="avg-rating">{!data.performance_percentage_reviewer ? "" : data.performance_percentage_reviewer}</p>
 					<p>Average Score</p>
-					<p id="avg-rating">{broughtDownAverage(getTotalScore(parameters), hodTotalScore(parameters))}%</p>
+					<p id="avg-rating">{!data?.total_performance_percentage ? "" : data?.total_performance_percentage + "%"}</p>
 				</div>
 			</div>}
 		</>

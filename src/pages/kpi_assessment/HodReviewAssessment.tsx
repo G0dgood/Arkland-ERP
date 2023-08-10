@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { calculateTotalScore } from '../../utils/KpiFunctions';
+import { calculateTotalScore, getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
 import { useLocation, useParams } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
@@ -11,20 +11,19 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 	const { id } = useParams()
 	const year = new Date().getFullYear().toString();
 	const location = useLocation();
+	const [hods, setHOD] = useState([])
 	const [kpinputs, setKpInputs] = useState({
 		month: 0,
 		reviewer: "",
 		job_knowledge: 0,
 		efficiency: 0,
 		attendance: 0,
-		communication: 0,
 		comment: "",
 	});
 
 
 
-	//  @ts-ignore  
-	// const hod: any = Object.values(reviews).reduce((a, v) => (a = a + v?.reviewer), 0);
+
 
 	const mappedParameters: any = Object.keys(!viewdata?.parameters ? [] : viewdata?.parameters).map((key) => {
 		const { self_score, score_weight } = viewdata?.parameters[key] || {};
@@ -103,9 +102,6 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 		}));
 	};
 
-	const [hods, setHOD] = useState([])
-
-
 
 	useEffect(() => {
 		getData()
@@ -116,7 +112,7 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 	const getData = async () => {
 		setisLoading(true)
 		try {
-			const hodsUrl = `employees`
+			const hodsUrl = `employees/hods`
 			const hods: any = await HttpService.get(hodsUrl)
 			setHOD(hods?.data?.data)
 			setisLoading(false)
@@ -124,16 +120,54 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 			setisLoading(false)
 		}
 	}
-
-
 	const availablleHods = [] as any;
 	hods &&
 		hods?.forEach((hod: any) =>
 			availablleHods.push({
-				value: hod.id,
-				label: hod.full_name,
+				value: hod?.user?.employee,
+				label: hod?.name,
 			})
 		);
+
+
+	const [inputs, setInputs] = useState<any>({
+		month: 0,
+		reviewer: "",
+		job_knowledge: 0,
+		efficiency: 0,
+		attendance: 0,
+		other_parameters: [],
+		comment: ""
+	})
+
+
+	const [newKpiField, setNewKpiField] = useState<any>([
+		{
+			id: 1,
+			name: "",
+			score: 0,
+			description: "",
+		}
+	]);
+
+
+
+
+	const handleKPIChange = (input: any, value: any, index: any,) => {
+		let items = [...newKpiField];
+		let oldItem = items.findIndex((x) => x.id === index);
+		let newItem = { ...items[oldItem], [input]: value };
+		items[oldItem] = newItem;
+		setNewKpiField(items);
+	};
+
+	const other_parameters = newKpiField?.map((item: any) => ({
+		name: item.name,
+		score: item.score,
+		description: item.description,
+	}));
+
+	const allInput = { ...inputs, other_parameters }
 
 
 	return (
@@ -204,23 +238,22 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 							)
 						})}
 
-						{/* <div className="added-field">
-       <div className="factor_area Grade-title">
-        <p>Total</p>
-        <div>
-         <p>{Weight}</p>
-        </div>
-       </div>
-       <div className="rate_area Grade-title">
-        <p>{!Amount ? "0" : Amount}</p>
-       </div>
-       {location.state.name === "admin" ? "" : <div className="btn_area Grade-title">
-        {data?.status === 'active' ? hod : <p> {hodscore}</p>}
-       </div>}
-       {location.state.name === "admin" && <div className="btn_area Grade-title">
-        <p> {hodscore}</p>
-       </div>} 
-      </div> */}
+						<div className="added-field">
+							<div className="factor_area Grade-title">
+								<p>Total</p>
+								<div>
+									<p>{getTotalScoreWeight(parameters)}</p>
+								</div>
+							</div>
+							<div className="rate_area Grade-title">
+								<p>{getTotalScore(parameters)}</p>
+							</div>
+							{viewdata?.status === "in review" ? "" :
+								<div className="btn_area Grade-title">
+									<p> {hodTotalScore(parameters)}</p>
+								</div>}
+						</div>
+
 					</div>
 					<div>
 						{viewdata?.status === 'active' ? "" :

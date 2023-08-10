@@ -151,6 +151,9 @@ class HttpService {
             this.dataService.clearData();  
         }
       
+        else if (e.response.data.message === "Unable to complete request") {   
+             
+        }
         else if (e.response.status === 403 && e.response.data.error_code === 24) {   
              fireAlert2(e.response.data.message, "You will be redirected!", "warning", "/update-password"); 
         }

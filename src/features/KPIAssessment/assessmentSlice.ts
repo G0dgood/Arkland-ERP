@@ -46,7 +46,13 @@ const initialState = {
  allkpiisError: false,
  allkpiisSuccess: false,
  allkpiisLoading: false, 
- allkpimessage: '', 
+  allkpimessage: '', 
+ 
+ editdata:  [],
+ editisError: false,
+ editisSuccess: false,
+ editisLoading: false, 
+ editmessage: '', 
  
 }
  
@@ -113,6 +119,20 @@ export const teamAssessment = createAsyncThunk('assessment/teamAssessment', asyn
 export const hodReviewAssessment = createAsyncThunk('assessment/hodReviewAssessment', async ( data:any ,thunkAPI) => {
   try {
     return await assessmentService.hodReviewAssessment(data )
+  } catch (error: any) { 
+    const message = (error.response && 
+      error.response.data && 
+      error.response.data.message) ||
+      error.message ||error.toString() 
+    
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+// Hod Review Assessment      
+//  @ts-ignore  
+export const editAssessment = createAsyncThunk('assessment/editAssessment', async ( data:any ,thunkAPI) => {
+  try {
+    return await assessmentService.editAssessment(data )
   } catch (error: any) { 
     const message = (error.response && 
       error.response.data && 
@@ -192,6 +212,11 @@ export const assessmentSlice:any = createSlice({
       state.allkpiisSuccess = false
       state.allkpiisError = false
       state.allkpimessage = ''  
+
+      state.editisLoading = false
+      state.editisSuccess = false
+      state.editisError = false
+      state.editmessage = ''  
     },
     
   },
@@ -301,6 +326,22 @@ export const assessmentSlice:any = createSlice({
         state.allkpiisError = true
         state.allkpimessage = action.payload
         state.allkpidata = [] 
+      })
+
+
+      .addCase(editAssessment.pending, (state) => {
+        state.editisLoading = true 
+      })
+      .addCase(editAssessment.fulfilled, (state:any, action) => {
+        state.editisLoading = false
+        state.editisSuccess = true
+        state.editdata = action.payload  
+      })
+      .addCase(editAssessment.rejected, (state:any, action) => {
+        state.editisLoading = false
+        state.editisError = true
+        state.editmessage = action.payload
+        state.editdata = [] 
       })
 
      

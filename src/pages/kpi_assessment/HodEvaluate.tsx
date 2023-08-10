@@ -5,7 +5,7 @@ import { fireAlert } from '../../utils/Alert';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hodReviewAssessment, reset } from '../../features/KPIAssessment/assessmentSlice';
-import { calculateTotalScore } from '../../utils/KpiFunctions';
+import { calculateTotalScore, getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
 
 
 const HodEvaluation = ({ data }: any) => {
@@ -94,7 +94,7 @@ const HodEvaluation = ({ data }: any) => {
       ...prevData,
       [key]: {
         ...prevData[key],
-        hod_score: newScoreWeight,
+        hod_score: newScoreWeight <= 5 ? newScoreWeight : '',
       },
     }));
   };
@@ -211,23 +211,21 @@ const HodEvaluation = ({ data }: any) => {
               )
             })}
 
-            {/* <div className="added-field">
-       <div className="factor_area Grade-title">
-        <p>Total</p>
-        <div>
-         <p>{Weight}</p>
-        </div>
-       </div>
-       <div className="rate_area Grade-title">
-        <p>{!Amount ? "0" : Amount}</p>
-       </div>
-       {location.state.name === "admin" ? "" : <div className="btn_area Grade-title">
-        {data?.status === 'active' ? hod : <p> {hodscore}</p>}
-       </div>}
-       {location.state.name === "admin" && <div className="btn_area Grade-title">
-        <p> {hodscore}</p>
-       </div>} 
-      </div> */}
+            <div className="added-field">
+              <div className="factor_area Grade-title">
+                <p>Total</p>
+                <div>
+                  <p>{getTotalScoreWeight(parameters)}</p>
+                </div>
+              </div>
+              <div className="rate_area Grade-title">
+                <p>{getTotalScore(parameters)}</p>
+              </div>
+              {data?.status === "in review" ? "" :
+                <div className="btn_area Grade-title">
+                  <p> {hodTotalScore(parameters)}</p>
+                </div>}
+            </div>
           </div>
           {location.state.name === "admin" ? "" :
             <div>

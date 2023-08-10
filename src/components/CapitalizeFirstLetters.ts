@@ -1,4 +1,4 @@
-export const  capitalizeFirstLetters= (str:any)=> {
+export const  capitalizeFirstLetters = (str:any)=> {
   // Split the string into an array of words
   const words = str?.split(' ');
 

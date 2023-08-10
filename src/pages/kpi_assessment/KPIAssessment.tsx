@@ -8,9 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
 import HttpService from "../../components/HttpService";
 import SelectInput from "../../components/SelectInput";
-import { FaBeer } from 'react-icons/fa';
 import { BsDashCircleFill, BsPlusCircleFill } from "react-icons/bs";
-import { myAttendance } from "../../features/Attendances/attendanceSlice";
 import { blockFullStop } from "../../utils/KpiFunctions";
 
 
@@ -31,26 +29,18 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
     efficiency: 0,
     attendance: 0,
     communication: 0,
-    reliability: 0,
-    collaboration: 0,
     comment: "",
   });
 
 
 
 
-  // const handleOnChangeKpiData = (num: 'one' | 'two', input: string, value: string | number) => {
-  // 	setKpiData((prevState) => ({ ...prevState, [num]: { ...prevState.[num], [input]: value } }))
-  // }
 
   // @ts-ignore
   const kpiData1: any = ({
     Performance1: "Job Knowledge",
     Performance2: "Efficiency",
     Performance3: "Attendance",
-    Performance4: "Communication",
-    Performance5: "Reliability",
-    Performance6: "Collaboration",
   });
 
   const kpiData2: any = ({
@@ -59,9 +49,6 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
     IndicatorDescription2:
       "Maintaining the same standards and behaviors that lead to producing a high quality of work",
     IndicatorDescription3: "Frequency of times at work",
-    IndicatorDescription4:
-      "Completes clearly defined tasks and works and also learn the relevant technologies to improve the company sales mobile application solutions.",
-
 
   });
 
@@ -96,15 +83,6 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
   const totalScore2 = kpinputs.efficiency;
   const totalScore3 = kpinputs.attendance;
 
-  const [kpiscore, setkpiscore] = useState();
-  useEffect(() => {
-    const kpi: any = 0
-    setkpiscore(kpi);
-  }, [
-    totalScore1,
-    totalScore2,
-    totalScore3,
-  ]);
 
 
 
@@ -152,7 +130,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
   const getData = async () => {
     setisLoading(true)
     try {
-      const hodsUrl = `employees`
+      const hodsUrl = `employees/hods`
       const hods: any = await HttpService.get(hodsUrl)
       setHOD(hods?.data?.data)
       setisLoading(false)
@@ -166,8 +144,8 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
   hods &&
     hods?.forEach((hod: any) =>
       availablleHods.push({
-        value: hod.id,
-        label: hod.full_name,
+        value: hod?.user?.employee,
+        label: hod?.name,
       })
     );
 
@@ -183,8 +161,6 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
         efficiency: 0,
         attendance: 0,
         communication: 0,
-        reliability: 0,
-        collaboration: 0,
         comment: "",
       });
     }
@@ -192,7 +168,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
   }, [setIsCheck, createisSuccess]);
 
 
-  console.log('availablleHods', hods)
+
 
   return (
     <form onSubmit={handelkpi}>
@@ -281,10 +257,10 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
                   </div>
                 </div>
               </div>
-              <div className="table-datacell-button-bottom">
+              {/* <div className="table-datacell-button-bottom">
                 <div className="table-datacell-button-bottom-color1">KPI SCORE:</div>
                 <div className="table-datacell-button-bottom-color2">{!kpiscore ? 0 : kpiscore}</div>
-              </div>
+              </div> */}
             </div>
             {/* <div className="kpi-add-more">
        <h6>Add more field</h6>
@@ -338,7 +314,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
                     <textarea
                       id="kpi-textarea"
                       className="Performance-Indicator-input2"
-                      value={kpiData2.IndicatorDescription2}
+                      value={kpiData2.IndicatorDescription1}
                       onChange={(e) =>
                         handleOnChange("IndicatorDescription1", e.target.value)}
                       rows={4}
@@ -523,10 +499,9 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
           <textarea
             id="shareCommentText"
             placeholder="Write a comment.."
-            required
             value={kpinputs.comment}
             onChange={(e) => handleOnChange("comment", e.target.value)}
-            onInput={blockFullStop} >
+          >
           </textarea>
           <div className="con-btn-success">
             <Button variant="contained" className="Add-btn" disabled={createisLoading} type="submit">

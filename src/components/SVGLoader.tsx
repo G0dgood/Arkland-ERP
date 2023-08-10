@@ -1,4 +1,4 @@
-export const SVGLoader = ({ width, height }) => {
+export const SVGLoader = ({ width, height }: any) => {
   return (
     <svg
       version="1.1"

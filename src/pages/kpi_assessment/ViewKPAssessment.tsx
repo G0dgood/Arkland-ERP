@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core'
 import { viewAssessment } from '../../features/KPIAssessment/assessmentSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { gradeSystem } from '../../utils/ShareData'
+import { KPISummary } from '../../utils/KpiFunctions'
 
 const ViewKPAssessment = () => {
 	const { id } = useParams()
@@ -14,22 +15,12 @@ const ViewKPAssessment = () => {
 	const location = useLocation();
 	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.assessment)
 	const [hodscore, setHodscore] = useState<number>(0);
-	const [broughtDownAverage, setBroughtDownAverage] = useState<any>(0);
-
-
 
 
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(viewAssessment(id));
 	}, [dispatch, id]);
-
-
-	// Performance  Percentage Calculation
-	React.useEffect(() => {
-		const finalscore: any = (viewdata?.performance_percentage_employee + hodscore) / (hodscore === 0 ? 0 : 2)
-		setBroughtDownAverage(finalscore)
-	}, [viewdata?.performance_percentage_employee, hodscore]);
 
 
 
@@ -67,29 +58,9 @@ const ViewKPAssessment = () => {
 							)}
 						</div>
 
-						{/* {viewdata?.status === 'active' ? <div className="kpi-summary">
-							<div className="kpi-summary-title">
-								<p>KPI Summary</p></div>
-							<div className="kpi-summary-body final-rating-summary">
-								<p>{viewdata?.employee_name}</p> <p>{viewdata?.performance_percentage_employee}%</p>
-								<p>HOD Score</p>
-								<p id="avg-rating">{viewdata?.performance_percentage_reviewer}{viewdata?.performance_percentage_reviewer === undefined ? '' : '%'}</p>
-								<p>Average Score</p>
-								<p id="avg-rating">{viewdata?.total_performance_percentage}{viewdata?.total_performance_percentage === undefined ? '' : '%'}</p>
-							</div>
-						</div> : <div className="kpi-summary">
-							<div className="kpi-summary-title">
-								<p>KPI Summary</p></div>
-							<div className="kpi-summary-body final-rating-summary">
-								<p>{viewdata?.employee_name}</p>
-								<p>{viewdata?.performance_percentage_employee}%</p>
-								<p>HOD Score</p>
-								<p id="hod-avg-rating">{hodscore === undefined ? "0" : hodscore}</p>
-								<p>Brought Down Average</p>
-								<p id="final-avg">{!broughtDownAverage || broughtDownAverage ===
-									Infinity ? "0" : broughtDownAverage}%</p>
-							</div>
-						</div>} */}
+						{/* KPISummary */}
+						{KPISummary(viewdata)}
+						{/* KPISummary  END*/}
 						{viewdata?.status === 'active' ? <div>
 							<div className="kpi-summary">
 								<div className="kpi-summary-title">

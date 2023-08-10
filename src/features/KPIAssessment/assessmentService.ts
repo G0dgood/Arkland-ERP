@@ -28,16 +28,23 @@ const teamAssessment = async (id:any) => {
   return data
 }
 
-const hodReviewAssessment = async (  inputs: any) => {  
-  const { id, input } = inputs
+const editAssessment = async (  inputs: any) => {  
+  const { id, kpinputs } = inputs
   
-  console.log('inputs',inputs)
+  console.log('inputs', inputs) 
+    const { data }: any = await HttpService.patch(`hr/appraisals/${id}`, kpinputs)   
+  return data
+}
+
+
+const hodReviewAssessment = async (  inputs: any) => {  
+  const { id, input } = inputs 
     const { data }: any = await HttpService.patch(`hr/appraisals/${id}/review`, input)   
   return data
 }
 
 const deleteAssessment = async (id:any ) => {  
-    const { data }: any = await HttpService.delete(`hr/appraisals/${id}` )   
+    const { data }: any = await HttpService.delete(`hr/appraisals/${id}`)   
   return data
 }
  
@@ -52,7 +59,8 @@ const assessmentService = {
   teamAssessment,
   hodReviewAssessment,
   deleteAssessment,
-  allAssessment
+  allAssessment,
+  editAssessment
 }
 
 export default assessmentService

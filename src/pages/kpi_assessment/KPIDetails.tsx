@@ -9,6 +9,7 @@ import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { deleteAssessment, reset, viewAssessment } from '../../features/KPIAssessment/assessmentSlice';
 import { gradeSystem } from '../../utils/ShareData';
+import { KPISummary } from '../../utils/KpiFunctions';
 
 
 const KPIDetails = () => {
@@ -83,20 +84,9 @@ const KPIDetails = () => {
 								</div>
 							)}
 						</div>
-						{/* } */}
-						{/* <div className="kpi-summary">
-							<div className="kpi-summary-title">
-								<p>KPI Summary</p>
-							</div>
-							<div className="kpi-summary-body m-t-10" >
-								<p>Total</p>
-								<p id="total-rating">{viewdata?.performance_percentage_employee} {viewdata?.performance_percentage_employee === undefined ? '' : '%'}</p>
-								<p>HOD Score</p>
-								<p id="avg-rating">{viewdata?.performance_percentage_reviewer}{viewdata?.performance_percentage_reviewer === undefined ? '' : '%'}</p>
-								<p>Average Score</p>
-								<p id="avg-rating">{viewdata?.total_performance_percentage}{viewdata?.total_performance_percentage === undefined ? '' : '%'}</p>
-							</div>
-						</div> */}
+						{/* KPISummary */}
+						{KPISummary(viewdata)}
+						{/* KPISummary  END*/}
 
 						<div className="kpi-summary">
 							<div className="kpi-summary-title">

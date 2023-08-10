@@ -13,6 +13,7 @@ import { SVGLoader } from '../../components/SVGLoader';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { ImArrowRight2 } from 'react-icons/im';
 import { FaUserCircle } from 'react-icons/fa';
+import { capitalizeFirstLetters } from '../../components/CapitalizeFirstLetters';
 
 
 const ViewLeave = () => {
@@ -108,8 +109,8 @@ const ViewLeave = () => {
 							<span  ><FaUserCircle size={"50px"} color='#f0dada' /></span>
 						</div>
 						<div className='leave-appli-title-name'>
-							{/* <h5>Okoro Godwin Chinedu</h5>
-							<p>Softworks</p> */}
+							<h5>{data?.employee?.full_name}</h5>
+							{/* <p>Softworks</p> */}
 						</div>
 						<div className='leave-appli-board'>
 							<div>
@@ -190,7 +191,7 @@ const ViewLeave = () => {
 					<div className='leave-details-view'>
 						<div className='leave-details-view-one'>
 							<div className='leave-details-status'>
-								<div><h5>Leave Type : {data?.type}</h5></div>
+								<div><h5>Leave Type : {capitalizeFirstLetters(data?.type)}</h5></div>
 								<div className='pending-incon-status'>
 									<span className='pending-incon-status-styles'><BsCheckCircleFill /></span>
 									<span>{count === 3 ? "complete" : "pending"}</span>
@@ -254,7 +255,7 @@ const ViewLeave = () => {
 												disabled={viewdeleteisLoading}
 												className="table-link-btn-new"
 												type="submit">{viewdeleteisLoading ?
-													<Spinner animation="border" /> : 'Delete Leave'}
+													<Spinner animation="border" size='sm' /> : 'Delete Leave'}
 											</Button>
 
 										</span>
@@ -282,110 +283,7 @@ const ViewLeave = () => {
 							</div>
 						</div>
 					</div>
-					{/* <div className='contact-container-body'>
-						<section className="contact-container">
 
-							<form className="contact-form" onSubmit={handleSubmit}>
-								<div className="heading">
-									<h2>Leave Type : {data?.type}</h2>
-									<p>Fill in information to update your Leave!</p>
-								</div>
-								<div>
-									<h6>Name</h6>
-									<select id="Modal-textarea-input-sub"
-										value={inputs.leave_type}
-										onChange={(e) => handleOnChange("leave_type", e.target.value)}>
-										<option value=" ">Select Name...</option>
-										<option value="Paid Leave">Paid Leave</option>
-										<option value="Sick Leave">Sick Leave</option>
-										<option value="casual">Casual</option>
-									</select >
-									<div className='Modal-data-time'>
-									</div>
-									<div className='Modal-data-time pt-3'>
-										<div className='Modal-two-input'>
-											<h6>Start Date</h6>
-											<input id='Modal-textarea-input-sub' placeholder='Select start date of leave' type={'date'}
-												value={inputs.start_date}
-												onChange={(e) => handleOnChange("start_date", e.target.value)} />
-										</div>
-										<div className='div-space' />
-										<div className='Modal-two-input'>
-											<h6>End Date</h6>
-											<input id='Modal-textarea-input-sub' placeholder='Select end date of leave' type={'date'}
-												value={inputs.end_date}
-												onChange={(e) => handleOnChange("end_date", e.target.value)} />
-										</div>
-									</div>
-									<div className='Modal-textarea-middle'>
-										<h6>Description</h6>
-										<textarea rows={3} className='Modal-textarea' placeholder='Enter detailed reason for leave'
-											value={inputs.description}
-											onChange={(e) => handleOnChange("description", e.target.value)} />
-									</div>
-								</div>
-								<Button variant="contained"
-									disabled={viewdeleteisLoading}
-									className="Add-btn-modal" type="submit">{viewdeleteisLoading ? <Spinner animation="border" /> : 'Delete Leave'} </Button>
-
-							</form>
-							<div className="contact-info">
-								<h3 className="heading">Leave Details</h3>
-								<ul className="contacts">
-									<li>
-										<span className='BsFillBriefcaseFill'><BsFillBriefcaseFill /></span>
-										Leave Type : {data?.type}
-									</li>
-									<li>
-										<span className='BsFillBriefcaseFill'><BsCalendarDateFill /></span>
-										State date : {moment(data?.start_date).format("DD-MM-YYYY")}
-									</li>
-									<li>
-										<span className='BsFillBriefcaseFill'><BsCalendarDate /></span>
-										End date :  {moment(data?.end_date).format("DD-MM-YYYY")}
-									</li> */}
-
-					{/* <span  >
-										Leave Progress
-									</span>
-									<div className='leave-type-progress'>
-										<li className="  rounded mb-3">
-											<div className="progress mb-3"  > */}
-
-
-					{/* </div>
-											<div className="p-3">
-												<div className="media">
-													<div className="media-body align-self-center">
-														<div className="small text-muted">{count + ' Aprovals'}</div>
-													</div>
-													<div className="align-self-center ml-3">
-														{data?.hod_approved === true &&
-															<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-														{data?.hr_approved === true &&
-															<img className="rounded-circle border mr-n2" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-														{data?.finally_approved === true &&
-															<img className="rounded-circle border" src="https://www.gravatar.com/avatar?d=mp&s=40" alt='' />}
-													</div>
-												</div>
-											</div>
-
-											<Button className={data?.status === "HOD approved" ? "table-link" :
-												data?.status === "HR approved" ? "table-link-hr" :
-													data?.status === "approved" ? "table-link-active" :
-														data?.status === "rejected" ? "table-link-reject" : "table-link"}>
-												{data?.status === "HOD approved" ? "HOD approved" :
-													data?.status === "HR approved" ? "HR approved" :
-														data?.status === "approved" ? "LEAVE approved" :
-															data?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}</Button>
-
-										</li>
-									</div>
-								</ul>
-								<div className="social-links"></div>
-							</div>
-						</section>
-					</div> */}
 				</div>
 			)}
 		</div >
