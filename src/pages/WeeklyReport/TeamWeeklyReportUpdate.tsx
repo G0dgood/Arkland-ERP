@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react'
 import { fireAlert } from '../../utils/Alert';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,6 +8,9 @@ import WeeklyReportTable from './WeeklyReportTable';
 import moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { acknowledgeReport, reset, viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice';
+
+
+
 const TeamWeeklyReportUpdate = () => {
 	const dispatch = useAppDispatch();
 	const { viewdata, viewisLoading }: any = useAppSelector((state: any) => state.Weeklyreport)
@@ -42,6 +44,8 @@ const TeamWeeklyReportUpdate = () => {
 			dispatch(reset());
 		}
 	}, [acknowledgeisSuccess, dispatch, id, navigate])
+
+
 
 
 

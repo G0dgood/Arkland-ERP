@@ -36,6 +36,8 @@ const ViewTeam = () => {
 
 	}
 
+
+
 	return (
 		<div>
 			{
@@ -120,9 +122,7 @@ const ViewTeam = () => {
 								) : (
 									show ? <TeamMembers memberdata={memberdata} /> : ""
 
-
 								)}
-
 							</div>
 						</div>
 

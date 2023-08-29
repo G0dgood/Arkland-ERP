@@ -10,6 +10,7 @@ import HttpService from "../../components/HttpService";
 import SelectInput from "../../components/SelectInput";
 import { BsDashCircleFill, BsPlusCircleFill } from "react-icons/bs";
 import { blockFullStop } from "../../utils/KpiFunctions";
+import createHttpService from "../../components/HttpService";
 
 
 const dataService = new DataService()
@@ -128,6 +129,7 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
   const [isLoading, setisLoading] = useState(false)
 
   const getData = async () => {
+    const HttpService = createHttpService();
     setisLoading(true)
     try {
       const hodsUrl = `employees/hods`

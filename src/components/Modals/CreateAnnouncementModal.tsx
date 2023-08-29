@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 // import SelectField from "../Inputs/SelectField";
 import SelectInput from "../SelectInput";
 import HttpService from "../HttpService";
+import createHttpService from "../HttpService";
 
 
 const CreateAnnouncementModal = () => {
@@ -48,6 +49,7 @@ const CreateAnnouncementModal = () => {
   ];
 
   const getData = async () => {
+    const HttpService = createHttpService();
     setisLoading(true)
     try {
       const employeesUrl = "hr/employee-roles"

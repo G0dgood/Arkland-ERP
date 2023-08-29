@@ -10,6 +10,7 @@ import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 
 
+
 const TaskList = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -36,6 +37,21 @@ const TaskList = () => {
 
 	const header = ["TASK CREATED BY", "TASK ASSIGNED TO", "TASK STATUS", "TASK TITLE", "TASK CREATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);
+
+	const [collapseNav, setCollapseNav] = useState(() => {
+		// @ts-ignore
+		return JSON.parse(localStorage.getItem("collapse")) || false;
+	});
+
+	useEffect(() => {
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+		localStorage.setItem("collapse", JSON.stringify(collapseNav));
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+	}, [collapseNav]);
+
+	const toggleSideNav = () => {
+		setCollapseNav(!collapseNav);
+	}
 
 	return (
 		<div >

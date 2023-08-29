@@ -40,7 +40,7 @@ const initialState = {
 // Get Announcement
 export const getAnnouncement = createAsyncThunk('announcement/getAnnouncement', async (data,thunkAPI) => {
   try {
-    return await announcementService.getAnnouncement( )
+    return await announcementService.getAnnouncement(data)
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 

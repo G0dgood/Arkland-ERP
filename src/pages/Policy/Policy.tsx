@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
+
 
 
 
 const Policy = () => {
+
 
 
 	return (

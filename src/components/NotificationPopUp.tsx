@@ -5,6 +5,8 @@ import DataService from '../utils/dataService';
 const dataService = new DataService()
 const NotificationPopUp = ({ setRefresh, setNotification, socket }: any) => {
 
+
+
 	// Audio File
 	const myAudio = new Audio(noti);
 

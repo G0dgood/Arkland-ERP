@@ -73,6 +73,9 @@ import TeamLeadViewTeam from "./pages/TeamLeadProjects/TeamLeadViewTeam";
 import TeamLeadTerminationList from "./pages/TeamLeadProjects/TeamLeadTerminationList";
 import TeamAttendance from "./pages/EmployeeAttendance/TeamAttendance";
 import MyWarning from "./pages/MyWarning/MyWarning";
+import Application from "./pages/Application/Application";
+import InfoDetails from "./pages/Application/InfoDetails";
+
 
 
 
@@ -90,13 +93,13 @@ const App: React.FC<any> = () => {
  return (
   <BrowserRouter>
    <Routes>
-    <Route path="/login" element={<Login />} />
+    <Route path="/" element={<Login />} />
     <Route path="/update-password" element={<UpdatePassword />} />
     <Route path="/forgot-password" element={<ForgotPassword />} />
 
     {/* protected routes for auth */}
-    <Route path="/" element={auth}>
-     <Route index element={<Dashboard />} />
+    <Route element={auth}>
+     <Route path="/dashboard" element={<Dashboard />} />
 
      <Route path="employees">
       <Route index element={<AllEmployees />} />
@@ -191,6 +194,10 @@ const App: React.FC<any> = () => {
       <Route index element={<WarningList />} />
       <Route path="warning/:id" element={<ViewWarning />} />
       <Route path="warning/mywarning" element={<MyWarning />} />
+     </Route>
+     <Route path="application">
+      <Route index element={<Application />} />
+      <Route path="infodetails/:id" element={<InfoDetails />} />
      </Route>
 
      <Route path="workers_request">

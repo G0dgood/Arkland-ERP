@@ -16,6 +16,7 @@ import DeactivateExpiredWarnings from "./warnings/DeactivateExpiredWarnings";
 import { capitalizeFirstLetters } from "../../components/CapitalizeFirstLetters";
 
 
+
 const WarningList = () => {
   const dispatch = useAppDispatch();
   const { warningdata, warningisError, warningisLoading, warningmessage } = useAppSelector((state: any) => state.employee)
@@ -60,6 +61,7 @@ const WarningList = () => {
   }, [warningmessage, warningisError, dispatch, createwarningisSuccess])
 
   const [displayData, setDisplayData] = useState([]);
+
 
   return (
     <div  >

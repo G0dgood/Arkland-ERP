@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import projectBack from "../../../assets/vectors/project-back.svg";
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import TerminationModal from "../../../components/TerminationModal";
 import { viewTerminations } from "../../../features/Employee/employeeSlice";
 import { SVGLoader } from "../../../components/SVGLoader";
+
 
 
 
@@ -21,6 +22,8 @@ const ViewTerminations = () => {
     // @ts-ignore
     dispatch(viewTerminations(id));
   }, [dispatch, id]);
+
+
 
 
 

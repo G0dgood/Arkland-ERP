@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import WeeklyReportTable from './WeeklyReportTable';
 import moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice';
 import { useParams } from 'react-router-dom';
+
 
 const ManagerWeeklyReportView = () => {
 	const dispatch = useAppDispatch();
@@ -18,6 +19,21 @@ const ManagerWeeklyReportView = () => {
 
 
 
+
+	const [collapseNav, setCollapseNav] = useState(() => {
+		// @ts-ignore
+		return JSON.parse(localStorage.getItem("collapse")) || false;
+	});
+
+	useEffect(() => {
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+		localStorage.setItem("collapse", JSON.stringify(collapseNav));
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+	}, [collapseNav]);
+
+	const toggleSideNav = () => {
+		setCollapseNav(!collapseNav);
+	}
 
 	return (
 		<div  >

@@ -9,6 +9,7 @@ import $ from "jquery";
 
 import SelectInput from '../SelectInput';
 import HttpService from '../HttpService';
+import createHttpService from '../HttpService';
 
 const HRClockInModal = () => {
 	const dispatch = useAppDispatch();
@@ -66,6 +67,7 @@ const HRClockInModal = () => {
 	setInterval(setClockWithCurrentTime, 1000);
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const employees = "hr/employees"

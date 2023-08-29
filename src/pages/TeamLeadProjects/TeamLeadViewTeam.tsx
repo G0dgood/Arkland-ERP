@@ -1,18 +1,13 @@
 import { useEffect, useState } from 'react'
 import projectBack from "../../assets/vectors/project-back.svg";
 import { useNavigate, useParams } from 'react-router-dom'
-
-
-
 import { RiTeamLine } from 'react-icons/ri';
 import moment from 'moment';
-
-
 import { Button } from '@material-ui/core';
-
 import HttpService from '../../components/HttpService';
 import TeamLeadTeamMembers from './TeamLeadTeamMembers';
 import { SVGLoader } from '../../components/SVGLoader';
+import createHttpService from '../../components/HttpService';
 
 const TeamLeadViewTeam = () => {
 	const { id } = useParams()
@@ -27,6 +22,7 @@ const TeamLeadViewTeam = () => {
 
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setViewisLoading(true)
 		try {
 			const teamViewUrl = `teams/${id}/view`
@@ -45,6 +41,7 @@ const TeamLeadViewTeam = () => {
 
 
 	const getDataMembers = async () => {
+		const HttpService = createHttpService();
 		setMemberisLoading(true)
 		try {
 			const teamViewUrl = `teams/${id}/members`
@@ -68,6 +65,8 @@ const TeamLeadViewTeam = () => {
 		}
 
 	}
+
+
 
 	return (
 		<div>

@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import Lightboxs from '../../components/Lightboxs'
 
 
+
 const TeamWeeklyReport = () => {
 	const dispatch = useAppDispatch();
 	const { HODdata, HODisLoading } = useAppSelector((state: any) => state.Weeklyreport)
@@ -29,6 +30,8 @@ const TeamWeeklyReport = () => {
 
 
 	const [displayData, setDisplayData] = useState([]);
+
+
 
 	return (
 		<div  >
@@ -118,7 +121,6 @@ const TeamWeeklyReport = () => {
 					Total={"Assessment"}
 				/>
 			</footer>
-
 		</div >
 	)
 }

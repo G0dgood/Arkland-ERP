@@ -7,6 +7,8 @@ import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import HttpService from '../../components/HttpService';
 
+import createHttpService from '../../components/HttpService';
+
 
 const TeamLeadTeams = () => {
 
@@ -25,6 +27,7 @@ const TeamLeadTeams = () => {
 		getData()
 	}, [])
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const projectsUrl = "teams"
@@ -37,12 +40,9 @@ const TeamLeadTeams = () => {
 		}
 	}
 
-
-
-
-
 	const header = ["NAME", "DESCRIPTION", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);
+
 
 	return (
 		<div >

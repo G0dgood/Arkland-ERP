@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import CreateHODModal from "../../components/Modals/CreateHODModal";
 
 
+
 const HODList = () => {
 	const { data, isLoading } = useAppSelector((state: any) => state.hod)
 	const { createisSuccess } = useAppSelector((state: any) => state.hod)
@@ -52,6 +53,7 @@ const HODList = () => {
 
 
 	const [displayData, setDisplayData] = useState([]);
+
 
 	return (
 		<div  >
@@ -101,7 +103,7 @@ const HODList = () => {
 									) : (
 										displayData?.map((item: any, i: any) => (
 											<tr className="data-table-row" key={i}>
-												<td className="table-datacell datatype-numeric">
+												<td className="table-datacell ">
 													{item?.name}
 												</td>
 												<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>

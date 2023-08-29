@@ -10,6 +10,7 @@ import { SlClose } from 'react-icons/sl';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { getAllLeave } from '../../features/Leave/leaveSlice';
 
+
 const AllLeaveApplications = () => {
 
 	const dispatch = useAppDispatch();
@@ -54,8 +55,8 @@ const AllLeaveApplications = () => {
 
 
 
-
 	return (
+
 		<div >
 			<div className='SiteWorkermaindiv'>
 				<div className='SiteWorkermaindivsub'>

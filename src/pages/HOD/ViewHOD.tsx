@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { viewHOD } from '../../features/HOD/hodSlice';
 import moment from 'moment';
 import DeleteHOD from './DeleteHOD';
 import { SVGLoader } from '../../components/SVGLoader';
+
 
 const ViewHOD = () => {
 	const dispatch = useAppDispatch();
@@ -19,6 +20,8 @@ const ViewHOD = () => {
 		// @ts-ignore
 		dispatch(viewHOD(id));
 	}, [dispatch, id]);
+
+
 
 
 	return (

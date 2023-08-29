@@ -1,21 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useLocation } from 'react-router-dom'
 import moment from 'moment';
-import LogoutOption from '../../components/LogoutOption';
 import DataService from '../../utils/dataService';
-import { useState } from 'react';
 import { FiUser } from "react-icons/fi";
-
 
 const dataService = new DataService()
 const Profile = () => {
-	const location = useLocation()
-	const [open, setOpen] = useState<any>(location.state.open);
-
 
 	// @ts-ignore
 	const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 	const { privileges } = userInfo
+
+
 
 
 
@@ -32,7 +27,6 @@ const Profile = () => {
 
 				</div>
 				<div className='profile-edit'>
-					<LogoutOption open={open} setOpen={setOpen} />
 				</div>
 			</div>
 

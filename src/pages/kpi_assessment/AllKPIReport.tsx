@@ -10,6 +10,7 @@ import Pagination from '../../components/Pagination'
 import { allAssessment } from '../../features/KPIAssessment/assessmentSlice'
 
 
+
 const dataService = new DataService()
 const AllKPIReport = () => {
 
@@ -56,8 +57,10 @@ const AllKPIReport = () => {
 
 	// const month = ["January", "February", "March", "April", "May", "June", "July", "	August", "September", "October", "November", "December"]
 
+
+
 	return (
-		<div  >
+		<div>
 			<div className="SiteWorkermaindiv">
 				<div className="SiteWorkermaindivsub">
 					<span className="SupportmainTitleh3">KPI Assessment</span>

@@ -9,6 +9,7 @@ import HRClockInModal from "../../../components/Modals/HRClockInModal";
 import { FcOvertime, FcClock } from 'react-icons/fc';
 import { BsCalendar2Week, BsDot } from "react-icons/bs";
 
+
 const AttendanceTable = () => {
   const dispatch = useAppDispatch();
   const { hrgetattenddata, hrgetattendisLoading } = useAppSelector((state: any) => state.attendance)
@@ -34,6 +35,7 @@ const AttendanceTable = () => {
     { title: "HR ASSISTED CHECK-IN", prop: "is_hr_assisted" },
   ];
   const [displayData, setDisplayData] = useState([]);
+
   return (
     <div  >
 

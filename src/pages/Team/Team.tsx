@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import CreateTeamModal from './CreateTeamModal';
 import CopyToClipboardButton from '../../components/CopyToClipboardButton';
 
+
 const Team = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
@@ -30,6 +31,8 @@ const Team = () => {
 
 	const header = ["NAME", "ID", "DESCRIPTION", "STATUS", "CREATED TIME", "UPDATED TIME", "VIEW"];
 	const [displayData, setDisplayData] = useState([]);
+
+
 
 	return (
 		<div >

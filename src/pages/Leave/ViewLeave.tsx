@@ -16,6 +16,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { capitalizeFirstLetters } from '../../components/CapitalizeFirstLetters';
 
 
+
 const ViewLeave = () => {
 	const dispatch = useAppDispatch();
 	const { id } = useParams()
@@ -85,6 +86,8 @@ const ViewLeave = () => {
 		e.preventDefault();
 		dispatch(viewdeleteLeave(id));
 	}
+
+
 
 	return (
 		<div>
@@ -286,7 +289,7 @@ const ViewLeave = () => {
 
 				</div>
 			)}
-		</div >
+		</div>
 	)
 }
 

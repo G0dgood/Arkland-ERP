@@ -4,8 +4,9 @@ import img from "../../assets/images/mann2.svg";
 import TodoShowAll from "../../components/TodoShowAll";
 import Todos from "./Todos";
 import Announcement from "./Announcement";
-import HttpService from "../../components/HttpService";
 import DataService from "../../utils/dataService";
+import createHttpService from "../../components/HttpService";
+import Header from "../../components/Header";
 
 const dataService = new DataService()
 const StaffDashboard = () => {
@@ -53,6 +54,7 @@ const StaffDashboard = () => {
 
 
   const getData = async () => {
+    const HttpService = createHttpService();
     setisLoading(true)
     try {
       const tasksUrl = `tasks`

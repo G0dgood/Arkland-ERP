@@ -11,6 +11,8 @@ import { useAppDispatch } from "../../store/useStore";
 import HttpService from "../../components/HttpService";
 import Pagination from "../../components/Pagination";
 
+import createHttpService from "../../components/HttpService";
+
 
 const TeamAttendance = () => {
 	const dispatch = useAppDispatch();
@@ -25,6 +27,7 @@ const TeamAttendance = () => {
 
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const teamsUrl = "hr/attendances/list/for-teams"
@@ -59,6 +62,8 @@ const TeamAttendance = () => {
 	];
 
 	const [displayData, setDisplayData] = useState([]);
+
+
 
 	return (
 		<div  >

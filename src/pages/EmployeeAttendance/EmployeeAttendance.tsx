@@ -5,6 +5,8 @@ import { myAttendance } from "../../features/Attendances/attendanceSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { Calendars } from "../../components/Calender/Calender";
 import HttpService from "../../components/HttpService";
+
+import createHttpService from "../../components/HttpService";
 // import { Calendars } from "../../components/Calender/Calender";
 
 const EmployeeAttendance = () => {
@@ -25,6 +27,7 @@ const EmployeeAttendance = () => {
   }, [])
 
   const getData = async () => {
+    const HttpService = createHttpService();
     setisLoading(true)
     try {
       const attendanceUrl = "hr/attendances/list/self"
@@ -36,6 +39,8 @@ const EmployeeAttendance = () => {
       setisLoading(false)
     }
   }
+
+
 
 
   return (

@@ -1,6 +1,5 @@
 import moment from 'moment';
-import { useEffect } from 'react'
-
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TfiAnnouncement } from 'react-icons/tfi';
@@ -8,6 +7,7 @@ import projectBack from "../../assets/vectors/project-back.svg";
 import DeleteAnnouncementsModal from './DeleteAnnouncementsModal';
 import { viewAnnouncement } from '../../features/Announcement/announcemetSlice';
 import { SVGLoader } from '../../components/SVGLoader';
+
 
 const AnnouncementsView = () => {
 	const navigate = useNavigate();
@@ -19,6 +19,8 @@ const AnnouncementsView = () => {
 		// @ts-ignore
 		dispatch(viewAnnouncement(id));
 	}, [dispatch, id]);
+
+
 
 
 

@@ -31,6 +31,8 @@ const DeleteHOD = ({ id }: any) => {
 		dispatch(deleteHOD(id));
 	}
 
+
+
 	return (
 		<div>
 			<Button onClick={() => setDeleteShow(true)}> <ImBin size={25} color='#bf8412' /></Button>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
 import {
   EntriesPerPage,
   MainSearch,
@@ -8,15 +7,10 @@ import {
 } from "../../components/TableOptions";
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
-// import { Button } from "@material-ui/core";
-import HttpService from "../../components/HttpService";
-// import RespondToWarning from "../all_employees/warnings/RespondToWarning";
+import createHttpService from "../../components/HttpService";
 
 
 const MyWarning = () => {
-
-
-
 
 
   const [warningdata, setData] = useState([])
@@ -29,6 +23,7 @@ const MyWarning = () => {
     getData()
   }, [])
   const getData = async () => {
+    const HttpService = createHttpService();
     setisLoading(true)
     try {
       const warningsUrl = "me/warnings"
@@ -66,7 +61,6 @@ const MyWarning = () => {
 
 
   const [displayData, setDisplayData] = useState<any>([]);
-
 
 
 

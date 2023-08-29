@@ -5,6 +5,7 @@ import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import HttpService from "../../components/HttpService";
 import { SVGLoader } from "../../components/SVGLoader";
+import createHttpService from "../../components/HttpService";
 
 const TeamLeadProject = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const TeamLeadProject = () => {
 
 
   const getData = async () => {
+    const HttpService = createHttpService();
     setisLoading(true)
     try {
       const projectsUrl = "teams/projects"

@@ -8,8 +8,9 @@ import Barchat from "../../components/AdminDashboardChat/Barchat";
 import { MdOpenInFull } from "react-icons/md";
 import FullBarChart from "../../components/AdminDashboardChat/FullBarChart";
 import { useEffect, useState } from "react";
-import HttpService from "../../components/HttpService";
 import DataService from "../../utils/dataService";
+
+import createHttpService from "../../components/HttpService";
 
 const dataService = new DataService()
 const AdminDashboard = () => {
@@ -38,6 +39,7 @@ const AdminDashboard = () => {
 
 
  const getData = async () => {
+  const HttpService = createHttpService();
   setisLoading(true)
   try {
    const employeesUrl = "hr/employees"
@@ -70,6 +72,8 @@ const AdminDashboard = () => {
    setisLoading(false)
   }
  }
+
+
 
  return (
   <div className="main-div">

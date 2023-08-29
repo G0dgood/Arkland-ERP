@@ -10,6 +10,7 @@ import { managerReport } from '../../features/WeeklyReport/WeeklyReportSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import Lightboxs from '../../components/Lightboxs'
 
+
 const ManagerWeeklyReport = () => {
 	const dispatch = useAppDispatch();
 	const { managerdata, managerisLoading } = useAppSelector((state: any) => state.Weeklyreport)

@@ -6,6 +6,7 @@ import { FiUpload } from "react-icons/fi";
 import { fireAlert } from "../utils/Alert";
 import HttpService from "./HttpService";
 import { useAppDispatch } from "../store/useStore";
+import createHttpService from "./HttpService";
 
 
 const UploadEmployee = () => {
@@ -27,7 +28,7 @@ const UploadEmployee = () => {
 
 
   const submitHandler = async () => {
-
+    const HttpService = createHttpService();
     setisLoading(true)
     await HttpService.uploadFile(url, {}, { employees: file })
       .then((response) => {

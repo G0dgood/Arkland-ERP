@@ -6,9 +6,9 @@ import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import RequestEmployeeTerminationModal from "../../../components/Modals/RequestEmployeeTerminationModal";
 import { viewWarning } from "../../../features/Employee/employeeSlice";
 import UpdateWarning from "./UpdateWarning";
-// import RespondToWarning from "./RespondToWarning";
 import { capitalizeFirstLetters } from "../../../components/CapitalizeFirstLetters";
 import { SVGLoader } from "../../../components/SVGLoader";
+
 
 
 const ViewWarning = () => {
@@ -18,13 +18,11 @@ const ViewWarning = () => {
  const { id } = useParams<{ id: string }>();
  const { viewwarningdata, viewwarningisLoading } = useAppSelector((state: any) => state.employee)
 
-
-
-
  useEffect(() => {
   // @ts-ignore
   dispatch(viewWarning(id));
  }, [dispatch, id]);
+
 
  return (
   <div  >

@@ -15,15 +15,14 @@ import fifth from "../../assets/images/PHOENIX.jpg";
 import logo from "../../assets/images/ASLLOGO.svg";
 import InputField from "../../components/Inputs/InputField";
 import { useNavigate } from "react-router-dom";
-import HttpService from "../../components/HttpService";
-import DataService from "../../utils/dataService";
-
+import DataService from "../../utils/dataService"; // Import your HttpService
+import createHttpService from "../../components/HttpService";
 
 
 const dataService = new DataService()
 
+
 const Login = () => {
-  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
   const token = dataService.getToken()
@@ -44,17 +43,19 @@ const Login = () => {
 
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
+    const HttpService = createHttpService();
     setLoading(true);
     try {
       const response: any = await HttpService.post("auth/login", values)
       const token = response.data.token
+      HttpService.setToken(token); // Set the token in HttpService
       dataService.setToken(token)
       const { department, role, employee, privileges, notifications } = response.data
       const userInfo = { department, role, employee, privileges, notifications }
       dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
       resetForm(values);
       setLoading(false);
-
+      // navigate("/dashboard");
       window.location.replace("/");
     } catch (error) {
       setLoading(false);
@@ -68,10 +69,13 @@ const Login = () => {
     }
   }
 
+
   useEffect(() => {
-    if (user && token) {
-      navigate("/")
+    if (token && user) {
+      navigate("/dashboard")
     }
+
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -4,7 +4,8 @@ import { Button } from "@material-ui/core";
 import { BiUser } from "react-icons/bi";
 import EditProfile from "./components/EditProfile";
 import ResetPassword from "./components/ResetPassword";
-import HttpService from "../../components/HttpService";
+
+import createHttpService from "../../components/HttpService";
 
 const AdminEditUser = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +24,7 @@ const AdminEditUser = () => {
 
 
   const getData = async () => {
+    const HttpService = createHttpService();
     try {
       const rolesUrl = "hr/employee-roles"
       const roles: any = await HttpService.get(rolesUrl)
@@ -75,6 +77,8 @@ const AdminEditUser = () => {
     },
     { component: <ResetPassword email={employee?.email} /> },
   ];
+
+
 
   return (
     <div id="edit-user">

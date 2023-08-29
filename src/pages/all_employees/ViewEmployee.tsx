@@ -12,6 +12,7 @@ import { SVGLoader } from "../../components/SVGLoader";
 
 
 
+
 const ViewEmployee = () => {
  const navigate = useNavigate();
  const dispatch = useAppDispatch();
@@ -34,6 +35,7 @@ const ViewEmployee = () => {
  const [isFinancialDetailsOpen, setIsFinancialDetailsOpen] = useState(false);
  const [isReferencesOpen, setIsReferencesOpen] = useState(false);
  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
 
 
  return (

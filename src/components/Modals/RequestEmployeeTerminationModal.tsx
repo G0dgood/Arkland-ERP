@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { createTerminations, reset } from '../../features/Employee/employeeSlice';
+import createHttpService from '../HttpService';
 
 const RequestEmployeeTerminationModal = () => {
 	const { TerminationsisLoading, TerminationsisSuccess } = useAppSelector((state: any) => state.employee)
@@ -51,6 +52,7 @@ const RequestEmployeeTerminationModal = () => {
 	const [warnings, setWarnings] = useState<any>([]);
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const employeesUrl = "hr/employees"

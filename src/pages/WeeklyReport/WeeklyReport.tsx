@@ -8,9 +8,9 @@ import { Button } from '@material-ui/core';
 import moment from 'moment';
 import { useAppDispatch } from '../../store/useStore';
 import DataService from '../../utils/dataService';
-import HttpService from '../../components/HttpService';
 import Uploadfile from './Uploadfile';
 import { useNavigate } from 'react-router-dom';
+import createHttpService from '../../components/HttpService';
 
 const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {
@@ -104,6 +104,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 	const blob = files?.map((item: any) => item.file)
 
 	const submitHandler = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		const fileObject: any = {}
 		// @ts-ignore
@@ -137,6 +138,7 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 			navigate('/weeklyreport/weeklyreport/myweeklyreport')
 		}
 	}, [html, setIsCheck, dispatch, isSuccess, message, navigate])
+
 
 
 

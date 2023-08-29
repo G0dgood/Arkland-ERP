@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
@@ -8,6 +8,7 @@ import moment from 'moment';
 import DeleteTeamLeadModal from './DeleteTeamLeadModal';
 import { GiTeamIdea } from 'react-icons/gi';
 import { SVGLoader } from '../../components/SVGLoader';
+
 
 const TeamLeadView = () => {
 	const navigate = useNavigate();
@@ -23,6 +24,8 @@ const TeamLeadView = () => {
 		// @ts-ignore
 		dispatch(viewTeamLead(id));
 	}, [dispatch, id]);
+
+
 
 
 

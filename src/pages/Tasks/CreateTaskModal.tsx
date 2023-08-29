@@ -12,6 +12,7 @@ import { createTask, reset } from '../../features/Tasks/taskSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import HttpService from '../../components/HttpService';
+import createHttpService from '../../components/HttpService';
 // import DataService from '../../utils/dataService';
 
 // const dataService = new DataService()
@@ -43,6 +44,7 @@ const CreateTaskModal = ({ view }: any) => {
 
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		// setisLoading(true)
 		try {
 			const teamsUrl = `employees/users`

@@ -9,8 +9,6 @@ import { SVGLoader } from "../../components/SVGLoader";
 const AdminAnnouncement = ({ announcements, isLoading }: any) => {
 
 
-
-
   return (
     <div className="admin-main-div-col-2-sub">
       <div className="Announcement-sub-1">
@@ -41,7 +39,7 @@ const AdminAnnouncement = ({ announcements, isLoading }: any) => {
                   <div className="main-todo-Event" style={{ borderRadius: "4px" }} >
                     <div className="main-todo-container">
                       <div className="main-todo-note">
-                        <div>{item.message.slice(0, 80) + "..."}</div>
+                        <div>{item.message.slice(0, 120) + "..."}</div>
                         <div className="main-todo-note-minutes">
                           {moment.duration(moment().diff(item.created_at)).humanize()}{" "}
                           ago

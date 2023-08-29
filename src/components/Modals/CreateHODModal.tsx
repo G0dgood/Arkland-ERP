@@ -7,6 +7,7 @@ import { createHOD, reset } from '../../features/HOD/hodSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import SelectInput from '../SelectInput'
 import HttpService from '../HttpService'
+import createHttpService from '../HttpService'
 
 
 
@@ -80,6 +81,7 @@ const CreateHODModal = () => {
 	}
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const employees = "hr/employees"

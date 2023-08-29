@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { GiTeamIdea } from 'react-icons/gi';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
@@ -10,6 +10,7 @@ import UpdateTaskModal from './UpdateTaskModal';
 import UpdateNoteModal from './UpdateNoteModal';
 import { getUserPrivileges } from '../../functions/auth';
 import { SVGLoader } from '../../components/SVGLoader';
+
 
 const TaskView = () => {
 	const navigate = useNavigate();
@@ -43,6 +44,21 @@ const TaskView = () => {
 
 
 
+
+	const [collapseNav, setCollapseNav] = useState(() => {
+		// @ts-ignore
+		return JSON.parse(localStorage.getItem("collapse")) || false;
+	});
+
+	useEffect(() => {
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+		localStorage.setItem("collapse", JSON.stringify(collapseNav));
+		// --- Set state of collapseNav to localStorage on pageLoad --- //
+	}, [collapseNav]);
+
+	const toggleSideNav = () => {
+		setCollapseNav(!collapseNav);
+	}
 
 	return (
 		<div>

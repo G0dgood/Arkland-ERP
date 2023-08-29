@@ -19,6 +19,8 @@ import ApproveEmployeeModal from "../../components/Modals/ApproveEmployeeModal";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import UploadEmployee from "../../components/UploadEmployee";
 
+
+
 const AllEmployees = () => {
   const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isMaster } = getUserPrivileges();
   const dispatch = useAppDispatch();
@@ -80,6 +82,8 @@ const AllEmployees = () => {
   useEffect(() => {
     localStorage.setItem("reportsPerPage", entriesPerPage);
   }, [entriesPerPage]);
+
+
 
 
   return (

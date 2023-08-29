@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import projectBack from "../../assets/vectors/project-back.svg";
@@ -7,6 +7,7 @@ import { viewRole } from '../../features/Employee/employeeSlice';
 import DeleteModals from '../../components/DeleteModals';
 import CreateRoleModal from '../../components/Modals/CreateRoleModal';
 import { SVGLoader } from '../../components/SVGLoader';
+
 
 
 const ViewRole = () => {
@@ -21,6 +22,8 @@ const ViewRole = () => {
 		// @ts-ignore
 		dispatch(viewRole(id));
 	}, [dispatch, id]);
+
+
 
 
 	return (

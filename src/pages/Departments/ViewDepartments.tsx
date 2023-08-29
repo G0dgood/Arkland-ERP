@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { reset, viewDepartments } from "../../features/Department/departmentSlice";
@@ -8,6 +8,7 @@ import projectBack from "../../assets/vectors/project-back.svg";
 import CopyToClipboardButton from "../../components/CopyToClipboardButton";
 import { SVGLoader } from "../../components/SVGLoader";
 import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal";
+
 
 
 const ViewDepartments = () => {
@@ -33,6 +34,8 @@ const ViewDepartments = () => {
       dispatch(viewDepartments(id));
     }
   }, [dispatch, id, viewmessage]);
+
+
 
 
 

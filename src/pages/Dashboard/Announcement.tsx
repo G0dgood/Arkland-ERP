@@ -46,7 +46,7 @@ const Announcement = ({ announcement: data, isLoading }: any) => {
                 <div className="main-todo-Event" style={{ borderRadius: "4px" }} key={i}  >
                   <div className="main-todo-container">
                     <div className="main-todo-note">
-                      <div>{item?.message?.slice(0, 65)}</div>
+                      <div>{item?.message?.slice(0, 120) + '...'}</div>
                       <div className="main-todo-note-minutes">
                         {moment.duration(moment().diff(item?.created_at)).humanize()}{" "} ago
                       </div>

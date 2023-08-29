@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Carousel, Spinner } from "react-bootstrap";
-
 import { Button } from "@material-ui/core";
 import { Form, Formik } from "formik";
-
 import { Helmet } from "react-helmet-async";
 import * as Yup from "yup";
 import first from "../../../assets/images/Bijou.jpg";
@@ -13,12 +11,8 @@ import fourth from "../../../assets/images/A&A.jpg";
 import fifth from "../../../assets/images/PHOENIX.jpg";
 import logo from "../../../assets/images/ASLLOGO.svg";
 import InputField from "../../../components/Inputs/InputField";
-import { fireAlert, fireAlert2 } from "../../../utils/Alert";
-import { useNavigate } from "react-router-dom";
-import HttpService from "../../../components/HttpService";
 import DataService from "../../../utils/dataService";
-// import { useAppDispatch, useAppSelector } from "../../../store/useStore";
-import { reset, updatePassword } from "../../../features/User/userSlice";
+import createHttpService from "../../../components/HttpService";
 
 const dataService = new DataService()
 const UpdatePassword = () => {
@@ -34,6 +28,7 @@ const UpdatePassword = () => {
 
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
+    const HttpService = createHttpService();
     setLoading(true);
     try {
       const response: any = await HttpService.patch("me/password", values)

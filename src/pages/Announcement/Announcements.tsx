@@ -10,6 +10,7 @@ import { getAnnouncement } from '../../features/Announcement/announcemetSlice';
 import { useNavigate } from 'react-router-dom';
 import CreateAnnouncementModal from '../../components/Modals/CreateAnnouncementModal';
 
+
 const Announcements = () => {
 	const dispatch = useAppDispatch();
 	const { createisSuccess } = useAppSelector((state: any) => state.announcement)
@@ -52,7 +53,6 @@ const Announcements = () => {
 
 	const [displayData, setDisplayData] = useState([]);
 
-	// console.log('displayData', displayData)
 
 	return (
 		<div  >

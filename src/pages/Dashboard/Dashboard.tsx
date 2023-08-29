@@ -1,6 +1,7 @@
 import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
 import { getUserPrivileges } from "../../functions/auth";
+import AdminDashboards from "../Admin/AdminDashboards";
 
 const Dashboard = () => {
 
@@ -8,7 +9,8 @@ const Dashboard = () => {
     isHRHead,
     isSuperAdmin,
     isHrAdmin,
-    isMaster
+    isMaster,
+    isAdmin
   } = getUserPrivileges();
 
 
@@ -28,3 +30,7 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+// : isAdmin ? (
+//   <AdminDashboards />
+// )

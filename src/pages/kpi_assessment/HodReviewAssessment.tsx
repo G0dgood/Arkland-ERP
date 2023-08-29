@@ -5,6 +5,7 @@ import { Button } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
 import SelectInput from '../../components/SelectInput';
 import HttpService from '../../components/HttpService';
+import createHttpService from '../../components/HttpService';
 
 
 const KPIInfoDetails = ({ viewdata }: any) => {
@@ -110,6 +111,7 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 	const [isLoading, setisLoading] = useState(false)
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const hodsUrl = `employees/hods`
@@ -168,6 +170,7 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 	}));
 
 	const allInput = { ...inputs, other_parameters }
+
 
 
 	return (
@@ -230,7 +233,7 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 											{datas[key]?.score}
 										</div>
 										<div className="btn_area">
-											{calculateTotalScore(parameters[key]?.score_weight, parameters[key]?.score)}
+											{datas[key].reviewer_score}
 										</div>
 									</div>
 

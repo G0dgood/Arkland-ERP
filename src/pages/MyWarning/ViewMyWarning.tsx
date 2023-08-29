@@ -1,12 +1,10 @@
-
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
-
 import projectBack from "../../../assets/vectors/project-back.svg";
 import RespondToWarning from "../all_employees/warnings/RespondToWarning";
 import { useEffect, useState } from "react";
-import HttpService from "../../components/HttpService";
 import { SVGLoader } from "../../components/SVGLoader";
+import createHttpService from "../../components/HttpService";
 
 
 
@@ -23,6 +21,7 @@ const ViewWarning = () => {
 		getData()
 	}, [])
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const warningsUrl = "me/warnings"
@@ -34,6 +33,8 @@ const ViewWarning = () => {
 			setisLoading(false)
 		}
 	}
+
+
 
 
 	return (

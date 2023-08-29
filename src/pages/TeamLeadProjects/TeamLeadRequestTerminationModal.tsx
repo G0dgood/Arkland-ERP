@@ -9,6 +9,7 @@ import { fireAlert } from '../../utils/Alert';
 import HttpService from '../../components/HttpService';
 import SelectInput from '../../components/SelectInput';
 import { teanCreateTerminations } from '../../features/Employee/employeeSlice';
+import createHttpService from '../../components/HttpService';
 
 const TeamLeadRequestTerminationModal = () => {
 	const { teanTerminationsisLoading, teanTerminationsisSuccess } = useAppSelector((state: any) => state.employee)
@@ -57,6 +58,7 @@ const TeamLeadRequestTerminationModal = () => {
 
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const employeesUrl = "employees"

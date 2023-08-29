@@ -11,10 +11,7 @@ const allNotifications = async (response:any  ) => {
 }
  
  
- 
- 
- 
- 
+  
  
 const NotificationService = { 
   allNotifications   

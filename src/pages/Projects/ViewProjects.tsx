@@ -12,10 +12,10 @@ import CommenceProjectModal from "./CommenceProjectModal";
 import { GiCrane } from "react-icons/gi";
 import { ProgressBar } from "react-bootstrap";
 import CreateWarningModal from "../../components/Modals/CreateWarningModal";
-import HttpService from "../../components/HttpService";
 import { FaUserCircle } from "react-icons/fa";
 import { BiUser } from "react-icons/bi";
 import { SVGLoader } from "../../components/SVGLoader";
+import createHttpService from "../../components/HttpService";
 
 
 
@@ -47,6 +47,7 @@ const ViewProjects = () => {
     setisLoading(true)
     try {
       const teamUrl = `hr/teams/${viewdata?.team?.id}/employees`
+      const HttpService = createHttpService();
       const team: any = await HttpService.get(teamUrl)
       setTeammenbers(team?.data?.data)
       setisLoading(false)
@@ -64,6 +65,8 @@ const ViewProjects = () => {
       dispatch(viewProject(id));
     }
   }, [commenceisSuccess, completeisSuccess, dispatch, id, suspendisSuccess, updateisSuccess]);
+
+
 
   return (
     <div>

@@ -25,11 +25,12 @@ const KPIAdminDetails = ({ data }: any) => {
 
 
 	const mappedParameters: any = Object.keys(!data.parameters ? [] : data.parameters).map((key) => {
-		const { self_score, score_weight } = data.parameters[key] || {};
+		const { self_score, score_weight, reviewer_score } = data.parameters[key] || {};
 		return {
 			key,
 			score: self_score || 0, // Provide a default value for score if it is missing
 			score_weight: score_weight || 0, // Provide a default value for score_weight if it is missing
+			reviewer_score: reviewer_score || 0
 		};
 	});
 
@@ -41,6 +42,7 @@ const KPIAdminDetails = ({ data }: any) => {
 			parameters[mappedParameters[key].key] = {
 				score: mappedParameters[key].score,
 				score_weight: mappedParameters[key].score_weight,
+				reviewer_score: mappedParameters[key].reviewer_score,
 			};
 		}
 	});
@@ -89,7 +91,7 @@ const KPIAdminDetails = ({ data }: any) => {
 										</div>
 										{data?.status === "in review" ? "" :
 											<div className="btn_area">
-												{calculateTotalScore(parameters[key].score_weight, parameters[key].score)}
+												{parameters[key].reviewer_score}
 											</div>}
 									</div>
 								</div>

@@ -71,24 +71,14 @@ export const calculateTotalScore = (weights: number, scores: number) => {
 
 
 export const hodTotalScore = (parameters: any) => {
-	// Calculate the total score for each entry in parameters
-	const calculatedScores: any = {};
-	for (const [key, value] of Object.entries(parameters)) {
-		// @ts-ignore
-		const score = parseFloat(value.score);
-		// @ts-ignore
-		const score_weight = parseFloat(value.score_weight);
-		// @ts-ignore
-		calculatedScores[key] = calculateTotalScore(score_weight, score);
-
+	let totalReviewerScore = 0;
+	for (const key in parameters) {
+		const reviewerScore = parameters[key].reviewer_score;
+		if (typeof reviewerScore === 'number') {
+			totalReviewerScore += reviewerScore;
+		}
 	}
-	// Calculate the total of the totalScore values
-	let totalSum = 0;
-	for (const key in calculatedScores) {
-		totalSum += calculatedScores[key];
-
-	}
-	return totalSum;
+	return totalReviewerScore;
 };
 
 

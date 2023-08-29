@@ -5,11 +5,11 @@ import { BsCheckCircle } from 'react-icons/bs'
 import moment from 'moment'
 import TableLoader from '../../components/TableLoader'
 import Pagination from '../../components/Pagination'
-import { fireAlert } from '../../utils/Alert'
 import AssignPrivilegesModal from '../../components/Modals/AssignPrivilegesModal'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { userprivileges } from '../../features/User/userSlice'
 import { useNavigate } from 'react-router-dom'
+
 
 
 const Userprivileges = () => {
@@ -57,6 +57,7 @@ const Userprivileges = () => {
 
 	const [displayData, setDisplayData] = useState([]);
 
+
 	return (
 		<div  >
 			<div id='main-space'>
@@ -101,8 +102,8 @@ const Userprivileges = () => {
 							) : (
 								displayData.map((item: any, i: any) => (
 									<tr className="data-table-row" key={i}>
-										<td className="table-datacell datatype-numeric">{!item?.user?.full_name ? "---" : item?.user?.full_name}</td>
-										<td className="table-datacell datatype-numeric">{item?.role}</td>
+										<td className="table-datacell ">{!item?.user?.full_name ? "---" : item?.user?.full_name}</td>
+										<td className="table-datacell ">{item?.role}</td>
 										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
 
 										<td className="table-datacell datatype-numeric">

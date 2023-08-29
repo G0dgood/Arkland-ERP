@@ -6,7 +6,7 @@ import SelectInput from '../../components/SelectInput';
 import { fireAlert } from '../../utils/Alert';
 import { createTeamLead, reset } from '../../features/TeamLead/teamleadSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import HttpService from '../../components/HttpService';
+import createHttpService from '../../components/HttpService';
 
 const CreateTeamLead = () => {
 	const dispatch = useAppDispatch();
@@ -20,6 +20,7 @@ const CreateTeamLead = () => {
 	const [employees, setEmployees] = useState<any>([]);
 
 	const getData = async () => {
+		const HttpService = createHttpService();
 		setisLoading(true)
 		try {
 			const employeesUrl = "hr/employees"

@@ -9,6 +9,7 @@ import Pagination from "../../components/Pagination";
 import HttpService from "../../components/HttpService";
 import moment from "moment";
 import TeamLeadRequestTerminationModal from "./TeamLeadRequestTerminationModal";
+import createHttpService from "../../components/HttpService";
 
 
 
@@ -26,6 +27,7 @@ const TeamLeadTerminationList = () => {
  }, [])
 
  const getDataMembers = async () => {
+  const HttpService = createHttpService();
   setTerminationsisLoading(true)
   try {
    const teamViewUrl = `teams/terminations/list`

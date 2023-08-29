@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { getAllLeave } from '../../features/Leave/leaveSlice';
 
 
+
 const AllLeave = () => {
 	const dispatch = useAppDispatch();
 	const { getAllLeavedata: data, getAllLeaveisLoading: isLoading } = useAppSelector((state: any) => state.leave)
@@ -52,6 +53,8 @@ const AllLeave = () => {
 	}, [data?.data]);
 
 	const [displayData, setDisplayData] = useState([]);
+
+
 
 	return (
 		<div >
@@ -183,7 +186,7 @@ const AllLeave = () => {
 					Total={"All Leave"}
 				/>
 			</footer>
-		</div >
+		</div>
 	)
 }
 

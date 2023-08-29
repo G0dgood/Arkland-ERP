@@ -19,7 +19,7 @@ export const fireAlert = ( title: string, message: string, icon: any) => {
   });
 };
 
-export const fireAlert2 = ( title: string, message: string, icon: any ,url:any) => { 
+export const fireAlert2 = ( title: string, message: string, icon: any ,url:any ,props:any) => { 
   swalWithBootstrapButtons.fire({
     title: title  ,
     html: message,
@@ -27,10 +27,9 @@ export const fireAlert2 = ( title: string, message: string, icon: any ,url:any) 
     showCancelButton: false, 
     cancelButtonText: "OK",
      confirmButtonText: "Okay"
-    }).then(function () {
+  }).then(function () { 
       // Redirect the user
-       window.location.replace(url); 
-    });
-   
+         window.location.replace(url);     
+    }); 
 };
  

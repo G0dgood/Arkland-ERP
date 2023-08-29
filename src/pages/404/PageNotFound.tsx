@@ -1,7 +1,10 @@
 import { Button } from "@material-ui/core"
+import { useNavigate } from "react-router-dom";
 
 
 const PageNotFound = () => {
+
+	const navigate = useNavigate();
 	return (
 		<div className='body-container'>
 			<div className="container-body">
@@ -29,10 +32,9 @@ const PageNotFound = () => {
 				<Button
 					variant="contained"
 					className="add-experience"
-					onClick={() => window.location.replace("/")}
+					onClick={() => navigate("/")}
 				>
-
-					Back home
+					Login
 				</Button>
 			</div>
 

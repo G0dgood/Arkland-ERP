@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { createprivileges, reset } from '../../features/User/userSlice';
 import HttpService from '../HttpService';
 import SelectInput from '../SelectInput';
+import createHttpService from '../HttpService';
 
 
 const AssignPrivilegesModal = ({ setReload }: any) => {
@@ -24,6 +25,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 
 	const handelclick = async () => {
+		const HttpService = createHttpService();
 		setisLoadings(true)
 		try {
 			const employees = "hr/employees"

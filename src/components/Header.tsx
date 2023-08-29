@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
@@ -11,263 +11,229 @@ import toast, { Toaster } from "react-hot-toast";
 import MobileSideBar from "./MobileSideBar";
 import Notification from "./Notification/Notification";
 import DataService from "../utils/dataService";
-import HttpService from "./HttpService";
 import Socket from "./NotificationPopUp";
-import { io } from "socket.io-client";
-
+import createHttpService from "./HttpService";
+import { SocketContext } from "./SocketContext";
+import LogoutModal from "./LogoutOption";
 
 
 
 const dataService = new DataService()
-const Header = ({ toggleSideNav }: any) => {
+const Header = ({ toggleSideNav, to, ignorePaths }: any) => {
+ const socket = useContext(SocketContext);
+ const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
+ const [network, setnetwork] = useState<any>();
+ const [dropDown, setDropDown] = useState(false);
+ const [showLogout, setShowLogout] = useState<any>(false);
+ const [dropDownNoti, setDropDownNoti] = useState(false);
+ const [loading, setLoading] = useState(false);
+ const [refresh, setRefresh] = useState(false);
 
-  const socket = io("https://arkland-erp-b4872258abbf.herokuapp.com");
-  // const socket = io("https://arkland-erp.herokuapp.com");
+ const [notification, setNotification] = useState<any>(userInfo?.notifications);
+ const url = "notifications"
 
-  const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
-  const [network, setnetwork] = useState<any>();
-  const [dropDown, setDropDown] = useState(false);
-  const [drop, setDrop] = useState(false);
-  const [dropDownNoti, setDropDownNoti] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+ window.addEventListener("offline", (e) => setnetwork("offline"));
+ window.addEventListener("online", (e) => setnetwork("online"));
+ useEffect(() => {
+  if (network === "online") {
+   toast.success("You are back online!");
+  } else if (network === "offline") {
+   toast.error("You have lost internet connection!");
+  }
+ }, [network]);
 
-  const [notification, setNotification] = useState<any>(userInfo.notifications);
-  const url = "notifications"
-
-
-
-  window.addEventListener("offline", (e) => setnetwork("offline"));
-  window.addEventListener("online", (e) => setnetwork("online"));
-  useEffect(() => {
-    if (network === "online") {
-      toast.success("You are back online!");
-    } else if (network === "offline") {
-      toast.error("You have lost internet connection!");
-    }
-  }, [network]);
-
-  const [isOpen, setIsopen] = useState(false);
-  // const [data, setData] = useState(false);
+ const [isOpen, setIsopen] = useState(false);
 
 
 
-  const ToggleSidebar = () => {
-    isOpen === true ? setIsopen(false) : setIsopen(true);
-  };
 
-  const handleClick = () => {
-    if (!drop) {
-      setDrop(true)
-    } else {
-      setDrop(false)
-    }
+
+
+ const ToggleSidebar = () => {
+  isOpen === true ? setIsopen(false) : setIsopen(true);
+ };
+
+ const handleClick = () => {
+  if (!showLogout) {
+   setShowLogout(true)
+  } else {
+   setShowLogout(false)
+  }
+ }
+
+
+ const handleNext = async () => {
+  const HttpService = createHttpService();
+  setLoading(true)
+  const page = notification?.paginator?.nextPage
+  const size = 10
+  await HttpService.search(url, { page, size })
+   .then((response: any) => {
+    setLoading(false)
+    const newNotification = response?.data?.data
+    userInfo.notifications = newNotification
+    dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+    setNotification(newNotification)
+   })
+   .catch((error) => {
+    setLoading(false)
+   })
+ }
+
+
+ const handlePrev = async () => {
+  const HttpService = createHttpService();
+  setLoading(true)
+  const page = notification?.paginator?.prevPage
+  const size = 10
+  await HttpService.search(url, { page, size })
+   .then((response: any) => {
+    setLoading(false)
+    const newNotification = response?.data?.data
+    userInfo.notifications = newNotification
+    dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+    setNotification(newNotification)
+   })
+   .catch((error) => {
+    setLoading(false)
+   })
+ }
+
+ useEffect(() => {
+  if (refresh) {
+   setTimeout(() => {
+    handleRefresh()
+   }, 5000);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+ }, [refresh])
+
+
+ const handleRefresh = async () => {
+  const HttpService = createHttpService();
+  setLoading(true)
+  const page = 1
+  const size = 10
+  await HttpService.search(url, { page, size })
+   .then((response: any) => {
+    setLoading(false)
+    const newNotification = response?.data?.data
+    userInfo.notifications = newNotification
+    dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
+    setNotification(newNotification)
+   })
+   .catch((error) => {
+    setLoading(false)
+   })
+ }
+
+
+
+
+ const isActive: any = (match: any, location: { pathname: string | any[]; }) => {
+  if (!match) {
+   return false;
   }
 
-
-  const handleNext = async () => {
-    setLoading(true)
-    const page = notification.paginator.nextPage
-    const size = 10
-    await HttpService.search(url, { page, size })
-      .then((response: any) => {
-        setLoading(false)
-        const newNotification = response?.data?.data
-        userInfo.notifications = newNotification
-        dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
-        setNotification(newNotification)
-      })
-      .catch((error) => {
-        setLoading(false)
-      })
-  }
+  // Check if the current route's path is in the ignorePaths array
+  return ignorePaths.some((ignorePath: string) => location.pathname.includes(ignorePath));
+ };
 
 
-  const handlePrev = async () => {
-    setLoading(true)
-    const page = notification.paginator.prevPage
-    const size = 10
-    await HttpService.search(url, { page, size })
-      .then((response: any) => {
-        setLoading(false)
-        const newNotification = response?.data?.data
-        userInfo.notifications = newNotification
-        dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
-        setNotification(newNotification)
-      })
-      .catch((error) => {
-        setLoading(false)
-      })
-  }
+ return (
+  <div id="header" onMouseLeave={() => { setDropDownNoti(false); setDropDown(false) }} >
+   <Toaster
+    position="top-center"
+    toastOptions={{
+     duration: 15000,
+     // error: {
+     //   duration: 20000,
+     // }
+    }}
+   />
 
-  useEffect(() => {
-    if (refresh) {
-      setTimeout(() => {
-        handleRefresh()
-      }, 5000);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refresh])
+   <div className="header-container">
+    <div className="header-left" >
+     <TfiAlignJustify
+      className="mobileSidebarbtn"
+      size={25}
+      onClick={toggleSideNav}
+     />
+     <TfiAlignJustify
+      className="mobileSidebarbtntwo"
+      size={25}
+      onClick={ToggleSidebar}
+     />
 
+     <div className="header-logo">
+      <img src={logo} alt="ASL" />
+     </div>
+     <span className="header-logo-text">{/* Line Manager */}</span>
+     <span className="header-logo-text1">
+      {userInfo?.employee?.email}
+     </span>
+    </div>
+    <div className="hand-noficational-place" >
+     <Socket setNotification={setNotification} socket={socket} setRefresh={setRefresh} />
+     {/* @ts-ignore */}
+     <div className="hand-noficational-place-sup" >
+      <div className="Messages-button" onClick={() => { setDropDownNoti(true) }} >
+       <span className="content">
+        <IoIosNotifications size={30} />
+       </span>
+       <span className="badge">{notification?.new_notification_count}</span>
+      </div>
+      {dropDownNoti &&
+       (<div className="user-details-noti">
+        <Notification handleNext={handleNext} handlePrev={handlePrev} notification={notification} loading={loading} />
+       </div>)}
+     </div>
 
-  const handleRefresh = async () => {
-    setLoading(true)
-    const page = 1
-    const size = 10
-    await HttpService.search(url, { page, size })
-      .then((response: any) => {
-        setLoading(false)
-        const newNotification = response?.data?.data
-        userInfo.notifications = newNotification
-        dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
-        setNotification(newNotification)
-      })
-      .catch((error) => {
-        setLoading(false)
-      })
-  }
-
-
-  // const handleLogout = async () => {
-  //   setisLoading(true);
-  //   socket.disconnect()
-  //   try {
-  //     await HttpService.patch("me/logout", {})
-  //     window.location.replace("/");
-  //     dataService.clearData()
-  //     setisLoading(false);
-  //   } catch (error) {
-  //     window.location.replace("/");
-  //     setisLoading(false);
-  //     dataService.clearData()
-  //   }
-  // };
-
-
-  return (
-    <div id="header" onMouseLeave={() => { setDropDownNoti(false); setDrop(false); setDropDown(false) }} >
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 15000,
-          // error: {
-          //   duration: 20000,
-          // }
-        }}
-      />
-
-      <div className="header-container">
-        <div className="header-left" >
-          <TfiAlignJustify
-            className="mobileSidebarbtn"
-            size={25}
-            onClick={toggleSideNav}
-          />
-          <TfiAlignJustify
-            className="mobileSidebarbtntwo"
-            size={25}
-            onClick={ToggleSidebar}
-          />
-
-          <div className="header-logo">
-            <img src={logo} alt="ASL" />
-          </div>
-          <span className="header-logo-text">{/* Line Manager */}</span>
-          <span className="header-logo-text1">
-            {userInfo?.employee?.email}
-          </span>
-        </div>
-        <div className="hand-noficational-place" >
-          <Socket setNotification={setNotification} socket={socket} setRefresh={setRefresh} />
-          {/* @ts-ignore */}
-          <div className="hand-noficational-place-sup" >
-            <div className="Messages-button" onClick={() => { setDropDownNoti(true) }} >
-              <span className="content">
-                <IoIosNotifications size={30} />
-              </span>
-              <span className="badge">{notification?.new_notification_count}</span>
-            </div>
-            {dropDownNoti &&
-              (<div className="user-details-noti">
-                <Notification handleNext={handleNext} handlePrev={handlePrev} notification={notification} loading={loading} />
-              </div>)}
-          </div>
-
-          <div
-            className="d-flex header-user-details"
-            onClick={() => setDropDown(true)}
-          // onClick={() => setDropDown(true)}
-          >
-            <span className="dropdown-names">
-              {userInfo?.employee?.full_name}
-            </span>
-            <div className="preview-header img-container-header">
-              <FaUserCircle size={22} />
-            </div>
-
-            {dropDown && (
-              <div className="dropdown"  >
-                <Nav className="flex-column">
-                  <NavLink to="/profile"
-                    state={{ open: false }}
-                    className="drop-user-settings">
-                    <CgProfile size={20} className="dropdown-icons-tools" />
-                    Profile
-                  </NavLink>
-                  <NavLink
-                    to='/profile' state={{ open: true }}
-                    onClick={handleClick}
-                    className="drop-logout" >
-                    <AiOutlineLogout size={20} className="dropdown-icons-tools" />
-                    Logout
-                  </NavLink>
-                  {/* {drop &&
-                    <div className="drop-logout  drop-logout-container" >
-                      <Button className="button-logout">NO</Button>
-                      <Button className="button-logout" onClick={handleLogout}>
-                        {isLoading ? <Spinner animation="border" size="sm" /> : "YES"}
-                      </Button>
-                    </div>} */}
-                </Nav>
-              </div>
-            )}
-            {/* {dropDown && (
-              <div className="dropdown">
-                <div className="flex-column">
-                  <div
-                    id="i"
-                    className="drop-user-settings" >
-                    <CgProfile className="dropdown-icons-tools" size={20} />
-                    Profile
-                  </div>
-                  <div id="i"
-                    className="drop-logout"
-                  // onClick={handleClick}
-                  >
-                    <AiOutlinePoweroff className="dropdown-icons-tools" size={20} />
-                    Logout
-                  </div>
-                </div>
-                {drop &&
-                  <div className="drop-logout  drop-logout-container" >
-                    <Button className="button-logout " onClick={() => setDrop(false)}>NO</Button>
-                    <Button className="button-logout" onClick={handleLogout}>
-                      {isLoading ? <Spinner animation="border" size="sm" /> : "YES"}
-                    </Button>
-                  </div>}
-              </div>
-            )} */}
-          </div>
-        </div>
+     <div
+      className="d-flex header-user-details"
+      onClick={() => setDropDown(true)}
+     >
+      <span className="dropdown-names">
+       {userInfo?.employee?.full_name}
+      </span>
+      <div className="preview-header img-container-header">
+       <FaUserCircle size={22} />
       </div>
 
-      <MobileSideBar
-        ToggleSidebar={ToggleSidebar}
-        isOpen={isOpen}
-      // setHideNav={setHideNav}
-      />
-    </div >
-  );
+      {dropDown && (
+       <div className="dropdown"  >
+        <Nav className="flex-column">
+         <NavLink to="/profile"
+          state={{ open: false }}
+          className="drop-user-settings">
+          <CgProfile size={20} className="dropdown-icons-tools" />
+          Profile
+         </NavLink>
+         <NavLink
+          to={to}
+          //  @ts-ignore  
+          activeClassName={isActive ? '' : 'inactive'}
+          onClick={handleClick}
+          className="drop-logout" >
+          <AiOutlineLogout size={20} className="dropdown-icons-tools" />
+          Logout
+         </NavLink>
+        </Nav>
+
+       </div>
+      )}
+
+     </div>
+    </div>
+   </div>
+   <LogoutModal setShowLogout={setShowLogout} showLogout={showLogout} setDropDown={setDropDown} />
+   <MobileSideBar
+    ToggleSidebar={ToggleSidebar}
+    isOpen={isOpen}
+   // setHideNav={setHideNav}
+   />
+  </div >
+ );
 };
 
 export default Header;

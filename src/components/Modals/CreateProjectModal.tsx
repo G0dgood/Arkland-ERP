@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { createProject, reset } from "../../features/Project/projectSlice";
 
 import HttpService from "../HttpService";
+import createHttpService from "../HttpService";
 
 const CreateProjectModal = (props: any) => {
   const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.project)
@@ -56,6 +57,7 @@ const CreateProjectModal = (props: any) => {
 
 
   const getData = async () => {
+    const HttpService = createHttpService();
     // setisLoading(true)
     try {
 

@@ -13,6 +13,7 @@ import { useAppDispatch } from "../../store/useStore";
 
 import HttpService from "../../components/HttpService";
 import { Button } from "@material-ui/core";
+import createHttpService from "../../components/HttpService";
 
 
 const CreateEmployee = () => {
@@ -125,7 +126,7 @@ const CreateEmployee = () => {
   }, [dispatch]);
 
   const getData = async () => {
-
+    const HttpService = createHttpService();
     try {
       const rolesUrl = "hr/employee-roles"
       const role: any = await HttpService.get(rolesUrl)

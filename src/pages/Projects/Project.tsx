@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { BsPlusLg } from "react-icons/bs";
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { getUserPrivileges } from "../../functions/auth";
 import CreateProjectModal from "../../components/Modals/CreateProjectModal";
 import { SVGLoader } from "../../components/SVGLoader";
+
 
 const ProjectView = () => {
   const dispatch = useAppDispatch();
@@ -41,6 +42,8 @@ const ProjectView = () => {
     for (let i = 2; i < num; i++) if (num % i === 0) return false;
     return num > 1;
   };
+
+
 
   return (
     <div  >

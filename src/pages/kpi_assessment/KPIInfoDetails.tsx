@@ -28,12 +28,13 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 
 
 	const mappedParameters: any = Object.keys(!viewdata?.parameters ? [] : viewdata?.parameters).map((key) => {
-		const { self_score, score_weight } = viewdata?.parameters[key] || {};
+		const { self_score, score_weight, reviewer_score } = viewdata?.parameters[key] || {};
 		return {
 			key,
 			description: key,
 			score: self_score || 0, // Provide a default value for score if it is missing
 			score_weight: score_weight || 0, // Provide a default value for score_weight if it is missing
+			reviewer_score: reviewer_score || 0, // Provide a default value for reviewer_score if it is missing
 		};
 	});
 
@@ -44,6 +45,7 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 				description: mappedParameters[key].description,
 				score: mappedParameters[key].score,
 				score_weight: mappedParameters[key].score_weight,
+				reviewer_score: mappedParameters[key].reviewer_score,
 			};
 		}
 	});
@@ -94,15 +96,6 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 		comment: '',
 	};
 	const [input, setInput] = useState<InputState>(initialInputState);
-
-	// const extractedData: any = {};
-
-	// for (const key in input?.parameters) {
-	// 	if (input?.parameters?.hasOwnProperty(key)) {
-	// 		// @ts-ignore
-	// 		extractedData[key] = input?.parameters[key].score;
-	// 	}
-	// }
 
 
 
@@ -157,14 +150,6 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 	};
 
 
-	// const mapped: any = Object.keys(!input.parameters ? [] : input.parameters).map((key) => {
-	// 	const { self_score, score_weight } = input?.parameters[key] || {};
-	// 	return {
-	// 		score: self_score || 0, // Provide a default value for score if it is missing
-	// 		description: score_weight || 0, // Provide a default value for score_weight if it is missing
-	// 	};
-	// });
-
 	useEffect(() => {
 		setKpInputs((prevState: any) => {
 			return ({
@@ -179,7 +164,7 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 	}, [setInput, datas, input.comment, input.month, input]);
 
 
-	console.log('kpinputs', kpinputs);
+
 
 
 	useEffect(() => {
@@ -272,7 +257,7 @@ const KPIInfoDetails = ({ viewdata }: any) => {
 										</div>
 
 										<div className="btn_area">
-											{calculateTotalScore(parseInt(parameters[key]?.score_weight), parseInt(parameters[key]?.score))}
+											{datas[key].reviewer_score}
 										</div>
 									</div>
 

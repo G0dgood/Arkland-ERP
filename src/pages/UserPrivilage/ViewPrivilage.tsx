@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import projectBack from "../../assets/vectors/project-back.svg";
 import moment from 'moment';
@@ -8,6 +7,7 @@ import { viewPrevilage } from '../../features/Employee/employeeSlice';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import DeletePrivileges from './DeletePrivileges';
 import { SVGLoader } from '../../components/SVGLoader';
+
 
 
 const ViewPrivilage = () => {
@@ -20,6 +20,8 @@ const ViewPrivilage = () => {
 	useEffect(() => {
 		dispatch(viewPrevilage(id));
 	}, [dispatch, id])
+
+
 
 
 

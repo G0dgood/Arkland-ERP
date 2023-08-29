@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import CreateDepartmentModal from "../../components/Modals/CreateDepartmentModal
 import { allDepartments } from "../../features/Department/departmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { SVGLoader } from "../../components/SVGLoader";
+
 
 const DepartmentsView = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,8 @@ const DepartmentsView = () => {
     for (let i = 2; i < num; i++) if (num % i === 0) return false;
     return num > 1;
   };
+
+
 
 
   return (
