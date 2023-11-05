@@ -2,24 +2,25 @@
 import { Button } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { MdOutlineClose } from 'react-icons/md'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { fireAlert } from '../../utils/Alert'
 import { rejectRequest, reset } from '../../features/workerRequest/workerRequestSlice'
 import { useNavigate } from 'react-router-dom'
+import { ModalHeader } from '../../components/Modals/ModalOptions'
+import { GrEject } from 'react-icons/gr'
 
 const RejectWorkerRequestModal = ({ id }: any) => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { rejectisLoading, rejectmessage, rejectisSuccess } = useAppSelector((state: any) => state.worker)
 
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 
 
 	useEffect(() => {
 		if (rejectisSuccess) {
 			navigate(-1)
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Worker reject  successfully", "success");
 			dispatch(reset());
 		}
@@ -35,23 +36,17 @@ const RejectWorkerRequestModal = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button className="add-experience" onClick={() => setShow(true)}>Reject Request</Button>
-
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}>Reject Request</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={Show}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span></span>
-					<span className="span-center-title">Reject Worker Request</span>
-					<Button
-						style={{ color: "#fff" }}
-						onClick={() => setShow(false)} >
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+
+				<ModalHeader setLgShow={setLgShow} icon={<GrEject size={30} />} title={">Reject Worker Request"} subtitle={">Reject Worker Request"} />
 				<Modal.Body>
 					<h5>Are you Sure?</h5>
 					<h5>You want to Reject this Request?</h5>

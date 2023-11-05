@@ -44,7 +44,7 @@ const CreateProjects = () => {
   return (
     <>
       <Helmet>
-        <title>Create project | Arkland ERP</title>
+        <title>Create Project | Arkland ERP</title>
       </Helmet>
       <div id="screen-wrapper">
         <div className="back-to-employee-container">

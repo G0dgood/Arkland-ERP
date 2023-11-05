@@ -22,6 +22,8 @@ const Dashboard = () => {
         isHrAdmin ||
         isMaster) ? (
         <AdminDashboard />
+      ) : isAdmin ? (
+        <AdminDashboards />
       ) : (
         <StaffDashboard />
       )}
@@ -30,7 +32,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-// : isAdmin ? (
-//   <AdminDashboards />
-// )

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TfiAnnouncement } from 'react-icons/tfi';

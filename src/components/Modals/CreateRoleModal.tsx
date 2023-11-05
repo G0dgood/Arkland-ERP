@@ -7,6 +7,8 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { allDepartments } from '../../features/Department/departmentSlice';
 import { createEmployeeRole, editRole, reset } from '../../features/Employee/employeeSlice';
 import { useNavigate } from 'react-router-dom';
+import { ModalHeader } from './ModalOptions';
+import { FiEdit } from 'react-icons/fi';
 
 
 const CreateRoleModal = ({ id, viewroledata }: any) => {
@@ -101,21 +103,14 @@ const CreateRoleModal = ({ id, viewroledata }: any) => {
 
 	return (
 		<div>
-			<Button variant="contained" className="add-experience"
-				onClick={() => setLgShow(true)}>
-				{id ? "Edit Role" : "	Create Role"}
-			</Button>
+			<li className={"active"} onClick={() => setLgShow(true)}>{id ? "Edit Role" : "	Create Role"}</li>
 			<Modal
 				size="lg"
 				show={lgShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered>
-				<Modal.Header  >
-					<span className='span-center-title'>	{id ? "Edit Role" : "	Create Role"}</span>
-					<Button onClick={() => { setLgShow(false); handleclick() }}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<FiEdit size={30} />} title={id ? "Edit Role" : "	Create Role"} subtitle={id ? "Edit Role" : "	Create Role"} />
+
 				<Modal.Body>
 					<div className='Modal-Body'>
 						<h6>Name</h6>

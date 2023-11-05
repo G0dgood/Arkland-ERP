@@ -1,20 +1,21 @@
 import { Button } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { MdOutlineClose } from 'react-icons/md'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { fireAlert } from '../../utils/Alert'
 import { approveRequest, reset } from '../../features/workerRequest/workerRequestSlice'
+import { GrCheckmark } from 'react-icons/gr'
+import { ModalHeader } from '../../components/Modals/ModalOptions'
 
 const ApproveWorkerRequestModal = ({ id }: any) => {
 
 	const dispatch = useAppDispatch();
 	const { approveisLoading, approvemessage, approveisSuccess } = useAppSelector((state: any) => state.worker)
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 
 	useEffect(() => {
 		if (approveisSuccess) {
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Worker Request  successfully", "success");
 			dispatch(reset());
 		}
@@ -29,23 +30,17 @@ const ApproveWorkerRequestModal = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button className="add-experience" onClick={() => setShow(true)}>Approve Request</Button>
 
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}>Approve Request</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={Show}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span></span>
-					<span className="span-center-title">Approve Worker Request</span>
-					<Button
-						style={{ color: "#fff" }}
-						onClick={() => setShow(false)} >
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<GrCheckmark size={30} />} title={"Approve Worker Request"} subtitle={"Approve Worker Request"} />
 				<Modal.Body>
 					<h5>Are you Sure?</h5>
 					<h5>You want to Approve this Request?</h5>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@material-ui/core';
-import { BsCalendarDate, BsCalendarDateFill, BsCheckCircleFill, BsFillBriefcaseFill, BsPatchCheckFill } from 'react-icons/bs';
+import { BsCheckCircleFill, BsPatchCheckFill } from 'react-icons/bs';
 import moment from 'moment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';

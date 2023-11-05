@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import projectBack from "../../assets/vectors/project-back.svg";

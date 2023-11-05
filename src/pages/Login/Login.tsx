@@ -74,8 +74,6 @@ const Login = () => {
     if (token && user) {
       navigate("/dashboard")
     }
-
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

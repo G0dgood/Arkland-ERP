@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
-import { FiCheckCircle, FiEye } from "react-icons/fi";
+import { FiCheckCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
 import {
-	MainSearch,
 	NoRecordFound,
+	SearchComponent,
 	TableFetch,
 } from "../../components/TableOptions";
 import { getHOD } from "../../features/HOD/hodSlice";
 import moment from "moment";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import CreateHODModal from "../../components/Modals/CreateHODModal";
+import { Button } from "@material-ui/core";
 
 
 
 const HODList = () => {
 	const { data, isLoading } = useAppSelector((state: any) => state.hod)
 	const { createisSuccess } = useAppSelector((state: any) => state.hod)
+	const [displayData, setDisplayData] = useState([]);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
@@ -26,14 +28,14 @@ const HODList = () => {
 	useEffect(() => {
 		dispatch(getHOD());
 		if (createisSuccess) {
-			getHOD()
+			dispatch(getHOD());
 		}
 	}, [createisSuccess, dispatch]);
 
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
-		return localStorage.getItem("reportsPerPage") || "10";
+		return localStorage.getItem("reportsPerPage") || "8";
 	});
 
 	useEffect(() => {
@@ -52,117 +54,89 @@ const HODList = () => {
 
 
 
-	const [displayData, setDisplayData] = useState([]);
+
 
 
 	return (
-		<div  >
 
-			<div>
-				<div className="allemployees-container">
-					<div className="allemployees-container-main">
-						<div className="SiteWorkermaindivsub">
-							<span className="SupportmainTitleh3">HOD List</span>
-						</div>
-						<div >
-						</div>
-
-						<div style={{ display: "flex", justifyContent: "space-between" }}>
-							<MainSearch
-								//  setSearchItem={setSearchItem}
-								// searchItem={searchItem}
-								placeholder={"Search...          HOD"} />
-							<span style={{ marginLeft: "20px" }}>
-								<CreateHODModal />
-							</span>
-						</div>
-
-
-					</div>
-					<section className="md-ui component-data-table">
-						{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
-						<div className="main-table-wrapper">
-							<table className="main-table-content">
-								<thead className="data-table-header">
-									<tr className="data-table-row">
-										{header.map((i, index) => {
-											return (
-												<>
-													<td className="table-datacell datatype-numeric" key={index} >
-														{i.title}
-													</td>
-												</>);
-										})}
-									</tr>
-								</thead>
-								<tbody className="data-table-content">
-									{false ? (
-										<TableFetch colSpan={9} />
-									) : displayData?.length === 0 || displayData === undefined ? (
-										<NoRecordFound colSpan={9} />
-									) : (
-										displayData?.map((item: any, i: any) => (
-											<tr className="data-table-row" key={i}>
-												<td className="table-datacell ">
-													{item?.name}
+		<div id="reports">
+			<h5 className="page-title">HOD List</h5>
+			<ul className="nav-tabs-btn mb-3">
+				<CreateHODModal />
+			</ul>
+			<div className='half-background'>
+				<SearchComponent sortData={data} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage} placeholder={"HOD"} />
+				<section className="md-ui component-data-table">
+					{isLoading ? <TableLoader isLoading={isLoading} /> : ""}
+					<div className="main-table-wrapper">
+						<table className="main-table-content">
+							<thead className="data-table-header">
+								<tr className="data-table-row">
+									{header.map((i, index) => {
+										return (
+											<>
+												<td className="table-datacell datatype-numeric" key={index} >
+													{i.title}
 												</td>
-												<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
-												<td className="table-datacell datatype-numeric">
-													{item?.status}
-												</td>
-												<td className="table-datacell datatype-numeric">
-													<div className="table-active-items" key={i}>
-														{/* <span> */}
-														{item?.status === "in review" ? (
-															<span
-																className="edit-icon-color"
-																title="Approve employee"
-																color="#d32f2f"
-															>
-																<FiCheckCircle
-																	size={25}
-																	title="Approve Employee"
-																	color="green"
-																/>
-															</span>
-														) : (
-															""
-														)}
-
+											</>);
+									})}
+								</tr>
+							</thead>
+							<tbody className="data-table-content">
+								{false ? (
+									<TableFetch colSpan={9} />
+								) : displayData?.length === 0 || displayData === undefined ? (
+									<NoRecordFound colSpan={9} />
+								) : (
+									displayData?.map((item: any, i: any) => (
+										<tr className="data-table-row" key={i}>
+											<td className="table-datacell ">
+												{item?.name}
+											</td>
+											<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
+											<td className="table-datacell datatype-numeric">
+												{item?.status}
+											</td>
+											<td className="table-datacell datatype-numeric">
+												<div className="table-active-items" key={i}>
+													{/* <span> */}
+													{item?.status === "in review" ? (
 														<span
-															className="lock-icon-color"
-															title="View employee "
-															style={{
-																marginLeft: "10px",
-															}}
-															onClick={() => navigate(`/hod/hod/viewhod/${item.id}`)}
+															className="edit-icon-color"
+															title="Approve employee"
+															color="#d32f2f"
 														>
-															<FiEye
+															<FiCheckCircle
 																size={25}
-																title="View Employee"
+																title="Approve Employee"
 																color="green"
 															/>
 														</span>
-													</div>
-												</td>
-											</tr>
-										))
-									)}
-								</tbody>
-							</table>
-						</div>
-					</section>
-				</div>
-				<footer className="main-table-footer">
-					<Pagination
-						setDisplayData={setDisplayData}
-						data={data}
-						entriesPerPage={entriesPerPage}
-						Total={"HOD"}
-					/>
-				</footer>
-			</div>
-		</div>
+													) : (
+														""
+													)}
+
+													<Button id="view-status" onClick={() => navigate(`/hod/hod/viewhod/${item.id}`)}>View</Button>
+
+												</div>
+											</td>
+										</tr>
+									))
+								)}
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</div >
+			<footer className="main-table-footer">
+				<Pagination
+					setDisplayData={setDisplayData}
+					data={data}
+					entriesPerPage={entriesPerPage}
+					Total={"HOD"}
+				/>
+			</footer>
+		</div >
 	);
 };
 

@@ -20,7 +20,7 @@ const KPIDetails = () => {
 	const { viewdata, viewisLoading, viewmessage } = useAppSelector((state: any) => state.assessment)
 	const { deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.assessment)
 
-	console.log('viewdata', viewdata)
+
 
 	useEffect(() => {
 		// @ts-ignore

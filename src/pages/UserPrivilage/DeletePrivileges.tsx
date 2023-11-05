@@ -4,16 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { Button } from '@material-ui/core';
-import { MdOutlineClose } from 'react-icons/md';
 import { ImBin } from 'react-icons/im';
 import { deleteprivileges, reset } from '../../features/User/userSlice';
+import { ModalHeader } from '../../components/Modals/ModalOptions';
+import { AiOutlineTeam } from 'react-icons/ai';
 
 
 const DeletePrivileges = ({ id }: any) => {
 
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const [deleteShow, setDeleteShow] = useState(false);
+	const [deleteShow, setLgShow] = useState(false);
 	const { deleteisLoading, deletemessage, deleteisSuccess } = useAppSelector((state: any) => state.userinfo)
 
 
@@ -21,7 +22,7 @@ const DeletePrivileges = ({ id }: any) => {
 	useEffect(() => {
 		if (deleteisSuccess) {
 			fireAlert("Successful", "Privilege Deletion Successfully", "success");
-			setDeleteShow(false)
+			setLgShow(false)
 			navigate(-1)
 			dispatch(reset());
 		}
@@ -35,24 +36,19 @@ const DeletePrivileges = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button onClick={() => setDeleteShow(true)}> <ImBin size={25} color='#bf8412' /></Button>
+			<Button onClick={() => setLgShow(true)}> <ImBin size={25} color='#bf8412' /></Button>
 			<Modal
 				size="lg"
 				show={deleteShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header  >
-					<span className="span-center-title">Delete Privilege</span>
-					<Button onClick={() => setDeleteShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<AiOutlineTeam size={30} />} title={"Delete Privilege"} subtitle={" Delete Privilege"} />
 				<Modal.Body>
 					<h5 className="last-line m-5"> Are you sure you want to delete this Privilege?</h5>
 					<div className='deleteKPIHandler'>
 						<span className='deleteKPIHandler-mr'>
-							<Button className="table-link-active" onClick={() => setDeleteShow(false)}>
+							<Button className="table-link-active" onClick={() => setLgShow(false)}>
 								Close
 							</Button>
 						</span>

@@ -109,7 +109,7 @@ const FullBarChart = ({ departments, employees, setShow, show, fullscreen }: any
   return (
     <div>
       <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
-        <header className="ChatProgressView-header"  >
+        {/* <header className="ChatProgressView-header"  >
           <div>
             <span className="app-chat--icon px-2">
               <GoGraph />
@@ -123,7 +123,7 @@ const FullBarChart = ({ departments, employees, setShow, show, fullscreen }: any
               className="ChatProgressView-close-icon"
             />
           </div>
-        </header>
+        </header> */}
         <Modal.Body  >
           <Bar data={data} options={options} />
         </Modal.Body>

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-  EntriesPerPage,
-  MainSearch,
   NoRecordFound,
+  SearchComponent,
   TableFetch,
 } from "../../components/TableOptions";
 import Pagination from "../../components/Pagination";
@@ -15,13 +14,11 @@ const MyWarning = () => {
 
   const [warningdata, setData] = useState([])
   const [warningisLoading, setisLoading] = useState(false)
+  const [displayData, setDisplayData] = useState<any>([]);
 
 
 
-
-  useEffect(() => {
-    getData()
-  }, [])
+  useEffect(() => { getData() }, [])
   const getData = async () => {
     const HttpService = createHttpService();
     setisLoading(true)
@@ -60,93 +57,82 @@ const MyWarning = () => {
 
 
 
-  const [displayData, setDisplayData] = useState<any>([]);
+
 
 
 
 
   return (
-    <div  >
 
-      <div className="SiteWorkermaindiv">
-        <div className="SiteWorkermaindivsub">
-          My Warnings
-        </div>
-        <div>
-          <EntriesPerPage
-            data={warningdata}
-            entriesPerPage={entriesPerPage}
-            setEntriesPerPage={setEntriesPerPage}
-          />
-        </div>
-        <div>
-          <MainSearch placeholder={"Search...          Warnings"} />
-        </div>
-      </div>
-      <section className="md-ui component-data-table">
-        <div className="main-table-wrapper">
-          {warningisLoading ? <TableLoader isLoading={warningisLoading} /> : ""}
-          <table className="main-table-content">
-            <thead className="data-table-header">
-              <tr className="data-table-row">
-                {header.map((i, index) => {
-                  return (
-                    <>
-                      <td
-                        className="table-datacell datatype-numeric"
-                        key={index}
-                      >
-                        {i?.title}
+    <div id="reports">
+      <h5 className="page-title"> My Warnings</h5>
+      <div className='half-background mt-4'>
+        <SearchComponent sortData={warningdata} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage} placeholder={"My Team Leave Applications"} />
+        <section className="md-ui component-data-table">
+          <div className="main-table-wrapper">
+            {warningisLoading ? <TableLoader isLoading={warningisLoading} /> : ""}
+            <table className="main-table-content">
+              <thead className="data-table-header">
+                <tr className="data-table-row">
+                  {header.map((i, index) => {
+                    return (
+                      <>
+                        <td
+                          className="table-datacell datatype-numeric"
+                          key={index}
+                        >
+                          {i?.title}
+                        </td>
+                      </>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody className="data-table-content">
+                {warningisLoading ? (
+                  <TableFetch colSpan={8} />
+                ) : displayData?.length === 0 || displayData == null ? (
+                  <NoRecordFound colSpan={8} />
+                ) : (
+                  displayData?.map((item: any, i: any) => (
+                    <tr className="data-table-row" key={i}>
+
+                      <td className="table-datacell datatype-numeric">
+                        {item?.message}
                       </td>
-                    </>
-                  );
-                })}
-              </tr>
-            </thead>
-            <tbody className="data-table-content">
-              {warningisLoading ? (
-                <TableFetch colSpan={8} />
-              ) : displayData?.length === 0 || displayData == null ? (
-                <NoRecordFound colSpan={8} />
-              ) : (
-                displayData.map((item: any, i: any) => (
-                  <tr className="data-table-row" key={i}>
-
-                    <td className="table-datacell datatype-numeric">
-                      {item?.message}
-                    </td>
-                    <td className="table-datacell datatype-numeric">
-                      {item?.misconduct}
-                    </td>
-                    <td className="table-datacell datatype-numeric">
-                      {item?.count}
-                    </td>
-                    <td className="table-datacell datatype-numeric">
-                      {item?.status}
-                    </td>
-                    {/* <td className="table-datacell datatype-numeric">
+                      <td className="table-datacell datatype-numeric">
+                        {item?.misconduct}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {item?.count}
+                      </td>
+                      <td className="table-datacell datatype-numeric">
+                        {item?.status}
+                      </td>
+                      {/* <td className="table-datacell datatype-numeric">
                       <RespondToWarning id={item?.id} className={"team-applicatiom-update"} />
                     </td> */}
-                    {/* <td className="table-datacell datatype-numeric" key={i}>
+                      {/* <td className="table-datacell datatype-numeric" key={i}>
                       <Link to={`/warning/warning/${item?._id}`}  >
                         <Button id="team-applicatiom-update">  View</Button>
                       </Link>
                     </td> */}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </section>
-      <footer className="main-table-footer">
-        <Pagination
-          setDisplayData={setDisplayData}
-          data={warningdata}
-          entriesPerPage={entriesPerPage}
-          Total={"Employee"}
-        />
-      </footer>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <footer className="main-table-footer">
+          <Pagination
+            setDisplayData={setDisplayData}
+            data={warningdata}
+            entriesPerPage={entriesPerPage}
+            Total={"Employee"}
+          />
+        </footer>
+      </div>
     </div>
   );
 };

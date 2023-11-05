@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { fireAlert } from '../../utils/Alert';
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
+import { MdOutlineAssignment, MdOutlineClose } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { createprivileges, reset } from '../../features/User/userSlice';
-import HttpService from '../HttpService';
 import SelectInput from '../SelectInput';
 import createHttpService from '../HttpService';
+import { ModalHeader } from './ModalOptions';
 
 
 const AssignPrivilegesModal = ({ setReload }: any) => {
@@ -49,7 +49,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 				label: employee?.full_name,
 			})
 		);
-	const [lgShow, setLgShow] = useState(false);
+	const [lgShow, setLgShow] = useState<any>(false);
 	const [inputs, setInputs] = useState({
 		role: "",
 		user: "",
@@ -122,21 +122,17 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 	return (
 		<div>
-			<Button variant="contained" className="add-experience"
-				onClick={() => { setLgShow(true); handelclick() }}>
-				Assign Privilege
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => { setLgShow(true); handelclick() }}>Assign Privilege</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={lgShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered>
-				<Modal.Header  >
-					<span className='span-center-title'>Assign Privilege</span>
-					<Button onClick={() => setLgShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+
+				<ModalHeader setLgShow={setLgShow} icon={<MdOutlineAssignment size={30} />} title={"Assign Privilege"} subtitle={"Assign An Employee A Privilege"} />
+
 				<Modal.Body>
 					<div className='Modal-Body'>
 						<h6>Name</h6>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions';
+import { NoRecordFound, SearchComponent, TableFetch } from '../../components/TableOptions';
 import Pagination from '../../components/Pagination';
 import moment from 'moment';
 import { BsCheckCircle, BsClock } from 'react-icons/bs';
@@ -9,7 +9,7 @@ import { SlClose } from 'react-icons/sl';
 import TableLoader from '../../components/TableLoader';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { getTeamLeave } from '../../features/Leave/leaveSlice';
- 
+
 
 
 
@@ -29,24 +29,14 @@ const TeamLeaveApplications = () => {
 
 
 	const [displayData, setDisplayData] = useState([]);
- 
-	return ( 
-		<div>  
-				<div className='SiteWorkermaindiv'>
-					<div className='SiteWorkermaindivsub'>
-						<span className='SupportmainTitleh3'>My Team Leave Applications</span>
-					</div>
-					<div>
-						<EntriesPerPage
-							data={teamdata}
-							entriesPerPage={entriesPerPage}
-							setEntriesPerPage={setEntriesPerPage}
-						/>
-					</div>
-					<div>
-						<MainSearch placeholder={'Search...          Team Leave '} />
-					</div>
-				</div>
+
+	return (
+
+		<div id="reports">
+			<h5 className="page-title">My Team Leave Applications</h5>
+
+			<div className='half-background mt-4'>
+				<SearchComponent sortData={teamdata} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage} placeholder={"My Team Leave Applications"} />
 				<section className="md-ui component-data-table">
 					{teamisLoading ? <TableLoader isLoading={teamisLoading} /> : ""}
 					<div className="main-table-wrapper">
@@ -127,15 +117,7 @@ const TeamLeaveApplications = () => {
 															item?.status === "rejected" ? "Leave Rejected" :
 																"IN Progress"}
 											</div>
-											{/* <Button className={item?.status === "HOD approved" ? "table-link" :
-											item?.status === "HR approved" ? "table-link-hr" :
-												item?.status === "approved" ? "table-link-active" :
-													item?.status === "rejected" ? "table-link-reject" : "table-link"}>
-											{item?.status === "HOD approved" ? "HOD approved" :
-												item?.status === "HR approved" ? "HR approved" :
-													item?.status === "approved" ? "LEAVE approved" :
-														item?.status === "rejected" ? "LEAVE Rejected" : "IN Progress"}
-										</Button> */}
+
 										</td>
 										<td className="table-datacell datatype-numeric">
 											<Link to={`/leave/leave/hod/${item?._id}`}>
@@ -160,7 +142,8 @@ const TeamLeaveApplications = () => {
 						entriesPerPage={entriesPerPage}
 						Total={"Team Leave"}
 					/>
-				</footer> 
+				</footer>
+			</div>
 		</div>
 	)
 }

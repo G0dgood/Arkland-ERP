@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { MdOutlineClose } from "react-icons/md";
 import { BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
 import InputField from "../Inputs/InputField";
@@ -18,6 +17,8 @@ import { createProject, reset } from "../../features/Project/projectSlice";
 
 import HttpService from "../HttpService";
 import createHttpService from "../HttpService";
+import { ModalHeader } from "./ModalOptions";
+import { BiBuildingHouse } from "react-icons/bi";
 
 const CreateProjectModal = (props: any) => {
   const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.project)
@@ -112,23 +113,15 @@ const CreateProjectModal = (props: any) => {
     );
   return (
     <div>
-      <Button
-        className="subone-header-flex-btn"
-        onClick={() => { setLgShow(true); getData() }} >
-        <BsPlusLg size={10} color="#fff" className="Create-plue-account" />{" "}
-        Create Project
-      </Button>
+      <ul className="nav-tabs-btn mb-3">
+        <li className={"active"} onClick={() => { setLgShow(true); getData() }}> Create Project</li>
+      </ul>
       <Modal
         size="lg"
         show={lgShow}
         aria-labelledby="contained-modal-title-vcenter"
         centered >
-        <Modal.Header>
-          <span className="span-center-title">Create Project</span>
-          <Button onClick={() => setLgShow(false)}>
-            <MdOutlineClose size={28} />
-          </Button>
-        </Modal.Header>
+        <ModalHeader setLgShow={setLgShow} icon={<BiBuildingHouse size={30} />} title={"Create Project"} subtitle={"Create A New Project"} />
         <Modal.Body>
           <Formik
             initialValues={{

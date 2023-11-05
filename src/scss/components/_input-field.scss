@@ -97,3 +97,27 @@
     }
   }
 }
+
+
+.main-select-input{
+  width: 16.25rem;
+  height: 42px;
+  border-radius: 5px;
+  border: 1px solid #990000;
+}
+
+.react-select__control {
+  /* styles for the control container */
+  width: 200px;
+  border: 1px solid #ccc;
+  /* Add more styles as needed */
+}
+
+.react-select__option {
+  /* styles for each option */
+  background-color: #f0f0f0;
+  font-size: 16px;
+  /* Add more styles as needed */
+}
+
+

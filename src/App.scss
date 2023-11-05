@@ -8,6 +8,7 @@
 html {
   scroll-behavior: smooth;
 }
+
 $sidebar-bg-color: #fff;
 $submenu-bg-color: rgba(255, 255, 255, 0.05);
 $submenu-bg-color-collapsed: rgba(240, 238, 238, 0.95);
@@ -168,8 +169,8 @@ input[type="radio"]:checked + label::after
     color: #990000 !important;
     padding: 0.15rem 1rem !important;
     border-radius: 3px !important; 
-      border: 1px solid #990000 !important; 
-      background-color: #fff !important;
+    border: 1px solid #990000 !important; 
+    background-color: #fff !important;
 }
 
 .table-link-off-active { 
@@ -177,7 +178,7 @@ input[type="radio"]:checked + label::after
     padding: 0.15rem 1rem !important;
     border-radius: 3px !important;
     border: 1px solid #990000 !important; 
-      height: 2rem !important;
+    height: 2rem !important;
 }
 .table-link-off-active:hover { 
     color: #fff !important;
@@ -187,6 +188,154 @@ input[type="radio"]:checked + label::after
     background-color: #990000 !important;
 }
 
+.drawer-container {
+  position: fixed;
+  top: 0;
+  right: -40%; /* Adjust the width of the drawer as needed */
+  width: 40%; /* Adjust the width of the drawer as needed */
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.drawer-open {
+  right: 0;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.drawer-content {
+  padding: 20px;
+}
+
+
+.modal-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap) * 0.5);
+    background-color: var(--bs-modal-footer-bg);
+     border-top: none !important;  
+     border-bottom-right-radius: var(--bs-modal-inner-border-radius);  
+    border-bottom-left-radius: var(--bs-modal-inner-border-radius);
+}
+
+
+
+
+$md-checkbox-checked-color: #990000;
+$md-checkbox-border-color: rgba(0, 0, 0, 0.54);
+$md-checkbox-border-color-disabled: rgba(0, 0, 0, 0.26);
+$md-checkbox-checked-color-disabled: rgba(0, 0, 0, 0.26);
+
+$md-checkbox-margin: 1em 0;
+$md-checkbox-size: 1.25em;
+$md-checkbox-padding: 0.25em;
+$md-checkbox-border-width: 2px;
+$md-checkbox-border-radius: 0.125em;
+$md-checkmark-width: 0.125em;
+$md-checkmark-color: #fff;
+$md-checkbox-label-padding: 0.75em;
+
+.md-checkbox {
+  position: relative;
+  margin: $md-checkbox-margin;
+  text-align: left;
+
+  &.md-checkbox-inline {
+    display: inline-block;
+  }
+
+  label {
+    cursor: pointer;
+    display: inline;
+    line-height: $md-checkbox-size;
+    vertical-align: top;
+    clear: both;
+    padding-left: 1px;
+    &:not(:empty) {
+      padding-left: $md-checkbox-label-padding;
+    }
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    &:before {
+      // box
+      width: $md-checkbox-size;
+      height: $md-checkbox-size;
+      background: #fff;
+      border: $md-checkbox-border-width solid $md-checkbox-border-color;
+      border-radius: $md-checkbox-border-radius;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    &:after {
+      // checkmark
+    }
+  }
+
+  input[type="checkbox"] {
+    outline: 0;
+    visibility: hidden;
+    width: $md-checkbox-size;
+    margin: 0;
+    display: block;
+    float: left;
+    font-size: inherit;
+
+    &:checked {
+      + label:before {
+        background: $md-checkbox-checked-color;
+        border: none;
+      }
+      + label:after {
+        $md-checkmark-size: $md-checkbox-size - 2 * $md-checkbox-padding;
+
+        transform: translate(
+            $md-checkbox-padding,
+            ($md-checkbox-size / 2) - ($md-checkmark-size / 2.6)
+          )
+          rotate(-45deg);
+        width: $md-checkmark-size;
+        height: $md-checkmark-size / 2;
+
+        border: $md-checkmark-width solid $md-checkmark-color;
+        border-top-style: none;
+        border-right-style: none;
+      }
+    }
+
+    &:disabled {
+      + label:before {
+        border-color: $md-checkbox-border-color-disabled;
+      }
+      &:checked {
+        + label:before {
+          background: $md-checkbox-checked-color-disabled;
+        }
+      }
+    }
+  }
+}
 
 
  

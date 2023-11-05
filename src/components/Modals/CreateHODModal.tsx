@@ -1,13 +1,13 @@
 import { Button } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import { Form, Modal, Spinner } from 'react-bootstrap'
-import { MdOutlineClose } from 'react-icons/md'
 import { fireAlert } from '../../utils/Alert'
 import { createHOD, reset } from '../../features/HOD/hodSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import SelectInput from '../SelectInput'
-import HttpService from '../HttpService'
 import createHttpService from '../HttpService'
+import { ModalHeader } from './ModalOptions'
+import { GrUser } from 'react-icons/gr'
 
 
 
@@ -99,7 +99,7 @@ const CreateHODModal = () => {
 		}
 	}
 
-	// console.log('employee', employees)
+
 
 	const availableDepartment = [] as any;
 	departments &&
@@ -123,25 +123,14 @@ const CreateHODModal = () => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => { setLgShow(true); getData() }} >
-				Create HOD
-			</Button>
-
+			<li className={"active"} onClick={() => { setLgShow(true); getData() }}>Create HOD</li>
 			<Modal
 				size="lg"
 				show={lgShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span className="span-center-title">Create HOD</span>
-					<Button onClick={() => setLgShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<GrUser size={30} />} title={"Create HOD"} subtitle={"Create a HOD"} />
 				<Modal.Body>
 
 					<Form onSubmit={handleCreate}>

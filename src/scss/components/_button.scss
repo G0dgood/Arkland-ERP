@@ -1,11 +1,43 @@
 
-// .MuiButton-label {
-//   width: 100%;
-//   display: inherit;
-//   align-items: inherit;
-//   justify-content: inherit;
-//   font-style: normal;
-//   font-weight: 500;
-//   font-size: 16px;
-//   line-height: 24px;
-// }
+#view-btn{
+	width: 68px !important;
+	height: 22px !important;
+	color: #990000 !important;
+	border-radius: 2px !important;
+	border: 1px solid #D18C8C !important;
+	font-size: 10px !important; 
+}
+#view-status{
+	width: 68px !important;
+	height: 22px !important;
+	color: #fff !important;
+	border-radius: 2px !important;
+	background-color: #990000 !important; 
+	font-size: 10px !important; 
+}
+#view-status-top{
+	width: 92px !important;
+	height: 35px !important;
+	color: #fff !important;
+	border-radius: 2px !important;
+	background-color: #990000 !important; 
+	font-size: 10px !important; 
+}
+
+.accordion-button:not(.collapsed) {
+    color: #990000 !important;
+    background-color: #f3d7da !important;
+				box-shadow: none !important;
+    // box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 #dc3545;
+}
+
+.accordion-item:first-of-type .accordion-button {
+				box-shadow: none !important;
+				color: #000 !important;
+    border-top-left-radius: var(--bs-accordion-inner-border-radius);
+    border-top-right-radius: var(--bs-accordion-inner-border-radius);
+}
+
+.accordion-button {
+			box-shadow: none !important;
+}

@@ -6,7 +6,6 @@ import Todos from "./Todos";
 import Announcement from "./Announcement";
 import DataService from "../../utils/dataService";
 import createHttpService from "../../components/HttpService";
-import Header from "../../components/Header";
 
 const dataService = new DataService()
 const StaffDashboard = () => {

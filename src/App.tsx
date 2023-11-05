@@ -75,6 +75,12 @@ import TeamAttendance from "./pages/EmployeeAttendance/TeamAttendance";
 import MyWarning from "./pages/MyWarning/MyWarning";
 import Application from "./pages/Application/Application";
 import InfoDetails from "./pages/Application/InfoDetails";
+import ApprovalRequests from "./pages/PayRoll/ApprovalRequests";
+import PayParameters from "./pages/PayRoll/PayParameters";
+import PayrollEmployees from "./pages/PayRoll/PayrollEmployees";
+import SalaryIncrement from "./pages/PayRoll/SalaryIncrement";
+import PayRun from "./pages/PayRoll/PayRun";
+import EmployeesOnboarding from "./pages/PayRoll/Employees/EmployeesOnboarding";
 
 
 
@@ -222,6 +228,16 @@ const App: React.FC<any> = () => {
      <Route path="/createnewrole" element={<CreateRole />} />
      <Route path="/support" element={<Support />} />
      <Route path="/policy" element={<Policy />} />
+
+     <Route path="payroll">
+      <Route index element={<PayParameters />} />
+      <Route path="payroll/payparameters" element={<PayParameters />} />
+      <Route path="payroll/approvalrequests" element={<ApprovalRequests />} />
+      <Route path="payroll/payrollemployees" element={<PayrollEmployees />} />
+      <Route path="payroll/salaryincrement" element={<SalaryIncrement />} />
+      <Route path="payroll/employeesonboarding" element={<EmployeesOnboarding />} />
+      <Route path="payroll/payrun" element={<PayRun />} />
+     </Route>
     </Route>
     <Route path="*" element={<PageNotFound />} />
    </Routes>

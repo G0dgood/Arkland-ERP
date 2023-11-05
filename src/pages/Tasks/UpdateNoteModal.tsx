@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core'
-import { MdOutlineClose } from 'react-icons/md'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { fireAlert } from '../../utils/Alert'
 import { noteTask, reset } from '../../features/Tasks/taskSlice'
+import { ModalHeader } from '../../components/Modals/ModalOptions'
+import { GoNote } from 'react-icons/go'
 
 const UpdateNoteModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 	const { noteisLoading, notemessage, noteisSuccess } = useAppSelector((state: any) => state.task)
 
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
 		note: "",
 	});
@@ -19,7 +20,7 @@ const UpdateNoteModal = ({ id }: any) => {
 
 	useEffect(() => {
 		if (noteisSuccess) {
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Task Note updated successfully", "success");
 			dispatch(reset());
 		}
@@ -43,27 +44,16 @@ const UpdateNoteModal = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => setShow(true)} >
-				Update Task Note
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}>	Update Task Note</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={Show}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span></span>
-					<span className="span-center-title">Update Task Note</span>
-					<Button
-						style={{ color: "#fff" }}
-						onClick={() => setShow(false)} >
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<GoNote size={30} />} title={"Update Task"} subtitle={"Update Task Note"} />
 				<Modal.Body>
 					<div className={"input "}>
 						<label className={"input__label"} >

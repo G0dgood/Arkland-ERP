@@ -29,9 +29,6 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 
 
 
-
-
-
 	const [newWeeklyField, setNewWeeklyField] = useState<any>([
 		{
 			id: 1,
@@ -179,16 +176,16 @@ const WeeklyReport = ({ setIsCheck }: any) => {
 									required
 									value={inputs.week}
 									onChange={(e) => handleOnChange("week", e.target.value)} >
-									<option value=""> </option>
+									<option value=""> 	</option>
 									<option value="1">Week 1</option>
 									<option value="2">Week 2</option>
 									<option value="3">Week 3</option>
 									<option value="4">Week 4</option>
 									<option value="5">Week 5</option>
-								</select> </span>
+								</select>
+							</span>
 
 						</div>
-
 						<div>
 							<span id='weekly-report-title-text'>SELF ASSESSMENT OPTIONS : </span>
 							<span>		<select

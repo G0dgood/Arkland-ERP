@@ -7,13 +7,15 @@ import { FiEye } from 'react-icons/fi'
 import { viewTask } from '../../features/Tasks/taskSlice'
 import { Button } from '@material-ui/core'
 import { SVGLoader } from '../SVGLoader'
+import { ModalHeader } from './ModalOptions'
+import { FaTasks } from 'react-icons/fa'
 
 
 
 const ViewScheduleModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 	const { viewdata: schedule, viewisLoading } = useAppSelector((state: any) => state.task)
-	const [viewShow, setViewShow] = useState(false)
+	const [viewShow, setLgShow] = useState(false)
 
 
 
@@ -36,7 +38,7 @@ const ViewScheduleModal = ({ id }: any) => {
 		<div>
 			<FiEye
 				size={20}
-				onClick={() => { setViewShow(true); handleClick(id) }}
+				onClick={() => { setLgShow(true); handleClick(id) }}
 				cursor="pointer"
 				title="VIEW TODO"
 			/>
@@ -45,14 +47,7 @@ const ViewScheduleModal = ({ id }: any) => {
 				show={viewShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered >
-
-				<Modal.Header>
-					<span className="span-center-title">Task Details</span>
-					<Button onClick={() => setViewShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
-
+				<ModalHeader setLgShow={setLgShow} icon={<FaTasks size={30} />} title={"Task Details"} subtitle={"View Task Details"} />
 				<Modal.Body>
 					{viewisLoading ? (
 						<div className="table-loader-announcement1">

@@ -9,6 +9,8 @@ import SelectInput from '../../components/SelectInput';
 import { allEmployee } from '../../features/Employee/employeeSlice';
 import { InputField } from '../../components/TableOptions';
 import { useNavigate } from 'react-router-dom';
+import { ModalHeader } from '../../components/Modals/ModalOptions';
+import { AiOutlineTeam } from 'react-icons/ai';
 
 
 const CreateTeamMembers = ({ id }: any) => {
@@ -21,7 +23,7 @@ const CreateTeamMembers = ({ id }: any) => {
 		dispatch(allEmployee());
 	}, [dispatch]);
 
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 
 	const [inputs, setInputs] = useState<any>({
 		employee: "",
@@ -51,7 +53,7 @@ const CreateTeamMembers = ({ id }: any) => {
 
 	useEffect(() => {
 		if (createTeamMembersisSuccess) {
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Team member created  successfully", "success");
 			dispatch(reset());
 			navigate(-1);
@@ -109,27 +111,17 @@ const CreateTeamMembers = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="Add-btn"
-				onClick={() => setShow(true)}
-			>
-				Create Team Members
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}>			Create Team Members</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={Show}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span className="span-center-title"> Create Team Members</span>
-					<Button
-						onClick={() => setShow(false)}
-					>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<AiOutlineTeam size={30} />} title={"Create Team Members"} subtitle={" Create Team Members"} />
+
 				<Modal.Body>
 
 

@@ -10,6 +10,8 @@ import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { allEmployee, createWarning, reset } from "../../features/Employee/employeeSlice";
+import { ModalHeader } from "./ModalOptions";
+import { RiErrorWarningLine } from "react-icons/ri";
 
 
 const CreateWarningModal = ({ id }: any) => {
@@ -59,25 +61,15 @@ const CreateWarningModal = ({ id }: any) => {
 
   return (
     <div>
-      <Button
-        variant="contained"
-        className="add-experience"
-        onClick={() => { setLgShow(true); handlewarning() }}
-      >
-        Create Warning
-      </Button>
+      <li className={"active"} onClick={() => { setLgShow(true); handlewarning() }}> Create Warning</li>
       <Modal
         size="lg"
         show={lgShow}
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header>
-          <span className="span-center-title"> Create Warning</span>
-          <Button onClick={() => setLgShow(false)}>
-            <MdOutlineClose size={28} />
-          </Button>
-        </Modal.Header>
+        <ModalHeader setLgShow={setLgShow} icon={<RiErrorWarningLine size={30} />} title={"Create Warning"} subtitle={"Create a Warning"} />
+
         <Modal.Body>
           <Formik
             initialValues={{

@@ -13,6 +13,8 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import HttpService from '../../components/HttpService';
 import createHttpService from '../../components/HttpService';
+import { ModalHeader } from '../../components/Modals/ModalOptions';
+import { BsListTask } from 'react-icons/bs';
 // import DataService from '../../utils/dataService';
 
 // const dataService = new DataService()
@@ -20,7 +22,7 @@ const CreateTaskModal = ({ view }: any) => {
 	const dispatch = useAppDispatch();
 	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.task)
 
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 
 
 	// const userInfo = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
@@ -28,7 +30,7 @@ const CreateTaskModal = ({ view }: any) => {
 
 	useEffect(() => {
 		if (createisSuccess) {
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Task created successfully", "success");
 			dispatch(reset());
 		}
@@ -73,12 +75,10 @@ const CreateTaskModal = ({ view }: any) => {
 
 	return (
 		<div>
-			{view === "team" ? <Button className="add-experience" onClick={() => { setShow(true); getData() }}>Add task</Button> : <Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => { setShow(true); getData() }} >
-				Create Task
-			</Button>}
+			<ul className="nav-tabs-btn mb-3">
+				{view === "team" ? <li className={"active"} onClick={() => { setLgShow(true); getData() }}>Add task</li> : <li className={"active"} onClick={() => { setLgShow(true); getData() }}>	Create Task </li>}
+			</ul>
+
 
 			<Modal
 				size="lg"
@@ -86,14 +86,8 @@ const CreateTaskModal = ({ view }: any) => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span className="span-center-title"> Create Task</span>
-					<Button
-						onClick={() => setShow(false)}
-					>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+
+				<ModalHeader setLgShow={setLgShow} icon={<BsListTask size={30} />} title={"Create Task"} subtitle={" Create A New Task"} />
 				<Modal.Body>
 					<Formik
 						initialValues={{
@@ -220,7 +214,7 @@ const CreateTaskModal = ({ view }: any) => {
 												type="submit"
 											>
 												{createisLoading
-													? <Spinner animation="border" />
+													? <Spinner animation="border" size='sm' />
 													: "Create"}
 											</Button>
 										</div>

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Modal, Toast, ProgressBar, Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
 import { MdOutlineClose } from "react-icons/md";
-import { FiUpload } from "react-icons/fi";
+import { FiUpload, FiUploadCloud } from "react-icons/fi";
 import { fireAlert } from "../utils/Alert";
 import HttpService from "./HttpService";
 import { useAppDispatch } from "../store/useStore";
 import createHttpService from "./HttpService";
+import { ModalHeader } from "./Modals/ModalOptions";
 
 
 const UploadEmployee = () => {
@@ -17,11 +18,11 @@ const UploadEmployee = () => {
 
 
   const [progress, setProgress] = useState(0);
-  const [show, setShow] = useState(false);
+  const [show, setLgShow] = useState(false);
   const handleClose = () => {
-    setShow(false);
+    setLgShow(false);
   };
-  const handleShow = () => setShow(true);
+  const handleShow = () => setLgShow(true);
   const [file, setFile] = useState<any>()
 
 
@@ -61,29 +62,17 @@ const UploadEmployee = () => {
 
   return (
     <>
-      <Button
-        variant="contained"
-        className="add-experience"
-        onClick={handleShow}
-      >
-        <FiUpload className="icon-space" />
-        Upload
-      </Button>
+
+      <li className={"active"} onClick={handleShow}>  <FiUpload className="icon-space" /> Upload</li>
       <Modal
         show={show}
         size="lg"
         onHide={handleClose}
-        // onClick={onClickReset}
         backdrop="static"
         keyboard={false}
         centered
         className="logic-modal">
-        <Modal.Header >
-          <span className="span-center-title">Upload File</span>
-          <Button onClick={() => setShow(false)}>
-            <MdOutlineClose size={28} />
-          </Button>
-        </Modal.Header>
+        <ModalHeader setLgShow={setLgShow} icon={<FiUploadCloud size={30} />} title={"Upload File"} subtitle={"Upload A File"} />
         <Modal.Body>
           <form className="upload-form">
             <div
@@ -120,7 +109,7 @@ const UploadEmployee = () => {
               </span>
               <span >
                 <Button className=" table-link-active" onClick={submitHandler} >
-                  {isLoading ? <Spinner animation="border" /> : "Upload"}
+                  {isLoading ? <Spinner animation="border" size="sm" /> : "Upload"}
                 </Button>
               </span>
             </div>

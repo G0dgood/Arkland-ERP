@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { InputField } from '../../components/TableOptions'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core'
-import { MdOutlineClose } from 'react-icons/md'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { fireAlert } from '../../utils/Alert'
 import { formatDate } from '../../utils/formatDate'
@@ -12,12 +11,14 @@ import { difficultyOptions, priorityOptions } from '../../functions/helpers'
 import { Form, Formik } from 'formik'
 import { getTeamLead } from '../../features/TeamLead/teamleadSlice'
 import { reset, updateTask } from '../../features/Tasks/taskSlice'
+import { ModalHeader } from '../../components/Modals/ModalOptions'
+import { GrDocumentUpdate } from 'react-icons/gr'
 
 const UpdateTaskModal = ({ id, title }: any) => {
 	const dispatch = useAppDispatch();
 	const { updateisLoading, updatemessage, updateisSuccess } = useAppSelector((state: any) => state.task)
 	const { data: teamMembers } = useAppSelector((state: any) => state.task)
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState<any>({
 		title: " ",
 		points: 0,
@@ -36,7 +37,7 @@ const UpdateTaskModal = ({ id, title }: any) => {
 
 	useEffect(() => {
 		if (updateisSuccess) {
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Task updated successfully", "success");
 			dispatch(reset());
 		}
@@ -72,28 +73,16 @@ const UpdateTaskModal = ({ id, title }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => setShow(true)}
-			>
-				Update Task
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}>Update Task</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={Show}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span></span>
-					<span className="span-center-title">Update Task </span>
-					<Button
-						style={{ color: "#fff" }}
-						onClick={() => setShow(false)} >
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<GrDocumentUpdate size={30} />} title={"Update Task"} subtitle={"Update Task"} />
 				<Modal.Body>
 					<Formik
 						initialValues={{

@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
-import { MdOutlineClose } from "react-icons/md";
 import { Form, Formik } from "formik";
-import { BsPlusLg } from "react-icons/bs";
+import { BsBuilding, BsPlusLg } from "react-icons/bs";
 import { fireAlert } from "../../utils/Alert";
 import InputField from "../Inputs/InputField";
 import TextAreaField from "../Inputs/TextAreaField";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { createDepartments, editDepartments, reset } from "../../features/Department/departmentSlice";
 import { useNavigate } from "react-router-dom";
+import { ModalHeader } from "./ModalOptions";
+
 
 const CreateDepartmentModal = ({ edit, id }: any) => {
  const navigate = useNavigate();
@@ -65,12 +66,8 @@ const CreateDepartmentModal = ({ edit, id }: any) => {
     aria-labelledby="contained-modal-title-vcenter"
     centered
    >
-    <Modal.Header>
-     <span className="span-center-title">{edit ? "Edit Department" : "Create Department"}</span>
-     <Button onClick={() => setLgShow(false)}>
-      <MdOutlineClose size={28} />
-     </Button>
-    </Modal.Header>
+    <ModalHeader setLgShow={setLgShow} icon={<BsBuilding size={30} />} title={edit ? "Edit Department" : "Create Department"} subtitle={edit ? "Edit Exiting Department" : "Create New Department"} />
+
     <Modal.Body>
      <Formik
       initialValues={{

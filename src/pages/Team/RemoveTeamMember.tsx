@@ -6,14 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { removeTeamMembers, reset } from '../../features/Team/teamSlice';
 import { fireAlert } from '../../utils/Alert';
+import { RiTeamLine } from 'react-icons/ri';
+import { ModalHeader } from '../../components/Modals/ModalOptions';
 
 const RemoveTeamMember = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { removeMembersisLoading, removeMembersisSuccess } = useAppSelector((state: any) => state.team)
 
-	const [showdelete, setShowDelete] = useState(false);
-	const handleDeleteClose = () => setShowDelete(false);
+	const [showdelete, setLgShow] = useState(false);
+	const handleDeleteClose = () => setLgShow(false);
 
 	useEffect(() => {
 		if (removeMembersisSuccess) {
@@ -31,12 +33,9 @@ const RemoveTeamMember = ({ id }: any) => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="Add-btn"
-				onClick={() => setShowDelete(true)} >
-				Remove Team Member
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}>		Remove Team Member</li>
+			</ul>
 			<Modal
 				show={showdelete}
 				onHide={handleDeleteClose}
@@ -45,12 +44,7 @@ const RemoveTeamMember = ({ id }: any) => {
 				className="kpi-modal"
 				centered
 			>
-				<Modal.Header>
-					<span className="span-center-title">	Remove Team Member</span>
-					<Button onClick={() => setShowDelete(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<RiTeamLine size={30} />} title={"	Remove Team Member"} subtitle={" 	Remove Team Member"} />
 				<Modal.Body>
 					<p>Are you Sure?</p>
 					<p>This action cannot be reversed</p>

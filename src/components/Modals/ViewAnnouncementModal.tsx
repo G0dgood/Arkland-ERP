@@ -7,12 +7,14 @@ import { FiEye } from 'react-icons/fi';
 import { viewMeAnnouncement } from '../../features/Announcement/announcemetSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { SVGLoader } from '../SVGLoader';
+import { ModalHeader } from './ModalOptions';
+import { BsViewList } from 'react-icons/bs';
 
 
 const ViewAnnouncementModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 	const { medata, meisLoading } = useAppSelector((state: any) => state.announcement)
-	const [viewShow, setViewShow] = useState(false);
+	const [viewShow, setLgShow] = useState(false);
 
 	const handleClick = (id: any) => {
 		// @ts-ignore
@@ -24,7 +26,7 @@ const ViewAnnouncementModal = ({ id }: any) => {
 			<FiEye
 				style={{ marginRight: "10px" }}
 				size={20}
-				onClick={() => { setViewShow(true); handleClick(id) }}
+				onClick={() => { setLgShow(true); handleClick(id) }}
 				cursor="pointer"
 				title="VIEW ANNOUNCEMENT"
 				color='#gray'
@@ -34,13 +36,8 @@ const ViewAnnouncementModal = ({ id }: any) => {
 				show={viewShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered  >
-				<Modal.Header>
-					<span className="span-center-title">View Announcement</span>
 
-					<Button onClick={() => setViewShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<BsViewList size={30} />} title={"View Announcement"} subtitle={"		View Announcement List"} />
 				<Modal.Body>
 					{meisLoading ? (
 						<div className="table-loader-announcement1">

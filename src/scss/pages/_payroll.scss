@@ -1,0 +1,136 @@
+.roll-title{
+	display: flex;
+	justify-content: space-between;
+}
+
+.roll-icon{
+	width: 40px;
+	height: 40px;
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50px;
+	border: 1px solid #80808055;
+}
+.roll-icon:hover {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box shadow */
+}
+
+.half-background{
+	background-color: #fff;
+	width: 100%;
+	height: 100%;
+	padding: 1rem;
+	border: 1px solid #e8e8e8 !important;
+}
+
+.half-background-input{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.mix-input-icon{
+	display: flex;
+	align-items: center;
+	border: 1px solid #990000;
+	border-radius: 5px 8px 8px 5px !important;
+}
+
+.mix-input-icon-Button{
+	background-color: #990000 !important;
+	color: #fff !important;
+	height: 2rem !important;
+	width: 30px !important;
+	border-radius: 0px 5px 5px 0px !important;
+}
+
+.mix-input-icon-Button-input{
+	height: 2rem !important;
+	width: 300px !important;
+	border: none !important;
+}
+
+// .mix-input-icon:hover {
+//   /* Your styles for .mix-input-icon when hovered */
+//   border-color: #99000057; /* Example: Change the border color on hover */
+// }
+
+.mix-input-icon-Button:hover {
+  /* Your styles for .mix-input-icon-Button when hovered */
+  background-color: #990000c4 !important; /* Example: Change the background color on hover */
+  color: #fff !important; /* Example: Change the text color on hover */
+}
+
+.mix-input-icon-Button-input:hover {
+  /* Your styles for .mix-input-icon-Button-input when hovered */
+  /* Add your hover styles here */
+}
+
+.pay_paramiter{
+	display: flex !important;
+}
+
+.CSV-button{
+	font-size: small !important;
+	height: 2rem !important;
+		border: 1px solid #990000 !important;
+		color: #990000 !important;
+  margin-right: 10px !important;
+}
+
+
+
+/* Default styles for desktop */
+.half-background-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item {
+  width: 240px;
+  // border: 1px solid #990000;
+}
+
+.entries-per-page {
+  width: 240px;
+}
+
+.pay_parameter {
+  display: flex;
+  align-items: center;
+}
+
+.CSV-button,
+.mix-input-icon-Button {
+  margin-right: 10px;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .half-background-input {
+    flex-direction: column;
+  }
+
+  .item, .entries-per-page {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .CSV-button, .mix-input-icon-Button {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .pay_parameter {
+    flex-direction: column;
+  }
+}

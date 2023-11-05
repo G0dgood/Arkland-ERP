@@ -7,6 +7,9 @@ import { fireAlert } from '../../utils/Alert';
 import { createTeamLead, reset } from '../../features/TeamLead/teamleadSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import createHttpService from '../../components/HttpService';
+import { AiOutlineTeam } from 'react-icons/ai';
+import { ModalHeader } from '../../components/Modals/ModalOptions';
+import { BsBuilding } from 'react-icons/bs';
 
 const CreateTeamLead = () => {
 	const dispatch = useAppDispatch();
@@ -43,7 +46,7 @@ const CreateTeamLead = () => {
 
 
 
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 
 	const [inputs, setInputs] = useState<any>({
 		name: "",
@@ -76,7 +79,7 @@ const CreateTeamLead = () => {
 
 	useEffect(() => {
 		if (createisSuccess) {
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Project Manager created  successfully", "success");
 			dispatch(reset());
 		}
@@ -129,26 +132,15 @@ const CreateTeamLead = () => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => { setShow(true); getData() }} >
-				Create Project Manager
-			</Button>
+			<li className={"active"} onClick={() => { setLgShow(true); getData() }}>	Create Project Manager</li>
 			<Modal
 				size="lg"
 				show={Show}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span className="span-center-title"> Create Project Manager</span>
-					<Button
-						onClick={() => setShow(false)}
-					>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<BsBuilding size={30} />} title={"Create Project Manager"} subtitle={"Create Project Manager"} />
+
 				<Modal.Body>
 
 
@@ -221,7 +213,7 @@ const CreateTeamLead = () => {
 									onClick={handleSubmit}
 								>
 									{createisLoading
-										? <Spinner animation="border" />
+										? <Spinner animation="border" size='sm' />
 										: "Create Team Lead"}
 								</Button>
 							</div>

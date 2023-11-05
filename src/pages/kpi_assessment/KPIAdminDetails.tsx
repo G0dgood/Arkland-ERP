@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { fireAlert } from '../../utils/Alert';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/useStore';
-import { calculateTotalScore, getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
+import { getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
 
 
 

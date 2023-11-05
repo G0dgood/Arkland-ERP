@@ -1,19 +1,20 @@
 import { Button } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { MdOutlineClose } from 'react-icons/md'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
 import { createRequest, reset } from '../../features/workerRequest/workerRequestSlice'
 import { fireAlert } from '../../utils/Alert'
 import SelectInput from '../../components/SelectInput'
 import { getRole } from '../../features/Employee/employeeSlice'
 import { BsDashCircleFill, BsPlusCircleFill } from 'react-icons/bs'
+import { ModalHeader } from '../../components/Modals/ModalOptions'
+import { AiOutlineUserAdd } from 'react-icons/ai'
 
 const RequestForWorkersModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 	const { createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.worker)
 	const { getroledata, getroleisLoading } = useAppSelector((state: any) => state.employee)
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 	const [count, setCount] = React.useState(0);
 	const [counts, setCounts] = React.useState(0);
 
@@ -64,7 +65,7 @@ const RequestForWorkersModal = ({ id }: any) => {
 
 	useEffect(() => {
 		if (createisSuccess) {
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Worker Request Creation   successfully", "success");
 			dispatch(reset());
 		}
@@ -134,29 +135,22 @@ const RequestForWorkersModal = ({ id }: any) => {
 	}, [newInputField]);
 
 	const handleClick = () => {
-		setShow(true)
+		setLgShow(true)
 		dispatch(getRole());
 	}
 
 	return (
 		<div >
-			<Button className="add-experience" onClick={handleClick}>Create Employee Request</Button>
-
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={handleClick}>Create Employee Request</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={Show}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span></span>
-					<span className="span-center-title">Create Employee Request</span>
-					<Button
-						style={{ color: "#fff" }}
-						onClick={() => setShow(false)} >
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<AiOutlineUserAdd size={30} />} title={"Create Employee Request"} subtitle={"Create Employee Request"} />
 				<Modal.Body>
 					<div id='add-field-new'>
 						{newInputField?.map((item: any, index: any) => (

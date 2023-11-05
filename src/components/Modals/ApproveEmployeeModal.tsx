@@ -2,19 +2,19 @@
 import { Button } from '@material-ui/core';
 import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
 import moment from 'moment';
 import { fireAlert } from '../../utils/Alert';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { hrApproveEmployees, reset } from '../../features/Employee/employeeSlice';
 import { BiUser } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import { ModalHeader } from './ModalOptions';
 
 
 const ApproveEmployeeModal = ({ id, data }: any) => {
 	const dispatch = useAppDispatch();
 	const { approveisLoading, approveisSuccess } = useAppSelector((state: any) => state.employee)
-	const [deleteShow, setDeleteShow] = useState(false);
+	const [deleteShow, setLgShow] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -34,7 +34,7 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 
 	return (
 		<div>
-			<Button className={data?.status === "in review" ? "table-link" : "table-link-active"} onClick={() => setDeleteShow(true)} >
+			<Button className={data?.status === "in review" ? "table-link" : "table-link-active"} onClick={() => setLgShow(true)} >
 				{data?.status === "in review" ? data?.status : "Approved"}
 			</Button>
 			<Modal
@@ -42,13 +42,8 @@ const ApproveEmployeeModal = ({ id, data }: any) => {
 				show={deleteShow}
 				centered
 			>
-				<Modal.Header id="displayTermination">
-					<span className="span-center-title">
-						{data?.status === "in review" ? "Approve Employee" : "Employee Preview"}</span>
-					<Button onClick={() => setDeleteShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<BiUser size={30} />} title={data?.status === "in review" ? "Approve Employee" : "Employee Preview"} subtitle={data?.status === "in review" ? "Approve Employee" : "Employee Preview"} />
+
 				<Modal.Body>
 					<div className="  ">
 						<form method="post">

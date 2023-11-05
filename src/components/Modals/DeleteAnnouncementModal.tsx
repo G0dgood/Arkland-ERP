@@ -7,10 +7,12 @@ import { MdOutlineClose } from 'react-icons/md'
 import { fireAlert } from '../../utils/Alert'
 import { deleteAnnouncement, reset } from '../../features/Announcement/announcemetSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'
+import { ModalHeader } from './ModalOptions'
+import { TfiAnnouncement } from 'react-icons/tfi'
 
 const DeleteAnnouncementModal = ({ id }: any) => {
 	const dispatch = useAppDispatch();
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 	const { deleteisLoading, deleteisSuccess } = useAppSelector((state: any) => state.announcement)
 
 
@@ -24,7 +26,7 @@ const DeleteAnnouncementModal = ({ id }: any) => {
 	useEffect(() => {
 		if (deleteisSuccess) {
 			fireAlert(title, html, icon);
-			setShow(false)
+			setLgShow(false)
 			dispatch(reset());
 			// @ts-ignore
 			dispatch(deleteAnnouncement(id));
@@ -40,23 +42,19 @@ const DeleteAnnouncementModal = ({ id }: any) => {
 		<div>
 			<FiTrash2
 				size={25}
-				onClick={() => setShow(true)}
+				onClick={() => setLgShow(true)}
 				cursor="pointer"
 				title="DELETE ANNOUNCEMENT"
 			/>
 			<Modal
 				show={Show}
-				onHide={() => setShow(false)}
+				onHide={() => setLgShow(false)}
 				backdrop="static"
 				keyboard={false}
 				className="kpi-modal"
 			>
-				<Modal.Header>
-					<span className="span-center-title">Delete Announcement</span>
-					<Button onClick={() => setShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<TfiAnnouncement size={30} />} title={"Delete Announcement"} subtitle={"Delete Announcement Below"} />
+
 				<Modal.Body>
 					<p>Are you Sure?</p>
 					<p>This action cannot be reversed</p>
@@ -64,7 +62,7 @@ const DeleteAnnouncementModal = ({ id }: any) => {
 
 					<div className='deleteKPIHandler'>
 						<span className='deleteKPIHandler-mr'>
-							<Button className="table-link-active" onClick={() => setShow(false)}>
+							<Button className="table-link-active" onClick={() => setLgShow(false)}>
 								Close
 							</Button>
 						</span>

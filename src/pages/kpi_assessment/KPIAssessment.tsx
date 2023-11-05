@@ -6,7 +6,6 @@ import { Spinner } from "react-bootstrap";
 import { createAssessment, reset } from "../../features/KPIAssessment/assessmentSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import DataService from "../../utils/dataService";
-import HttpService from "../../components/HttpService";
 import SelectInput from "../../components/SelectInput";
 import { BsDashCircleFill, BsPlusCircleFill } from "react-icons/bs";
 import { blockFullStop } from "../../utils/KpiFunctions";

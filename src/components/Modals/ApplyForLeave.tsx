@@ -6,6 +6,8 @@ import { fireAlert } from "../../utils/Alert";
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { createLeave } from '../../features/Leave/leaveSlice';
 import { reset } from '../../features/Announcement/announcemetSlice';
+import { ModalHeader } from './ModalOptions';
+import { BsCalendar4Week } from 'react-icons/bs';
 
 
 
@@ -55,21 +57,17 @@ const ApplyForLeave = () => {
 
 	return (
 		<div>
-			<Button variant="contained" className="border px-3 p-1 add-experience"
-				onClick={() => setLgShow(true)}>
-				<i className="fa fa-plus"></i>&nbsp;	Apply for Leave
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}>Apply for Leave</li>
+			</ul>
+
 			<Modal
 				size="lg"
 				show={lgShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered>
-				<Modal.Header  >
-					<span className='span-center-title'>Apply For Leave</span>
-					<Button onClick={() => setLgShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<BsCalendar4Week size={30} />} title={"Apply For Leave"} subtitle={"Fill the form to apply for leave"} />
+
 				<Modal.Body>
 					<div className='Modal-Body'>
 						<h6>Name</h6>

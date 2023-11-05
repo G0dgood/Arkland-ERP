@@ -165,7 +165,7 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
             <p> Medical Allowance</p>
             <p> ₦ {inputs?.medical_allowance}</p>
             <p> Housing Allowance</p>
-            <p>₦ {inputs?.housing_allowance}</p>
+            <p> ₦ {inputs?.housing_allowance}</p>
             <p> Transportation Allowance</p>
             <p>₦ {inputs?.transportation_allowance} </p>
             <p> Utility Allowance</p>

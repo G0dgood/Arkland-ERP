@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
-import { calculateTotalScore, getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
-import { useLocation, useParams } from 'react-router-dom';
+import { getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
+import { useParams } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
 import SelectInput from '../../components/SelectInput';
-import HttpService from '../../components/HttpService';
 import createHttpService from '../../components/HttpService';
 
 
 const KPIInfoDetails = ({ viewdata }: any) => {
 	const { id } = useParams()
 	const year = new Date().getFullYear().toString();
-	const location = useLocation();
+
 	const [hods, setHOD] = useState([])
 	const [kpinputs, setKpInputs] = useState({
 		month: 0,

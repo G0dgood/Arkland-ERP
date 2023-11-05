@@ -664,7 +664,7 @@ textarea{
 
  .grade-system {
     background-color: #f4b6b6 !important;
-    border-radius: 3px !important;
+    border-radius: 2px !important;
     box-shadow: 0 0 1px rgb(0 0 0 / 5%), 0 0 2px rgb(0 0 0 / 5%), 0 0 4px rgb(0 0 0 / 5%) !important; 
 }
 
@@ -701,49 +701,67 @@ textarea{
  .table-link  {
     background-color: rgba(240, 64, 0, .1) !important;
     color: #e2522e!important;
-    padding: 0.15rem 1rem !important;
-    border-radius: 3px !important;
+    width: 68px !important;
+	height: 22px !important;
+  font-size: 10px !important; 
+    border-radius: 2px !important;
     border: 1px solid #e2522e!important;
 }
  .table-link-permission  {
     background-color: rgba(240, 64, 0, .1) !important;
     color: #e2522e!important;
-    padding: 0.5rem 1rem !important;
-    border-radius: 3px !important;
+  width: 68px !important;
+	height: 22px !important;
+  font-size: 10px !important;
+    border-radius: 2px !important;
     border: 1px solid #e2522e!important;
 }
 
 .permission-bin-container{
   margin-left: 1rem;
 }
+
+	// width: 68px !important;
+	// height: 22px !important;
+  // font-size: 10px !important; 
+	// color: #990000 !important;
+	// border-radius: 2px !important;
+	// border: 1px solid #D18C8C !important;
+	// font-size: 10px !important; 
  .table-link-active  {
   //  text-align: center;
     color: #29CC97 !important;
     background-color: #29cc962c !important;
-    padding: 0.15rem 1rem !important;
-    border-radius: 3px !important;
+    width: 68px !important;
+	height: 22px !important;
+  font-size: 10px !important; 
+    border-radius: 2px !important;
     border: 1px solid #29CC97 !important; 
 }
  .table-link-hr {
   //  text-align: center;
     color: purple !important;
     background-color: rgba(128, 0, 128, 0.17) !important;
-    padding: 0.15rem 1rem !important;
-    border-radius: 3px !important;
+    width: 68px !important;
+	height: 22px !important;
+  font-size: 10px !important; 
+    border-radius: 2px !important;
     border: 1px solid purple !important; 
 }
  .table-link-reject  {
   //  text-align: center;
     color: #fff !important;
     background-color: red !important;
-    padding: 0.15rem 1rem !important;
-    border-radius: 3px !important;
+    width: 68px !important;
+	height: 22px !important;
+  font-size: 10px !important; 
+    border-radius: 2px !important;
     border: 1px solid red !important; 
 }
  .table-create-btn  { 
     color: #fff !important;
     background-color: c.color(primary-color) !important;  
-    border-radius: 3px !important;
+    border-radius: 2px !important;
     cursor: pointer !important;
     font-size: 12px !important;
     font-weight: bold !important;

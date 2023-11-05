@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { EntriesPerPage, MainSearch, NoRecordFound, TableFetch } from '../../components/TableOptions'
+import { EntriesPerPage, MainSearch, NoRecordFound, SearchComponent, TableFetch } from '../../components/TableOptions'
 import { BsCheckCircle } from 'react-icons/bs'
 import { Button } from '@material-ui/core'
 import Pagination from '../../components/Pagination'
@@ -17,6 +17,7 @@ const CreateRole = () => {
 	const dispatch = useAppDispatch();
 	const { getroledata, getroleisLoading } = useAppSelector((state: any) => state.employee)
 	const { createroleisSuccess } = useAppSelector((state: any) => state.employee)
+	const [displayData, setDisplayData] = useState([]);
 
 	useEffect(() => {
 		dispatch(getRole());
@@ -34,7 +35,7 @@ const CreateRole = () => {
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
-		return localStorage.getItem("reportsPerPage") || "10";
+		return localStorage.getItem("reportsPerPage") || "8";
 	});
 
 	useEffect(() => {
@@ -53,82 +54,71 @@ const CreateRole = () => {
 
 
 
-	const [displayData, setDisplayData] = useState([]);
+
 	return (
-		<div  >
-			<div className='SiteWorkermaindiv'>
-				<div className='SiteWorkermaindivsub'>
-					Employee Role
-				</div>
-				<div>
-					<EntriesPerPage
+
+		<div id="reports">
+			<h5 className="page-title">Employee Role</h5>
+			<ul className="nav-tabs-btn mb-3">
+				<CreateRoleModal />
+			</ul>
+			<div className='half-background'>
+				<SearchComponent sortData={sortData} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage} placeholder={"Role"} />
+				<section className="md-ui component-data-table">
+					{getroleisLoading ? <TableLoader isLoading={getroleisLoading} /> : ""}
+					<div className="main-table-wrapper">
+						<table className="main-table-content">
+							<thead className="data-table-header">
+								<tr className="data-table-row" >
+									<td className="table-datacell  ">Name</td>
+									<td className="table-datacell ">ID</td>
+									<td className="table-datacell ">Description</td>
+									<td className="table-datacell ">Created Date</td>
+									<td className="table-datacell ">Status</td>
+									<td className="table-datacell ">Action</td>
+
+								</tr>
+							</thead>
+							<tbody className="data-table-content">
+								{getroleisLoading ? (
+									<TableFetch colSpan={8} />
+								) : displayData?.length === 0 || displayData == null ? (
+									<NoRecordFound colSpan={8} />
+								) : (
+									displayData.map((item: any, i: any) => (
+										<tr className="data-table-row" key={i}>
+											<td className="table-datacell  ">{item?.name}</td>
+											<td className="table-datacell ">
+												<CopyToClipboardButton url={item?.id} padding={"6px"} size={15} />
+											</td>
+											<td className="table-datacell ">{item?.description}</td>
+											<td className="table-datacell ">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
+
+											<td className="table-datacell ">
+												{item?.status === "active" ? <BsCheckCircle size={25} color={"green"} /> : <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
+
+											</td>
+											<td className="table-datacell ">
+												<Button id="view-status" onClick={() => navigate(`/userrole/userrole/viewrole/${item?.id}`)}>View</Button>
+											</td>
+										</tr>
+									))
+								)}
+							</tbody>
+						</table>
+					</div>
+
+
+				</section>
+				<footer className="main-table-footer">
+					<Pagination
+						setDisplayData={setDisplayData}
 						data={sortData}
 						entriesPerPage={entriesPerPage}
-						setEntriesPerPage={setEntriesPerPage}
+						Total={"Employee"}
 					/>
-				</div>
-				<div className='Announcements-row '>
-					<MainSearch placeholder={'Search...         Role'} />
-					<div className='SiteWorkermaindivsub  maindivsub '  >
-						<CreateRoleModal />
-
-					</div>
-				</div>
+				</footer>
 			</div>
-			<section className="md-ui component-data-table">
-				{getroleisLoading ? <TableLoader isLoading={getroleisLoading} /> : ""}
-				<div className="main-table-wrapper">
-					<table className="main-table-content">
-						<thead className="data-table-header">
-							<tr className="data-table-row" >
-								<td className="table-datacell  ">Name</td>
-								<td className="table-datacell datatype-numeric">ID</td>
-								<td className="table-datacell datatype-numeric">Description</td>
-								<td className="table-datacell datatype-numeric">Created Date</td>
-								<td className="table-datacell datatype-numeric">Status</td>
-								<td className="table-datacell datatype-numeric">ACTION</td>
-
-							</tr>
-						</thead>
-						<tbody className="data-table-content">
-							{getroleisLoading ? (
-								<TableFetch colSpan={8} />
-							) : displayData?.length === 0 || displayData == null ? (
-								<NoRecordFound colSpan={8} />
-							) : (
-								displayData.map((item: any, i: any) => (
-									<tr className="data-table-row" key={i}>
-										<td className="table-datacell  ">{item?.name}</td>
-										<td className="table-datacell datatype-numeric">
-											<CopyToClipboardButton url={item?.id} padding={"6px"} size={15} />
-										</td>
-										<td className="table-datacell datatype-numeric">{item?.description}</td>
-										<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
-
-										<td className="table-datacell datatype-numeric">
-											{item?.status === "active" ? <BsCheckCircle size={25} color={"green"} /> : <BsCheckCircle size={25} color={"red"} className="icon-bold" />}
-
-										</td>
-										<td className="table-datacell datatype-numeric">
-											<Button id="team-applicatiom-update" onClick={() => navigate(`/userrole/userrole/viewrole/${item?.id}`)}>View</Button>
-										</td>
-									</tr>
-								))
-							)}
-						</tbody>
-					</table>
-				</div>
-
-
-			</section>
-			<footer className="main-table-footer">
-				<Pagination
-					setDisplayData={setDisplayData}
-					data={sortData}
-					entriesPerPage={entriesPerPage}
-					Total={"Employee"}
-				/>
-			</footer>
 		</div>
 	)
 }

@@ -13,6 +13,7 @@
 @use "./components/Notification"; 
 @use "./components/UploadBase.scss"; 
 @use "./components/logoutModal"; 
+ 
 
 // pages
 @use "./pages/kpiassessment";
@@ -36,10 +37,12 @@
 @use "./pages/announcement.scss";
 @use "./pages/Reports";
 @use "./pages/LoanInquiry.scss";
+@use "./pages/payroll";
+ 
 
 @use "./abstracts/colors" as c;
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css);
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 *,
 *::before,
 *::after {
@@ -73,12 +76,12 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif !important;
+  font-family: "Poppins", sans-serif !important; 
+  line-height: 1.3;
+    padding-left: 0px !important; 
   background: #f6f6f6;
-  margin: 0;
-  letter-spacing: normal;
-  box-sizing: border-box !important;
-  font-size: 12px !important;
+  margin: 0; 
+  box-sizing: border-box !important; 
 }
 
 td {
@@ -141,7 +144,11 @@ main {
   overflow-y: scroll
 }
 }
-
+.page-title {
+    color: #6a707e;
+     font: 18.72px "Poppins";
+     font-weight: bold;
+}
 // .YEPft {
 //     margin-left: 16px;
 // }
@@ -350,10 +357,10 @@ form input[type="search"]::-webkit-search-cancel-button {
 form.searchbox button {
   background-color: c.color(primary-color);
   position: absolute;
-  top: 9px;
+  top: 10px;
   right: 9px;
   color: #ffff;
-  padding: 0 5px;
+  padding: 2px 6px;
   border-radius: 3px;
   justify-content: center;
   align-items: center;

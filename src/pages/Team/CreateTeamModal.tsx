@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@material-ui/core';
 import { Form, Formik } from "formik";
-import { MdOutlineClose } from 'react-icons/md';
 import { Modal, Spinner } from 'react-bootstrap';
 import InputField from '../../components/Inputs/InputField';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { createTeam, getTeam, reset } from '../../features/Team/teamSlice';
+import { ModalHeader } from '../../components/Modals/ModalOptions';
+import { AiOutlineTeam } from 'react-icons/ai';
 
 const CreateTeamModal = () => {
 	const dispatch = useAppDispatch();
 	const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.team)
-	const [Show, setShow] = useState(false);
+	const [Show, setLgShow] = useState(false);
 
 	useEffect(() => {
 		if (createisSuccess) {
-			setShow(false)
+			setLgShow(false)
 			fireAlert("Success", "Team created successfully", "success");
 			dispatch(reset());
 			dispatch(getTeam());
@@ -30,27 +31,16 @@ const CreateTeamModal = () => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => setShow(true)}
-			>
-				Create Team
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}>Create Team</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={Show}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header>
-					<span className="span-center-title"> Create Team</span>
-					<Button
-						onClick={() => setShow(false)}
-					>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<AiOutlineTeam size={30} />} title={"Create Team"} subtitle={" Create Team"} />
 				<Modal.Body>
 					<Formik
 						initialValues={{
@@ -95,7 +85,7 @@ const CreateTeamModal = () => {
 										<div className="btn-modal-container">
 											<Button
 												variant="contained"
-												className="Add-btn-modal"
+												className="add-experience"
 												type="submit" >
 												{createisLoading ? <Spinner animation="border" /> : "Create Team"}
 											</Button>

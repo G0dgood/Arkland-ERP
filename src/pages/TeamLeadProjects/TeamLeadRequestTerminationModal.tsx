@@ -1,19 +1,19 @@
 import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
-import { createRequest, reset } from '../../features/workerRequest/workerRequestSlice';
+import { reset } from '../../features/workerRequest/workerRequestSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
-import HttpService from '../../components/HttpService';
 import SelectInput from '../../components/SelectInput';
 import { teanCreateTerminations } from '../../features/Employee/employeeSlice';
 import createHttpService from '../../components/HttpService';
+import { ModalHeader } from '../../components/Modals/ModalOptions';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 const TeamLeadRequestTerminationModal = () => {
 	const { teanTerminationsisLoading, teanTerminationsisSuccess } = useAppSelector((state: any) => state.employee)
-	const [deleteShow, setDeleteShow] = React.useState(false);
+	const [deleteShow, setLgShow] = React.useState(false);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const reasonOptions = [
@@ -113,7 +113,7 @@ const TeamLeadRequestTerminationModal = () => {
 			})
 
 			dispatch(reset());
-			setDeleteShow(false)
+			setLgShow(false)
 			navigate(-1)
 		}
 	}, [teanTerminationsisSuccess, dispatch, navigate])
@@ -135,35 +135,20 @@ const TeamLeadRequestTerminationModal = () => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => { setDeleteShow(true); getData() }}
-			>
-				Request Employee Termination
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => { setLgShow(true); getData() }}>	Request Employee Termination</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={deleteShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header id="displayTermination">
-					<span></span>
-					<Modal.Title>
-						Request Employee Termination
-					</Modal.Title>
-					<Button
-						style={{ color: "#fff" }}
-						onClick={() => setDeleteShow(false)}
-					>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<AiOutlineDelete size={30} />} title={"		Request Employee Termination"} subtitle={"Request Termination Of An Employee"} />
 				<Modal.Body>
 					<div className='Modal-Body'>
 
-						<div className='mt-2  '>
+						<div className='mt-2 '>
 							<h6>Name</h6>
 							<SelectInput
 								isDisabled={isLoading}

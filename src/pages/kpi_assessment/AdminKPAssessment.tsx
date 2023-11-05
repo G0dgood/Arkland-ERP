@@ -65,7 +65,6 @@ const AdminKPAssessment = () => {
 					{/* KPISummary */}
 					{KPISummary(viewdata)}
 					{/* KPISummary  END*/}
-
 					<div className="kpi-summary">
 						<div className="kpi-summary-title">
 							<p>{viewdata?.employee_name}'s  comment</p>

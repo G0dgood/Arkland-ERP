@@ -1,44 +1,38 @@
-import { useEffect, useState } from "react";
-// import { Calendars } from "../../components/Calender/Calender";
 
-import { myAttendance } from "../../features/Attendances/attendanceSlice";
-import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import { useAppSelector } from "../../store/useStore";
 import { Calendars } from "../../components/Calender/Calender";
-import HttpService from "../../components/HttpService";
 
-import createHttpService from "../../components/HttpService";
 // import { Calendars } from "../../components/Calender/Calender";
 
 const EmployeeAttendance = () => {
 
-  const dispatch = useAppDispatch();
+
 
   const { mydata } = useAppSelector((state: any) => state.attendance)
 
-  const [attendance, setAttendance] = useState(null)
-  const [first, setisLoading] = useState(false)
 
-  console.log('attendance', attendance)
+
+
   // useEffect(() => {
   //   dispatch(myAttendance())
   // }, [dispatch])
-  useEffect(() => {
-    getData()
-  }, [])
+  // useEffect(() => {
+  //   getData()
+  // }, [])
 
-  const getData = async () => {
-    const HttpService = createHttpService();
-    setisLoading(true)
-    try {
-      const attendanceUrl = "hr/attendances/list/self"
-      const attendance: any = await HttpService.get(attendanceUrl)
-      setAttendance(attendance?.data?.data)
-      setisLoading(false)
+  // const getData = async () => {
+  //   const HttpService = createHttpService();
+  //   setisLoading(true)
+  //   try {
+  //     const attendanceUrl = "hr/attendances/list/self"
+  //     const attendance: any = await HttpService.get(attendanceUrl)
+  //     setAttendance(attendance?.data?.data)
+  //     setisLoading(false)
 
-    } catch (error) {
-      setisLoading(false)
-    }
-  }
+  //   } catch (error) {
+  //     setisLoading(false)
+  //   }
+  // }
 
 
 

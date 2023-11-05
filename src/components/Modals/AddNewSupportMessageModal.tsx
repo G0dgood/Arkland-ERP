@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Button } from '@material-ui/core';
-import { MdOutlineClose } from 'react-icons/md';
+import { ModalHeader } from './ModalOptions';
+import { BiMessageDetail } from 'react-icons/bi';
 
 const AddNewSupportMessageModal = (props: any) => {
 
@@ -19,13 +20,7 @@ const AddNewSupportMessageModal = (props: any) => {
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header  >
-					<span className='span-center-title'>New Message</span>
-					<Button onClick={() => setLgShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-
-				</Modal.Header>#b61818#b65e5e
+				<ModalHeader setLgShow={setLgShow} icon={<BiMessageDetail size={30} />} title={"New Message"} subtitle={"New Message"} />
 				<Modal.Body>
 					<div className='Modal-Body'>
 						<h6>Subject</h6>

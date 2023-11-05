@@ -3,6 +3,7 @@ import { CSVLink } from "react-csv";
 import moment from "moment";
 import { Button } from "@material-ui/core";
 import { AiOutlineDownload } from "react-icons/ai";
+import { RiDownloadLine } from "react-icons/ri";
 
 const WeeklyReportDownloader = ({ data }: any) => {
 	const headers = [
@@ -62,11 +63,14 @@ const WeeklyReportDownloader = ({ data }: any) => {
 	return (
 		<CSVLink data={exportData} headers={headers} filename={csvdate}>
 
-			<Button
+			{/* <Button
 				variant="contained"
 				className="add-experience" >
 				<AiOutlineDownload size={20} />
 				Download Report
+			</Button> */}
+			<Button className='CSV-button'   >
+				<RiDownloadLine size={15} /> CSV
 			</Button>
 		</CSVLink>
 	);

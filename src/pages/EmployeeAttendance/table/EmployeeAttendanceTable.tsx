@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 import TableLoader from "../../../components/TableLoader";
 import {
   EntriesPerPage,
-  MainSearch,
-  NoRecordFound,
-  TableFetch,
 } from "../../../components/TableOptions";
 import { useAppDispatch, useAppSelector } from "../../../store/useStore";
 import { myAttendance } from "../../../features/Attendances/attendanceSlice";
@@ -53,16 +50,8 @@ const EmployeeAttendanceTable = () => {
     };
   });
 
-  console.log('mydata', mydata)
-  // const attendanceEvents = [
-  //   {
-  //     title: 'John Doe',
-  //     start: '2023-07-01',
-  //     end: '2023-07-05',
-  //     color: '#2196F3',
-  //   },
-  //   // Add more attendance events as needed
-  // ];
+
+
 
   const holidayEvents = [
     {

@@ -8,8 +8,9 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import $ from "jquery";
 
 import SelectInput from '../SelectInput';
-import HttpService from '../HttpService';
 import createHttpService from '../HttpService';
+import { ModalHeader } from './ModalOptions';
+import { BsClock } from 'react-icons/bs';
 
 const HRClockInModal = () => {
 	const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ const HRClockInModal = () => {
 
 
 
-	const [show, setShow] = useState<any>(false);
+	const [show, setLgShow] = useState<any>(false);
 	const [employees, setEmployees] = useState<any>("");
 	const [isLoading, setisLoading] = useState<any>(false);
 	const [inputs, setInputs] = useState<any>({
@@ -109,13 +110,7 @@ const HRClockInModal = () => {
 	}
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => { setShow(true); getData() }}
-			>
-				{false ? <Spinner animation="border" /> : " Clock in"}
-			</Button>
+			<li className={"active"} onClick={() => { setLgShow(true); getData() }}>  Clock in</li>
 			<Modal
 				show={show}
 				// onHide={handle Close}
@@ -124,12 +119,8 @@ const HRClockInModal = () => {
 				className="kpi-modal"
 				centered
 			>
-				<Modal.Header>
-					<span className="span-center-title">HR Clock IN</span>
-					<Button onClick={() => setShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+
+				<ModalHeader setLgShow={setLgShow} icon={<BsClock size={30} />} title={"HR Clock IN"} subtitle={"HR Clock IN Record"} />
 				<Modal.Body>
 					<div className='mt-2 mb-4'>
 						<SelectInput
@@ -149,11 +140,11 @@ const HRClockInModal = () => {
 						</div>
 					</div>
 					<div className='deleteKPIHandler' style={{ marginTop: "7rem" }}>
-						<span className='deleteKPIHandler-mr' onClick={() => setShow(false)}>
+						<span className='deleteKPIHandler-mr' onClick={() => setLgShow(false)}>
 							<Button className="table-link-active">
 								Close </Button></span>
 						<span ><Button className="table-link" onClick={handleclockIn} >
-							{hrisLoading ? <Spinner animation="border" /> : "clock in"}
+							{hrisLoading ? <Spinner animation="border" size='sm' /> : "clock in"}
 						</Button></span>
 					</div>
 				</Modal.Body>

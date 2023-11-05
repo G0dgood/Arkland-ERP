@@ -1,13 +1,14 @@
 
-import { Button } from '@material-ui/core';
+
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
+import { MdOutlineAssessment } from 'react-icons/md';
 import KPIAssessment from '../../pages/kpi_assessment/KPIAssessment';
-import HttpService from '../HttpService';
+
+import { ModalHeader } from './ModalOptions';
 
 const CreateKpiModal = () => {
-	const [show, setShow] = useState(false);
+	const [show, setLgShow] = useState(false);
 	const [count, setCount] = useState<number>(0)
 	const [inputs, setInputs] = useState<any>({
 		month: 0,
@@ -74,24 +75,19 @@ const CreateKpiModal = () => {
 
 	return (
 		<>
-			<Button className="add-experience" onClick={() => { setShow(true) }} style={{ marginLeft: "1rem" }}>
-				Create KPI Assessment
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => { setLgShow(true) }}>		Create KPI Assessment</li>
+			</ul>
 			<Modal
 				show={show}
-				onHide={() => setShow(false)}
+				onHide={() => setLgShow(false)}
 				fullscreen={true}>
-				<Modal.Header  >
-					<span className="span-center-title">Create Assessment</span>
+				<ModalHeader setLgShow={setLgShow} icon={<MdOutlineAssessment size={30} />} title={"Create Assessment"} subtitle={"Create Assessment"} />
 
-					<Button onClick={() => setShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
 				<Modal.Body>
 					<main>
 						<KPIAssessment
-							setShow={setShow}
+							setLgShow={setLgShow}
 							handleRemoveField={handleRemoveField}
 							handleAddField={handleAddField}
 							newKpiField={newKpiField}

@@ -1,30 +1,24 @@
 import { useState } from 'react'
 import { Button } from '@mui/material'
 import { Modal } from 'react-bootstrap'
-import { MdOutlineClose } from 'react-icons/md'
+import { ModalHeader } from './ModalOptions'
+import { BsCalendar2Event } from 'react-icons/bs'
 
 const CreateEvent = () => {
 	const [lgShow, setLgShow] = useState(false);
 	return (
 
 		<div>
-			<Button variant="contained" className="Create-event"
-				onClick={() => setLgShow(true)}>
-				Create Event
-			</Button>
-
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => setLgShow(true)}> 	Create Event</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={lgShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header  >
-					<span className="span-center-title" >Create Event</span>
-					<Button onClick={() => setLgShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<BsCalendar2Event size={30} />} title={"Create Event"} subtitle={"Create An Event"} />
 				<Modal.Body>
 					<div className='Modal-Body'>
 						<div className='modal-input-sub-space'>

@@ -9,10 +9,12 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { createTerminations, reset } from '../../features/Employee/employeeSlice';
 import createHttpService from '../HttpService';
+import { ModalHeader } from './ModalOptions';
+import { FiUserMinus } from 'react-icons/fi';
 
 const RequestEmployeeTerminationModal = () => {
 	const { TerminationsisLoading, TerminationsisSuccess } = useAppSelector((state: any) => state.employee)
-	const [deleteShow, setDeleteShow] = React.useState(false);
+	const [deleteShow, setLgShow] = React.useState(false);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const reasonOptions = [
@@ -106,7 +108,7 @@ const RequestEmployeeTerminationModal = () => {
 			})
 
 			dispatch(reset());
-			setDeleteShow(false)
+			setLgShow(false)
 			navigate(-1)
 		}
 	}, [TerminationsisSuccess, dispatch, navigate])
@@ -128,35 +130,19 @@ const RequestEmployeeTerminationModal = () => {
 
 	return (
 		<div>
-			<Button
-				variant="contained"
-				className="add-experience"
-				onClick={() => { setDeleteShow(true); getData() }}
-			>
-				Request Employee Termination
-			</Button>
+			<ul className="nav-tabs-btn mb-3">
+				<li className={"active"} onClick={() => { setLgShow(true); getData() }}>Request Employee Termination</li>
+			</ul>
 			<Modal
 				size="lg"
 				show={deleteShow}
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
-				<Modal.Header id="displayTermination">
-
-					<Modal.Title>
-						Request Employee Termination
-					</Modal.Title>
-					<Button
-
-						onClick={() => setDeleteShow(false)}
-					>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setLgShow} icon={<FiUserMinus size={30} />} title={"Employee Termination"} subtitle={"		Request Employee Termination"} />
 				<Modal.Body>
 					<div className='Modal-Body'>
-
-						<div className='mt-2  '>
+						<div>
 							<h6>Name</h6>
 							<SelectInput
 								isDisabled={isLoading}

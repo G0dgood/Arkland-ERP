@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { calculateTotalScore, getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
+import { getTotalScore, getTotalScoreWeight, hodTotalScore } from '../../utils/KpiFunctions';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
