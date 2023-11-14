@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Form, Modal, Spinner } from "react-bootstrap";
-import { MdOutlineClose } from "react-icons/md";
 import { fireAlert } from "../../utils/Alert";
 import { createAnnouncement, reset } from "../../features/Announcement/announcemetSlice";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";

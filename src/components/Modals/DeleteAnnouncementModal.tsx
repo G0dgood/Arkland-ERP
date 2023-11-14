@@ -2,8 +2,6 @@ import { Button } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { FiTrash2 } from 'react-icons/fi'
-import { MdOutlineClose } from 'react-icons/md'
-
 import { fireAlert } from '../../utils/Alert'
 import { deleteAnnouncement, reset } from '../../features/Announcement/announcemetSlice'
 import { useAppDispatch, useAppSelector } from '../../store/useStore'

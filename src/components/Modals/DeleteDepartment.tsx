@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { deleteDepartments, reset } from '../../features/Department/departmentSlice';
 import { Button } from '@material-ui/core';
-import { MdOutlineClose } from 'react-icons/md';
 import { ImBin } from 'react-icons/im';
 import { ModalHeader } from './ModalOptions';
 import { FaWarehouse } from 'react-icons/fa';

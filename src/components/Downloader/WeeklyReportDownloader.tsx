@@ -1,8 +1,6 @@
-import React from "react";
 import { CSVLink } from "react-csv";
 import moment from "moment";
 import { Button } from "@material-ui/core";
-import { AiOutlineDownload } from "react-icons/ai";
 import { RiDownloadLine } from "react-icons/ri";
 
 const WeeklyReportDownloader = ({ data }: any) => {

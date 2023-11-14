@@ -1,7 +1,5 @@
-import { Button } from '@material-ui/core';
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import { MdOutlineClose } from 'react-icons/md'
 import moment from 'moment';
 import { FiEye } from 'react-icons/fi';
 import { viewMeAnnouncement } from '../../features/Announcement/announcemetSlice';

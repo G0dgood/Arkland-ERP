@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,9 +11,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { groupBy } from "lodash";
-import { BsChatLeftText } from "react-icons/bs";
-import { MdOutlineClose } from "react-icons/md";
-import { GoGraph } from "react-icons/go";
+import { ModalHeader } from "../Modals/ModalOptions";
+import { SlGraph } from "react-icons/sl";
 
 ChartJS.register(
   CategoryScale,
@@ -28,14 +25,7 @@ ChartJS.register(
 
 const FullBarChart = ({ departments, employees, setShow, show, fullscreen }: any) => {
 
-
-
-
-
-
   const [clientInfo, setClientInfo] = useState([]);
-
-
   const Name = groupBy(clientInfo, "client");
   const people: any = [];
 
@@ -109,21 +99,7 @@ const FullBarChart = ({ departments, employees, setShow, show, fullscreen }: any
   return (
     <div>
       <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
-        {/* <header className="ChatProgressView-header"  >
-          <div>
-            <span className="app-chat--icon px-2">
-              <GoGraph />
-            </span>
-            <span>Employee in Department!</span>
-          </div>
-          <div className="ChatProgressView-close" onClick={() => setShow(false)}>
-            <MdOutlineClose
-              size={25}
-              style={{ color: "white", backgroundColor: "" }}
-              className="ChatProgressView-close-icon"
-            />
-          </div>
-        </header> */}
+        <ModalHeader setLgShow={setShow} icon={<SlGraph size={30} />} title={"Chat"} subtitle={"Fill List of all department Chat"} />
         <Modal.Body  >
           <Bar data={data} options={options} />
         </Modal.Body>

@@ -31,17 +31,15 @@ const AllEmployees = () => {
  const navigate = useNavigate();
 
 
-
+ console.log('data', data)
 
  useEffect(() => {
-  // @ts-ignore
   dispatch(allEmployee());
  }, [dispatch]);
 
 
  useEffect(() => {
   if (approveisSuccess || reset) {
-   // @ts-ignore
    dispatch(allEmployee());
   }
  }, [approveisSuccess, dispatch, reset]);
@@ -62,7 +60,7 @@ const AllEmployees = () => {
 
  useEffect(() => {
   // Sort the data by "In Review" first
-  const sorted = sortDataByReview(data);
+  const sorted = sortDataByReview(data?.data);
   const unLinked: any = !sorted ? [] : sorted?.filter((suggestion: any) =>
    // @ts-ignore  
    suggestion?.full_name?.toLowerCase()?.startsWith(searchItem?.toLowerCase()) ||
@@ -80,7 +78,7 @@ const AllEmployees = () => {
 
  // --- Pagination --- //
  const [entriesPerPage, setEntriesPerPage] = useState(() => {
-  return localStorage.getItem("reportsPerPage") || "10";
+  return localStorage.getItem("reportsPerPage") || "8";
  });
 
  useEffect(() => {
@@ -152,8 +150,8 @@ const AllEmployees = () => {
             <div className="md-checkbox">
              <input id={i}
               type="checkbox"
-              checked={selectedIds.includes(item.id)}
-              onChange={() => handleCheckboxChange(item.id)} />
+              checked={selectedIds?.includes(item?.id)}
+              onChange={() => handleCheckboxChange(item?.id)} />
              <label htmlFor={i}> </label>
             </div>
            </td>
@@ -164,13 +162,13 @@ const AllEmployees = () => {
             {item?.email}
            </td>
            <td className="table-datacell">
-            {item?.role?.name}
+            {/* {item?.role?.name} */}
            </td>
            <td className="table-datacell  ">
-            {item?.department?.name}
+            {/* {item?.department?.name} */}
            </td>
            <td className="table-datacell datatype-numeric">
-            {item?.category}
+            {/* {item?.category} */}
            </td>
            <td className="table-datacell datatype-numeric">
             {item?.status}

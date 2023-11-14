@@ -11,21 +11,22 @@
 .header-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
  
 }
 
 @media only screen and (max-width: 1220px) {
-  .header-container {
-  display: flex;
-  justify-content: space-between;
-  overflow-x: scroll;
-}
+//   .header-container {
+//   display: flex;
+//   justify-content: space-between;
+//   overflow-x: scroll;
+// }
 }
 
 .header-container .header-left {
-  display: flex;
-  justify-content: space-between;
+  display: flex; 
   align-items: center;
+  gap: 40px;
 }
 
 .header-container .FaBars {
@@ -161,14 +162,17 @@
   height: 30px;
 }
 .header-logo {
-  display: block !important;
-  margin-left: 100px !important;
-  margin-right: 100px !important;
-  display: flex !important;
-  justify-content: flex-end !important;
-  width: 30px !important;
-  height: 30px !important;
-  image-rendering: auto;
+  display: block !important;  
+  // margin-right: 100px !important;
+  // display: flex !important;
+  // justify-content: flex-end !important;
+
+  // image-rendering: auto;
+}
+.header-logo img {
+  width: 100px !important;
+  height: 40px !important;
+
 }
 
 .header-logo-text {
@@ -186,9 +190,9 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .header-logo img {
-    display: none !important;
-  }
+  // .header-logo img {
+  //   display: none !important;
+  // }
 }
 
 .hand-noficational-place{
@@ -197,9 +201,13 @@
 }
 
 .hand-noficational-place-sup{
-  margin-right: 6rem;
+   margin-right: 6rem; 
 }
-  
+  @media screen and (max-width: 1000px) {
+  .hand-noficational-place-sup{
+   margin-right: 1rem; 
+}
+}
 
 .Messages-button {
 	position: relative;
@@ -250,6 +258,12 @@
   top: 4rem;  
   z-index: 1000; 
  scroll-padding-top: 0px !important;
+}
+
+@media screen and (max-width: 1020px) {
+.user-details-noti{ 
+margin: auto;
+}
 }
 
 .user-details-noti ol, ul {
@@ -308,4 +322,37 @@
 .button-logout{
   width: 75px;
   height: 35px;
+}
+
+.profile-click-img{
+  width: 45px;
+  height: 45px;
+  background-color: #DDDDDD;
+  border-radius: 5px;
+}
+
+.profile-click-img-container{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.profile-click-img-text p{
+color: #776D6D ;
+}
+
+@media only screen and (max-width:600px) {
+.profile-click-img-text h4{
+display: none ;
+}
+.profile-click-img-text p{
+display: none ;
+}
+
+.header-container .header-left {
+  display: flex; 
+  align-items: center;
+  gap: 20px;
+}
+
 }

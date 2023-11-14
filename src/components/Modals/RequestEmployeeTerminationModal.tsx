@@ -1,8 +1,6 @@
 import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
-import HttpService from '../HttpService';
 import SelectInput from '../SelectInput';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
@@ -14,7 +12,7 @@ import { FiUserMinus } from 'react-icons/fi';
 
 const RequestEmployeeTerminationModal = () => {
 	const { TerminationsisLoading, TerminationsisSuccess } = useAppSelector((state: any) => state.employee)
-	const [deleteShow, setLgShow] = React.useState(false);
+	const [deleteShow, setLgShow] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const reasonOptions = [

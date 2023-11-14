@@ -1,7 +1,6 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { MdOutlineClose } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { deleteEmployees, reset } from '../../features/Employee/employeeSlice';

@@ -120,4 +120,26 @@
   /* Add more styles as needed */
 }
 
+.custom-select {
+  position: relative ;
+  display: inline-block;
+}
+
+.custom-select select {
+  appearance: none; /* Remove default styles on Firefox */
+  -webkit-appearance: none; /* Remove default styles on Chrome and Safari */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.custom-select::after {
+  content: '\25BC'; /* Unicode character for a down-pointing triangle */
+  position: absolute;
+  font-size: 10px;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  color: #990000;  
+}
 

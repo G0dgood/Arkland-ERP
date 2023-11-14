@@ -1,7 +1,6 @@
 import { Button } from '@material-ui/core';
 import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
 import { fireAlert } from '../../utils/Alert';
 import { hrcreateAttendance, reset } from '../../features/Attendances/attendanceSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';

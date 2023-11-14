@@ -2,7 +2,6 @@ import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
-import { MdOutlineClose } from "react-icons/md";
 import { fireAlert } from "../../utils/Alert";
 import ReactSelectField from "../Inputs/ReactSelectField";
 

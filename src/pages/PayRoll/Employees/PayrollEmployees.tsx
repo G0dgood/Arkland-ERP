@@ -1,13 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react'
-import { NoRecordFound, SearchComponent, TableFetch } from '../../components/TableOptions';
-import TableLoader from '../../components/TableLoader';
-import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { NoRecordFound, SearchComponent, TableFetch } from '../../../components/TableOptions';
+import { useAppDispatch } from '../../../store/useStore';
 import { Button } from '@material-ui/core';
-import { BsCheckCircle } from 'react-icons/bs';
-import moment from 'moment';
-import Pagination from '../../components/Pagination';
+import Pagination from '../../../components/Pagination';
 import { useNavigate } from 'react-router-dom';
-import CreateAnnouncementModal from '../../components/Modals/CreateAnnouncementModal';
+import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
+
 
 
 const PayrollEmployees = () => {
@@ -86,13 +85,14 @@ const PayrollEmployees = () => {
 	return (
 		<div id="reports">
 			<h5 className="page-title">All Employee</h5>
+
 			<ul className="nav-tabs-btn mb-3">
 				{/* <CreateAnnouncementModal />
 				<Button id="view-status-top" onClick={() => navigate("/payroll/payroll/employeesonboarding")}>Add Employee</Button> */}
 				<li className={"active"} onClick={() => navigate("/payroll/payroll/employeesonboarding")}> Add Employee</li>
 			</ul>
 			<div className='half-background'>
-				<SearchComponent sortData={sortData} entriesPerPage={entriesPerPage} setEntriesPerPage={entriesPerPage} parameter={false} addemployee={true} />
+				<SearchComponent sortData={sortData} entriesPerPage={entriesPerPage} setEntriesPerPage={entriesPerPage} parameter={false} addemployee={true} placeholder={"Employees"} />
 
 				<section className="md-ui component-data-table">
 					{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
@@ -133,7 +133,7 @@ const PayrollEmployees = () => {
 												<td className="table-datacell datatype-numeric">₦123,455 </td>
 												<td className="table-datacell datatype-numeric">091-22-766-665</td>
 												<td className="table-datacell datatype-numeric">
-													<Button id="view-btn" onClick={() => navigate(`/announcements/announcements/`)}>View</Button>
+													<Button id="view-btn" onClick={() => navigate(`/payroll/payroll/employeepayrollview/`)}>View</Button>
 												</td>
 												<td className="table-datacell datatype-numeric">
 													<Button id="view-status" onClick={() => navigate(`/announcements/announcements/`)}>Approve</Button>
@@ -149,12 +149,31 @@ const PayrollEmployees = () => {
 				</section>
 
 				<footer className="main-table-footer">
-					<Pagination
+
+					<div className="paginations">
+						<ul>
+							<li className="prev">
+								<a >
+									<MdArrowBackIos />
+								</a>
+							</li>
+							<li><a >1</a></li>
+							<li className="active"><a >2</a></li>
+							<li><a >3</a></li>
+							<li><a >4</a></li>
+							<li><a >5</a></li>
+							<li><span className="delimeter">...</span></li>
+							<li><a >8</a></li>
+							<li className="next">
+								<a ><MdArrowForwardIos /></a></li>
+						</ul>
+					</div>
+					{/* <Pagination
 						setDisplayData={setDisplayData}
 						data={sortData}
 						entriesPerPage={entriesPerPage}
 						Total={"Employee"}
-					/>
+					/> */}
 				</footer>
 			</div>
 		</div>

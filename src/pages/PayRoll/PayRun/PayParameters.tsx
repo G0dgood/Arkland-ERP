@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { IoArrowBackSharp } from 'react-icons/io5';
-import Allowances from './Allowances';
-import Deductions from './Deductions';
+import Allowances from '../Allowances/Allowances';
+import Deductions from '../Deductions/Deductions';
+
 
 const PayParameters = () => {
 

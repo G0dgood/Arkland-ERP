@@ -180,7 +180,7 @@
 
 
 #faq-container-noti {
-  width: 400px !important;
+  width: 400px ;
   height: 100% !important;
   max-height: 600px !important;
   margin: 0 auto;
@@ -190,10 +190,37 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; 
 }
 
+#notificationbtn {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+     width: 400px ;
+}
+
+ 
+
+#notibtn, #notibtn:hover {
+    background: none!important;
+    color: #000; 
+    // width: 100px;
+    // height: 20px;
+}
+
+#notibtn {
+    border: none!important;
+    font-weight: 600;
+    outline: none!important;
+}
+
+#notispan-container{
+  display: flex !important;
+  font-size: small !important;
+  align-items: center;
+}
+
 @media screen and (max-width: 1200px) {
-  .user-details-noti  { 
-   transform: scale(0.8) !important;
-  }
+  // .user-details-noti  { 
+  //  transform: scale(0.8) !important;
+  // }
 }
 
 .faq {

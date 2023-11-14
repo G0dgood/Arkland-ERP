@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { fireAlert } from '../../utils/Alert';
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineAssignment, MdOutlineClose } from 'react-icons/md';
+import { MdOutlineAssignment } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { createprivileges, reset } from '../../features/User/userSlice';
 import SelectInput from '../SelectInput';

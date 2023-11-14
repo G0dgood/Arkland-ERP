@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core';
-import { MdOutlineClose } from 'react-icons/md';
 import { fireAlert } from "../../utils/Alert";
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { createLeave } from '../../features/Leave/leaveSlice';
