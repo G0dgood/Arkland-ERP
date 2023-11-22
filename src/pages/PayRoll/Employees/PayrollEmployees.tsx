@@ -25,7 +25,7 @@ const PayrollEmployees = () => {
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
-		return localStorage.getItem("reportsPerPage") || "10";
+		return localStorage.getItem("reportsPerPage") || "8";
 	});
 
 	useEffect(() => {
@@ -127,7 +127,7 @@ const PayrollEmployees = () => {
 												<td className="table-datacell datatype-numeric">Precious Damola</td>
 												<td className="table-datacell datatype-numeric">Software</td>
 												<td className="table-datacell datatype-numeric">preciousdamo@gmail.com</td>
-												<td className="table-datacell datatype-numeric"> 	091-22-766-665 </td>
+												<td className="table-datacell datatype-numeric">091-22-766-665 </td>
 												<td className="table-datacell datatype-numeric">A&A </td>
 												<td className="table-datacell datatype-numeric">IT </td>
 												<td className="table-datacell datatype-numeric">₦123,455 </td>
@@ -136,7 +136,7 @@ const PayrollEmployees = () => {
 													<Button id="view-btn" onClick={() => navigate(`/payroll/payroll/employeepayrollview/`)}>View</Button>
 												</td>
 												<td className="table-datacell datatype-numeric">
-													<Button id="view-status" onClick={() => navigate(`/announcements/announcements/`)}>Approve</Button>
+													<Button id="view-status" onClick={() => navigate(``)}>Approve</Button>
 												</td>
 											</tr>
 										))

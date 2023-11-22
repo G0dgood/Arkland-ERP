@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NoRecordFound, TableFetch } from '../../../../components/TableOptions';
 import { useNavigate } from 'react-router-dom';
 import FixedOvertimeComponent from './FixedOvertimeComponent';
+import BulkUpload from '../../../../components/BulkUpload/BulkUpload';
 
 
 
 const FixedOvertime = ({ parameter }: any) => {
-
+	const [selectedRadio, setSelectedRadio] = useState("radio-1");
 	const navigate = useNavigate();
 	const keys = [
 		"Employee",
@@ -56,7 +57,8 @@ const FixedOvertime = ({ parameter }: any) => {
 
 	return (
 		<div>
-			{parameter && <FixedOvertimeComponent />}
+			{parameter && <FixedOvertimeComponent setSelectedRadio={setSelectedRadio} selectedRadio={selectedRadio} />}
+			{selectedRadio === "radio-2" && <BulkUpload />}
 			<section className="md-ui component-data-table">
 				{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
 				<div className="main-table-wrapper">

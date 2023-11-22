@@ -1,9 +1,11 @@
 import { NoRecordFound, TableFetch } from '../../../../components/TableOptions';
 import { useNavigate } from 'react-router-dom';
 import SpecialDeductionsComponent from './SpecialDeductionsComponent';
+import { useState } from 'react';
+import BulkUpload from '../../../../components/BulkUpload/BulkUpload';
 
 const SpecialDeductions = ({ parameter }: any) => {
-
+	const [selectedRadio, setSelectedRadio] = useState("radio-1");
 	const navigate = useNavigate();
 	const keys = [
 		"Employee",
@@ -53,7 +55,8 @@ const SpecialDeductions = ({ parameter }: any) => {
 
 	return (
 		<div>
-			{parameter && <SpecialDeductionsComponent />}
+			{parameter && <SpecialDeductionsComponent setSelectedRadio={setSelectedRadio} selectedRadio={selectedRadio} />}
+			{selectedRadio === "radio-2" && <BulkUpload />}
 			<section className="md-ui component-data-table">
 				{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
 				<div className="main-table-wrapper">

@@ -6,7 +6,7 @@ import {
   SubMenu,
   SidebarContent
 } from 'react-pro-sidebar';
-import { FaRegAddressCard, FaRegMoneyBillAlt, FaTasks } from 'react-icons/fa';
+import { FaRegAddressCard, FaTasks } from 'react-icons/fa';
 import { TfiAnnouncement, TfiLayoutGrid2 } from 'react-icons/tfi';
 import { FiFolder, FiPieChart, FiUser, FiUserPlus } from 'react-icons/fi';
 import { GoFile } from 'react-icons/go';
@@ -19,7 +19,7 @@ import { RiTeamLine } from 'react-icons/ri';
 import { GiTeamIdea } from 'react-icons/gi';
 import { VscWarning } from 'react-icons/vsc';
 import DataService from '../../utils/dataService';
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
 
 const dataService = new DataService()

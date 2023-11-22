@@ -1,11 +1,13 @@
 import { NoRecordFound, TableFetch } from '../../../../components/TableOptions';
 import { useNavigate } from 'react-router-dom';
 import SalaryArrearsComponent from './SalaryArrearsComponent';
+import { useState } from 'react';
+import BulkUpload from '../../../../components/BulkUpload/BulkUpload';
 
 
 
 const SalaryArrears = ({ parameter }: any) => {
-
+	const [selectedRadio, setSelectedRadio] = useState("radio-1");
 	const navigate = useNavigate();
 	const keys = [
 		"Employee",
@@ -55,7 +57,8 @@ const SalaryArrears = ({ parameter }: any) => {
 
 	return (
 		<div>
-			{parameter && <SalaryArrearsComponent />}
+			{parameter && <SalaryArrearsComponent setSelectedRadio={setSelectedRadio} selectedRadio={selectedRadio} />}
+			{selectedRadio === "radio-2" && <BulkUpload />}
 			<section className="md-ui component-data-table">
 				{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
 				<div className="main-table-wrapper">

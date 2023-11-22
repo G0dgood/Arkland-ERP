@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NoRecordFound, TableFetch } from '../../../../components/TableOptions';
 import AbsenteeismComponent from './AbsenteeismComponent';
+import BulkUpload from '../../../../components/BulkUpload/BulkUpload';
 
 const Absenteeism = ({ parameter }: any) => {
-
+	const [selectedRadio, setSelectedRadio] = useState("radio-1");
 
 	const keys = [
 		"Employee",
@@ -53,7 +54,8 @@ const Absenteeism = ({ parameter }: any) => {
 
 	return (
 		<div>
-			{parameter && <AbsenteeismComponent />}
+			{parameter && <AbsenteeismComponent setSelectedRadio={setSelectedRadio} selectedRadio={selectedRadio} />}
+			{selectedRadio === "radio-2" && <BulkUpload />}
 			<section className="md-ui component-data-table">
 				{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
 				<div className="main-table-wrapper">

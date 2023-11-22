@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NoRecordFound, TableFetch } from '../../../../components/TableOptions';
 import { useNavigate } from 'react-router-dom';
 import DailyTransportAllowanceComponent from './DailyTransportAllowanceComponent';
+import BulkUpload from '../../../../components/BulkUpload/BulkUpload';
 
 
 const DailyTransportAllowance = ({ parameter }: any) => {
-
+	const [selectedRadio, setSelectedRadio] = useState("radio-1");
 	const navigate = useNavigate();
 	const keys = [
 		"Employee",
@@ -55,7 +56,8 @@ const DailyTransportAllowance = ({ parameter }: any) => {
 
 	return (
 		<div>
-			{parameter && <DailyTransportAllowanceComponent />}
+			{parameter && <DailyTransportAllowanceComponent setSelectedRadio={setSelectedRadio} selectedRadio={selectedRadio} />}
+			{selectedRadio === "radio-2" && <BulkUpload />}
 			<section className="md-ui component-data-table">
 				{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
 				<div className="main-table-wrapper">

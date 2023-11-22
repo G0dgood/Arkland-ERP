@@ -2,6 +2,15 @@ import React from 'react'
 import { NoRecordFound } from '../../../components/TableOptions';
 
 const GroupPayRunTable = ({ keys, data }: any) => {
+	const valuesArray = [
+		["", "Sponsorship Allow", "Basic Pay",],
+		["", "Fixed Overtime ", "Housing Allowance ",],
+		["", "Overtime", "Transport",],
+		["", "Medical", "Utility",],
+		["", "Utility", "Meal",],
+		["", "Bonus", "Medical",],
+		// Add more arrays for additional rows
+	];
 
 
 	return (
@@ -29,10 +38,9 @@ const GroupPayRunTable = ({ keys, data }: any) => {
 								{false ? (
 									<NoRecordFound colSpan={3} />
 								) : (
-									data?.map((item: any, index: any) => (
-										<tr key={index} className="data-table-row">
-
-											<td className="table-datacell" key={index} >
+									valuesArray?.map((item: any, index: any) => (
+										<tr className="data-table-row">
+											<td className="table-datacell"   >
 												<div style={{ display: "flex" }}>
 													<span>
 														<div className="radio"  >
@@ -40,7 +48,8 @@ const GroupPayRunTable = ({ keys, data }: any) => {
 															<label htmlFor={`radio-${index}`} className="radio-label">
 															</label>
 														</div>
-													</span> <span>Sponsorship Allow</span>
+													</span>
+													<span>{item[1]}</span>
 												</div>
 											</td>
 											<td className="table-datacell" >
@@ -51,7 +60,7 @@ const GroupPayRunTable = ({ keys, data }: any) => {
 														</label>
 													</div>
 													</span>
-													<span>Basic Pay</span>
+													<span>{item[2]}</span>
 												</div>
 											</td>
 										</tr>

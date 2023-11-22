@@ -20,7 +20,7 @@ const EmployeesOnboarding = () => {
 	};
 
 	useEffect(() => {
-		setActiveKey(open.toString())
+		setActiveKey(open?.toString())
 	}, [open])
 
 	const handleNextClick = () => {

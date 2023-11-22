@@ -1,6 +1,9 @@
 import CryptoJS from 'crypto-js';
  
 class DataService {
+	static getData(arg0: string) {
+		throw new Error('Method not implemented.');
+	}
 
     private token_key = "erp-sYUDugysad-sdkjhsadkrjyteyugd--dskghjksdh" 
 	static setToken: any;

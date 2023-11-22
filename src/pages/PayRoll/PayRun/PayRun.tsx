@@ -138,7 +138,7 @@ const PayRun = () => {
 												<td className="table-datacell datatype-numeric">Lapaz</td>
 												<td className="table-datacell datatype-numeric">ACTIVE</td>
 												<td className="table-datacell datatype-numeric">
-													<Button id="view-status" onClick={() => navigate(``)}>View</Button>
+													<Button id="view-status" onClick={() => navigate(`/payroll/payroll/payrunview`)}>View</Button>
 												</td>
 												<td className="table-datacell datatype-numeric">
 													<Button id="close-puy-btn" onClick={() => navigate(``)}>Close Pay Run</Button>

@@ -10,6 +10,7 @@ import EmployeesDownloader from "./Downloader/EmployeesDownloader";
 import { SetStateAction } from "react";
 import { customStyles, options, options2 } from "../utils/ShareData";
 import filter from "../assets/images/Filter.svg"
+import { useNavigate } from "react-router-dom";
 
 
 // EntriesPerPage
@@ -160,8 +161,8 @@ const InputField2 = ({ placeholder, style, label, value, type, onChange, max, di
 };
 
 
-const SearchComponent = ({ sortData, entriesPerPage, setEntriesPerPage, parameter, addemployee, WeeklyReport, placeholder, employeesDownloader, EmployeesCSV, HODWeeklyReport, handleParameter, setSelectedOption, parameterdeduct, emailpayslip, CSV, ApprovalRequests }: any) => {
-
+const SearchComponent = ({ sortData, entriesPerPage, setEntriesPerPage, parameter, addemployee, WeeklyReport, placeholder, employeesDownloader, EmployeesCSV, HODWeeklyReport, handleParameter, setSelectedOption, parameterdeduct, emailpayslip, CSV, ApprovalRequests, SalaryHistory }: any) => {
+  const navigate = useNavigate();
 
 
 
@@ -191,7 +192,7 @@ const SearchComponent = ({ sortData, entriesPerPage, setEntriesPerPage, paramete
         {(parameter || parameterdeduct) && <Button className='parameter-btn' onClick={handleParameter}>
           Create Parameter
         </Button>}
-        {emailpayslip && <Button className='parameter-btn' onClick={handleParameter}>
+        {emailpayslip && <Button className='parameter-btn' onClick={() => navigate('/payroll/payroll/emailpayslip')}>
           Email Pay Slip
         </Button>}
 
@@ -205,6 +206,9 @@ const SearchComponent = ({ sortData, entriesPerPage, setEntriesPerPage, paramete
               <option value="engaged">engaged</option>
             </select>
           </div>}
+
+        {SalaryHistory && <h3>Salary History</h3>}
+
       </div>
 
       <div>

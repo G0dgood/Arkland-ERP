@@ -1,12 +1,6 @@
-
-
-
 import { useState } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@material-ui/core";
-import projectBack from "../../../assets/vectors/project-back.svg";
-import { SVGLoader } from "../../../components/SVGLoader";
 import { IoArrowBackSharp } from "react-icons/io5";
 
 
@@ -14,10 +8,6 @@ import { IoArrowBackSharp } from "react-icons/io5";
 
 const PayRollEmployeeView = () => {
 	const navigate = useNavigate();
-
-
-
-
 
 
 	const [isEssentialDetailsOpen, setIsEssentialDetailsOpen] = useState(true);

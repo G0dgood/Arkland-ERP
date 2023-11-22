@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core'
 import React from 'react'
+import PayRunModal from '../../../components/Modals/PayRunModal'
 
 const RunSpecificItems = () => {
 	return (
@@ -28,7 +29,8 @@ const RunSpecificItems = () => {
 				</div>
 			</div>
 			<div style={{ float: "right", paddingRight: "3.6rem", marginTop: "1.5rem", marginBottom: "3rem" }}>
-				<Button id="view-status"  >Run</Button>
+				{/* <Button id="view-status"  >Run</Button> */}
+				<PayRunModal />
 			</div>
 		</div>
 	)

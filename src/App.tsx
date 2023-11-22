@@ -76,13 +76,17 @@ import MyWarning from "./pages/MyWarning/MyWarning";
 import Application from "./pages/Application/Application";
 import InfoDetails from "./pages/Application/InfoDetails";
 import ApprovalRequests from "./pages/PayRoll/ApprovalRequests/ApprovalRequests";
-import PayParameters from "./pages/PayRoll/PayRun/PayParameters";
+import PayParameters from "./pages/PayRoll/PayParameters/PayParameters";
 import PayrollEmployees from "./pages/PayRoll/Employees/PayrollEmployees";
 import SalaryIncrement from "./pages/PayRoll/SalaryIncrement/SalaryIncrement";
 import PayRun from "./pages/PayRoll/PayRun/PayRun";
 import EmployeePayrollView from "./pages/PayRoll/Employees/EmployeePayrollView";
 import EmployeesOnboarding from "./pages/PayRoll/Employees/EmployeesOnboarding";
 import PayRollEmployeeView from "./pages/PayRoll/Employees/PayRollEmployeeView";
+import PayRunView from "./pages/PayRoll/PayRun/PayRunView";
+import SalaryIncrementView from "./pages/PayRoll/SalaryIncrement/SalaryIncrementView";
+import OneTimePassword from "./pages/OneTimePassword/OneTimePassword";
+import EmailPaySlip from "./pages/PayRoll/Email/EmailPaySlip";
 
 
 
@@ -104,6 +108,7 @@ const App: React.FC<any> = () => {
     <Route path="/" element={<Login />} />
     <Route path="/update-password" element={<UpdatePassword />} />
     <Route path="/forgot-password" element={<ForgotPassword />} />
+    <Route path="/onetimepassword/:id" element={<OneTimePassword />} />
 
     {/* protected routes for auth */}
     <Route element={auth}>
@@ -241,6 +246,9 @@ const App: React.FC<any> = () => {
       <Route path="payroll/payrun" element={<PayRun />} />
       <Route path="payroll/employeepayrollview" element={<EmployeePayrollView />} />
       <Route path="payroll/payrollemployeeview" element={<PayRollEmployeeView />} />
+      <Route path="payroll/payrunview" element={<PayRunView />} />
+      <Route path="payroll/salaryincrementview" element={<SalaryIncrementView />} />
+      <Route path="payroll/emailpayslip" element={<EmailPaySlip />} />
      </Route>
     </Route>
     <Route path="*" element={<PageNotFound />} />

@@ -3,6 +3,7 @@ import { NoRecordFound, SearchComponent, TableFetch } from '../../../components/
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
+import ApproveRequest from '../../../components/Modals/ApproveRequest';
 
 const ApprovalRequests = () => {
 
@@ -20,7 +21,7 @@ const ApprovalRequests = () => {
 
 	// --- Pagination --- //
 	const [entriesPerPage, setEntriesPerPage] = useState(() => {
-		return localStorage.getItem("reportsPerPage") || "10";
+		return localStorage.getItem("reportsPerPage") || "8";
 	});
 
 	useEffect(() => {
@@ -127,7 +128,8 @@ const ApprovalRequests = () => {
 												<td className="table-datacell datatype-numeric">091-22-766-665</td>
 
 												<td className="table-datacell datatype-numeric">
-													<Button id="view-status" onClick={() => navigate(`/announcements/announcements/`)}>Approve</Button>
+													{/* <Button id="view-status" onClick={() => navigate(`/announcements/announcements/`)}>Approve</Button> */}
+													<ApproveRequest />
 												</td>
 											</tr>
 										))
