@@ -4,34 +4,31 @@ import { Modal, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import { fireAlert } from "../../utils/Alert";
 import ReactSelectField from "../Inputs/ReactSelectField";
-
 import SelectField from "../Inputs/SelectField";
 import TextAreaField from "../Inputs/TextAreaField";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
-import { allEmployee, createWarning, reset } from "../../features/Employee/employeeSlice";
+import { createWarning, reset } from "../../features/Employee/employeeSlice";
 import { ModalHeader } from "./ModalOptions";
 import { RiErrorWarningLine } from "react-icons/ri";
+import createHttpService from "../HttpService";
 
 
 const CreateWarningModal = ({ id }: any) => {
   const dispatch = useAppDispatch();
-  const { data: employees } = useAppSelector((state: any) => state.employee)
   const { createwarningisLoading, createwarningisSuccess } = useAppSelector((state: any) => state.employee)
   const [lgShow, setLgShow] = useState(false);
-
+  const [employees, setEmployees] = useState([]);
 
 
   const handlewarning = () => {
-    dispatch(allEmployee());
+    getData()
   }
 
   const subordinationOptions = ["Type of misconduct", "insubordination", "absenteeism", "lateness", "negligence", "disbedience", "inefficiency", "incompetence", "leaving duty post without permission", "gross misconduct", "others"];
 
 
   const handleSubmit = async (values: any, { resetForm }: any) => {
-
     const inputs = { ...values }
-
     // @ts-ignore
     dispatch(createWarning(inputs));
   };
@@ -44,18 +41,29 @@ const CreateWarningModal = ({ id }: any) => {
       dispatch(reset());
     }
   }, [createwarningisSuccess, dispatch])
+  const getData = async () => {
+    const HttpService = createHttpService();
+    // setisLoading(true)
+    try {
+      const employeeUrl = `employees`
+      const employee: any = await HttpService.get(employeeUrl)
+      setEmployees(employee?.data?.data?.data)
+
+      // setisLoading(false)
+
+    } catch (error) {
+      // setisLoading(false)
+    }
+  }
 
 
 
-  const availablleEmployees = [] as any;
+  const availablleEmployees = employees?.map((employee: any) => ({
+    value: employee?.id,
+    label: employee?.full_name,
+  })) || [];
 
-  employees &&
-    employees?.forEach((employee: any) =>
-      availablleEmployees.push({
-        value: employee?.id,
-        label: employee?.full_name,
-      })
-    );
+
 
 
   return (

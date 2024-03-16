@@ -102,10 +102,17 @@ span .profile-image-name-sub2{
 }
 
  
-.viewprofile-container{
+.viewprofile-container {
   display: grid;
-  grid-template-columns: 1fr 1fr; 
+  grid-template-columns: 1fr 1fr; /* Default: Two columns */
 }
+
+@media only screen and (max-width: 768px) { 
+  .viewprofile-container {
+    grid-template-columns: 1fr; /* On screens with a minimum width of 768px, switch to one column */
+  }
+}
+
 
 .General-Information{
   margin-top: 2.5rem !important;
@@ -168,17 +175,14 @@ span .profile-image-name-sub2{
     color: #fff !important;
     cursor: pointer !important;
     border: solid 1px #990000 !important;
-    padding: 0.25rem 0px !important;
-   padding-right: 1rem !important;
-    padding-left: 1rem !important;
+    width: 100%;
+    padding: 0.4rem 0px !important; 
     border-radius: 4px !important;
     font-size: 0.8rem !important;
      
 }
 
-
-// pubile
-
+ 
 
   #profile-details{
     display:flex; 

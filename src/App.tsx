@@ -12,8 +12,8 @@ import SiteWorkerRequest from "./pages/WorkersRequest/SiteWorkerRequest";
 import CreateProjects from "./pages/Projects/CreateProjects";
 import TeamLeaveApplications from "./pages/Leave/TeamLeaveApplications";
 import CreateEmployee from "./pages/all_employees/CreateEmployee";
-import WarningList from "./pages/all_employees/WarningList";
-import WeeklyReport from "./pages/WeeklyReport/WeeklyReport";
+import WarningList from "./pages/warnings/WarningList";
+import WeeklyReport from "./pages/WorkersRequest/WeeklyReport/WeeklyReport";
 import Profile from "./pages/Profile/Profile";
 import AdminEditUser from "./pages/AdminEditUser/AdminEditUser";
 import ForgotPassword from "./pages/auth/forgot-password/Forgot-Password";
@@ -25,19 +25,18 @@ import ViewKPAssessment from "./pages/kpi_assessment/ViewKPAssessment";
 import KPIDetails from "./pages/kpi_assessment/KPIDetails";
 import ViewEmployee from "./pages/all_employees/ViewEmployee";
 import ViewDepartments from "./pages/Departments/ViewDepartments";
-import WeeklyReportView from "./pages/WeeklyReport/WeeklyReportView";
-import TeamWeeklyReport from "./pages/WeeklyReport/TeamWeeklyReport";
-import TeamWeeklyReportUpdate from "./pages/WeeklyReport/TeamWeeklyReportUpdate";
+import WeeklyReportView from "./pages/WorkersRequest/WeeklyReport/WeeklyReportView";
+import TeamWeeklyReport from "./pages/WorkersRequest/WeeklyReport/TeamWeeklyReport";
+import TeamWeeklyReportUpdate from "./pages/WorkersRequest/WeeklyReport/TeamWeeklyReportUpdate";
 import AllLeave from "./pages/Leave/AllLeave";
 import HRUpdateLeave from "./pages/Leave/HRUpdateLeave";
 import FinalLeaveUpdate from "./pages/Leave/FinalLeaveUpdate";
 import TerminationList from "./pages/all_employees/terminations/TerminationList";
-import ViewWarning from "./pages/all_employees/warnings/ViewWarning";
+import ViewWarning from "./pages/warnings/ViewWarning";
 import ViewLeave from "./pages/Leave/ViewLeave";
 import HodLeaveView from "./pages/Leave/HodLeaveView";
 import ViewTerminations from "./pages/all_employees/terminations/ViewTerminations";
 import AttendanceTable from "./pages/HumanResources/attendance/AttendanceTable";
-import EmployeeAttendance from "./pages/EmployeeAttendance/EmployeeAttendance";
 import EmployeeAttendanceTable from "./pages/EmployeeAttendance/table/EmployeeAttendanceTable";
 import UpdatePassword from "./pages/auth/forgot-password/UpdatePassword";
 import PageNotFound from "./pages/404/PageNotFound";
@@ -49,7 +48,7 @@ import DataService from "./utils/dataService";
 import Layout from "./components/Layout";
 import AllEmployees from "./pages/all_employees/AllEmployees";
 import MyKPIAssessment from "./pages/kpi_assessment/MyKPIAssessment";
-import MyWeekReport from "./pages/WeeklyReport/MyWeekReport";
+import MyWeekReport from "./pages/WorkersRequest/WeeklyReport/MyWeekReport";
 import AllKPIReport from "./pages/kpi_assessment/AllKPIReport";
 import TaskList from "./pages/Tasks/TaskList";
 import Team from "./pages/Team/Team";
@@ -63,8 +62,8 @@ import ViewHOD from "./pages/HOD/ViewHOD";
 import ViewRole from "./pages/EmployeeRole/ViewRole";
 import TeamLead from "./components/TeamLead";
 import ViewPrivilage from "./pages/UserPrivilage/ViewPrivilage";
-import ManagerWeeklyReport from "./pages/WeeklyReport/ManagerWeeklyReport";
-import ManagerWeeklyReportView from "./pages/WeeklyReport/ManagerWeeklyReportView";
+import ManagerWeeklyReport from "./pages/WorkersRequest/WeeklyReport/ManagerWeeklyReport";
+import ManagerWeeklyReportView from "./pages/WorkersRequest/WeeklyReport/ManagerWeeklyReportView";
 import AdminKPAssessment from "./pages/kpi_assessment/AdminKPAssessment";
 import TeamLeadProject from "./pages/TeamLeadProjects/TeamLeadProject";
 import ViewTeamLeadProject from "./pages/TeamLeadProjects/ViewTeamLeadProject";
@@ -87,6 +86,7 @@ import PayRunView from "./pages/PayRoll/PayRun/PayRunView";
 import SalaryIncrementView from "./pages/PayRoll/SalaryIncrement/SalaryIncrementView";
 import OneTimePassword from "./pages/OneTimePassword/OneTimePassword";
 import EmailPaySlip from "./pages/PayRoll/Email/EmailPaySlip";
+import PayrollEmployeesEdit from "./pages/PayRoll/Employees/PayrollEmployeesEdit";
 
 
 
@@ -244,7 +244,8 @@ const App: React.FC<any> = () => {
       <Route path="payroll/salaryincrement" element={<SalaryIncrement />} />
       <Route path="payroll/employeesonboarding" element={<EmployeesOnboarding />} />
       <Route path="payroll/payrun" element={<PayRun />} />
-      <Route path="payroll/employeepayrollview" element={<EmployeePayrollView />} />
+      <Route path="payroll/employeepayrollview/:id/details" element={<EmployeePayrollView />} />
+      <Route path="payroll/payrollemployeesedit" element={<PayrollEmployeesEdit />} />
       <Route path="payroll/payrollemployeeview" element={<PayRollEmployeeView />} />
       <Route path="payroll/payrunview" element={<PayRunView />} />
       <Route path="payroll/salaryincrementview" element={<SalaryIncrementView />} />

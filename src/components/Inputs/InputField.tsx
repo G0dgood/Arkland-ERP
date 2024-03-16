@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ErrorMessage, useField } from "formik";
-import { InputFieldProps } from "../../interfaces/input";
+import { InputFieldProps } from "../../pages/interfaces/input";
 
 const InputField = ({
   label,

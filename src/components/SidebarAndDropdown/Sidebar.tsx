@@ -28,7 +28,7 @@ const Sidebar = ({
   handleToggleSidebar,
   collapseNav
 }: any) => {
-  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead, isHeadOfDepartment, isMaster, isSupport } = getUserPrivileges();
+  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin, isTeamLead, isHeadOfDepartment, isMaster, isSupport, isPayrolladmin } = getUserPrivileges();
   // @ts-ignore
   const userInfo: any = dataService.getData(`${process.env.REACT_APP_ERP_USER_INFO}`)
 
@@ -211,24 +211,24 @@ const Sidebar = ({
             </SubMenu>)}
           {/* <MenuItem className='Side__Content' active={pathname === '/support'} icon={<BiSupport size={17} />}>  Support <Link to="/support" /> </MenuItem>
           // <MenuItem className='Side__Content' active={pathname === '/policy'} icon={<BsShield size={17} />}>  Policy <Link to="/policy" /> </MenuItem> */}
-          {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster || isHeadOfDepartment) && (
+          {(isTeamLead || isHRHead || isSuperAdmin || isAdmin || isHrAdmin || isMaster || isHeadOfDepartment || isPayrolladmin) && (
             <SubMenu title={'Pay Roll'} icon={<FaRegAddressCard size={17} />} onClick={() => handleSubMenuClick('dropdown8')}
               open={openDropdown === 'dropdown8'}>
-              {(isSuperAdmin || isHRHead || isHrAdmin) && (
+              {(isSuperAdmin || isHRHead || isHrAdmin || isPayrolladmin) && (
                 <MenuItem onClick={handleMenuItemClick} className='Side__Content' active={pathname === '/payroll/payroll/payrollemployees'}>
                   <Link to="/payroll/payroll/payrollemployees" />Employees</MenuItem>
               )}
-              {(isSuperAdmin || isHRHead || isHrAdmin) && (
+              {(isSuperAdmin || isHRHead || isHrAdmin || isPayrolladmin) && (
                 <MenuItem onClick={handleMenuItemClick} className='Side__Content' active={pathname === '/payroll/payroll/payparameters'}>
                   <Link to="/payroll/payroll/payparameters" />Pay Parameters</MenuItem>
               )}
-              {(isSuperAdmin || isTeamLead || isHeadOfDepartment) && (
+              {(isSuperAdmin || isTeamLead || isHeadOfDepartment || isPayrolladmin) && (
                 <MenuItem onClick={handleMenuItemClick} className='Side__Content' active={pathname === '/payroll/payroll/payrun'}> <Link to="/payroll/payroll/payrun" />Pay Run</MenuItem>
               )}
-              {(isSuperAdmin || isAdmin || isHRHead) && (
+              {(isSuperAdmin || isAdmin || isHRHead || isPayrolladmin) && (
                 <MenuItem onClick={handleMenuItemClick} className='Side__Content' active={pathname === '/payroll/payroll/approvalrequests'}>  <Link to="/payroll/payroll/approvalrequests" />Approved Requests</MenuItem>
               )}
-              {(isSuperAdmin || isAdmin || isHRHead) && (
+              {(isSuperAdmin || isAdmin || isHRHead || isPayrolladmin) && (
                 <MenuItem onClick={handleMenuItemClick} className='Side__Content' active={pathname === '/payroll/payroll/salaryincrement'}>  <Link to="/payroll/payroll/salaryincrement" />Salary Increment</MenuItem>
               )}
             </SubMenu>)}

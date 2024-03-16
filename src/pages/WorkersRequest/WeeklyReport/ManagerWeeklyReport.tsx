@@ -1,24 +1,23 @@
 import { Button } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import TableLoader from '../../components/TableLoader'
-import { NoRecordFound, SearchComponent, TableFetch } from '../../components/TableOptions'
+import TableLoader from '../../../components/TableLoader'
+import { NoRecordFound, SearchComponent, TableFetch } from '../../../components/TableOptions'
 import moment from 'moment'
-import Pagination from '../../components/Pagination'
-import { getHODWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
-import { useAppDispatch, useAppSelector } from '../../store/useStore'
-import Lightboxs from '../../components/Lightboxs'
+import Pagination from '../../../components/Pagination'
+import { managerReport } from '../../../features/WeeklyReport/WeeklyReportSlice'
+import { useAppDispatch, useAppSelector } from '../../../store/useStore'
+import Lightboxs from '../../../components/Lightboxs'
 
 
-
-const TeamWeeklyReport = () => {
+const ManagerWeeklyReport = () => {
 	const dispatch = useAppDispatch();
-	const { HODdata, HODisLoading } = useAppSelector((state: any) => state.Weeklyreport)
+	const { managerdata, managerisLoading } = useAppSelector((state: any) => state.Weeklyreport)
 
 
 	useEffect(() => {
-		// @ts-ignore
-		dispatch(getHODWeeklyReport());
+
+		dispatch(managerReport());
 	}, [dispatch]);
 
 
@@ -27,24 +26,19 @@ const TeamWeeklyReport = () => {
 		return localStorage.getItem("reportsPerPage") || "8";
 	});
 
-
 	const [displayData, setDisplayData] = useState([]);
-
-
-
 	return (
 		<div id="reports">
-			<h5 className="page-title">Team Weekly Report</h5>
-
-			<div className='half-background mt-4' >
-				<SearchComponent sortData={HODdata} entriesPerPage={entriesPerPage} HODWeeklyReport={HODdata} setEntriesPerPage={setEntriesPerPage} placeholder={"Team Weekly Report"} />
+			<h5 className="page-title">Employee Weekly Report</h5>
+			<div className='half-background mt-4'>
+				<SearchComponent sortData={managerdata} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage} placeholder={'Team Weekly Report'} data={managerdata} WeeklyReport={true} />
 				<section className="md-ui component-data-table">
-					{HODisLoading ? <TableLoader isLoading={HODisLoading} /> : ""}
+					{managerisLoading ? <TableLoader isLoading={managerisLoading} /> : ""}
 					<div className="main-table-wrapper">
 						<table className="main-table-content">
 							<thead className="data-table-header">
 								<tr className="data-table-row" >
-									<td className="table-datacell  ">Full Name</td>
+									<td className="table-datacell">Full Name</td>
 									<td className="table-datacell datatype-numeric">Year</td>
 									<td className="table-datacell datatype-numeric">Week</td>
 									<td className="table-datacell datatype-numeric">Self Assessment</td>
@@ -54,20 +48,20 @@ const TeamWeeklyReport = () => {
 								</tr>
 							</thead>
 							<tbody className="data-table-content">
-								{HODisLoading ? (
+								{managerisLoading ? (
 									<TableFetch colSpan={8} />
 								) : displayData?.length === 0 || displayData == null ? (
 									<NoRecordFound colSpan={8} />
 								) : (
 									displayData?.map((item: any, i: any) => (
 										<tr className="data-table-row" key={i}>
-											<td className="table-datacell datatype-numeric"> {item?.employee_name}</td>
-											<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}</td>
+											<td className="table-datacell"> {item?.employee_name}</td>
+											<td className="table-datacell datatype-numeric">{moment(item?.created_at).format("DD-MM-YYYY")}
+											</td>
 											<td className="table-datacell datatype-numeric">{item?.week}</td>
 											<td className="table-datacell datatype-numeric">{item?.self_assessment}</td>
 											<td className="table-datacell datatype-numeric"><Lightboxs img={item?.attachments} /></td>
 											<td className="table-datacell datatype-numeric">
-												{/* <Button className={item?.status === "submitted" ? "table-link " : "table-link-active"}>{item?.status}</Button> */}
 												<div className={item?.status !== "active"
 													? "status is-green  move-svg-left"
 													: "status is-wait move-svg-left"}  >
@@ -80,11 +74,11 @@ const TeamWeeklyReport = () => {
 														</svg>}
 													{item?.status !== "active" ? "Completed" : item?.status}
 												</div>
+												{/* <Button className={item?.status === "submitted" ? "table-link " : "table-link-active"}>{item?.status}</Button> */}
 											</td>
 											<td className="table-datacell datatype-numeric">
-												<Link to={`/weeklyreport/weeklyreport/update/${item?._id}`}>
-
-													<Button id="team-applicatiom-update">	{item?.status === "acknowledged" ? 'View' : 'Update'}</Button>
+												<Link to={`/weeklyreport/weeklyreport/manager/view/${item?._id}`}>
+													<Button id="view-status">View</Button>
 												</Link>
 
 											</td>
@@ -99,14 +93,15 @@ const TeamWeeklyReport = () => {
 				<footer className="main-table-footer">
 					<Pagination
 						setDisplayData={setDisplayData}
-						data={HODdata}
+						data={managerdata}
 						entriesPerPage={entriesPerPage}
 						Total={"Assessment"}
 					/>
 				</footer>
+
 			</div >
 		</div >
 	)
 }
 
-export default TeamWeeklyReport
+export default ManagerWeeklyReport

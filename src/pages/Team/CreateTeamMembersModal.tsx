@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import { fireAlert } from '../../utils/Alert';
 import { createTeamMembers, reset } from '../../features/Team/teamSlice';
@@ -11,13 +10,34 @@ import { InputField } from '../../components/TableOptions';
 import { useNavigate } from 'react-router-dom';
 import { ModalHeader } from '../../components/Modals/ModalOptions';
 import { AiOutlineTeam } from 'react-icons/ai';
+import createHttpService from '../../components/HttpService';
 
 
 const CreateTeamMembers = ({ id }: any) => {
 	const dispatch = useAppDispatch();
 	const { createTeamMembersisLoading, createTeamMembersisSuccess } = useAppSelector((state: any) => state.team)
-	const { data: employee, isLoading } = useAppSelector((state: any) => state.employee)
+	// const { data: employee, isLoading } = useAppSelector((state: any) => state.employee)
 	const navigate = useNavigate();
+
+	const [isLoading, setisLoading] = useState(false);
+	const [employee, setEmployees] = useState<any>([]);
+
+
+	const getData = async () => {
+		const HttpService = createHttpService();
+		setisLoading(true)
+		try {
+			const employees = "hr/employees"
+			const employee: any = await HttpService.get(employees)
+			setEmployees(employee?.data?.data)
+			setisLoading(false)
+
+		} catch (error) {
+			setisLoading(false)
+		}
+	}
+
+	console.log('employee', employee)
 
 	useEffect(() => {
 		dispatch(allEmployee());
@@ -66,7 +86,7 @@ const CreateTeamMembers = ({ id }: any) => {
 	const availableEmployees = [] as any;
 
 	employee &&
-		employee.forEach((employee: any) =>
+		employee?.data?.forEach((employee: any) =>
 			availableEmployees.push({
 				value: employee?.id,
 				label: employee?.full_name,
@@ -111,8 +131,8 @@ const CreateTeamMembers = ({ id }: any) => {
 
 	return (
 		<div>
-			<ul className="nav-tabs-btn mb-3">
-				<li className={"active"} onClick={() => setLgShow(true)}>			Create Team Members</li>
+			<ul className="nav-tabs-btn  ">
+				<li className={"active"} onClick={() => { setLgShow(true); getData() }}>Create Team Members</li>
 			</ul>
 			<Modal
 				size="lg"

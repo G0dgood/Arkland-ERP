@@ -17,7 +17,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 	const [isLoadings, setisLoadings] = useState(false);
 
-	const [employees, setEmployees] = useState([]);
+	const [employees, setEmployees] = useState<any>([]);
 	const [input, setInput] = useState<any>({
 		isEmployee: "",
 	})
@@ -30,6 +30,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 		try {
 			const employees = "hr/employees"
 			const employee: any = await HttpService.get(employees)
+
 			setEmployees(employee?.data?.data)
 			setisLoadings(false)
 
@@ -40,15 +41,22 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 
 
-	const availableEmployees = [] as any;
+	// const availableEmployees = [] as any;
 
-	employees &&
-		employees.forEach((employee: any) =>
-			availableEmployees.push({
-				value: employee?.user,
-				label: employee?.full_name,
-			})
-		);
+	// employees &&
+	// 	employees.forEach((employee: any) =>
+	// 		availableEmployees.push({
+	// 			value: employee?.user,
+	// 			label: employee?.full_name,
+	// 		})
+	// 	);
+
+	const availableEmployees = employees?.data?.map((employee: any) => ({
+		value: employee.id,
+		label: employee.name,
+	})) || [];
+
+
 	const [lgShow, setLgShow] = useState<any>(false);
 	const [inputs, setInputs] = useState({
 		role: "",

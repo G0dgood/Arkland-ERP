@@ -1,12 +1,61 @@
 import { NoRecordFound, TableFetch } from '../../../../components/TableOptions';
 import { useNavigate } from 'react-router-dom';
 import SpecialAllowancesComponent from './SpecialAllowancesComponent';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BulkUpload from '../../../../components/BulkUpload/BulkUpload';
+import { useAppDispatch, useAppSelector } from '../../../../store/useStore';
+import { getPayparameterDetails } from '../../../../features/Payparameters/PayparametersSlice';
 
 const SpecialAllowances = ({ parameter }: any) => {
+	const dispatch = useAppDispatch();
+	const { payparameterDetailsdata, payparameterDetailsisLoading } = useAppSelector((state: any) => state.payparameters)
+
+	console.log('payparameterDetailsdata', payparameterDetailsdata)
+
+
 	const [selectedRadio, setSelectedRadio] = useState("radio-1");
 	const navigate = useNavigate();
+	const [input, setInput] = useState({
+		employee: "Employees",
+		location: "",
+		role: "",
+		department: "",
+		category: "",
+		expatriate: "",
+		monthstopay: "",
+		amount: "",
+		comment: "",
+	})
+
+	const [Query, setQuery] = useState(
+		{
+			size: undefined,
+			page: undefined,
+			sort: undefined,
+			limit: undefined,
+			search: undefined,
+			base: undefined,
+			title: undefined,
+			status: undefined,
+			location: !input?.location ? undefined : input?.location,
+			department: !input?.department ? undefined : input?.department,
+			role: !input?.role ? undefined : input?.role,
+			// @ts-ignore  
+			is_expatriate: !input?.is_expatriate ? undefined : input?.is_expatriate,
+			category: !input?.category ? undefined : input?.category
+		}
+	);
+
+
+	useEffect(() => {
+		// @ts-ignore  
+		dispatch(getPayparameterDetails(Query));
+	}, [Query, dispatch])
+
+
+
+
+
 	const keys = [
 		"Employee",
 		"Pay Period",
@@ -84,7 +133,7 @@ const SpecialAllowances = ({ parameter }: any) => {
 								) : data?.length === 0 || data == null ? (
 									<NoRecordFound colSpan={8} />
 								) : (
-									data.map((item, index) => (
+									data?.map((item, index) => (
 										<tr key={index} className="data-table-row">
 											{Object.values(item).map((value, index) => (
 												<td className="table-datacell" key={index}>{value}</td>

@@ -190,6 +190,8 @@
 import axios from "axios";
 import { fireAlert, fireAlert2 } from "../utils/Alert";
 import DataService from "../utils/dataService";
+import { toast } from 'react-toastify';
+import { customId } from "../shared/shared";
  
 
 
@@ -205,6 +207,8 @@ const createHttpService = () => {
   const config = {
     headers: { Authorization: `Bearer ${token}` }
   };
+
+ 
  
 
   const get = async (url: string) => {
@@ -279,7 +283,7 @@ const uploadFile = (url: string, data: Record<string, any>, files: Record<string
   const headers: HeadersConfig = {
     ...config.headers, // Preserve existing headers
     "content-type": "multipart/form-data",
-  };
+  }; 
 
   const formData = new FormData();
   for (let key in files) {
@@ -316,9 +320,12 @@ const uploadFile = (url: string, data: Record<string, any>, files: Record<string
       // Handle error message
     } else if (e.response.status === 403 && e.response.data.error_code === 24) {
       fireAlert2(e.response.data.message, "You will be redirected!", "warning", "/update-password", "");
+    }else if (e.response.data.message === "") {
+     toast.error(e.response.data.message, { toastId: customId });
     } else if (e.response.data.message === "Request failed with status code 500" ? false : e.response.data.message) {
-      fireAlert("Error", e.response.data.message, "error");
-    }
+      fireAlert("Error", e.response.data.message, "error"); 
+      console.log('e.response.data.message',e.response.data.message)
+    }  
   };
 
  const objectToQueryString = (obj: { [key: string]: string | number | boolean }) => {
@@ -348,4 +355,8 @@ const uploadFile = (url: string, data: Record<string, any>, files: Record<string
   };
 };
 
-export default createHttpService ;
+export default createHttpService;
+
+
+
+// toast.error(e.response.data.message, { toastId: customId });

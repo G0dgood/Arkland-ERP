@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import moment from "moment";
 import SelectField from "../../../components/Inputs/SelectField";
 import InputField from "../../../components/Inputs/InputField";
-import { EmployeeFormProps } from "../../../interfaces/employee";
+import { EmployeeFormProps } from "../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
 import ReactSelectField from "../../../components/Inputs/ReactSelectField";
 import {

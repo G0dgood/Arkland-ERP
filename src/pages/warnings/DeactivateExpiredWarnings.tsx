@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from '../../../store/useStore';
-import { fireAlert } from '../../../utils/Alert';
-import { deactivateWarning, reset } from '../../../features/Employee/employeeSlice';
-import { ModalHeader } from '../../../components/Modals/ModalOptions';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { fireAlert } from '../../utils/Alert';
+import { deactivateWarning, reset } from '../../features/Employee/employeeSlice';
+import { ModalHeader } from '../../components/Modals/ModalOptions';
 import { IoMdWarning } from 'react-icons/io';
 
 const DeactivateExpiredWarnings = () => {

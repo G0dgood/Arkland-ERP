@@ -16,9 +16,6 @@ const ViewScheduleModal = ({ id }: any) => {
 	const [viewShow, setLgShow] = useState(false)
 
 
-
-
-
 	const priorityOptions = ["Lowest priority", "Low priority", "Medium priority", "High priority", "Top priority"]
 	const difficultyOptions = ["Very easy", "Easy", "Moderate", "Challenging", "Very challenging"]
 
@@ -28,7 +25,6 @@ const ViewScheduleModal = ({ id }: any) => {
 	const handleClick = (id: any) => {
 		// @ts-ignore
 		dispatch(viewTask(id));
-
 	}
 
 	return (

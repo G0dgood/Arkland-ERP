@@ -1,9 +1,10 @@
 import { Button } from '@material-ui/core';
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import { AiOutlineFileDone } from 'react-icons/ai';
 import { MdOutlineClose } from 'react-icons/md';
+import { customId } from '../shared/shared';
 
 
 const Lightboxs = ({ img }: any) => {
@@ -12,7 +13,7 @@ const Lightboxs = ({ img }: any) => {
 
 
 	const showAlert = () => {
-		toast.error("No file Avialable");
+		toast.error("No file Avialable!", { toastId: customId })
 	};
 
 	return (

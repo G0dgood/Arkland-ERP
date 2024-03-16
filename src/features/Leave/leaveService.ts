@@ -1,12 +1,13 @@
 import createHttpService from '../../components/HttpService';
-import HttpService from '../../components/HttpService'
+ 
  
  
   
  
 const createLeave = async (input: any) => { 
   const HttpService = createHttpService();
-  const  {data} : any = await HttpService.post("leaves", input)
+  const { data }: any = await HttpService.post("leaves", input)
+  console.log('createLeave',createLeave)
   return data
 }
 

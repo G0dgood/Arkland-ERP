@@ -47,9 +47,9 @@ const CreateTaskModal = ({ view }: any) => {
 		const HttpService = createHttpService();
 		// setisLoading(true)
 		try {
-			const teamsUrl = `employees/users`
-			const teams: any = await HttpService.get(teamsUrl)
-			setTeamsLead(teams?.data?.data)
+			const employeeUrl = `employees`
+			const employee: any = await HttpService.get(employeeUrl)
+			setTeamsLead(employee?.data?.data?.data)
 
 			// setisLoading(false)
 
@@ -85,7 +85,7 @@ const CreateTaskModal = ({ view }: any) => {
 				centered
 			>
 
-				<ModalHeader setLgShow={setLgShow} icon={<BsListTask size={30} />} title={"Create Task"} subtitle={" Create A New Task"} />
+				<ModalHeader setLgShow={setLgShow} icon={<BsListTask size={30} />} title={"Create Task"} subtitle={" Create a new task"} />
 				<Modal.Body>
 					<Formik
 						initialValues={{

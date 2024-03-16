@@ -5,7 +5,7 @@ import moment from "moment";
 import PhoneInput from "react-phone-input-2";
 import InputField from "../../../components/Inputs/InputField";
 import SelectField from "../../../components/Inputs/SelectField";
-import { EmployeeFormProps } from "../../../interfaces/employee";
+import { EmployeeFormProps } from "../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
 import {
   ACADEMIC_QUALIFICATIONS,

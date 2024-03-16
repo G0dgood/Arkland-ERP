@@ -26,7 +26,7 @@ const TeamLeadView = () => {
 	}, [dispatch, id]);
 
 
-
+	console.log('viewdata', viewdata)
 
 
 

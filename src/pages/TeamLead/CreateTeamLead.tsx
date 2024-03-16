@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Button } from '@material-ui/core';
 import { Modal, Spinner } from 'react-bootstrap';
-import { MdOutlineClose } from 'react-icons/md';
+
 import SelectInput from '../../components/SelectInput';
 import { fireAlert } from '../../utils/Alert';
 import { createTeamLead, reset } from '../../features/TeamLead/teamleadSlice';
 import { useAppDispatch, useAppSelector } from '../../store/useStore';
 import createHttpService from '../../components/HttpService';
-import { AiOutlineTeam } from 'react-icons/ai';
+
 import { ModalHeader } from '../../components/Modals/ModalOptions';
 import { BsBuilding } from 'react-icons/bs';
 
@@ -16,11 +16,12 @@ const CreateTeamLead = () => {
 	const { createisError, createisLoading, createmessage, createisSuccess } = useAppSelector((state: any) => state.teamlead)
 
 
-
 	const [isLoading, setisLoading] = useState<any>([]);
 	const [team, setTeam] = useState<any>([]);
 	const [departments, setDepartments] = useState<any>([]);
 	const [employees, setEmployees] = useState<any>([]);
+
+	console.log("departments", team, departments, employees)
 
 	const getData = async () => {
 		const HttpService = createHttpService();
@@ -34,9 +35,11 @@ const CreateTeamLead = () => {
 			const departments: any = await HttpService.get(departmentsUrl)
 			setDepartments(departments?.data?.data)
 
-			const teamUrl = "hr/teams"
+			const teamUrl = `teams`
 			const team: any = await HttpService.get(teamUrl)
 			setTeam(team?.data?.data)
+
+
 			setisLoading(false)
 
 		} catch (error) {
@@ -44,6 +47,29 @@ const CreateTeamLead = () => {
 		}
 	}
 
+	// const getData = async () => {
+	// 	const HttpService = createHttpService();
+	// 	setisLoading(true);
+
+	// 	try {
+	// 		const fetchData = async (url: string, setDataFunction: { (value: SetStateAction<never[]>): void; (arg0: any): void; }) => {
+	// 			const response = await HttpService.get(url);
+	// 			setDataFunction(response?.data?.data);
+	// 		};
+
+	// 		const endpoints = [
+	// 			{ url: "hr/employees", setter: setEmployees },
+	// 			{ url: "hr/departments", setter: setDepartments },
+	// 			{ url: "hr/teams", setter: setTeam },
+	// 		];
+
+	// 		await Promise.all(endpoints.map(({ url, setter }) => fetchData(url, setter)));
+	// 	} catch (error) {
+	// 		console.error("Error fetching data:", error);
+	// 	} finally {
+	// 		setisLoading(false);
+	// 	}
+	// };
 
 
 	const [Show, setLgShow] = useState(false);
@@ -60,9 +86,6 @@ const CreateTeamLead = () => {
 		user: "",
 		department: "",
 	})
-
-
-
 
 
 	useEffect(() => {
@@ -91,36 +114,22 @@ const CreateTeamLead = () => {
 		dispatch(createTeamLead(inputs));
 	}
 
-	const availableEmployees = [] as any;
-
-	employees &&
-		employees.forEach((employee: any) =>
-			availableEmployees.push({
-				value: employee?.user,
-				label: employee?.full_name,
-			})
-		);
-
-	const availableTeam = [] as any;
-
-	team &&
-		team.forEach((team: any) =>
-			availableTeam.push({
-				value: team?.id,
-				label: team?.name,
-			})
-		);
 
 
-	const availabledepartment = [] as any;
 
-	departments &&
-		departments.forEach((department: any) =>
-			availabledepartment.push({
-				value: department?.id,
-				label: department?.name,
-			})
-		);
+	const availabledepartment = departments?.map((departments: any) => ({
+		value: departments.id,
+		label: departments.name,
+	})) || [];
+	const availableEmployees = employees?.data?.map((employee: any) => ({
+		value: employee.id,
+		label: employee?.full_name,
+	})) || [];
+
+	const availableTeam = team?.map((teamLeads: any) => ({
+		value: teamLeads?.id,
+		label: teamLeads?.name,
+	})) || [];
 
 
 	const handleOnChange1 = (input: any, value: any) => {
@@ -129,6 +138,8 @@ const CreateTeamLead = () => {
 			[input]: value,
 		}));
 	};
+
+	console.log('availableEmployees', employees)
 
 	return (
 		<div>
@@ -175,7 +186,6 @@ const CreateTeamLead = () => {
 							<div className="Modal-textarea-middle">
 								<div className="col">
 									<div className="form-group">
-
 										<SelectInput
 											label="User"
 											isDisabled={isLoading}
@@ -191,7 +201,6 @@ const CreateTeamLead = () => {
 							<div className="Modal-textarea-middle">
 								<div className="col">
 									<div className="form-group">
-
 										<SelectInput
 											label="Department"
 											isDisabled={isLoading}
@@ -219,7 +228,6 @@ const CreateTeamLead = () => {
 							</div>
 						</div>
 					</div>
-
 				</Modal.Body>
 			</Modal>
 		</div >

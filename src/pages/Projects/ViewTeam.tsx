@@ -19,6 +19,8 @@ const ViewTeam = () => {
 	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.team)
 	const { memberdata, memberisLoading } = useAppSelector((state: any) => state.team)
 
+	console.log('viewdata', viewdata)
+
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(viewTeam(id));

@@ -6,6 +6,7 @@ import Pagination from '../../../components/Pagination';
 import { useNavigate } from 'react-router-dom';
 import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import PayRunComponent from './PayRunComponent';
+import { Helmet } from 'react-helmet-async';
 
 
 
@@ -85,103 +86,108 @@ const PayRun = () => {
 
 
 	return (
-		<div id="reports">
-			<h5 className="page-title">Pay Run</h5>
+		<>
+			<Helmet>
+				<title>Pay Run | Arkland ERP</title>
+			</Helmet>
+			<div id="reports">
+				<h5 className="page-title">Pay Run</h5>
 
-			<ul className="nav-tabs-btn mb-3">
+				<ul className="nav-tabs-btn mb-3">
 
-			</ul>
-			<div className='half-background '>
-				<SearchComponent sortData={sortData} entriesPerPage={entriesPerPage} setEntriesPerPage={entriesPerPage} parameter={false} addemployee={true} placeholder={"Employees"} emailpayslip={true} CSV={true} />
+				</ul>
+				<div className='half-background '>
+					<SearchComponent sortData={sortData} entriesPerPage={entriesPerPage} setEntriesPerPage={entriesPerPage} parameter={false} addemployee={true} placeholder={"Employees"} emailpayslip={true} CSV={true} />
 
-				<PayRunComponent />
-				<section className="md-ui component-data-table">
-					{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
-					<div className="main-table-wrapper">
-						<table className="main-table-content">
-							<thead className="data-table-header">
-								<tr className="data-table-row">
-									{keys.map((i, index) => {
-										return (
-											<>
-												<td
-													className="table-datacell datatype-numeric"
-													key={index} >
-													{i}
-												</td>
-											</>
-										);
-									})}
-								</tr>
-							</thead>
+					<PayRunComponent />
+					<section className="md-ui component-data-table">
+						{/* {isLoading ? <TableLoader isLoading={isLoading} /> : ""} */}
+						<div className="main-table-wrapper">
+							<table className="main-table-content">
+								<thead className="data-table-header">
+									<tr className="data-table-row">
+										{keys.map((i, index) => {
+											return (
+												<>
+													<td
+														className="table-datacell datatype-numeric"
+														key={index} >
+														{i}
+													</td>
+												</>
+											);
+										})}
+									</tr>
+								</thead>
 
-							<tbody className="data-table-content">
-								{
-									false ? (
-										<TableFetch colSpan={8} />
-									) : data?.length === 0 || data == null ? (
-										<NoRecordFound colSpan={8} />
-									) : (
+								<tbody className="data-table-content">
+									{
+										false ? (
+											<TableFetch colSpan={8} />
+										) : data?.length === 0 || data == null ? (
+											<NoRecordFound colSpan={8} />
+										) : (
 
-										data.map((item, index) => (
-											<tr key={index} className="data-table-row">
-												<td className="table-datacell datatype-numeric">
-													<h4>Precious Damola</h4>
-													<p style={{ fontSize: "12px", color: "#808080" }}>28/1/2023</p>
-												</td>
-												<td className="table-datacell datatype-numeric"> 1</td>
-												<td className="table-datacell datatype-numeric">₦56000888888</td>
-												<td className="table-datacell datatype-numeric">22</td>
-												<td className="table-datacell datatype-numeric">900</td>
-												<td className="table-datacell datatype-numeric">Location </td>
-												<td className="table-datacell datatype-numeric">Department</td>
-												<td className="table-datacell datatype-numeric">Lapaz</td>
-												<td className="table-datacell datatype-numeric">ACTIVE</td>
-												<td className="table-datacell datatype-numeric">
-													<Button id="view-status" onClick={() => navigate(`/payroll/payroll/payrunview`)}>View</Button>
-												</td>
-												<td className="table-datacell datatype-numeric">
-													<Button id="close-puy-btn" onClick={() => navigate(``)}>Close Pay Run</Button>
-												</td>
-											</tr>
-										))
-									)}
-							</tbody>
-						</table>
-					</div>
+											data.map((item, index) => (
+												<tr key={index} className="data-table-row">
+													<td className="table-datacell datatype-numeric">
+														<h4>Precious Damola</h4>
+														<p style={{ fontSize: "12px", color: "#808080" }}>28/1/2023</p>
+													</td>
+													<td className="table-datacell datatype-numeric"> 1</td>
+													<td className="table-datacell datatype-numeric">₦56000888888</td>
+													<td className="table-datacell datatype-numeric">22</td>
+													<td className="table-datacell datatype-numeric">900</td>
+													<td className="table-datacell datatype-numeric">Location </td>
+													<td className="table-datacell datatype-numeric">Department</td>
+													<td className="table-datacell datatype-numeric">Lapaz</td>
+													<td className="table-datacell datatype-numeric">ACTIVE</td>
+													<td className="table-datacell datatype-numeric">
+														<Button id="view-status" onClick={() => navigate(`/payroll/payroll/payrunview`)}>View</Button>
+													</td>
+													<td className="table-datacell datatype-numeric">
+														<Button id="close-puy-btn" onClick={() => navigate(``)}>Close Pay Run</Button>
+													</td>
+												</tr>
+											))
+										)}
+								</tbody>
+							</table>
+						</div>
 
 
-				</section>
+					</section>
 
-				<footer className="main-table-footer">
+					<footer className="main-table-footer">
 
-					<div className="paginations">
-						<ul>
-							<li className="prev">
-								<a >
-									<MdArrowBackIos />
-								</a>
-							</li>
-							<li><a>1</a></li>
-							<li className="active"><a>2</a></li>
-							<li><a>3</a></li>
-							<li><a>4</a></li>
-							<li><a>5</a></li>
-							<li><span className="delimeter">...</span></li>
-							<li><a>8</a></li>
-							<li className="next">
-								<a ><MdArrowForwardIos /></a></li>
-						</ul>
-					</div>
-					{/* <Pagination
+						<div className="paginations">
+							<ul>
+								<li className="prev">
+									<a >
+										<MdArrowBackIos />
+									</a>
+								</li>
+								<li><a>1</a></li>
+								<li className="active"><a>2</a></li>
+								<li><a>3</a></li>
+								<li><a>4</a></li>
+								<li><a>5</a></li>
+								<li><span className="delimeter">...</span></li>
+								<li><a>8</a></li>
+								<li className="next">
+									<a ><MdArrowForwardIos /></a></li>
+							</ul>
+						</div>
+						{/* <Pagination
 						setDisplayData={setDisplayData}
 						data={sortData}
 						entriesPerPage={entriesPerPage}
 						Total={"Employee"}
 					/> */}
-				</footer>
+					</footer>
+				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 

@@ -6,6 +6,7 @@ import RunSpecificItemsTable from './ RunSpecificItemsTable';
 import GroupPayRunTable from './GroupPayRunTable';
 import RunSpecificItems from './ RunSpecificItems';
 import GroupPayRun from './GroupPayRun';
+import { Helmet } from 'react-helmet-async';
 
 const PayRunComponent = () => {
 
@@ -45,50 +46,55 @@ const PayRunComponent = () => {
 
 
 	return (
-		<div className='specialallowancescomponent'>
-			<div className='mt-5'>
+		<>
+			<Helmet>
+				<title>Pay Run Component | Arkland ERP</title>
+			</Helmet>
+			<div className='specialallowancescomponent'>
+				<div className='mt-5'>
 
-				<div id='entry-radio-btn-container'>
-					<div className="radio" id='entry-radio-btn'>
-						<p className='check-title'>Run Specific Items</p>
-						<input
-							id="radio-1"
-							name="radio"
-							type="radio"
-							checked={selectedRadio === 'radio-1'}
-							onChange={() => handleRadioChange('radio-1')}
-						/>
-						<label htmlFor="radio-1" className="radio-label"></label>
-					</div>
+					<div id='entry-radio-btn-container'>
+						<div className="radio" id='entry-radio-btn'>
+							<p className='check-title'>Run Specific Items</p>
+							<input
+								id="radio-1"
+								name="radio"
+								type="radio"
+								checked={selectedRadio === 'radio-1'}
+								onChange={() => handleRadioChange('radio-1')}
+							/>
+							<label htmlFor="radio-1" className="radio-label"></label>
+						</div>
 
-					<div className="radio" id='entry-radio-btn'>
-						<p className='check-title' >Group Pay Run</p>
-						<input
-							id="radio-2"
-							name="radio"
-							type="radio"
-							checked={selectedRadio === 'radio-2'}
-							onChange={() => handleRadioChange('radio-2')}
-						/>
-						<label htmlFor="radio-2" className="radio-label"></label>
+						<div className="radio" id='entry-radio-btn'>
+							<p className='check-title' >Group Pay Run</p>
+							<input
+								id="radio-2"
+								name="radio"
+								type="radio"
+								checked={selectedRadio === 'radio-2'}
+								onChange={() => handleRadioChange('radio-2')}
+							/>
+							<label htmlFor="radio-2" className="radio-label"></label>
+						</div>
 					</div>
+					{/* Run Specific Items Conponent */}
+					{selectedRadio === "radio-1" ? <RunSpecificItems /> :
+						selectedRadio === "radio-2" ? <GroupPayRun /> :
+							<RunSpecificItems />}
+
+
 				</div>
-				{/* Run Specific Items Conponent */}
-				{selectedRadio === "radio-1" ? <RunSpecificItems /> :
-					selectedRadio === "radio-2" ? <GroupPayRun /> :
-						<RunSpecificItems />}
+				{selectedRadio === "radio-1" ?
+					<RunSpecificItemsTable data={data} keys={keys} /> :
+					selectedRadio === "radio-2" ?
+						<GroupPayRunTable data={data} keys={keys} />
+						: <div className='BsFileEarmarkText'>
+							<BsFileEarmarkText size={100} color='#808080' />
+						</div>}
 
-
-			</div>
-			{selectedRadio === "radio-1" ?
-				<RunSpecificItemsTable data={data} keys={keys} /> :
-				selectedRadio === "radio-2" ?
-					<GroupPayRunTable data={data} keys={keys} />
-					: <div className='BsFileEarmarkText'>
-						<BsFileEarmarkText size={100} color='#808080' />
-					</div>}
-
-		</div >
+			</div >
+		</>
 	)
 }
 

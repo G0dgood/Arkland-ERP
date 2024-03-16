@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
-import projectBack from "../../../assets/vectors/project-back.svg";
-import { useAppDispatch, useAppSelector } from "../../../store/useStore";
-import RequestEmployeeTerminationModal from "../../../components/Modals/RequestEmployeeTerminationModal";
-import { viewWarning } from "../../../features/Employee/employeeSlice";
+import projectBack from "../../assets/vectors/project-back.svg";
+import { useAppDispatch, useAppSelector } from "../../store/useStore";
+import RequestEmployeeTerminationModal from "../../components/Modals/RequestEmployeeTerminationModal";
+import { viewWarning } from "../../features/Employee/employeeSlice";
 import UpdateWarning from "./UpdateWarning";
-import { capitalizeFirstLetters } from "../../../components/CapitalizeFirstLetters";
-import { SVGLoader } from "../../../components/SVGLoader";
+import { capitalizeFirstLetters } from "../../components/CapitalizeFirstLetters";
+import { SVGLoader } from "../../components/SVGLoader";
 
 
 

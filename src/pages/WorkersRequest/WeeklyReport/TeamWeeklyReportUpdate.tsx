@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
-import { fireAlert } from '../../utils/Alert';
+import { fireAlert } from '../../../utils/Alert';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
-import TableLoader from '../../components/TableLoader';
+import TableLoader from '../../../components/TableLoader';
 import WeeklyReportTable from './WeeklyReportTable';
 import moment from 'moment';
-import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { acknowledgeReport, reset, viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/useStore';
+import { acknowledgeReport, reset, viewWeeklyReport } from '../../../features/WeeklyReport/WeeklyReportSlice';
 
 
 

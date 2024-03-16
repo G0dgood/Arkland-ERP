@@ -33,6 +33,8 @@ const FullBarChart = ({ departments, employees, setShow, show, fullscreen }: any
     people?.push(item[1]?.length)
   );
 
+  console.log('employees', employees)
+
   // filters number of employees in each department
   useEffect(() => {
     const newData: any = [];

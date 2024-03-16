@@ -37,7 +37,6 @@ const CreateEmployeeView = ({ active, employee, departments, roles }: any) => {
     medical_allowance: "",
     housing_allowance: "",
     transportation_allowance: "",
-
   });
 
   useEffect(() => {

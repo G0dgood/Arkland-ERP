@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SpecialAllowances from './SpecialAllowances/SpecialAllowances';
 import { SearchComponent } from '../../../components/TableOptions';
 import DailyTransportAllowance from './DailyTransportAllowance /DailyTransportAllowance';
@@ -12,13 +12,44 @@ import EndOfYearBonus from './EndOfYearBonus /EndOfYearBonus';
 import LeaveArrears from './LeaveArrears /LeaveArrears';
 import SponsorshipAllowance from './SponsorshipAllowance/SponsorshipAllowance';
 import Bonus from './Bonus /Bonus';
+import { getPayparameters } from '../../../features/Payparameters/PayparametersSlice';
+import { useAppDispatch } from '../../../store/useStore';
 
 const Allowances = () => {
-
+	const dispatch = useAppDispatch();
 	const [selectedOption, setSelectedOption] = useState<any>({
 		"value": 1,
-		"label": " Special Allowances"
+		"label": "Special Allowances"
 	});
+	const [Query, setQuery] = useState(
+		{
+			size: undefined,
+			page: undefined,
+			sort: undefined,
+			limit: undefined,
+			search: undefined,
+			base: undefined,
+			title: undefined,
+			status: undefined
+		}
+	)
+	const handleQueryClick = () => {
+		// @ts-ignore  
+		dispatch(getPayparameters(Query));
+	};
+
+	useEffect(() => {
+		// @ts-ignore  
+		dispatch(getPayparameters(Query));
+		if (selectedOption) {
+			// @ts-ignore  
+			dispatch(getPayparameters(Query));
+		}
+	}, [Query, dispatch, selectedOption])
+
+
+
+
 	const [parameter, setParameter] = useState<any>(false);
 
 	const handleParameter = () => {

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import WeeklyReportTable5 from '../../components/table_component/WeeklyReportTable5'
+import WeeklyReportTable5 from '../../../components/table_component/WeeklyReportTable5'
 import { useNavigate, useParams } from 'react-router-dom'
-import { fireAlert } from '../../utils/Alert'
-import TableLoader from '../../components/TableLoader'
+import { fireAlert } from '../../../utils/Alert'
+import TableLoader from '../../../components/TableLoader'
 import { Button } from '@material-ui/core'
 import { Spinner } from 'react-bootstrap'
-import { deleteWeeklyReport, reset, updateWeeklyReport, viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice'
+import { deleteWeeklyReport, reset, updateWeeklyReport, viewWeeklyReport } from '../../../features/WeeklyReport/WeeklyReportSlice'
 import moment from 'moment'
-import { useAppDispatch, useAppSelector } from '../../store/useStore'
+import { useAppDispatch, useAppSelector } from '../../../store/useStore'
 
 const WeeklyReportView = () => {
 	const { viewdata, viewisLoading } = useAppSelector((state: any) => state.Weeklyreport)

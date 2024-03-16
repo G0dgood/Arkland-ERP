@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import { Button } from '@material-ui/core';
 import { MdOutlineClose } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from '../../../store/useStore';
-import { reset, responseWarning } from '../../../features/Employee/employeeSlice';
-import { fireAlert } from '../../../utils/Alert';
+import { useAppDispatch, useAppSelector } from '../../store/useStore';
+import { reset, responseWarning } from '../../features/Employee/employeeSlice';
+import { fireAlert } from '../../utils/Alert';
 import { useNavigate } from 'react-router-dom';
 
 

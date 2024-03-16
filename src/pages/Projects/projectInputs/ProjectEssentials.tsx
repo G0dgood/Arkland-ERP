@@ -2,7 +2,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "../../../components/Inputs/InputField";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
-import { ProjectFormProps } from "../../../interfaces/project";
+import { ProjectFormProps } from "../../interfaces/project";
 import ReactSelectField from "../../../components/Inputs/ReactSelectField";
 import CountrySelectField from "../../../components/Inputs/CountrySelectField";
 import { formatDate } from "../../../utils/formatDate";

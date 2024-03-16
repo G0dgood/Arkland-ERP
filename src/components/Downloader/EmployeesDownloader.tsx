@@ -60,11 +60,6 @@ const EmployeesDownloader = ({ data }: any) => {
   return (
     <CSVLink data={exportData} headers={headers} filename={csvdate}>
 
-      {/* <Button
-        variant="contained"
-        className="add-experience" >
-        <AiOutlineDownload size={25} />
-      </Button> */}
       <Button className='CSV-button'   >
         <RiDownloadLine size={15} /> CSV
       </Button>

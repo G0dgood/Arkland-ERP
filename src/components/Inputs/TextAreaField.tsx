@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ErrorMessage, useField } from "formik";
-import { InputFieldProps } from "../../interfaces/input";
+import { InputFieldProps } from "../../pages/interfaces/input";
 
 const TextAreaField = ({
   label,
@@ -35,9 +35,8 @@ const TextAreaField = ({
     <div className={`input ${className ? className : ""}`}>
       <label
         htmlFor={field.name}
-        className={`input__label ${meta.touched && meta.error && "error"} ${
-          labelColor ? "focused" : ""
-        }`}
+        className={`input__label ${meta.touched && meta.error && "error"} ${labelColor ? "focused" : ""
+          }`}
       >
         {label}
       </label>

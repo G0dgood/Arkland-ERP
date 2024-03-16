@@ -1,6 +1,5 @@
 import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import TableLoader from "../../components/TableLoader";
@@ -20,7 +19,8 @@ import DrawerComponent from '../../components/DrawerComponent';
 
 
 const AllEmployees = () => {
- const { isSuperAdmin, isAdmin, isMaster } = getUserPrivileges();
+
+ const { isSuperAdmin, isAdmin, isMaster, isPayrolladmin } = getUserPrivileges();
  const dispatch = useAppDispatch();
  const { data, isLoading } = useAppSelector((state: any) => state.employee)
  const { approveisSuccess } = useAppSelector((state: any) => state.employee)
@@ -28,14 +28,38 @@ const AllEmployees = () => {
  const [displayData, setDisplayData] = useState([]);
  const [searchItem, setSearchItem] = useState("");
  const [sortedItem, setSortedItem] = useState([]);
+
+
+ const [Query, setQuery] = useState(
+  {
+   size: undefined,
+   page: undefined,
+   sort: true,
+   limit: undefined,
+   search: undefined,
+   base: undefined
+  }
+ );
+
+
+
+ const handleQueryClick = () => {
+  // @ts-ignore  
+  dispatch(allEmployee(Query));
+ };
+
+
+
+
  const navigate = useNavigate();
 
 
- console.log('data', data)
+
 
  useEffect(() => {
-  dispatch(allEmployee());
- }, [dispatch]);
+  // @ts-ignore  
+  dispatch(allEmployee(Query));
+ }, [Query, dispatch]);
 
 
  useEffect(() => {
@@ -48,8 +72,8 @@ const AllEmployees = () => {
 
  // Function to sort data by status, with "In Review" first, and then alphabetically by name
  const sortDataByReview = (data: any[]) => {
-  const inReviewData = data?.filter((item) => item?.status === 'in review');
-  const otherData = data?.filter((item) => item?.status !== 'in review');
+  const inReviewData = !data ? [] : data?.filter((item) => item?.status === 'in review');
+  const otherData = !data ? [] : data?.filter((item) => item?.status !== 'in review');
   const sortedInReview = inReviewData?.sort((a, b) => a?.full_name?.localeCompare(b?.full_name));
   const sortedOther = otherData?.sort((a, b) => a?.full_name?.localeCompare(b?.full_name));
   return [...sortedInReview, ...sortedOther];
@@ -67,9 +91,9 @@ const AllEmployees = () => {
    // @ts-ignore  
    suggestion?.email?.toLowerCase()?.startsWith(searchItem?.toLowerCase()) ||
    // @ts-ignore  
-   suggestion?.role?.name?.toLowerCase()?.startsWith(searchItem?.toLowerCase()) ||
+   suggestion?.role?.toLowerCase()?.startsWith(searchItem?.toLowerCase()) ||
    // @ts-ignore  
-   suggestion?.department?.name?.toLowerCase()?.startsWith(searchItem?.toLowerCase())
+   suggestion?.department?.toLowerCase()?.startsWith(searchItem?.toLowerCase())
   );
   setSortedItem(unLinked)
 
@@ -109,30 +133,29 @@ const AllEmployees = () => {
  };
 
  return (
-
   <div id="reports">
    <DrawerComponent isOpen={isDrawerOpen} onClose={toggleDrawer} />
-   <h5 className="page-title">Warning List</h5>
+   <h5 className="page-title">Employee List</h5>
    <ul className="nav-tabs-btn mb-3">
     <li className={"active"} onClick={() => navigate("/employees/employees/create")}>Create Employee</li>
     <UploadEmployee />
    </ul>
    <div className='half-background'>
-    <SearchComponent sortData={displayData} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage} parameter={false} addemployee={false} placeholder={"Warnings"} employeesDownloader={sortedItem} EmployeesCSV={true} />
+    <SearchComponent sortData={displayData} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage} parameter={false} addemployee={false} placeholder={"Employee"} employeesDownloader={sortedItem} EmployeesCSV={true} setQuery={setQuery} handleQuery={handleQueryClick} />
     <section className="md-ui component-data-table">
      {isLoading ? <TableLoader isLoading={isLoading} /> : ""}
      <div className="main-table-wrapper">
       <table className="main-table-content">
        <thead className="data-table-header">
         <tr className="data-table-row">
-         <td className="table-datacell"  >  </td>
+         {/* <td className="table-datacell"  >  </td> */}
          <td className="table-datacell"  > FULL NAME </td>
          <td className="table-datacell datatype-numeric"  > EMAIL </td>
          <td className="table-datacell datatype-numeric"  > ROLE </td>
          <td className="table-datacell datatype-numeric"  > DEPARTMENT </td>
          <td className="table-datacell datatype-numeric"  > CATEGORY </td>
          <td className="table-datacell datatype-numeric"  > STATUS</td>
-         {(isSuperAdmin || isAdmin || isMaster) && (
+         {(isSuperAdmin || isAdmin || isMaster || isPayrolladmin) && (
           <td className="table-datacell datatype-numeric"  > Employee</td>
          )}
          <td className="table-datacell datatype-numeric"  > ACTION</td>
@@ -146,7 +169,7 @@ const AllEmployees = () => {
         ) : (
          displayData?.map((item: any, i: any) => (
           <tr className="data-table-row" key={i}>
-           <td>
+           {/* <td>
             <div className="md-checkbox">
              <input id={i}
               type="checkbox"
@@ -154,7 +177,7 @@ const AllEmployees = () => {
               onChange={() => handleCheckboxChange(item?.id)} />
              <label htmlFor={i}> </label>
             </div>
-           </td>
+           </td> */}
            <td className="table-datacell  ">
             {item?.full_name}
            </td>
@@ -162,10 +185,10 @@ const AllEmployees = () => {
             {item?.email}
            </td>
            <td className="table-datacell">
-            {/* {item?.role?.name} */}
+            {item?.role}
            </td>
            <td className="table-datacell  ">
-            {/* {item?.department?.name} */}
+            {item?.department}
            </td>
            <td className="table-datacell datatype-numeric">
             {/* {item?.category} */}
@@ -182,7 +205,7 @@ const AllEmployees = () => {
              )}
             </td>)}
            <td className="table-datacell datatype-numeric">
-            <Button id="view-status" onClick={() => navigate(`/employees/employees/${data?.id}`)} >
+            <Button id="view-status" onClick={() => navigate(`/employees/employees/${item?.id}`)} >
              View More
             </Button>
             {/* <div className="table-active-items" key={i}>

@@ -11,7 +11,7 @@ import TableLoader from "../../components/TableLoader";
 import { useAppDispatch, useAppSelector } from "../../store/useStore";
 import { getWarning } from "../../features/Employee/employeeSlice";
 import { Button } from "@material-ui/core";
-import DeactivateExpiredWarnings from "./warnings/DeactivateExpiredWarnings";
+import DeactivateExpiredWarnings from "./DeactivateExpiredWarnings";
 import { capitalizeFirstLetters } from "../../components/CapitalizeFirstLetters";
 
 
@@ -30,7 +30,7 @@ const WarningList = () => {
  }, [deactivateWarningisSuccess, dispatch]);
 
 
-
+ console.log('warningdata', warningdata)
 
 
  const header = [
@@ -98,7 +98,7 @@ const WarningList = () => {
         ) : displayData?.length === 0 || displayData == null ? (
          <NoRecordFound colSpan={8} />
         ) : (
-         displayData.map((item: any, i: any) => (
+         displayData?.map((item: any, i: any) => (
           <tr className="data-table-row" key={i}>
            <td className="table-datacell  ">
             {item?.employee?.full_name}
@@ -132,7 +132,7 @@ const WarningList = () => {
       setDisplayData={setDisplayData}
       data={warningdata?.data}
       entriesPerPage={entriesPerPage}
-      Total={"Employee"}
+      Total={"Warning"}
      />
     </footer>
    </div>

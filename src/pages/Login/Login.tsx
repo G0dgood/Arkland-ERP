@@ -49,8 +49,7 @@ const Login = () => {
       const response: any = await HttpService.post("auth/login", values)
       // const token = response.data.token
       // HttpService.setToken(token); // Set the token in HttpService
-      // dataService.setToken(token)
-      console.log('response.data', response)
+      // dataService.setToken(token) 
       const { department, role, employee, privileges, notifications, data: { user } } = response.data
       const userInfo = { department, role, employee, privileges, notifications }
       dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)

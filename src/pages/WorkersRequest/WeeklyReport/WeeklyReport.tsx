@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
-import WeeklyReportTable from '../../components/table_component/WeeklyReportTable';
+import WeeklyReportTable from '../../../components/table_component/WeeklyReportTable';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdPostAdd } from 'react-icons/md';
-import { fireAlert } from '../../utils/Alert';
+import { fireAlert } from '../../../utils/Alert';
 import { Spinner } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
-import { useAppDispatch } from '../../store/useStore';
-import DataService from '../../utils/dataService';
+import { useAppDispatch } from '../../../store/useStore';
+import DataService from '../../../utils/dataService';
 import Uploadfile from './Uploadfile';
 import { useNavigate } from 'react-router-dom';
-import createHttpService from '../../components/HttpService';
+import createHttpService from '../../../components/HttpService';
 
 const dataService = new DataService()
 const WeeklyReport = ({ setIsCheck }: any) => {

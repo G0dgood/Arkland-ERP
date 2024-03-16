@@ -1,5 +1,5 @@
 import createHttpService from '../../components/HttpService';
-import HttpService from '../../components/HttpService'
+
 
 
 const getTeamLead = async (id: any) => {

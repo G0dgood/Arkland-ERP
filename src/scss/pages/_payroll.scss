@@ -196,10 +196,8 @@ background-color: #FCF7F7;
  
 }
 
-.input__field-view {
-    width: 100%;
-    background-color: #FCF7F7;
-    // border: 1px solid #d5d5d5;
+.input__field-view {  
+    background-color: #FCF7F7; 
     box-sizing: border-box;
     outline: 0;
     box-shadow: none;
@@ -207,20 +205,26 @@ background-color: #FCF7F7;
     padding: 0.575rem 0.75rem;
 }
 
+.input-payroll{
+  display: flex;
+  flex-direction: column; 
+}
+
 
 #input2 {
-  width: 100%;
+  width: 100% !important;
   padding: 0.9rem;
   border: none !important;
   border-radius: 5px;
-   box-sizing: border-box; 
+  box-sizing: border-box; 
+  border: 1px solid #FCF7F7 !important;
   }
 
   #input2:hover{
    border: 1px solid #990000 !important;
   }
   #input2:focus{
-   border: 2px solid #990000 !important;
+   border: 1px solid #990000 !important;
   }
 
   .selected-sub-entries{
@@ -515,9 +519,11 @@ background-color: #FCF7F7;
 
 .approve-container{
   width: 100%;
-  border-top: 2px solid #9900005e ;
+  // border-top: 2px solid #9900005e ;
   display: flex;
 justify-content: space-between;
+background-color: #fff;
+border-radius: 5px;
 
 }
 
@@ -525,11 +531,10 @@ justify-content: space-between;
  
  
 .approve-container-divider{
-    border-right: 2px solid #9900005e;
+    border-right: 2px solid #AFA9A9;
    height: auto; /* Adjust the height as needed */
    width: 2px;
-   margin: 40px 0px 60px 0px;
-  //  background-color: #990000;
+  //  margin: 40px 0px 60px 0px; 
 }
 .approve-container-main1{
     width: 498%;
@@ -547,7 +552,7 @@ justify-content: space-between;
 
 .approve-container li {
  margin: 10px 0; /* Add margin for spacing between list items */
-  background-color: #f0f0f0; /* Add a background color */
+  // background-color: #f0f0f0; 
   padding: 10px; /* Add padding to the list items */
   border-radius: 5px; /* Add border radius for rounded corners */
   width: 100%; /* Set a specific width for the list items */
@@ -572,27 +577,116 @@ justify-content: space-between;
 
 .approve-buttons {
   display: flex;
-  gap: 10px;
+  gap: 50px;
   margin-top: 20px;
+  justify-content: center;
+  margin-bottom: 1rem; 
 }
 
-.approve-button,
-.reject-button {
-  padding: 10px 20px;
-  background-color: #4caf50; /* Green for Approve */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.approve-button{
+  padding: 5px 20px !important;
+  background-color: #990000 !important; /* Green for Approve */
+  color: white !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
 }
 
 .reject-button {
-  background-color: #f44336; /* Red for Reject */
+  background-color: #990000 !important; /* Red for Reject */
+  padding: 5px 20px !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
 }
+
+#approved{
+    width: 68px !important;
+    height: 22px !important;
+    color: #fff !important;
+    border-radius: 2px !important;
+    background-color: #4caf50 !important;
+    font-size: 10px !important;  
+}
+#rejected{
+    width: 68px !important;
+    height: 22px !important;
+    color: #fff !important;
+    border-radius: 2px !important;
+    background-color: #f44336 !important;
+    font-size: 10px !important;  
+}
+
+
+.payroll-textarea{
+  padding: 1rem;
+  margin: 0px 1rem;
+  width: 95%;
+}
+ 
 
 .approve-container-main1 h2,
 .approve-container-main2 h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #4CAF50; /* Nice color for title */
+  font-size: 18px;
+font-weight: 400; 
+
+}
+.approve-container-main1  ,
+.approve-container-main2  {
+
+
+}
+
+#next-vaule-container{
+  width: 147px !important;
+  border-bottom: 1px solid black !important; 
+  text-align: center; 
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.pay-DetailsOpen{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-toggel{
+  width: 35px;
+  height: 35px;
+  border: 1px solid #990000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #99000016;
+  color: #990000;
+  cursor: pointer;
+}
+.icon-toggel:hover{
+  width: 35px;
+  height: 35px;
+  border: 1px solid #990000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #99000016;
+  color: #990000;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box shadow */
+}
+
+
+#approve-container-black{
+  background-color: #E5E5E5;
+  padding: 2rem;
+  
+}
+
+.li-flex-item{
+  display: flex;
+  justify-content: space-between;
 }

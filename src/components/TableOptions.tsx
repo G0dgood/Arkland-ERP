@@ -3,14 +3,17 @@ import { VscCloudDownload } from "react-icons/vsc";
 import Search from "./Search";
 import { Button } from "@material-ui/core";
 import { IoIosSearch } from "react-icons/io";
-import { RiArrowUpDownFill, RiDownloadLine } from "react-icons/ri";
+import { RiDownloadLine } from "react-icons/ri";
 import Select from "react-select";
 import WeeklyReportDownloader from "./Downloader/WeeklyReportDownloader";
 import EmployeesDownloader from "./Downloader/EmployeesDownloader";
-import { SetStateAction } from "react";
+import { SetStateAction, useState } from "react";
 import { customStyles, options, options2 } from "../utils/ShareData";
 import filter from "../assets/images/Filter.svg"
 import { useNavigate } from "react-router-dom";
+import PayrollEmployeeDownloader from "./Downloader/PayrollEmployeeDownloader";
+import { allEmployee } from "../features/Employee/employeeSlice";
+import { useAppDispatch } from "../store/useStore";
 
 
 // EntriesPerPage
@@ -137,32 +140,35 @@ const InputField = ({ placeholder, style, label, value, type, onChange, max }: a
     </div>
   );
 };
-const InputField2 = ({ placeholder, style, label, value, type, onChange, max, disable }: any) => {
+const InputField2 = ({ placeholder, style, label, value, type, onChange, max, disable, bold, showError, errors, values, errorsholder }: any) => {
   return (
-    <div className={"input "}>
-      <label className={"input__label"} >
+    <div className={"input-payroll"}>
+      <label className={"input__label"} style={bold}>
         {label}
-      </label>
-      <input
-        id="input2"
-        className={"input__field-view"}
-        type={type}
-        autoComplete="off"
-        placeholder={placeholder}
-        style={style}
-        value={value}
-        max={max}
-        onChange={onChange}
-        disabled={disable ? true : false}
+        <input
+          id="input2"
+          className={"input__field-view"}
+          type={type}
+          autoComplete="off"
+          placeholder={placeholder}
+          style={style}
+          value={values}
+          max={max}
+          onChange={onChange}
+          disabled={disable ? true : false}
 
-      />
+        />
+        {showError ? errors && <p className="formik-errors">{errors}</p> : ""}
+      </label>
     </div>
   );
 };
 
 
-const SearchComponent = ({ sortData, entriesPerPage, setEntriesPerPage, parameter, addemployee, WeeklyReport, placeholder, employeesDownloader, EmployeesCSV, HODWeeklyReport, handleParameter, setSelectedOption, parameterdeduct, emailpayslip, CSV, ApprovalRequests, SalaryHistory }: any) => {
+const SearchComponent = ({ sortData, entriesPerPage, setEntriesPerPage, parameter, addemployee, WeeklyReport, placeholder, employeesDownloader, EmployeesCSV, HODWeeklyReport, handleParameter, setSelectedOption, parameterdeduct, emailpayslip, CSV, ApprovalRequests, SalaryHistory, PayrollEmployee, handleQuery, }: any) => {
   const navigate = useNavigate();
+
+
 
 
 
@@ -208,7 +214,6 @@ const SearchComponent = ({ sortData, entriesPerPage, setEntriesPerPage, paramete
           </div>}
 
         {SalaryHistory && <h3>Salary History</h3>}
-
       </div>
 
       <div>
@@ -223,14 +228,16 @@ const SearchComponent = ({ sortData, entriesPerPage, setEntriesPerPage, paramete
         {WeeklyReport && <WeeklyReportDownloader />}
         {EmployeesCSV && <EmployeesDownloader data={employeesDownloader} />}
         {HODWeeklyReport && < WeeklyReportDownloader data={HODWeeklyReport} />}
+        {PayrollEmployee && < PayrollEmployeeDownloader />}
+
         {CSV && <Button className='CSV-button'   >
           <RiDownloadLine size={15} /> CSV
         </Button>}
 
-        <Button className='CSV-button'>
+        {/* <Button className='CSV-button'>
           <RiArrowUpDownFill size={15} /> Sort
-        </Button>
-        <Button className='CSV-button'>
+        </Button> */}
+        <Button className='CSV-button' onClick={handleQuery}>
           <img src={filter} alt="ASL" className="filter-icon" /> Filter</Button>
         <div className='mix-input-icon'>
           <input className='mix-input-icon-Button-input' placeholder={placeholder} />
@@ -249,21 +256,18 @@ const monthNames = [
 
 
 
-const InputOne = ({ setSelectedValue, selectedValue }: any) => {
+const InputOne = ({ handleOnChange, input }: any) => {
 
   const options = ["Employees", "Role", "Category", "Department", "Expatriate", "Location"];
 
-  // Handle the change event and update the selected value
-  const handleSelectChange = (event: any) => {
-    setSelectedValue(event.target.value);
-  };
+
 
   return (
     <div className="input  mt-3">
       <label className={"input__label"} >
         {"Select Employee By "}
       </label>
-      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={selectedValue} onChange={handleSelectChange}>
+      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={input?.employee} onChange={(e: any) => handleOnChange("employee", e.target.value)}>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
@@ -276,21 +280,17 @@ const InputOne = ({ setSelectedValue, selectedValue }: any) => {
 
 
 
-const InputLocation = ({ setSelectedLocation, selectedLocation }: any) => {
+const InputLocation = ({ handleOnChange, input }: any) => {
 
   const options = ["A&A", "Lapazs", "Phoenix"];
 
-  // Handle the change event and update the selected value
-  const handleSelectChange = (event: any) => {
-    setSelectedLocation(event.target.value);
-  };
 
   return (
     <div className="input  mt-3">
       <label className={"input__label"} >
         Select Location
       </label>
-      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={selectedLocation} onChange={handleSelectChange}>
+      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={input?.location} onChange={(e: any) => handleOnChange("location", e.target.value)}>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
@@ -300,21 +300,18 @@ const InputLocation = ({ setSelectedLocation, selectedLocation }: any) => {
     </div>
   );
 };
-const InputRole = ({ setSelectedRole, selectedRole }: any) => {
+const InputRole = ({ handleOnChange, input }: any) => {
 
   const options = ["Admin", "Employee", "Head of department", "HR admin", "Team lead", "Super admin", "Master"];
 
-  // Handle the change event and update the selected value
-  const handleSelectChange = (event: any) => {
-    setSelectedRole(event.target.value);
-  };
+
 
   return (
     <div className="input  mt-3">
       <label className={"input__label"} >
         Select Role
       </label>
-      <select id="Modal-textarea-input-sub" value={selectedRole} onChange={handleSelectChange} className="input-perameter-color">
+      <select id="Modal-textarea-input-sub" value={input?.role} onChange={(e: any) => handleOnChange("role", e.target.value)} className="input-perameter-color">
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
@@ -324,21 +321,17 @@ const InputRole = ({ setSelectedRole, selectedRole }: any) => {
     </div>
   );
 };
-const InputCategory = ({ setSelectedCategory, selectedCategory }: any) => {
+const InputCategory = ({ handleOnChange, input }: any) => {
 
   const options = ["Admin", "Employee", "Head of department", "HR admin", "Team lead", "Super admin", "Master"];
 
-  // Handle the change event and update the selected value
-  const handleSelectChange = (event: any) => {
-    setSelectedCategory(event.target.value);
-  };
 
   return (
     <div className="input  mt-3">
       <label className={"input__label"} >
-        Select Role
+        Select Category
       </label>
-      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={selectedCategory} onChange={handleSelectChange}>
+      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={input?.category} onChange={(e: any) => handleOnChange("category", e.target.value)} >
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
@@ -348,21 +341,17 @@ const InputCategory = ({ setSelectedCategory, selectedCategory }: any) => {
     </div>
   );
 };
-const InputDepartment = ({ setSelectedDepartment, selectedDepartment }: any) => {
+const InputDepartment = ({ handleOnChange, input }: any) => {
 
   const options = ["Admin", "Employee", "Head of department", "HR admin", "Team lead", "Super admin", "Master"];
 
-  // Handle the change event and update the selected value
-  const handleSelectChange = (event: any) => {
-    setSelectedDepartment(event.target.value);
-  };
 
   return (
     <div className="input  mt-3">
       <label className={"input__label"} >
-        Select Role
+        Select Department
       </label>
-      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={selectedDepartment} onChange={handleSelectChange}>
+      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={input?.department} onChange={(e: any) => handleOnChange("department", e.target.value)}>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
@@ -372,21 +361,17 @@ const InputDepartment = ({ setSelectedDepartment, selectedDepartment }: any) => 
     </div>
   );
 };
-const InputExpatriate = ({ setSelectedExpatriate, selectedExpatriate }: any) => {
+const InputExpatriate = ({ handleOnChange, input }: any) => {
 
   const options = ["Admin", "Employee", "Head of department", "HR admin", "Team lead", "Super admin", "Master"];
 
-  // Handle the change event and update the selected value
-  const handleSelectChange = (event: any) => {
-    setSelectedExpatriate(event.target.value);
-  };
 
   return (
     <div className="input  mt-3">
       <label className={"input__label"} >
-        Select Role
+        Select Expatriate
       </label>
-      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={selectedExpatriate} onChange={handleSelectChange}>
+      <select id="Modal-textarea-input-sub" className="input-perameter-color" value={input?.expatriate} onChange={(e: any) => handleOnChange("expatriate", e.target.value)}>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
@@ -415,5 +400,5 @@ export {
   InputRole,
   InputCategory,
   InputDepartment,
-  InputExpatriate
+  InputExpatriate,
 };

@@ -2,7 +2,8 @@ import { Button } from '@material-ui/core';
 import { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap';
 import { FiUpload } from 'react-icons/fi';
-import { MdOutlineClose } from 'react-icons/md';
+import { MdOutlineCloudUpload } from "react-icons/md";
+import { ModalHeader } from '../../../components/Modals/ModalOptions';
 
 const Uploadfile = ({ setFile, setShow, show, submitHandler, isLoading }: any) => {
 	const shortid = require('shortid');
@@ -113,12 +114,7 @@ const Uploadfile = ({ setFile, setShow, show, submitHandler, isLoading }: any) =
 				keyboard={false}
 				centered
 				className="logic-modal">
-				<Modal.Header >
-					<span className="span-center-title">Upload File</span>
-					<Button onClick={() => setShow(false)}>
-						<MdOutlineClose size={28} />
-					</Button>
-				</Modal.Header>
+				<ModalHeader setLgShow={setShow} icon={<MdOutlineCloudUpload size={30} />} title={"Upload"} subtitle={"Upload a file, CSV,PNG,JPEG"} />
 				<Modal.Body>
 					<div className="card">
 						<div className="card-body">

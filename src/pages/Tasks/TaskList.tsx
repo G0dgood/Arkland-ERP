@@ -23,6 +23,8 @@ const TaskList = () => {
 	});
 
 
+
+
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(getTask());

@@ -1,58 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IoArrowBackSharp } from "react-icons/io5";
-
+import { Helmet } from "react-helmet-async";
+import { useAppDispatch, useAppSelector } from "../../../store/useStore";
+import { getEmployeePayrollDetails } from "../../../features/PayRoll/payrollSlice";
+import { HiArrowSmRight } from "react-icons/hi";
+import { HiArrowSmDown } from "react-icons/hi";
 
 
 
 const PayRollEmployeeView = () => {
+	// Access passed data from location.state
+	const { paydata } = window?.history?.state?.usr || {};
+
+
+	const { id } = useParams();
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
+	const [sectionStates, setSectionStates] = useState([true, true, true, true]);
 
-	const [isEssentialDetailsOpen, setIsEssentialDetailsOpen] = useState(true);
-	const [isFinancialDetailsOpen, setIsFinancialDetailsOpen] = useState(false);
-	const [isReferencesOpen, setIsReferencesOpen] = useState(false);
-	const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+	const toggleSection = (index: number) => {
+		const newStates = sectionStates.map((state, i) => (i === index ? !state : state));
+		setSectionStates(newStates);
+	};
 
 
 
 	return (
-		<div>
-			<div className='roll-title mb-3'>
-				<h5 className="page-title">Review Employee Details</h5>
-				<div className='roll-icon' onClick={() => navigate(-1)}>
-					<IoArrowBackSharp size={22} />
+		<>
+			<Helmet>
+				<title>PayRoll Employee View | Arkland ERP</title>
+			</Helmet>
+
+			<div>
+				<div className='roll-title mb-3'>
+					<h5 className="page-title">Review Employee Details</h5>
+					<div className='roll-icon' onClick={() => navigate(-1)}>
+						<IoArrowBackSharp size={22} />
+					</div>
 				</div>
-			</div>
-			{false ? (
-				<div className="isLoading-container-view">
-					{/* <SVGLoader width={"60px"} height={"60px"} /> */}
-				</div>
-			) : (
+
 				<div className="employee-main-div-col">
-					{/* <div className="employee-main-div-col-header">
+					<div className="pay-DetailsOpen mt-4">
 						<div>
-							<img
-								src={projectBack}
-								alt="User"
-								className="project-back-img"
-								onClick={() => navigate(-1)}
-								title="Return"
-							/>
-						</div> 
-					</div>  */}
-					{/* <h4 style={{ marginTop: "3rem" }}>Review Employee Details</h4> */}
-					<h6
-						style={{ cursor: "pointer" }}
-						onClick={() =>
-							setIsEssentialDetailsOpen(!isEssentialDetailsOpen)
-						}
-					>
-						Employee Essential Details{"  "}
-						{isEssentialDetailsOpen ? "▼" : "►"}
-					</h6>
-					{isEssentialDetailsOpen && (
+							<span style={{ cursor: "pointer", fontWeight: "bold" }} onClick={() => toggleSection(0)}>
+								Employee Essential Details
+							</span>
+						</div>
+						<div>
+							{sectionStates[0] ? <span className="icon-toggel" onClick={() => toggleSection(0)}><HiArrowSmDown /></span> : <span className="icon-toggel" onClick={() => toggleSection(0)}><HiArrowSmRight /></span>}
+						</div>
+					</div>
+
+					{sectionStates[0] && (
 						<div
 							className="viewprofile-container"
 							style={{ marginTop: "2rem" }}
@@ -60,86 +62,86 @@ const PayRollEmployeeView = () => {
 							<div>
 								<div className="getjob-application-details">
 									<p>Full Name</p>
-									<p>{"employee?.full_name"}</p>
+									<p>{paydata?.full_name}</p>
 									<p>Email</p>
-									<p>{"employee?.personal_email"}</p>
+									<p>{paydata?.personal_email}</p>
 									<p>Phone</p>
-									<p>{"employee?.phone"} </p>
+									<p>{paydata?.phone} </p>
 									<p>Date of Birth (DD-MM-YYYY)</p>
 									<p>
-										{" "}
 										{moment("employee?.date_of_birth").format("DD-MM-YYYY")}
 									</p>
 									<p>Age</p>
 									<p>
-										{" "}
+										{ }
 										{
 											moment("employee?.date_of_birth").fromNow().split(" ")[0]
-										}{" "}
+										}{ }
 										years old
 									</p>
 									<p>Gender</p>
-									<p> {"employee?.gender"}</p>
+									<p> {paydata?.gender}</p>
 									<p>Marital Status</p>
-									<p> {"employee?.marital_status"}</p>
+									<p> {paydata?.marital_status}</p>
 									<p>Country</p>
-									<p>{"employee?.country"}</p>
+									<p>{paydata?.country}</p>
 									<p>State</p>
-									<p> {"employee?.state_of_origin"} </p>
+									<p> {paydata?.state_of_origin} </p>
 									<p>Address</p>
-									<p>{"employee?.address"}</p>
+									<p>{paydata?.address}</p>
 									<p>City</p>
-									<p>{"employee?.city"}</p>
+									<p>{paydata?.city}</p>
 								</div>
 							</div>
 							<div>
 								<div className="getjob-application-details">
 									<p>Expatriate</p>
 									<p>
-										{"employee?.is_expatriate" ? "Yes" : "No"}
+										{paydata?.is_expatriate ? "Yes" : "No"}
 									</p>
-									{"employee?.is_expatriate" ? (
+									{paydata?.is_expatriate ? (
 										<>
 											<>
 												<p>Passport Number</p>
-												<p>{"employee?.passport_number"}</p>
+												<p>{paydata?.passport_number}</p>
 											</>
 											<>
 												<p>Visa Type</p>
-												<p>{"employee?.visa_type"}</p>
+												<p>{paydata?.visa_type}</p>
 											</>
 											<>
 												<p>Visa Duration</p>
-												<p>{"employee?.visa_duration"} months </p>
+												<p>{paydata?.visa_duration} months </p>
 											</>
 										</>
 									) : (
 										<>
 											<p>NIN</p>
-											<p>{"employee?.nin"}</p>
+											<p>{paydata?.nin}</p>
 										</>
 									)}
 
 									<p>Instiution attended</p>
-									<p>{"employee?.institution_attended"}</p>
+									<p>{paydata?.institution_attended}</p>
 									<p>Course studied</p>
-									<p>{"employee?.course_studied"}</p>
+									<p>{paydata?.course_studied}</p>
 									<p>Qualification</p>
-									<p>{"employee?.qualification"}</p>
+									<p>{paydata?.qualification}</p>
 								</div>
 							</div>
 						</div>
 					)}
-					<h6
-						style={{ marginTop: "3rem", cursor: "pointer" }}
-						onClick={() =>
-							setIsFinancialDetailsOpen(!isFinancialDetailsOpen)
-						}
-					>
-						Employee Financial Details
-						{isFinancialDetailsOpen ? "▼" : "►"}
-					</h6>
-					{isFinancialDetailsOpen && (
+					<div className="pay-DetailsOpen mt-4">
+						<div>
+							<span style={{ cursor: "pointer", fontWeight: "bold" }} onClick={() => toggleSection(1)}>
+								Employee Financial Details
+							</span>
+						</div>
+						<div>
+							{sectionStates[1] ? <span className="icon-toggel" onClick={() => toggleSection(1)}><HiArrowSmDown /></span> : <span className="icon-toggel" onClick={() => toggleSection(1)}><HiArrowSmRight /></span>}
+						</div>
+					</div>
+					{sectionStates[1] && (
 						<div
 							className="viewprofile-container"
 							style={{ marginTop: "2rem" }}
@@ -147,109 +149,118 @@ const PayRollEmployeeView = () => {
 							<div>
 								<div className="getjob-application-details">
 									<p>Bank Nameeeeeee</p>
-									<p>{"employee?.bank_name"}</p>
+									<p>{paydata?.bank_name}</p>
 									<p>Bank Account Number</p>
-									<p>{"employee?.bank_account_number"}</p>
+									<p>{paydata?.bank_account_number}</p>
 									<p>Bank Account Name</p>
-									<p>{"employee?.bank_account_name"} </p>
+									<p>{paydata?.bank_account_name} </p>
 									<p>Gross Salary</p>
-									<p>₦ {"salary?.basic_salary"}</p>
+									<p>₦ {paydata?.basic_salary}</p>
 									<p>Meal Allowance</p>
-									<p>₦ {"salary?.meal_allowance"}</p>
+									<p>₦ {paydata?.meal_allowance}</p>
 								</div>
 							</div>
 							<div>
 								<div className="getjob-application-details">
 									<p>Basic Salary</p>
-									<p>₦ {"salary?.basic_salary"}</p>
+									<p>₦ {paydata?.basic_salary}</p>
 									<p> Medical Allowance</p>
-									<p> ₦ {"salary?.medical_allowance"}</p>
+									<p> ₦ {paydata?.medical_allowance}</p>
 									<p> Housing Allowance</p>
-									<p>₦ {"salary?.housing_allowance"}</p>
+									<p>₦ {paydata?.housing_allowance}</p>
 									<p> Transportation Allowance</p>
-									<p>₦ {"salary?.transportation_allowance"} </p>
+									<p>₦ {paydata?.transportation_allowance} </p>
 									<p> Utility Allowance</p>
-									<p>₦ {"salary?.utility_allowance"}</p>
+									<p>₦ {paydata?.utility_allowance}</p>
 								</div>
 							</div>
 						</div>
 					)}
+					<div className="pay-DetailsOpen mt-4">
+						<div>
+							<span style={{ cursor: "pointer", fontWeight: "bold" }} onClick={() => toggleSection(2)}>
+								Employee References
+							</span>
+						</div>
+						<div>
+							{sectionStates[2] ? <span className="icon-toggel" onClick={() => toggleSection(2)}><HiArrowSmDown /></span> : <span className="icon-toggel" onClick={() => toggleSection(2)}><HiArrowSmRight /></span>}
+						</div>
+					</div>
 
-					<h6
-						style={{ marginTop: "3rem", cursor: "pointer" }}
-						onClick={() => setIsReferencesOpen(!isReferencesOpen)}
-					>
-						Employee References
-						{isReferencesOpen ? "▼" : "►"}
-					</h6>
-					{isReferencesOpen && (
+					{sectionStates[2] && (
 						<div className="viewprofile-container" style={{ marginTop: "2rem" }} >
 							<div>
 								<div className="getjob-application-details">
 									<p>Next of Kin</p>
-									<p>{"employee?.next_of_kin"}</p>
+									<p>{paydata?.next_of_kin}</p>
 									<p>Next of Kin Phone Number</p>
-									<p>{"employee?.next_of_kin_phone"}</p>
+									<p>{paydata?.next_of_kin_phone}</p>
 									<p>Next of Kin Email</p>
-									<p>{"employee?.next_of_kin_email"} </p>
+									<p>{paydata?.next_of_kin_email} </p>
 									<p> Next of Kin Address</p>
-									<p> ₦ {"employee?.next_of_kin_address"}</p>
+									<p> ₦ {paydata?.next_of_kin_address}</p>
 								</div>
 							</div>
 							<div>
 								<div className="getjob-application-details">
 									<p>Referee Name</p>
-									<p>{"employee?.referee_name"}</p>
+									<p>{paydata?.referee_name}</p>
 									<p>Referee Phone Number</p>
-									<p>{"employee?.referee_phone"}</p>
+									<p>{paydata?.referee_phone}</p>
 									<p>Emergency Contact Name</p>
-									<p>{"employee?.emergency_contact_name"} </p>
+									<p>{paydata?.emergency_contact_name} </p>
 									<p>Emergency Contact Phone</p>
-									<p>{'employee?.emergency_contact_phone'}</p>
+									<p>{paydata?.emergency_contact_phone}</p>
 								</div>
 							</div>
 						</div>
 					)}
 
-					<h6 style={{ marginTop: "3rem", cursor: "pointer" }} onClick={() => setIsDetailsOpen(!isDetailsOpen)}  >
-						Details of employment
-						{isDetailsOpen ? "▼" : "►"}
-					</h6>
-					{isDetailsOpen && (
+
+					<div className="pay-DetailsOpen mt-4">
+						<div>
+							<span style={{ cursor: "pointer", fontWeight: "bold" }} onClick={() => toggleSection(3)}>
+								Details of employment
+							</span>
+						</div>
+						<div>
+							{sectionStates[3] ? <span className="icon-toggel" onClick={() => toggleSection(3)}><HiArrowSmDown /></span> : <span className="icon-toggel" onClick={() => toggleSection(3)}><HiArrowSmRight /></span>}
+						</div>
+					</div>
+					{sectionStates[3] && (
 						<div className="viewprofile-container" style={{ marginTop: "2rem" }} >
 							<div>
 								<div className="getjob-application-details">
 									<p>Department</p>
-									<p>{'employee?.department?.name'}</p>
+									<p>{paydata?.department?.name}</p>
 									<p>Role</p>
-									<p>{'employee?.role?.name'}</p>
+									<p>{paydata?.role?.name}</p>
 									<p>Work Location Objection</p>
-									<p> {"employee.has_work_location_objection" ? "Yes" : "No"} </p>
+									<p> {paydata.has_work_location_objection ? "Yes" : "No"} </p>
 									<p>Tally Number</p>
-									<p>{"employee?.tally_number"}</p>
+									<p>{paydata?.tally_number}</p>
 								</div>
 							</div>
 							<div>
 								<div className="getjob-application-details">
 									<p>Employment ID</p>
-									<p>{"employee?.employee_id"} </p>
+									<p>{paydata?.employee_id} </p>
 									<p>Employment Type</p>
-									<p>{"employee?.employment_type"}</p>
+									<p>{paydata?.employment_type}</p>
 									<p>Employment Date (DD-MM-YYYY)</p>
-									<p>{moment("employee?.employment_date").format("DD-MM-YYYY")}</p>
+									<p>{moment(paydata?.employment_date).format("DD-MM-YYYY")}</p>
 									<p>Employment Duration (Months)</p>
-									<p>{"employee?.employment_duration"}</p>
+									<p>{paydata?.employment_duration}</p>
 								</div>
 							</div>
 						</div>
 					)}
-					<div style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
+					<div className="mt-4" style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px", }}>
 						<button id='view-status' >Create</button>
 					</div>
 				</div>
-			)}
-
-		</div>
+			</div>
+		</>
 	);
 };
 

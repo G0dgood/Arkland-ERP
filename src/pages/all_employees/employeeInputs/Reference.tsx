@@ -2,7 +2,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import PhoneInput from "react-phone-input-2";
 import InputField from "../../../components/Inputs/InputField";
-import { EmployeeFormProps } from "../../../interfaces/employee";
+import { EmployeeFormProps } from "../../interfaces/employee";
 
 const Reference = ({
   active,

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import WeeklyReportTable from './WeeklyReportTable';
 import moment from 'moment';
-import { useAppDispatch, useAppSelector } from '../../store/useStore';
-import { viewWeeklyReport } from '../../features/WeeklyReport/WeeklyReportSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/useStore';
+import { viewWeeklyReport } from '../../../features/WeeklyReport/WeeklyReportSlice';
 import { useParams } from 'react-router-dom';
 
 

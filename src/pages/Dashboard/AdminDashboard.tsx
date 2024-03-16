@@ -24,6 +24,8 @@ const AdminDashboard = () => {
  const [isLoading, setisLoading] = useState<any>([]);
  const [fullscreen, setFullscreen] = useState<any>(false);
 
+
+
  function handleShow() {
   setFullscreen(true);
   setShow(true);
@@ -75,6 +77,8 @@ const AdminDashboard = () => {
 
 
 
+ console.log('departments', departments)
+
  return (
   <div className="main-div">
    <div className="main-div-col-1">
@@ -82,7 +86,7 @@ const AdminDashboard = () => {
      <div className="AdminDashboard-first-3-card-color-1">
       <h5 className="AdminDashboard-first-h5">Total Employees</h5>
       <h2 className="AdminDashboard-first-h3">
-       {!employees?.length ? 0 : employees?.length}
+       {!employees?.data?.length ? 0 : employees?.data?.length}
       </h2>
       <p className="AdminDashboard-first-p">
        <RiUser6Fill size={30} />
@@ -113,8 +117,8 @@ const AdminDashboard = () => {
      <div className="row" >
       <div className="Average-container-card col-8  w-65"  >
        <MdOpenInFull className="barchat-OpenInFull" onClick={handleShow} />
-       <Barchat departments={!departments?.length ? [] : departments} employees={!employees?.length ? [] : employees} />
-       <FullBarChart departments={!departments?.length ? [] : departments} employees={!employees?.length ? [] : employees} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
+       <Barchat departments={!departments?.length ? [] : departments} employees={!employees?.data?.length ? [] : employees?.data} />
+       <FullBarChart departments={!departments?.length ? [] : departments} employees={!employees?.data?.length ? [] : employees?.data} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
       </div>
       <div className="Average-container-card col-3 ms-4 w-5"  >
        <DonutChat employees={!employees?.length ? 0 : employees} />

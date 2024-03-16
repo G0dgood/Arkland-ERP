@@ -7,7 +7,6 @@ import { TfiAlignJustify } from "react-icons/tfi";
 import logo from "../assets/images/ASLLOGO.svg";
 import { AiOutlineLogout } from "react-icons/ai";
 import { IoIosNotifications } from "react-icons/io";
-import toast, { Toaster } from "react-hot-toast";
 import MobileSideBar from "./MobileSideBar";
 import Notification from "./Notification/Notification";
 import DataService from "../utils/dataService";
@@ -16,7 +15,8 @@ import createHttpService from "./HttpService";
 import { SocketContext } from "./SocketContext";
 import LogoutModal from "./LogoutOption";
 import profile from "../assets/images/new-profile.svg";
-
+import { customId } from "../shared/shared";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const dataService = new DataService()
@@ -37,9 +37,11 @@ const Header = ({ toggleSideNav, to, ignorePaths }: any) => {
   window.addEventListener("online", (e) => setnetwork("online"));
   useEffect(() => {
     if (network === "online") {
-      toast.success("You are back online!");
+      toast.dismiss();
+      toast.success("You are back online!", { toastId: customId })
     } else if (network === "offline") {
-      toast.error("You have lost internet connection!");
+      toast.dismiss();
+      toast.error("You have lost internet connection!", { toastId: customId })
     }
   }, [network]);
 
@@ -137,9 +139,11 @@ const Header = ({ toggleSideNav, to, ignorePaths }: any) => {
   };
 
 
+
+
   return (
     <div id="header" onMouseLeave={() => { setDropDownNoti(false); setDropDown(false) }} >
-      <Toaster
+      {/* <Toaster
         position="top-center"
         toastOptions={{
           duration: 15000,
@@ -147,8 +151,8 @@ const Header = ({ toggleSideNav, to, ignorePaths }: any) => {
           //   duration: 20000,
           // }
         }}
-      />
-
+      /> */}
+      <ToastContainer />
       <div className="header-container">
         <div className="header-left" >
           <TfiAlignJustify
@@ -193,7 +197,7 @@ const Header = ({ toggleSideNav, to, ignorePaths }: any) => {
               </div>
               <div className="profile-click-img-text">
                 <h4>{userInfo?.employee?.full_name}</h4>
-                <p>{userInfo?.role?.name}</p>
+                <p>{userInfo?.employee?.role}</p>
               </div>
             </div>
             {/* <span className="dropdown-names">
@@ -213,7 +217,7 @@ const Header = ({ toggleSideNav, to, ignorePaths }: any) => {
                     Profile
                   </NavLink>
                   <NavLink
-                    to={to}
+                    // to={to}
                     //  @ts-ignore  
                     activeClassName={isActive ? '' : 'inactive'}
                     onClick={handleClick}

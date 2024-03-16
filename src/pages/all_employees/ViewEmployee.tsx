@@ -22,6 +22,7 @@ const ViewEmployee = () => {
  const { isHRHead, isSuperAdmin, isAdmin, isHrAdmin } = getUserPrivileges();
  const { id } = useParams<{ id: string }>();
 
+ console.log('viewdata', viewdata)
 
 
  useEffect(() => {

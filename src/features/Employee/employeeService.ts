@@ -1,12 +1,15 @@
 import createHttpService from '../../components/HttpService';
-import HttpService from '../../components/HttpService'
 import { AnyArray } from 'immer/dist/internal'
+import QueryParams from '../../components/QueryParams';
  
  
   
-const allEmployee = async () => {  
+const allEmployee = async (Query:any) => {
+  const base = `hr/employees` 
   const HttpService = createHttpService();
-  const {data}:any = await HttpService.get("hr/employees") 
+  	const { size, page, sort, limit, search} = Query   
+   const url = QueryParams(size, page, sort, limit, search , null, null, null, null, null, null, null,base); 
+	const { data }: any = await HttpService.get(url) 
   return data
 }
 

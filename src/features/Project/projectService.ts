@@ -20,7 +20,8 @@ const viewProject = async ( id:any ) => {
  
 const createProject = async (input: any) => {  
    const HttpService = createHttpService();
-  const  {data}:any  =  await HttpService.post(`hr/projects`, input) 
+  const { data }: any = await HttpService.post(`hr/projects`, input) 
+ 
   return data
  }
 

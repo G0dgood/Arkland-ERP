@@ -1,5 +1,4 @@
 import createHttpService from '../../components/HttpService';
-import HttpService from '../../components/HttpService'
  
  
   
@@ -56,9 +55,7 @@ const acknowledgeReport = async (id:any ) => {
   return data
 }
  
- 
- 
- 
+  
  
  
 const WeeklyReportService = { 

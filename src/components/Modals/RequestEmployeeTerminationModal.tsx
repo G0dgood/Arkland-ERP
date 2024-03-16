@@ -68,24 +68,40 @@ const RequestEmployeeTerminationModal = () => {
 			setisLoading(false)
 		}
 	}
-	const availableEmployees = [] as any;
 
-	employees &&
-		employees.forEach((employee: any) =>
-			availableEmployees.push({
-				value: employee?.id,
-				label: employee?.full_name,
-			})
-		);
-	const availableWarnings = [] as any;
 
-	warnings &&
-		warnings.forEach((employee: any) =>
-			availableWarnings.push({
-				value: employee?.id,
-				label: employee?.misconduct,
-			})
-		);
+
+	// const availableEmployees = [] as any;
+
+	// employees &&
+	// 	employees.forEach((employee: any) =>
+	// 		availableEmployees.push({
+	// 			value: employee?.id,
+	// 			label: employee?.full_name,
+	// 		})
+	// 	);
+	// const availableWarnings = [] as any;
+
+	// warnings &&
+	// 	warnings.forEach((employee: any) =>
+	// 		availableWarnings.push({
+	// 			value: employee?.id,
+	// 			label: employee?.misconduct,
+	// 		})
+	// 	);
+
+	const availableEmployees = employees?.data?.map((employee: any) => ({
+		value: employee.id,
+		label: employee.full_name,
+	})) || [];
+
+	const availableWarnings = warnings?.data?.map((warning: any) => ({
+		value: warning.id,
+		label: warning.name,
+	})) || [];
+
+
+
 
 
 	const handleTerminations = () => {

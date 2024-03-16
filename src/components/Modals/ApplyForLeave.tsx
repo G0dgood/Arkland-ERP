@@ -14,6 +14,8 @@ const ApplyForLeave = () => {
 	const dispatch = useAppDispatch();
 	const { isError, isLoading, message, isSuccess } = useAppSelector((state: any) => state.leave)
 
+
+
 	const [lgShow, setLgShow] = useState(false);
 	const [inputs, setInputs] = useState({
 		start_date: "",
@@ -26,7 +28,6 @@ const ApplyForLeave = () => {
 	const handleLeave = () => {
 		// @ts-ignore
 		dispatch(createLeave(inputs));
-
 	}
 
 

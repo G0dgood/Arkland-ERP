@@ -173,7 +173,7 @@ const initialState = {
 
 export const allEmployee = createAsyncThunk('employee/allEmployee', async (data,thunkAPI) => {
   try {
-    return await employeeService.allEmployee()
+    return await employeeService.allEmployee(data)
   } catch (error: any) {
     const message = (error.response && 
       error.response.data && 

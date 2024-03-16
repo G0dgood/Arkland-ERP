@@ -74,7 +74,32 @@ const CreateHODModal = () => {
 		}));
 	};
 
-	const handleCreate = (e: any) => {
+	// const handleCreate = (e: any) => {
+	// 	e.preventDefault();
+	// 	// @ts-ignore
+	// 	dispatch(createHOD(input));
+	// }
+
+	// const getData = async () => {
+	// 	const HttpService = createHttpService();
+	// 	setisLoading(true)
+	// 	try {
+	// 		const employees = "hr/employees"
+	// 		const employee: any = await HttpService.get(employees)
+	// 		setEmployees(employee?.data?.data)
+
+	// 		const departmentsUrl = "hr/departments"
+	// 		const departments: any = await HttpService.get(departmentsUrl)
+	// 		setDepartments(departments?.data?.data)
+
+	// 		setisLoading(false)
+
+	// 	} catch (error) {
+	// 		setisLoading(false)
+	// 	}
+	// }
+
+	const handleCreate = (e: React.FormEvent) => {
 		e.preventDefault();
 		// @ts-ignore
 		dispatch(createHOD(input));
@@ -82,43 +107,55 @@ const CreateHODModal = () => {
 
 	const getData = async () => {
 		const HttpService = createHttpService();
-		setisLoading(true)
+		setisLoading(true);
+
 		try {
-			const employees = "hr/employees"
-			const employee: any = await HttpService.get(employees)
-			setEmployees(employee?.data?.data)
+			const employeesUrl = "hr/employees";
+			const departmentsUrl = "hr/departments";
 
-			const departmentsUrl = "hr/departments"
-			const departments: any = await HttpService.get(departmentsUrl)
-			setDepartments(departments?.data?.data)
+			const [employeesResponse, departmentsResponse] = await Promise.all([
+				HttpService.get(employeesUrl),
+				HttpService.get(departmentsUrl),
+			]);
 
-			setisLoading(false)
-
+			setEmployees(employeesResponse?.data?.data);
+			setDepartments(departmentsResponse?.data?.data);
 		} catch (error) {
-			setisLoading(false)
+			console.error("Error fetching data:", error);
+		} finally {
+			setisLoading(false);
 		}
 	}
 
 
+	const availableDepartment = departments?.map((department: any) => ({
+		value: department.id,
+		label: department.name,
+	})) || [];
+	const availableEmployees = employees?.map((employee: any) => ({
+		value: employee.id,
+		label: employee.full_name,
+	})) || [];
 
-	const availableDepartment = [] as any;
-	departments &&
-		departments.forEach((department: any) =>
-			availableDepartment.push({
-				value: department?.id,
-				label: department?.name,
-			})
-		);
 
-	const availableEmployees = [] as any;
+	// const availableDepartment = [] as any;
+	// departments &&
+	// 	departments.forEach((department: any) =>
+	// 		availableDepartment.push({
+	// 			value: department?.id,
+	// 			label: department?.name,
+	// 		})
+	// 	);
 
-	employees &&
-		employees.forEach((employee: any) =>
-			availableEmployees.push({
-				value: employee?.user,
-				label: employee?.full_name,
-			})
-		);
+	// const availableEmployees = [] as any;
+
+	// employees &&
+	// 	employees.forEach((employee: any) =>
+	// 		availableEmployees.push({
+	// 			value: employee?.user,
+	// 			label: employee?.full_name,
+	// 		})
+	// 	);
 
 
 	return (

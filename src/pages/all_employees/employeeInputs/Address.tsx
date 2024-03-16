@@ -3,7 +3,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "../../../components/Inputs/InputField";
 import CountrySelectField from "../../../components/Inputs/CountrySelectField";
-import { EmployeeFormProps } from "../../../interfaces/employee";
+import { EmployeeFormProps } from "../../interfaces/employee";
 
 const Address = ({
   active,

@@ -1,4 +1,4 @@
-import toast, { Toaster } from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import noti from './NotificationSound/IPhoneNotification.mp3'
 import DataService from '../utils/dataService';
 
@@ -43,15 +43,7 @@ const NotificationPopUp = ({ setRefresh, setNotification, socket }: any) => {
 
 	return (
 		<>
-			<Toaster
-				position="top-center"
-				toastOptions={{
-					duration: 15000,
-					// error: {
-					//   duration: 20000,
-					// }     
-				}}
-			/>
+
 		</>
 	)
 

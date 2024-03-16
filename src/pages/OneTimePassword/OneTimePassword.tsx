@@ -99,8 +99,8 @@ const OneTimePassword = () => {
 			const userInfo = { department, role, employee, privileges, notifications }
 			dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)
 			setLoading(false);
-			// navigate("/onetimepassword");
-			window.location.replace("/");
+			// navigate("/dashboard");
+			window.location.replace("/dashboard");
 		} catch (error) {
 			setLoading(false);
 			setError(true);

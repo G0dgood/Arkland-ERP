@@ -14,12 +14,11 @@ import taskSlice from '../features/Tasks/taskSlice'
 import teamSlice from '../features/Team/teamSlice'
 import teamleadSlice from '../features/TeamLead/teamleadSlice'
 import workerRequestSlice from '../features/workerRequest/workerRequestSlice'
+import payrollSlice from '../features/PayRoll/payrollSlice'
+import PayparametersSlice from '../features/Payparameters/PayparametersSlice'
+import SalarySlice from '../features/Salary/SalarySlice'
  
- 
- 
- 
- 
- 
+  
 
 export const store:any = configureStore({
   reducer: {  
@@ -38,6 +37,11 @@ export const store:any = configureStore({
     worker: workerRequestSlice, 
     team: teamSlice, 
     teamlead: teamleadSlice, 
+    
+    // Payroll
+    payroll: payrollSlice, 
+    payparameters: PayparametersSlice, 
+    salary: SalarySlice, 
     
   },
 })

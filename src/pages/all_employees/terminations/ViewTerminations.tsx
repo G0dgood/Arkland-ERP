@@ -26,9 +26,6 @@ const ViewTerminations = () => {
 
 
 
-
-
-
   return (
     <div  >
       {viewterminationsisLoading ? (

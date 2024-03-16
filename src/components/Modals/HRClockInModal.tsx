@@ -80,16 +80,20 @@ const HRClockInModal = () => {
 		}
 	}
 
-	const availableEmployees = [] as any;
+	// const availableEmployees = [] as any;
 
-	employees &&
-		employees.forEach((employee: any) =>
-			availableEmployees.push({
-				value: employee?.id,
-				label: employee?.full_name,
-			})
-		);
+	// employees &&
+	// 	employees.forEach((employee: any) =>
+	// 		availableEmployees.push({
+	// 			value: employee?.id,
+	// 			label: employee?.full_name,
+	// 		})
+	// 	);
 
+	const availableEmployees = employees?.data?.map((employees: any) => ({
+		value: employees.id,
+		label: employees.full_name,
+	})) || [];
 
 
 

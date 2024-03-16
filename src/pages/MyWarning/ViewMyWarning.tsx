@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import projectBack from "../../../assets/vectors/project-back.svg";
-import RespondToWarning from "../all_employees/warnings/RespondToWarning";
+import RespondToWarning from "../warnings/RespondToWarning";
 import { useEffect, useState } from "react";
 import { SVGLoader } from "../../components/SVGLoader";
 import createHttpService from "../../components/HttpService";

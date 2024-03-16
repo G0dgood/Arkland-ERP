@@ -2,7 +2,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import Cleave from "cleave.js/react";
 import InputField from "../../../components/Inputs/InputField";
-import { EmployeeFormProps } from "../../../interfaces/employee";
+import { EmployeeFormProps } from "../../interfaces/employee";
 import CustomInputField from "../../../components/Inputs/CustomInputField";
 import { removeNonNumeric } from "../../../utils/numbers";
 import { useEffect, useState } from "react";

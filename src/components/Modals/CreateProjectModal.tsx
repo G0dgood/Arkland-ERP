@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -18,7 +18,7 @@ import createHttpService from "../HttpService";
 import { ModalHeader } from "./ModalOptions";
 import { BiBuildingHouse } from "react-icons/bi";
 
-const CreateProjectModal = (props: any) => {
+const CreateProjectModal = () => {
  const { createisLoading, createisSuccess } = useAppSelector((state: any) => state.project)
  const navigate = useNavigate();
  const dispatch = useAppDispatch();
@@ -30,10 +30,6 @@ const CreateProjectModal = (props: any) => {
  const [departments, setDepartments] = useState([]);
  const [teamLeads, setTeamslead] = useState([]);
  const [teams, setTeams] = useState([]);
-
-
-
-
 
 
  useEffect(() => {
@@ -55,57 +51,90 @@ const CreateProjectModal = (props: any) => {
  };
 
 
+ // const getData = async () => {
+ //  const HttpService = createHttpService();
+ //  try {
+
+ //   const departmentsUrl = "hr/departments"
+ //   const departments: any = await HttpService.get(departmentsUrl)
+ //   setDepartments(departments?.data?.data)
+
+ //   const teamleadsUrl = "hr/team-leads"
+ //   const teamlead: any = await HttpService.get(teamleadsUrl)
+ //   setTeamslead(teamlead?.data?.data)
+
+ //   const teamsUrl = `hr/teams`
+ //   const teams: any = await HttpService.get(teamsUrl)
+ //   setTeams(teams?.data?.data)
+
+ //  } catch (error) {
+ //  }
+ // }
+
  const getData = async () => {
   const HttpService = createHttpService();
-  // setisLoading(true)
+
   try {
+   const fetchData = async (url: string, setDataFunction: { (value: SetStateAction<never[]>): void; (arg0: any): void; }) => {
+    const response = await HttpService.get(url);
+    setDataFunction(response?.data?.data);
+   };
 
-   const departmentsUrl = "hr/departments"
-   const departments: any = await HttpService.get(departmentsUrl)
-   setDepartments(departments?.data?.data)
+   const endpoints = [
+    { url: "hr/departments", setter: setDepartments },
+    { url: "hr/team-leads", setter: setTeamslead },
+    { url: "hr/teams", setter: setTeams },
+   ];
 
-   const teamleadsUrl = "hr/team-leads"
-   const teamlead: any = await HttpService.get(teamleadsUrl)
-   setTeamslead(teamlead?.data?.data)
-
-   const teamsUrl = `hr/teams`
-   const teams: any = await HttpService.get(teamsUrl)
-   setTeams(teams?.data?.data)
-
-   // setisLoading(false)
-
+   await Promise.all(endpoints.map(({ url, setter }) => fetchData(url, setter)));
   } catch (error) {
-   // setisLoading(false)
+   console.error("An error occurred while fetching data:", error);
   }
- }
-
- const availablleDepartments = [] as any;
- departments &&
-  departments.forEach((team: any) =>
-   availablleDepartments.push({
-    value: team.id,
-    label: team.name,
-   })
-  );
-
- const availablleTeam = [] as any;
- teams &&
-  teams.forEach((team: any) =>
-   availablleTeam.push({
-    value: team.id,
-    label: team.name,
-   })
-  );
+ };
 
 
- const availablleTeamLeads = [] as any;
- teamLeads &&
-  teamLeads.forEach((team: any) =>
-   availablleTeamLeads.push({
-    value: team.id,
-    label: team.name,
-   })
-  );
+ // const availablleDepartments = [] as any;
+ // departments &&
+ //  departments?.forEach((team: any) =>
+ //   availablleDepartments.push({
+ //    value: team.id,
+ //    label: team.name,
+ //   })
+ //  );
+
+ const availableDepartments = departments?.map((departments: any) => ({
+  value: departments.id,
+  label: departments.name,
+ })) || [];
+ const availableTeam = teams?.map((team: any) => ({
+  value: team.id,
+  label: team.name,
+ })) || [];
+
+ const availableTeamLeads = teamLeads?.map((teamLeads: any) => ({
+  value: teamLeads?.id,
+  label: teamLeads?.name,
+ })) || [];
+
+
+ // const availableTeam = [] as any;
+ // teams &&
+ //  teams?.forEach((team: any) =>
+ //   availableTeam.push({
+ //    value: team.id,
+ //    label: team.name,
+ //   })
+ //  );
+
+
+ // const availableTeamLeads = [] as any;
+ // teamLeads &&
+ //  teamLeads?.forEach((team: any) =>
+ //   availableTeamLeads.push({
+ //    value: team.id,
+ //    label: team.name,
+ //   })
+ //  );
 
  return (
   <div>
@@ -181,7 +210,7 @@ const CreateProjectModal = (props: any) => {
               <ReactSelectField
                label="Team"
                name="team"
-               options={availablleTeam}
+               options={availableTeam}
                className="form-group__gender"
                onChange={(event: any) => {
                 setFieldValue("team", event?.value);
@@ -293,7 +322,7 @@ const CreateProjectModal = (props: any) => {
             className="add-experience"
             type="submit" >
             {createisLoading ? (
-             <Spinner animation="border" />
+             <Spinner animation="border" size="sm" />
             ) : ("Create Project")}
            </Button>
           </div>

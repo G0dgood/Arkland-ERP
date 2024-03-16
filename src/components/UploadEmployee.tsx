@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Toast, ProgressBar, Spinner } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import { Button } from "@material-ui/core";
-import { MdOutlineClose } from "react-icons/md";
 import { FiUpload, FiUploadCloud } from "react-icons/fi";
 import { fireAlert } from "../utils/Alert";
-import HttpService from "./HttpService";
 import { useAppDispatch } from "../store/useStore";
 import createHttpService from "./HttpService";
 import { ModalHeader } from "./Modals/ModalOptions";
@@ -89,14 +87,8 @@ const UploadEmployee = () => {
               type="file"
               id="fileupload"
               className="file-upload-input"
-              // @ts-ignore 
+
               onChange={handleChange} />
-            {/* <ProgressBar
-              animated
-              className="upload-progress-bar"
-              now={progress}
-            // onClick={onClickReset}
-            /> */}
 
 
             <div className='deleteKPIHandler' style={{ marginTop: "40px" }}>
