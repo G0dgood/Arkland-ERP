@@ -94,7 +94,7 @@ const OneTimePassword = () => {
 			const token = response.data.token
 			HttpService.setToken(token); // Set the token in HttpService
 			dataService.setToken(token)
-			console.log('response.data', response)
+			// console.log('response.data', response)
 			const { department, role, employee, privileges, notifications } = response.data
 			const userInfo = { department, role, employee, privileges, notifications }
 			dataService.setData(`${process.env.REACT_APP_ERP_USER_INFO}`, userInfo)

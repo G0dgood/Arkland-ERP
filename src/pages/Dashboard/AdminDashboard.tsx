@@ -26,6 +26,9 @@ const AdminDashboard = () => {
 
 
 
+
+
+
  function handleShow() {
   setFullscreen(true);
   setShow(true);
@@ -47,7 +50,7 @@ const AdminDashboard = () => {
    const employeesUrl = "hr/employees"
    const employees: any = await HttpService.get(employeesUrl)
    setEmployees(employees?.data?.data)
-
+   console.log('employees', employees)
    const departmentsUrl = "hr/departments"
    const departments: any = await HttpService.get(departmentsUrl)
    setDepartments(departments?.data?.data)
