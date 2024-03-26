@@ -61,13 +61,15 @@
   position: relative;
   grid-column: 8/12;
   background-color: #fff;
-  padding: 0 50px;
+  padding: 0 40px;
   padding-top: 35px;
   padding-bottom: 50px;
   width: 500px;
   border-radius: 3px;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.15), 0 0 2px rgba(0, 0, 0, 0.15),
     0 0 16px rgba(218, 209, 209, 0.15);
+    width: 400px;
+    height: 500px;
 }
 
 .login-form-container button {
@@ -134,8 +136,8 @@
   padding: 1rem;
 }
 .logo-image {
-  width: 250px;
-  height: 200px;
+  width: 150px;
+  height: 140px;
   margin: auto;
   display: flex;
   justify-content: center;

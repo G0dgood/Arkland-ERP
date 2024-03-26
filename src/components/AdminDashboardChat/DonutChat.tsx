@@ -93,15 +93,10 @@ const DonutChat = ({ employees }: any) => {
 
 
   return (
-    <div
-      className="chat-container"
-      style={{ height: "100%", width: "100%" }}
-    >
+    <div  >
       <Doughnut
         data={data}
-        // height="100%"
-        // width="100%"
-        options={{ maintainAspectRatio: false }}
+        options={{ maintainAspectRatio: true }}
       />
 
     </div>

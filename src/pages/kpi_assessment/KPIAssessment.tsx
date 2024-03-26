@@ -140,6 +140,8 @@ const KPIAssessment = ({ setIsCheck, setShow, handleRemoveField, handleAddField,
     }
   }
 
+  console.log('hods', hods)
+
 
   const availablleHods = [] as any;
   hods &&

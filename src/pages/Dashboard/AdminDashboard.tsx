@@ -26,7 +26,7 @@ const AdminDashboard = () => {
 
 
 
-
+ console.log('employees', employees)
 
 
  function handleShow() {
@@ -116,16 +116,15 @@ const AdminDashboard = () => {
     </div>
 
     {/* </div> */}
-    <div className="container">
-     <div className="row" >
-      <div className="Average-container-card col-8  w-65"  >
-       <MdOpenInFull className="barchat-OpenInFull" onClick={handleShow} />
-       <Barchat departments={!departments?.length ? [] : departments} employees={!employees?.data?.length ? [] : employees?.data} />
-       <FullBarChart departments={!departments?.length ? [] : departments} employees={!employees?.data?.length ? [] : employees?.data} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
-      </div>
-      <div className="Average-container-card col-3 ms-4 w-5"  >
-       <DonutChat employees={!employees?.length ? 0 : employees} />
-      </div>
+
+    <div className="admin-row-graph-container" >
+     <div className="Average-container-card1  " >
+      <MdOpenInFull className="barchat-OpenInFull" onClick={handleShow} />
+      {/* <Barchat departments={!departments?.length ? [] : departments} employees={!employees?.data?.length ? [] : employees?.data} /> */}
+      <FullBarChart departments={!departments?.length ? [] : departments} employees={!employees?.data?.length ? [] : employees?.data} show={show} fullscreen={fullscreen} setFullscreen={setFullscreen} setShow={setShow} />
+     </div>
+     <div className="Average-container-card2  "  >
+      <DonutChat employees={!employees?.length ? 0 : employees} />
      </div>
     </div>
     <div >

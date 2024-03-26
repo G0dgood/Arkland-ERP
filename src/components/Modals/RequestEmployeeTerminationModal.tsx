@@ -23,14 +23,14 @@ const RequestEmployeeTerminationModal = () => {
 	];
 
 	const [inputs, setInputs] = useState({
-		employee: " ",
-		warning: " ",
-		reason: " ",
-		description: " "
+		employee: "",
+		warning: "",
+		reason: "",
+		description: ""
 	})
 
 	const [input, setInput] = useState<any>({
-		employee: " ",
+		employee: "",
 		warning: ""
 
 	})
@@ -90,14 +90,16 @@ const RequestEmployeeTerminationModal = () => {
 	// 		})
 	// 	);
 
+
+
 	const availableEmployees = employees?.data?.map((employee: any) => ({
 		value: employee.id,
 		label: employee.full_name,
 	})) || [];
 
-	const availableWarnings = warnings?.data?.map((warning: any) => ({
+	const availableWarnings = warnings?.map((warning: any) => ({
 		value: warning.id,
-		label: warning.name,
+		label: warning.misconduct,
 	})) || [];
 
 
@@ -123,7 +125,6 @@ const RequestEmployeeTerminationModal = () => {
 
 			dispatch(reset());
 			setLgShow(false)
-			navigate(-1)
 		}
 	}, [TerminationsisSuccess, dispatch, navigate])
 

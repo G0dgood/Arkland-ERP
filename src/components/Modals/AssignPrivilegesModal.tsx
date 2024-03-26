@@ -39,7 +39,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 		}
 	}
 
-
+	console.log('employees', employees)
 
 	// const availableEmployees = [] as any;
 
@@ -53,7 +53,7 @@ const AssignPrivilegesModal = ({ setReload }: any) => {
 
 	const availableEmployees = employees?.data?.map((employee: any) => ({
 		value: employee.id,
-		label: employee.name,
+		label: employee.full_name,
 	})) || [];
 
 
